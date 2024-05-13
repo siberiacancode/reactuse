@@ -36,7 +36,8 @@
     "lint": "eslint . --ext ts --ext tsx --no-error-on-unmatched-pattern --fix",
     "format": "prettier --write **/*.{ts,js}",
     "type": "tsc --noEmit",
-    "pretty": "yarn type && yarn format && yarn lint"
+    "pretty": "yarn type && yarn format && yarn lint",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.js": "prettier --write",
@@ -64,6 +65,8 @@
     "@types/node": "^20.11.19",
     "@types/react": "^18.2.56",
     "eslint": "^8.56.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "shx": "^0.3.4",
