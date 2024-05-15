@@ -1,3 +1,7 @@
+# vite press
+docs/.vitepress/cache
+docs/.vitepress/dist
+
 # Microsoft Azure Build Output
 csx/
 *.build.csdef

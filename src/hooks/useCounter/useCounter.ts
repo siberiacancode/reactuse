@@ -6,8 +6,8 @@ export interface UseCounterOptions {
 }
 export interface UseCounterReturn {
   count: number;
-  set: (value: number) => void;
-  reset: (value?: number) => void;
+  set: React.Dispatch<React.SetStateAction<number>>;
+  reset: () => void;
   inc: (value?: number) => void;
   dec: (value?: number) => void;
 }
@@ -25,7 +25,7 @@ export const useCounter: UseCounter = (...params) => {
   const { max = Number.POSITIVE_INFINITY, min = Number.NEGATIVE_INFINITY } =
     typeof params[0] === 'number' ? params[1] ?? {} : params[0] ?? {};
 
-  const [count, setCount] = React.useState(initialValue ?? min ?? 0);
+  const [count, setCount] = React.useState(initialValue ?? 0);
 
   const inc = (value: number = 1) => {
     setCount((prevCount) => {
@@ -41,13 +41,23 @@ export const useCounter: UseCounter = (...params) => {
     });
   };
 
-  const reset = (value: number = initialValue ?? 0) => {
+  const reset = () => {
+    const value = initialValue ?? 0;
     if (typeof max === 'number' && value > max) return setCount(max);
     if (typeof min === 'number' && value < min) return setCount(min);
     setCount(value);
   };
 
-  const set = (value: number) => setCount(Math.max(min, Math.min(max, value)));
+  const set = (value: React.SetStateAction<number>) => {
+    setCount((prevCount) => {
+      const updatedCount = Math.max(
+        min,
+        Math.min(max, typeof value === 'number' ? value : value(prevCount))
+      );
+
+      return updatedCount;
+    });
+  };
 
   return { count, set, inc, dec, reset } as const;
 };
