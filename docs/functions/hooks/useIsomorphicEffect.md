@@ -1,3 +1,7 @@
+<script setup>
+import Demo from '../../components/demo.vue'
+</script>
+
 # useIsomorphicEffect
 
 Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
@@ -11,8 +15,13 @@ import { useIsomorphicEffect } from '@sibericancode/reactuse';
 useIsomorphicEffect(callback, deps)
 ```
 
+## Demo
+
+<Demo hook="useIsomorphicEffect" />
+
+
 ## Contributors
 
-[Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useIsomorphicEffect/useIsomorphicEffect.ts) • [Docs](#)
+[Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useIsomorphicEffect/useIsomorphicEffect.ts) • [Demo](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useIsomorphicEffect/useIsomorphicEffect.demo.ts) • [Docs](#)
 
 [Suggest changes to this page](#)
