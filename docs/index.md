@@ -3,23 +3,28 @@
 layout: home
 
 hero:
-  name: "react use"
-  text: "react use"
-  tagline: My great project tagline
+  name: reactuse 🚀
+  tagline: the largest and most useful hook library
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Get Started
+      link: /
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: View on GitHub
+      link: /
 
 features:
-  - title: Feature A
+  - title: useBoolean
+    details: Hook provides a boolean state and a function to toggle the boolean value
+    link: /functions/hooks/useBoolean
+  - title: useCounter
+    details: Hook that manages a counter with increment, decrement, reset, and set functionalities
+    link: /functions/hooks/useCounter
+  - title: useIsomorphicEffect
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
+  - title: useNumber
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
+
+
 

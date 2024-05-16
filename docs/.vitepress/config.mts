@@ -1,13 +1,46 @@
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
-  title: 'react use',
-  description: 'react use',
+  title: 'reactuse',
+  description: '🚀 the largest and most useful hook library',
+  locales: {
+    root: {
+      label: 'English',
+      lang: 'en',
+      themeConfig: {
+        nav: [
+          { text: 'Home', link: '/' },
+          {
+            text: 'Functions',
+            items: [{ text: 'Hooks', link: '/functions/hooks/' }]
+          }
+        ],
+        sidebar: [
+          {
+            text: 'Hooks',
+            items: [
+              { text: 'useBoolean', link: '/functions/hooks/useBoolean' },
+              { text: 'useCounter', link: '/functions/hooks/useCounter' }
+            ]
+          }
+        ]
+      }
+    }
+    // ru: {
+    //   label: 'Русский',
+    //   lang: 'ru',
+    //   themeConfig: {
+    //     nav: [
+    //       { text: 'Главная', link: '/ru' },
+    //       {
+    //         text: 'Функции',
+    //         items: [{ text: 'Хуки', link: '/ru/functions/hooks' }]
+    //       }
+    //     ]
+    //   }
+    // }
+  },
   themeConfig: {
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
-    ],
     sidebar: [
       {
         text: 'Examples',
@@ -17,6 +50,10 @@ export default defineConfig({
         ]
       }
     ],
-    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }]
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/siberiacancode/reactuse' },
+      { icon: 'npm', link: 'https://github.com/siberiacancode/reactuse' },
+      { icon: 'youtube', link: 'https://www.youtube.com/@siberiacancode' }
+    ]
   }
 });

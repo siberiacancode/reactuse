@@ -1,5 +1,6 @@
 import React from 'react';
-import { useIsomorphicEffect } from './useIsomorphicEffect';
+
+import { useIsomorphicEffect } from './useIsomorphicEffect/useIsomorphicEffect';
 import { useMutationObserver } from './useMutationObserver';
 
 export interface UseDocumentTitleOptions {
@@ -24,7 +25,6 @@ export function useDocumentTitle(value?: string, options?: UseDocumentTitleOptio
         document.title = prevTitleRef.current;
       };
     }
-    return;
   }, []);
 
   const set = (value: string) => {

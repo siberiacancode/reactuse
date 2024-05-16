@@ -1,14 +1,24 @@
 import React from 'react';
 
+/** The use counter options */
 export interface UseCounterOptions {
+  /** The min of count value */
   min?: number;
+  /** The max of count value */
   max?: number;
 }
+
+/** The use counter return type */
 export interface UseCounterReturn {
+  /** The current count value */
   count: number;
+  /** Function to set a specific value to the counter */
   set: React.Dispatch<React.SetStateAction<number>>;
+  /** Function to reset the counter to its initial value. */
   reset: () => void;
+  /** Function to increment the counter */
   inc: (value?: number) => void;
+  /** Function to decrement the counter */
   dec: (value?: number) => void;
 }
 
@@ -20,6 +30,18 @@ export type UseCounter = {
   ): UseCounterReturn;
 };
 
+/**
+ * Hook that manages a counter with increment, decrement, reset, and set functionalities
+ *
+ * @overload
+ * @param {number} initialValue - The initial number value, defaults to 0
+ * @param {UseCounterOptions} - The use counter options
+ * @return {UseCounterReturn} An object containing the current count and functions to interact with the counter
+ *
+ * @overload
+ * @param {UseCounterOptions & { initialValue: number }} - The use counter options
+ * @return {UseCounterReturn} An object containing the current count and functions to interact with the counter
+ */
 export const useCounter: UseCounter = (...params) => {
   const initialValue = typeof params[0] === 'number' ? params[0] : params[0]?.initialValue;
   const { max = Number.POSITIVE_INFINITY, min = Number.NEGATIVE_INFINITY } =
