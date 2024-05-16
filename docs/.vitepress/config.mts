@@ -20,7 +20,8 @@ export default defineConfig({
             text: 'Hooks',
             items: [
               { text: 'useBoolean', link: '/functions/hooks/useBoolean' },
-              { text: 'useCounter', link: '/functions/hooks/useCounter' }
+              { text: 'useCounter', link: '/functions/hooks/useCounter' },
+              { text: 'useIsomorphicEffect', link: '/functions/hooks/useIsomorphicEffect' }
             ]
           }
         ]

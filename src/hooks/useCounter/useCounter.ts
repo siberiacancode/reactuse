@@ -49,6 +49,8 @@ export const useCounter: UseCounter = (...params) => {
 
   const [count, setCount] = React.useState(initialValue ?? 0);
 
+  React.useEffect(() => {}, [min, max]);
+
   const inc = (value: number = 1) => {
     setCount((prevCount) => {
       if (typeof max === 'number' && count === max) return prevCount;

@@ -21,9 +21,8 @@ features:
     details: Hook that manages a counter with increment, decrement, reset, and set functionalities
     link: /functions/hooks/useCounter
   - title: useIsomorphicEffect
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: useNumber
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    details: Hook conditionally selects either useLayoutEffect or useEffect based on the environment
+    link: /functions/hooks/useIsomorphicEffect
 ---
 
 

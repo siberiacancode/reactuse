@@ -1,3 +1,7 @@
+<script setup>
+import Demo from '../../components/demo.vue'
+</script>
+
 # useBoolean
 
 Hook provides a boolean state and a function to toggle the boolean value
@@ -10,6 +14,11 @@ import { useBoolean } from '@sibericancode/reactuse';
 ```typescript
 const [on, toggle] = useBoolean()
 ```
+
+## Demo
+
+<Demo hook="useBoolean" />
+
 
 ## Api
 
@@ -39,6 +48,6 @@ Description: The use boolean return type
 
 ## Contributors
 
-[Source](#) • [Docs](#)
+[Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useBoolean/useBoolean.ts) • [Docs](#)
 
 [Suggest changes to this page](#)

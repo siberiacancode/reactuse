@@ -5,14 +5,15 @@ module.exports = {
   overrides: [
     ...eslint.react.overrides,
     {
-      files: ['*.ts'],
+      files: ['*.ts', '*.tsx'],
       parserOptions: {
         tsconfigRootDir: __dirname
       },
       rules: {
         '@typescript-eslint/no-unsafe-call': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
-        '@typescript-eslint/no-unsafe-assignment': 'off'
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        'jsx-a11y/label-has-associated-control': 'off'
       }
     }
   ]

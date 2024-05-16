@@ -1,3 +1,7 @@
+<script setup>
+import Demo from '../../components/demo.vue'
+</script>
+
 # useCounter
 
 Hook that manages a counter with increment, decrement, reset, and set functionalities
@@ -11,6 +15,11 @@ import { useCounter } from '@sibericancode/reactuse';
 const { count, dec, inc, reset, set } = useCounter();
 ```
 
+## Demo
+
+<Demo hook="useCounter" />
+
+
 ## Api
 
 ### Parameters
@@ -21,6 +30,6 @@ const { count, dec, inc, reset, set } = useCounter();
 
 ## Contributors
 
-[Source](#) • [Docs](#)
+[Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useCounter/useCounter.ts) • [Docs](#)
 
 [Suggest changes to this page](#)

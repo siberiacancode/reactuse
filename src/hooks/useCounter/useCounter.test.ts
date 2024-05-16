@@ -80,7 +80,7 @@ describe('Counter increment', () => {
 });
 
 describe('Counter maximum', () => {
-  it('Should Should not exceed the max limit', () => {
+  it('Should not exceed the max limit', () => {
     const { result } = renderHook(() => useCounter(0, { max: 1 }));
 
     act(() => result.current.inc());
@@ -99,7 +99,7 @@ describe('Counter maximum', () => {
 });
 
 describe('Counter minimum', () => {
-  it('Should Should not exceed the min limit', () => {
+  it('Should not exceed the min limit', () => {
     const { result } = renderHook(() => useCounter(1, { min: 0 }));
 
     act(() => result.current.dec());
@@ -125,7 +125,7 @@ describe('Value is object', () => {
   });
 
   describe('Counter maximum', () => {
-    it('Should Should not exceed the max limit', () => {
+    it('Should not exceed the max limit', () => {
       const { result } = renderHook(() => useCounter({ max: 1 }));
 
       act(() => result.current.inc());
@@ -144,7 +144,7 @@ describe('Value is object', () => {
   });
 
   describe('Counter minimum', () => {
-    it('Should Should not exceed the min limit', () => {
+    it('Should not exceed the min limit', () => {
       const { result } = renderHook(() => useCounter({ min: 0 }));
 
       act(() => result.current.dec());

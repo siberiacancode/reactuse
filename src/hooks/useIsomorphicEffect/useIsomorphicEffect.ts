@@ -1,3 +1,7 @@
-import { useEffect, useLayoutEffect } from 'react';
+import React from 'react';
 
-export const useIsomorphicEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+/**
+ * Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
+ */
+export const useIsomorphicEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
