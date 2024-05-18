@@ -1,8 +1,16 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
   title: 'reactuse',
   description: '🚀 the largest and most useful hook library',
+  vite: {
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('../../src', import.meta.url))
+      }
+    }
+  },
   locales: {
     root: {
       label: 'English',
@@ -20,8 +28,14 @@ export default defineConfig({
             text: 'Hooks',
             items: [
               { text: 'useBoolean', link: '/functions/hooks/useBoolean' },
+              { text: 'useClickOutside', link: '/functions/hooks/useClickOutside' },
               { text: 'useCounter', link: '/functions/hooks/useCounter' },
-              { text: 'useIsomorphicEffect', link: '/functions/hooks/useIsomorphicEffect' }
+              {
+                text: 'useIsomorphicLayoutEffect',
+                link: '/functions/hooks/useIsomorphicLayoutEffect'
+              },
+              { text: 'useNetwork', link: '/functions/hooks/useNetwork' },
+              { text: 'useTimeout', link: '/functions/hooks/useTimeout' }
             ]
           }
         ]

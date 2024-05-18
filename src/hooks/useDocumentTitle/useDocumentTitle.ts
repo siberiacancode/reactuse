@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useIsomorphicEffect } from './useIsomorphicEffect/useIsomorphicEffect';
-import { useMutationObserver } from './useMutationObserver';
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
+import { useMutationObserver } from '../useMutationObserver';
 
 export interface UseDocumentTitleOptions {
   restoreOnUnmount?: boolean;
@@ -19,7 +19,7 @@ export function useDocumentTitle(value?: string, options?: UseDocumentTitleOptio
     document.head.querySelector('title')
   );
 
-  useIsomorphicEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (options?.restoreOnUnmount) {
       return () => {
         document.title = prevTitleRef.current;
@@ -32,7 +32,7 @@ export function useDocumentTitle(value?: string, options?: UseDocumentTitleOptio
     if (updatedValue.length > 0) document.title = updatedValue;
   };
 
-  useIsomorphicEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (typeof value !== 'string') return;
     set(value);
   }, [value]);
