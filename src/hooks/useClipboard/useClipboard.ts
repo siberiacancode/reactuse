@@ -5,9 +5,9 @@ type ClipboardCallback = (value: string) => void;
 type UseClipboardReturn = readonly [value: string, copy: ClipboardCallback];
 
 /**
- * Hook provides a clipboard state and function, that set value to clipboard
+ * Hook provides a clipboard state and function that sets a value to the clipboard
  *
- * @returns {UseClipboardReturn} An cortage of state and update function
+ * @returns {UseClipboardReturn} A tuple of state and update function
  */
 export const useClipboard = (): UseClipboardReturn => {
   const [value, setValue] = useState('');
