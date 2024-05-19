@@ -7,10 +7,10 @@ const Demo = () => {
 
   return (
     <div>
-      <label>
-        <input onChange={() => toggle()} type='checkbox' checked={on} />
-        <span>{on ? 'On' : 'Off'}</span>
-      </label>
+      <p>Value: {on.toString()}</p>
+      <button onClick={() => toggle()}>Toggle</button>
+      <button onClick={() => toggle(true)}>Set (true)</button>
+      <button onClick={() => toggle(false)}>Set (false)</button>
     </div>
   );
 };

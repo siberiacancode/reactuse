@@ -7,11 +7,11 @@ const Demo = () => {
 
   return (
     <div>
-      <p>count: {count}</p>
-      <button onClick={() => inc()}>inc</button>
-      <button onClick={() => dec()}>dec</button>
-      <button onClick={reset}>reset</button>
-      <button onClick={() => set(5)}>set 5</button>
+      <p>Count: {count}</p>
+      <button onClick={() => inc()}>Increment</button>
+      <button onClick={() => dec()}>Decrement</button>
+      <button onClick={() => set(5)}>Set (5)</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 };
