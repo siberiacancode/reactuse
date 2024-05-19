@@ -4,16 +4,16 @@ import Demo from '../../components/demo.vue'
 
 # useNetwork
 
-<!-- Hook provides a boolean state and a function to toggle the boolean value -->
+Hook provides the current network connection status and related details.
 
 ```typescript
 import { useNetwork } from '@sibericancode/reactuse';
 ```
 
-<!-- ## Usage
+## Usage
 ```typescript
-const [on, toggle] = useNetwork()
-``` -->
+const network = useNetwork();
+```
 
 ## Demo
 
@@ -24,15 +24,30 @@ const [on, toggle] = useNetwork()
 
 ### Parameters
 
+This hook does not accept any parameters.
+
 ### Returns
 
+[`useNetworkReturn`](#usenetworkreturn)
 
 ## Type aliases
 
 ### useNetworkReturn
 
+Type: Object  
+Description: The use network return type
 
 #### Type declaration
+
+| Name          | Type                  | Note                                                    |
+|---------------|-----------------------|---------------------------------------------------------|
+| online        | `boolean`             | Indicates if the device is currently online.            |
+| saveData      | `boolean \| undefined`| Indicates if the user has enabled data saving mode.     |
+| type          | `string \| undefined` | The type of network connection (e.g., `wifi`, `cellular`). |
+| downlink      | `number \| undefined` | The estimated downlink speed in megabits per second.    |
+| downlinkMax   | `number \| undefined` | The maximum downlink speed, if available.               |
+| effectiveType | `string \| undefined` | The effective type of connection (e.g., `2g`, `3g`, `4g`). |
+| rtt           | `number \| undefined` | The estimated round-trip time in milliseconds.          |
 
 ## Contributors
 
