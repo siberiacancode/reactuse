@@ -1,5 +1,32 @@
+import { readdirSync } from 'node:fs';
+import { resolve, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitepress';
+
+const srcPath = fileURLToPath(new URL('../../src', import.meta.url));
+
+interface SidebarItem {
+  text: string;
+  link: string;
+}
+
+type SidebarType = 'hooks';
+
+function getSidebarItems(type: SidebarType): SidebarItem[] {
+  const sidebarPaths: SidebarItem[] = [];
+  const hooksPath = readdirSync(resolve(srcPath, type));
+
+  for (const path of hooksPath) {
+    if (extname(path) === '.ts') continue;
+    const name = basename(path);
+    sidebarPaths.push({
+      text: name,
+      link: `/functions/${type}/${name}`,
+    });
+  }
+
+  return sidebarPaths;
+}
 
 export default defineConfig({
   title: 'reactuse',
@@ -7,9 +34,14 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('../../src', import.meta.url))
-      }
-    }
+        '@': srcPath,
+        '@siberiacancode/reactuse': srcPath
+      },
+      dedupe: [
+        'react',
+        'react-dom',
+      ],
+    },
   },
   locales: {
     root: {
@@ -20,27 +52,22 @@ export default defineConfig({
           { text: 'Home', link: '/' },
           {
             text: 'Functions',
-            items: [{ text: 'Hooks', link: '/functions/hooks/' }]
-          }
+            items: [
+              {
+                text: 'Hooks',
+                link: '/functions/hooks/',
+              },
+            ],
+          },
         ],
         sidebar: [
           {
             text: 'Hooks',
-            items: [
-              { text: 'useBoolean', link: '/functions/hooks/useBoolean' },
-              { text: 'useClickOutside', link: '/functions/hooks/useClickOutside' },
-              { text: 'useCounter', link: '/functions/hooks/useCounter' },
-              {
-                text: 'useIsomorphicLayoutEffect',
-                link: '/functions/hooks/useIsomorphicLayoutEffect'
-              },
-              { text: 'useNetwork', link: '/functions/hooks/useNetwork' },
-              { text: 'useTimeout', link: '/functions/hooks/useTimeout' }
-            ]
-          }
-        ]
-      }
-    }
+            items: getSidebarItems('hooks'),
+          },
+        ],
+      },
+    },
     // ru: {
     //   label: 'Русский',
     //   lang: 'ru',

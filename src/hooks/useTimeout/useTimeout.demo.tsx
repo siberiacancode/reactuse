@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { useTimeout } from './useTimeout';
+import { useTimeout } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const timeout = useTimeout(() => {}, 5000);

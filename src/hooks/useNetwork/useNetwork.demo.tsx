@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { useNetwork } from './useNetwork';
+import { useNetwork } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const network = useNetwork();

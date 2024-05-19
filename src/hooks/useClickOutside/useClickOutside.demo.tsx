@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { useClickOutside } from './useClickOutside';
+import { useClickOutside } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const ref = useClickOutside<HTMLDivElement>((event) => {

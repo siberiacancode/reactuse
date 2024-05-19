@@ -27,7 +27,11 @@ onMounted(async () => {
     <p class="demo-link">
       <a :href="sourceLink" target="_blank">source</a>
     </p>
-    <div ref="demoRef" />
+    <div ref="demoRef">
+      <p class="loading">
+        Loading...
+      </p>
+    </div>
   </div>
 </template>
 
@@ -49,6 +53,12 @@ onMounted(async () => {
   font-weight: 500;
   transition: color .5s;
   margin: .1rem 0;
+}
+
+.loading {
+  font-size: 1rem;
+  color: var(--vp-c-brand);
+  text-align: center;
 }
 
 :deep(p) {

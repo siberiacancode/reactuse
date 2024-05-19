@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { useCounter } from './useCounter';
+import { useCounter } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { count, inc, dec, reset, set } = useCounter();

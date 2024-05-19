@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import { useIsomorphicLayoutEffect } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   useIsomorphicLayoutEffect(() => {
