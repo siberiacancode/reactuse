@@ -31,5 +31,3 @@ const { count, dec, inc, reset, set } = useCounter();
 ## Contributors
 
 [Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useCounter/useCounter.ts) • [Demo](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useCounter/useCounter.demo.ts) • [Docs](#)
-
-[Suggest changes to this page](#)

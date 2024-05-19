@@ -49,5 +49,3 @@ Description: The use boolean return type
 ## Contributors
 
 [Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useBoolean/useBoolean.ts) • [Demo](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useBoolean/useBoolean.demo.ts) • [Docs](#)
-
-[Suggest changes to this page](#)

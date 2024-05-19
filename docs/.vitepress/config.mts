@@ -16,6 +16,10 @@ export default defineConfig({
       label: 'English',
       lang: 'en',
       themeConfig: {
+        editLink: {
+          pattern: 'https://github.com/siberiacancode/reactuse/blob/main/docs/:path',
+          text: 'Suggest changes to this page',
+        },
         nav: [
           { text: 'Home', link: '/' },
           {
@@ -35,7 +39,8 @@ export default defineConfig({
                 link: '/functions/hooks/useIsomorphicLayoutEffect'
               },
               { text: 'useNetwork', link: '/functions/hooks/useNetwork' },
-              { text: 'useTimeout', link: '/functions/hooks/useTimeout' }
+              { text: 'useTimeout', link: '/functions/hooks/useTimeout' },
+              { text: 'useDocumentTitle', link: '/functions/hooks/useDocumentTitle' }
             ]
           }
         ]

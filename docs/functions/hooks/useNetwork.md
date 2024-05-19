@@ -37,5 +37,3 @@ const [on, toggle] = useNetwork()
 ## Contributors
 
 [Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useNetwork/useNetwork.ts) • [Demo](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useNetwork/useNetwork.demo.ts) • [Docs](#)
-
-[Suggest changes to this page](#)

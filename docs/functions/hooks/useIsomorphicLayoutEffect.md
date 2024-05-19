@@ -23,5 +23,3 @@ useIsomorphicLayoutEffect(callback, deps)
 ## Contributors
 
 [Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useIsomorphicLayoutEffect/useIsomorphicLayoutEffect.ts) • [Demo](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useIsomorphicLayoutEffect/useIsomorphicLayoutEffect.demo.ts) • [Docs](#)
-
-[Suggest changes to this page](#)

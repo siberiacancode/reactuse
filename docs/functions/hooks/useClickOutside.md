@@ -37,5 +37,3 @@ const [on, toggle] = useClickOutside()
 ## Contributors
 
 [Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useClickOutside/useClickOutside.ts) • [Demo](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useClickOutside/useClickOutside.demo.ts) • [Docs](#)
-
-[Suggest changes to this page](#)

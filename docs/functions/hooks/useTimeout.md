@@ -37,5 +37,3 @@ const [on, toggle] = useTimeout()
 ## Contributors
 
 [Source](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useTimeout/useTimeout.ts) • [Demo](https://github.com/siberiacancode/reactuse/blob/main/src/hooks/useTimeout/useTimeout.demo.ts) • [Docs](#)
-
-[Suggest changes to this page](#)
