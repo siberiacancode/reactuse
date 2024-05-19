@@ -13,7 +13,8 @@ module.exports = {
         '@typescript-eslint/no-unsafe-call': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
-        'jsx-a11y/label-has-associated-control': 'off'
+        'jsx-a11y/label-has-associated-control': 'off',
+        'no-nested-ternary': 'off'
       }
     }
   ]
