@@ -12,7 +12,7 @@ import { useNetwork } from '@sibericancode/reactuse';
 
 ## Usage
 ```typescript
-const network = useNetwork();
+const network = useNetwork()
 ```
 
 ## Demo
