@@ -201,6 +201,7 @@ build/Release
 # Yarn
 .yarn/
 .yarnrc
+yarn.lock
 
 # Playwright test output
 **/playwright/test-results
