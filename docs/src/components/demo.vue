@@ -6,17 +6,17 @@ import { ref, computed, onMounted, defineAsyncComponent } from 'vue';
 const props = defineProps({
   hook: {
     type: String
-  },
+  }
 });
 
 const sourceLink = computed(() => {
-  return `https://github.com/siberiacancode/reactuse/blob/main/src/hooks/${props.hook}/${props.hook}.demo.tsx`
-})
+  return `https://github.com/siberiacancode/reactuse/blob/main/src/hooks/${props.hook}/${props.hook}.demo.tsx`;
+});
 
 const demoRef = ref();
 
 onMounted(async () => {
-  const demoComponent = await import(`../../src/hooks/${props.hook}/${props.hook}.demo.tsx`);
+  const demoComponent = await import(`../../../src/hooks/${props.hook}/${props.hook}.demo.tsx`);
   const root = createRoot(demoRef.value);
   root.render(createElement(demoComponent.default, {}, null));
 });
@@ -51,8 +51,8 @@ onMounted(async () => {
   right: 10px;
   font-size: 12px;
   font-weight: 500;
-  transition: color .5s;
-  margin: .1rem 0;
+  transition: color 0.5s;
+  margin: 0.1rem 0;
 }
 
 .loading {
@@ -62,14 +62,14 @@ onMounted(async () => {
 }
 
 :deep(p) {
-  margin: .5rem 0;
+  margin: 0.5rem 0;
 }
 
 :deep(button) {
   padding: 3px 15px;
   background-color: var(--vp-c-brand-2);
   color: #fff;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   border-radius: 4px;
   font-size: 1rem;
   box-sizing: border-box;
