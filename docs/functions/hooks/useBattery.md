@@ -15,6 +15,18 @@ import { useBattery } from '@sibericancode/reactuse';
 const battery = useBattery()
 ```
 
+## Type declaration
+
+| Name            | Type               | Note                                                       |
+|-----------------|--------------------|------------------------------------------------------------|
+| isSupported     | `boolean`          | Indicates if the device don't support getBattery().        |
+| loading         | `boolean`          | Indicates if the device don't fetch battery information.   |
+| charging        | `boolean` ¦ `null` | Indicates if the battery is charging.                      |
+| chargingTime    | `number` ¦ `null`  | Time until the device is fully charged.                    |
+| dischargingTime | `number` ¦ `null`  | Time until the device is fully discharged.                 |
+| level           | `number` ¦ `null`  | Battery charge level from 0 to 1. |
+
+
 ## Demo
 
 <Demo hook="useBattery" />
