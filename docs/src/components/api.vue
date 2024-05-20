@@ -4,6 +4,7 @@ import { isDefaultType } from '../utils/isDefaultType';
 
 const props = defineProps<{
   apiParameters: Spec[];
+  hook: string;
 }>();
 
 type Group = {
@@ -33,6 +34,13 @@ props.apiParameters.forEach((parameter, index) => {
 
   groups[groupIndex].parameters.push(parameter);
 });
+
+const baseUrl = `https://github.com/siberiacancode/reactuse/blob/main/src/hooks/${props.hook}/${props.hook}.ts`
+
+function getSourceLink(returns: Spec) {
+  // TODO: start-end line
+  return `${baseUrl}#L${returns.source[0].number}`;
+}
 </script>
 
 <template>
@@ -55,6 +63,7 @@ props.apiParameters.forEach((parameter, index) => {
             {{ parameter.type }}
           </td>
           <td v-else>
+            <!-- TODO: getSourceLink -->
             <a href="#">{{ parameter.type }}</a>
           </td>
 
@@ -72,7 +81,7 @@ props.apiParameters.forEach((parameter, index) => {
         <code>{{ group.returns.type }}</code>
       </p>
       <p v-else>
-        <a href="#">
+        <a :href="getSourceLink(group.returns)" target="_blank">
           <code>{{ group.returns.type }}</code>
         </a>
       </p>

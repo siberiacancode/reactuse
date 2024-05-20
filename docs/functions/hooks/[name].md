@@ -24,9 +24,8 @@ import { {{ $params.name }} } from '@sibericancode/reactuse';
 
 ## Api
 
-<Api :apiParameters="$params.apiParameters" />
+<Api :apiParameters="$params.apiParameters" :hook="$params.name" />
 
 ## Contributors
 
 <Contributors :hook="$params.name" />
-

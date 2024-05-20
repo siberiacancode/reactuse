@@ -1,8 +1,8 @@
-import fs from 'node:fs';
+import { readFileSync } from 'node:fs';
 
-export const getHookFile = async (name: string) => {
+export const getHookFile = (name: string) => {
   try {
-    const fileContent = await fs.promises.readFile(`./src/hooks/${name}/${name}.ts`, 'utf-8');
+    const fileContent = readFileSync(`./src/hooks/${name}/${name}.ts`, 'utf-8');
     return fileContent;
   } catch (error) {
     console.error(`Error reading file: ${error}`);
