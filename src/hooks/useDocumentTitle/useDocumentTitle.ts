@@ -18,11 +18,11 @@ export type UseDocumentTitleReturn = [
 
 /**
  * @name useDocumentTitle
- * @description A custom hook that manages the document title and allows updating it.
+ * @description A custom hook that manages the document title and allows updating it
  *
- * @param {string} value - The initial title. If not provided, the current document title will be used.
- * @param {UseDocumentTitleOptions} options - The options for the useDocumentTitle hook.
- * @returns {UseDocumentTitleReturn} An array containing the current title and a function to update the title.
+ * @param {string} [value] The initial title. If not provided, the current document title will be used
+ * @param {UseDocumentTitleOptions} [options] The use document title options
+ * @returns {UseDocumentTitleReturn} An array containing the current title and a function to update the title
  *
  * @example
  * const [title, setTitle] = useDocumentTitle();
