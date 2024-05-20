@@ -25,8 +25,15 @@ export const useClipboard = (): UseClipboardReturn => {
     window.navigator.clipboard.writeText(value);
   }, []);
 
-  document.addEventListener('copy', updateValue);
-  document.addEventListener('cut', updateValue);
+  useEffect(() => {
+    document.addEventListener('copy', updateValue);
+    document.addEventListener('cut', updateValue);
+
+    return () => {
+      document.removeEventListener('copy', updateValue);
+      document.removeEventListener('cut', updateValue);
+    };
+  }, []);
 
   return [value, copy] as const;
 };
