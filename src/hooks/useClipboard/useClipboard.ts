@@ -12,18 +12,18 @@ type UseClipboardReturn = readonly [value: string, copy: ClipboardCallback];
 export const useClipboard = (): UseClipboardReturn => {
   const [value, setValue] = useState('');
 
-  const updateValue = useCallback(() => {
+  const updateValue = () => {
     window.navigator.clipboard
       .readText()
       .then((text) => setValue(text))
       .catch((reason) => console.error('[useClipboard]', reason));
-  }, []);
+  };
 
-  const copy = useCallback<ClipboardCallback>((value: string) => {
+  const copy: ClipboardCallback = (value: string) => {
     setValue(value);
 
     window.navigator.clipboard.writeText(value);
-  }, []);
+  };
 
   useEffect(() => {
     document.addEventListener('copy', updateValue);
