@@ -6,7 +6,7 @@ export const parseHookJsdoc = (file: string) => {
   const description = jsdoc.tags.find(({ tag }) => tag === 'description');
   const usage = jsdoc.tags.find(({ tag }) => tag === 'example');
   const apiParameters = jsdoc.tags.filter(
-    ({ tag }) => tag === 'param' || tag === 'overload' || tag === 'return'
+    ({ tag }) => tag === 'param' || tag === 'overload' || tag === 'returns'
   );
 
   return { description, usage, apiParameters };

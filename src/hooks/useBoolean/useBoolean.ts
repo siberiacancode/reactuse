@@ -13,7 +13,7 @@ type UseBooleanReturn = [
  * @description - Hook provides a boolean state and a function to toggle the boolean value
  *
  * @param {boolean} [initialValue=false] The initial boolean value
- * @return {UseBooleanReturn} An object containing the boolean state value and utility functions to manipulate the state
+ * @returns {UseBooleanReturn} An object containing the boolean state value and utility functions to manipulate the state
  *
  * @example
  * const [on, toggle] = useBoolean()

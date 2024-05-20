@@ -43,11 +43,11 @@ export type UseCounter = {
  * @overload
  * @param {number} [initialValue=0] The initial number value
  * @param {UseCounterOptions} [useCounterOptions] The use counter options
- * @return {UseCounterReturn} An object containing the current count and functions to interact with the counter
+ * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
 
  * @overload
  * @param {UseCounterParams} [useCounterParams] The use counter params
- * @return {UseCounterReturn} An object containing the current count and functions to interact with the counter
+ * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
  *
  * @example
  * const { count, dec, inc, reset, set } = useCounter(5);

@@ -9,11 +9,11 @@ const props = defineProps<{
 type Group = {
   id: number;
   parameters: Spec[];
-  return: Spec | null;
+  returns: Spec | null;
 };
 
 let groupIndex = 0;
-const groups: Group[] = [{ id: groupIndex, parameters: [], return: null }];
+const groups: Group[] = [{ id: groupIndex, parameters: [], returns: null }];
 
 props.apiParameters.forEach((parameter, index) => {
   if (parameter.tag === 'overload') {
@@ -21,13 +21,13 @@ props.apiParameters.forEach((parameter, index) => {
       props.apiParameters.findIndex((parameter) => parameter.tag === 'overload') === index;
     if (!isFirstOverload) {
       groupIndex++;
-      groups.push({ id: groupIndex, parameters: [], return: null });
+      groups.push({ id: groupIndex, parameters: [], returns: null });
     }
     return;
   }
 
-  if (parameter.tag === 'return') {
-    groups[groupIndex].return = parameter;
+  if (parameter.tag === 'returns') {
+    groups[groupIndex].returns = parameter;
     return;
   }
 
@@ -36,9 +36,9 @@ props.apiParameters.forEach((parameter, index) => {
 </script>
 
 <template>
-  <h3>Parameters</h3>
   <div v-for="group in groups" :key="group.id">
-    <table>
+    <h3 v-if="group.parameters.length">Parameters</h3>
+    <table v-if="group.parameters.length">
       <thead>
         <tr>
           <th>Name</th>
@@ -66,11 +66,14 @@ props.apiParameters.forEach((parameter, index) => {
       </tbody>
     </table>
 
-    <div v-if="group.return">
+    <div v-if="group.returns">
       <h3>Returns</h3>
-      <p>
+      <p v-if="isDefaultType(group.returns.type)">
+        <code>{{ group.returns.type }}</code>
+      </p>
+      <p v-else>
         <a href="#">
-          <code>{{ group.return.type }}</code>
+          <code>{{ group.returns.type }}</code>
         </a>
       </p>
     </div>

@@ -22,7 +22,7 @@ export const getSidebarHookItems = async () => {
 
       const jsdoc = parseHookJsdoc(match[0].trim());
 
-      if (!jsdoc.description || !jsdoc.usage || !jsdoc.apiParameters) {
+      if (!jsdoc.description || !jsdoc.usage) {
         console.error(`No content found for ${hook}`);
         return null;
       }

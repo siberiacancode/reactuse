@@ -18,11 +18,9 @@ import { {{ $params.name }} } from '@sibericancode/reactuse';
 {{ $params.usage }}
 ```
 
-
 ## Demo
 
 <Demo :hook="$params.name" />
-
 
 ## Api
 

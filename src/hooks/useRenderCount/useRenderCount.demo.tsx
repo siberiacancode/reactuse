@@ -3,15 +3,15 @@ import React from 'react';
 import { useRenderCount } from './useRenderCount';
 
 const Demo = () => {
-  const [, forceUpdate] = React.useReducer((v) => v + 1, 0);
   const renderCount = useRenderCount();
+  const [value, setValue] = React.useState(0);
 
   return (
     <div>
-      <button data-test-id='forct-update-button' onClick={forceUpdate}>
+      <p>Render count: {renderCount}</p>
+      <button type='button' onClick={() => setValue(value + 1)}>
         Force Update
       </button>
-      <p>Render count: {renderCount}</p>
     </div>
   );
 };
