@@ -8,6 +8,15 @@ export interface UseCounterOptions {
   max?: number;
 }
 
+export interface UseCounterParams {
+  /** The initial number value, defaults to 0 */
+  initialValue?: number;
+  /** The min of count value */
+  min?: number;
+  /** The max of count value */
+  max?: number;
+}
+
 /** The use counter return type */
 export interface UseCounterReturn {
   /** The current count value */
@@ -24,23 +33,24 @@ export interface UseCounterReturn {
 
 export type UseCounter = {
   (initialValue?: number, options?: UseCounterOptions): UseCounterReturn;
-  (
-    { initialValue, max, min }: { initialValue?: number } & UseCounterOptions,
-    options?: never
-  ): UseCounterReturn;
+  ({ initialValue, max, min }: UseCounterParams, options?: never): UseCounterReturn;
 };
 
 /**
- * Hook that manages a counter with increment, decrement, reset, and set functionalities
+ * @name useCounter
+ * @description - Hook that manages a counter with increment, decrement, reset, and set functionalities
  *
  * @overload
- * @param {number} initialValue - The initial number value, defaults to 0
- * @param {UseCounterOptions} - The use counter options
- * @return {UseCounterReturn} An object containing the current count and functions to interact with the counter
- *
+ * @param {number} [initialValue=0] The initial number value
+ * @param {UseCounterOptions} [useCounterOptions] The use counter options
+ * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
+
  * @overload
- * @param {UseCounterOptions & { initialValue: number }} - The use counter options
- * @return {UseCounterReturn} An object containing the current count and functions to interact with the counter
+ * @param {UseCounterParams} [useCounterParams] The use counter params
+ * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
+ *
+ * @example
+ * const { count, dec, inc, reset, set } = useCounter(5);
  */
 export const useCounter: UseCounter = (...params) => {
   const initialValue = typeof params[0] === 'number' ? params[0] : params[0]?.initialValue;
