@@ -26,9 +26,13 @@ const isBatterySupported = nav && typeof nav.getBattery === 'function';
 type UseBatteryState = BatteryState & { isSupported: boolean; loading: boolean };
 
 /**
- * Hook for getting information about battery status
+ * @name useBattery
+ * @description Hook for getting information about battery status
  *
  * @returns {UseBatteryState} Object containing battery information & Battery API support
+ *
+ * @example
+ * const battery = useBattery();
  */
 export const useBattery = () => {
   const [state, setState] = React.useState<UseBatteryState>({
