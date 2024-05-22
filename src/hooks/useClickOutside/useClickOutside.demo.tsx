@@ -4,8 +4,15 @@ import { useClickOutside } from './useClickOutside';
 
 const Demo = () => {
   const ref = useClickOutside<HTMLDivElement>((event) => {
-    console.log('@click outside', event.target);
+    console.log('@click outside 1', event.target);
   });
+
+  useClickOutside(
+    () => document.getElementById('content')!,
+    (event) => {
+      console.log('@click outside 2', event.target);
+    }
+  );
 
   // const ref = React.useRef<HTMLDivElement>(null);
   // useOnClickOutside(ref, () => {

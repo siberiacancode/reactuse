@@ -3,14 +3,12 @@ import React from 'react';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
 // composedPath что это такое
-// params error
-// string && element а нужно ли ?
 
-type UseClickOutsideTarget = React.RefObject<HTMLElement | null> | string | Element;
+type UseClickOutsideTarget = React.RefObject<HTMLElement | null> | (() => Element) | Element;
 
 const getElement = (target: UseClickOutsideTarget) => {
-  if (typeof target === 'string') {
-    return document.querySelector(target);
+  if (typeof target === 'function') {
+    return target();
   }
 
   if (target instanceof Element) {
@@ -20,22 +18,35 @@ const getElement = (target: UseClickOutsideTarget) => {
   return target.current;
 };
 
-export type UseClickOutsideReturn<Ref extends Element = any> = React.RefObject<Ref>;
+export type UseClickOutsideReturn<
+  Target extends UseClickOutsideTarget | Array<UseClickOutsideTarget> = any
+> = React.RefObject<Target>;
 
 export type UseClickOutside = {
-  <Ref extends Element = any>(
-    target: UseClickOutsideTarget | Array<UseClickOutsideTarget>,
+  <Target extends UseClickOutsideTarget | Array<UseClickOutsideTarget> = any>(
+    target: Target,
     callback: (event: Event) => void
-  ): UseClickOutsideReturn<Ref>;
-  <Ref extends Element = any>(
+  ): void;
+
+  <Target extends UseClickOutsideTarget | Array<UseClickOutsideTarget> = any>(
     callback: (event: Event) => void,
     target?: never
-  ): UseClickOutsideReturn<Ref>;
+  ): UseClickOutsideReturn<Target>;
 };
 
-export const useClickOutside: UseClickOutside = (...params) => {
+/**
+ * @name useClickOutside
+ * @description - Hook that manages a counter with increment, decrement, reset, and set functionalities
+ *
+ * @example
+ * const { count, dec, inc, reset, set } = useCounter(5);
+ */
+export const useClickOutside = ((...params: any[]) => {
+  const target = (typeof params[1] === 'undefined' ? null : params[0]) as
+    | UseClickOutsideTarget
+    | Array<UseClickOutsideTarget>
+    | undefined;
   const callback = (params[1] ? params[1] : params[0]) as (event: Event) => void;
-  const target = typeof params[0] === 'function' ? null : params[0];
 
   const internalRef = React.useRef<Element>(null);
   const internalCallbackRef = React.useRef(callback);
@@ -74,5 +85,6 @@ export const useClickOutside: UseClickOutside = (...params) => {
     };
   }, []);
 
+  if (target) return;
   return internalRef;
-};
+}) as UseClickOutside;
