@@ -81,7 +81,7 @@ export const useEventListener = ((...params: any[]) => {
       return () => element.removeEventListener(event, listener, options);
     }
     return undefined;
-  }, [event, listener, options]);
+  }, [target, event, listener, options]);
 
   if (target) return;
   return internalRef;
