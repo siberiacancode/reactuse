@@ -67,12 +67,12 @@ const getServerSnapshot = () => {
 
 /**
  * @name useNetwork
- * @description React hook to track network status.
+ * @description - Hook to track network status.
  *
  * @returns {UseNetworkReturn} An object containing the network status.
  *
  * @example
- * const networkStatus = useNetwork();
+ * const network = useNetwork();
  */
 
 export const useNetwork = (): UseNetworkReturn => {
