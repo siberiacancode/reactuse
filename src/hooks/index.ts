@@ -10,6 +10,7 @@ export * from './useMount/useMount';
 export * from './useNetwork/useNetwork';
 export * from './useNonInitialEffect/useNonInitialEffect';
 export * from './useOnline/useOnline';
+export * from './useOrientation/useOrientation';
 export * from './useRenderCount/useRenderCount';
 export * from './useSessionStorage/useSessionStorage';
 export * from './useStorage/useStorage';

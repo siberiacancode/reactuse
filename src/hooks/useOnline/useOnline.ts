@@ -1,9 +1,7 @@
 import React from 'react';
 
 const getSnapshot = () => navigator.onLine;
-const getServerSnapshot = () => {
-  throw Error('useOnline is a client side hook');
-};
+const getServerSnapshot = () => false;
 const subscribe = (callback: () => void) => {
   window.addEventListener('online', callback);
   window.addEventListener('offline', callback);

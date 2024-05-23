@@ -1,7 +1,7 @@
 import React from 'react';
 
 type UseEventListenerTarget =
-  | React.RefObject<HTMLElement | null>
+  | React.RefObject<Element | null>
   | (() => Element)
   | Element
   | Window
@@ -65,12 +65,12 @@ export type UseEventListener = {
  * const { count, dec, inc, reset, set } = useCounter(5);
  */
 export const useEventListener = ((...params: any[]) => {
-  const target = (typeof params[3] === 'undefined' ? null : params[0]) as
+  const target = (params[1] instanceof Function ? null : params[0]) as
     | UseEventListenerTarget
     | undefined;
-  const event = (target ? params[0] : params[1]) as string;
-  const listener = (target ? params[1] : params[2]) as (...arg: any[]) => any;
-  const options: UseEventListenerOptions | undefined = target ? params[2] : params[3];
+  const event = (target ? params[1] : params[0]) as string;
+  const listener = (target ? params[2] : params[1]) as (...arg: any[]) => any;
+  const options: UseEventListenerOptions | undefined = target ? params[3] : params[2];
 
   const internalRef = React.useRef<Element | Document | Window>(null);
 

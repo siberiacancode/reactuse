@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
 
 // composedPath что это такое
 
-type UseClickOutsideTarget = React.RefObject<HTMLElement | null> | (() => Element) | Element;
+type UseClickOutsideTarget = React.RefObject<Element | null> | (() => Element) | Element;
 
 const getElement = (target: UseClickOutsideTarget) => {
   if (typeof target === 'function') {
