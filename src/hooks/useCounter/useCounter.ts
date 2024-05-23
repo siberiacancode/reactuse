@@ -33,6 +33,7 @@ export interface UseCounterReturn {
 
 export type UseCounter = {
   (initialValue?: number, options?: UseCounterOptions): UseCounterReturn;
+
   ({ initialValue, max, min }: UseCounterParams, options?: never): UseCounterReturn;
 };
 
