@@ -66,8 +66,13 @@ const getServerSnapshot = () => {
 };
 
 /**
- * React hook to track network status.
- * @returns {UseNetworkReturn} The network status.
+ * @name useNetwork
+ * @description React hook to track network status.
+ *
+ * @returns {UseNetworkReturn} An object containing the network status.
+ *
+ * @example
+ * const networkStatus = useNetwork();
  */
 
 export const useNetwork = (): UseNetworkReturn => {
