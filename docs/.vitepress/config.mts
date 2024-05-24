@@ -35,7 +35,8 @@ export default defineConfig({
                 link: '/functions/hooks/useIsomorphicLayoutEffect'
               },
               { text: 'useNetwork', link: '/functions/hooks/useNetwork' },
-              { text: 'useTimeout', link: '/functions/hooks/useTimeout' }
+              { text: 'useTimeout', link: '/functions/hooks/useTimeout' },
+              { text: 'useIsClient', link: '/functions/hooks/useIsClient' }
             ]
           }
         ]
