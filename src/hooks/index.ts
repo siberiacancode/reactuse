@@ -1,5 +1,6 @@
 export * from './useBoolean/useBoolean';
 export * from './useClickOutside/useClickOutside';
+export * from './useCopyToClipboard/useCopyToClipboard';
 export * from './useCounter/useCounter';
 export * from './useDebouncedValue/useDebouncedValue';
 export * from './useDocumentTitle/useDocumentTitle';
