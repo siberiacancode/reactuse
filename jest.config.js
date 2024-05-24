@@ -4,7 +4,8 @@ const { jest } = require('@siberiacancode/jest');
 const jestConfig = {
   ...jest,
   clearMocks: true,
-  testEnvironment: 'jsdom'
+  testEnvironment: 'jsdom',
+  setupFiles: ['./jest.polyfills.js']
 };
 
 module.exports = jestConfig;
