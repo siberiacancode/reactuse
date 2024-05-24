@@ -1,19 +1,22 @@
 import React from 'react';
 
-/** Interface for battery status */
-export interface BatteryState {
-  charging: boolean | null /** Is charging battery? */;
-  chargingTime: number | null /** Time until the battery is fully charged */;
-  dischargingTime: number | null /** Time until the battery is completely discharged */;
-  level: number | null /** Battery charge level from 0 to 1 */;
+interface UseBatteryStateInfo {
+  /** Is charging battery? */
+  charging: boolean | null;
+  /** Time until the battery is fully charged */
+  chargingTime: number | null;
+  /** Time until the battery is completely discharged */
+  dischargingTime: number | null;
+  /** Battery charge level from 0 to 1 */
+  level: number | null;
 }
 
 /** A type that combines battery state and EventTarget to listen for events */
-type BatteryManager = BatteryState & EventTarget;
+type BatteryEventTarget = UseBatteryStateInfo & EventTarget;
 
-/** Extending the Navigator interface to include the getBattery method, because it's not describe in TS */
 interface NavigatorBattery extends Navigator {
-  getBattery?: () => Promise<BatteryManager>;
+  /** Extending the Navigator interface to include the getBattery method, because it's not describe in TS */
+  getBattery?: () => Promise<BatteryEventTarget>;
 }
 
 /** Checks the existence of navigator object */
@@ -23,19 +26,20 @@ const nav: NavigatorBattery | undefined = typeof navigator !== 'undefined' ? nav
 const isBatterySupported = nav && typeof nav.getBattery === 'function';
 
 /** State for hook UseBattery */
-type UseBatteryState = BatteryState & { isSupported: boolean; loading: boolean };
+type UseBatteryStateReturn = UseBatteryStateInfo & { isSupported: boolean; loading: boolean };
 
 /**
  * @name useBattery
  * @description Hook for getting information about battery status
  *
- * @returns {UseBatteryState} Object containing battery information & Battery API support
+ * @returns {UseBatteryStateReturn} Object containing battery information & Battery API support
  *
  * @example
  * const battery = useBattery();
  */
+
 export const useBattery = () => {
-  const [state, setState] = React.useState<UseBatteryState>({
+  const [state, setState] = React.useState<UseBatteryStateReturn>({
     isSupported: true,
     loading: true,
     level: null,
@@ -50,7 +54,7 @@ export const useBattery = () => {
       setState((prevState) => ({ ...prevState, isSupported: false, loading: false }));
 
     let isMounted = true;
-    let battery: BatteryManager | null = null;
+    let battery: BatteryEventTarget | null = null;
 
     /** Battery state change handler */
     const handleChange = () => {
