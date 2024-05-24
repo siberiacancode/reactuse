@@ -16,21 +16,19 @@ export const renderHookServer = <Hook extends () => any>(
     wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
   } = {}
 ): { result: { current: ReturnType<Hook> }; hydrate: () => void } => {
-  // Store hook return value
   const results: Array<ReturnType<Hook>> = [];
   const result = {
     get current() {
       return results.slice(-1)[0];
     }
   };
-  const setValue = (value: ReturnType<Hook>) => {
-    results.push(value);
-  };
+  const setValue = (value: ReturnType<Hook>) => results.push(value);
 
   const Component = ({ useHook }: { useHook: Hook }) => {
     setValue(useHook() as ReturnType<Hook>);
     return null;
   };
+
   const component = Wrapper ? (
     <Wrapper>
       <Component useHook={useHook} />
@@ -39,10 +37,8 @@ export const renderHookServer = <Hook extends () => any>(
     <Component useHook={useHook} />
   );
 
-  // Render hook on server
   const serverOutput = renderToString(component);
 
-  // Render hook on client
   const hydrate = () => {
     const root = document.createElement('div');
     root.innerHTML = serverOutput;

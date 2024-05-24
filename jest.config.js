@@ -5,7 +5,10 @@ const jestConfig = {
   ...jest,
   clearMocks: true,
   testEnvironment: 'jsdom',
-  setupFiles: ['./jest.polyfills.js']
+  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  moduleNameMapper: {
+    '@/(.*)': '<rootDir>/src/$1'
+  }
 };
 
 module.exports = jestConfig;

@@ -18,3 +18,4 @@ export * from './useStorage/useStorage';
 export * from './useTimeout/useTimeout';
 export * from './useUnmount/useUnmount';
 export * from './useWindowEvent/useWindowEvent';
+export * from './useWindowSize/useWindowSize';

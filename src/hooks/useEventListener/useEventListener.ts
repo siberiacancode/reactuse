@@ -1,6 +1,6 @@
 import React from 'react';
 
-type UseEventListenerTarget =
+export type UseEventListenerTarget =
   | React.RefObject<Element | null>
   | (() => Element)
   | Element
@@ -28,14 +28,14 @@ export type UseEventListener = {
   <Event extends keyof WindowEventMap = keyof WindowEventMap>(
     target: Window,
     event: Event,
-    listener: (this: Window, event: WindowEventMap[Event]) => any,
+    listener: (this: Window, event: WindowEventMap[Event]) => void,
     options?: UseEventListenerOptions
   ): void;
 
   <Event extends keyof DocumentEventMap = keyof DocumentEventMap>(
     target: Document,
     event: Event,
-    listener: (this: Document, event: DocumentEventMap[Event]) => any,
+    listener: (this: Document, event: DocumentEventMap[Event]) => void,
     options?: UseEventListenerOptions
   ): void;
 
@@ -45,13 +45,13 @@ export type UseEventListener = {
   >(
     target: Target,
     event: Event,
-    listener: (this: Target, event: HTMLElementEventMap[Event]) => any,
+    listener: (this: Target, event: HTMLElementEventMap[Event]) => void,
     options?: UseEventListenerOptions
   ): void;
 
   <Target extends Element, Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(
     event: Event,
-    listener: (this: Target, event: HTMLElementEventMap[Event]) => any,
+    listener: (this: Target, event: HTMLElementEventMap[Event]) => void,
     options?: UseEventListenerOptions,
     target?: never
   ): UseEventListenerReturn<Target>;
@@ -69,7 +69,7 @@ export const useEventListener = ((...params: any[]) => {
     | UseEventListenerTarget
     | undefined;
   const event = (target ? params[1] : params[0]) as string;
-  const listener = (target ? params[2] : params[1]) as (...arg: any[]) => any;
+  const listener = (target ? params[2] : params[1]) as (...arg: any[]) => void;
   const options: UseEventListenerOptions | undefined = target ? params[3] : params[2];
 
   const internalRef = React.useRef<Element | Document | Window>(null);
