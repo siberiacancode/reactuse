@@ -24,6 +24,29 @@ interface UseStepReturn {
   setStep: (value: number) => void;
 }
 
+/**
+ * @name useStep
+ * @description Helpers for building steppers.
+ *
+ * @param {UseStepProps} UseStepProps
+ * 
+ * @returns {UseStepReturn}
+ *
+ * @example
+ * function Foo() {
+ *  const steps = [<Component1 />, <Component2 />, <Component3 />];
+ *  const { currentStep, nextStep, prevStep } = useStep({ max: steps.length });
+ *  const CurrentStepComponent = steps[currentStep];
+ * 
+ *  return (
+ *    <>
+ *      <CurrentStepComponent />
+ *      <button onClick={nextStep}>To Next Step</button>
+ *      <button onClick={prevStep}>To Prev Step</button>
+ *    </>
+ *   );
+ * };
+ */
 export function useStep({ initial = 0, max }: UseStepProps): UseStepReturn {
   const initialStep = useRef(initial);
   const maxStep = useRef(max);
