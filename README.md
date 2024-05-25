@@ -1,20 +1,19 @@
 # 🚀 React Use
 
-## ✨ Contributors
+the largest and most useful hook library
 
-<table>
-  <tr>
-    <td align="center" style="word-wrap: break-word; width: 100; height: 100">
-        <a href="https://github.com/debabin">
-            <img src="https://avatars.githubusercontent.com/u/45297354?v=4"
-            width="100;"  
-            alt="debabin" />
-            <br />
-            <sub style="font-size:13px"><b>🧊 debabin</b></sub>
-        </a>
-    </td>
-  </tr>
-</table>
+## 🦉 Philosophy
+
+**🚀 React Use** this is a library that will allow you to easy and simple to use React hooks. Unlike its competitors, this package takes into account the features of React and also contains a huge number of useful hooks. 
+
+## Features
+
+- **TypeScript support out of the box** - full typed package
+- **SSR** - package work with server side render
+
+
+
+
 
 
 
