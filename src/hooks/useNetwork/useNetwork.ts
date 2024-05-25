@@ -4,6 +4,7 @@ import { isShallowEqual } from '@/utils/helpers';
 
 export type ConnectionType = Connection['type'];
 export type ConnectionEffectiveType = Connection['effectiveType'];
+
 /** The use network return type */
 export interface UseNetworkReturn {
   /** Indicates if the device is currently online */
@@ -22,19 +23,8 @@ export interface UseNetworkReturn {
   type?: Connection['type'];
 }
 
-/**
- * Retrieves the network connection object.
- * @returns {Connection} The network connection object.
- */
-
 export const getConnection = () =>
   navigator?.connection || navigator?.mozConnection || navigator?.webkitConnection;
-
-/**
- * Subscribes to network events.
- * @param {Function} callback - The callback function to be executed on network events.
- * @returns {Function} The function to unsubscribe from network events.
- */
 
 const subscribe = (callback: () => void) => {
   window.addEventListener('online', callback, { passive: true });
@@ -56,11 +46,6 @@ const subscribe = (callback: () => void) => {
   };
 };
 
-/**
- * Retrieves the server snapshot.
- * @throws {Error} The error indicating that useNetwork is a client-side hook.
- */
-
 const getServerSnapshot = () => {
   throw Error('useNetwork is a client side hook');
 };
@@ -74,7 +59,6 @@ const getServerSnapshot = () => {
  * @example
  * const network = useNetwork();
  */
-
 export const useNetwork = (): UseNetworkReturn => {
   const cache = React.useRef<UseNetworkReturn>();
 
