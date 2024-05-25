@@ -49,11 +49,11 @@ export function useStep({ initial = 0, max }: UseStepProps): UseStepReturn {
   };
 
   const resetStep = () => {
-    setCurrentStep(initialStep.value);
+    setCurrentStep(initialStep.current);
   };
 
   const setStep = (value: number) => {
-    if (value > maxStep.current || value < initialStep.value) {
+    if (value > maxStep.current || value < initialStep.current) {
       return;
     }
 
