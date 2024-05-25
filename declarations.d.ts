@@ -17,8 +17,16 @@ interface Connection extends EventTarget {
   onChange: (event: Event) => void;
 }
 
+interface BatteryManager extends EventTarget {
+  charging: boolean;
+  chargingTime: number;
+  dischargingTime: number;
+  level: number;
+}
+
 interface Navigator {
   readonly connection: Connection;
   readonly mozConnection: Connection;
   readonly webkitConnection: Connection;
+  readonly getBattery: () => Promise<BatteryManager>;
 }

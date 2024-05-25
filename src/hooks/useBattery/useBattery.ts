@@ -1,32 +1,20 @@
 import React from 'react';
 
-interface UseBatteryStateInfo {
+/** State for hook use battery */
+interface UseBatteryStateReturn {
+  /** Is battery API supported? */
+  supported: boolean;
+  /** Is battery information loading? */
+  loading: boolean;
   /** Is charging battery? */
-  charging: boolean | null;
+  charging: boolean;
   /** Time until the battery is fully charged */
-  chargingTime: number | null;
+  chargingTime: number;
   /** Time until the battery is completely discharged */
-  dischargingTime: number | null;
+  dischargingTime: number;
   /** Battery charge level from 0 to 1 */
-  level: number | null;
+  level: number;
 }
-
-/** A type that combines battery state and EventTarget to listen for events */
-type BatteryEventTarget = UseBatteryStateInfo & EventTarget;
-
-interface NavigatorBattery extends Navigator {
-  /** Extending the Navigator interface to include the getBattery method, because it's not describe in TS */
-  getBattery?: () => Promise<BatteryEventTarget>;
-}
-
-/** Checks the existence of navigator object */
-const nav: NavigatorBattery | undefined = typeof navigator !== 'undefined' ? navigator : undefined;
-
-/** Checks the existence of getBattery method */
-const isBatterySupported = nav && typeof nav.getBattery === 'function';
-
-/** State for hook UseBattery */
-type UseBatteryStateReturn = UseBatteryStateInfo & { isSupported: boolean; loading: boolean };
 
 /**
  * @name useBattery
@@ -37,65 +25,49 @@ type UseBatteryStateReturn = UseBatteryStateInfo & { isSupported: boolean; loadi
  * @example
  * const battery = useBattery();
  */
-
 export const useBattery = () => {
   const [state, setState] = React.useState<UseBatteryStateReturn>({
-    isSupported: true,
+    supported: false,
     loading: true,
-    level: null,
-    charging: null,
-    chargingTime: null,
-    dischargingTime: null
+    level: 0,
+    charging: false,
+    chargingTime: 0,
+    dischargingTime: 0
   });
 
   React.useEffect(() => {
-    /** Battery API is not supported, return isSupported: false */
-    if (!isBatterySupported)
-      setState((prevState) => ({ ...prevState, isSupported: false, loading: false }));
+    const isSupported =
+      navigator && 'getBattery' in navigator && typeof navigator.getBattery === 'function';
+    if (!isSupported) return setState({ ...state, loading: false });
 
-    let isMounted = true;
-    let battery: BatteryEventTarget | null = null;
+    let battery: BatteryManager | null;
 
-    /** Battery state change handler */
-    const handleChange = () => {
-      if (!isMounted || !battery) return null;
+    const handleChange = () =>
       setState({
-        isSupported: true,
+        supported: true,
         loading: true,
-        level: battery.level,
-        charging: battery.charging,
-        dischargingTime: battery.dischargingTime,
-        chargingTime: battery.chargingTime
-      });
-    };
-
-    /** Getting battery information and adding event listeners */
-    nav!.getBattery!()
-      .then((b) => {
-        // eslint-disable-next-line promise/always-return
-        if (!isMounted) return null;
-        battery = b;
-        battery.addEventListener('levelchange', handleChange);
-        battery.addEventListener('chargingchange', handleChange);
-        battery.addEventListener('chargingtimechange', handleChange);
-        battery.addEventListener('dischargingtimechange', handleChange);
-        handleChange();
-      })
-      .catch((error) => {
-        console.log('Failed to get battery:', error);
-        setState((prevState) => ({ ...prevState, loading: false }));
+        level: battery?.level || 0,
+        charging: battery?.charging || false,
+        dischargingTime: battery?.dischargingTime || 0,
+        chargingTime: battery?.chargingTime || 0
       });
 
-    /** Clearing event listeners when a component is unmounted */
+    navigator.getBattery().then((batteryManager) => {
+      battery = batteryManager;
+      handleChange();
+
+      batteryManager.addEventListener('levelchange', handleChange);
+      batteryManager.addEventListener('chargingchange', handleChange);
+      batteryManager.addEventListener('chargingtimechange', handleChange);
+      batteryManager.addEventListener('dischargingtimechange', handleChange);
+    });
+
     return () => {
-      isMounted = false;
-
-      if (battery) {
-        battery.removeEventListener('levelchange', handleChange);
-        battery.removeEventListener('chargingchange', handleChange);
-        battery.removeEventListener('chargingtimechange', handleChange);
-        battery.removeEventListener('dischargingtimechange', handleChange);
-      }
+      if (!battery) return;
+      battery.removeEventListener('levelchange', handleChange);
+      battery.removeEventListener('chargingchange', handleChange);
+      battery.removeEventListener('chargingtimechange', handleChange);
+      battery.removeEventListener('dischargingtimechange', handleChange);
     };
   }, []);
 
