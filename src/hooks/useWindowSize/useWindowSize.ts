@@ -24,7 +24,8 @@ export interface UseWindowSizeReturn {
  * @name useWindowSize
  * @description - Hook that manages a window size
  *
- * @param {UseWindowSizeParams} [useWindowSizeParams] The use copy to clipboard params
+ * @param {number} [params.initialWidth=Number.POSITIVE_INFINITY] The initial window width
+ * @param {number} [params.initialHeight=Number.POSITIVE_INFINITY] The initial window height
  * @returns {UseWindowSizeReturn} An object containing the current window width and height
  *
  * @example

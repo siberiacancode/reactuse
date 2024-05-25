@@ -8,7 +8,7 @@ const Demo = () => {
   return (
     <div>
       <p>Press any keyboard button</p>
-      [&nbsp;{pressedKeys}&nbsp;]
+      [&nbsp;{pressedKeys.map(({ key }) => key)}&nbsp;]
     </div>
   );
 };

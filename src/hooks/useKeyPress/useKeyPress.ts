@@ -6,17 +6,18 @@ import { useEventListener } from '../useEventListener/useEventListener';
 /** The key or keys to listen for */
 export type UseKeyPressKey = string | string[];
 
+/** The use key press options */
 export type UseKeyPressOptions = {
   /** The target to attach the event listeners to */
-  target: UseEventListenerTarget;
+  target?: UseEventListenerTarget;
 };
 
 /**
  * @name useKeyPress
  * @description - Hook that listens for key press events
  *
- * @param {UseKeyPressKey} key - The key or keys to listen for
- * @param {UseEventListenerTarget} [options.target=window] - The target to attach the event listeners to
+ * @param {UseKeyPressKey} key The key or keys to listen for
+ * @param {UseEventListenerTarget} [options.target=window] The target to attach the event listeners to
  * @returns {useKeyPressReturns} Return boolean type (`true` if the specified keys are currently pressed)
  *
  * @example
