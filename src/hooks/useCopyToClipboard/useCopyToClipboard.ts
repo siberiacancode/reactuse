@@ -24,7 +24,7 @@ interface UseCopyToClipboardReturn {
  * @returns {UseCopyToClipboardReturn} An object containing the boolean state value and utility functions to manipulate the state
  *
  * @example
- * const [copiedText, copyToClipboard] = useCopyToClipboard();
+ * const { value, copy } = useCopyToClipboard();
  */
 export const useCopyToClipboard = (): UseCopyToClipboardReturn => {
   const [value, setValue] = React.useState<string | null>(null);
