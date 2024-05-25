@@ -4,8 +4,15 @@ export type UseStorageInitialValue<Value> = Value | (() => Value);
 export interface UseStorageOptions<Value> {
   serializer?: (value: Value) => string;
   deserializer?: (value: string) => Value;
-  storage: Storage;
+  storage?: Storage;
+  initialValue?: UseStorageInitialValue<Value>;
 }
+
+export type UseStorageReturn<Value> = [
+  value: Value,
+  set: (value: Value) => void,
+  remove: () => void
+];
 
 export const dispatchStorageEvent = (params: Partial<StorageEvent>) =>
   window.dispatchEvent(new StorageEvent('storage', params));
@@ -30,7 +37,7 @@ const getStorageItem = <Value>(
   deserializer: (value: string) => Value
 ) => {
   const value = storage.getItem(key);
-  if (!value) return null;
+  if (!value) return undefined;
   return deserializer(value);
 };
 
@@ -49,72 +56,52 @@ const getStorageServerSnapshot = <Value>(initialValue: UseStorageInitialValue<Va
  * @example
  * text
  */
-export function useStorage<Value = string | null>(
+export const useStorage = <Value>(
   key: string,
-  initialValue?: UseStorageInitialValue<Value>,
-  options?: UseStorageOptions<Value>
-) {
+  params?: UseStorageInitialValue<Value> | UseStorageOptions<Value>
+) => {
+  const options = (typeof params === 'object' ? params : undefined) as UseStorageOptions<Value>;
+  const initialValue = (options ? options?.initialValue : params) as UseStorageInitialValue<Value>;
+
   const storage = options?.storage ?? window.localStorage;
-  const serializer = React.useCallback<(value: Value) => string>(
-    (value) => {
-      if (options?.serializer) return options.serializer(value);
-      return JSON.stringify(value);
-    },
-    [options?.serializer]
-  );
+  const serializer = (value: Value) => {
+    if (options?.serializer) return options.serializer(value);
+    return JSON.stringify(value);
+  };
 
-  const deserializer = React.useCallback<(value: string) => Value>(
-    (value) => {
-      if (options?.deserializer) return options.deserializer(value);
+  const deserializer = (value: string) => {
+    if (options?.deserializer) return options.deserializer(value);
 
-      if (value === 'undefined') {
-        return undefined as unknown as Value;
-      }
+    if (value === 'undefined') {
+      return undefined as unknown as Value;
+    }
 
-      try {
-        return JSON.parse(value) as Value;
-      } catch (error) {
-        return value as Value;
-      }
-    },
-    [options, initialValue]
-  );
+    try {
+      return JSON.parse(value) as Value;
+    } catch (error) {
+      return value as Value;
+    }
+  };
 
   const getSnapshot = () => getStorageItem<Value>(storage, key, deserializer);
   const getServerSnapshot = () => getStorageServerSnapshot(initialValue);
   const store = React.useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
 
-  const setState = React.useCallback(
-    (value: Value) => {
-      if (value === undefined || value === null) {
-        return removeStorageItem(storage, key);
-      }
-
-      setStorageItem(storage, key, serializer(value));
-    },
-    [key, store]
-  );
+  const set = (value: Value) => {
+    if (value === null) return removeStorageItem(storage, key);
+    setStorageItem(storage, key, serializer(value));
+  };
 
   React.useEffect(() => {
     const value = getStorageItem<Value>(storage, key, deserializer);
-    if (value !== null || !initialValue) return;
+    if (value !== undefined || !initialValue) return;
 
-    setStorageItem(
-      storage,
-      key,
-      serializer(initialValue instanceof Function ? initialValue() : initialValue)
-    );
+    const defaultValue = initialValue instanceof Function ? initialValue() : initialValue;
+
+    setStorageItem(storage, key, serializer(defaultValue));
   }, [key]);
 
-  return {
-    value:
-      store ??
-      ((initialValue
-        ? initialValue instanceof Function
-          ? initialValue()
-          : initialValue
-        : null) as Value),
-    set: setState,
-    clear: () => removeStorageItem(storage, key)
-  };
-}
+  const remove = () => removeStorageItem(storage, key);
+
+  return [store, set, remove] as const;
+};
