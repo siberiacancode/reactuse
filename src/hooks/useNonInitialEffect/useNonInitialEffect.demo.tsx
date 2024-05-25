@@ -1,24 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { useRenderCount } from '../useRenderCount/useRenderCount';
+import { useCounter } from '../useCounter/useCounter';
 
 import { useNonInitialEffect } from './useNonInitialEffect';
 
 const Demo = () => {
-  const renderCount = useRenderCount();
-  const [value, setValue] = useState(0);
+  const counter = useCounter();
+  const [useEffectTriggered, setUseEffectTriggered] = React.useState(false);
+  const [useNonInitialEffectTriggered, setUseNonInitialEffectTriggered] = React.useState(false);
 
   useNonInitialEffect(() => {
-    alert(`useNonInitialEffect triggered`);
-  }, [value]);
+    setUseNonInitialEffectTriggered(true);
+  }, [counter.count]);
+
+  React.useEffect(() => {
+    setUseEffectTriggered(true);
+  }, [counter.count]);
 
   return (
     <div>
       <p>
-        Current render: <code>{renderCount || 'initial'}</code>
+        Count: <code>{counter.count}</code>
       </p>
-      <button type='button' onClick={() => setValue(value + 1)}>
-        Force Update
+      <p>
+        Use effect triggered: <code>{String(useEffectTriggered)}</code>
+      </p>
+      <p>
+        Use non initial effect triggered: <code>{String(useNonInitialEffectTriggered)}</code>
+      </p>
+
+      <button type='button' onClick={() => counter.inc()}>
+        Force update
       </button>
     </div>
   );
