@@ -2359,11 +2359,6 @@
   dependencies:
     vue-demi ">=0.14.7"
 
-"@webcam/core@*":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@webcam/core/-/core-1.0.1.tgz#89394d0faaf97ea842952735d7fbfe0aaf45abd6"
-  integrity sha512-N422fDE1iJ5pc5IiLh2NhvxQPFYTMLDbw+x0YtREGMDg4S05qvRgD8Au0N0/JoQUVvS7Vw+ns16/jYPUDgljtQ==
-
 abab@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.6.tgz#41b80f2c871d19686216b82309231cfd3cb3d291"
