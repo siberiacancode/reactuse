@@ -5,7 +5,7 @@ const jestConfig = {
   ...jest,
   clearMocks: true,
   testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setupTests.js'],
   moduleNameMapper: {
     '@/(.*)': '<rootDir>/src/$1'
   }
