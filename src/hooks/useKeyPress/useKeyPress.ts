@@ -1,20 +1,27 @@
 import React from 'react';
 
+import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
 import { useEventListener } from '../useEventListener/useEventListener';
 
-export const useKeyPress = (key: string) => {
+export type UseKeyPressKey = string | string[];
+
+export type UseKeyPressOptions = {
+  target: UseEventListenerTarget;
+};
+
+export const useKeyPress = (key: UseKeyPressKey, options?: UseKeyPressOptions) => {
   const [pressed, setPressed] = React.useState(false);
 
   const onKeyDown = (event: KeyboardEvent) => {
-    if (event.key === key) setPressed(true);
+    if (Array.isArray(key) ? key.includes(event.key) : event.key === key) setPressed(true);
   };
 
   const onKeyUp = (event: KeyboardEvent) => {
-    if (event.key === key) setPressed(false);
+    if (Array.isArray(key) ? key.includes(event.key) : event.key === key) setPressed(false);
   };
 
-  useEventListener('keydown', onKeyDown);
-  useEventListener('keyup', onKeyUp);
+  useEventListener(options?.target ?? window, 'keydown', onKeyDown);
+  useEventListener(options?.target ?? window, 'keyup', onKeyUp);
 
   return pressed;
 };

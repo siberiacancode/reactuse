@@ -4,30 +4,32 @@ import type {
 } from '../useEventListener/useEventListener';
 import { useEventListener } from '../useEventListener/useEventListener';
 
+export type UseKeyPressEventKey = string | string[];
+
 export type UseKeyPressEvent = {
   (
-    key: string,
+    key: UseKeyPressEventKey,
     target: Window,
     listener: (this: Window, event: WindowEventMap['keydown']) => void,
     options?: UseEventListenerOptions
   ): void;
 
   (
-    key: string,
+    key: UseKeyPressEventKey,
     target: Document,
     listener: (this: Document, event: DocumentEventMap['keydown']) => void,
     options?: UseEventListenerOptions
   ): void;
 
   <Target extends UseEventListenerTarget>(
-    key: string,
+    key: UseKeyPressEventKey,
     target: Target,
     listener: (this: Target, event: HTMLElementEventMap['keydown']) => void,
     options?: UseEventListenerOptions
   ): void;
 
   <Target extends Element>(
-    key: string,
+    key: UseKeyPressEventKey,
     listener: (this: Target, event: HTMLElementEventMap['keydown']) => void,
     options?: UseEventListenerOptions,
     target?: never
@@ -35,7 +37,7 @@ export type UseKeyPressEvent = {
 };
 
 export const useKeyPressEvent = ((...params: any[]) => {
-  const key = params[0] as string;
+  const keys = (Array.isArray(params[0]) ? params[0] : [params[0]]) as UseKeyPressEventKey;
   const target = (params[1] instanceof Function ? null : params[1]) as
     | UseEventListenerTarget
     | undefined;
@@ -43,7 +45,7 @@ export const useKeyPressEvent = ((...params: any[]) => {
   const options: UseEventListenerOptions | undefined = target ? params[3] : params[2];
 
   const onKeyDown = (event: KeyboardEvent) => {
-    if (event.key === key) callback(event);
+    if (keys.includes(event.key)) callback(event);
   };
 
   useEventListener(target ?? window, 'keydown', onKeyDown, options);
