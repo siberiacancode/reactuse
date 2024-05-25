@@ -7,7 +7,9 @@ const Demo = () => {
 
   return (
     <div>
-      <p>Value: {on.toString()}</p>
+      <p>
+        Value: <code>{on.toString()}</code>
+      </p>
       <button onClick={() => toggle()}>Toggle</button>
       <button onClick={() => toggle(true)}>Set (true)</button>
       <button onClick={() => toggle(false)}>Set (false)</button>

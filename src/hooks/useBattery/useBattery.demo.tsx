@@ -8,7 +8,10 @@ const Demo = () => {
   if (!battery.supported) {
     return (
       <div>
-        <strong>Battery sensor</strong>: <div>not supported</div>
+        <strong>Battery sensor</strong>:
+        <div>
+          <code>not supported</code>
+        </div>
       </div>
     );
   }
@@ -16,20 +19,38 @@ const Demo = () => {
   if (!battery.loading) {
     return (
       <div>
-        <strong>Battery sensor</strong>: <div>supported</div>
-        <strong>Battery state</strong>: <div>fetching</div>
+        <strong>Battery sensor</strong>:
+        <div>
+          <code>supported</code>
+        </div>
+        <strong>Battery state</strong>:
+        <div>
+          <code>fetching</code>
+        </div>
       </div>
     );
   }
 
   return (
     <div>
-      <div>Battery sensor: {battery.supported && 'supported'}</div>
-      <div>Battery state: {battery.loading && 'loaded'}</div>
-      <div>Charge level: {battery.level && (battery.level * 100).toFixed(0)}%</div>
-      <div>Charging: {battery.charging ? 'yes' : 'no'}</div>
-      <div>Charging time: {battery.chargingTime ? battery.chargingTime : 'finished'}</div>
-      <div>Discharging time: {battery.dischargingTime ? battery.dischargingTime : 'never'}</div>
+      <div>
+        Battery sensor: <code>{battery.supported && 'supported'}</code>
+      </div>
+      <div>
+        Battery state: <code>{battery.loading && 'loaded'}</code>
+      </div>
+      <div>
+        Charge level: <code>{battery.level && (battery.level * 100).toFixed(0)}%</code>
+      </div>
+      <div>
+        Charging: <code>{battery.charging ? 'yes' : 'no'}</code>
+      </div>
+      <div>
+        Charging time: <code>{battery.chargingTime ? battery.chargingTime : 'finished'}</code>
+      </div>
+      <div>
+        Discharging time: <code>{battery.dischargingTime ? battery.dischargingTime : 'never'}</code>
+      </div>
     </div>
   );
 };

@@ -1,35 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+
+import { useNonInitialEffect } from '../useNonInitialEffect/useNonInitialEffect';
 
 import { useDocumentVisibility } from './useDocumentVisibility';
 
 const Demo = () => {
-  const visibilityState = useDocumentVisibility();
-  const [visible, setVisible] = useState(visibilityState);
+  const documentVisibility = useDocumentVisibility();
 
-  useEffect(() => {
-    let timeoutId: string | number | NodeJS.Timeout | undefined;
+  useNonInitialEffect(() => {
+    console.log(`Current document visibility state: ${documentVisibility}`);
 
-    if (visibilityState === 'hidden') {
-      setVisible(visibilityState);
-    } else {
-      timeoutId = setTimeout(() => {
-        setVisible(visibilityState);
-      }, 1000);
+    if (documentVisibility === 'visible') {
+      alert(`Current document visibility state: ${documentVisibility}`);
     }
-
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [visibilityState]);
+  }, [documentVisibility]);
 
   return (
     <div>
       <p>
-        <strong>Minimize the page or switch to another tab, and then return here.</strong>
+        Switch to another tab and then return here
         <br />
-        Visibility state: <code>{visible}</code>
+        <br />
+        Visibility status: <code>{documentVisibility}</code>
       </p>
     </div>
   );
