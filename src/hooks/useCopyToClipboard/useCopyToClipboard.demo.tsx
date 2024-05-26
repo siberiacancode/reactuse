@@ -3,10 +3,11 @@ import React from 'react';
 import { useCopyToClipboard } from './useCopyToClipboard';
 
 const Demo = () => {
-  const [copiedText, copyToClipboard] = useCopyToClipboard();
+  const clipboard = useCopyToClipboard();
 
   const handleCopy = (value: string) => () => {
-    copyToClipboard(value)
+    clipboard
+      .copy(value)
       .then(() => {
         console.log('Copied!', { value });
       })
@@ -29,7 +30,7 @@ const Demo = () => {
           C
         </button>
       </div>
-      <p>Copied value: {copiedText ?? 'Nothing is copied yet!'}</p>
+      <p>Copied value: {clipboard.value ?? 'Nothing is copied yet!'}</p>
       <input type='text' placeholder='Paste here' />
     </>
   );

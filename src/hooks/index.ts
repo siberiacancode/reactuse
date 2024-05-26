@@ -20,6 +20,7 @@ export * from './useOnline/useOnline';
 export * from './useOrientation/useOrientation';
 export * from './useRenderCount/useRenderCount';
 export * from './useSessionStorage/useSessionStorage';
+export * from './useStep/useStep';
 export * from './useStorage/useStorage';
 export * from './useTimeout/useTimeout';
 export * from './useUnmount/useUnmount';

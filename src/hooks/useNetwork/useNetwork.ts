@@ -57,7 +57,7 @@ const getServerSnapshot = () => {
  * @returns {UseNetworkReturn} An object containing the network status.
  *
  * @example
- * const network = useNetwork();
+ * const { online, downlink, downlinkMax, effectiveType, rtt, saveData, type } = useNetwork();
  */
 export const useNetwork = (): UseNetworkReturn => {
   const cache = React.useRef<UseNetworkReturn>();

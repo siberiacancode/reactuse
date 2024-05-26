@@ -18,12 +18,12 @@ interface UseBatteryStateReturn {
 
 /**
  * @name useBattery
- * @description Hook for getting information about battery status
+ * @description - Hook for getting information about battery status
  *
  * @returns {UseBatteryStateReturn} Object containing battery information & Battery API support
  *
  * @example
- * const battery = useBattery();
+ * const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();
  */
 export const useBattery = () => {
   const [state, setState] = React.useState<UseBatteryStateReturn>({

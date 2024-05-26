@@ -34,13 +34,6 @@ export type UseClickOutside = {
   ): UseClickOutsideReturn<Target>;
 };
 
-/**
- * @name useClickOutside
- * @description - Hook that manages a counter with increment, decrement, reset, and set functionalities
- *
- * @example
- * const { count, dec, inc, reset, set } = useCounter(5);
- */
 export const useClickOutside = ((...params: any[]) => {
   const target = (typeof params[1] === 'undefined' ? null : params[0]) as
     | UseClickOutsideTarget
