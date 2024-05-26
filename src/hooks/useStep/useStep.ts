@@ -28,6 +28,24 @@ interface UseStepReturn {
   set: (value: number | 'last' | 'first') => void;
 }
 
+/**
+ * @name useStep
+ * @description Helpers for building steppers
+ *
+ * @param {number} [params] Maximum step value
+ *
+ * @returns {UseStepReturn} An object contains variables and functions to change the step
+ *
+ * @example Params as number
+ * const steps = [...];
+ * const step = useStep(steps.length);
+ * const StepComponent = steps[step.currentStep - 1];
+ *
+ * @example Params as object
+ * const steps = [...];
+ * const step = useStep({ initial: 0, max: steps.length - 1 });
+ * const StepComponent = steps[step.currentStep];
+ */
 export const useStep = (params: number | UseStepParams): UseStepReturn => {
   const maxStep = typeof params === 'object' ? params.max : params;
   const initial = typeof params === 'object' ? params.initial : 1;
