@@ -9,6 +9,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
+    "newLine": "lf",
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "resolveJsonModule": true,
