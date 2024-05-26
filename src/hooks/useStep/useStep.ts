@@ -32,37 +32,33 @@ const FIRST_STEP_VALUE = 1;
 
 /**
  * @name useStep
- * @description Helpers for building steppers
+ * @description - Hook that create stepper
  *
- * @param {number} [params] Maximum step value
- *
+ * @overload
+ * @param {number} max Maximum number of steps
  * @returns {UseStepReturn} An object contains variables and functions to change the step
  *
- * @example Params as number
- * const steps = [...];
- * const step = useStep(steps.length);
- * const StepComponent = steps[step.currentStep - 1];
+ * @overload
+ * @param {number} params.max Maximum number of steps
+ * @param {number} params.initial Initial value for step
+ * @returns {UseStepReturn} An object contains variables and functions to change the step
  *
- * @example Params as object
- * const steps = [...];
- * const step = useStep({ initial: 1, max: steps.length });
- * const StepComponent = steps[step.currentStep - 1];
+ * @example
+ * const step = useStep(5);
+ * @example
+ * const stepper = useStep({ initial: 2, max: 5 });
  */
 export const useStep = (params: number | UseStepParams): UseStepReturn => {
-  const isParamsObject = typeof params === 'object';
-  if (isParamsObject && params.initial < FIRST_STEP_VALUE) {
-    throw new Error(`Initial cannot be less than ${FIRST_STEP_VALUE}`);
-  }
+  const max = typeof params === 'object' ? params.max : params;
+  const initial = typeof params === 'object' ? params.initial : FIRST_STEP_VALUE;
 
-  const initial = isParamsObject ? params.initial : FIRST_STEP_VALUE;
-  const max = isParamsObject ? params.max : params;
-
-  const initialStep = React.useRef(initial);
-  const maxStep = React.useRef(max);
+  const initialStep = React.useRef(
+    initial > max || initial < FIRST_STEP_VALUE ? FIRST_STEP_VALUE : initial
+  );
   const [currentStep, setCurrentStep] = React.useState(initial);
 
   const isFirst = currentStep === FIRST_STEP_VALUE;
-  const isLast = currentStep === maxStep.current;
+  const isLast = currentStep === max;
 
   const next = () => {
     if (isLast) return;
@@ -78,14 +74,14 @@ export const useStep = (params: number | UseStepParams): UseStepReturn => {
 
   const set = (value: number | 'last' | 'first') => {
     if (value === 'first') return setCurrentStep(initialStep.current);
-    if (value === 'last') return setCurrentStep(maxStep.current);
-    if (value >= maxStep.current) return setCurrentStep(maxStep.current);
+    if (value === 'last') return setCurrentStep(max);
+    if (value >= max) return setCurrentStep(max);
     if (value <= FIRST_STEP_VALUE) return setCurrentStep(FIRST_STEP_VALUE);
     setCurrentStep(value);
   };
 
   return {
-    counts: maxStep.current,
+    counts: max,
     currentStep,
     isFirst,
     isLast,

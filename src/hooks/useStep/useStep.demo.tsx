@@ -2,37 +2,37 @@ import React from 'react';
 
 import { useStep } from './useStep';
 
-const Step1 = () => {
-  return <p>This is Step 1</p>;
-};
-
-const Step2 = () => {
-  return <p>This is Step 2</p>;
-};
-
-const Step3 = () => {
-  return <p>This is Step 3</p>;
-};
+const Step1 = () => <p>First step</p>;
+const Step2 = () => <p>Second step</p>;
+const Step3 = () => <p>Third step</p>;
+const STEPS = [<Step1 />, <Step2 />, <Step3 />];
 
 const Demo = () => {
-  const steps = [<Step1 />, <Step2 />, <Step3 />];
-  const { currentStep, isFirst, isLast, next, back, reset } = useStep(steps.length);
-  const CurrentStepComponent = steps[currentStep - 1];
+  const { currentStep, isFirst, isLast, next, back, reset } = useStep(STEPS.length);
+  const index = currentStep - 1;
+
+  const StepComponent = STEPS[index];
 
   return (
     <>
-      <p>Current Step Value – {currentStep}</p>
-      <p>Is First Step – {isFirst}</p>
-      <p>Is Last Step – {isLast}</p>
-      {CurrentStepComponent}
-      <button type='button' disabled={isLast} onClick={next}>
-        To Next Step
-      </button>
+      <p>
+        Current step value: <code>{currentStep}</code>
+      </p>
+      <p>
+        Is first step: <code>{String(isFirst)}</code>
+      </p>
+      <p>
+        Is last step: <code>{String(isLast)}</code>
+      </p>
+      {StepComponent}
       <button type='button' disabled={isFirst} onClick={back}>
-        To Previous Step
+        Back
+      </button>
+      <button type='button' disabled={isLast} onClick={next}>
+        Next
       </button>
       <button type='button' disabled={isFirst} onClick={reset}>
-        To Initial Step
+        Reset
       </button>
     </>
   );
