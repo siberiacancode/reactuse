@@ -43,11 +43,14 @@ export type UseCounter = {
  *
  * @overload
  * @param {number} [initialValue=0] The initial number value
- * @param {UseCounterOptions} [useCounterOptions] The use counter options
+ * @param {number} [options.min=Number.NEGATIVE_INFINITY] The min of count value
+ * @param {number} [options.max=Number.POSITIVE_INFINITY] The max of count value
  * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
 
  * @overload
- * @param {UseCounterParams} [useCounterParams] The use counter params
+ * @param {number} [params.initialValue=0] The initial number value
+ * @param {number} [params.min=Number.NEGATIVE_INFINITY] The min of count value
+ * @param {number} [params.max=Number.POSITIVE_INFINITY] The max of count value
  * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
  *
  * @example

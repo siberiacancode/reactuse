@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useTimeout } from './useTimeout';
 
 const Demo = () => {
@@ -7,8 +5,10 @@ const Demo = () => {
 
   return (
     <div>
-      <p>{String(timeout.ready)}</p>
-      <button onClick={timeout.clear}>clear</button>
+      <p>
+        Timeout ready: <code>{String(timeout.ready)}</code>
+      </p>
+      <button onClick={timeout.clear}>Clear</button>
     </div>
   );
 };

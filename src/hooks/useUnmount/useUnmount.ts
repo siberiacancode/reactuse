@@ -5,7 +5,6 @@ import React from 'react';
  * @description - Hook that defines the logic when unmounting a component
  *
  * @param {() => void} callback The callback function to be invoked on component unmount
- *
  * @returns {void}
  *
  * @example

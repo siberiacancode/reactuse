@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useNetwork } from './useNetwork';
 
 const Demo = () => {

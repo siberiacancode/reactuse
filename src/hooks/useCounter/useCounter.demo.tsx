@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useCounter } from './useCounter';
 
 const Demo = () => {
@@ -7,7 +5,9 @@ const Demo = () => {
 
   return (
     <div>
-      <p>Count: {count}</p>
+      <p>
+        Count: <code>{count}</code>
+      </p>
       <button onClick={() => inc()}>Increment</button>
       <button onClick={() => dec()}>Decrement</button>
       <button onClick={() => set(5)}>Set (5)</button>

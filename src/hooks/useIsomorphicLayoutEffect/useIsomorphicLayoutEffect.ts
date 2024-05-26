@@ -1,7 +1,12 @@
 import React from 'react';
 
+import { isClient } from '@/utils/helpers';
+
 /**
- * Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
+ * @name useIsomorphicLayoutEffect
+ * @description - Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
+ *
+ * @example
+ * useIsomorphicLayoutEffect(() => console.log('effect'), [])
  */
-export const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+export const useIsomorphicLayoutEffect = isClient ? React.useLayoutEffect : React.useEffect;
