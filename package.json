@@ -38,7 +38,7 @@
     "type": "tsc --noEmit",
     "pretty": "yarn type && yarn format && yarn lint",
     "prepare": "husky install",
-    "unit-test": "jest",
+    "unit-test": "vitest",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -62,12 +62,10 @@
   "devDependencies": {
     "@siberiacancode/builder": "^1.3.0",
     "@siberiacancode/eslint": "^1.1.0",
-    "@siberiacancode/jest": "^1.0.2",
     "@siberiacancode/prettier": "^1.1.0",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^15.0.7",
     "@types/doctrine": "^0.0.9",
-    "@types/jest": "^29.5.12",
     "@types/node": "^20.11.19",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
@@ -75,6 +73,7 @@
     "doctrine": "^3.0.0",
     "eslint": "^8.56.0",
     "husky": "^9.0.11",
+    "jsdom": "^24.1.0",
     "lint-staged": "^15.2.2",
     "markdown-table": "^3.0.3",
     "react": "^18.2.0",
@@ -82,7 +81,8 @@
     "shx": "^0.3.4",
     "typescript": "^5.3.3",
     "vite": "^5.1.3",
-    "vitepress": "^1.1.4"
+    "vitepress": "^1.1.4",
+    "vitest": "^1.6.0"
   },
   "keywords": [
     "react",
