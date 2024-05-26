@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useStep } from './useStep';
 
 const Step1 = () => <p>First step</p>;

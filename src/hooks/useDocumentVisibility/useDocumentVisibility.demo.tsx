@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useNonInitialEffect } from '../useNonInitialEffect/useNonInitialEffect';
 
 import { useDocumentVisibility } from './useDocumentVisibility';

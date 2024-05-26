@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 const Demo = () => {

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useTimeout } from './useTimeout';
 
 const Demo = () => {

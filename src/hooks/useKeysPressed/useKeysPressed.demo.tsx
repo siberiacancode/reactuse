@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useKeysPressed } from './useKeysPressed';
 
 const Demo = () => {

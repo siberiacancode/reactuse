@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useKeyPress } from './useKeyPress';
 
 const Demo = () => {
