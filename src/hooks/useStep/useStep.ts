@@ -28,6 +28,8 @@ interface UseStepReturn {
   set: (value: number | 'last' | 'first') => void;
 }
 
+const FIRST_STEP_VALUE = 1;
+
 /**
  * @name useStep
  * @description Helpers for building steppers
@@ -47,14 +49,20 @@ interface UseStepReturn {
  * const StepComponent = steps[step.currentStep];
  */
 export const useStep = (params: number | UseStepParams): UseStepReturn => {
-  const maxStep = typeof params === 'object' ? params.max : params;
-  const initial = typeof params === 'object' ? params.initial : 1;
+  const isParamsObject = typeof params === 'object';
+  if (isParamsObject && params.initial < FIRST_STEP_VALUE) {
+    throw new Error(`Initial cannot be less than ${FIRST_STEP_VALUE}`);
+  }
+
+  const initial = isParamsObject ? params.initial : FIRST_STEP_VALUE;
+  const max = isParamsObject ? params.max : params;
 
   const initialStep = React.useRef(initial);
+  const maxStep = React.useRef(max);
   const [currentStep, setCurrentStep] = React.useState(initial);
 
-  const isFirst = currentStep === 1;
-  const isLast = currentStep === maxStep;
+  const isFirst = currentStep === FIRST_STEP_VALUE;
+  const isLast = currentStep === maxStep.current;
 
   const next = () => {
     if (isLast) return;
@@ -70,14 +78,14 @@ export const useStep = (params: number | UseStepParams): UseStepReturn => {
 
   const set = (value: number | 'last' | 'first') => {
     if (value === 'first') return setCurrentStep(initialStep.current);
-    if (value === 'last') return setCurrentStep(maxStep);
-    if (value >= maxStep) return setCurrentStep(maxStep);
-    if (value <= 1) return setCurrentStep(1);
+    if (value === 'last') return setCurrentStep(maxStep.current);
+    if (value >= maxStep.current) return setCurrentStep(maxStep.current);
+    if (value <= FIRST_STEP_VALUE) return setCurrentStep(FIRST_STEP_VALUE);
     setCurrentStep(value);
   };
 
   return {
-    counts: maxStep,
+    counts: maxStep.current,
     currentStep,
     isFirst,
     isLast,
