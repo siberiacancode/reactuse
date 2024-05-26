@@ -4,7 +4,7 @@ export const useMap = <K, V>(intialValue?: ReadonlyArray<readonly [K, V]>) => {
   const [map] = useState(() => new Map(intialValue));
   const [size, setSize] = useState(map.size);
 
-  return useMemo(
+  const actions = useMemo(
     () => ({
       set(key: K, value: V) {
         const result = map.set(key, value);
@@ -43,4 +43,6 @@ export const useMap = <K, V>(intialValue?: ReadonlyArray<readonly [K, V]>) => {
     }),
     [map, size]
   );
+
+  return [map, actions] as const;
 };
