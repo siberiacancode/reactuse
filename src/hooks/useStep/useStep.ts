@@ -45,8 +45,8 @@ const FIRST_STEP_VALUE = 1;
  *
  * @example Params as object
  * const steps = [...];
- * const step = useStep({ initial: 0, max: steps.length - 1 });
- * const StepComponent = steps[step.currentStep];
+ * const step = useStep({ initial: 1, max: steps.length });
+ * const StepComponent = steps[step.currentStep - 1];
  */
 export const useStep = (params: number | UseStepParams): UseStepReturn => {
   const isParamsObject = typeof params === 'object';
