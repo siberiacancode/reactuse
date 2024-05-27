@@ -24,7 +24,7 @@ it('Should use network on server', () => {
   });
 });
 
-it('Should use network state', () => {
+it('Should change state upon network events', () => {
   const { result } = renderHook(useNetwork);
 
   expect(result.current.online).toBeTruthy();
