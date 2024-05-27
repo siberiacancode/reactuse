@@ -55,6 +55,16 @@ export type UseEventListener = {
     options?: UseEventListenerOptions,
     target?: never
   ): UseEventListenerReturn<Target>;
+
+  <
+    Target extends Element,
+    Event extends keyof MediaQueryListEventMap = keyof MediaQueryListEventMap
+  >(
+    event: Event | Event[],
+    listener: (this: Target, event: MediaQueryListEventMap[Event]) => void,
+    options?: UseEventListenerOptions,
+    target?: never
+  ): UseEventListenerReturn<Target>;
 };
 
 /**

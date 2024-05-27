@@ -46,9 +46,15 @@ const subscribe = (callback: () => void) => {
   };
 };
 
-const getServerSnapshot = () => {
-  throw Error('useNetwork is a client side hook');
-};
+const getServerSnapshot = () => ({
+  online: false,
+  type: undefined,
+  effectiveType: undefined,
+  saveData: false,
+  downlink: 0,
+  downlinkMax: 0,
+  rtt: 0
+});
 
 /**
  * @name useNetwork
