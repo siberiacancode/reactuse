@@ -2,21 +2,22 @@ import { renderHook } from '@testing-library/react';
 
 import { usePrevious } from './usePrevious';
 
-it('Should use previous value', () => {
-  const { result } = renderHook(usePrevious);
+it('Should use previous', () => {
+  const { result } = renderHook(() => usePrevious(0));
 
   expect(result.current).toBe(undefined);
 });
 
 it('Should return previous value after update', () => {
-  const { result, rerender } = renderHook(usePrevious);
+  const { result, rerender } = renderHook((state) => usePrevious(state), {
+    initialProps: 0
+  });
 
-  rerender(0);
   expect(result.current).toBe(undefined);
 
-  rerender(2);
+  rerender(1);
   expect(result.current).toBe(0);
 
-  rerender(4);
-  expect(result.current).toBe(2);
+  rerender(2);
+  expect(result.current).toBe(1);
 });
