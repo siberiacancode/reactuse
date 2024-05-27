@@ -28,15 +28,37 @@ interface UseStepReturn {
   set: (value: number | 'last' | 'first') => void;
 }
 
-export const useStep = (params: number | UseStepParams): UseStepReturn => {
-  const maxStep = typeof params === 'object' ? params.max : params;
-  const initial = typeof params === 'object' ? params.initial : 1;
+const FIRST_STEP_VALUE = 1;
 
-  const initialStep = React.useRef(initial);
+/**
+ * @name useStep
+ * @description - Hook that create stepper
+ *
+ * @overload
+ * @param {number} max Maximum number of steps
+ * @returns {UseStepReturn} An object contains variables and functions to change the step
+ *
+ * @overload
+ * @param {number} params.max Maximum number of steps
+ * @param {number} params.initial Initial value for step
+ * @returns {UseStepReturn} An object contains variables and functions to change the step
+ *
+ * @example
+ * const step = useStep(5);
+ * @example
+ * const stepper = useStep({ initial: 2, max: 5 });
+ */
+export const useStep = (params: number | UseStepParams): UseStepReturn => {
+  const max = typeof params === 'object' ? params.max : params;
+  const initial = typeof params === 'object' ? params.initial : FIRST_STEP_VALUE;
+
+  const initialStep = React.useRef(
+    initial > max || initial < FIRST_STEP_VALUE ? FIRST_STEP_VALUE : initial
+  );
   const [currentStep, setCurrentStep] = React.useState(initial);
 
-  const isFirst = currentStep === 1;
-  const isLast = currentStep === maxStep;
+  const isFirst = currentStep === FIRST_STEP_VALUE;
+  const isLast = currentStep === max;
 
   const next = () => {
     if (isLast) return;
@@ -52,14 +74,14 @@ export const useStep = (params: number | UseStepParams): UseStepReturn => {
 
   const set = (value: number | 'last' | 'first') => {
     if (value === 'first') return setCurrentStep(initialStep.current);
-    if (value === 'last') return setCurrentStep(maxStep);
-    if (value >= maxStep) return setCurrentStep(maxStep);
-    if (value <= 1) return setCurrentStep(1);
+    if (value === 'last') return setCurrentStep(max);
+    if (value >= max) return setCurrentStep(max);
+    if (value <= FIRST_STEP_VALUE) return setCurrentStep(FIRST_STEP_VALUE);
     setCurrentStep(value);
   };
 
   return {
-    counts: maxStep,
+    counts: max,
     currentStep,
     isFirst,
     isLast,

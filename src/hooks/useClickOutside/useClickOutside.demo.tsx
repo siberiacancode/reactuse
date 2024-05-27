@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useClickOutside } from './useClickOutside';
 
 const Demo = () => {
@@ -13,11 +11,6 @@ const Demo = () => {
       console.log('@click outside 2', event.target);
     }
   );
-
-  // const ref = React.useRef<HTMLDivElement>(null);
-  // useOnClickOutside(ref, () => {
-  //   console.log('@click outside');
-  // });
 
   return (
     <div

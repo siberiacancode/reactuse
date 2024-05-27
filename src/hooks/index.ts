@@ -23,6 +23,7 @@ export * from './useSessionStorage/useSessionStorage';
 export * from './useStep/useStep';
 export * from './useStorage/useStorage';
 export * from './useTimeout/useTimeout';
+export * from './useToggle/useToggle';
 export * from './useUnmount/useUnmount';
 export * from './useWindowEvent/useWindowEvent';
 export * from './useWindowSize/useWindowSize';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useDocumentTitle } from './useDocumentTitle';
 
 const Demo = () => {
