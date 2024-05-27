@@ -1,5 +1,6 @@
 import React from 'react';
 
+/** The use rerender return type */
 interface UseRerenderReturns {
   /** The id of the rerender */
   id: number;
