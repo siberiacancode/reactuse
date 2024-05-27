@@ -9,6 +9,7 @@ export * from './useDocumentTitle/useDocumentTitle';
 export * from './useDocumentVisibility/useDocumentVisibility';
 export * from './useEventListener/useEventListener';
 export * from './useFavicon/useFavicon';
+export * from './useHash/useHash';
 export * from './useHover/useHover';
 export * from './useIdle/useIdle';
 export * from './useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';

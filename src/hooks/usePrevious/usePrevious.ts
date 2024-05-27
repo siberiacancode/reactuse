@@ -12,7 +12,7 @@ import React from 'react';
  * const prevValue = usePrevious(value);
  */
 export const usePrevious = <Value>(value: Value) => {
-  const ref = React.useRef<Value>(value);
+  const ref = React.useRef<Value>();
 
   React.useEffect(() => {
     ref.current = value;
