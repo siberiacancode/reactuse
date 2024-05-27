@@ -8,7 +8,7 @@ it('Should use previous value', () => {
   expect(result.current).toBe(undefined);
 });
 
-it('Should return previous value aftre update', () => {
+it('Should return previous value after update', () => {
   const { result, rerender } = renderHook(usePrevious);
 
   rerender(0);
