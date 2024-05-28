@@ -1,15 +1,15 @@
 import { useBoolean } from '../useBoolean/useBoolean';
 
-import { useUnmount } from './useUnmount';
+import { useMount } from './useMount';
 
 const Component = () => {
-  useUnmount(() => alert('unmount'));
+  useMount(() => alert('mount'));
 
   return <p>Hello World!</p>;
 };
 
 const Demo = () => {
-  const [on, toggle] = useBoolean(true);
+  const [on, toggle] = useBoolean(false);
 
   return (
     <>

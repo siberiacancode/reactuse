@@ -2,7 +2,24 @@ import { useState } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
-export const useOrientation = () => {
+/** The use orientation return type */
+export interface UseOrientationReturn {
+  /** The current screen orientation angle */
+  angle: number;
+  /** The screen orientation type */
+  type: OrientationType;
+}
+
+/**
+ * @name useOrientation
+ * @description - Hook that returns the current screen orientation
+ *
+ * @returns {UseOrientationReturn} An object containing the current screen orientation
+ *
+ * @example
+ * const { angle, type } = useOrientation();
+ */
+export const useOrientation = (): UseOrientationReturn => {
   const [orientation, setOrientation] = useState<{
     angle: number;
     type: OrientationType;

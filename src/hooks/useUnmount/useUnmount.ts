@@ -8,7 +8,7 @@ import React from 'react';
  * @returns {void}
  *
  * @example
- * useUnmount(() => console.log('Component unmounted'));
+ * useUnmount(() => console.log('This effect runs on component unmount'));
  */
 
 export const useUnmount = (callback: () => void) => {

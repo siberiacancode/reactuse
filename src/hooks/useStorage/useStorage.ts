@@ -49,13 +49,6 @@ const storageSubscribe = (callback: () => void) => {
 const getStorageServerSnapshot = <Value>(initialValue: UseStorageInitialValue<Value>) =>
   initialValue instanceof Function ? initialValue() : initialValue;
 
-/**
- * @name useStorage
- * @description - Hook that manages a counter with increment, decrement, reset, and set functionalities
- *
- * @example
- * text
- */
 export const useStorage = <Value>(
   key: string,
   params?: UseStorageInitialValue<Value> | UseStorageOptions<Value>
@@ -83,7 +76,7 @@ export const useStorage = <Value>(
     }
   };
 
-  const getSnapshot = () => getStorageItem<Value>(storage, key, deserializer);
+  const getSnapshot = () => getStorageItem<Value>(storage, key, deserializer) as Value;
   const getServerSnapshot = () => getStorageServerSnapshot(initialValue);
   const store = React.useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
 

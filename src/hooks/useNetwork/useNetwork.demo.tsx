@@ -4,16 +4,35 @@ const Demo = () => {
   const network = useNetwork();
 
   return (
-    <ul>
-      <li>online: {String(network.online)}</li>
-      <li>saveData: {String(network.saveData)}</li>
-      <li>type: {String(network.type)}</li>
-      <li>downlink: {network.downlink}</li>
-      <li>downlinkMax: {String(network.downlinkMax)}</li>
-      <li>effectiveType: {network.effectiveType}</li>
-      <li>rtt: {network.rtt}</li>
-      <li>saveData: {String(network.saveData)}</li>
-    </ul>
+    <div>
+      <p>Network status</p>
+      <ul>
+        <li>
+          online: <code>{String(network.online)}</code>
+        </li>
+        <li>
+          saveData: <code>{String(network.saveData)}</code>
+        </li>
+        <li>
+          type: <code>{String(network.type)}</code>
+        </li>
+        <li>
+          downlink: <code>{network.downlink}</code>
+        </li>
+        <li>
+          downlinkMax: <code>{String(network.downlinkMax)}</code>
+        </li>
+        <li>
+          effectiveType: <code>{network.effectiveType}</code>
+        </li>
+        <li>
+          rtt: <code>{network.rtt}</code>
+        </li>
+        <li>
+          saveData: <code>{String(network.saveData)}</code>
+        </li>
+      </ul>
+    </div>
   );
 };
 

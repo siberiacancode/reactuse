@@ -17,10 +17,30 @@ const IDLE_EVENTS = [
 ] satisfies Array<keyof WindowEventMap>;
 const ONE_MINUTE = 60e3;
 
+//* The use idle return type */
+export interface UseIdleReturn {
+  //* The idle state */
+  idle: boolean;
+  //* The last active time */
+  lastActive: number;
+}
+
+/**
+ * @name useIdle
+ * @description - Hook that defines the logic when the user is idle
+ *
+ * @param {number} [milliseconds=ONE_MINUTE] The idle time in milliseconds
+ * @param {boolean} [options.initialState=false] The options for the hook
+ * @param {Array<keyof WindowEventMap>} [options.events=IDLE_EVENTS]
+ * @returns {UseIdleReturn} An object containing the idle state and the last active time
+ *
+ * @example
+ * const { idle, lastActive } = useIdle();
+ */
 export const useIdle = (
   milliseconds = ONE_MINUTE,
   { initialState = false, events = IDLE_EVENTS }: UseIdleOptions = {}
-) => {
+): UseIdleReturn => {
   const [idle, setIdle] = React.useState(initialState);
   const [lastActive, setLastActive] = React.useState(Date.now());
 

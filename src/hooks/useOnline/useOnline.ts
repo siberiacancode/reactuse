@@ -11,5 +11,14 @@ const subscribe = (callback: () => void) => {
   };
 };
 
+/**
+ * @name useOnline
+ * @description - Hook that manages if the user is online
+ *
+ * @returns {boolean} A boolean indicating if the user is online
+ *
+ * @example
+ * const online = useOnline();
+ */
 export const useOnline = () =>
   React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

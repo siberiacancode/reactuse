@@ -7,12 +7,12 @@ export const GOOGLE_FAVICON_URL = 'https://www.google.com/favicon.ico';
 
 const Demo = () => {
   const [url, setUrl] = React.useState(REACT_FAVICON_URL);
-  const [favicon, setFavicon] = useFavicon(url);
+  const favicon = useFavicon(url);
 
   return (
     <>
       <p>
-        Current favicon: <code>{favicon ?? 'default'}</code>
+        Current favicon: <code>{favicon.href ?? 'default'}</code>
       </p>
 
       <div>
@@ -27,10 +27,10 @@ const Demo = () => {
       <br />
 
       <div>
-        <button type='button' onClick={() => setFavicon(GOOGLE_FAVICON_URL)}>
+        <button type='button' onClick={() => favicon.set(GOOGLE_FAVICON_URL)}>
           Change to google favicon
         </button>
-        <button type='button' onClick={() => setFavicon(REACT_FAVICON_URL)}>
+        <button type='button' onClick={() => favicon.set(REACT_FAVICON_URL)}>
           Change to react favicon
         </button>
       </div>

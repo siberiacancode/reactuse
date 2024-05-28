@@ -55,6 +55,9 @@ export type UseCounter = {
  *
  * @example
  * const { count, dec, inc, reset, set } = useCounter(5);
+ * 
+ * @example
+ * const { count, dec, inc, reset, set } = useCounter({ initialValue: 5, min: 0, max: 10 });
  */
 export const useCounter: UseCounter = (...params) => {
   const initialValue = typeof params[0] === 'number' ? params[0] : params[0]?.initialValue;

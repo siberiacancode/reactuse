@@ -3,10 +3,13 @@ import React from 'react';
 import { useMount } from '../useMount/useMount';
 import { useNonInitialEffect } from '../useNonInitialEffect/useNonInitialEffect';
 
+/** The use favicon options */
 export interface UseFaviconOptions {
+  /** The rel of the favicon */
   rel: string;
 }
 
+/** The use favicon return type */
 export type UseFaviconReturn = [string, React.Dispatch<React.SetStateAction<string>>];
 
 /**
@@ -18,7 +21,7 @@ export type UseFaviconReturn = [string, React.Dispatch<React.SetStateAction<stri
  * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon
  *
  * @example
- * const [href, setHref] = useFavicon('https://www.google.com/favicon.ico');
+ * const { href, set } = useFavicon('https://www.google.com/favicon.ico');
  */
 export const useFavicon = (initialHref?: string, options?: UseFaviconOptions) => {
   const rel = options?.rel ?? 'icon';
@@ -53,5 +56,5 @@ export const useFavicon = (initialHref?: string, options?: UseFaviconOptions) =>
     injectFavicon(initialHref);
   }, [initialHref, options?.rel]);
 
-  return [href, set] as const;
+  return { href, set } as const;
 };

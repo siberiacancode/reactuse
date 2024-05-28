@@ -67,13 +67,6 @@ export type UseEventListener = {
   ): UseEventListenerReturn<Target>;
 };
 
-/**
- * @name useEventListener
- * @description - Hook that manages a counter with increment, decrement, reset, and set functionalities
- *
- * @example
- * const { count, dec, inc, reset, set } = useCounter(5);
- */
 export const useEventListener = ((...params: any[]) => {
   const target = (params[1] instanceof Function ? null : params[0]) as
     | UseEventListenerTarget

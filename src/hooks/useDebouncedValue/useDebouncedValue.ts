@@ -9,16 +9,6 @@ interface UseDebouncedValueOptions {
   maxWait?: number;
 }
 
-/**
- * @name useDebouncedValue
- * @description - Hook that manages a counter with increment, decrement, reset, and set functionalities
- *
- * @param {any} value fix me
- * @param {number} delay The delay in milliseconds
- *
- * @example
- * const { count, dec, inc, reset, set } = useCounter(5);
- */
 export const useDebouncedValue = <Value>(
   value: Value,
   delay: number,
