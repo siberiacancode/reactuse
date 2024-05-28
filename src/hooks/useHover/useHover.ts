@@ -2,12 +2,17 @@ import React from 'react';
 
 import { useEventListener } from '../useEventListener/useEventListener';
 
+//* The use hover options type */
 export interface UseHoverOptions {
+  //* The on entry callback */
   onEntry?: () => void;
+  //* The on leave callback */
   onLeave?: () => void;
 }
 
+//* The use hover target type */
 export type UseHoverTarget = React.RefObject<Element | null> | Element;
+//* The use hover return type */
 export type UseHoverReturn<Target extends UseHoverTarget = any> = [
   React.RefObject<Target>,
   boolean

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
+
 export type UseStorageInitialValue<Value> = Value | (() => Value);
 export interface UseStorageOptions<Value> {
   serializer?: (value: Value) => string;
@@ -85,13 +87,15 @@ export const useStorage = <Value>(
     setStorageItem(storage, key, serializer(value));
   };
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const value = getStorageItem<Value>(storage, key, deserializer);
-    if (value !== undefined || !initialValue) return;
+    if (value !== undefined && !initialValue) return;
 
-    const defaultValue = initialValue instanceof Function ? initialValue() : initialValue;
-
-    setStorageItem(storage, key, serializer(defaultValue));
+    setStorageItem(
+      storage,
+      key,
+      serializer(initialValue instanceof Function ? initialValue() : initialValue)
+    );
   }, [key]);
 
   const remove = () => removeStorageItem(storage, key);

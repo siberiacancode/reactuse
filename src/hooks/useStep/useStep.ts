@@ -45,6 +45,7 @@ const FIRST_STEP_VALUE = 1;
  *
  * @example
  * const step = useStep(5);
+ *
  * @example
  * const stepper = useStep({ initial: 2, max: 5 });
  */

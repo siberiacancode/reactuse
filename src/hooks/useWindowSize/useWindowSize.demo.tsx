@@ -8,10 +8,10 @@ const Demo = () => {
       <p>Current window size:</p>
       <p>
         <span>
-          width: <b>{size.width}</b>
+          width: <code>{size.width}</code>
         </span>{' '}
         <span>
-          height: <b>{size.height}</b>
+          height: <code>{size.height}</code>
         </span>
       </p>
     </div>

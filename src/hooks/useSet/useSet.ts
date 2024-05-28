@@ -2,6 +2,17 @@ import React from 'react';
 
 import { useRerender } from '../useRerender/useRerender';
 
+/**
+ * @name useSet
+ * @description - Hook that manages a set structure
+ *
+ * @template Value The type of the value
+ * @param {Value[]} values The initial array of the set
+ * @returns {Set<Value>} A set structure
+ *
+ * @example
+ * const set = useSet([1, 2, 3]);
+ */
 export const useSet = <Value>(values: Value[]) => {
   const setRef = React.useRef(new Set(values));
   const rerender = useRerender();
