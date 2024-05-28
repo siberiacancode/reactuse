@@ -12,6 +12,9 @@ type UseHashReturn = [string, (value: string) => void];
  * @description - Hook that manages the hash value
  *
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
+ *
+ * @example
+ * const [hash, setHash] = useHash();
  */
 export const useHash = (): UseHashReturn => {
   const [hash, setHash] = React.useState<string>(window ? getHash() : '');
