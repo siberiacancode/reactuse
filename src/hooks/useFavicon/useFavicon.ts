@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import { useMount } from '../useMount/useMount';
-import { useNonInitialEffect } from '../useNonInitialEffect/useNonInitialEffect';
 
 /** The use favicon options */
 export interface UseFaviconOptions {
@@ -50,7 +50,7 @@ export const useFavicon = (initialHref?: string, options?: UseFaviconOptions) =>
     injectFavicon(initialHref);
   });
 
-  useNonInitialEffect(() => {
+  useDidUpdate(() => {
     if (!initialHref) return;
     setHref(initialHref);
     injectFavicon(initialHref);

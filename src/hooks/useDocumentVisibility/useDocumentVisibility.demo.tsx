@@ -1,11 +1,11 @@
-import { useNonInitialEffect } from '../useNonInitialEffect/useNonInitialEffect';
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 
 import { useDocumentVisibility } from './useDocumentVisibility';
 
 const Demo = () => {
   const documentVisibility = useDocumentVisibility();
 
-  useNonInitialEffect(() => {
+  useDidUpdate(() => {
     console.log(`Current document visibility state: ${documentVisibility}`);
 
     if (documentVisibility === 'visible') {

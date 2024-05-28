@@ -4,6 +4,8 @@ import { renderHookServer } from '@/tests';
 
 import { useNetwork } from './useNetwork';
 
+const mockNavigatorOnline = vi.spyOn(navigator, 'onLine', 'get');
+
 it('Should use network', () => {
   const { result } = renderHook(useNetwork);
 
@@ -30,19 +32,13 @@ it('Should change state upon network events', () => {
   expect(result.current.online).toBeTruthy();
 
   act(() => {
-    Object.defineProperty(window.navigator, 'onLine', {
-      get: () => false,
-      configurable: true
-    });
+    mockNavigatorOnline.mockReturnValue(false);
     window.dispatchEvent(new Event('offline'));
   });
   expect(result.current.online).toBeFalsy();
 
   act(() => {
-    Object.defineProperty(window.navigator, 'onLine', {
-      get: () => true,
-      configurable: true
-    });
+    mockNavigatorOnline.mockReturnValue(true);
     window.dispatchEvent(new Event('online'));
   });
   expect(result.current.online).toBeTruthy();
