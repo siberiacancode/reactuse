@@ -3,7 +3,7 @@ import React from 'react';
 /** The use rerender return type */
 interface UseRerenderReturns {
   /** The id of the rerender */
-  id: number;
+  id: string;
   /** Function to rerender the component */
   update: () => void;
 }
@@ -18,6 +18,7 @@ interface UseRerenderReturns {
  * const { id, update } = useRerender();
  */
 export const useRerender = (): UseRerenderReturns => {
-  const [value, setValue] = React.useState(0);
-  return { id: value, update: () => setValue(Math.random()) };
+  const id = React.useId();
+  const [value, setValue] = React.useState(id);
+  return { id: value, update: () => setValue(Math.random().toString()) };
 };
