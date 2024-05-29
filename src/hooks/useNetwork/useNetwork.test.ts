@@ -13,7 +13,7 @@ it('Should use network', () => {
 });
 
 it('Should use network on server', () => {
-  const { result } = renderHookServer(() => useNetwork());
+  const { result } = renderHookServer(useNetwork);
 
   expect(result.current).toEqual({
     online: false,
@@ -27,19 +27,15 @@ it('Should use network on server', () => {
 });
 
 it('Should change state upon network events', () => {
+  mockNavigatorOnline.mockReturnValue(true);
   const { result } = renderHook(useNetwork);
-
   expect(result.current.online).toBeTruthy();
 
-  act(() => {
-    mockNavigatorOnline.mockReturnValue(false);
-    window.dispatchEvent(new Event('offline'));
-  });
+  mockNavigatorOnline.mockReturnValue(false);
+  act(() => window.dispatchEvent(new Event('offline')));
   expect(result.current.online).toBeFalsy();
 
-  act(() => {
-    mockNavigatorOnline.mockReturnValue(true);
-    window.dispatchEvent(new Event('online'));
-  });
+  mockNavigatorOnline.mockReturnValue(true);
+  act(() => window.dispatchEvent(new Event('online')));
   expect(result.current.online).toBeTruthy();
 });
