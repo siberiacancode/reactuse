@@ -32,7 +32,7 @@
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepublish": "yarn type && yarn unit-test run && yarn build",
+    "prepublishOnly": "yarn type && yarn unit-test run && yarn build",
     "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
     "lint": "eslint . --ext ts --ext tsx --no-error-on-unmatched-pattern --fix",
     "format": "prettier --write **/*.{ts,jsm,md}",
