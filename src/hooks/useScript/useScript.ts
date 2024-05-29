@@ -1,9 +1,12 @@
 import React from 'react';
 
+/** The use script status */
 export type UseScriptStatus = 'loading' | 'ready' | 'error' | 'unknown';
 export const SCRIPT_STATUS_ATTRIBUTE_NAME = 'script-status';
 
+/** The use script options extends from attributes script tag */
 export interface UseScriptOptions extends React.ComponentProps<'script'> {
+  /** Whether to remove the script on unmount */
   removeOnUnmount?: boolean;
 }
 

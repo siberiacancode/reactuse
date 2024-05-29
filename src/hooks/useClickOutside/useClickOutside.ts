@@ -18,24 +18,23 @@ const getElement = (target: UseClickOutsideTarget) => {
   return target.current;
 };
 
-export type UseClickOutsideReturn<
-  Target extends UseClickOutsideTarget | Array<UseClickOutsideTarget> = any
-> = React.RefObject<Target>;
+export type UseClickOutsideReturn<Target extends UseClickOutsideTarget | UseClickOutsideTarget[]> =
+  React.RefObject<Target>;
 
 export type UseClickOutside = {
-  <Target extends UseClickOutsideTarget | Array<UseClickOutsideTarget> = any>(
+  <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
     target: Target,
     callback: (event: Event) => void
   ): void;
 
-  <Target extends UseClickOutsideTarget | Array<UseClickOutsideTarget> = any>(
+  <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
     callback: (event: Event) => void,
     target?: never
   ): UseClickOutsideReturn<Target>;
 };
 
 export const useClickOutside = ((...params: any[]) => {
-  const target = (typeof params[1] === 'undefined' ? null : params[0]) as
+  const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
     | UseClickOutsideTarget
     | Array<UseClickOutsideTarget>
     | undefined;
@@ -51,6 +50,8 @@ export const useClickOutside = ((...params: any[]) => {
   React.useEffect(() => {
     const handler = (event: Event) => {
       if (Array.isArray(target)) {
+        if (!target.length) return;
+
         target.forEach((target) => {
           const element = getElement(target);
 
