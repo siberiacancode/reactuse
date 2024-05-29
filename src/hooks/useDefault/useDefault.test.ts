@@ -7,31 +7,41 @@ it('Should use default', () => {
   const { result } = renderHook(() => useDefault(5, 10));
   const [state, setState] = result.current;
 
-  expect(typeof state).toBe('number');
+  expect(state).toBe(5);
   expect(typeof setState).toBe('function');
 });
 
 it('Should return initial value', () => {
   const { result } = renderHook(() => useDefault(5, 10));
-
   expect(result.current[0]).toBe(5);
 });
 
-it('Should return default value', () => {
-  const { result } = renderHook(() => useDefault(undefined, 10));
-
-  expect(result.current[0]).toBe(10);
-});
-
-it('Should return default value', () => {
-  const { result } = renderHook(() => useDefault(null, 10));
-
-  expect(result.current[0]).toBe(10);
+const emptyValues = [null, undefined];
+emptyValues.forEach((emptyValue) => {
+  it(`Should return default value when initial value is ${emptyValue}`, () => {
+    const { result } = renderHook(() => useDefault(emptyValue, 1));
+    expect(result.current[0]).toBe(1);
+  });
 });
 
 it('Should set new value', () => {
   const { result } = renderHook(() => useDefault(5, 10));
+  const [, setState] = result.current;
 
-  act(() => result.current[1](20));
+  act(() => setState(20));
   expect(result.current[0]).toBe(20);
+
+  act(() => setState((prevState) => prevState! + 10));
+  expect(result.current[0]).toBe(30);
+});
+
+it('Should return default value when set new empty value', () => {
+  const { result } = renderHook(() => useDefault(5, 10));
+  const [, setState] = result.current;
+
+  expect(result.current[0]).toBe(5);
+
+  act(() => setState(undefined));
+
+  expect(result.current[0]).toBe(10);
 });
