@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { isClient } from '@/utils/helpers';
+
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
 export type UseStorageInitialValue<Value> = Value | (() => Value);
@@ -33,14 +35,10 @@ const removeStorageItem = (storage: Storage, key: string) => {
   dispatchStorageEvent({ key, oldValue, newValue: null, storageArea: storage });
 };
 
-const getStorageItem = <Value>(
-  storage: Storage,
-  key: string,
-  deserializer: (value: string) => Value
-) => {
+const getStorageItem = (storage: Storage, key: string) => {
   const value = storage.getItem(key);
   if (!value) return undefined;
-  return deserializer(value);
+  return value;
 };
 
 const storageSubscribe = (callback: () => void) => {
@@ -48,8 +46,7 @@ const storageSubscribe = (callback: () => void) => {
   return () => window.removeEventListener('storage', callback);
 };
 
-const getStorageServerSnapshot = <Value>(initialValue: UseStorageInitialValue<Value>) =>
-  initialValue instanceof Function ? initialValue() : initialValue;
+const getServerSnapshot = () => undefined;
 
 export const useStorage = <Value>(
   key: string,
@@ -78,8 +75,7 @@ export const useStorage = <Value>(
     }
   };
 
-  const getSnapshot = () => getStorageItem<Value>(storage, key, deserializer) as Value;
-  const getServerSnapshot = () => getStorageServerSnapshot(initialValue);
+  const getSnapshot = () => getStorageItem(storage, key);
   const store = React.useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
 
   const set = (value: Value) => {
@@ -88,7 +84,7 @@ export const useStorage = <Value>(
   };
 
   useIsomorphicLayoutEffect(() => {
-    const value = getStorageItem<Value>(storage, key, deserializer);
+    const value = getStorageItem(storage, key);
     if (value !== undefined && !initialValue) return;
 
     setStorageItem(
@@ -100,5 +96,7 @@ export const useStorage = <Value>(
 
   const remove = () => removeStorageItem(storage, key);
 
-  return [store, set, remove] as const;
+  if (!isClient)
+    return [initialValue instanceof Function ? initialValue() : initialValue, set, remove] as const;
+  return [store ? deserializer(store) : undefined, set, remove] as const;
 };
