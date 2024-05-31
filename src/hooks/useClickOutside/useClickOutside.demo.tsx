@@ -1,16 +1,14 @@
+import { useCounter } from '../useCounter/useCounter';
+
 import { useClickOutside } from './useClickOutside';
 
 const Demo = () => {
-  const ref = useClickOutside<HTMLDivElement>((event) => {
-    console.log('@click outside 1', event.target);
-  });
+  const counter = useCounter();
 
-  useClickOutside(
-    () => document.getElementById('content')!,
-    (event) => {
-      console.log('@click outside 2', event.target);
-    }
-  );
+  const ref = useClickOutside<HTMLDivElement>(() => {
+    console.log('click outside');
+    counter.inc();
+  });
 
   return (
     <div
@@ -20,12 +18,17 @@ const Demo = () => {
         width: 200,
         height: 200,
         display: 'flex',
+        userSelect: 'none',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        border: '1px solid red'
+        border: `1px solid ${counter.count < 5 ? 'red' : 'green'}`
       }}
     >
-      content
+      <p>Click more than 5 times:</p>
+      <p>
+        <code>{counter.count}</code>
+      </p>
     </div>
   );
 };
