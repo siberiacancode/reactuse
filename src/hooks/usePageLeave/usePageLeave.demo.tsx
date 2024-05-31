@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useCounter } from '@/hooks';
 
 import { usePageLeave } from './usePageLeave';
 
 const Demo = () => {
-  const [leftsCount, setLeftsCount] = useState(0);
+  const { count, inc } = useCounter(0);
 
-  usePageLeave(() => setLeftsCount((prevState) => prevState + 1));
+  usePageLeave(() => inc(1));
 
-  return <>Mouse left the page {leftsCount} times</>;
+  return <>Mouse left the page {count} times</>;
 };
 
 export default Demo;

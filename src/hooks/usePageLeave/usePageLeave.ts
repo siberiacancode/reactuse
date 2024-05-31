@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEventListener } from '@/hooks';
 
 /**
  * @name usePageLeave
@@ -7,12 +7,7 @@ import React from 'react';
  * @param {() => void} onPageLeave The callback function what calls then mouse leaves the page
  *
  * @example
- * usePageLeave(callbackFn)
+ * usePageLeave(() => console.log('on leave'))
  */
-
-export function usePageLeave(onPageLeave: () => void) {
-  React.useEffect(() => {
-    document.documentElement.addEventListener('mouseleave', onPageLeave);
-    return () => document.documentElement.removeEventListener('mouseleave', onPageLeave);
-  }, []);
-}
+export const usePageLeave = (onPageLeave: () => void) =>
+  useEventListener(document, 'mouseleave', onPageLeave);
