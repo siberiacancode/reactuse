@@ -1,5 +1,4 @@
 import { act, renderHook } from '@testing-library/react';
-import { afterAll, afterEach, beforeAll, expect } from 'vitest';
 
 import { useCopyToClipboard } from './useCopyToClipboard';
 
