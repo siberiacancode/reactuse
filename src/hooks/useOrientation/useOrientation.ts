@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
@@ -20,7 +20,7 @@ export interface UseOrientationReturn {
  * const { angle, type } = useOrientation();
  */
 export const useOrientation = (): UseOrientationReturn => {
-  const [orientation, setOrientation] = useState<{
+  const [orientation, setOrientation] = React.useState<{
     angle: number;
     type: OrientationType;
   }>({ angle: 0, type: 'landscape-primary' });
