@@ -38,7 +38,7 @@ type IStatus = 'connecting' | 'failed' | 'connected' | 'disconnected';
  * });
  *
  * const sendMessage = (data) => {
- *    send(data)
+ *    send(data);
  * }
  */
 export const useWebSocket = (
@@ -50,9 +50,25 @@ export const useWebSocket = (
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [waitingToReconnect, setWaitingToReconnect] = useState<any>(null);
   const [status, setStatus] = useState<IStatus>('connecting');
-
-  const send = (data: Record<string, any>) => {
-    ws.current?.send(JSON.stringify(data));
+  /**
+   *
+   * @param {string} data
+   * @description The message sent to a socket can be anything, not only object. That is the reason why you have to convert all of your data into string.
+   * @example
+   * const {send} = useWebSocket('wss://serverws.com/', (message) => {
+   *   console.log(message.data);
+   * })
+   *
+   * function handleSubmit() {
+   *    const message = "Hello World!";
+   *    send(message);
+   *
+   *    const object = {message: "Hello World!"};
+   *    send(JSON.stringify(object));
+   * }
+   */
+  const send = (data: string) => {
+    ws.current?.send(data);
   };
 
   useEffect(() => {
