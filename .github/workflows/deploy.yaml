@@ -40,9 +40,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install dependencies
-        run: yarn installll
+        run: yarn instal
       - name: Build with VitePress
-        run: npm run docs:build
+        run: yarn docs:build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
