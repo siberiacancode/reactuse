@@ -7,6 +7,7 @@ export default async () => {
   const sidebarHookItems = await getSidebarHookItems();
 
   return defineConfig({
+    base: '/reactuse/',
     title: 'reactuse',
     description: '🚀 the largest and most useful hook library',
     vite: {
