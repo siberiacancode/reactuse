@@ -64,6 +64,7 @@
     "@siberiacancode/builder": "^1.3.0",
     "@siberiacancode/eslint": "^1.1.0",
     "@siberiacancode/prettier": "^1.1.0",
+    "@siberiacancode/vitest": "^1.2.3",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^15.0.7",
     "@types/doctrine": "^0.0.9",
@@ -74,7 +75,6 @@
     "doctrine": "^3.0.0",
     "eslint": "^8.56.0",
     "husky": "^9.0.11",
-    "jsdom": "^24.1.0",
     "lint-staged": "^15.2.2",
     "markdown-table": "^3.0.3",
     "react": "^18.2.0",
@@ -82,8 +82,7 @@
     "shx": "^0.3.4",
     "typescript": "^5.3.3",
     "vite": "^5.1.3",
-    "vitepress": "^1.1.4",
-    "vitest": "^1.6.0"
+    "vitepress": "^1.1.4"
   },
   "keywords": [
     "react",

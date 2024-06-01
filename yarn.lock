@@ -1663,6 +1663,14 @@
   dependencies:
     prettier "^3.2.5"
 
+"@siberiacancode/vitest@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@siberiacancode/vitest/-/vitest-1.2.3.tgz#d203ecb2909e17a54b3c11e133e97b87d6c817bf"
+  integrity sha512-rWtS33Bk4l/VqihA2fDd3Q4BRbxD/XxY5dJ2bVg5u0QwPIe1AE19dy3bQKzAduyrtIv5G+mPvfwaVFxXykmZnw==
+  dependencies:
+    jsdom "^24.1.0"
+    vitest "^1.6.0"
+
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"

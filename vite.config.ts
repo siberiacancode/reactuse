@@ -1,16 +1,12 @@
+import { vitest } from '@siberiacancode/vitest';
 import path from 'node:path';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  base: '/reactuse/',
   test: {
-    include: ['**/*.test.ts'],
-    globals: true,
-    setupFiles: './tests/setupTests.ts',
-    environment: 'jsdom',
-    coverage: {
-      reporter: ['lcov', 'text']
-    },
-    outputFile: 'coverage/sonar-report.xml'
+    ...vitest,
+    setupFiles: './tests/setupTests.ts'
   },
   resolve: {
     alias: {
