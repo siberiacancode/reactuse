@@ -9,7 +9,7 @@ const Demo = () => {
   return (
     <>
       <p>
-        Value now: <code>{count}</code>, value before: <code>{prevCount}</code>
+        Value now: <code>{count}</code>, value before: <code>{prevCount ?? 'undefined'}</code>
       </p>
       <button type='button' onClick={() => setCount(count + 1)}>
         +

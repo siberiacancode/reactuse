@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useEventListener } from '../useEventListener/useEventListener';
 
-//* The use hover options type */
+//* The use hover options */
 export interface UseHoverOptions {
   //* The on entry callback */
   onEntry?: () => void;
@@ -54,9 +54,9 @@ export type UseHover = {
  * });
  */
 export const useHover = ((...params: any[]) => {
-  const target = (params[0] instanceof Function || !('current' in params[0]) ? null : params[0]) as
-    | UseHoverTarget
-    | undefined;
+  const target = (
+    params[0] instanceof Function || !('current' in params[0]) ? undefined : params[0]
+  ) as UseHoverTarget | undefined;
 
   const options = (
     target

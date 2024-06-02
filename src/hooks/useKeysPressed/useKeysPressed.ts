@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
+import { useEvent } from '../useEvent/useEvent';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
 import { useEventListener } from '../useEventListener/useEventListener';
 
@@ -27,20 +29,20 @@ export const useKeysPressed = (params?: UseKeysPressedParams) => {
   const enabled = params?.enabled ?? true;
   const [keys, setKeys] = React.useState<{ key: string; code: string }[]>([]);
 
-  const onKeyDown = (event: KeyboardEvent) => {
+  const onKeyDown = useEvent((event: KeyboardEvent) => {
     if (!enabled) return;
     setKeys((prevKeys) => {
       if (prevKeys.some(({ code }) => code === event.code)) return prevKeys;
       return [...prevKeys, { key: event.key, code: event.code }];
     });
-  };
+  });
 
-  const onKeyUp = (event: KeyboardEvent) => {
+  const onKeyUp = useEvent((event: KeyboardEvent) => {
     if (!enabled) return;
     setKeys((prevKeys) => prevKeys.filter(({ code }) => code !== event.code));
-  };
+  });
 
-  React.useEffect(() => {
+  useDidUpdate(() => {
     setKeys([]);
   }, [enabled]);
 
