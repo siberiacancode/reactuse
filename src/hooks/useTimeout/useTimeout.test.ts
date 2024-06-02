@@ -1,5 +1,4 @@
 import { act, renderHook } from '@testing-library/react';
-import { beforeEach } from 'vitest';
 
 import { useTimeout } from './useTimeout';
 
