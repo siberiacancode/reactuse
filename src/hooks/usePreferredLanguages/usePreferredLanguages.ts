@@ -1,24 +1,26 @@
 import React from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 /**
  * @name usePreferredLanguages
  * @description Hook that returns a browser preferred languages from navigator.
  *
- * @returns {string[]} Readonly array of strings representing the user's preferred languages
+ * @returns {readonly string[]} Readonly array of strings representing the user's preferred languages
  *
  * @example
  * const languages = usePreferredLanguages()
  */
 export const usePreferredLanguages = () => {
-  const preferredLanguages = React.useRef<readonly string[]>([]);
+  const subscribe = (callback: () => void) => {
+    window.addEventListener('languagechange', callback);
 
-  if (!isClient) {
-    preferredLanguages.current = ['ru-RU', 'en-US'];
-  } else {
-    preferredLanguages.current = navigator.languages;
-  }
+    return () => {
+      window.removeEventListener('languagechange', callback);
+    };
+  };
 
-  return preferredLanguages.current;
+  const getSnapshot = () => window.navigator.languages;
+
+  const getServerSnapshot = () => ['ru-RU', 'en-US'] as const;
+
+  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 };
