@@ -11,6 +11,7 @@ export * from './useDocumentVisibility/useDocumentVisibility';
 export * from './useEvent/useEvent';
 export * from './useEventListener/useEventListener';
 export * from './useFavicon/useFavicon';
+export * from './useFps/useFps';
 export * from './useFullscreen/useFullscreen';
 export * from './useHash/useHash';
 export * from './useHotkeys/useHotkeys';
