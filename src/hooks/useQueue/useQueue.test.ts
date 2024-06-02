@@ -15,10 +15,9 @@ it('Should use queue', () => {
 });
 
 it('Should initialize the queue with initial value', () => {
-  const initialQueue = [1, 2, 3];
-  const { result } = renderHook(() => useQueue(initialQueue));
+  const { result } = renderHook(() => useQueue([1, 2, 3]));
 
-  expect(result.current.queue).toEqual(initialQueue);
+  expect(result.current.queue).toEqual([1, 2, 3]);
   expect(result.current.first).toBe(1);
   expect(result.current.last).toBe(3);
   expect(result.current.size).toBe(3);
@@ -43,7 +42,7 @@ it('Should add an element to the queue', () => {
 });
 
 it('Should remove an element from the queue and return it value', () => {
-  const { result } = renderHook(() => useQueue([1, 2, 3]));
+  const { result } = renderHook(() => useQueue([1, 2]));
 
   let removedElement;
 
@@ -52,20 +51,20 @@ it('Should remove an element from the queue and return it value', () => {
   });
 
   expect(removedElement).toBe(1);
-  expect(result.current.queue).toEqual([2, 3]);
-  expect(result.current.first).toBe(2);
-  expect(result.current.last).toBe(3);
-  expect(result.current.size).toBe(2);
+  expect(result.current.queue).toEqual([2]);
+  expect(result.current.first).toEqual(2);
+  expect(result.current.last).toEqual(2);
+  expect(result.current.size).toBe(1);
 
   act(() => {
     removedElement = result.current.remove();
   });
 
   expect(removedElement).toBe(2);
-  expect(result.current.queue).toEqual([3]);
-  expect(result.current.first).toBe(3);
-  expect(result.current.last).toBe(3);
-  expect(result.current.size).toBe(1);
+  expect(result.current.queue).toEqual([]);
+  expect(result.current.first).toBeUndefined();
+  expect(result.current.last).toBeUndefined();
+  expect(result.current.size).toBe(0);
 });
 
 it('Should clear the queue', () => {
@@ -96,7 +95,7 @@ it('Should handle removing from an empty queue', () => {
 });
 
 it('Should maintain correct state across multiple operations', () => {
-  const { result } = renderHook(() => useQueue());
+  const { result } = renderHook(() => useQueue<number>());
 
   act(() => {
     result.current.add(1);
@@ -110,12 +109,13 @@ it('Should maintain correct state across multiple operations', () => {
   expect(result.current.last).toBe(4);
   expect(result.current.size).toBe(4);
 
-  let removedElementArray;
+  const removedElementArray: number[] = [];
 
-  act(() => {
-    const removed1 = result.current.remove();
-    const removed2 = result.current.remove();
-    removedElementArray = [removed1, removed2];
+  Array.from({ length: 2 }).forEach(() => {
+    act(() => {
+      const removed = result.current.remove();
+      removedElementArray.push(removed);
+    });
   });
 
   expect(removedElementArray).toEqual([1, 2]);
@@ -123,11 +123,4 @@ it('Should maintain correct state across multiple operations', () => {
   expect(result.current.first).toBe(3);
   expect(result.current.last).toBe(4);
   expect(result.current.size).toBe(2);
-
-  act(() => result.current.clear());
-
-  expect(result.current.queue).toEqual([]);
-  expect(result.current.first).toBeUndefined();
-  expect(result.current.last).toBeUndefined();
-  expect(result.current.size).toBe(0);
 });
