@@ -3,7 +3,7 @@ import React from 'react';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useMutationObserver } from '../useMutationObserver';
 
-/** The use document title options type */
+/** The use document title options */
 export interface UseDocumentTitleOptions {
   /** Restore the previous title on unmount */
   restoreOnUnmount?: boolean;

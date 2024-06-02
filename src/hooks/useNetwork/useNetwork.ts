@@ -58,9 +58,9 @@ const getServerSnapshot = () => ({
 
 /**
  * @name useNetwork
- * @description - Hook to track network status.
+ * @description - Hook to track network status
  *
- * @returns {UseNetworkReturn} An object containing the network status.
+ * @returns {UseNetworkReturn} An object containing the network status
  *
  * @example
  * const { online, downlink, downlinkMax, effectiveType, rtt, saveData, type } = useNetwork();

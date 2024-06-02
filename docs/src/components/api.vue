@@ -79,3 +79,9 @@ props.apiParameters.forEach((parameter, index) => {
     </div>
   </div>
 </template>
+
+<style scoped>
+td:nth-child(2) {
+  white-space: nowrap;
+}
+</style>

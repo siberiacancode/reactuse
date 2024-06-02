@@ -3,9 +3,9 @@ import React from 'react';
 const getSnapshot = () => document.visibilityState;
 const getServerSnapshot = (): DocumentVisibilityState => 'hidden';
 const subscribe = (callback: () => void) => {
-  window.addEventListener('visibilitychange', callback);
+  document.addEventListener('visibilitychange', callback);
   return () => {
-    window.removeEventListener('visibilitychange', callback);
+    document.removeEventListener('visibilitychange', callback);
   };
 };
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 
 import { isClient } from '@/utils/helpers';
 
@@ -29,10 +29,10 @@ export interface UseWindowSizeReturn {
  * @returns {UseWindowSizeReturn} An object containing the current window width and height
  *
  * @example
- * const { width, height } = useWindowSize()
+ * const { width, height } = useWindowSize();
  */
 export const useWindowSize = (params?: UseWindowSizeParams) => {
-  const [size, setSize] = useState({
+  const [size, setSize] = React.useState({
     width: isClient ? window.innerWidth : params?.initialWidth ?? Number.POSITIVE_INFINITY,
     height: isClient ? window.innerHeight : params?.initialWidth ?? Number.POSITIVE_INFINITY
   });

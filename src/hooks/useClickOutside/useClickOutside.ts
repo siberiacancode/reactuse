@@ -2,10 +2,10 @@ import React from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
-// composedPath что это такое
-
+/** The use click outside target element type */
 type UseClickOutsideTarget = React.RefObject<Element | null> | (() => Element) | Element;
 
+/** Function to get target element based on its type */
 const getElement = (target: UseClickOutsideTarget) => {
   if (typeof target === 'function') {
     return target();
@@ -18,24 +18,45 @@ const getElement = (target: UseClickOutsideTarget) => {
   return target.current;
 };
 
-export type UseClickOutsideReturn<
-  Target extends UseClickOutsideTarget | Array<UseClickOutsideTarget> = any
-> = React.RefObject<Target>;
+/** The use click outside return type */
+export type UseClickOutsideReturn<Target extends UseClickOutsideTarget | UseClickOutsideTarget[]> =
+  React.RefObject<Target>;
 
 export type UseClickOutside = {
-  <Target extends UseClickOutsideTarget | Array<UseClickOutsideTarget> = any>(
+  <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
     target: Target,
     callback: (event: Event) => void
   ): void;
 
-  <Target extends UseClickOutsideTarget | Array<UseClickOutsideTarget> = any>(
+  <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
     callback: (event: Event) => void,
     target?: never
   ): UseClickOutsideReturn<Target>;
 };
 
+/**
+ * @name useClickOutside
+ * @description - Hook to handle click events outside the specified target element(s)
+ *
+ * @overload
+ * @template Target The target element(s) to detect outside clicks for
+ * @param {Target} target The target element(s) to detect outside clicks for
+ * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
+ * @returns {void}
+ *
+ * @overload
+ * @template Target The target element(s) to detect outside clicks for
+ * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
+ * @returns {UseClickOutsideReturn<Target>} A React ref to attach to the target element
+ *
+ * @example
+ * const ref = useClickOutside<HMLDiTvElement>(() => console.log('click outside'));
+ *
+ * @example
+ * useClickOutside(ref, () => console.log('click outside'));
+ */
 export const useClickOutside = ((...params: any[]) => {
-  const target = (typeof params[1] === 'undefined' ? null : params[0]) as
+  const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
     | UseClickOutsideTarget
     | Array<UseClickOutsideTarget>
     | undefined;
@@ -51,6 +72,8 @@ export const useClickOutside = ((...params: any[]) => {
   React.useEffect(() => {
     const handler = (event: Event) => {
       if (Array.isArray(target)) {
+        if (!target.length) return;
+
         target.forEach((target) => {
           const element = getElement(target);
 

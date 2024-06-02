@@ -2,111 +2,46 @@ import { act, renderHook } from '@testing-library/react';
 
 import { useCopyToClipboard } from './useCopyToClipboard';
 
-afterEach(() => {
-  vi.clearAllMocks();
+const mockNavigatorClipboardWriteText = vi.fn();
+Object.assign(navigator, {
+  clipboard: {
+    ...global.navigator.clipboard,
+    writeText: mockNavigatorClipboardWriteText
+  }
 });
 
-it('Should be defined', () => {
-  const { result } = renderHook(() => useCopyToClipboard());
+const mockDocumentExecCommand = vi.fn();
+Object.assign(document, {
+  execCommand: mockDocumentExecCommand
+});
+
+it('Should use copy to clipboard', () => {
+  const { result } = renderHook(useCopyToClipboard);
 
   expect(result.current.value).toBeNull();
   expect(typeof result.current.copy).toBe('function');
 });
 
-describe('Should copy to clipboard using navigator', () => {
-  beforeAll(() => {
-    Object.assign(navigator, {
-      clipboard: {
-        writeText: vi.fn()
-      }
-    });
-  });
+it('Should copy value to clipboard', async () => {
+  const { result } = renderHook(useCopyToClipboard);
 
-  afterAll(() => {
-    Object.assign(navigator, {
-      clipboard: {}
-    });
-  });
+  await act(() => result.current.copy('string'));
 
-  it('Should copy value to clipboard', async () => {
-    const copyText = 'Some string content';
-    const { result } = renderHook(() => useCopyToClipboard());
-
-    await act(async () => {
-      await result.current.copy(copyText);
-    });
-
-    const {
-      clipboard: { writeText }
-    } = navigator;
-
-    expect(result.current.value).toBe(copyText);
-    expect(writeText).toHaveBeenLastCalledWith(copyText);
-    expect(writeText).toHaveBeenCalledOnce();
-  });
-
-  it('Should copy last value to clipboard', async () => {
-    const copyText = 'Lorem ipsum dolor sit amet';
-    const { result } = renderHook(() => useCopyToClipboard());
-
-    await act(async () => {
-      await result.current.copy('Some string');
-      await result.current.copy(copyText);
-    });
-
-    const {
-      clipboard: { writeText }
-    } = navigator;
-
-    expect(result.current.value).toBe(copyText);
-    expect(writeText).toHaveBeenCalledTimes(2);
-    expect(writeText).toHaveBeenLastCalledWith(copyText);
-  });
+  expect(result.current.value).toBe('string');
+  expect(mockNavigatorClipboardWriteText).toHaveBeenCalledOnce();
+  expect(mockNavigatorClipboardWriteText).toHaveBeenCalledWith('string');
 });
 
-describe('Should copy to clipboard using legacy way', () => {
-  beforeAll(() => {
-    Object.assign(document, {
-      execCommand: vi.fn()
-    });
-  });
+it('Should copy value to clipboard if writeText not supported', async () => {
+  mockNavigatorClipboardWriteText.mockRejectedValueOnce(new Error('writeText not supported'));
+  const { result } = renderHook(useCopyToClipboard);
 
-  afterAll(() => {
-    Object.assign(document, {
-      execCommand: undefined
-    });
-  });
+  await act(() => result.current.copy('string'));
 
-  it('Should copy value to clipboard using legacy way', async () => {
-    const copyText = 'Some string content';
-    const { result } = renderHook(() => useCopyToClipboard());
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { execCommand } = document;
 
-    await act(async () => {
-      await result.current.copy(copyText);
-    });
-
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const { execCommand } = document;
-
-    expect(result.current.value).toBe(copyText);
-    expect(execCommand).toHaveBeenCalledOnce();
-    expect(execCommand).toHaveBeenLastCalledWith('copy');
-  });
-
-  it('Should copy last value to clipboard using legacy way', async () => {
-    const copyText = 'Lorem ipsum dolor sit amet';
-    const { result } = renderHook(() => useCopyToClipboard());
-
-    await act(async () => {
-      await result.current.copy('Some string');
-      await result.current.copy(copyText);
-    });
-
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const { execCommand } = document;
-
-    expect(result.current.value).toBe(copyText);
-    expect(execCommand).toHaveBeenCalledTimes(2);
-    expect(execCommand).toHaveBeenLastCalledWith('copy');
-  });
+  expect(result.current.value).toBe('string');
+  expect(execCommand).toHaveBeenCalledOnce();
+  expect(execCommand).toHaveBeenLastCalledWith('copy');
 });
