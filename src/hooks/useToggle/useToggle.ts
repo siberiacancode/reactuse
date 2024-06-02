@@ -26,5 +26,5 @@ export const useToggle = <Value = boolean>(values: readonly Value[] = [false, tr
     values as Value[]
   );
 
-  return [option, toggle as (value?: Value) => void] as const;
+  return [option, toggle as (value?: React.SetStateAction<Value>) => void] as const;
 };
