@@ -1,4 +1,5 @@
 import React from 'react';
+import { flushSync } from 'react-dom';
 
 /** The use queue return type */
 export interface UseQueueReturn<Value> {
@@ -36,10 +37,13 @@ export const useQueue = <Value>(initialValue: Value[] = []): UseQueueReturn<Valu
   const clear = () => setQueue([]);
   const remove = () => {
     let removed;
-    setQueue(([first, ...rest]) => {
-      removed = first;
-      return rest;
+    flushSync(() => {
+      setQueue(([first, ...rest]) => {
+        removed = first;
+        return rest;
+      });
     });
+
     return removed as Value;
   };
 

@@ -36,9 +36,10 @@ export default {
     // const features = params
     //   .filter(Boolean)
     //   .map((param) => {
-    //     return `\n- title: ${param?.params.name}\n  details: ${param?.params.description}\n  link: /functions/hooks/useBattery`;
+    //     return `\n- title: ${param?.params.name}\n  details: ${param?.params.description}\n  link: /functions/hooks/${param?.params.name}`;
     //   })
     //   .join(' ');
+    // console.log('@', features);
 
     return params.filter(Boolean);
   }

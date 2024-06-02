@@ -24,7 +24,14 @@ const Demo = () => {
       <button type='button' onClick={() => add(last === undefined ? 0 : last + 1)}>
         Add
       </button>
-      <button type='button' onClick={remove}>
+      <button
+        type='button'
+        onClick={() => {
+          const removed1 = remove();
+          const removed2 = remove();
+          console.log('@', removed1, removed2);
+        }}
+      >
         Remove
       </button>
     </div>
