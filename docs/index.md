@@ -98,6 +98,9 @@ features:
 - title: usePageLeave
   details: Hook what calls given function when mouse leaves the page
   link: /functions/hooks/usePageLeave
+- title: usePreferredLanguages
+  details: Hook that returns a browser preferred languages from navigator
+  link: /functions/hooks/usePreferredLanguages
 - title: usePrevious
   details: Hook that returns the previous value
   link: /functions/hooks/usePrevious
