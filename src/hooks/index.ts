@@ -25,6 +25,7 @@ export * from './useNetwork/useNetwork';
 export * from './useOnline/useOnline';
 export * from './useOperatingSystem/useOperatingSystem';
 export * from './useOrientation/useOrientation';
+export * from './usePreferredLanguages/usePreferredLanguages';
 export * from './usePrevious/usePrevious';
 export * from './useRenderCount/useRenderCount';
 export * from './useRerender/useRerender';
