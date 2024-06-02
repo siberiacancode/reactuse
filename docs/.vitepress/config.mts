@@ -56,7 +56,7 @@ export default async () => {
               text: 'Functions',
               items: [
                 { text: 'Get Started', link: '/getting-started' },
-                { text: 'Hooks', link: '/functions/hooks/' }
+                { text: 'Hooks', link: '/functions/hooks/useBattery.html' }
               ]
             }
           ],
