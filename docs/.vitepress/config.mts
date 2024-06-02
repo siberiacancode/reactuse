@@ -23,11 +23,23 @@ export default async () => {
         return;
       }
     },
+    head: [
+      [
+        'link',
+        {
+          rel: 'icon',
+          href: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>'
+        }
+      ]
+    ],
     locales: {
       root: {
         label: 'English',
         lang: 'en',
         themeConfig: {
+          search: {
+            provider: 'local'
+          },
           editLink: {
             pattern: ({ filePath, params }) => {
               if (filePath.includes('hooks') && params?.name) {
@@ -42,10 +54,17 @@ export default async () => {
             { text: 'Home', link: '/' },
             {
               text: 'Functions',
-              items: [{ text: 'Hooks', link: '/functions/hooks/' }]
+              items: [
+                { text: 'Get Started', link: '/getting-started' },
+                { text: 'Hooks', link: '/functions/hooks/' }
+              ]
             }
           ],
           sidebar: [
+            {
+              text: 'Getting started',
+              link: '/getting-started'
+            },
             {
               text: 'Hooks',
               items: [...sidebarHookItems]

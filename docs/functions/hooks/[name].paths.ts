@@ -33,6 +33,13 @@ export default {
       })
     );
 
+    // const features = params
+    //   .filter(Boolean)
+    //   .map((param) => {
+    //     return `\n- title: ${param?.params.name}\n  details: ${param?.params.description}\n  link: /functions/hooks/useBattery`;
+    //   })
+    //   .join(' ');
+
     return params.filter(Boolean);
   }
 };

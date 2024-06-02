@@ -29,7 +29,7 @@ export interface UseWindowSizeReturn {
  * @returns {UseWindowSizeReturn} An object containing the current window width and height
  *
  * @example
- * const { width, height } = useWindowSize()
+ * const { width, height } = useWindowSize();
  */
 export const useWindowSize = (params?: UseWindowSizeParams) => {
   const [size, setSize] = React.useState({
