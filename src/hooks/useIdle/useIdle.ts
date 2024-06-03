@@ -3,8 +3,8 @@ import React from 'react';
 import { throttle } from '@/utils/helpers';
 
 interface UseIdleOptions {
-  initialState?: boolean;
-  events?: Array<keyof WindowEventMap>;
+  initialValue?: boolean;
+  events?: Array<keyof DocumentEventMap>;
 }
 
 const IDLE_EVENTS = [
@@ -14,7 +14,7 @@ const IDLE_EVENTS = [
   'touchstart',
   'wheel',
   'resize'
-] satisfies Array<keyof WindowEventMap>;
+] satisfies Array<keyof DocumentEventMap>;
 const ONE_MINUTE = 60e3;
 
 //* The use idle return type */
@@ -39,9 +39,9 @@ export interface UseIdleReturn {
  */
 export const useIdle = (
   milliseconds = ONE_MINUTE,
-  { initialState = false, events = IDLE_EVENTS }: UseIdleOptions = {}
+  { initialValue = false, events = IDLE_EVENTS }: UseIdleOptions = {}
 ): UseIdleReturn => {
-  const [idle, setIdle] = React.useState(initialState);
+  const [idle, setIdle] = React.useState(initialValue);
   const [lastActive, setLastActive] = React.useState(Date.now());
 
   React.useEffect(() => {
@@ -51,7 +51,7 @@ export const useIdle = (
     const onEvent = throttle(() => {
       setIdle(false);
       setLastActive(Date.now());
-      window.clearTimeout(timeoutId);
+      clearTimeout(timeoutId);
       timeoutId = setTimeout(onTimeout, milliseconds);
     }, 500);
 
@@ -67,7 +67,7 @@ export const useIdle = (
     return () => {
       events.forEach((event) => window.addEventListener(event, onEvent));
       document.removeEventListener('visibilitychange', onVisibilitychange);
-      window.clearTimeout(timeoutId);
+      clearTimeout(timeoutId);
     };
   }, [milliseconds, events]);
 
