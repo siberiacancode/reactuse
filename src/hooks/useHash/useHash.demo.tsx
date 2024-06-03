@@ -11,7 +11,7 @@ const Demo = () => {
     <div>
       <p>window.location.href:</p>
       <p>
-        <pre>{window.location.href}</pre>
+        <pre style={{ whiteSpace: 'pre-wrap' }}>{window.location.href}</pre>
       </p>
       <p>Edit hash: </p>
       <p>
