@@ -10,8 +10,8 @@ const Demo = () => {
   return (
     <div>
       <p>window.location.href:</p>
-      <p style={{ overflowY: 'auto' }}>
-        <pre>{window.location.href}</pre>
+      <p>
+        <pre style={{ whiteSpace: 'pre-wrap' }}>{window.location.href}</pre>
       </p>
       <p>Edit hash: </p>
       <p>
