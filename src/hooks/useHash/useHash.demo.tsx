@@ -10,7 +10,7 @@ const Demo = () => {
   return (
     <div>
       <p>window.location.href:</p>
-      <p>
+      <p style={{ overflowY: 'auto' }}>
         <pre>{window.location.href}</pre>
       </p>
       <p>Edit hash: </p>
