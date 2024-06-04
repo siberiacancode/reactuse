@@ -39,21 +39,22 @@ export type UseClickOutside = {
  * @description - Hook to handle click events outside the specified target element(s)
  *
  * @overload
- * @template Target The target element(s) to detect outside clicks for
+ * @template Target The target element(s)
  * @param {Target} target The target element(s) to detect outside clicks for
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
  * @returns {void}
  *
+ * @example
+ * useClickOutside(ref, () => console.log('click outside'));
+ *
  * @overload
- * @template Target The target element(s) to detect outside clicks for
+ * @template Target The target element(s)
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
  * @returns {UseClickOutsideReturn<Target>} A React ref to attach to the target element
  *
  * @example
  * const ref = useClickOutside<HMLDiTvElement>(() => console.log('click outside'));
  *
- * @example
- * useClickOutside(ref, () => console.log('click outside'));
  */
 export const useClickOutside = ((...params: any[]) => {
   const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as

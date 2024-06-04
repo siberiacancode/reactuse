@@ -35,20 +35,44 @@ export type UseHover = {
  * @name useHover
  * @description - Hook that defines the logic when hovering an element
  *
+ * @overload
+ * @template Target The target element
+ * @param {Target} target The target element to be hovered
+ * @param {() => void} [callback] The callback function to be invoked on mouse enter
+ * @returns {boolean} The state of the hover
+ *
  * @example
  * const hovering = useHover(ref, () => console.log('callback'));
  *
- * @example
- * const [ref, hovering] = useHover(() => console.log('callback'));
+ * @overload
+ * @template Target The target element
+ * @param {Target} target The target element to be hovered
+ * @param {() => void} [options.onEntry] The callback function to be invoked on mouse enter
+ * @param {() => void} [options.onLeave] The callback function to be invoked on mouse leave
+ * @returns {boolean} The state of the hover
  *
  * @example
- * const [ref, hovering] = useHover({
+ * const hovering = useHover(ref, {
  *   onEntry: () => console.log('onEntry'),
  *   onLeave: () => console.log('onLeave'),
  * });
  *
+ * @overload
+ * @template Target The target element
+ * @param {() => void} [callback] The callback function to be invoked on mouse enter
+ * @returns {UseHoverReturn<Target>} The state of the hover
+ *
  * @example
- * const hovering = useHover(ref, {
+ * const [ref, hovering] = useHover(() => console.log('callback'));
+ *
+ * @overload
+ * @template Target The target element
+ * @param {() => void} [options.onEntry] The callback function to be invoked on mouse enter
+ * @param {() => void} [options.onLeave] The callback function to be invoked on mouse leave
+ * @returns {UseHoverReturn<Target>} The state of the hover
+ *
+ * @example
+ * const [ref, hovering] = useHover({
  *   onEntry: () => console.log('onEntry'),
  *   onLeave: () => console.log('onLeave'),
  * });

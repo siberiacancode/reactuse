@@ -90,5 +90,8 @@
     "react use",
     "use",
     "hooks"
-  ]
+  ],
+  "dependencies": {
+    "screenfull": "^6.0.2"
+  }
 }

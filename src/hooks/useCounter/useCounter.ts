@@ -46,16 +46,17 @@ export type UseCounter = {
  * @param {number} [options.min=Number.NEGATIVE_INFINITY] The min of count value
  * @param {number} [options.max=Number.POSITIVE_INFINITY] The max of count value
  * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
-
+ *
+ * @example
+ * const { count, dec, inc, reset, set } = useCounter(5);
+ *
  * @overload
  * @param {number} [params.initialValue=0] The initial number value
  * @param {number} [params.min=Number.NEGATIVE_INFINITY] The min of count value
  * @param {number} [params.max=Number.POSITIVE_INFINITY] The max of count value
  * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
  *
- * @example
- * const { count, dec, inc, reset, set } = useCounter(5);
- * 
+ *
  * @example
  * const { count, dec, inc, reset, set } = useCounter({ initialValue: 5, min: 0, max: 10 });
  */

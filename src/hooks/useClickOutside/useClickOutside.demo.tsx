@@ -12,7 +12,6 @@ const Demo = () => {
 
   return (
     <div
-      id='content'
       ref={ref}
       style={{
         width: 200,

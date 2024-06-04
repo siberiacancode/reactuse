@@ -38,13 +38,13 @@ const FIRST_STEP_VALUE = 1;
  * @param {number} max Maximum number of steps
  * @returns {UseStepReturn} An object contains variables and functions to change the step
  *
+ * @example
+ * const step = useStep(5);
+ *
  * @overload
  * @param {number} params.max Maximum number of steps
  * @param {number} params.initial Initial value for step
  * @returns {UseStepReturn} An object contains variables and functions to change the step
- *
- * @example
- * const step = useStep(5);
  *
  * @example
  * const stepper = useStep({ initial: 2, max: 5 });
