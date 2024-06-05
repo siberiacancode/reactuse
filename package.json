@@ -1,6 +1,6 @@
 {
   "name": "@siberiacancode/reactuse",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Ultimate tool",
   "license": "MIT",
   "author": {
@@ -51,6 +51,9 @@
       "eslint --no-error-on-unmatched-pattern --fix"
     ]
   },
+  "dependencies": {
+    "screenfull": "^6.0.2"
+  },
   "peerDependencies": {
     "@types/react": "^18.0.0",
     "react": "^17.0.2 || ^18.0.0"
@@ -90,8 +93,5 @@
     "react use",
     "use",
     "hooks"
-  ],
-  "dependencies": {
-    "screenfull": "^6.0.2"
-  }
+  ]
 }

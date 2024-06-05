@@ -99,6 +99,7 @@ export const useHover = ((...params: any[]) => {
     options?.onEntry?.();
     setHovering(true);
   };
+
   const onMouseLeave = () => {
     options?.onLeave?.();
     setHovering(false);

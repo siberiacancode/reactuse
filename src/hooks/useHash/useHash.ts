@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useWindowEvent } from '../useWindowEvent/useWindowEvent';
-
 const getHash = () => decodeURIComponent(window.location.hash.replace('#', ''));
 
 /** The use hash return type */
@@ -24,8 +22,12 @@ export const useHash = (): UseHashReturn => {
     setHash(value);
   };
 
-  useWindowEvent('hashchange', () => {
-    if (hash !== window.location.hash) setHash(window.location.hash);
+  React.useEffect(() => {
+    const onHashChange = () => setHash(getHash());
+    window.addEventListener('hashchange', onHashChange);
+    return () => {
+      window.removeEventListener('hashchange', onHashChange);
+    };
   });
 
   return [hash, set] as const;

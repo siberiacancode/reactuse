@@ -9,7 +9,7 @@ import Contributors from '../../src/components/contributors.vue'
 {{ $params.description }}
 
 ```typescript-vue
-import { {{ $params.name }} } from '@sibericancode/reactuse';
+import { {{ $params.name }} } from '@siberiacancode/reactuse';
 ```
 
 ## Usage
