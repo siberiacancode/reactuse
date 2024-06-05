@@ -59,6 +59,9 @@ features:
 - title: useIdle
   details: Hook that defines the logic when the user is idle
   link: /functions/hooks/useIdle
+- title: useInterval
+  details: Hook that makes and interval and returns controlling functions
+  link: /functions/hooks/useInterval
 - title: useIsFirstRender
   details: Hook that returns true if the component is first render
   link: /functions/hooks/useIsFirstRender

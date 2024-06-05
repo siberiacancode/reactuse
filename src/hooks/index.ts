@@ -16,6 +16,7 @@ export * from './useHotkeys/useHotkeys';
 export * from './useHover/useHover';
 export * from './useIdle/useIdle';
 export * from './useIntersectionObserver/useIntersectionObserver';
+export * from './useInterval/useInterval';
 export * from './useIsFirstRender/useIsFirstRender';
 export * from './useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 export * from './useKeyPress/useKeyPress';
