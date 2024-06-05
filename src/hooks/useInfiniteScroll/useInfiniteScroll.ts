@@ -67,7 +67,7 @@ export const useInfiniteScroll = ((...params) => {
         left: scrollLeft
       };
 
-      if (direction === 'bottom' && distances[direction] <= distance) {
+      if (distances[direction] <= distance) {
         internalCallbackRef.current(event);
       }
     };
