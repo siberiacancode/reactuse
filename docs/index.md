@@ -90,7 +90,7 @@ features:
   details: Hook that executes a callback when the component mounts
   link: /functions/hooks/useMount
 - title: useMouse
-  details: 
+  details: Hook that manages a mouse position
   link: /functions/hooks/useMouse
 - title: useNetwork
   details: Hook to track network status
