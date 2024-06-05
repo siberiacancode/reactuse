@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { isShallowEqual } from '@/utils/helpers';
+import { isClient } from '@/utils/helpers';
 
 export type ConnectionType = Connection['type'];
 export type ConnectionEffectiveType = Connection['effectiveType'];
@@ -26,36 +26,6 @@ export interface UseNetworkReturn {
 export const getConnection = () =>
   navigator?.connection || navigator?.mozConnection || navigator?.webkitConnection;
 
-const subscribe = (callback: () => void) => {
-  window.addEventListener('online', callback, { passive: true });
-  window.addEventListener('offline', callback, { passive: true });
-
-  const connection = getConnection();
-
-  if (connection) {
-    connection.addEventListener('change', callback, { passive: true });
-  }
-
-  return () => {
-    window.removeEventListener('online', callback);
-    window.removeEventListener('offline', callback);
-
-    if (connection) {
-      connection.removeEventListener('change', callback);
-    }
-  };
-};
-
-const getServerSnapshot = () => ({
-  online: false,
-  type: undefined,
-  effectiveType: undefined,
-  saveData: false,
-  downlink: 0,
-  downlinkMax: 0,
-  rtt: 0
-});
-
 /**
  * @name useNetwork
  * @description - Hook to track network status
@@ -66,13 +36,22 @@ const getServerSnapshot = () => ({
  * const { online, downlink, downlinkMax, effectiveType, rtt, saveData, type } = useNetwork();
  */
 export const useNetwork = (): UseNetworkReturn => {
-  const cache = React.useRef<UseNetworkReturn>();
-
-  const getSnapshot = () => {
+  const [value, setValue] = React.useState(() => {
+    if (!isClient) {
+      return {
+        online: false,
+        type: undefined,
+        effectiveType: undefined,
+        saveData: false,
+        downlink: 0,
+        downlinkMax: 0,
+        rtt: 0
+      };
+    }
     const online = navigator.onLine;
     const connection = getConnection();
 
-    const nextState = {
+    return {
       online,
       downlink: connection?.downlink,
       downlinkMax: connection?.downlinkMax,
@@ -81,14 +60,41 @@ export const useNetwork = (): UseNetworkReturn => {
       saveData: connection?.saveData,
       type: connection?.type
     };
+  });
 
-    if (cache.current && isShallowEqual(cache.current as any, nextState)) {
-      return cache.current;
+  React.useEffect(() => {
+    const callback = () => {
+      const online = navigator.onLine;
+      const connection = getConnection();
+
+      setValue({
+        online,
+        downlink: connection?.downlink,
+        downlinkMax: connection?.downlinkMax,
+        effectiveType: connection?.effectiveType,
+        rtt: connection?.rtt,
+        saveData: connection?.saveData,
+        type: connection?.type
+      });
+    };
+    window.addEventListener('online', callback, { passive: true });
+    window.addEventListener('offline', callback, { passive: true });
+
+    const connection = getConnection();
+
+    if (connection) {
+      connection.addEventListener('change', callback, { passive: true });
     }
 
-    cache.current = nextState;
-    return nextState;
-  };
+    return () => {
+      window.removeEventListener('online', callback);
+      window.removeEventListener('offline', callback);
 
-  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+      if (connection) {
+        connection.removeEventListener('change', callback);
+      }
+    };
+  });
+
+  return value;
 };

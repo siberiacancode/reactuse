@@ -47,6 +47,9 @@ features:
 - title: useFavicon
   details: Hook that manages the favicon
   link: /functions/hooks/useFavicon
+- title: useFullscreen
+  details: Hook to handle fullscreen events
+  link: /functions/hooks/useFullscreen
 - title: useHash
   details: Hook that manages the hash value
   link: /functions/hooks/useHash
@@ -71,6 +74,9 @@ features:
 - title: useKeysPressed
   details: Hook that listens for key press events
   link: /functions/hooks/useKeysPressed
+- title: useList
+  details: Hook that defines the logic when unmounting a component
+  link: /functions/hooks/useList
 - title: useLocalStorage
   details: Hook that manages local storage value
   link: /functions/hooks/useLocalStorage
@@ -83,6 +89,9 @@ features:
 - title: useMount
   details: Hook that executes a callback when the component mounts
   link: /functions/hooks/useMount
+- title: useMouse
+  details: 
+  link: /functions/hooks/useMouse
 - title: useNetwork
   details: Hook to track network status
   link: /functions/hooks/useNetwork
@@ -122,9 +131,9 @@ features:
 - title: useSet
   details: Hook that manages a set structure
   link: /functions/hooks/useSet
-- title: useStep
-  details: Hook that create stepper
-  link: /functions/hooks/useStep
+- title: useTextSelection
+  details: Hook that manages the text selection
+  link: /functions/hooks/useTextSelection 
 - title: useTimeout
   details: that executes a callback function after a specified delay
   link: /functions/hooks/useTimeout
