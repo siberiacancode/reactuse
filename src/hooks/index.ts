@@ -15,6 +15,7 @@ export * from './useHash/useHash';
 export * from './useHotkeys/useHotkeys';
 export * from './useHover/useHover';
 export * from './useIdle/useIdle';
+export * from './useInfiniteScroll/useInfiniteScroll';
 export * from './useIntersectionObserver/useIntersectionObserver';
 export * from './useIsFirstRender/useIsFirstRender';
 export * from './useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
