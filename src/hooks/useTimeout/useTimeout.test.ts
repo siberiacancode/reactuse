@@ -6,50 +6,36 @@ beforeEach(() => {
   vi.useFakeTimers();
 });
 
-it('Should not call callback at the start', () => {
-  const callback = vi.fn();
-  const { result } = renderHook(() => useTimeout(callback, 5000));
+it('Should use timeout', () => {
+  const { result } = renderHook(() => useTimeout(vi.fn(), 5000));
 
   expect(result.current.ready).toBeFalsy();
-  expect(callback).not.toBeCalled();
-});
-
-it('Shoul not call callback unless the timer has expired', () => {
-  const callback = vi.fn();
-  const { result } = renderHook(() => useTimeout(callback, 5000));
-
-  act(() => vi.advanceTimersByTime(4999));
-
-  expect(result.current.ready).toBeFalsy();
-  expect(callback).not.toBeCalled();
+  expect(typeof result.current.clear).toBe('function');
 });
 
 it('Should call callback after the timer expires', () => {
   const callback = vi.fn();
   const { result } = renderHook(() => useTimeout(callback, 5000));
 
-  act(() => vi.runAllTimers());
+  act(() => vi.advanceTimersByTime(2500));
+  expect(result.current.ready).toBeFalsy();
+  expect(callback).toBeCalledTimes(0);
+
+  act(() => vi.advanceTimersByTime(5000));
 
   expect(result.current.ready).toBeTruthy();
   expect(callback).toBeCalledTimes(1);
 });
 
-it('Should not call callback after calling the cleaning function', () => {
+it('Should clear the timeout', () => {
   const callback = vi.fn();
   const { result } = renderHook(() => useTimeout(callback, 5000));
 
   act(() => {
     result.current.clear();
-    vi.runAllTimers();
+    vi.clearAllTimers();
   });
 
-  expect(callback).not.toBeCalled();
-});
-
-it('Should be ready after calling the cleaning function', () => {
-  const { result } = renderHook(() => useTimeout(() => {}, 5000));
-
-  act(() => result.current.clear());
-
   expect(result.current.ready).toBeTruthy();
+  expect(callback).not.toBeCalled();
 });

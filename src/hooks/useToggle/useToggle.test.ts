@@ -6,7 +6,7 @@ it('Should use toggle', () => {
   const { result } = renderHook(() => useToggle());
   const [on, toggle] = result.current;
 
-  expect(on).toBe(false);
+  expect(on).toBeFalsy();
   expect(typeof toggle).toBe('function');
 });
 

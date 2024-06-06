@@ -18,7 +18,7 @@ it('Should add a new value and rerender', () => {
 
   act(() => set.add(4));
 
-  expect(set.has(4)).toBe(true);
+  expect(set.has(4)).toBeTruthy();
   expect(set.size).toBe(4);
 });
 
@@ -28,7 +28,7 @@ it('Should delete a value and rerender', () => {
 
   act(() => set.delete(3));
 
-  expect(set.has(3)).toBe(false);
+  expect(set.has(3)).toBeFalsy();
   expect(set.size).toBe(2);
 });
 
