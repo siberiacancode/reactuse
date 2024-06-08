@@ -54,7 +54,7 @@ features:
   details: Hook that manages the hash value
   link: /functions/hooks/useHash
 - title: useHotkeys
-  details: Hook that listens for key press events
+  details: Hook that listens for hotkeys
   link: /functions/hooks/useHotkeys
 - title: useHover
   details: Hook that defines the logic when hovering an element
@@ -68,11 +68,14 @@ features:
 - title: useIsomorphicLayoutEffect
   details: Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
   link: /functions/hooks/useIsomorphicLayoutEffect
+- title: useKeyboard
+  details: Hook that help to listen for keyboard events
+  link: /functions/hooks/useKeyboard
 - title: useKeyPress
   details: Hook that listens for key press events
   link: /functions/hooks/useKeyPress
 - title: useKeysPressed
-  details: Hook that listens for key press events
+  details: Hook for get keys that were pressed
   link: /functions/hooks/useKeysPressed
 - title: useList
   details: Hook that defines the logic when unmounting a component
@@ -81,8 +84,11 @@ features:
   details: Hook that manages local storage value
   link: /functions/hooks/useLocalStorage
 - title: useLogger
-  details: Hook for debugging lifecycle
+  details: Hook that defines the logic when long pressing an element
   link: /functions/hooks/useLogger
+- title: useLongPress
+  details: Hook for debugging lifecycle
+  link: /functions/hooks/useLongPress
 - title: useMediaQuery
   details: Hook that manages a media query
   link: /functions/hooks/useMediaQuery
@@ -92,6 +98,9 @@ features:
 - title: useMouse
   details: Hook that manages a mouse position
   link: /functions/hooks/useMouse
+- title: useMutation
+  details: Hook that defines the logic when mutate data
+  link: /functions/hooks/useMutation
 - title: useNetwork
   details: Hook to track network status
   link: /functions/hooks/useNetwork
@@ -113,6 +122,9 @@ features:
 - title: usePrevious
   details: Hook that returns the previous value
   link: /functions/hooks/usePrevious
+- title: useQuery
+  details: Hook that defines the logic when query data
+  link: /functions/hooks/useQuery
 - title: useQueue
   details: Hook that manages a queue
   link: /functions/hooks/useQueue

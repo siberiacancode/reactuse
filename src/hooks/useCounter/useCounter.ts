@@ -1,6 +1,6 @@
 import React from 'react';
 
-/** The use counter options */
+/** The use counter options type */
 export interface UseCounterOptions {
   /** The min of count value */
   min?: number;

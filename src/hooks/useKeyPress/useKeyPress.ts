@@ -6,7 +6,7 @@ import { useEventListener } from '../useEventListener/useEventListener';
 /** The key or keys to listen for */
 export type UseKeyPressKey = string | string[];
 
-/** The use key press options */
+/** The use key press options type */
 export type UseKeyPressOptions = {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
