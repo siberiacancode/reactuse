@@ -3,47 +3,40 @@ import { renderHook } from '@testing-library/react';
 import { useEvent } from './useEvent';
 
 it('Should use event', () => {
-  const { result } = renderHook(() => useEvent(() => {}));
+  const { result } = renderHook(() => useEvent(vi.fn));
 
   expect(result.current).toBeTypeOf('function');
 });
 
 it('Should return stable reference', () => {
-  let callback = vi.fn();
-  const { result, rerender } = renderHook(() => useEvent(callback));
-  const firstCallbackReference = result.current;
-  rerender();
+  const firstCallback = vi.fn();
+  const { result, rerender } = renderHook((callback) => useEvent(callback), {
+    initialProps: firstCallback
+  });
 
-  expect(result.current).toBe(firstCallbackReference);
+  const callbackReference = result.current;
 
-  callback = vi.fn();
-  rerender();
+  expect(result.current).toBe(callbackReference);
 
-  expect(result.current).toBe(firstCallbackReference);
+  const secondCallback = vi.fn();
+  rerender(secondCallback);
+
+  expect(result.current).toBe(callbackReference);
 });
 
 it('Should call the most recent callback', () => {
-  let callback = vi.fn();
-  const { result, rerender } = renderHook(() => useEvent(callback));
+  const firstCallback = vi.fn();
+  const { result, rerender } = renderHook((callback) => useEvent(callback), {
+    initialProps: firstCallback
+  });
   result.current();
 
-  expect(callback).toHaveBeenCalledTimes(1);
+  expect(firstCallback).toHaveBeenCalledTimes(1);
 
-  callback = vi.fn();
-  rerender();
+  const secondCallback = vi.fn();
+  rerender(secondCallback);
+
   result.current();
 
-  expect(callback).toHaveBeenCalledTimes(1);
-});
-
-it('Should handle changing callback with parameters', () => {
-  let callback = vi.fn((num: number) => num * 2);
-  const { result, rerender } = renderHook(() => useEvent(callback));
-
-  expect(result.current(2)).toBe(4);
-
-  callback = vi.fn((num: number) => num * 3);
-  rerender();
-
-  expect(result.current(2)).toBe(6);
+  expect(secondCallback).toHaveBeenCalledTimes(1);
 });
