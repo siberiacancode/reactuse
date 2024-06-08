@@ -30,3 +30,5 @@ interface Navigator {
   readonly webkitConnection: Connection;
   readonly getBattery: () => Promise<BatteryManager>;
 }
+
+type ReturnTypeOrType<T> = T extends (...args: any[]) => any ? ReturnType<T> : T;

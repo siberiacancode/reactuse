@@ -3,7 +3,11 @@ import React from 'react';
 import { getRetry } from '@/utils/helpers';
 
 /* The use query return type */
-interface UseQueryOptions<QueryData, Data> {
+interface UseQueryOptions<
+  QueryData,
+  Data,
+  PlaceholderData extends Data | (() => Data) | undefined
+> {
   /* The depends for the hook */
   keys?: React.DependencyList;
   /* The callback function to be invoked on success */
@@ -15,15 +19,15 @@ interface UseQueryOptions<QueryData, Data> {
   /* The initial data for the hook */
   initialData?: Data | (() => Data);
   /* The placeholder data for the hook */
-  placeholderData?: Data | (() => Data);
+  placeholderData?: PlaceholderData;
   /* The retry count of requests */
   retry?: boolean | number;
 }
 
 /* The use query return type */
-interface UseQueryReturn<Data> {
+interface UseQueryReturn<Data, PlaceholderData extends Data | (() => Data) | undefined> {
   /* The state of the query */
-  data: Data | undefined;
+  data: Data | ReturnTypeOrType<PlaceholderData>;
   /* The loading state of the query */
   isLoading: boolean;
   /* The error state of the query */
@@ -56,10 +60,14 @@ interface UseQueryReturn<Data> {
  * @example
  * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useQuery(() => fetch('https://example.com/data'));
  */
-export const useQuery = <QueryData, Data = QueryData>(
+export const useQuery = <
+  QueryData,
+  Data = QueryData,
+  PlaceholderData extends Data | (() => Data) | undefined = undefined
+>(
   callback: () => Promise<QueryData>,
-  options?: UseQueryOptions<QueryData, Data>
-): UseQueryReturn<Data> => {
+  options?: UseQueryOptions<QueryData, Data, PlaceholderData>
+): UseQueryReturn<Data, PlaceholderData> => {
   const retryCountRef = React.useRef(options?.retry ? getRetry(options.retry) : 0);
 
   const [isLoading, setIsLoading] = React.useState(false);
