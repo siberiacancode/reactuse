@@ -21,10 +21,10 @@ it('Should toggle boolean', () => {
   const { result } = renderHook(useBoolean);
   const toggle = result.current[1];
 
-  act(() => toggle());
+  act(toggle);
   expect(result.current[0]).toBeTruthy();
 
-  act(() => toggle());
+  act(toggle);
   expect(result.current[0]).toBeFalsy();
 
   act(() => toggle(false));

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
+import { useEvent } from '../useEvent/useEvent';
 
 /** The use timeout return type */
 interface UseTimeoutReturn {
@@ -23,26 +23,23 @@ interface UseTimeoutReturn {
  */
 export function useTimeout(callback: () => void, delay: number): UseTimeoutReturn {
   const [ready, setReady] = React.useState(false);
-  const internalCallbackRef = React.useRef(callback);
-  const timeoutRef = React.useRef<NodeJS.Timeout>();
 
-  useIsomorphicLayoutEffect(() => {
-    internalCallbackRef.current = callback;
-  }, [callback]);
+  const timeoutIdRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const internalCallback = useEvent(callback);
 
   React.useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
-      internalCallbackRef.current();
+    timeoutIdRef.current = setTimeout(() => {
+      internalCallback();
       setReady(true);
     }, delay);
 
     return () => {
-      clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutIdRef.current);
     };
   }, [delay]);
 
   const clear = () => {
-    clearTimeout(timeoutRef.current);
+    clearTimeout(timeoutIdRef.current);
     setReady(true);
   };
 

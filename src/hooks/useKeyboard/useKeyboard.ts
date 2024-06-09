@@ -13,7 +13,7 @@ export type UseKeyboardParams = {
 
 /**
  * @name useKeyboard
- * @description - Hook that listens for key press events
+ * @description - Hook that help to listen for keyboard events
  *
  * @param {UseEventListenerTarget} [target=window] The target to attach the event listeners to
  * @param {(event: KeyboardEvent) => void} [onKeyDown] The callback function to be invoked on key down

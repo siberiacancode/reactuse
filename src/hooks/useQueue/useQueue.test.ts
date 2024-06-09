@@ -70,7 +70,7 @@ it('Should remove an element from the queue and return it value', () => {
 it('Should clear the queue', () => {
   const { result } = renderHook(() => useQueue([1, 2, 3]));
 
-  act(() => result.current.clear());
+  act(result.current.clear);
 
   expect(result.current.queue).toEqual([]);
   expect(result.current.first).toBeUndefined();

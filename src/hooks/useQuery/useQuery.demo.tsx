@@ -28,7 +28,7 @@ const Demo = () => {
       {getPokemonQuery.data && (
         <div>
           <p>
-            <code>{getPokemonQuery.data.name}</code>
+            Name: <code>{getPokemonQuery.data.name}</code>
           </p>
           <img
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonQuery.data.id}.png`}

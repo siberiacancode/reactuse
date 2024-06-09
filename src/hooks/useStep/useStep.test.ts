@@ -19,31 +19,31 @@ it('Should use step', () => {
 it('Should increase the step', () => {
   const { result } = renderHook(() => useStep(STEPS.length));
 
-  act(() => result.current.next());
+  act(result.current.next);
   expect(result.current.currentStep).toBe(2);
 });
 
 it('Should not increase the step when max is reached', () => {
   const { result } = renderHook(() => useStep(1));
 
-  act(() => result.current.next());
+  act(result.current.next);
   expect(result.current.currentStep).toBe(1);
 });
 
 it('Should decrease the step', () => {
   const { result } = renderHook(() => useStep(STEPS.length));
 
-  act(() => result.current.next());
+  act(result.current.next);
   expect(result.current.currentStep).toBe(2);
 
-  act(() => result.current.back());
+  act(result.current.back);
   expect(result.current.currentStep).toBe(1);
 });
 
 it('Should not decrease the step when min is reached', () => {
   const { result } = renderHook(() => useStep(STEPS.length));
 
-  act(() => result.current.back());
+  act(result.current.back);
   expect(result.current.currentStep).toBe(1);
 });
 
@@ -63,11 +63,11 @@ it('Should have valid booleans', () => {
   expect(result.current.isFirst).toBeTruthy();
   expect(result.current.isLast).toBeFalsy();
 
-  act(() => result.current.next());
+  act(result.current.next);
   expect(result.current.isFirst).toBeFalsy();
   expect(result.current.isLast).toBeFalsy();
 
-  act(() => result.current.next());
+  act(result.current.next);
   expect(result.current.isFirst).toBeFalsy();
   expect(result.current.isLast).toBeTruthy();
 
@@ -99,7 +99,7 @@ describe('Value is object', () => {
   it('Should increase the step', () => {
     const { result } = renderHook(() => useStep({ initial: 1, max: STEPS.length }));
 
-    act(() => result.current.next());
+    act(result.current.next);
     expect(result.current.currentStep).toBe(2);
   });
 
@@ -107,24 +107,24 @@ describe('Value is object', () => {
     const INITIAL_STEP = STEPS.length;
     const { result } = renderHook(() => useStep({ initial: INITIAL_STEP, max: STEPS.length }));
 
-    act(() => result.current.next());
+    act(result.current.next);
     expect(result.current.currentStep).toBe(STEPS.length);
   });
 
   it('Should decrease the step', () => {
     const { result } = renderHook(() => useStep({ initial: 1, max: STEPS.length }));
 
-    act(() => result.current.next());
+    act(result.current.next);
     expect(result.current.currentStep).toBe(2);
 
-    act(() => result.current.back());
+    act(result.current.back);
     expect(result.current.currentStep).toBe(1);
   });
 
   it('Should not decrease the step when min is reached', () => {
     const { result } = renderHook(() => useStep({ initial: 1, max: STEPS.length }));
 
-    act(() => result.current.back());
+    act(result.current.back);
     expect(result.current.currentStep).toBe(1);
   });
 
@@ -144,11 +144,11 @@ describe('Value is object', () => {
     expect(result.current.isFirst).toBeTruthy();
     expect(result.current.isLast).toBeFalsy();
 
-    act(() => result.current.next());
+    act(result.current.next);
     expect(result.current.isFirst).toBeFalsy();
     expect(result.current.isLast).toBeFalsy();
 
-    act(() => result.current.next());
+    act(result.current.next);
     expect(result.current.isFirst).toBeFalsy();
     expect(result.current.isLast).toBeTruthy();
 
