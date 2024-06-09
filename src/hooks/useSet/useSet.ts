@@ -1,6 +1,16 @@
 import React from 'react';
 
-import { useRerender } from '../useRerender/useRerender';
+declare global {
+  interface Set<T> {
+    union(other: Set<T>): Set<T>;
+    difference(other: Set<T>): Set<T>;
+    symmetricDifference(other: Set<T>): Set<T>;
+    intersection(other: Set<T>): Set<T>;
+    isDisjointFrom(other: Set<T>): boolean;
+    isSubsetOf(other: Set<T>): boolean;
+    isSupersetOf(other: Set<T>): boolean;
+  }
+}
 
 /**
  * @name useSet
@@ -14,25 +24,43 @@ import { useRerender } from '../useRerender/useRerender';
  * const set = useSet([1, 2, 3]);
  */
 export const useSet = <Value>(values?: Value[]) => {
-  const setRef = React.useRef(new Set(values));
-  const rerender = useRerender();
+  const [set, setSet] = React.useState(new Set(values));
 
-  setRef.current.add = (...args) => {
-    const result = Set.prototype.add.apply(setRef.current, args);
-    rerender.update();
-    return result;
+  const add = (value: Value) => setSet((prevSet) => new Set(prevSet).add(value));
+  const remove = (value: Value) =>
+    setSet((prevSet) => {
+      if (!prevSet.has(value)) return prevSet;
+      const newSet = new Set(prevSet);
+      newSet.delete(value);
+      return newSet;
+    });
+  const clear = () => setSet(new Set());
+  const reset = () => setSet(new Set(values));
+  const toggle = (value: Value) =>
+    setSet((prevSet) => {
+      if (!prevSet.has(value)) return new Set(prevSet).add(value);
+      const newSet = new Set(prevSet);
+      newSet.delete(value);
+      return newSet;
+    });
+  const union = (other: Set<Value>) => setSet(set.union(other));
+  const difference = (other: Set<Value>) => setSet(set.difference(other));
+  const symmetricDifference = (other: Set<Value>) => setSet(set.symmetricDifference(other));
+  const intersection = (other: Set<Value>) => setSet(set.intersection(other));
+  const has = (value: Value) => set.has(value);
+
+  return {
+    value: set,
+    size: set.size,
+    has,
+    add,
+    remove,
+    clear,
+    reset,
+    toggle,
+    union,
+    difference,
+    symmetricDifference,
+    intersection
   };
-
-  setRef.current.clear = (...args) => {
-    Set.prototype.clear.apply(setRef.current, args);
-    rerender.update();
-  };
-
-  setRef.current.delete = (...args) => {
-    const result = Set.prototype.delete.apply(setRef.current, args);
-    rerender.update();
-    return result;
-  };
-
-  return setRef.current;
 };
