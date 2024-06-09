@@ -27,7 +27,7 @@ const Demo = () => {
       </div>
 
       <div style={{ marginTop: 8 }}>
-        {Array.from(scopes).map((scope) => (
+        {Array.from(scopes.value).map((scope) => (
           <>
             <code key={scope}>{scope}</code>{' '}
           </>
