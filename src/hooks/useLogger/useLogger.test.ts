@@ -9,26 +9,24 @@ afterEach(() => {
 });
 
 it('Should use logger', () => {
-  const { result } = renderHook(() => useLogger('Array', [1, 2, 3]));
-  expect(result.current).toBe(undefined);
-});
-
-it('Should log mount and unmount messages', () => {
-  const { unmount } = renderHook(() => useLogger('Component', [1, 2, 3]));
+  renderHook(() => useLogger('Component', [1, 2, 3]));
 
   expect(mockConsoleLog).toHaveBeenCalledWith('Component mounted', 1, 2, 3);
-
-  unmount();
-  expect(mockConsoleLog).toBeCalledTimes(2);
-  expect(mockConsoleLog).toHaveBeenCalledWith('Component unmounted');
+  expect(mockConsoleLog).toHaveBeenCalledOnce();
 });
 
-it('Should log mount and update messages', () => {
+it('Should log unmount', () => {
+  const { unmount } = renderHook(() => useLogger('Component', [1, 2, 3]));
+
+  unmount();
+  expect(mockConsoleLog).toHaveBeenCalledWith('Component unmounted');
+  expect(mockConsoleLog).toBeCalledTimes(2);
+});
+
+it('Should log on update', () => {
   const { rerender } = renderHook(({ name, params }) => useLogger(name, params), {
     initialProps: { name: 'Component', params: [1, 2, 3] }
   });
-
-  expect(mockConsoleLog).toHaveBeenCalledWith('Component mounted', 1, 2, 3);
 
   rerender({ name: 'Component', params: [4, 5, 6] });
   expect(mockConsoleLog).toBeCalledTimes(2);

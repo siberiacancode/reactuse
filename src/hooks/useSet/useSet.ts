@@ -49,7 +49,7 @@ interface UseSetReturn<Value> {
  * @returns {UseSetReturn} An object containing the current set and functions to interact with the set
  *
  * @example
- * const set = useSet([1, 2, 3]);
+ * const { value, add, remove, clear, reset, toggle, union, intersection, difference, symmetricDifference, size, has } = useSet([1, 2, 3]);
  */
 export const useSet = <Value>(values?: Value[]): UseSetReturn<Value> => {
   const [set, setSet] = React.useState(new Set(values));
