@@ -1,9 +1,9 @@
 import { usePreferredColorScheme } from './usePreferredColorScheme';
 
 const Demo = () => {
-  const colorScheme = usePreferredColorScheme();
+  const preferredColorScheme = usePreferredColorScheme();
 
-  return <p>Preferred Color Scheme: {colorScheme}</p>;
+  return <p>Preferred color scheme: {preferredColorScheme}</p>;
 };
 
 export default Demo;
