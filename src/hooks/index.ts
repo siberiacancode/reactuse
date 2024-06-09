@@ -37,6 +37,7 @@ export * from './useOnline/useOnline';
 export * from './useOperatingSystem/useOperatingSystem';
 export * from './useOrientation/useOrientation';
 export * from './usePageLeave/usePageLeave';
+export * from './usePreferredColorScheme/usePreferredColorScheme';
 export * from './usePreferredLanguages/usePreferredLanguages';
 export * from './usePrevious/usePrevious';
 export * from './useQuery/useQuery';

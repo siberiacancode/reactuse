@@ -119,6 +119,9 @@ features:
 - title: usePageLeave
   details: Hook what calls given function when mouse leaves the page
   link: /functions/hooks/usePageLeave
+- title: usePreferredColorScheme
+  details: Hook that returns user preferred color scheme
+  link: /functions/hooks/usePreferredColorScheme
 - title: usePreferredLanguages
   details: Hook that returns a browser preferred languages from navigator
   link: /functions/hooks/usePreferredLanguages
