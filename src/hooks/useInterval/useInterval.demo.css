@@ -1,0 +1,15 @@
+.yellow-color {
+  color: rgba(255,255,0,.5)
+}
+
+.yellow-background {
+  background: rgba(255,255,0,.5) !important
+}
+
+.green-color {
+  color: rgba(0,255,0,.5)
+}
+
+.green-background {
+  background: rgba(0,255,0,.5) !important
+}
