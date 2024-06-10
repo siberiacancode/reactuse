@@ -1,37 +1,45 @@
 import React from 'react';
 
-import { getCookie, removeCookie as removeItem, setCookie as setItem } from '@/utils/helpers';
-
-export interface UseCookieOptions {
-  expires?: Date;
-  httpOnly?: boolean;
-  secure?: boolean;
-  path?: string;
-  priority?: 'low' | 'medium' | 'high';
-  sameSite?: boolean | 'lax' | 'strict' | 'none';
-  domain?: string;
-}
+import {
+  getCookie,
+  isClient,
+  removeCookie as removeItem,
+  setCookie as setItem
+} from '@/utils/helpers';
+import type { UseCookieOptions } from '@/utils/helpers/cookie/stringifyCookieOptions';
 
 export interface UseCookieReturn {
   value?: string;
-  updateCookie: (value: string, options?: UseCookieOptions) => void;
-  removeCookie: () => void;
+  set: (value: string, options?: UseCookieOptions) => void;
+  remove: () => void;
 }
 
-export const useCookie = (key: string, initialValue?: string): UseCookieReturn => {
-  const [value, setValue] = React.useState<string | undefined>(() => {
-    return getCookie(key, initialValue);
-  });
+/**
+ * @name useCookie
+ * @description - Hook that returns the current value of a cookie, a callback to update the cookie and a callback to delete the cookie.
+ *
+ * @param {string} key The name of the cookie
+ * @param {string} [initialValue=''] The initial cookie value
+ * @returns {UseCookieReturn} An object containing the current value and functions to interact with the cookie
+ *
+ * @example
+ * const { value, set, remove } = useCounter('my-cookie');
+ */
 
-  const removeCookie = React.useCallback(() => {
+export const useCookie = (key: string, initialValue?: string): UseCookieReturn => {
+  const [value, setValue] = React.useState<string | undefined>(
+    isClient ? () => getCookie(key, initialValue) : undefined
+  );
+
+  const remove = () => {
     setValue(undefined);
     removeItem(key);
-  }, [key]);
+  };
 
-  const updateCookie = (value: string, options?: UseCookieOptions) => {
+  const set = (value: string, options?: UseCookieOptions) => {
     setValue(value);
     setItem(key, value, options);
   };
 
-  return { value, updateCookie, removeCookie } as const;
+  return { value, set, remove };
 };

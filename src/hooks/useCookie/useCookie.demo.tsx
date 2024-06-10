@@ -5,24 +5,24 @@ import { useCounter } from '@/hooks';
 import { useCookie } from './useCookie';
 
 const Demo = () => {
-  const { value, updateCookie, removeCookie } = useCookie('my-cookie');
+  const { value, set, remove } = useCookie('my-cookie');
   const { count, inc } = useCounter(1);
 
   React.useEffect(() => {
-    removeCookie();
+    remove();
   }, []);
 
-  const updateCookieHandler = () => {
-    updateCookie(`my-awesome-cookie-${count}`);
+  const setCookieHandler = () => {
+    set(`my-awesome-cookie-${count}`);
     inc();
   };
 
   return (
     <div>
       <p>Value: {value}</p>
-      <button onClick={updateCookieHandler}>Update Cookie</button>
+      <button onClick={setCookieHandler}>Update Cookie</button>
       <br />
-      <button onClick={removeCookie}>Delete Cookie</button>
+      <button onClick={remove}>Delete Cookie</button>
     </div>
   );
 };
