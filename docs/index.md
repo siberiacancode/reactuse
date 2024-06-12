@@ -44,6 +44,9 @@ features:
 - title: useEvent
   details: Hook that creates an event and returns a stable reference of it
   link: /functions/hooks/useEvent
+- title: useEventListener
+  details: Hook to handle event(s) on the specified target element
+  link: /functions/hooks/useEventListener
 - title: useFavicon
   details: Hook that manages the favicon
   link: /functions/hooks/useFavicon
