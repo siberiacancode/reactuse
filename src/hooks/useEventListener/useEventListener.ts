@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useEvent } from '../useEvent/useEvent';
 
+/** The use event listener target element type */
 export type UseEventListenerTarget =
   | React.RefObject<Element | null>
   | (() => Element)
@@ -9,6 +10,7 @@ export type UseEventListenerTarget =
   | Window
   | Document;
 
+/** Function to get target element based on its type */
 const getElement = (target: UseEventListenerTarget) => {
   if (typeof target === 'function') {
     return target();
@@ -21,8 +23,10 @@ const getElement = (target: UseEventListenerTarget) => {
   return target.current;
 };
 
+/** The use event listener options */
 export type UseEventListenerOptions = boolean | AddEventListenerOptions;
 
+/** The use event listener return type */
 export type UseEventListenerReturn<Target extends UseEventListenerTarget> = React.RefObject<Target>;
 
 export type UseEventListener = {
@@ -68,6 +72,66 @@ export type UseEventListener = {
   ): UseEventListenerReturn<Target>;
 };
 
+/**
+ * @name useEventListener
+ * @description - Hook to handle events on elements
+ *
+ * @overload
+ * @template Event
+ * @param {Window} target The target element to handle events for
+ * @param {Event | Event[]} event The event(s) to handle
+ * @param {(this: Window, event: WindowEventMap[Event]) => void} listener The callback to execute when an event is detected
+ * @param {UseEventListenerOptions} options The options for the event listener
+ * @returns {void}
+ *
+ * @example
+ * useEventListener(window, 'click', (event) => console.log('click', event.target));
+ *
+ * @overload
+ * @template Event The target element
+ * @param {Document} target The target element to handle events for
+ * @param {Event | Event[]} event The event(s) to handle
+ * @param {(this: Document, event: DocumentEventMap[Event]) => void} listener The callback to execute when an event is detected
+ * @param {UseEventListenerOptions} options The options for the event listener
+ * @returns {void}
+ *
+ * @example
+ * useEventListener(document, 'click', (event) => console.log('click', event.target));
+ *
+ * @overload
+ * @template Target
+ * @template Event The target element
+ * @param {Target} target The target element to handle events for
+ * @param {Event | Event[]} event The event(s) to handle
+ * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} listener The callback to execute when an event is detected
+ * @param {UseEventListenerOptions} options The options for the event listener
+ * @returns {void}
+ *
+ * @example
+ * useEventListener(document.createElement('div'), 'click', (event) => console.log('click', event.target));
+ *
+ * @overload
+ * @template Target
+ * @template Event The target element
+ * @param {Event | Event[]} event The event(s) to handle
+ * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} listener The callback to execute when an event is detected
+ * @param {UseEventListenerOptions} options The options for the event listener
+ * @returns {UseEventListenerReturn<Target>}
+ *
+ * @example
+ * const ref = useEventListener('click', (event) => console.log('click', event.target));
+ *
+ * @overload
+ * @template Target
+ * @template Event The target element
+ * @param {Event | Event[]} event The event(s) to handle
+ * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} listener The callback to execute when an event is detected
+ * @param {UseEventListenerOptions} options The options for the event listener
+ * @returns {UseEventListenerReturn<Target>}
+ *
+ * @example
+ * const ref = useEventListener('click', (event) => console.log('click', event.target));
+ */
 export const useEventListener = ((...params: any[]) => {
   const target = (params[1] instanceof Function ? null : params[0]) as
     | UseEventListenerTarget
