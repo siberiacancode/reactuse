@@ -50,6 +50,7 @@ export * from './useSet/useSet';
 export * from './useStep/useStep';
 export * from './useStorage/useStorage';
 export * from './useTextSelection/useTextSelection';
+export * from './useTime/useTime';
 export * from './useTimeout/useTimeout';
 export * from './useToggle/useToggle';
 export * from './useUnmount/useUnmount';
