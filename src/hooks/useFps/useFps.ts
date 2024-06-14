@@ -1,25 +1,23 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 
 /**
  * @name useFps
  * @description - Hook that measures frames per second
- *
- * @template Value The type of the value
  *
  * @returns {number} A number which determines frames per second
  *
  * @example
  * const fps = useFps();
  */
-export const useFps = (): number => {
-  const [fps, setFps] = useState(0);
+export const useFps = () => {
+  const [fps, setFps] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
     let frameCount = 0;
     let startTime = performance.now();
     let requestId: number;
 
-    const updateFps = () => {
+    const onRequestAnimationFrame = () => {
       frameCount += 1;
       const currentTime = performance.now();
       const elapsedTime = currentTime - startTime;
@@ -31,10 +29,10 @@ export const useFps = (): number => {
         startTime = currentTime;
       }
 
-      requestId = requestAnimationFrame(updateFps);
+      requestId = requestAnimationFrame(onRequestAnimationFrame);
     };
 
-    requestId = requestAnimationFrame(updateFps);
+    requestId = requestAnimationFrame(onRequestAnimationFrame);
 
     return () => {
       cancelAnimationFrame(requestId);
