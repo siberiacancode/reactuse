@@ -7,6 +7,8 @@ export interface UsePaintPencil {
   color?: string;
   /** Pencil width */
   width?: number;
+  /** Pencil opacity */
+  opacity?: number;
 }
 
 export type UsePaintOptions = UsePaintPencil;
@@ -14,6 +16,7 @@ export type UsePaintOptions = UsePaintPencil;
 /** The use paint return type */
 export interface UsePaintReturn {
   pencil: UsePaintPencil & { set: React.Dispatch<React.SetStateAction<UsePaintPencil>> };
+  drawing: boolean;
 }
 
 export type UsePaintTarget =
@@ -46,21 +49,21 @@ export type UsePaint = {
  * @name usePaint
  * @description - Hook that allows you to draw in a specific area
  *
- * @param {UsePaintParams} options - Optional properties for customizing the canvas and pencil.
- *
- * @param {CanvasOptions} options.canvasOptions - Optional properties for customizing the canvas.
- * @param {number} options.canvasOptions.width - Optional width of the canvas. Defaults to 800.
- * @param {number} options.canvasOptions.height - Optional height of the canvas. Defaults to width / 1.77.
- * @param {string} options.canvasOptions.bgColor - Optional background color of the canvas. Defaults to '#fff'.
- *
- * @param {PencilOptions} options.pencilOptions - Optional properties for customizing the pencil.
- * @param {string} options.pencilOptions.color - Optional color of the pencil. Defaults to '#000'.
- * @param {number} options.pencilOptions.width - Optional width of the pencil. Defaults to 5.
- * @param {number} options.pencilOptions.opacity - Optional opacity of the pencil. Defaults to 0.1.
- * @returns {UsePaintReturn} - Object containing the canvas reference, function to set the pencil color, pencil width, pencil opacity and function to clear the canvas.
+ * @overload
+ * @template Target The target element
+ * @param {Target} target The target element to be painted
+ * @param {UsePaintOptions} [options] The options to be used
+ * @returns {UsePaintReturn} An object containing the current pencil options and functions to interact with the paint
  *
  * @example
- * const { pencil, set } = usePaint(canvasRef);
+ * const { pencil, drawing } = usePaint(canvasRef);
+ *
+ * @overload
+ * @param {UsePaintOptions} [options] The options to be used
+ * @returns {UsePaintReturn & { ref: React.RefObject<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint
+ *
+ * @example
+ * const { ref, pencil, drawing } = usePaint();
  */
 
 export const usePaint = ((...params: any[]) => {
@@ -69,17 +72,18 @@ export const usePaint = ((...params: any[]) => {
   ) as UsePaintTarget | undefined;
   const options = (target ? params[1] : params[0]) as UsePaintOptions | undefined;
 
-  const [isDrawing, setIsDrawing] = React.useState(false);
+  const [drawing, setIsDrawing] = React.useState(false);
   const internalRef = React.useRef<HTMLCanvasElement>(null);
   const contextRef = React.useRef<CanvasRenderingContext2D | null>(null);
 
   const [pencil, setPencil] = React.useState({
     width: options?.width ?? 5,
-    color: options?.color ?? 'black'
+    color: options?.color ?? 'black',
+    opacity: options?.opacity ?? 0.1
   });
 
   const onMouseMove = useEvent((event: MouseEvent) => {
-    if (!isDrawing || !contextRef.current) return;
+    if (!drawing || !contextRef.current) return;
     contextRef.current.lineTo(event.offsetX, event.offsetY);
     contextRef.current.stroke();
   });
@@ -120,8 +124,8 @@ export const usePaint = ((...params: any[]) => {
     contextRef.current.lineWidth = pencil.width;
     contextRef.current.lineCap = 'round';
     contextRef.current.lineJoin = 'round';
-  }, [pencil.color, pencil.width]);
+  }, [pencil.color, pencil.width, pencil.opacity]);
 
-  if (target) return { pencil: { ...pencil, set: setPencil } };
-  return { pencil: { ...pencil, set: setPencil }, ref: internalRef };
+  if (target) return { pencil: { ...pencil, set: setPencil }, drawing };
+  return { pencil: { ...pencil, set: setPencil }, ref: internalRef, drawing };
 }) as UsePaint;

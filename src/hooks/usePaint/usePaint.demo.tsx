@@ -3,7 +3,7 @@ import { useKeyPressEvent } from '../useKeyPressEvent/useKeyPressEvent';
 import { usePaint } from './usePaint';
 
 const Demo = () => {
-  const { ref, pencil } = usePaint({ width: 10, color: '#e63946' });
+  const { ref, pencil, drawing } = usePaint({ width: 10, color: '#e63946' });
 
   const clearCanvas = () => {
     const canvas = ref.current;
@@ -21,7 +21,10 @@ const Demo = () => {
   useKeyPressEvent('c', clearCanvas);
 
   return (
-    <div>
+    <>
+      <p>
+        Status: <code>{drawing ? 'drawing' : 'not drawing'}</code>
+      </p>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div>
           <label>Color</label>
@@ -46,15 +49,14 @@ const Demo = () => {
       <canvas ref={ref} style={{ backgroundColor: 'white' }} />
       <br />
 
-      <div>
-        <button type='button' onClick={clearCanvas}>
-          Clear
-        </button>
-      </div>
+      <button type='button' onClick={clearCanvas}>
+        Clear
+      </button>
+
       <p>
         or press key <code>c</code> to clear
       </p>
-    </div>
+    </>
   );
 };
 
