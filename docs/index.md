@@ -20,6 +20,9 @@ features:
 - title: useBoolean
   details: Hook provides a boolean state and a function to toggle the boolean value
   link: /functions/hooks/useBoolean
+- title: useBrowserLanguage
+  details: Hook that returns the current browser language
+  link: /functions/hooks/useBrowserLanguage
 - title: useClickOutside
   details: Hook to handle click events outside the specified target element(s)
   link: /functions/hooks/useClickOutside
@@ -152,8 +155,11 @@ features:
 - title: useTextSelection
   details: Hook that manages the text selection
   link: /functions/hooks/useTextSelection 
+- title: useTime
+  details: Hook that gives you current time in different values
+  link: /functions/hooks/useTime
 - title: useTimeout
-  details: that executes a callback function after a specified delay
+  details: Hook that executes a callback function after a specified delay
   link: /functions/hooks/useTimeout
 - title: useToggle
   details: Hook that create toggle

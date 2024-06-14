@@ -1,46 +1,32 @@
 import { useTime } from './useTime';
 
 const Demo = () => {
-  const {
-    seconds,
-    minutes,
-    hours,
-    meridiemHours: { ampmHours, ampm },
-    day,
-    month,
-    year
-  } = useTime();
+  const { seconds, minutes, hours, meridiemHours, day, month, year } = useTime();
 
   return (
     <div>
-      <p>Current Time</p>
-      <div>
-        <p>
-          Seconds: <span>{seconds}</span>
-        </p>
-        <p>
-          Minutes: <span>{minutes}</span>
-        </p>
-        <p>
-          Hours: <span>{hours}</span>
-        </p>
-        <p>
-          MeridiemHours:&nbsp;
-          <span>
-            {ampmHours}
-            {ampm}
-          </span>
-        </p>
-        <p>
-          Day: <span>{day}</span>
-        </p>
-        <p>
-          Month: <span>{month}</span>
-        </p>
-        <p>
-          Year: <span>{year}</span>
-        </p>
-      </div>
+      <p>
+        Date{' '}
+        <code>
+          {month}:{day}:{year}
+        </code>
+      </p>
+      <p>
+        Time{' '}
+        <code>
+          {hours}:{minutes}:{seconds}
+        </code>
+      </p>
+
+      <p>
+        Meridiem hours:{' '}
+        <span>
+          <code>
+            {meridiemHours.value}
+            {meridiemHours.type}
+          </code>
+        </span>
+      </p>
     </div>
   );
 };

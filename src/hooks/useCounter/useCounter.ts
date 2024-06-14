@@ -1,6 +1,6 @@
 import React from 'react';
 
-/** The use counter options type */
+/** The use counter options */
 export interface UseCounterOptions {
   /** The min of count value */
   min?: number;
@@ -46,24 +46,26 @@ export type UseCounter = {
  * @param {number} [options.min=Number.NEGATIVE_INFINITY] The min of count value
  * @param {number} [options.max=Number.POSITIVE_INFINITY] The max of count value
  * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
- *
- * @example
- * const { count, dec, inc, reset, set } = useCounter(5);
- *
+
  * @overload
  * @param {number} [params.initialValue=0] The initial number value
  * @param {number} [params.min=Number.NEGATIVE_INFINITY] The min of count value
  * @param {number} [params.max=Number.POSITIVE_INFINITY] The max of count value
  * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter
  *
- *
+ * @example
+ * const { count, dec, inc, reset, set } = useCounter(5);
+ * 
  * @example
  * const { count, dec, inc, reset, set } = useCounter({ initialValue: 5, min: 0, max: 10 });
  */
-export const useCounter: UseCounter = (...params) => {
-  const initialValue = typeof params[0] === 'number' ? params[0] : params[0]?.initialValue;
+export const useCounter = ((...params: any[]) => {
+  const initialValue =
+    typeof params[0] === 'number' ? params[0] : (params[0] as UseCounterParams)?.initialValue;
   const { max = Number.POSITIVE_INFINITY, min = Number.NEGATIVE_INFINITY } =
-    typeof params[0] === 'number' ? params[1] ?? {} : params[0] ?? {};
+    typeof params[0] === 'number'
+      ? ((params[1] ?? {}) as UseCounterOptions)
+      : ((params[0] ?? {}) as UseCounterParams);
 
   const [count, setCount] = React.useState(initialValue ?? 0);
 
@@ -102,4 +104,4 @@ export const useCounter: UseCounter = (...params) => {
   };
 
   return { count, set, inc, dec, reset } as const;
-};
+}) as UseCounter;

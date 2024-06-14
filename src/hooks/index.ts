@@ -1,5 +1,6 @@
 export * from './useBattery/useBattery';
 export * from './useBoolean/useBoolean';
+export * from './useBrowserLanguage/useBrowserLanguage';
 export * from './useClickOutside/useClickOutside';
 export * from './useCopyToClipboard/useCopyToClipboard';
 export * from './useCounter/useCounter';

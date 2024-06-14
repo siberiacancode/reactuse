@@ -63,7 +63,6 @@ export type UseMouse = {
  */
 export const useMouse = ((...params: any[]) => {
   const target = params[0] as UseMouseTarget | undefined;
-  console.log('@', target);
 
   const [value, setValue] = React.useState({
     x: 0,
