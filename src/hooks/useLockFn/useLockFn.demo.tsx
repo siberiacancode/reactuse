@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useLockFn } from '@/hooks';
+import { useLockFn } from '@/hooks/useLockFn/useLockFn';
 
 const mockApiRequest = () => {
   return new Promise<void>((resolve) => {
@@ -12,17 +12,18 @@ const mockApiRequest = () => {
 
 const Demo = () => {
   const [count, setCount] = useState(0);
-
+  const [message, setMessage] = useState('');
   const submit = useLockFn(async () => {
-    console.info('Start to submit');
+    setMessage('Start to submit');
     await mockApiRequest();
     setCount((val) => val + 1);
-    console.info('Submit finished');
+    setMessage('Submit finished');
   });
 
   return (
     <>
       <p>Submit count: {count}</p>
+      {message && <p>Message: {message}</p>}
       <button onClick={submit}>Submit</button>
     </>
   );
