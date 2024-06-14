@@ -122,6 +122,9 @@ features:
 - title: useOrientation
   details: Hook that returns the current screen orientation
   link: /functions/hooks/useOrientation
+- title: usePaint
+  details: Hook that allows you to draw in a specific area
+  link: /functions/hooks/usePaint
 - title: usePageLeave
   details: Hook what calls given function when mouse leaves the page
   link: /functions/hooks/usePageLeave
