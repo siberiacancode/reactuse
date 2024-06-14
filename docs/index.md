@@ -68,9 +68,6 @@ features:
 - title: useIdle
   details: Hook that defines the logic when the user is idle
   link: /functions/hooks/useIdle
-- title: useInfiniteScroll
-  details: Hook that allows you to do infinite scrolling of an element
-  link: /functions/hooks/useInfiniteScroll
 - title: useInterval
   details: Hook that makes and interval and returns controlling functions
   link: /functions/hooks/useInterval
