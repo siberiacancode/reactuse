@@ -93,6 +93,22 @@ export const usePaint = ((...params: any[]) => {
     if (!element) return;
     contextRef.current = element.getContext('2d');
 
+    const dpr = window.devicePixelRatio;
+    const rect = element.getBoundingClientRect();
+
+    element.width = rect.width * dpr;
+    element.height = rect.height * dpr;
+
+    contextRef?.current?.scale(dpr, dpr);
+
+    element.style.width = `${rect.width}px`;
+    element.style.height = `${rect.height}px`;
+
+    if (contextRef.current) {
+      contextRef.current.imageSmoothingEnabled = true;
+      contextRef.current.imageSmoothingQuality = 'high';
+    }
+
     const onMouseDown = (event: MouseEvent) => {
       if (!contextRef.current) return;
       contextRef.current.beginPath();
