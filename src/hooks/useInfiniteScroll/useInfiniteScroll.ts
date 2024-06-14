@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React from 'react';
 
 export type UseInfiniteScrollTarget = React.RefObject<Element | null> | (() => Element) | Element;
 
@@ -42,14 +42,14 @@ export const useInfiniteScroll = ((...params) => {
   const { direction = 'bottom', distance = 10 } =
     (params[1] instanceof Function ? params[2] : params[1]) ?? {};
 
-  const internalRef = useRef<Element>(null);
-  const internalCallbackRef = useRef(callback);
+  const internalRef = React.useRef<Element>(null);
+  const internalCallbackRef = React.useRef(callback);
 
-  useEffect(() => {
+  React.useEffect(() => {
     internalCallbackRef.current = callback;
   }, [callback]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const element = target ? getElement(target) : internalRef.current;
 
     const onLoadMore = (event: Event) => {
