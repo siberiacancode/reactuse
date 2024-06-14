@@ -179,6 +179,9 @@ features:
 - title: useWindowSize
   details: Hook that manages a window size
   link: /functions/hooks/useWindowSize
+- title: useLockFn
+  details: A hook that creates a function which ensures that only one instance of the given asynchronous function can run at a time.
+  link: /functions/hooks/useLockFn
 ---
 
 
