@@ -89,7 +89,7 @@ export default async () => {
     themeConfig: {
       socialLinks: [
         { icon: 'github', link: 'https://github.com/siberiacancode/reactuse' },
-        { icon: 'npm', link: 'https://github.com/siberiacancode/reactuse' },
+        { icon: 'npm', link: 'https://www.npmjs.com/package/@siberiacancode/reactuse' },
         { icon: 'youtube', link: 'https://www.youtube.com/@siberiacancode' }
       ]
     }

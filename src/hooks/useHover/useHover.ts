@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useEventListener } from '../useEventListener/useEventListener';
 
-//* The use hover options */
+//* The use hover options type */
 export interface UseHoverOptions {
   //* The on entry callback */
   onEntry?: () => void;
@@ -13,10 +13,7 @@ export interface UseHoverOptions {
 //* The use hover target type */
 export type UseHoverTarget = React.RefObject<Element | null> | Element;
 //* The use hover return type */
-export type UseHoverReturn<Target extends UseHoverTarget = any> = [
-  React.RefObject<Target>,
-  boolean
-];
+export type UseHoverReturn<Target extends UseHoverTarget> = [React.RefObject<Target>, boolean];
 
 export type UseHover = {
   <Target extends UseHoverTarget>(target: Target, callback?: () => void): boolean;
@@ -99,6 +96,7 @@ export const useHover = ((...params: any[]) => {
     options?.onEntry?.();
     setHovering(true);
   };
+
   const onMouseLeave = () => {
     options?.onLeave?.();
     setHovering(false);

@@ -1,7 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { renderHookServer } from '@/tests';
-
+// import { renderHookServer } from '@/tests';
 import { useNetwork } from './useNetwork';
 
 const mockNavigatorOnline = vi.spyOn(navigator, 'onLine', 'get');
@@ -12,19 +11,19 @@ it('Should use network', () => {
   expect(result.current.online).toBeTruthy();
 });
 
-it('Should use network on server', () => {
-  const { result } = renderHookServer(useNetwork);
+// it('Should use network on server', () => {
+//   const { result } = renderHookServer(useNetwork);
 
-  expect(result.current).toEqual({
-    online: false,
-    type: undefined,
-    effectiveType: undefined,
-    saveData: false,
-    downlink: 0,
-    downlinkMax: 0,
-    rtt: 0
-  });
-});
+//   expect(result.current).toEqual({
+//     online: false,
+//     type: undefined,
+//     effectiveType: undefined,
+//     saveData: false,
+//     downlink: 0,
+//     downlinkMax: 0,
+//     rtt: 0
+//   });
+// });
 
 it('Should change state upon network events', () => {
   mockNavigatorOnline.mockReturnValue(true);

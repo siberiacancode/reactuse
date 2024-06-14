@@ -21,10 +21,10 @@ it('Should set initial value', () => {
 it('Should reset counter', () => {
   const { result } = renderHook(useCounter);
 
-  act(() => result.current.inc());
+  act(result.current.inc);
   expect(result.current.count).toBe(1);
 
-  act(() => result.current.reset());
+  act(result.current.reset);
   expect(result.current.count).toBe(0);
 });
 
@@ -51,7 +51,7 @@ describe('Counter decrement', () => {
   it('Should decrement counter', () => {
     const { result } = renderHook(useCounter);
 
-    act(() => result.current.dec());
+    act(result.current.dec);
     expect(result.current.count).toBe(-1);
   });
 
@@ -67,7 +67,7 @@ describe('Counter increment', () => {
   it('Should increment counter', () => {
     const { result } = renderHook(useCounter);
 
-    act(() => result.current.inc());
+    act(result.current.inc);
     expect(result.current.count).toBe(1);
   });
 
@@ -83,10 +83,10 @@ describe('Counter maximum', () => {
   it('Should not exceed the max limit', () => {
     const { result } = renderHook(() => useCounter(0, { max: 1 }));
 
-    act(() => result.current.inc());
+    act(result.current.inc);
     expect(result.current.count).toBe(1);
 
-    act(() => result.current.inc());
+    act(result.current.inc);
     expect(result.current.count).toBe(1);
   });
 
@@ -102,10 +102,10 @@ describe('Counter minimum', () => {
   it('Should not exceed the min limit', () => {
     const { result } = renderHook(() => useCounter(1, { min: 0 }));
 
-    act(() => result.current.dec());
+    act(result.current.dec);
     expect(result.current.count).toBe(0);
 
-    act(() => result.current.dec());
+    act(result.current.dec);
     expect(result.current.count).toBe(0);
   });
 
@@ -128,10 +128,10 @@ describe('Value is object', () => {
     it('Should not exceed the max limit', () => {
       const { result } = renderHook(() => useCounter({ max: 1 }));
 
-      act(() => result.current.inc());
+      act(result.current.inc);
       expect(result.current.count).toBe(1);
 
-      act(() => result.current.inc());
+      act(result.current.inc);
       expect(result.current.count).toBe(1);
     });
 
@@ -147,10 +147,10 @@ describe('Value is object', () => {
     it('Should not exceed the min limit', () => {
       const { result } = renderHook(() => useCounter({ min: 0 }));
 
-      act(() => result.current.dec());
+      act(result.current.dec);
       expect(result.current.count).toBe(0);
 
-      act(() => result.current.dec());
+      act(result.current.dec);
       expect(result.current.count).toBe(0);
     });
 

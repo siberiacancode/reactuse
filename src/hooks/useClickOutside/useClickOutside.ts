@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 
 /** The use click outside target element type */
 type UseClickOutsideTarget = React.RefObject<Element | null> | (() => Element) | Element;
@@ -54,7 +54,6 @@ export type UseClickOutside = {
  *
  * @example
  * const ref = useClickOutside<HMLDiTvElement>(() => console.log('click outside'));
- *
  */
 export const useClickOutside = ((...params: any[]) => {
   const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
@@ -66,7 +65,7 @@ export const useClickOutside = ((...params: any[]) => {
   const internalRef = React.useRef<Element>(null);
   const internalCallbackRef = React.useRef(callback);
 
-  useIsomorphicLayoutEffect(() => {
+  useDidUpdate(() => {
     internalCallbackRef.current = callback;
   }, [callback]);
 
@@ -75,13 +74,12 @@ export const useClickOutside = ((...params: any[]) => {
       if (Array.isArray(target)) {
         if (!target.length) return;
 
-        target.forEach((target) => {
+        const isClickedOutsideElements = target.every((target) => {
           const element = getElement(target);
-
-          if (element && !element.contains(event.target as Node)) {
-            internalCallbackRef.current(event);
-          }
+          return element && !element.contains(event.target as Node);
         });
+
+        if (isClickedOutsideElements) internalCallbackRef.current(event);
 
         return;
       }

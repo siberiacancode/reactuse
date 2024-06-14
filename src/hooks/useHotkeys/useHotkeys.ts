@@ -1,12 +1,11 @@
 import React from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
-import { useEvent } from '../useEvent/useEvent';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
 import { useEventListener } from '../useEventListener/useEventListener';
 
-/** The use keys pressed params */
-interface UseHotkeysOptions {
+/** The use hotkeys params */
+export interface UseHotkeysOptions {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
 
@@ -34,12 +33,12 @@ export const isHotkeyMatch = (hotkey: string, keys: UseHotkeysKey[]) =>
       )
     );
 
-type UseHotkeysHotkeys = string[] | string;
-type UseHotkeysKey = { key: string; code: string; alias: string };
+export type UseHotkeysHotkeys = string[] | string;
+export type UseHotkeysKey = { key: string; code: string; alias: string };
 
 /**
  * @name useHotkeys
- * @description - Hook that listens for key press events
+ * @description - Hook that listens for hotkeys
  *
  * @param {UseHotkeysHotkeys} hotkeys The key or keys to listen for
  * @param {(event: KeyboardEvent) => void} callback The callback function to be called when the hotkey is pressed
@@ -64,7 +63,7 @@ export const useHotkeys = (
   const preventDefault = options?.preventDefault ?? true;
   const [, setKeys] = React.useState<UseHotkeysKey[]>([]);
 
-  const onKeyDown = useEvent((event: KeyboardEvent) => {
+  const onKeyDown = (event: KeyboardEvent) => {
     if (preventDefault) event.preventDefault();
 
     if (!enabled) return;
@@ -86,12 +85,12 @@ export const useHotkeys = (
 
       return updatedKeys;
     });
-  });
+  };
 
-  const onKeyUp = useEvent((event: KeyboardEvent) => {
+  const onKeyUp = (event: KeyboardEvent) => {
     if (!enabled) return;
     setKeys((prevKeys) => prevKeys.filter(({ code }) => code !== event.code));
-  });
+  };
 
   useDidUpdate(() => {
     setKeys([]);
