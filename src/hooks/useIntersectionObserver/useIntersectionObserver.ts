@@ -89,6 +89,6 @@ export const useIntersectionObserver = ((...params: any[]) => {
     };
   }, [target, options?.rootMargin, options?.threshold, enabled]);
 
-  if (!target) return { ref: internalRef, entry, inView: !!entry?.isIntersecting };
-  return { entry, inView: !!entry?.isIntersecting };
+  if (target) return { entry, inView: !!entry?.isIntersecting };
+  return { ref: internalRef, entry, inView: !!entry?.isIntersecting };
 }) as UseIntersectionObserver;

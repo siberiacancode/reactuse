@@ -109,6 +109,6 @@ export const useLongPress = ((...params: any[]) => {
   useEventListener(target ?? internalRef, 'mouseup', cancel);
   useEventListener(target ?? internalRef, 'touchend', cancel);
 
-  if (!target) return [internalRef, isLongPressActive];
-  return isLongPressActive;
+  if (target) return isLongPressActive;
+  return [internalRef, isLongPressActive];
 }) as UseLongPress;
