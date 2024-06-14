@@ -53,6 +53,9 @@ features:
 - title: useFullscreen
   details: Hook to handle fullscreen events
   link: /functions/hooks/useFullscreen
+- title: useFps
+  details: Hook that measures frames per second
+  link: /functions/hooks/useFps
 - title: useHash
   details: Hook that manages the hash value
   link: /functions/hooks/useHash
