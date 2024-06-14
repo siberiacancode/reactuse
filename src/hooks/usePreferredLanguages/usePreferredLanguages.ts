@@ -1,7 +1,7 @@
 import React from 'react';
 
 const getSnapshot = () => window.navigator.languages;
-const getServerSnapshot = () => ['en'] as const;
+const getServerSnapshot = () => [] as const;
 const subscribe = (callback: () => void) => {
   window.addEventListener('languagechange', callback);
   return () => {

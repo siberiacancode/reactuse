@@ -23,8 +23,7 @@ const getElement = (target: UseEventListenerTarget) => {
 
 export type UseEventListenerOptions = boolean | AddEventListenerOptions;
 
-export type UseEventListenerReturn<Target extends UseEventListenerTarget = any> =
-  React.RefObject<Target>;
+export type UseEventListenerReturn<Target extends UseEventListenerTarget> = React.RefObject<Target>;
 
 export type UseEventListener = {
   <Event extends keyof WindowEventMap = keyof WindowEventMap>(
@@ -82,7 +81,6 @@ export const useEventListener = ((...params: any[]) => {
   const internalListener = useEvent(listener);
 
   React.useEffect(() => {
-    console.log('@');
     const callback = (event: Event) => internalListener(event);
     const element = target ? getElement(target) : internalRef.current;
     if (element) {

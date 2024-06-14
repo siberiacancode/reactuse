@@ -12,6 +12,6 @@ it('Should update id on update call', () => {
   const { result } = renderHook(useRerender);
   const initialId = result.current.id;
 
-  act(() => result.current.update());
+  act(result.current.update);
   expect(result.current.id).not.toBe(initialId);
 });

@@ -41,9 +41,7 @@ export const renderHookServer = <Hook extends () => any>(
   const hydrate = () => {
     const root = document.createElement('div');
     root.innerHTML = serverOutput;
-    act(() => {
-      hydrateRoot(root, component);
-    });
+    act(() => hydrateRoot(root, component));
   };
 
   return {

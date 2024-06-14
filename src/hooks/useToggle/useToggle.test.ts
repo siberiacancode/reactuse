@@ -22,7 +22,7 @@ it('Should toggle value', () => {
   const [, toggle] = result.current;
 
   expect(result.current[0]).toBe('dark');
-  act(() => toggle());
+  act(toggle);
   expect(result.current[0]).toBe('light');
 });
 
@@ -49,18 +49,18 @@ it('Should correctly toggles more than two values', () => {
   const { result } = renderHook(() => useToggle(['dark', 'light', 'normal'] as const));
   const [, toggle] = result.current;
 
-  act(() => toggle());
+  act(toggle);
   expect(result.current[0]).toBe('light');
 
-  act(() => toggle());
+  act(toggle);
   expect(result.current[0]).toBe('normal');
 
-  act(() => toggle());
+  act(toggle);
   expect(result.current[0]).toBe('dark');
 
   act(() => toggle('normal'));
   expect(result.current[0]).toBe('normal');
 
-  act(() => toggle());
+  act(toggle);
   expect(result.current[0]).toBe('dark');
 });

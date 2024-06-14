@@ -19,7 +19,7 @@ const getElement = (target: UseFullScreenTarget) => {
   return target.current;
 };
 
-/** The use fullscreen options */
+/** The use fullscreen options type */
 export interface UseFullScreenOptions {
   /** initial value */
   initialValue?: boolean;

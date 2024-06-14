@@ -20,6 +20,9 @@ features:
 - title: useBoolean
   details: Hook provides a boolean state and a function to toggle the boolean value
   link: /functions/hooks/useBoolean
+- title: useBrowserLanguage
+  details: Hook that returns the current browser language
+  link: /functions/hooks/useBrowserLanguage
 - title: useClickOutside
   details: Hook to handle click events outside the specified target element(s)
   link: /functions/hooks/useClickOutside
@@ -50,11 +53,14 @@ features:
 - title: useFullscreen
   details: Hook to handle fullscreen events
   link: /functions/hooks/useFullscreen
+- title: useFps
+  details: Hook that measures frames per second
+  link: /functions/hooks/useFps
 - title: useHash
   details: Hook that manages the hash value
   link: /functions/hooks/useHash
 - title: useHotkeys
-  details: Hook that listens for key press events
+  details: Hook that listens for hotkeys
   link: /functions/hooks/useHotkeys
 - title: useHover
   details: Hook that defines the logic when hovering an element
@@ -62,17 +68,23 @@ features:
 - title: useIdle
   details: Hook that defines the logic when the user is idle
   link: /functions/hooks/useIdle
+- title: useInterval
+  details: Hook that makes and interval and returns controlling functions
+  link: /functions/hooks/useInterval
 - title: useIsFirstRender
   details: Hook that returns true if the component is first render
   link: /functions/hooks/useIsFirstRender
 - title: useIsomorphicLayoutEffect
   details: Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
   link: /functions/hooks/useIsomorphicLayoutEffect
+- title: useKeyboard
+  details: Hook that help to listen for keyboard events
+  link: /functions/hooks/useKeyboard
 - title: useKeyPress
   details: Hook that listens for key press events
   link: /functions/hooks/useKeyPress
 - title: useKeysPressed
-  details: Hook that listens for key press events
+  details: Hook for get keys that were pressed
   link: /functions/hooks/useKeysPressed
 - title: useList
   details: Hook that defines the logic when unmounting a component
@@ -81,8 +93,11 @@ features:
   details: Hook that manages local storage value
   link: /functions/hooks/useLocalStorage
 - title: useLogger
-  details: Hook for debugging lifecycle
+  details: Hook that defines the logic when long pressing an element
   link: /functions/hooks/useLogger
+- title: useLongPress
+  details: Hook for debugging lifecycle
+  link: /functions/hooks/useLongPress
 - title: useMediaQuery
   details: Hook that manages a media query
   link: /functions/hooks/useMediaQuery
@@ -92,6 +107,9 @@ features:
 - title: useMouse
   details: Hook that manages a mouse position
   link: /functions/hooks/useMouse
+- title: useMutation
+  details: Hook that defines the logic when mutate data
+  link: /functions/hooks/useMutation
 - title: useNetwork
   details: Hook to track network status
   link: /functions/hooks/useNetwork
@@ -110,12 +128,18 @@ features:
 - title: usePageLeave
   details: Hook what calls given function when mouse leaves the page
   link: /functions/hooks/usePageLeave
+- title: usePreferredColorScheme
+  details: Hook that returns user preferred color scheme
+  link: /functions/hooks/usePreferredColorScheme
 - title: usePreferredLanguages
   details: Hook that returns a browser preferred languages from navigator
   link: /functions/hooks/usePreferredLanguages
 - title: usePrevious
   details: Hook that returns the previous value
   link: /functions/hooks/usePrevious
+- title: useQuery
+  details: Hook that defines the logic when query data
+  link: /functions/hooks/useQuery
 - title: useQueue
   details: Hook that manages a queue
   link: /functions/hooks/useQueue
@@ -137,8 +161,11 @@ features:
 - title: useTextSelection
   details: Hook that manages the text selection
   link: /functions/hooks/useTextSelection 
+- title: useTime
+  details: Hook that gives you current time in different values
+  link: /functions/hooks/useTime
 - title: useTimeout
-  details: that executes a callback function after a specified delay
+  details: Hook that executes a callback function after a specified delay
   link: /functions/hooks/useTimeout
 - title: useToggle
   details: Hook that create toggle
