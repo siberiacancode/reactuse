@@ -1,23 +1,29 @@
-import { useState } from 'react';
+import { useRerender } from '../useRerender/useRerender';
 
 import { useRenderInfo } from './useRenderInfo';
 
 const Demo = () => {
-  const [counter, setCounter] = useState(0);
-  const renderInfo = useRenderInfo('My component');
+  const rerender = useRerender();
+  const renderInfo = useRenderInfo('Component');
 
   return (
-    <div>
-      <p>Component render information:</p>
-      <p>Name: {renderInfo.component}</p>
-      <p>Count renders: {renderInfo.renders}</p>
-      <p>Since last render: {renderInfo.sinceLast}</p>
-      <p>Timestamp: {renderInfo.timestamp}</p>
-      {/* eslint-disable-next-line no-return-assign */}
-      <button onClick={() => setCounter((prevState) => (prevState += 1))}>
-        RERENDER {counter}
+    <>
+      <p>
+        Name: <code>{renderInfo.component}</code>
+      </p>
+      <p>
+        Count renders: <code>{renderInfo.renders}</code>
+      </p>
+      <p>
+        Since last render: <code>{renderInfo.sinceLast} ms</code>
+      </p>
+      <p>
+        Timestamp: <code>{renderInfo.timestamp}</code>
+      </p>
+      <button type='button' onClick={rerender.update}>
+        Rerender
       </button>
-    </div>
+    </>
   );
 };
 
