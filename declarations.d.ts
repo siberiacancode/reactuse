@@ -24,9 +24,29 @@ interface BatteryManager extends EventTarget {
   level: number;
 }
 
+interface ColorSelectionOptions {
+  signal?: AbortSignal;
+}
+
+interface ColorSelectionResult {
+  sRGBHex: string;
+}
+
+interface EyeDropper {
+  open: (options?: ColorSelectionOptions) => Promise<ColorSelectionResult>;
+}
+
 interface Navigator {
   readonly connection: Connection;
   readonly mozConnection: Connection;
   readonly webkitConnection: Connection;
   readonly getBattery: () => Promise<BatteryManager>;
+}
+
+interface EyeDropperConstructor {
+  new (): EyeDropper;
+}
+
+interface Window {
+  EyeDropper?: EyeDropperConstructor | undefined;
 }

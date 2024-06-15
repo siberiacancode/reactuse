@@ -38,6 +38,9 @@ features:
 - title: useDidUpdate
   details: Hook that behaves like useEffect, but skips the effect on the initial render
   link: /functions/hooks/useDidUpdate
+- title: useDocumentEvent
+  details: Hook attaches an event listener to the document object for the specified event
+  link: /functions/hooks/useDocumentEvent
 - title: useDocumentTitle
   details: Hook that manages the document title and allows updating it
   link: /functions/hooks/useDocumentTitle
@@ -47,6 +50,9 @@ features:
 - title: useEvent
   details: Hook that creates an event and returns a stable reference of it
   link: /functions/hooks/useEvent
+- title: useEyeDropper
+  details: Hook that gives you access to the eye dropper
+  link: /functions/hooks/useEyeDropper
 - title: useFavicon
   details: Hook that manages the favicon
   link: /functions/hooks/useFavicon
