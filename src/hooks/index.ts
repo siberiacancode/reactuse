@@ -48,6 +48,7 @@ export * from './usePrevious/usePrevious';
 export * from './useQuery/useQuery';
 export * from './useQueue/useQueue';
 export * from './useRenderCount/useRenderCount';
+export * from './useRenderInfo/useRenderInfo';
 export * from './useRerender/useRerender';
 export * from './useScript/useScript';
 export * from './useSessionStorage/useSessionStorage';
