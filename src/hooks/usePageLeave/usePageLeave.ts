@@ -6,10 +6,11 @@ import { useEvent } from '../useEvent/useEvent';
  * @name usePageLeave
  * @description - Hook what calls given function when mouse leaves the page
  *
- * @param {() => void} callback The callback function what calls then mouse leaves the page
+ * @param {() => void} [callback] The callback function what calls then mouse leaves the page
+ * @returns {boolean} A boolean which determines if the mouse left the page
  *
  * @example
- * usePageLeave(() => console.log('on leave'))
+ * const isLeft = usePageLeave(() => console.log('on leave'))
  */
 export const usePageLeave = (callback?: () => void) => {
   const [isLeft, setIsLeft] = React.useState(false);
