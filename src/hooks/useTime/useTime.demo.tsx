@@ -8,7 +8,7 @@ const Demo = () => {
       <p>
         Date{' '}
         <code>
-          {month}:{day}:{year}
+          {month}/{day}/{year}
         </code>
       </p>
       <p>
