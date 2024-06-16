@@ -9,15 +9,12 @@ export type UseSwipePosition = { x: number; y: number };
 export type UseSwipeReturn = {
   direction: UseSwipeDirection;
   isSwiping: boolean;
-  deltaX: number;
-  deltaY: number;
+  distanceX: number;
+  distanceY: number;
   percent: number;
-  coordsStart: UseSwipePosition;
-  coordsEnd: UseSwipePosition;
-};
-
-export type UseSwipeReturnActions = {
-  reset: () => void;
+  posStart: UseSwipePosition;
+  posEnd: UseSwipePosition;
+  event: UseSwipeHandledEvents | null;
 };
 
 export type UseSwipeActions = {
@@ -33,41 +30,49 @@ export type UseSwipeActions = {
 export type UseSwipeOptions = {
   /** Min distance(px) before a swipe starts. **Default**: `10` */
   threshold: number;
-  /** Prevents scroll during swipe in most cases. **Default**: `false` */
+  /** Prevents scroll during swipe. **Default**: `false` */
   preventScrollOnSwipe: boolean;
-  /** Track mouse input. **Default**: `true` */
-  trackMouse: boolean;
-  /** Track touch input. **Default**: `true` */
-  trackTouch: boolean;
+  /** Track inputs. **Default**: ['mouse', 'touch'] */
+  track: ['mouse', 'touch'];
+  /** Direction(s) to track. **Default**: `['left', 'right', 'up', 'down']` */
+  directions: UseSwipeDirection[];
 } & UseSwipeActions;
 
 export type UseSwipe = {
+  <Target extends UseSwipeTarget>(target: Target, callback?: UseSwipeCallback): UseSwipeReturn;
+
   <Target extends UseSwipeTarget>(
     target: Target,
     options?: Partial<UseSwipeOptions>
-  ): UseSwipeReturn & UseSwipeReturnActions;
+  ): UseSwipeReturn;
 
   <Target extends UseSwipeTarget>(
-    options?: Partial<UseSwipeOptions>,
+    callback: UseSwipeCallback,
     target?: never
-  ): UseSwipeReturn & { ref: React.RefObject<Target> } & UseSwipeReturnActions;
+  ): UseSwipeReturn & { ref: React.RefObject<Target> };
+
+  <Target extends UseSwipeTarget>(
+    options: Partial<UseSwipeOptions>,
+    target?: never
+  ): UseSwipeReturn & { ref: React.RefObject<Target> };
 };
 
 const USE_SWIPE_DEFAULT_OPTIONS: UseSwipeOptions = {
   threshold: 10,
   preventScrollOnSwipe: false,
-  trackMouse: true,
-  trackTouch: true
+  track: ['mouse', 'touch'],
+  directions: ['left', 'right', 'up', 'down']
 };
 
 const USE_SWIPE_DEFAULT_STATE: UseSwipeReturn = {
   isSwiping: false,
   direction: 'none',
-  coordsStart: { x: 0, y: 0 },
-  coordsEnd: { x: 0, y: 0 },
-  deltaX: 0,
-  deltaY: 0,
-  percent: 0
+  posStart: { x: 0, y: 0 },
+  posEnd: { x: 0, y: 0 },
+  distanceX: 0,
+  distanceY: 0,
+  percent: 0,
+  event: null
 };
 
 const getElement = (target: UseSwipeTarget) => {
@@ -82,7 +87,7 @@ const getElement = (target: UseSwipeTarget) => {
   return target.current;
 };
 
-const getUseSwipeOptions = (options: UseSwipeOptions) => {
+const getUseSwipeOptions = (options: UseSwipeOptions | undefined) => {
   return {
     ...USE_SWIPE_DEFAULT_OPTIONS,
     ...options
@@ -96,22 +101,84 @@ const getSwipeDirection = (deltaX: number, deltaY: number): UseSwipeDirection =>
   return deltaY > 0 ? 'up' : 'down';
 };
 
+/**
+ * @name useSwipe
+ * @description - Hook that manages a swipe event
+ *
+ * @overload
+ * @template Target The target element
+ * @param {Target} target The target element to be swiped
+ * @param {() => void} [callback] The callback function to be invoked on swipe end
+ * @returns {UseSwipeReturn} The state of the swipe
+ *
+ * @example
+ * const { isSwiping, direction} = useSwipe(ref, (data) => console.log(data));
+ *
+ * @overload
+ * @template Target The target element
+ * @param {Target} target The target element to be swiped
+ * @param {UseSwipeOptions} options An object containing the swipe options
+ *
+ * @example
+ * const {isSwiping, direction} = useSwipe(ref, {
+ *  directions: ['left'],
+ *  threshold: 20,
+ *  preventScrollOnSwipe: true,
+ *  track: ['mouse'],
+ *  onSwiped: () => console.log('onSwiped'),
+ *  onSwiping: () => console.log('onSwiping'),
+ *  onSwipedLeft: () => console.log('onSwipedLeft'),
+ *  onSwipedRight: () => console.log('onSwipedRight'),
+ *  onSwipedUp: () => console.log('onSwipedUp'),
+ *  onSwipedDown: () => console.log('onSwipedDown'),
+ * });
+ *
+ * @overload
+ * @template Target The target element
+ * @param {() => void} [callback] The callback function to be invoked on swipe end
+ * @returns {UseSwipeReturn & { ref: React.RefObject<Target> }} The state of the swipe
+ *
+ * @example
+ * const { ref, isSwiping, direction} = useSwipe((data) => console.log(data));
+ *
+ * @overload
+ * @template Target The target element
+ * @param {UseSwipeOptions} options An object containing the swipe options
+ *
+ * @example
+ * const {ref, isSwiping, direction} = useSwipe({
+ *  directions: ['left'],
+ *  threshold: 20,
+ *  preventScrollOnSwipe: true,
+ *  track: ['mouse'],
+ *  onSwiped: () => console.log('onSwiped'),
+ *  onSwiping: () => console.log('onSwiping'),
+ *  onSwipedLeft: () => console.log('onSwipedLeft'),
+ *  onSwipedRight: () => console.log('onSwipedRight'),
+ *  onSwipedUp: () => console.log('onSwipedUp'),
+ *  onSwipedDown: () => console.log('onSwipedDown'),
+ * });
+ */
+
 export const useSwipe = ((...params: any[]) => {
-  const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
-    | UseSwipeTarget
-    | undefined;
-  const userOptions = (target ? params[1] : params[0]) as UseSwipeOptions;
+  const target = (
+    params[0] instanceof Function || !('current' in params[0]) ? undefined : params[0]
+  ) as UseSwipeTarget | undefined;
+  const userOptions = (
+    target
+      ? typeof params[1] === 'object'
+        ? params[1]
+        : { onSwiped: params[1] }
+      : typeof params[0] === 'object'
+        ? params[0]
+        : { onSwiped: params[0] }
+  ) as UseSwipeOptions | undefined;
 
   const options = getUseSwipeOptions(userOptions);
   const internalRef = React.useRef<Element>(null);
 
   const [value, setValue] = React.useState<UseSwipeReturn>(USE_SWIPE_DEFAULT_STATE);
 
-  const reset = () => {
-    setValue({ ...USE_SWIPE_DEFAULT_STATE });
-  };
-
-  // looks bullshit need some rework
   const getSwipePositions = (event: UseSwipeHandledEvents) => {
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return { x: 0, y: 0 }; // ?
@@ -130,10 +197,10 @@ export const useSwipe = ((...params: any[]) => {
     const { width, height } = element.getBoundingClientRect();
     return {
       none: 0,
-      left: Math.round((Math.abs(deltaX) * 100) / width),
-      right: Math.round((Math.abs(deltaX) * 100) / width),
-      up: Math.round((Math.abs(deltaY) * 100) / height),
-      down: Math.round((Math.abs(deltaY) * 100) / height)
+      left: Math.min(Math.round((Math.abs(deltaX) * 100) / width), 100),
+      right: Math.min(Math.round((Math.abs(deltaX) * 100) / width), 100),
+      up: Math.min(Math.round((Math.abs(deltaY) * 100) / height), 100),
+      down: Math.min(Math.round((Math.abs(deltaY) * 100) / height), 100)
     };
   };
 
@@ -145,31 +212,38 @@ export const useSwipe = ((...params: any[]) => {
       }
 
       const { x, y } = getSwipePositions(event);
-      const deltaX = Math.round(prevValue.coordsStart.x - x);
-      const deltaY = Math.round(prevValue.coordsStart.y - y);
-      const isThresholdExceeded = Math.max(Math.abs(deltaX), Math.abs(deltaY)) >= options.threshold;
+      const distanceX = Math.round(prevValue.posStart.x - x);
+      const distanceY = Math.round(prevValue.posStart.y - y);
+      const absX = Math.abs(distanceX);
+      const absY = Math.abs(distanceY);
+      const isThresholdExceeded = Math.max(absX, absY) >= options.threshold;
       const isSwiping = prevValue.isSwiping || isThresholdExceeded;
-      const direction = isSwiping ? getSwipeDirection(deltaX, deltaY) : 'none';
-      const percent = getPercent(deltaX, deltaY);
+      const direction = isSwiping ? getSwipeDirection(distanceX, distanceY) : 'none';
+      if (!options.directions.includes(direction)) return prevValue;
+
+      const percent = getPercent(distanceX, distanceY);
       const newValue: UseSwipeReturn = {
         ...prevValue,
         isSwiping,
         direction,
-        coordsEnd: { x, y },
-        deltaX,
-        deltaY,
+        event,
+        distanceX,
+        distanceY,
+        posEnd: { x, y },
         percent: percent[direction]
       };
 
       options?.onSwiping?.(newValue);
+
       return newValue;
     });
   };
 
-  const onFinish = () => {
+  const onFinish = (event: UseSwipeHandledEvents) => {
     setValue((prevValue) => {
       const newValue: UseSwipeReturn = {
         ...prevValue,
+        event,
         isSwiping: false
       };
 
@@ -193,15 +267,16 @@ export const useSwipe = ((...params: any[]) => {
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('touchmove', onMove);
   };
+
   const onStart = (event: UseSwipeHandledEvents) => {
     event.preventDefault(); // prevent text selection
 
     const isTouch = 'touches' in event;
-    if (options.trackMouse && !isTouch) {
+    if (options?.track.includes('mouse') && !isTouch) {
       document.addEventListener('mousemove', onMove);
       document.addEventListener('mouseup', onFinish, { once: true });
     }
-    if (options.trackTouch && isTouch) {
+    if (options?.track.includes('touch') && isTouch) {
       document.addEventListener('touchmove', onMove);
       document.addEventListener('touchend', onFinish, { once: true });
     }
@@ -211,7 +286,8 @@ export const useSwipe = ((...params: any[]) => {
     setValue((prevValue) => {
       const newValue: UseSwipeReturn = {
         ...prevValue,
-        coordsStart: { x, y },
+        event,
+        posStart: { x, y },
         direction: 'none'
       };
       options?.onSwipeStart?.(newValue);
@@ -223,11 +299,16 @@ export const useSwipe = ((...params: any[]) => {
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
 
-    // @ts-ignore
-    // element.addEventListener('mousedown', (event) <-- has Event type, not MouseEvent
-    if (options.trackMouse) element.addEventListener('mousedown', onStart);
-    // @ts-ignore
-    if (options.trackTouch) element.addEventListener('touchstart', onStart);
+    if (options?.track.includes('mouse')) {
+      // @ts-ignore
+      // element.addEventListener('mousedown', (event) <-- has Event type, not MouseEvent
+      element.addEventListener('mousedown', onStart);
+    }
+
+    if (options?.track.includes('touch')) {
+      // @ts-ignore
+      element.addEventListener('touchstart', onStart);
+    }
 
     return () => {
       // @ts-ignore
@@ -241,6 +322,6 @@ export const useSwipe = ((...params: any[]) => {
     };
   }, []);
 
-  if (target) return { ...value, reset };
-  return { ...value, reset, ref: internalRef };
+  if (target) return { ...value };
+  return { ...value, ref: internalRef };
 }) as UseSwipe;
