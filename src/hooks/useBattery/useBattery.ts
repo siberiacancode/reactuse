@@ -46,10 +46,10 @@ export const useBattery = () => {
       setState({
         supported: true,
         loading: false,
-        level: battery?.level || 0,
-        charging: battery?.charging || false,
-        dischargingTime: battery?.dischargingTime || 0,
-        chargingTime: battery?.chargingTime || 0
+        level: battery?.level ?? 0,
+        charging: battery?.charging ?? false,
+        dischargingTime: battery?.dischargingTime ?? 0,
+        chargingTime: battery?.chargingTime ?? 0
       });
 
     navigator.getBattery().then((batteryManager) => {
