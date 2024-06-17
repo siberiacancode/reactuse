@@ -15,10 +15,10 @@ const Demo = () => {
   ]);
 
   const webSocket = useWebSocket('wss://echo.websocket.org', {
-    onConnected: () =>
+    onConnected: (webSocket) =>
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: 'Connected', type: 'server', date: new Date() }
+        { text: `Connected to ${webSocket.url}`, type: 'server', date: new Date() }
       ]),
     onMessage: (event) =>
       setMessages((prevMessages) => [
