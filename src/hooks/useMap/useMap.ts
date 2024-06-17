@@ -1,6 +1,39 @@
 import { useMemo, useState } from 'react';
 
-export const useMap = <K, V>(intialValue?: ReadonlyArray<readonly [K, V]>) => {
+type MapActions<K, V, R = any> = {
+  /** Setter function to set new value in map */
+  set: (key: K, value: V) => Map<K, V>;
+  /** Function that returns boolean if given key exists in map or not */
+  has: (key: K) => boolean;
+  /** Delete function that deletes given key from map */
+  delete: (key: K) => boolean;
+  /** Function that clears map, deletes all elements and set size to 0 */
+  clear: () => void;
+  /** Mapper that can transform value and return the result to map it for UI */
+  map: (mapper: (value: V, key: K) => R) => R[];
+  /** Function that returns size of array */
+  size: number;
+};
+
+/** The use boolean return type */
+type UseMapReturn<K, V, R = any> = [
+  /** Actual map structure with data */
+  map: Map<K, V>,
+  /** A list of actions to work with map */
+  actions: MapActions<K, V, R>
+];
+
+/**
+ * @name useMap
+ * @description - Hook provides a map sctructure and some actions to work with given map
+ *
+ * @param {ReadonlyArray<readonly [K, V]>} initialValue The value to initialize map with
+ * @returns {UseMapReturn} An object containing actions to work with map
+ *
+ * @example
+ * const [map, actions] = useMap()
+ */
+export const useMap = <K, V>(intialValue?: ReadonlyArray<readonly [K, V]>): UseMapReturn<K, V> => {
   const [map] = useState(() => new Map(intialValue));
   const [size, setSize] = useState(map.size);
 
