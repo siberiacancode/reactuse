@@ -1,125 +1,113 @@
-import { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
-const connectSocket = (url: string) => {
-  return new WebSocket(url);
-};
+import { getRetry } from '@/utils/helpers';
 
-interface IOptions {
-  onFail: () => void;
-  onSuccess: () => void;
-  reconnectTimeout?: number;
+import { useEvent } from '../useEvent/useEvent';
+
+export type UseWebSocketUrl = string | (() => string);
+
+export interface UseWebSocketOptions {
+  onConnected?: (webSocket: WebSocket) => void;
+  onDisconnected?: (event: CloseEvent, webSocket: WebSocket) => void;
+  onError?: (event: Event, webSocket: WebSocket) => void;
+  onMessage?: (event: MessageEvent, webSocket: WebSocket) => void;
+  retry?: boolean | number;
+  protocols?: Array<'soap' | 'wasm'>;
 }
 
-type IStatus = 'connecting' | 'failed' | 'connected' | 'disconnected';
+export type UseWebSocketStatus = 'connecting' | 'failed' | 'connected' | 'disconnected';
+
+export interface UseWebSocketReturn {
+  status: UseWebSocketStatus;
+  close: WebSocket['close'];
+  send: WebSocket['send'];
+  open: () => void;
+  client?: WebSocket;
+}
 
 /**
- * Custom React hook to connect to a WebSocket server.
+ * @name useWebSocket
+ * @description - Hook that connects to a WebSocket server and handles incoming and outgoing messages
  *
- * @function useWebSocket
- * @param {string} url - The WebSocket server URL to connect to.
- * @param {function} onMessage - Callback function to handle incoming WebSocket messages.
- * @param {IOptions} [options] - Optional configuration object.
- * @param {function} options.onFail - Callback function to execute when the WebSocket connection fails.
- * @param {function} options.onSuccess - Callback function to execute when the WebSocket connection is successfully established.
- * @param {number} [options.reconnectTimeout=5000] - The time interval in milliseconds to wait before attempting to reconnect after the connection is closed.
- * @returns {object} - An object containing the WebSocket client instance, a boolean indicating if the connection is open, and a function to send data through the WebSocket.
- * @returns {WebSocket|null} return.client - The WebSocket client instance or null if not connected.
- * @returns {boolean} return.open - A boolean indicating if the WebSocket connection is open.
- * @returns {function} return.send - A function to send data through the WebSocket.
- * @returns {status} return.status - A status string, which tells the user status of connection
+ * @param {UseWebSocketUrl} url The URL of the WebSocket server
+ * @param {(webSocket: WebSocket) => void} [options.onConnected] The callback function that is called when the WebSocket connection is established
+ * @param {(event: CloseEvent, webSocket: WebSocket) => void} [options.onDisconnected] The callback function that is called when the WebSocket connection is closed
+ * @param {(event: Event, webSocket: WebSocket) => void} [options.onError] The callback function that is called when an error occurs
+ * @param {(event: MessageEvent, webSocket: WebSocket) => void} [options.onMessage] The callback function that is called when a message is received
+ * @param {boolean | number} [options.retry] The number of times to retry the connection
+ * @param {Array<'soap' | 'wasm'>} [options.protocols] The list of protocols to use
+ * @returns {UseWebSocketReturn} An object with the status, close, send, open, and ws properties
+ *
  * @example
- *
- * const { client, open, send } = useWebSocket('wss://serverws.com/', (message) => {
- *   console.log(message.data);
- * }, {
- *   onFail: () => console.log('Connection failed'),
- *   onSuccess: () => console.log('Connection successful'),
- *   reconnectTimeout: 10000
- * });
- *
- * const sendMessage = (data) => {
- *    send(data);
- * }
+ * const { status, close, send, open, client } = useWebSocket('url');
  */
 export const useWebSocket = (
-  url: string,
-  onMessage: (message: MessageEvent) => void,
-  options?: IOptions
-) => {
-  const ws = useRef<WebSocket | null>(null);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [waitingToReconnect, setWaitingToReconnect] = useState<any>(null);
-  const [status, setStatus] = useState<IStatus>('connecting');
-  /**
-   *
-   * @param {string} data
-   * @description The message sent to a socket can be anything, not only object. That is the reason why you have to convert all of your data into string.
-   * @example
-   * const {send} = useWebSocket('wss://serverws.com/', (message) => {
-   *   console.log(message.data);
-   * })
-   *
-   * function handleSubmit() {
-   *    const message = "Hello World!";
-   *    send(message);
-   *
-   *    const object = {message: "Hello World!"};
-   *    send(JSON.stringify(object));
-   * }
-   */
-  const send = (data: string) => {
-    ws.current?.send(data);
+  url: UseWebSocketUrl,
+  options?: UseWebSocketOptions
+): UseWebSocketReturn => {
+  const webSocketRef = React.useRef<WebSocket>();
+  const retryCountRef = React.useRef(options?.retry ? getRetry(options.retry) : 0);
+  const explicityCloseRef = React.useRef(false);
+
+  const [status, setStatus] = React.useState<UseWebSocketStatus>('connecting');
+
+  const send = (data: string | Blob | ArrayBufferLike | ArrayBufferView) =>
+    webSocketRef.current?.send(data);
+
+  const close = () => {
+    explicityCloseRef.current = true;
+    webSocketRef.current?.close();
   };
 
-  useEffect(() => {
-    if (waitingToReconnect) return;
+  const init = useEvent(() => {
+    webSocketRef.current = new WebSocket(
+      typeof url === 'function' ? url() : url,
+      options?.protocols
+    );
+    setStatus('connecting');
 
-    const setupWebSocket = () => {
-      const client = connectSocket(url);
-      ws.current = client;
+    const webSocket = webSocketRef.current;
+    if (!webSocket) return;
 
-      client.onerror = (e) => {
-        if (options?.onFail) {
-          options?.onFail();
-        }
-        setStatus('failed');
-        console.error('WebSocket error:', e);
-      };
-
-      client.onopen = () => {
-        setIsOpen(true);
-        setStatus('connected');
-        if (options?.onSuccess) {
-          options?.onSuccess();
-        }
-      };
-
-      client.onmessage = (message) => {
-        onMessage(message);
-      };
-
-      client.onclose = () => {
-        if (waitingToReconnect) return;
-
-        setIsOpen(false);
-        setStatus('disconnected');
-        setWaitingToReconnect(true);
-
-        setTimeout(() => {
-          setWaitingToReconnect(null);
-        }, options?.reconnectTimeout || 5000);
-      };
+    webSocket.onopen = () => {
+      setStatus('connected');
+      options?.onConnected?.(webSocket);
     };
 
-    setupWebSocket();
+    webSocket.onerror = (event) => {
+      setStatus('failed');
+      options?.onError?.(event, webSocket);
+    };
+
+    webSocket.onmessage = (event) => options?.onMessage?.(event, webSocket);
+
+    webSocket.onclose = (event) => {
+      setStatus('disconnected');
+      options?.onDisconnected?.(event, webSocket);
+      if (explicityCloseRef.current) return;
+
+      if (retryCountRef.current > 0) {
+        retryCountRef.current -= 1;
+        return init();
+      }
+      retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
+    };
+  });
+
+  React.useEffect(() => {
+    init();
 
     return () => {
-      if (ws.current) {
-        ws.current.close();
-        ws.current = null;
-      }
+      if (!webSocketRef.current) return;
+      webSocketRef.current.close();
+      webSocketRef.current = undefined;
     };
-  }, [url, waitingToReconnect]);
+  }, [url]);
 
-  return { client: ws.current, open: isOpen, send, status };
+  const open = () => {
+    explicityCloseRef.current = false;
+    init();
+  };
+
+  return { client: webSocketRef.current, close, open, send, status };
 };

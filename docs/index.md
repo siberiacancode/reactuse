@@ -143,6 +143,9 @@ features:
 - title: usePrevious
   details: Hook that returns the previous value
   link: /functions/hooks/usePrevious
+- title: useQRCode
+  details: Hook that generates a QR code
+  link: /functions/hooks/useQRCode
 - title: useQuery
   details: Hook that defines the logic when query data
   link: /functions/hooks/useQuery
@@ -179,6 +182,9 @@ features:
 - title: useUnmount
   details: Hook that defines the logic when unmounting a component
   link: /functions/hooks/useUnmount
+- title: useWebSocket
+  details: Hook that connects to a WebSocket server and handles incoming and outgoing messages
+  link: /functions/hooks/useWebSocket
 - title: useWindowEvent
   details: Hook attaches an event listener to the window object for the specified event
   link: /functions/hooks/useWindowEvent
