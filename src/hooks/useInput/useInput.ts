@@ -48,11 +48,11 @@ export interface UseInputReturn {
  * @description - Hook for input validation
  *
  * @param {string} [params.initialValue] Initial value
- * @param {UseInputRegisterParams} [params.validateMode] Validate mode
+ * @param {'onChange' | 'onBlur'} [params.validateMode] Validate mode
  * @returns {UseInputParams} An object containing input information
  *
  * @example
- * const { register, getValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useInput();
+ * const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useInput();
  */
 export const useInput = (params?: UseInputParams) => {
   const initialValue = params?.initialValue ?? '';
@@ -67,6 +67,9 @@ export const useInput = (params?: UseInputParams) => {
   const [error, setError] = React.useState<string | undefined>(undefined);
 
   const getValue = () => inputRef.current!.value;
+  const setValue = (value: string) => {
+    inputRef.current!.value = value;
+  };
   const reset = () => {
     inputRef.current!.value = initialValue;
     setDirty(false);
@@ -143,6 +146,7 @@ export const useInput = (params?: UseInputParams) => {
     setError,
     clearError,
     getValue,
+    setValue,
     reset,
     watch,
     focus

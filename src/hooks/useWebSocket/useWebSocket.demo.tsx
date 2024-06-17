@@ -54,7 +54,7 @@ const Demo = () => {
         ))}
       </div>
 
-      <input type='text' {...messageInput.register({ required: 'error text' })} />
+      <input type='text' {...messageInput.register()} />
       <button
         disabled={webSocket.status !== 'connected'}
         type='button'
@@ -65,7 +65,7 @@ const Demo = () => {
             { text: messageInput.getValue(), type: 'client', date: new Date() }
           ]);
           webSocket.send(message);
-          messageInput.clear();
+          messageInput.reset();
         }}
       >
         Send
