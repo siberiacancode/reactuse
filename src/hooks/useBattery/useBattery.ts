@@ -45,7 +45,7 @@ export const useBattery = () => {
     const handleChange = () =>
       setState({
         supported: true,
-        loading: true,
+        loading: false,
         level: battery?.level || 0,
         charging: battery?.charging || false,
         dischargingTime: battery?.dischargingTime || 0,
