@@ -9,7 +9,9 @@ const Demo = () => {
   return (
     <>
       <div key={rerender.id}>
-        <p>Render count: {renderCount}</p>
+        <p>
+          Render count: <code>{renderCount}</code>
+        </p>
       </div>
       <button type='button' onClick={rerender.update}>
         Rerender

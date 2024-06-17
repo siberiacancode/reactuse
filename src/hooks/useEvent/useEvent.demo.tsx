@@ -10,12 +10,12 @@ interface MemoComponentProps {
 }
 
 const MemoComponent = React.memo(({ onClick }: MemoComponentProps) => {
-  const rerenderCount = useRenderCount();
+  const renderCount = useRenderCount();
 
   return (
     <>
       <p>
-        Memo component rerender count: <code>{rerenderCount}</code>
+        Memo component rerender count: <code>{renderCount}</code>
       </p>
       <button type='button' onClick={onClick}>
         Send message

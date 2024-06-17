@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useInput } from '../useInput/useInput';
+
 import { useWebSocket } from './useWebSocket';
 
 type Message = {
@@ -9,7 +11,8 @@ type Message = {
 };
 
 const Demo = () => {
-  const [message, setMessage] = React.useState('');
+  const messageInput = useInput();
+
   const [messages, setMessages] = React.useState<Message[]>([
     { text: 'Connecting to chat...', type: 'server', date: new Date() }
   ]);
@@ -51,14 +54,18 @@ const Demo = () => {
         ))}
       </div>
 
-      <input type='text' value={message} onChange={(event) => setMessage(event.target.value)} />
+      <input type='text' {...messageInput.register({ required: 'error text' })} />
       <button
         disabled={webSocket.status !== 'connected'}
         type='button'
         onClick={() => {
-          setMessages([...messages, { text: message, type: 'client', date: new Date() }]);
+          const message = messageInput.getValue();
+          setMessages([
+            ...messages,
+            { text: messageInput.getValue(), type: 'client', date: new Date() }
+          ]);
           webSocket.send(message);
-          setMessage('');
+          messageInput.clear();
         }}
       >
         Send
