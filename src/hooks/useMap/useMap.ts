@@ -25,7 +25,7 @@ type UseMapReturn<K, V, R = any> = [
 
 /**
  * @name useMap
- * @description - Hook provides a map sctructure and some actions to work with given map
+ * @description - Hook provides a map structure and some actions to work with given map
  *
  * @param {ReadonlyArray<readonly [K, V]>} initialValue The value to initialize map with
  * @returns {UseMapReturn} An object containing actions to work with map
