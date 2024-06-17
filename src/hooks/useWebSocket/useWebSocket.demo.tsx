@@ -51,7 +51,7 @@ const Demo = () => {
         ))}
       </div>
 
-      <input type='text' onChange={(event) => setMessage(event.target.value)} />
+      <input type='text' value={message} onChange={(event) => setMessage(event.target.value)} />
       <button
         disabled={webSocket.status !== 'connected'}
         type='button'
