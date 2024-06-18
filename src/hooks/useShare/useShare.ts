@@ -41,7 +41,7 @@ interface UseShareParams {
  * share({ title: 'ReactUse', text: 'ReactUse is awesome', url: 'https://siberiacancode.github.io/reactuse' });
  */
 
-const useShare = ({
+export const useShare = ({
   onShare,
   onSuccess,
   onError,
@@ -91,5 +91,3 @@ const useShare = ({
 
   return { share, isSupported, isReady, isShared };
 };
-
-export default useShare;
