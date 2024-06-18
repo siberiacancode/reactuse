@@ -4,9 +4,10 @@ import { useField } from './useField';
 
 const Demo = () => {
   const renderCount = useRenderCount();
-  const messageInput = useField({ initialValue: 'Default message' });
-  const sexInput = useField({ initialValue: 'Male' });
-  const rememberThisComputerInput = useField();
+  const nameInput = useField({ initialValue: 'Dmtitry', validateOnChange: true });
+  const sexSelect = useField({ initialValue: 'Male' });
+  const aboutTextArea = useField();
+  const rememberThisComputerCheckbox = useField();
 
   return (
     <>
@@ -18,19 +19,24 @@ const Demo = () => {
         {JSON.stringify(
           {
             messageInput: {
-              dirty: messageInput.dirty,
-              touched: messageInput.touched,
-              error: messageInput.error
+              dirty: nameInput.dirty,
+              touched: nameInput.touched,
+              error: nameInput.error
             },
-            sexInput: {
-              dirty: sexInput.dirty,
-              touched: sexInput.touched,
-              error: sexInput.error
+            sexSelect: {
+              dirty: sexSelect.dirty,
+              touched: sexSelect.touched,
+              error: sexSelect.error
+            },
+            aboutTextArea: {
+              dirty: aboutTextArea.dirty,
+              touched: aboutTextArea.touched,
+              error: aboutTextArea.error
             },
             rememberThisComputerInput: {
-              dirty: rememberThisComputerInput.dirty,
-              touched: rememberThisComputerInput.touched,
-              error: rememberThisComputerInput.error
+              dirty: rememberThisComputerCheckbox.dirty,
+              touched: rememberThisComputerCheckbox.touched,
+              error: rememberThisComputerCheckbox.error
             }
           },
           null,
@@ -41,7 +47,8 @@ const Demo = () => {
       <div>
         <input
           type='text'
-          {...messageInput.register({
+          placeholder='Name'
+          {...nameInput.register({
             required: 'field is required',
             minLength: {
               value: 2,
@@ -49,27 +56,29 @@ const Demo = () => {
             }
           })}
         />
-        {messageInput.error && <span style={{ color: 'red' }}>{messageInput.error}</span>}
+        {nameInput.error && <span style={{ color: 'red' }}>{nameInput.error}</span>}
       </div>
 
-      <select {...sexInput.register()}>
+      <select {...sexSelect.register()}>
         <option value='Male'>Male</option>
         <option value='Female'>Female</option>
       </select>
 
+      <textarea placeholder='About' rows={5} {...aboutTextArea.register()} />
+
       <label htmlFor='checkbox'>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <input id='checkbox' type='checkbox' {...rememberThisComputerInput.register()} />
+          <input id='checkbox' type='checkbox' {...rememberThisComputerCheckbox.register()} />
           <span>Remember this computer?</span>
         </div>
       </label>
 
       <div>
-        <button type='button' onClick={messageInput.reset}>
+        <button type='button' onClick={nameInput.reset}>
           Reset
         </button>
 
-        <button type='button' onClick={messageInput.focus}>
+        <button type='button' onClick={nameInput.focus}>
           Focus
         </button>
 
@@ -79,9 +88,10 @@ const Demo = () => {
             alert(
               JSON.stringify(
                 {
-                  message: messageInput.getValue(),
-                  rememberThisComputer: rememberThisComputerInput.getValue(),
-                  sex: sexInput.getValue()
+                  message: nameInput.getValue(),
+                  sex: sexSelect.getValue(),
+                  about: aboutTextArea.getValue(),
+                  rememberThisComputer: rememberThisComputerCheckbox.getValue()
                 },
                 null,
                 2
