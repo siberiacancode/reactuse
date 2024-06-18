@@ -48,6 +48,7 @@ export * from './useScript/useScript';
 export * from './useSessionStorage/useSessionStorage';
 export * from './useSet/useSet';
 export * from './useStep/useStep';
+export * from './useStopwatch/useStopwatch';
 export * from './useStorage/useStorage';
 export * from './useTextSelection/useTextSelection';
 export * from './useTimeout/useTimeout';

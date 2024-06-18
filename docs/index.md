@@ -167,6 +167,9 @@ features:
 - title: useWindowSize
   details: Hook that manages a window size
   link: /functions/hooks/useWindowSize
+- title: useStopwatch
+  details: Hook that creates a stopwatch functionality
+  link: /functions/hooks/useStopwatch
 ---
 
 
