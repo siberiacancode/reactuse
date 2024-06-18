@@ -29,16 +29,7 @@ interface UseShareParams {
  * @returns {boolean} returns.isShared - Indicates if the content has been shared.
  *
  * @example
- * const { share, isSupported, isReady, isShared } = useShare({
- *   onShare: (content) => console.log('Sharing:', content),
- *   onSuccess: (content) => console.log('Shared successfully:', content),
- *   onError: (error) => console.log('Sharing failed:', error),
- *   fallback: () => console.log('Web Share API not supported'),
- *   successTimeout: 5000,
- * });
- *
- * // To share content:
- * share({ title: 'ReactUse', text: 'ReactUse is awesome', url: 'https://siberiacancode.github.io/reactuse' });
+ * const { share, isSupported, isReady, isShared } = useShare();
  */
 
 export const useShare = ({
@@ -47,7 +38,7 @@ export const useShare = ({
   onError,
   fallback,
   successTimeout = 3000
-}: UseShareParams) => {
+}: UseShareParams = {}) => {
   const [isSupported, setIsSupported] = React.useState(false);
   const [isReady, setIsReady] = React.useState(false);
   const [isShared, setIsShared] = React.useState(false);
