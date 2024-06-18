@@ -56,6 +56,9 @@ features:
 - title: useFavicon
   details: Hook that manages the favicon
   link: /functions/hooks/useFavicon
+- title: useField
+  details: Hook to manage a form field
+  link: /functions/hooks/useField
 - title: useFullscreen
   details: Hook to handle fullscreen events
   link: /functions/hooks/useFullscreen

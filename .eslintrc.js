@@ -14,6 +14,7 @@ module.exports = {
         '@typescript-eslint/no-unsafe-call': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/await-thenable': 'off',
         'jsx-a11y/label-has-associated-control': 'off',
         'no-nested-ternary': 'off',
         'promise/always-return': 'off',

@@ -14,6 +14,7 @@ export * from './useEvent/useEvent';
 export * from './useEventListener/useEventListener';
 export * from './useEyeDropper/useEyeDropper';
 export * from './useFavicon/useFavicon';
+export * from './useField/useField';
 export * from './useFps/useFps';
 export * from './useFullscreen/useFullscreen';
 export * from './useHash/useHash';
