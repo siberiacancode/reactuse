@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 
 import { useCounter } from '../useCounter/useCounter';
 import { useRenderCount } from '../useRenderCount/useRenderCount';

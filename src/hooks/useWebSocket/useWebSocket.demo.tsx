@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useField } from '../useField/useField';
 
