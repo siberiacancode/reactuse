@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { debounce } from '@/utils/helpers';
 
 /**
- * @name useDebouncedCallback
+ * @name useDebounceCallback
  * @description - Hook that creates a debounced callback and returns a stable reference of it
  *
  * @template Params The type of the params
@@ -13,7 +13,7 @@ import { debounce } from '@/utils/helpers';
  * @returns {(...args: Params) => Return} The callback with debounce
  *
  * @example
- * const debounced = useDebouncedCallback(() => console.log('callback'), 500);
+ * const debounced = useDebounceCallback(() => console.log('callback'), 500);
  */
 export const useDebounceCallback = <Params extends unknown[], Return>(
   callback: (...args: Params) => Return,

@@ -1,11 +1,11 @@
 import { useCounter } from '../useCounter/useCounter';
 
-import { useDebouncedValue } from './useDebouncedValue';
+import { useDebounceValue } from './useDebounceValue';
 
 const Demo = () => {
   const counter = useCounter();
 
-  const debouncedCounterCount = useDebouncedValue(counter.count, 500);
+  const debouncedCounterCount = useDebounceValue(counter.count, 500);
 
   return (
     <div>

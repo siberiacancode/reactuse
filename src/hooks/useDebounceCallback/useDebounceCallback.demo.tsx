@@ -1,6 +1,6 @@
 import { useCounter } from '../useCounter/useCounter';
 
-import { useDebounceCallback } from './useDebouncedCallback';
+import { useDebounceCallback } from './useDebounceCallback';
 
 const Demo = () => {
   const counter = useCounter();
