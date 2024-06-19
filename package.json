@@ -53,9 +53,11 @@
   },
   "peerDependencies": {
     "@types/react": "^18.0.0",
-    "qrcode": "^1.5.3",
     "react": "^17.0.2 || ^18.0.0",
-    "react-dom": "^17.0.2 || ^18.0.0",
+    "react-dom": "^17.0.2 || ^18.0.0"
+  },
+  "optionalDependencies": {
+    "qrcode": "^1.5.3",
     "screenfull": "^6.0.2"
   },
   "peerDependenciesMeta": {
