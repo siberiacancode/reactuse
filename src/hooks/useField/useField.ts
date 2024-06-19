@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useState } from 'react';
 
 import { useRerender } from '../useRerender/useRerender';
 
@@ -106,13 +106,13 @@ export const useField = <
 ): UseFieldReturn<Type> => {
   const initialValue = (params?.initialValue ?? '') as Value;
 
-  const inputRef = React.useRef<HTMLInputElement>();
-  const watchingRef = React.useRef(false);
+  const inputRef = useRef<HTMLInputElement>();
+  const watchingRef = useRef(false);
   const rerender = useRerender();
 
-  const [dirty, setDirty] = React.useState(false);
-  const [touched, setTouched] = React.useState(params?.initialTouched ?? false);
-  const [error, setError] = React.useState<string | undefined>(undefined);
+  const [dirty, setDirty] = useState(false);
+  const [touched, setTouched] = useState(params?.initialTouched ?? false);
+  const [error, setError] = useState<string | undefined>(undefined);
 
   const getValue = () => {
     if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')

@@ -5,10 +5,10 @@ import { useDebouncedValue } from './useDebouncedValue';
 const Demo = () => {
   const [debouncedCount, setDebouncedCount] = useDebouncedValue(0, 500);
 
-  const [text, setText] = React.useState('');
+  const [text, setText] = useState('');
   const [debouncedText] = useDebouncedValue(text, 1000);
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('@');
   }, [debouncedText]);
 

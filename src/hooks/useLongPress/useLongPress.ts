@@ -1,9 +1,10 @@
-import React from 'react';
+import type { RefObject } from 'react';
+import { useRef, useState } from 'react';
 
 import { useEventListener } from '../useEventListener/useEventListener';
 
 // * The use long press target type */
-export type UseLongPressTarget = React.RefObject<Element | null> | (() => Element) | Element;
+export type UseLongPressTarget = RefObject<Element | null> | (() => Element) | Element;
 
 // * The use long press options type */
 interface UseLongPressOptions {
@@ -18,10 +19,7 @@ interface UseLongPressOptions {
 }
 
 // * The use long press return type */
-export type UseLongPressReturn<Target extends UseLongPressTarget> = [
-  React.RefObject<Target>,
-  boolean
-];
+export type UseLongPressReturn<Target extends UseLongPressTarget> = [RefObject<Target>, boolean];
 
 export type UseLongPress = {
   <Target extends UseLongPressTarget>(
@@ -76,10 +74,10 @@ export const useLongPress = ((...params: any[]) => {
   const callback = (target ? params[1] : params[0]) as (event: Event) => void;
   const options = (target ? params[2] : params[1]) as UseLongPressOptions | undefined;
 
-  const [isLongPressActive, setIsLongPressActive] = React.useState(false);
-  const internalRef = React.useRef<Element>(null);
-  const timeoutIdRef = React.useRef<ReturnType<typeof setTimeout>>();
-  const isPressed = React.useRef(false);
+  const [isLongPressActive, setIsLongPressActive] = useState(false);
+  const internalRef = useRef<Element>(null);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>();
+  const isPressed = useRef(false);
 
   const start = (event: Event) => {
     options?.onStart?.(event);

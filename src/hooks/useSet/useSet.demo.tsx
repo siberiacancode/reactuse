@@ -1,9 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useSet } from './useSet';
 
 const Demo = () => {
-  const [input, setInput] = React.useState('');
+  const [input, setInput] = useState('');
   const scopes = useSet(['@siberiacancode', '@siberiacancode-tests', '@shared']);
 
   return (

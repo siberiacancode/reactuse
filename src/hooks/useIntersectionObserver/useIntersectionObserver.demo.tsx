@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntersectionObserver } from './useIntersectionObserver';
 
 const Demo = () => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { ref, inView } = useIntersectionObserver<HTMLDivElement>({
     root: containerRef.current,
     threshold: 1

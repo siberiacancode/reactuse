@@ -1,9 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useDocumentEvent } from './useDocumentEvent';
 
 const Demo = () => {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
 
   useDocumentEvent('click', () => setCount(count + 1));
 

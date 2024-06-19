@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { debounce } from '@/utils/helpers';
 
@@ -15,15 +15,15 @@ export const useDebouncedValue = <Value>(
   options?: UseDebouncedValueOptions
 ) => {
   console.log('@', options);
-  const previousValueRef = React.useRef(value);
-  const [state, setState] = React.useState(value);
+  const previousValueRef = useRef(value);
+  const [state, setState] = useState(value);
 
-  const debouncedSetState = React.useMemo(
+  const debouncedSetState = useMemo(
     () => debounce((value: Value) => setState(value), delay),
     [delay]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (previousValueRef.current === value) return;
     debouncedSetState(value);
     previousValueRef.current = value;

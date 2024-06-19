@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 
@@ -13,7 +13,7 @@ import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
  * useLogger('Component', [1, 2, 3]);
  */
 export const useLogger = (name: string, params: unknown[]) => {
-  React.useEffect(() => {
+  useEffect(() => {
     console.log(`${name} mounted`, ...params);
     return () => console.log(`${name} unmounted`);
   }, []);

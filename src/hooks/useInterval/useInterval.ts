@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useEvent } from '../useEvent/useEvent';
 
@@ -56,12 +56,12 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
       : (params[2] as UseIntervalOptions | undefined);
   const enabled = options?.enabled ?? true;
 
-  const [isActive, setIsActive] = React.useState<boolean>(enabled ?? true);
+  const [isActive, setIsActive] = useState<boolean>(enabled ?? true);
 
-  const intervalIdRef = React.useRef<ReturnType<typeof setInterval>>();
+  const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
   const internalCallback = useEvent(callback);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!enabled) return;
 
     intervalIdRef.current = setInterval(internalCallback, interval);

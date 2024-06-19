@@ -1,4 +1,5 @@
-import React from 'react';
+import type { DependencyList, EffectCallback } from 'react';
+import { useRef } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
@@ -6,14 +7,14 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  * @name useDidUpdate
  * @description – Hook that behaves like useEffect, but skips the effect on the initial render
  *
- * @param {React.EffectCallback} effect The effect callback
- * @param {React.DependencyList} [deps] The dependencies list for the effect
+ * @param {EffectCallback} effect The effect callback
+ * @param {DependencyList} [deps] The dependencies list for the effect
  *
  * @example
  * useDidUpdate(() => console.log('Won't be called when mounted'), [deps]);
  */
-export const useDidUpdate = (effect: React.EffectCallback, deps?: React.DependencyList) => {
-  const initialRender = React.useRef(true);
+export const useDidUpdate = (effect: EffectCallback, deps?: DependencyList) => {
+  const initialRender = useRef(true);
 
   useIsomorphicLayoutEffect(() => {
     if (initialRender.current) {

@@ -9,7 +9,7 @@ interface MemoComponentProps {
   onClick: () => void;
 }
 
-const MemoComponent = React.memo(({ onClick }: MemoComponentProps) => {
+const MemoComponent = memo(({ onClick }: MemoComponentProps) => {
   const renderCount = useRenderCount();
 
   return (

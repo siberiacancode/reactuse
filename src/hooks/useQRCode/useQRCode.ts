@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import QRCode from 'qrcode';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
@@ -15,8 +15,8 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  * const { value, set } = useQRCode('url');
  */
 export const useQRCode = (text?: string, options?: QRCode.QRCodeToDataURLOptions) => {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [value, setValue] = React.useState<string | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState<string | undefined>();
 
   const generateQrCode = async (value: string) => {
     setIsLoading(true);

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 declare global {
   interface Set<T> {
@@ -52,7 +52,7 @@ interface UseSetReturn<Value> {
  * const { value, add, remove, clear, reset, toggle, union, intersection, difference, symmetricDifference, size, has } = useSet([1, 2, 3]);
  */
 export const useSet = <Value>(values?: Value[]): UseSetReturn<Value> => {
-  const [set, setSet] = React.useState(new Set(values));
+  const [set, setSet] = useState(new Set(values));
 
   const add = (value: Value) => setSet((prevSet) => new Set(prevSet).add(value));
   const remove = (value: Value) =>

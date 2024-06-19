@@ -3,7 +3,7 @@ import React from 'react';
 import { useHotkeys } from './useHotkeys';
 
 const Demo = () => {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
   useHotkeys('control+a', () => setCount(count + 1), { preventDefault: true });
 
   return (

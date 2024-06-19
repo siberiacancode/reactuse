@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useEvent } from '../useEvent/useEvent';
 
@@ -22,12 +22,12 @@ interface UseTimeoutReturn {
  * const { clear, ready } = useTimeout(() => {}, 5000);
  */
 export function useTimeout(callback: () => void, delay: number): UseTimeoutReturn {
-  const [ready, setReady] = React.useState(false);
+  const [ready, setReady] = useState(false);
 
-  const timeoutIdRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>();
   const internalCallback = useEvent(callback);
 
-  React.useEffect(() => {
+  useEffect(() => {
     timeoutIdRef.current = setTimeout(() => {
       internalCallback();
       setReady(true);

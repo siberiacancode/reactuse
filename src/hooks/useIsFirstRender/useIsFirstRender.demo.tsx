@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useIsFirstRender } from './useIsFirstRender';
 
 const Demo = () => {
   const isFirstRender = useIsFirstRender();
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
 
   return (
     <div>

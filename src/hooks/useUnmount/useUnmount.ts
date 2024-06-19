@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * @name useUnmount
@@ -12,10 +12,10 @@ import React from 'react';
  */
 
 export const useUnmount = (callback: () => void) => {
-  const callbackRef = React.useRef(callback);
+  const callbackRef = useRef(callback);
   callbackRef.current = callback;
 
-  React.useEffect(
+  useEffect(
     () => () => {
       callbackRef.current();
     },

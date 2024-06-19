@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useState } from 'react';
 
 /** The use step params */
 interface UseStepParams {
@@ -53,10 +53,10 @@ export const useStep = (params: number | UseStepParams): UseStepReturn => {
   const max = typeof params === 'object' ? params.max : params;
   const initial = typeof params === 'object' ? params.initial : FIRST_STEP_VALUE;
 
-  const initialStep = React.useRef(
+  const initialStep = useRef(
     initial > max || initial < FIRST_STEP_VALUE ? FIRST_STEP_VALUE : initial
   );
-  const [currentStep, setCurrentStep] = React.useState(initial);
+  const [currentStep, setCurrentStep] = useState(initial);
 
   const isFirst = currentStep === FIRST_STEP_VALUE;
   const isLast = currentStep === max;

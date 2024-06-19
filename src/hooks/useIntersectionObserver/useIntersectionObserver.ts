@@ -1,14 +1,12 @@
-import React from 'react';
+import type { RefObject } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export type UseIntersectionObserverTarget =
-  | React.RefObject<Element | null>
-  | (() => Element)
-  | Element;
+export type UseIntersectionObserverTarget = RefObject<Element | null> | (() => Element) | Element;
 
 export interface UseIntersectionObserverOptions extends Omit<IntersectionObserverInit, 'root'> {
   enabled?: boolean;
   onChange?: (entry: IntersectionObserverEntry) => void;
-  root?: IntersectionObserverInit['root'] | React.RefObject<Element | null>;
+  root?: IntersectionObserverInit['root'] | RefObject<Element | null>;
 }
 
 const getTargetElement = (target: UseIntersectionObserverTarget) => {
@@ -51,7 +49,7 @@ export type UseIntersectionObserver = {
   <Target extends UseIntersectionObserverTarget>(
     options?: UseIntersectionObserverOptions,
     target?: never
-  ): UseIntersectionObserverReturn & { ref: React.RefObject<Target> };
+  ): UseIntersectionObserverReturn & { ref: RefObject<Target> };
 };
 
 export const useIntersectionObserver = ((...params: any[]) => {
@@ -61,13 +59,13 @@ export const useIntersectionObserver = ((...params: any[]) => {
   const options = (target ? params[1] : params[0]) as UseIntersectionObserverOptions | undefined;
   const enabled = options?.enabled ?? true;
 
-  const [entry, setEntry] = React.useState<IntersectionObserverEntry>();
+  const [entry, setEntry] = useState<IntersectionObserverEntry>();
 
-  const internalRef = React.useRef<Element>(null);
-  const onChangeRef = React.useRef<UseIntersectionObserverOptions['onChange']>();
+  const internalRef = useRef<Element>(null);
+  const onChangeRef = useRef<UseIntersectionObserverOptions['onChange']>();
   onChangeRef.current = options?.onChange;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!enabled) return;
 
     const element = target ? getTargetElement(target) : internalRef.current;

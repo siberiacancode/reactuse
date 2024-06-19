@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
 
@@ -36,7 +36,7 @@ export const getConnection = () =>
  * const { online, downlink, downlinkMax, effectiveType, rtt, saveData, type } = useNetwork();
  */
 export const useNetwork = (): UseNetworkReturn => {
-  const [value, setValue] = React.useState(() => {
+  const [value, setValue] = useState(() => {
     if (!isClient) {
       return {
         online: false,
@@ -62,7 +62,7 @@ export const useNetwork = (): UseNetworkReturn => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const callback = () => {
       const online = navigator.onLine;
       const connection = getConnection();

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 import { isClient } from '@/utils/helpers';
 
@@ -9,4 +9,4 @@ import { isClient } from '@/utils/helpers';
  * @example
  * useIsomorphicLayoutEffect(() => console.log('effect'), [])
  */
-export const useIsomorphicLayoutEffect = isClient ? React.useLayoutEffect : React.useEffect;
+export const useIsomorphicLayoutEffect = isClient ? useLayoutEffect : useEffect;

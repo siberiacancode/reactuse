@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * @name useFps
@@ -10,9 +10,9 @@ import React from 'react';
  * const fps = useFps();
  */
 export const useFps = () => {
-  const [fps, setFps] = React.useState(0);
+  const [fps, setFps] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let frameCount = 0;
     let startTime = performance.now();
     let requestId: number;

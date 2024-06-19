@@ -1,11 +1,12 @@
-import React from 'react';
+import type { DependencyList } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { getRetry } from '@/utils/helpers';
 
 /* The use query return type */
 interface UseQueryOptions<QueryData, Data> {
   /* The depends for the hook */
-  keys?: React.DependencyList;
+  keys?: DependencyList;
   /* The callback function to be invoked on success */
   onSuccess?: (data: Data) => void;
   /* The callback function to be invoked on error */
@@ -44,7 +45,7 @@ interface UseQueryReturn<Data> {
  *
  * @template Data - The type of the data
  * @param {() => Promise<Data>} callback - The callback function to be invoked
- * @param {React.DependencyList} [options.keys] - The dependencies for the hook
+ * @param {DependencyList} [options.keys] - The dependencies for the hook
  * @param {(data: Data) => void} [options.onSuccess] - The callback function to be invoked on success
  * @param {(error: Error) => void} [options.onError] - The callback function to be invoked on error
  * @param {UseQueryOptionsSelect<Data>} [options.select] - The select function to be invoked
@@ -60,15 +61,15 @@ export const useQuery = <QueryData, Data = QueryData>(
   callback: () => Promise<QueryData>,
   options?: UseQueryOptions<QueryData, Data>
 ): UseQueryReturn<Data> => {
-  const retryCountRef = React.useRef(options?.retry ? getRetry(options.retry) : 0);
+  const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
-  const [isRefetching, setIsRefetching] = React.useState(false);
-  const [isSuccess, setIsSuccess] = React.useState(!!options?.initialData);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isRefetching, setIsRefetching] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(!!options?.initialData);
 
-  const [error, setError] = React.useState<Error | undefined>(undefined);
-  const [data, setData] = React.useState<Data | undefined>(options?.initialData);
+  const [error, setError] = useState<Error | undefined>(undefined);
+  const [data, setData] = useState<Data | undefined>(options?.initialData);
 
   const request = (action: 'init' | 'refetch') => {
     setIsLoading(true);
@@ -101,7 +102,7 @@ export const useQuery = <QueryData, Data = QueryData>(
       });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (options?.initialData) return;
     request('init');
   }, options?.keys ?? []);
