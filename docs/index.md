@@ -32,6 +32,12 @@ features:
 - title: useCounter
   details: Hook that manages a counter with increment, decrement, reset, and set functionalities
   link: /functions/hooks/useCounter
+- title: useDebouncedCallback
+  details: Hook that creates a debounced callback and returns a stable reference of it
+  link: /functions/hooks/useDebouncedCallback
+- title: useDebouncedValue
+  details: Hook that creates a debounced value and returns a stable reference of it
+  link: /functions/hooks/useDebouncedValue
 - title: useDefault
   details: Hook that returns the default value
   link: /functions/hooks/useDefault

@@ -1,28 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useCounter } from '../useCounter/useCounter';
 
 import { useDebouncedValue } from './useDebouncedValue';
 
 const Demo = () => {
-  const [debouncedCount, setDebouncedCount] = useDebouncedValue(0, 500);
+  const counter = useCounter();
 
-  const [text, setText] = useState('');
-  const [debouncedText] = useDebouncedValue(text, 1000);
-
-  useEffect(() => {
-    console.log('@');
-  }, [debouncedText]);
+  const debouncedCounterCount = useDebouncedValue(counter.count, 500);
 
   return (
     <div>
-      <div>Count: {debouncedCount}</div>
-      <button type='button' onClick={() => setDebouncedCount(debouncedCount + 1)}>
-        increment with debounce
+      <p>
+        Value: <code>{counter.count}</code>
+      </p>
+      <p>
+        Debounced value: <code>{debouncedCounterCount}</code>
+      </p>
+      <button type='button' onClick={() => counter.inc()}>
+        Increment
       </button>
-
-      <div>Text: {text}</div>
-      <input type='text' value={text} onChange={(e) => setText(e.target.value)} />
-
-      <div>Debounced Text: {debouncedText}</div>
+      <button type='button' onClick={() => counter.dec()}>
+        Decrement
+      </button>
     </div>
   );
 };

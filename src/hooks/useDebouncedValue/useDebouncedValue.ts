@@ -1,27 +1,24 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { debounce } from '@/utils/helpers';
+import { useDebounceCallback } from '../useDebouncedCallback/useDebouncedCallback';
 
-// делаем value и state
-// усложняем ли хуки value и state
-
-interface UseDebouncedValueOptions {
-  maxWait?: number;
-}
-
-export const useDebouncedValue = <Value>(
-  value: Value,
-  delay: number,
-  options?: UseDebouncedValueOptions
-) => {
-  console.log('@', options);
+/**
+ * @name useDebouncedValue
+ * @description - Hook that creates a debounced value and returns a stable reference of it
+ *
+ * @template Value The type of the value
+ * @param {Value} value The value to be debounced
+ * @param {number} delay The delay in milliseconds
+ * @returns {Value} The debounced value
+ *
+ * @example
+ * const debouncedValue = useDebouncedValue(value, 500);
+ */
+export const useDebouncedValue = <Value>(value: Value, delay: number) => {
   const previousValueRef = useRef(value);
-  const [state, setState] = useState(value);
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
-  const debouncedSetState = useMemo(
-    () => debounce((value: Value) => setState(value), delay),
-    [delay]
-  );
+  const debouncedSetState = useDebounceCallback(setDebouncedValue, delay);
 
   useEffect(() => {
     if (previousValueRef.current === value) return;
@@ -29,5 +26,5 @@ export const useDebouncedValue = <Value>(
     previousValueRef.current = value;
   }, [value]);
 
-  return [state, debouncedSetState] as const;
+  return debouncedValue;
 };
