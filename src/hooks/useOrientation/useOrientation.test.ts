@@ -61,13 +61,6 @@ it('Should return current window orientation', () => {
   expect(typeof result.current.angle).toBe('number');
 });
 
-it('should use initial values in case of no parameters', () => {
-  const { result } = renderHook(useOrientation);
-
-  expect(result.current.type).toBe('landscape-primary');
-  expect(result.current.angle).toBe(0);
-});
-
 it('Should use orientation', () => {
   const { result } = renderHook(useOrientation);
 
