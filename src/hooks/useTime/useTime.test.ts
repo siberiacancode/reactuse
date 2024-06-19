@@ -3,34 +3,34 @@ import { vi } from 'vitest';
 
 import { useTime } from './useTime';
 
-vi.useFakeTimers();
+vi.useFakeTimers().setSystemTime(new Date('1999-03-12'));
 
-describe('useTime', () => {
-  it('returns the current time', () => {
-    const { result } = renderHook(() => useTime());
-    expect(result.current).toEqual(
-      expect.objectContaining({
-        seconds: expect.any(Number),
-        minutes: expect.any(Number),
-        hours: expect.any(Number),
-        meridiemHours: expect.objectContaining({
-          value: expect.any(Number),
-          type: expect.any(String)
-        }),
-        day: expect.any(Number),
-        month: expect.any(Number),
-        year: expect.any(Number),
-        timestamp: expect.any(Number)
-      })
-    );
-  });
+it('Should use time', () => {
+  const { result } = renderHook(useTime);
 
-  it('updates every second', () => {
-    const { result } = renderHook(() => useTime());
-    const initialTime = result.current;
-    act(() => {
-      vi.advanceTimersByTime(1000);
-    });
-    expect(result.current).not.toEqual(initialTime);
-  });
+  expect(result.current.year).toBe(1999);
+  expect(result.current.month).toBe(3);
+  expect(result.current.day).toBe(12);
+  expect(result.current.hours).toBe(7);
+  expect(result.current.minutes).toBe(0);
+  expect(result.current.seconds).toBe(0);
+  expect(result.current.meridiemHours.value).toBe(7);
+  expect(result.current.meridiemHours.type).toBe('am');
+  expect(result.current.timestamp).toBe(921196800000);
+});
+
+it('Should updates every second', () => {
+  const { result } = renderHook(useTime);
+  expect(result.current.minutes).toBe(0);
+  expect(result.current.seconds).toBe(0);
+
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(result.current.minutes).toBe(0);
+  expect(result.current.seconds).toBe(1);
+
+  act(() => vi.advanceTimersByTime(59_000));
+
+  expect(result.current.minutes).toBe(1);
+  expect(result.current.seconds).toBe(0);
 });
