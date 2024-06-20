@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 /** The use list return type */
 export interface UseListReturn<Item> {
@@ -30,7 +30,7 @@ export interface UseListReturn<Item> {
  * const { value, set, push, removeAt, insertAt, updateAt, clear } = useList();
  */
 export const useList = <Item>(initialList: Item[] = []) => {
-  const [list, setList] = React.useState(initialList);
+  const [list, setList] = useState(initialList);
 
   const set = (list: Item[]) => setList(list);
 

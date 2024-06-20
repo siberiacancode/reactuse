@@ -1,9 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { usePrevious } from './usePrevious';
 
 const Demo = () => {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
   const prevCount = usePrevious(count);
 
   return (

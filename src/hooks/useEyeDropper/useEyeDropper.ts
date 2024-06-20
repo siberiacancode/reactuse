@@ -1,6 +1,17 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
+import type {
+  ColorSelectionOptions,
+  ColorSelectionResult,
+  EyeDropperConstructor
+} from '@/utils/types';
+
+declare global {
+  interface Window {
+    EyeDropper?: EyeDropperConstructor | undefined;
+  }
+}
 
 /** The color selection return type */
 export interface UseEyeDropperReturn {
@@ -23,7 +34,7 @@ export const useEyeDropper = (
   initialValue: string | undefined = undefined
 ): UseEyeDropperReturn => {
   const supported = isClient ? 'EyeDropper' in window : false;
-  const [value, setValue] = React.useState(initialValue);
+  const [value, setValue] = useState(initialValue);
 
   const open = async (colorSelectionOptions?: ColorSelectionOptions) => {
     if (!window.EyeDropper) throw new Error('EyeDropper is not supported');

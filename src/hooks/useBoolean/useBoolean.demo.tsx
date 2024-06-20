@@ -8,9 +8,15 @@ const Demo = () => {
       <p>
         Value: <code>{on.toString()}</code>
       </p>
-      <button onClick={() => toggle()}>Toggle</button>
-      <button onClick={() => toggle(true)}>Set (true)</button>
-      <button onClick={() => toggle(false)}>Set (false)</button>
+      <button type='button' onClick={() => toggle()}>
+        Toggle
+      </button>
+      <button type='button' onClick={() => toggle(true)}>
+        Set (true)
+      </button>
+      <button type='button' onClick={() => toggle(false)}>
+        Set (false)
+      </button>
     </div>
   );
 };

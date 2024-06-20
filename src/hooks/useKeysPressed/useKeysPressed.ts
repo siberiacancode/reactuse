@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
@@ -26,7 +26,7 @@ interface UseKeysPressedParams {
  */
 export const useKeysPressed = (params?: UseKeysPressedParams) => {
   const enabled = params?.enabled ?? true;
-  const [keys, setKeys] = React.useState<{ key: string; code: string }[]>([]);
+  const [keys, setKeys] = useState<{ key: string; code: string }[]>([]);
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (!enabled) return;

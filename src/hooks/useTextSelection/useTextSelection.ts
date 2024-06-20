@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
 
@@ -32,11 +32,11 @@ export interface UseTextSelectionReturn {
  */
 export const useTextSelection = (): UseTextSelectionReturn => {
   const rerender = useRerender();
-  const [selection, setSelection] = React.useState<Selection | null>(
+  const [selection, setSelection] = useState<Selection | null>(
     isClient ? document.getSelection() : null
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const onSelectionChange = () => {
       setSelection(document.getSelection());
       rerender.update();

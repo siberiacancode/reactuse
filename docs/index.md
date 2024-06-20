@@ -32,6 +32,12 @@ features:
 - title: useCounter
   details: Hook that manages a counter with increment, decrement, reset, and set functionalities
   link: /functions/hooks/useCounter
+- title: useDebouncedCallback
+  details: Hook that creates a debounced callback and returns a stable reference of it
+  link: /functions/hooks/useDebouncedCallback
+- title: useDebouncedValue
+  details: Hook that creates a debounced value and returns a stable reference of it
+  link: /functions/hooks/useDebouncedValue
 - title: useDefault
   details: Hook that returns the default value
   link: /functions/hooks/useDefault
@@ -56,6 +62,9 @@ features:
 - title: useFavicon
   details: Hook that manages the favicon
   link: /functions/hooks/useFavicon
+- title: useField
+  details: Hook to manage a form field
+  link: /functions/hooks/useField
 - title: useFullscreen
   details: Hook to handle fullscreen events
   link: /functions/hooks/useFullscreen
@@ -143,9 +152,9 @@ features:
 - title: usePrevious
   details: Hook that returns the previous value
   link: /functions/hooks/usePrevious
-- title: useQRCode
-  details: Hook that generates a QR code
-  link: /functions/hooks/useQRCode
+# - title: useQRCode
+#   details: Hook that generates a QR code
+#   link: /functions/hooks/useQRCode
 - title: useQuery
   details: Hook that defines the logic when query data
   link: /functions/hooks/useQuery

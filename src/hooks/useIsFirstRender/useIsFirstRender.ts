@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 
 /**
  * @name useIsFirstRender
@@ -10,7 +10,7 @@ import React from 'react';
  * const isFirstRender = useIsFirstRender();
  */
 export const useIsFirstRender = () => {
-  const renderRef = React.useRef(true);
+  const renderRef = useRef(true);
 
   if (renderRef.current === true) {
     renderRef.current = false;

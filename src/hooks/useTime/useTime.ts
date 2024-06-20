@@ -1,7 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 
-import { useInterval } from '@/hooks';
 import { getDate } from '@/utils/helpers';
+
+import { useInterval } from '../useInterval/useInterval';
 
 export interface UseTimeReturn {
   seconds: number;
@@ -25,7 +26,7 @@ export interface UseTimeReturn {
  */
 
 export const useTime = (): UseTimeReturn => {
-  const [time, setTime] = React.useState(getDate());
+  const [time, setTime] = useState(getDate());
   useInterval(() => setTime(getDate()), 1000);
   return time;
 };

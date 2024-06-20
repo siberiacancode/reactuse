@@ -99,6 +99,19 @@ onMounted(async () => {
   background: var(--vp-c-bg-soft);
 }
 
+:deep(select) {
+  display: block;
+  font-size: 0.9rem;
+  padding: 0.5em 1em 0.4em 1em;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 4px;
+  outline: none;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text);
+  margin: 0.5rem 0;
+  min-width: 20rem;
+}
+
 :deep(input) {
   display: block;
   font-size: 0.9rem;
@@ -108,8 +121,11 @@ onMounted(async () => {
   outline: none;
   background: var(--vp-c-bg);
   color: var(--vp-c-text);
-  min-width: 20rem;
   margin: 0.5rem 0;
+}
+
+:deep(input[type='text'], input[type='number'], input[type='tel']) {
+  min-width: 20rem;
 }
 
 :deep(input:focus, button:focus) {

@@ -1,9 +1,9 @@
-import React from 'react';
+import { useRef } from 'react';
 
 import { useHover } from './useHover';
 
 const Demo = () => {
-  const hoverRef = React.useRef<HTMLDivElement>(null);
+  const hoverRef = useRef<HTMLDivElement>(null);
   const isHover = useHover(hoverRef, () => console.log('callback'));
 
   return (

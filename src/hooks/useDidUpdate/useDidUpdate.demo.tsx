@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { useCounter } from '../useCounter/useCounter';
 
@@ -6,14 +6,14 @@ import { useDidUpdate } from './useDidUpdate';
 
 const Demo = () => {
   const counter = useCounter();
-  const [useEffectTriggered, setUseEffectTriggered] = React.useState(false);
-  const [useDidUpdateTriggered, setUseDidUpdateTriggered] = React.useState(false);
+  const [useEffectTriggered, setUseEffectTriggered] = useState(false);
+  const [useDidUpdateTriggered, setUseDidUpdateTriggered] = useState(false);
 
   useDidUpdate(() => {
     setUseDidUpdateTriggered(true);
   }, [counter.count]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setUseEffectTriggered(true);
   }, [counter.count]);
 

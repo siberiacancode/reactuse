@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { flushSync } from 'react-dom';
 
 /** The use queue return type */
@@ -31,7 +31,7 @@ export interface UseQueueReturn<Value> {
  * const { queue, add, remove, clear, first, last, size } = useQueue([1, 2, 3]);
  */
 export const useQueue = <Value>(initialValue: Value[] = []): UseQueueReturn<Value> => {
-  const [queue, setQueue] = React.useState(initialValue);
+  const [queue, setQueue] = useState(initialValue);
 
   const add = (element: Value) => setQueue((queue) => [...queue, element]);
   const clear = () => setQueue([]);

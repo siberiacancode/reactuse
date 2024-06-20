@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 
 export interface UseRenderInfoReturn {
   component: string;
@@ -19,7 +19,7 @@ export interface UseRenderInfoReturn {
  * const rerenderInfo = useRenderInfo('Component');
  */
 export const useRenderInfo = (name: string = 'Unknown', log: boolean = true) => {
-  const renderInfoRef = React.useRef<UseRenderInfoReturn>({
+  const renderInfoRef = useRef<UseRenderInfoReturn>({
     component: name,
     renders: 0,
     timestamp: Date.now(),

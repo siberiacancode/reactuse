@@ -1,4 +1,5 @@
-import React from 'react';
+import type { Dispatch, RefObject, SetStateAction } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useEvent } from '../useEvent/useEvent';
 
@@ -15,12 +16,12 @@ export type UsePaintOptions = UsePaintPencil;
 
 /** The use paint return type */
 export interface UsePaintReturn {
-  pencil: UsePaintPencil & { set: React.Dispatch<React.SetStateAction<UsePaintPencil>> };
+  pencil: UsePaintPencil & { set: Dispatch<SetStateAction<UsePaintPencil>> };
   drawing: boolean;
 }
 
 export type UsePaintTarget =
-  | React.RefObject<HTMLCanvasElement>
+  | RefObject<HTMLCanvasElement>
   | (() => HTMLCanvasElement)
   | HTMLCanvasElement;
 
@@ -42,7 +43,7 @@ export type UsePaint = {
   (
     options?: UsePaintOptions,
     target?: never
-  ): UsePaintReturn & { ref: React.RefObject<HTMLCanvasElement> };
+  ): UsePaintReturn & { ref: RefObject<HTMLCanvasElement> };
 };
 
 /**
@@ -60,7 +61,7 @@ export type UsePaint = {
  *
  * @overload
  * @param {UsePaintOptions} [options] The options to be used
- * @returns {UsePaintReturn & { ref: React.RefObject<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint
+ * @returns {UsePaintReturn & { ref: RefObject<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint
  *
  * @example
  * const { ref, pencil, drawing } = usePaint();
@@ -72,11 +73,11 @@ export const usePaint = ((...params: any[]) => {
   ) as UsePaintTarget | undefined;
   const options = (target ? params[1] : params[0]) as UsePaintOptions | undefined;
 
-  const [drawing, setIsDrawing] = React.useState(false);
-  const internalRef = React.useRef<HTMLCanvasElement>(null);
-  const contextRef = React.useRef<CanvasRenderingContext2D | null>(null);
+  const [drawing, setIsDrawing] = useState(false);
+  const internalRef = useRef<HTMLCanvasElement>(null);
+  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
 
-  const [pencil, setPencil] = React.useState({
+  const [pencil, setPencil] = useState({
     width: options?.width ?? 5,
     color: options?.color ?? 'black',
     opacity: options?.opacity ?? 0.1
@@ -88,7 +89,7 @@ export const usePaint = ((...params: any[]) => {
     contextRef.current.stroke();
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const element = target ? getTargetElement(target) : internalRef.current;
     if (!element) return;
     contextRef.current = element.getContext('2d');
@@ -118,7 +119,7 @@ export const usePaint = ((...params: any[]) => {
     };
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!contextRef.current) return;
     contextRef.current.strokeStyle = pencil.color;
     contextRef.current.lineWidth = pencil.width;

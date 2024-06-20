@@ -1,6 +1,6 @@
-import React from 'react';
+import { useState } from 'react';
 
-import { useInput } from '../useInput/useInput';
+import { useField } from '../useField/useField';
 
 import { useWebSocket } from './useWebSocket';
 
@@ -11,9 +11,9 @@ type Message = {
 };
 
 const Demo = () => {
-  const messageInput = useInput();
+  const messageInput = useField({ initialValue: '' });
 
-  const [messages, setMessages] = React.useState<Message[]>([
+  const [messages, setMessages] = useState<Message[]>([
     { text: 'Connecting to chat...', type: 'server', date: new Date() }
   ]);
 

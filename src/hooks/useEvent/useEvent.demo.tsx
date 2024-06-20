@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 
 import { useCounter } from '../useCounter/useCounter';
 import { useRenderCount } from '../useRenderCount/useRenderCount';
@@ -9,7 +9,7 @@ interface MemoComponentProps {
   onClick: () => void;
 }
 
-const MemoComponent = React.memo(({ onClick }: MemoComponentProps) => {
+const MemoComponent = memo(({ onClick }: MemoComponentProps) => {
   const renderCount = useRenderCount();
 
   return (

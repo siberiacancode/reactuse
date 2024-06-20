@@ -1,4 +1,5 @@
-import React from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 
 /** The use counter options */
 export interface UseCounterOptions {
@@ -22,7 +23,7 @@ export interface UseCounterReturn {
   /** The current count value */
   count: number;
   /** Function to set a specific value to the counter */
-  set: React.Dispatch<React.SetStateAction<number>>;
+  set: Dispatch<SetStateAction<number>>;
   /** Function to reset the counter to its initial value. */
   reset: () => void;
   /** Function to increment the counter */
@@ -67,9 +68,7 @@ export const useCounter = ((...params: any[]) => {
       ? ((params[1] ?? {}) as UseCounterOptions)
       : ((params[0] ?? {}) as UseCounterParams);
 
-  const [count, setCount] = React.useState(initialValue ?? 0);
-
-  React.useEffect(() => {}, [min, max]);
+  const [count, setCount] = useState(initialValue ?? 0);
 
   const inc = (value: number = 1) => {
     setCount((prevCount) => {
@@ -92,7 +91,7 @@ export const useCounter = ((...params: any[]) => {
     setCount(value);
   };
 
-  const set = (value: React.SetStateAction<number>) => {
+  const set = (value: SetStateAction<number>) => {
     setCount((prevCount) => {
       const updatedCount = Math.max(
         min,

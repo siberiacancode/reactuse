@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
@@ -61,7 +61,7 @@ export const useHotkeys = (
 ) => {
   const enabled = options?.enabled ?? true;
   const preventDefault = options?.preventDefault ?? true;
-  const [, setKeys] = React.useState<UseHotkeysKey[]>([]);
+  const [, setKeys] = useState<UseHotkeysKey[]>([]);
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (preventDefault) event.preventDefault();

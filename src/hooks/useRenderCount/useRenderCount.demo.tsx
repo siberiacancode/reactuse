@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useRenderCount } from './useRenderCount';
 
 const Demo = () => {
   const renderCount = useRenderCount();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { getRetry } from '@/utils/helpers';
 
@@ -45,11 +45,11 @@ export const useWebSocket = (
   url: UseWebSocketUrl,
   options?: UseWebSocketOptions
 ): UseWebSocketReturn => {
-  const webSocketRef = React.useRef<WebSocket>();
-  const retryCountRef = React.useRef(options?.retry ? getRetry(options.retry) : 0);
-  const explicityCloseRef = React.useRef(false);
+  const webSocketRef = useRef<WebSocket>();
+  const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
+  const explicityCloseRef = useRef(false);
 
-  const [status, setStatus] = React.useState<UseWebSocketStatus>('connecting');
+  const [status, setStatus] = useState<UseWebSocketStatus>('connecting');
 
   const send = (data: string | Blob | ArrayBufferLike | ArrayBufferView) =>
     webSocketRef.current?.send(data);
@@ -94,7 +94,7 @@ export const useWebSocket = (
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     init();
 
     return () => {

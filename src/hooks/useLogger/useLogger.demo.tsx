@@ -1,9 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useLogger } from './useLogger';
 
 const Demo = () => {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
 
   useLogger('Demo', [count, { foo: 'bar' }]);
 
