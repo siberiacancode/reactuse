@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
 
@@ -39,11 +39,11 @@ export const useShare = ({
   fallback,
   successTimeout = 3000
 }: UseShareParams = {}) => {
-  const [isSupported, setIsSupported] = React.useState(false);
-  const [isReady, setIsReady] = React.useState(false);
-  const [isShared, setIsShared] = React.useState(false);
+  const [isSupported, setIsSupported] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const [isShared, setIsShared] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isClient && 'navigator' in window) {
       setIsSupported('share' in navigator);
       setIsReady(true);
@@ -55,7 +55,7 @@ export const useShare = ({
     return () => clearTimeout(timer);
   };
 
-  const share = React.useCallback(
+  const share = useCallback(
     async (content: ShareParams) => {
       if (isSupported) {
         onShare?.(content);
