@@ -1,8 +1,19 @@
 import { useEffect, useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
+import type { Connection } from '@/utils/types';
 
+declare global {
+  interface Navigator {
+    readonly connection: Connection;
+    readonly mozConnection: Connection;
+    readonly webkitConnection: Connection;
+  }
+}
+
+/** The type of network connection */
 export type ConnectionType = Connection['type'];
+/** The effective type of connection */
 export type ConnectionEffectiveType = Connection['effectiveType'];
 
 /** The use network return type */

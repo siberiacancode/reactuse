@@ -1,4 +1,4 @@
-interface Connection extends EventTarget {
+export interface Connection extends EventTarget {
   readonly downlink: number;
   readonly downlinkMax: number;
   readonly effectiveType: 'slow-2g' | '2g' | '3g' | '4g';
@@ -17,36 +17,25 @@ interface Connection extends EventTarget {
   onChange: (event: Event) => void;
 }
 
-interface BatteryManager extends EventTarget {
+export interface BatteryManager extends EventTarget {
   charging: boolean;
   chargingTime: number;
   dischargingTime: number;
   level: number;
 }
 
-interface ColorSelectionOptions {
+export interface ColorSelectionOptions {
   signal?: AbortSignal;
 }
 
-interface ColorSelectionResult {
+export interface ColorSelectionResult {
   sRGBHex: string;
 }
 
-interface EyeDropper {
+export interface EyeDropper {
   open: (options?: ColorSelectionOptions) => Promise<ColorSelectionResult>;
 }
 
-interface Navigator {
-  readonly connection: Connection;
-  readonly mozConnection: Connection;
-  readonly webkitConnection: Connection;
-  readonly getBattery: () => Promise<BatteryManager>;
-}
-
-interface EyeDropperConstructor {
+export interface EyeDropperConstructor {
   new (): EyeDropper;
-}
-
-interface Window {
-  EyeDropper?: EyeDropperConstructor | undefined;
 }

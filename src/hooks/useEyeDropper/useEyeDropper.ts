@@ -1,6 +1,17 @@
 import { useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
+import type {
+  ColorSelectionOptions,
+  ColorSelectionResult,
+  EyeDropperConstructor
+} from '@/utils/types';
+
+declare global {
+  interface Window {
+    EyeDropper?: EyeDropperConstructor | undefined;
+  }
+}
 
 /** The color selection return type */
 export interface UseEyeDropperReturn {

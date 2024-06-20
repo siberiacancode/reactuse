@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
 
+import type { BatteryManager } from '@/utils/types';
+
+declare global {
+  interface Navigator {
+    readonly getBattery: () => Promise<BatteryManager>;
+  }
+}
+
 /** State for hook use battery */
 interface UseBatteryStateReturn {
   /** Is battery API supported? */

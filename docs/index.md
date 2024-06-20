@@ -152,9 +152,9 @@ features:
 - title: usePrevious
   details: Hook that returns the previous value
   link: /functions/hooks/usePrevious
-- title: useQRCode
-  details: Hook that generates a QR code
-  link: /functions/hooks/useQRCode
+# - title: useQRCode
+#   details: Hook that generates a QR code
+#   link: /functions/hooks/useQRCode
 - title: useQuery
   details: Hook that defines the logic when query data
   link: /functions/hooks/useQuery

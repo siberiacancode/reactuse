@@ -47,7 +47,6 @@ export { usePaint } from './usePaint/usePaint';
 export { usePreferredColorScheme } from './usePreferredColorScheme/usePreferredColorScheme';
 export { usePreferredLanguages } from './usePreferredLanguages/usePreferredLanguages';
 export { usePrevious } from './usePrevious/usePrevious';
-export { useQRCode } from './useQRCode/useQRCode';
 export { useQuery } from './useQuery/useQuery';
 export { useQueue } from './useQueue/useQueue';
 export { useRenderCount } from './useRenderCount/useRenderCount';
