@@ -1,7 +1,10 @@
-import React from 'react';
+import type { RefObject } from 'react';
+import { useEffect, useRef } from 'react';
+
+import { useEvent } from '../useEvent/useEvent';
 
 export type UseEventListenerTarget =
-  | React.RefObject<Element | null>
+  | RefObject<Element | null>
   | (() => Element)
   | Element
   | Window
@@ -21,8 +24,7 @@ const getElement = (target: UseEventListenerTarget) => {
 
 export type UseEventListenerOptions = boolean | AddEventListenerOptions;
 
-export type UseEventListenerReturn<Target extends UseEventListenerTarget = any> =
-  React.RefObject<Target>;
+export type UseEventListenerReturn<Target extends UseEventListenerTarget> = RefObject<Target>;
 
 export type UseEventListener = {
   <Event extends keyof WindowEventMap = keyof WindowEventMap>(
@@ -76,17 +78,19 @@ export const useEventListener = ((...params: any[]) => {
   const listener = (target ? params[2] : params[1]) as (...arg: any[]) => void;
   const options: UseEventListenerOptions | undefined = target ? params[3] : params[2];
 
-  const internalRef = React.useRef<Element | Document | Window>(null);
+  const internalRef = useRef<Element | Document | Window>(null);
+  const internalListener = useEvent(listener);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const callback = (event: Event) => internalListener(event);
     const element = target ? getElement(target) : internalRef.current;
     if (element) {
-      events.forEach((event) => element.addEventListener(event, listener, options));
+      events.forEach((event) => element.addEventListener(event, callback, options));
       return () => {
-        events.forEach((event) => element.removeEventListener(event, listener, options));
+        events.forEach((event) => element.removeEventListener(event, callback, options));
       };
     }
-  }, [target, event, listener, options]);
+  }, [target, event, options]);
 
   if (target) return;
   return internalRef;

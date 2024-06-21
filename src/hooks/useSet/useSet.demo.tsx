@@ -1,9 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useSet } from './useSet';
 
 const Demo = () => {
-  const [input, setInput] = React.useState('');
+  const [input, setInput] = useState('');
   const scopes = useSet(['@siberiacancode', '@siberiacancode-tests', '@shared']);
 
   return (
@@ -27,7 +27,7 @@ const Demo = () => {
       </div>
 
       <div style={{ marginTop: 8 }}>
-        {Array.from(scopes).map((scope) => (
+        {Array.from(scopes.value).map((scope) => (
           <>
             <code key={scope}>{scope}</code>{' '}
           </>

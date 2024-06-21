@@ -1,10 +1,11 @@
-import React from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import { useMount } from '../useMount/useMount';
 
 /** The use favicon return type */
-export type UseFaviconReturn = [string, React.Dispatch<React.SetStateAction<string>>];
+export type UseFaviconReturn = [string, Dispatch<SetStateAction<string>>];
 
 /**
  * @name useFavicon
@@ -17,7 +18,7 @@ export type UseFaviconReturn = [string, React.Dispatch<React.SetStateAction<stri
  * const { href, set } = useFavicon('https://www.google.com/favicon.ico');
  */
 export const useFavicon = (initialHref?: string) => {
-  const [href, setHref] = React.useState(
+  const [href, setHref] = useState(
     initialHref ?? document.querySelector<HTMLLinkElement>(`link[rel*="icon"]`)?.href
   );
 

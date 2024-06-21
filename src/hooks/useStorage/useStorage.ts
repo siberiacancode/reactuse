@@ -1,4 +1,4 @@
-import React from 'react';
+import { useSyncExternalStore } from 'react';
 
 import { isClient } from '@/utils/helpers';
 
@@ -76,7 +76,7 @@ export const useStorage = <Value>(
   };
 
   const getSnapshot = () => getStorageItem(storage, key);
-  const store = React.useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
+  const store = useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
 
   const set = (value: Value) => {
     if (value === null) return removeStorageItem(storage, key);

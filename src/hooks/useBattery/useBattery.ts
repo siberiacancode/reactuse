@@ -1,4 +1,12 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+
+import type { BatteryManager } from '@/utils/types';
+
+declare global {
+  interface Navigator {
+    readonly getBattery: () => Promise<BatteryManager>;
+  }
+}
 
 /** State for hook use battery */
 interface UseBatteryStateReturn {
@@ -26,7 +34,7 @@ interface UseBatteryStateReturn {
  * const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();
  */
 export const useBattery = () => {
-  const [state, setState] = React.useState<UseBatteryStateReturn>({
+  const [state, setState] = useState<UseBatteryStateReturn>({
     supported: false,
     loading: true,
     level: 0,
@@ -35,7 +43,7 @@ export const useBattery = () => {
     dischargingTime: 0
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const isSupported =
       navigator && 'getBattery' in navigator && typeof navigator.getBattery === 'function';
     if (!isSupported) return setState({ ...state, loading: false });
@@ -45,11 +53,11 @@ export const useBattery = () => {
     const handleChange = () =>
       setState({
         supported: true,
-        loading: true,
-        level: battery?.level || 0,
-        charging: battery?.charging || false,
-        dischargingTime: battery?.dischargingTime || 0,
-        chargingTime: battery?.chargingTime || 0
+        loading: false,
+        level: battery?.level ?? 0,
+        charging: battery?.charging ?? false,
+        dischargingTime: battery?.dischargingTime ?? 0,
+        chargingTime: battery?.chargingTime ?? 0
       });
 
     navigator.getBattery().then((batteryManager) => {

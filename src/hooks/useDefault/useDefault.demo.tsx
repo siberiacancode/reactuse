@@ -10,7 +10,7 @@ const Demo = () => {
       <p>
         User: <code>{user.name}</code>
       </p>
-      <input onChange={(event) => setUser({ name: event.target.value })} />
+      <input value={user.name} onChange={(event) => setUser({ name: event.target.value })} />
       <button type='button' onClick={() => setUser(null)}>
         Clear user
       </button>

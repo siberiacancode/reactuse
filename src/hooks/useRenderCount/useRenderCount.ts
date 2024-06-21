@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * @name useRenderCount
@@ -10,9 +10,9 @@ import React from 'react';
  * const renderCount = useRenderCount();
  */
 export const useRenderCount = () => {
-  const renderCountRef = React.useRef(0);
+  const renderCountRef = useRef(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     renderCountRef.current += 1;
   });
 

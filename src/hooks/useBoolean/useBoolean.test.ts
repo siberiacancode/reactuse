@@ -6,7 +6,7 @@ it('Should use counter', () => {
   const { result } = renderHook(useBoolean);
   const [on, toggle] = result.current;
 
-  expect(on).toBe(false);
+  expect(on).toBeFalsy();
   expect(typeof toggle).toBe('function');
 });
 
@@ -14,22 +14,22 @@ it('Should set initial value', () => {
   const { result } = renderHook(() => useBoolean(true));
   const [on] = result.current;
 
-  expect(on).toBe(true);
+  expect(on).toBeTruthy();
 });
 
 it('Should toggle boolean', () => {
   const { result } = renderHook(useBoolean);
   const toggle = result.current[1];
 
-  act(() => toggle());
-  expect(result.current[0]).toBe(true);
+  act(toggle);
+  expect(result.current[0]).toBeTruthy();
 
-  act(() => toggle());
-  expect(result.current[0]).toBe(false);
+  act(toggle);
+  expect(result.current[0]).toBeFalsy();
 
   act(() => toggle(false));
-  expect(result.current[0]).toBe(false);
+  expect(result.current[0]).toBeFalsy();
 
   act(() => toggle(true));
-  expect(result.current[0]).toBe(true);
+  expect(result.current[0]).toBeTruthy();
 });

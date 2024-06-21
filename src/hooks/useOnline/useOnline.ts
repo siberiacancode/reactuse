@@ -1,4 +1,4 @@
-import React from 'react';
+import { useSyncExternalStore } from 'react';
 
 const getSnapshot = () => navigator.onLine;
 const getServerSnapshot = () => false;
@@ -20,5 +20,4 @@ const subscribe = (callback: () => void) => {
  * @example
  * const online = useOnline();
  */
-export const useOnline = () =>
-  React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+export const useOnline = () => useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

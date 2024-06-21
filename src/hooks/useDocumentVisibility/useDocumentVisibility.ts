@@ -1,7 +1,7 @@
-import React from 'react';
+import { useSyncExternalStore } from 'react';
 
 const getSnapshot = () => document.visibilityState;
-const getServerSnapshot = (): DocumentVisibilityState => 'hidden';
+const getServerSnapshot = () => 'hidden' as const;
 const subscribe = (callback: () => void) => {
   document.addEventListener('visibilitychange', callback);
   return () => {
@@ -19,4 +19,4 @@ const subscribe = (callback: () => void) => {
  * const visibilityState = useDocumentVisibility();
  */
 export const useDocumentVisibility = () =>
-  React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

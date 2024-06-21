@@ -1,4 +1,13 @@
-import React from 'react';
+import { useSyncExternalStore } from 'react';
+
+const getSnapshot = () => window.navigator.languages;
+const getServerSnapshot = () => [] as const;
+const subscribe = (callback: () => void) => {
+  window.addEventListener('languagechange', callback);
+  return () => {
+    window.removeEventListener('languagechange', callback);
+  };
+};
 
 /**
  * @name usePreferredLanguages
@@ -9,18 +18,5 @@ import React from 'react';
  * @example
  * const languages = usePreferredLanguages();
  */
-export const usePreferredLanguages = () => {
-  const subscribe = (callback: () => void) => {
-    window.addEventListener('languagechange', callback);
-
-    return () => {
-      window.removeEventListener('languagechange', callback);
-    };
-  };
-
-  const getSnapshot = () => window.navigator.languages;
-
-  const getServerSnapshot = () => ['en'] as const;
-
-  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-};
+export const usePreferredLanguages = () =>
+  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

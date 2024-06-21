@@ -1,8 +1,6 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
-
-import { useEventListener } from '../useEventListener/useEventListener';
 
 /** The use window size return type */
 interface UseWindowSizeParams {
@@ -32,17 +30,24 @@ export interface UseWindowSizeReturn {
  * const { width, height } = useWindowSize();
  */
 export const useWindowSize = (params?: UseWindowSizeParams) => {
-  const [size, setSize] = React.useState({
+  const [size, setSize] = useState({
     width: isClient ? window.innerWidth : params?.initialWidth ?? Number.POSITIVE_INFINITY,
     height: isClient ? window.innerHeight : params?.initialWidth ?? Number.POSITIVE_INFINITY
   });
 
-  useEventListener(window, 'resize', () => {
-    setSize({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-  });
+  useEffect(() => {
+    const onResize = () => {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
 
   return size;
 };

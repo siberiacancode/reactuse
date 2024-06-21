@@ -1,9 +1,9 @@
-import React from 'react';
+import { useRef, useState } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useMutationObserver } from '../useMutationObserver';
 
-/** The use document title options */
+/** The use document title options type */
 export interface UseDocumentTitleOptions {
   /** Restore the previous title on unmount */
   restoreOnUnmount?: boolean;
@@ -33,8 +33,8 @@ export function useDocumentTitle(
   value?: string,
   options?: UseDocumentTitleOptions
 ): UseDocumentTitleReturn {
-  const prevTitleRef = React.useRef(document.title);
-  const [title, setTitle] = React.useState(value ?? document.title);
+  const prevTitleRef = useRef(document.title);
+  const [title, setTitle] = useState(value ?? document.title);
 
   useMutationObserver(
     () => {

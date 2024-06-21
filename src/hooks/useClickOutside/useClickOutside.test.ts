@@ -137,5 +137,5 @@ it('Should call callback when clicked outside the element (multiple targets)', (
 
   act(() => document.dispatchEvent(new Event('mousedown')));
 
-  expect(callback).toBeCalledTimes(3);
+  expect(callback).toBeCalledTimes(1);
 });

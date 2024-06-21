@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useRef } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
@@ -17,13 +17,13 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
 export const useEvent = <Params extends unknown[], Return>(
   callback: (...args: Params) => Return
 ): ((...args: Params) => Return) => {
-  const callbackRef = React.useRef<typeof callback>(callback);
+  const callbackRef = useRef<typeof callback>(callback);
 
   useIsomorphicLayoutEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
-  return React.useCallback((...args) => {
+  return useCallback((...args) => {
     const fn = callbackRef.current;
     return fn(...args);
   }, []);

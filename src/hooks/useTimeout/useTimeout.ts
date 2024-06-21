@@ -1,6 +1,6 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
+import { useEvent } from '../useEvent/useEvent';
 
 /** The use timeout return type */
 interface UseTimeoutReturn {
@@ -12,7 +12,7 @@ interface UseTimeoutReturn {
 
 /**
  * @name useTimeout
- * @description Hook that executes a callback function after a specified delay
+ * @description - Hook that executes a callback function after a specified delay
  *
  * @param {() => void} callback The function to be executed after the timeout
  * @param {number} delay The delay in milliseconds before the timeout executes the callback function
@@ -22,27 +22,24 @@ interface UseTimeoutReturn {
  * const { clear, ready } = useTimeout(() => {}, 5000);
  */
 export function useTimeout(callback: () => void, delay: number): UseTimeoutReturn {
-  const [ready, setReady] = React.useState(false);
-  const internalCallbackRef = React.useRef(callback);
-  const timeoutRef = React.useRef<NodeJS.Timeout>();
+  const [ready, setReady] = useState(false);
 
-  useIsomorphicLayoutEffect(() => {
-    internalCallbackRef.current = callback;
-  }, [callback]);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>();
+  const internalCallback = useEvent(callback);
 
-  React.useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
-      internalCallbackRef.current();
+  useEffect(() => {
+    timeoutIdRef.current = setTimeout(() => {
+      internalCallback();
       setReady(true);
     }, delay);
 
     return () => {
-      clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutIdRef.current);
     };
   }, [delay]);
 
   const clear = () => {
-    clearTimeout(timeoutRef.current);
+    clearTimeout(timeoutIdRef.current);
     setReady(true);
   };
 
