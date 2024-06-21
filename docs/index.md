@@ -137,6 +137,9 @@ features:
 - title: useWindowEvent
   details: Hook attaches an event listener to the window object for the specified event
   link: /functions/hooks/useWindowEvent
+- title: useVibrate
+  details: Hook that provides Vibration API
+  link: /functions/hooks/useVibrate
 - title: useWindowSize
   details: Hook that manages a window size
   link: /functions/hooks/useWindowSize

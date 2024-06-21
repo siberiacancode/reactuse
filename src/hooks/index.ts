@@ -43,5 +43,6 @@ export * from './useStorage/useStorage';
 export * from './useTimeout/useTimeout';
 export * from './useToggle/useToggle';
 export * from './useUnmount/useUnmount';
+export * from './useVibrate/useVibrate';
 export * from './useWindowEvent/useWindowEvent';
 export * from './useWindowSize/useWindowSize';
