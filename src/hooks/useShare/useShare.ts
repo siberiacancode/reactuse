@@ -22,7 +22,7 @@ export interface UseShareReturn {
 
 /**
  * @name useShare
- * @description Custom hook to utilize the Web Share API with fallback and callback options.
+ * @description - Hook that utilizes the share api
  *
  * @param {UseShareParams} [params] The use share options
  * @returns {UseShareReturn}
@@ -30,7 +30,6 @@ export interface UseShareReturn {
  * @example
  * const { share, supported } = useShare();
  */
-
 export const useShare = (params?: UseShareParams) => {
   const supported = isClient ? 'share' in navigator : false;
 
