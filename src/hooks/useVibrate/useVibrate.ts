@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { isClient } from '@/utils/helpers';
+
 /** The use vibration params */
 export interface UseVibrateParams {
   /** Pattern for vibration */
@@ -68,17 +70,15 @@ export const useVibrate: UseVibrate = (...params) => {
   const [isVibrating, setIsVibrating] = useState(false);
 
   useEffect(() => {
-    if (navigator && 'vibrate' in navigator) {
+    if (isClient && navigator && 'vibrate' in navigator) {
       setIsSupported(true);
-    } else {
-      setIsSupported(false);
     }
   }, []);
 
   const vibrate = (curPattern = pattern) => {
     if (!isSupported || isVibrating) return;
 
-    const duration = curPattern instanceof Array ? curPattern.reduce((a, b) => a + b) : curPattern;
+    const duration = Array.isArray(curPattern) ? curPattern.reduce((a, b) => a + b) : curPattern;
 
     setIsVibrating(true);
     navigator.vibrate(curPattern);
