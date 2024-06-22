@@ -113,6 +113,9 @@ features:
 - title: useLongPress
   details: Hook for debugging lifecycle
   link: /functions/hooks/useLongPress
+- title: useMap
+  details: Hook that manages a map structure
+  link: /functions/hooks/useMap
 - title: useMediaQuery
   details: Hook that manages a media query
   link: /functions/hooks/useMediaQuery
