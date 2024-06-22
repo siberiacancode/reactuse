@@ -1,84 +1,51 @@
-import { useCallback, useEffect, useState } from 'react';
-
 import { isClient } from '@/utils/helpers';
 
-interface ShareParams {
+/** The use share options type */
+export interface UseShareParams {
+  /** The title of the share */
   title?: string;
+  /** The files of the share */
+  files?: File[];
+  /** The text of the share */
   text?: string;
+  /** The url of the share */
   url?: string;
 }
 
-interface UseShareParams {
-  onShare?: (content: ShareParams) => void;
-  onSuccess?: (content: ShareParams) => void;
-  onError?: (error: any) => void;
-  fallback?: () => void;
-  // Time in milliseconds after which the shared state is reset.
-  successTimeout?: number;
+/** The use share return type */
+export interface UseShareReturn {
+  /** The share function */
+  share: (shareParams: ShareData) => Promise<void>;
+  /** The share supported status */
+  supported: boolean;
 }
 
 /**
  * @name useShare
  * @description Custom hook to utilize the Web Share API with fallback and callback options.
  *
- * @param {UseShareParams} params - Parameters for configuring the hook.
- * @returns {Object} - Returns an object with share function and states: isSupported, isReady, isShared.
- * @returns {Function} returns.share - Function to trigger sharing.
- * @returns {boolean} returns.isSupported - Indicates if the Web Share API is supported.
- * @returns {boolean} returns.isReady - Indicates if the hook is ready to use.
- * @returns {boolean} returns.isShared - Indicates if the content has been shared.
+ * @param {UseShareParams} [params] The use share options
+ * @returns {UseShareReturn}
  *
  * @example
- * const { share, isSupported, isReady, isShared } = useShare();
+ * const { share, supported } = useShare();
  */
 
-export const useShare = ({
-  onShare,
-  onSuccess,
-  onError,
-  fallback,
-  successTimeout = 3000
-}: UseShareParams = {}) => {
-  const [isSupported, setIsSupported] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-  const [isShared, setIsShared] = useState(false);
+export const useShare = (params?: UseShareParams) => {
+  const supported = isClient ? 'share' in navigator : false;
 
-  useEffect(() => {
-    if (isClient && 'navigator' in window) {
-      setIsSupported('share' in navigator);
-      setIsReady(true);
-    }
-  }, []);
+  const share = async (shareParams: ShareData) => {
+    if (!supported) return;
 
-  const resetIsShared = (timeout: number) => {
-    const timer = setTimeout(() => setIsShared(false), timeout);
-    return () => clearTimeout(timer);
+    const data = {
+      ...params,
+      ...shareParams
+    };
+
+    if (data.files && navigator.canShare({ files: data.files })) navigator.share(data);
+
+    return navigator.share(data);
   };
 
-  const share = useCallback(
-    async (content: ShareParams) => {
-      if (isSupported) {
-        onShare?.(content);
-
-        try {
-          await navigator.share(content);
-          setIsShared(true);
-
-          onSuccess?.(content);
-
-          return resetIsShared(successTimeout);
-        } catch (error) {
-          onError?.(error);
-        }
-      } else {
-        fallback?.();
-        setIsShared(true);
-
-        return resetIsShared(successTimeout);
-      }
-    },
-    [fallback, isSupported, onError, onShare, onSuccess, successTimeout]
-  );
-
-  return { share, isSupported, isReady, isShared };
+  return { share, supported };
 };
