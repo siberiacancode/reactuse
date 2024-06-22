@@ -179,6 +179,9 @@ features:
 - title: useSet
   details: Hook that manages a set structure
   link: /functions/hooks/useSet
+- title: useShare
+  details: Hook that utilize the Web Share API
+  link: /functions/hooks/useShare
 - title: useTextSelection
   details: Hook that manages the text selection
   link: /functions/hooks/useTextSelection 
