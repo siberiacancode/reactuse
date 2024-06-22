@@ -56,6 +56,7 @@ export { useRerender } from './useRerender/useRerender';
 export { useScript } from './useScript/useScript';
 export { useSessionStorage } from './useSessionStorage/useSessionStorage';
 export { useSet } from './useSet/useSet';
+export { useShare } from './useShare/useShare';
 export { useStep } from './useStep/useStep';
 export { useStorage } from './useStorage/useStorage';
 export { useTextSelection } from './useTextSelection/useTextSelection';
@@ -66,3 +67,4 @@ export { useUnmount } from './useUnmount/useUnmount';
 export { useWebSocket } from './useWebSocket/useWebSocket';
 export { useWindowEvent } from './useWindowEvent/useWindowEvent';
 export { useWindowSize } from './useWindowSize/useWindowSize';
+
