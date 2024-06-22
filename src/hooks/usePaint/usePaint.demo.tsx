@@ -37,6 +37,7 @@ const Demo = () => {
         <div>
           <label>Width</label>
           <input
+            style={{ padding: '1em 0' }}
             min='3'
             max='20'
             type='range'

@@ -89,6 +89,12 @@ export const usePaint = ((...params: any[]) => {
     contextRef.current.stroke();
   });
 
+  const onMouseOut = () => {
+    if (!contextRef.current) return;
+    contextRef.current.closePath();
+    setIsDrawing(false);
+  };
+
   useEffect(() => {
     const element = target ? getTargetElement(target) : internalRef.current;
     if (!element) return;
@@ -110,12 +116,14 @@ export const usePaint = ((...params: any[]) => {
     element.addEventListener('mousedown', onMouseDown);
     element.addEventListener('mousemove', onMouseMove);
     element.addEventListener('mouseup', onMouseUp);
+    element.addEventListener('mouseout', onMouseOut);
 
     return () => {
       if (!element) return;
       element.removeEventListener('mousedown', onMouseDown);
       element.removeEventListener('mousemove', onMouseMove);
       element.removeEventListener('mouseup', onMouseUp);
+      element.removeEventListener('mouseout', onMouseOut);
     };
   }, []);
 
