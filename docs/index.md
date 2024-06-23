@@ -44,6 +44,9 @@ features:
 - title: useDidUpdate
   details: Hook that behaves like useEffect, but skips the effect on the initial render
   link: /functions/hooks/useDidUpdate
+- title: useDisclosure
+  details: Hook that allows you to open and close a modal
+  link: /functions/hooks/useDisclosure
 - title: useDocumentEvent
   details: Hook attaches an event listener to the document object for the specified event
   link: /functions/hooks/useDocumentEvent
