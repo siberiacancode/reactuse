@@ -191,15 +191,15 @@ features:
 - title: useUnmount
   details: Hook that defines the logic when unmounting a component
   link: /functions/hooks/useUnmount
+- title: useVibrate
+  details: Hook that provides Vibration API
+  link: /functions/hooks/useVibrate
 - title: useWebSocket
   details: Hook that connects to a WebSocket server and handles incoming and outgoing messages
   link: /functions/hooks/useWebSocket
 - title: useWindowEvent
   details: Hook attaches an event listener to the window object for the specified event
   link: /functions/hooks/useWindowEvent
-- title: useVibrate
-  details: Hook that provides Vibration API
-  link: /functions/hooks/useVibrate
 - title: useWindowSize
   details: Hook that manages a window size
   link: /functions/hooks/useWindowSize
