@@ -200,6 +200,9 @@ features:
 - title: useUnmount
   details: Hook that defines the logic when unmounting a component
   link: /functions/hooks/useUnmount
+- title: useVibrate
+  details: Hook that provides Vibration API
+  link: /functions/hooks/useVibrate
 - title: useWebSocket
   details: Hook that connects to a WebSocket server and handles incoming and outgoing messages
   link: /functions/hooks/useWebSocket
