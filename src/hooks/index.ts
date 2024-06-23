@@ -8,6 +8,7 @@ export { useDebounceCallback } from './useDebounceCallback/useDebounceCallback';
 export { useDebounceValue } from './useDebounceValue/useDebounceValue';
 export { useDefault } from './useDefault/useDefault';
 export { useDidUpdate } from './useDidUpdate/useDidUpdate';
+export { useDisclosure } from './useDisclosure/useDisclosure';
 export { useDocumentEvent } from './useDocumentEvent/useDocumentEvent';
 export { useDocumentTitle } from './useDocumentTitle/useDocumentTitle';
 export { useDocumentVisibility } from './useDocumentVisibility/useDocumentVisibility';
@@ -67,4 +68,3 @@ export { useUnmount } from './useUnmount/useUnmount';
 export { useWebSocket } from './useWebSocket/useWebSocket';
 export { useWindowEvent } from './useWindowEvent/useWindowEvent';
 export { useWindowSize } from './useWindowSize/useWindowSize';
-
