@@ -55,6 +55,7 @@ export { useRenderCount } from './useRenderCount/useRenderCount';
 export { useRenderInfo } from './useRenderInfo/useRenderInfo';
 export { useRerender } from './useRerender/useRerender';
 export { useScript } from './useScript/useScript';
+export { useScrollTo } from './useScrollTo/useScrollTo';
 export { useSessionStorage } from './useSessionStorage/useSessionStorage';
 export { useSet } from './useSet/useSet';
 export { useShare } from './useShare/useShare';
