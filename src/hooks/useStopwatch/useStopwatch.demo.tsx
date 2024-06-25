@@ -4,10 +4,10 @@ const Demo = () => {
   const { seconds, minutes, start, pause, reset } = useStopwatch();
 
   return (
-    <div className='App'>
-      <div>
-        <span>{minutes}</span>:<span>{seconds}</span>
-      </div>
+    <div>
+      <p>
+        <code>{minutes}</code>:<code>{seconds}</code>
+      </p>
       <button type='button' onClick={start}>
         Start
       </button>

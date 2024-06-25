@@ -1,4 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
+import { useCounter } from '@/hooks';
 
 import { useClickOutside } from './useClickOutside';
 

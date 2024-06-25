@@ -1,9 +1,8 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 interface UseStopwatchReturn {
-  current: string;
-  isPaused: boolean;
-  isOver: boolean;
+  paused: boolean;
+  over: boolean;
   days: number;
   hours: number;
   minutes: number;
@@ -12,44 +11,31 @@ interface UseStopwatchReturn {
   pause: () => void;
   start: () => void;
   reset: () => void;
-  togglePause: () => void;
+  toggle: () => void;
 }
 
 /**
  * @name useStopwatch
  * @description - Hook that creates a stopwatch functionality
  *
- * @overload
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
  * const { seconds, minutes, start, pause, reset } = useStopwatch();
  */
 
-const addLeadingZero = (digit: number): string => {
-  let timeStr = '';
-
-  if (digit % 10 === digit) {
-    timeStr += `0${digit}`;
-  }
-
-  timeStr += `${digit}`;
-
-  return timeStr;
-};
-
 export const useStopwatch = (autoStart: boolean = false): UseStopwatchReturn => {
-  const [time, setTime] = React.useState({
+  const [time, setTime] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0
   });
-  const [isPaused, setIsPaused] = React.useState(!autoStart);
-  const [isOver, setIsOver] = React.useState(false);
+  const [paused, setIsPaused] = useState(!autoStart);
+  const [over, setIsOver] = useState(false);
 
-  React.useEffect(() => {
-    if (isPaused) {
+  useEffect(() => {
+    if (paused) {
       return;
     }
     const interval = setInterval(() => {
@@ -81,18 +67,12 @@ export const useStopwatch = (autoStart: boolean = false): UseStopwatchReturn => 
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [time, isPaused]);
+  }, [time, paused]);
 
   return {
-    current: `${addLeadingZero(time.days)}:${addLeadingZero(
-      time.hours
-    )}:${addLeadingZero(time.minutes)}:${addLeadingZero(time.seconds)}`,
-    isPaused,
-    isOver,
-    days: time.days,
-    hours: time.hours,
-    minutes: time.minutes,
-    seconds: time.seconds,
+    paused,
+    over,
+    ...time,
     elapsedSeconds: time.days * 86400 + time.hours * 3600 + time.minutes * 60 + time.seconds,
     pause: () => setIsPaused(true),
     start: () => setIsPaused(false),
@@ -100,8 +80,6 @@ export const useStopwatch = (autoStart: boolean = false): UseStopwatchReturn => 
       setIsOver(false);
       setTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     },
-    togglePause: () => {
-      setIsPaused(!isPaused);
-    }
+    toggle: () => setIsPaused(!paused)
   };
 };

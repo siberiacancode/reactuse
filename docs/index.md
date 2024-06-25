@@ -143,6 +143,9 @@ features:
 - title: useScript
   details: Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
   link: /functions/hooks/useScript
+- title: useStopwatch
+  details: Hook that creates a stopwatch functionality
+  link: /functions/hooks/useStopwatch
 - title: useSessionStorage
   details: Hook that manages session storage value
   link: /functions/hooks/useSessionStorage
@@ -167,9 +170,6 @@ features:
 - title: useWindowSize
   details: Hook that manages a window size
   link: /functions/hooks/useWindowSize
-- title: useStopwatch
-  details: Hook that creates a stopwatch functionality
-  link: /functions/hooks/useStopwatch
 ---
 
 
