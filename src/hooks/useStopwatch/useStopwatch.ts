@@ -1,6 +1,18 @@
 import { useEffect, useState } from 'react';
 
-interface UseStopwatchReturn {
+export interface InitialTimeParams {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+export interface UseStopwatchParams {
+  enabled?: boolean;
+  initialTime?: InitialTimeParams;
+}
+
+export interface UseStopwatchReturn {
   paused: boolean;
   over: boolean;
   days: number;
@@ -24,14 +36,16 @@ interface UseStopwatchReturn {
  * const { seconds, minutes, start, pause, reset } = useStopwatch();
  */
 
-export const useStopwatch = (autoStart: boolean = false): UseStopwatchReturn => {
-  const [time, setTime] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-  const [paused, setPaused] = useState(!autoStart);
+export const useStopwatch = ({ enabled, initialTime }: UseStopwatchParams): UseStopwatchReturn => {
+  const [time, setTime] = useState(
+    initialTime || {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0
+    }
+  );
+  const [paused, setPaused] = useState(!enabled);
   const [over, setOver] = useState(false);
 
   useEffect(() => {
