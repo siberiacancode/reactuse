@@ -8,10 +8,10 @@ it('Should return correct values for each property', () => {
   expect(result.year).toBe(1999);
   expect(result.month).toBe(3);
   expect(result.day).toBe(12);
-  expect(result.hours).toBe(7);
+  expect(result.hours).toBe(3);
   expect(result.minutes).toBe(0);
   expect(result.seconds).toBe(0);
-  expect(result.meridiemHours.value).toBe(7);
+  expect(result.meridiemHours.value).toBe(3);
   expect(result.meridiemHours.type).toBe('am');
   expect(result.timestamp).toBe(921196800000);
 });

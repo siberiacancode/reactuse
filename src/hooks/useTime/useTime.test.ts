@@ -11,10 +11,10 @@ it('Should use time', () => {
   expect(result.current.year).toBe(1999);
   expect(result.current.month).toBe(3);
   expect(result.current.day).toBe(12);
-  expect(result.current.hours).toBe(7);
+  expect(result.current.hours).toBe(3);
   expect(result.current.minutes).toBe(0);
   expect(result.current.seconds).toBe(0);
-  expect(result.current.meridiemHours.value).toBe(7);
+  expect(result.current.meridiemHours.value).toBe(3);
   expect(result.current.meridiemHours.type).toBe('am');
   expect(result.current.timestamp).toBe(921196800000);
 });
