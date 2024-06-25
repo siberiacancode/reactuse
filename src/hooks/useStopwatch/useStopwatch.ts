@@ -39,11 +39,11 @@ export const useStopwatch = (autoStart: boolean = false): UseStopwatchReturn => 
       return;
     }
     const interval = setInterval(() => {
-      setTime((prev) => {
-        let d = prev.days;
-        let h = prev.hours;
-        let m = prev.minutes;
-        let s = prev.seconds;
+      setTime((prevTime) => {
+        let d = prevTime.days;
+        let h = prevTime.hours;
+        let m = prevTime.minutes;
+        let s = prevTime.seconds;
 
         if (s + 1 >= 60) {
           s = 0;
