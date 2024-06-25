@@ -80,6 +80,6 @@ export const useStopwatch = (autoStart: boolean = false): UseStopwatchReturn => 
       setOver(false);
       setTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     },
-    toggle: () => setPaused(!paused)
+    toggle: () => setPaused((prevPause) => !prevPause)
   };
 };
