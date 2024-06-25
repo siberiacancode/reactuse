@@ -1,7 +1,7 @@
-import React from 'react';
+import { useSyncExternalStore } from 'react';
 
 const getSnapshot = () => window.navigator.languages;
-const getServerSnapshot = () => ['en'] as const;
+const getServerSnapshot = () => [] as const;
 const subscribe = (callback: () => void) => {
   window.addEventListener('languagechange', callback);
   return () => {
@@ -19,4 +19,4 @@ const subscribe = (callback: () => void) => {
  * const languages = usePreferredLanguages();
  */
 export const usePreferredLanguages = () =>
-  React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

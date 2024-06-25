@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
 
@@ -30,12 +30,12 @@ export interface UseWindowSizeReturn {
  * const { width, height } = useWindowSize();
  */
 export const useWindowSize = (params?: UseWindowSizeParams) => {
-  const [size, setSize] = React.useState({
+  const [size, setSize] = useState({
     width: isClient ? window.innerWidth : params?.initialWidth ?? Number.POSITIVE_INFINITY,
     height: isClient ? window.innerHeight : params?.initialWidth ?? Number.POSITIVE_INFINITY
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const onResize = () => {
       setSize({
         width: window.innerWidth,

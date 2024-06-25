@@ -3,7 +3,11 @@ import { useOnline } from './useOnline';
 const Demo = () => {
   const online = useOnline();
 
-  return <p>User is {online ? 'online' : 'offline'}</p>;
+  return (
+    <p>
+      User is <code>{online ? 'online' : 'offline'}</code>
+    </p>
+  );
 };
 
 export default Demo;

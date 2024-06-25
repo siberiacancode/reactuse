@@ -1,9 +1,10 @@
-import React from 'react';
+import type { RefObject } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 
 /** The use click outside target element type */
-type UseClickOutsideTarget = React.RefObject<Element | null> | (() => Element) | Element;
+type UseClickOutsideTarget = RefObject<Element | null> | (() => Element) | Element;
 
 /** Function to get target element based on its type */
 const getElement = (target: UseClickOutsideTarget) => {
@@ -20,7 +21,7 @@ const getElement = (target: UseClickOutsideTarget) => {
 
 /** The use click outside return type */
 export type UseClickOutsideReturn<Target extends UseClickOutsideTarget | UseClickOutsideTarget[]> =
-  React.RefObject<Target>;
+  RefObject<Target>;
 
 export type UseClickOutside = {
   <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
@@ -62,14 +63,14 @@ export const useClickOutside = ((...params: any[]) => {
     | undefined;
   const callback = (params[1] ? params[1] : params[0]) as (event: Event) => void;
 
-  const internalRef = React.useRef<Element>(null);
-  const internalCallbackRef = React.useRef(callback);
+  const internalRef = useRef<Element>(null);
+  const internalCallbackRef = useRef(callback);
 
   useDidUpdate(() => {
     internalCallbackRef.current = callback;
   }, [callback]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handler = (event: Event) => {
       if (Array.isArray(target)) {
         if (!target.length) return;

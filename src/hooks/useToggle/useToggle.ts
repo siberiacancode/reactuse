@@ -1,4 +1,5 @@
-import React from 'react';
+import type { SetStateAction } from 'react';
+import { useReducer } from 'react';
 
 /** The use toggle return type */
 export type UseToggleReturn<Value> = readonly [Value, (value?: Value) => void];
@@ -17,14 +18,11 @@ export type UseToggleReturn<Value> = readonly [Value, (value?: Value) => void];
  * const [value, toggle] = useToggle(['light', 'dark'] as const);
  */
 export const useToggle = <Value = boolean>(values: readonly Value[] = [false, true] as any) => {
-  const [[option], toggle] = React.useReducer(
-    (state: Value[], action: React.SetStateAction<Value>) => {
-      const value = action instanceof Function ? action(state[0]) : action;
-      const index = Math.abs(state.indexOf(value));
-      return state.slice(index).concat(state.slice(0, index));
-    },
-    values as Value[]
-  );
+  const [[option], toggle] = useReducer((state: Value[], action: SetStateAction<Value>) => {
+    const value = action instanceof Function ? action(state[0]) : action;
+    const index = Math.abs(state.indexOf(value));
+    return state.slice(index).concat(state.slice(0, index));
+  }, values as Value[]);
 
-  return [option, toggle as (value?: React.SetStateAction<Value>) => void] as const;
+  return [option, toggle as (value?: SetStateAction<Value>) => void] as const;
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 /** The use boolean return type */
 type UseBooleanReturn = [
@@ -19,8 +19,8 @@ type UseBooleanReturn = [
  * const [on, toggle] = useBoolean()
  */
 export const useBoolean = (initialValue = false): UseBooleanReturn => {
-  const [value, setValue] = React.useState(initialValue);
-  const toggle = (value?: boolean) => setValue((prev) => value ?? !prev);
+  const [value, setValue] = useState(initialValue);
+  const toggle = (value?: boolean) => setValue((prevValue) => value ?? !prevValue);
 
   return [value, toggle];
 };

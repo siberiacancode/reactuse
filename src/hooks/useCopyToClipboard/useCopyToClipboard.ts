@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useState } from 'react';
 
 export const legacyCopyToClipboard = (value: string) => {
   const tempTextArea = document.createElement('textarea');
@@ -27,9 +27,9 @@ interface UseCopyToClipboardReturn {
  * const { value, copy } = useCopyToClipboard();
  */
 export const useCopyToClipboard = (): UseCopyToClipboardReturn => {
-  const [value, setValue] = React.useState<string | null>(null);
+  const [value, setValue] = useState<string | null>(null);
 
-  const copyToClipboard = React.useCallback(async (value: string) => {
+  const copyToClipboard = useCallback(async (value: string) => {
     try {
       if (navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(value);

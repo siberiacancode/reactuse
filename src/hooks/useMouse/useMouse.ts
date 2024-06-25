@@ -1,9 +1,10 @@
-import React from 'react';
+import type { RefObject } from 'react';
+import { useRef, useState } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
 /** The use mouse target element type */
-type UseMouseTarget = React.RefObject<Element | null> | (() => Element) | Element;
+type UseMouseTarget = RefObject<Element | null> | (() => Element) | Element;
 
 /** Function to get target element based on its type */
 const getElement = (target: UseMouseTarget) => {
@@ -37,9 +38,7 @@ export interface UseMouseReturn {
 export type UseMouse = {
   <Target extends UseMouseTarget>(target: Target): UseMouseReturn;
 
-  <Target extends UseMouseTarget>(
-    target?: never
-  ): UseMouseReturn & { ref: React.RefObject<Target> };
+  <Target extends UseMouseTarget>(target?: never): UseMouseReturn & { ref: RefObject<Target> };
 };
 
 /**
@@ -56,16 +55,15 @@ export type UseMouse = {
  *
  * @overload
  * @template Target The target element
- * @returns {UseMouseReturn & { ref: React.RefObject<Target> }} An object with the current mouse position and a ref
+ * @returns {UseMouseReturn & { ref: RefObject<Target> }} An object with the current mouse position and a ref
  *
  * @example
  * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
 export const useMouse = ((...params: any[]) => {
   const target = params[0] as UseMouseTarget | undefined;
-  console.log('@', target);
 
-  const [value, setValue] = React.useState({
+  const [value, setValue] = useState({
     x: 0,
     y: 0,
     elementX: 0,
@@ -74,7 +72,7 @@ export const useMouse = ((...params: any[]) => {
     elementPositionY: 0
   });
 
-  const internalRef = React.useRef<Element>(null);
+  const internalRef = useRef<Element>(null);
 
   useIsomorphicLayoutEffect(() => {
     const onMouseMove = (event: MouseEvent) => {

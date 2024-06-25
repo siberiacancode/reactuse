@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 
 const getServerSnapshot = () => false;
 
@@ -13,7 +13,7 @@ const getServerSnapshot = () => false;
  * const matches = useMediaQuery('(max-width: 768px)');
  */
 export const useMediaQuery = (query: string) => {
-  const subscribe = React.useCallback(
+  const subscribe = useCallback(
     (callback: () => void) => {
       const matchMedia = window.matchMedia(query);
 
@@ -27,5 +27,5 @@ export const useMediaQuery = (query: string) => {
 
   const getSnapshot = () => window.matchMedia(query).matches;
 
-  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 
 import { useCounter } from '../useCounter/useCounter';
 import { useRenderCount } from '../useRenderCount/useRenderCount';
@@ -9,13 +9,13 @@ interface MemoComponentProps {
   onClick: () => void;
 }
 
-const MemoComponent = React.memo(({ onClick }: MemoComponentProps) => {
-  const rerenderCount = useRenderCount();
+const MemoComponent = memo(({ onClick }: MemoComponentProps) => {
+  const renderCount = useRenderCount();
 
   return (
     <>
       <p>
-        Memo component rerender count: <code>{rerenderCount}</code>
+        Memo component rerender count: <code>{renderCount}</code>
       </p>
       <button type='button' onClick={onClick}>
         Send message

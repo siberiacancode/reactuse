@@ -1,5 +1,6 @@
-import React from 'react';
+import { useRef } from 'react';
 
+/** The operating system type */
 export type OperatingSystem = 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux';
 
 export const getOperatingSystem = (): OperatingSystem => {
@@ -26,6 +27,6 @@ export const getOperatingSystem = (): OperatingSystem => {
  * const operatingSystem = useOperatingSystem();
  */
 export const useOperatingSystem = () => {
-  const osOperatingSystemRef = React.useRef<OperatingSystem>(getOperatingSystem());
+  const osOperatingSystemRef = useRef<OperatingSystem>(getOperatingSystem());
   return osOperatingSystemRef.current;
 };
