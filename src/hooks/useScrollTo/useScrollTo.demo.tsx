@@ -23,7 +23,7 @@ const Demo = () => {
                 <div style={blockStyle}>Block 1</div>
                 <div style={blockStyle}>Block 2</div>
                 <div ref={targetToScroll} style={blockStyle}>Block 3</div>
-        </div>
+            </div>
         </>
     )
 }
