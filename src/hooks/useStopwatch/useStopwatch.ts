@@ -31,8 +31,8 @@ export const useStopwatch = (autoStart: boolean = false): UseStopwatchReturn => 
     minutes: 0,
     seconds: 0
   });
-  const [paused, setIsPaused] = useState(!autoStart);
-  const [over, setIsOver] = useState(false);
+  const [paused, setPaused] = useState(!autoStart);
+  const [over, setOver] = useState(false);
 
   useEffect(() => {
     if (paused) {
@@ -74,12 +74,12 @@ export const useStopwatch = (autoStart: boolean = false): UseStopwatchReturn => 
     over,
     ...time,
     elapsedSeconds: time.days * 86400 + time.hours * 3600 + time.minutes * 60 + time.seconds,
-    pause: () => setIsPaused(true),
-    start: () => setIsPaused(false),
+    pause: () => setPaused(true),
+    start: () => setPaused(false),
     reset: () => {
-      setIsOver(false);
+      setOver(false);
       setTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     },
-    toggle: () => setIsPaused(!paused)
+    toggle: () => setPaused(!paused)
   };
 };
