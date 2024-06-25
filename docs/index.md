@@ -185,6 +185,9 @@ features:
 - title: useShare
   details: Hook that utilize the Web Share API
   link: /functions/hooks/useShare
+- title: useScrollTo
+  details: Hook that allows scrolling to a specified HTML element
+  link: /functions/hooks/useScrollTo
 - title: useTextSelection
   details: Hook that manages the text selection
   link: /functions/hooks/useTextSelection 
