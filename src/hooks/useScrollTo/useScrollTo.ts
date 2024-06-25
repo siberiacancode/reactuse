@@ -1,8 +1,26 @@
 import { useRef } from 'react';
 
 const OPTIONS_DEFAULT: ScrollIntoViewOptions = {
+  /**
+   * Defines the transition animation.
+   * One of 'auto' or 'smooth'.
+   *
+   * @default 'smooth'
+   */
   behavior: 'smooth',
+  /**
+   * Defines vertical alignment.
+   * One of `'start'`, `'center'`, `'end'`, or `'nearest'`
+   *
+   * @default 'nearest'
+   */
   block: 'nearest',
+  /**
+   * Defines horizontal alignment.
+   * One of `start`, `center`, `end`, or `nearest`. Defaults to nearest.
+   *
+   * @default 'nearest'
+   */
   inline: 'nearest'
 };
 
