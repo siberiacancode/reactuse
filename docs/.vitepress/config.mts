@@ -1,10 +1,10 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitepress';
 
-import { getSidebarHookItems } from '../src/utils';
+import { getHookItems } from '../src/utils';
 
 export default async () => {
-  const sidebarHookItems = await getSidebarHookItems();
+  const sidebarHookItems = await getHookItems();
 
   return defineConfig({
     base: '/reactuse/',
@@ -18,6 +18,14 @@ export default async () => {
       }
     },
     transformPageData: (pageData) => {
+      if (pageData.relativePath === 'index.md') {
+        pageData.frontmatter.features = sidebarHookItems.map((item) => ({
+          title: item.text,
+          details: item.description,
+          link: item.link
+        }))
+      }
+
       if (pageData.relativePath.includes('hooks')) {
         pageData.title = pageData.params?.name;
         return;
