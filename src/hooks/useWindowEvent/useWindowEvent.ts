@@ -18,4 +18,4 @@ export const useWindowEvent = <Event extends keyof WindowEventMap>(
   event: Event,
   listener: (this: Window, event: WindowEventMap[Event]) => any,
   options?: UseEventListenerOptions
-) => useEventListener(window, event, listener, options);
+) => useEventListener(event, listener, options);

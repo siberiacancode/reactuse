@@ -13,7 +13,8 @@ const getPokemon = (id: number) =>
 const Demo = () => {
   const counter = useCounter(1);
   const getPokemonQuery = useQuery(() => getPokemon(counter.count), {
-    keys: [counter.count]
+    keys: [counter.count],
+    refetchInterval: 2000
   });
 
   return (

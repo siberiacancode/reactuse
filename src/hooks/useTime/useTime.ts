@@ -24,7 +24,6 @@ export interface UseTimeReturn {
  * @example
  * const { seconds, minutes, hours, meridiemHours, day, month, year, timestamp } = useTime();
  */
-
 export const useTime = (): UseTimeReturn => {
   const [time, setTime] = useState(getDate());
   useInterval(() => setTime(getDate()), 1000);
