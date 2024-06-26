@@ -51,26 +51,22 @@ export type UseEventListener = {
     options?: UseEventListenerOptions
   ): void;
 
-  <Event extends keyof WindowEventMap = keyof WindowEventMap>(
+  <Target extends Element, Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(
     event: Event | Event[],
-    listener: (this: Window, event: WindowEventMap[Event]) => void,
+    listener: (this: Target, event: HTMLElementEventMap[Event]) => void,
     options?: UseEventListenerOptions,
     target?: never
-  ): UseEventListenerReturn<Window>;
+  ): UseEventListenerReturn<Target>;
 
-  <Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(
+  <
+    Target extends Element,
+    Event extends keyof MediaQueryListEventMap = keyof MediaQueryListEventMap
+  >(
     event: Event | Event[],
-    listener: (this: Window, event: HTMLElementEventMap[Event]) => void,
+    listener: (this: Target, event: MediaQueryListEventMap[Event]) => void,
     options?: UseEventListenerOptions,
     target?: never
-  ): UseEventListenerReturn<Window>;
-
-  <Event extends keyof MediaQueryListEventMap = keyof MediaQueryListEventMap>(
-    event: Event | Event[],
-    listener: (this: Window, event: MediaQueryListEventMap[Event]) => void,
-    options?: UseEventListenerOptions,
-    target?: never
-  ): UseEventListenerReturn<Window>;
+  ): UseEventListenerReturn<Target>;
 };
 
 export const useEventListener = ((...params: any[]) => {
@@ -82,7 +78,7 @@ export const useEventListener = ((...params: any[]) => {
   const listener = (target ? params[2] : params[1]) as (...arg: any[]) => void;
   const options: UseEventListenerOptions | undefined = target ? params[3] : params[2];
 
-  const internalRef = useRef<Element | Document | Window>(window);
+  const internalRef = useRef<Element | Document | Window>(null);
   const internalListener = useEvent(listener);
 
   useEffect(() => {
