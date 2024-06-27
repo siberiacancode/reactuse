@@ -1,6 +1,7 @@
 import { getDate } from './getDate';
 
 vi.useFakeTimers().setSystemTime(new Date('1999-03-12'));
+const LOCAL_HOURS = new Date('1999-03-12').getHours();
 
 it('Should return correct values for each property', () => {
   const result = getDate();
@@ -8,11 +9,11 @@ it('Should return correct values for each property', () => {
   expect(result.year).toBe(1999);
   expect(result.month).toBe(3);
   expect(result.day).toBe(12);
-  expect(result.hours).toBe(7);
+  expect(result.hours).toBe(LOCAL_HOURS);
   expect(result.minutes).toBe(0);
   expect(result.seconds).toBe(0);
-  expect(result.meridiemHours.value).toBe(7);
-  expect(result.meridiemHours.type).toBe('am');
+  expect(result.meridiemHours.value).toBe(LOCAL_HOURS % 12 === 0 ? 12 : LOCAL_HOURS % 12);
+  expect(result.meridiemHours.type).toBe(LOCAL_HOURS >= 12 ? 'pm' : 'am');
   expect(result.timestamp).toBe(921196800000);
 });
 

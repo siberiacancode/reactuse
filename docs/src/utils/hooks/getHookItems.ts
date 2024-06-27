@@ -1,11 +1,15 @@
-import type { DefaultTheme } from 'vitepress';
-
 import { parseHookJsdoc } from '../parseHookJsdoc';
 
 import { getHookFile } from './getHookFile';
 import { getHooks } from './getHooks';
 
-export const getSidebarHookItems = async () => {
+interface HookItem {
+  text: string;
+  description: string;
+  link: string;
+}
+
+export const getHookItems = async (): Promise<HookItem[]> => {
   const hooks = await getHooks();
 
   const sidebar = await Promise.all(
@@ -29,10 +33,11 @@ export const getSidebarHookItems = async () => {
 
       return {
         text: hook,
+        description: jsdoc.description.description,
         link: `/functions/hooks/${hook}`
       };
     })
   );
 
-  return sidebar.filter(Boolean) as DefaultTheme.SidebarItem[];
+  return sidebar.filter(Boolean) as HookItem[];
 };

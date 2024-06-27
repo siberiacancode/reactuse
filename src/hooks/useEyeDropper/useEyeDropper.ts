@@ -9,7 +9,7 @@ import type {
 
 declare global {
   interface Window {
-    EyeDropper?: EyeDropperConstructor | undefined;
+    readonly EyeDropper?: EyeDropperConstructor | undefined;
   }
 }
 
