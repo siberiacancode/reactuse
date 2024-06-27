@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 /**
  * @name useMount
  * @description - Hook that executes a callback when the component mounts
- * @category Component
+ * @category Lifecycle
  *
  * @param {EffectCallback} effect The callback to execute
  *

@@ -26,7 +26,7 @@ export default {
             id: hook,
             name: hook,
             description: jsdoc.description.description,
-            category: jsdoc.category?.name || 'Hooks',
+            category: jsdoc.category?.name,
             lastModified: stats.mtime.getTime(),
             usage: jsdoc.usage.description,
             apiParameters: jsdoc.apiParameters

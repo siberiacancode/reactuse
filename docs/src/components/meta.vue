@@ -8,7 +8,7 @@ const props = defineProps({
   }
 });
 
-function timeAgo (timestamp, locale = 'en') {
+const timeAgo = (timestamp, locale = 'en') => {
   let value;
   const diff = Math.floor((new Date().getTime() - timestamp) / 1000);
   const minutes = Math.floor(diff / 60);
@@ -38,11 +38,11 @@ function timeAgo (timestamp, locale = 'en') {
 <template>
   <div class="meta">
     <template v-if="category">
-      <div> Category </div>
-      <div>{{ category }}</div>
+      <div>Category</div>
+      <div><code>{{ category }}</code></div>
     </template>
     <template v-if="lastModified">
-      <div> Last Changed </div>
+      <div>Last Changed</div>
       <div>{{ timeAgo(lastModified) }}</div>
     </template>
   </div>

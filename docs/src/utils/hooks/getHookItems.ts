@@ -35,7 +35,7 @@ export const getHookItems = async (): Promise<HookItem[]> => {
       return {
         text: hook,
         description: jsdoc.description.description,
-        category: jsdoc.category?.name || 'Hooks',
+        category: jsdoc.category?.name,
         link: `/functions/hooks/${hook}`
       };
     })

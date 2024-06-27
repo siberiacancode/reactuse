@@ -6,16 +6,16 @@ import { getHookItems } from '../src/utils';
 
 export default async () => {
   const hookItems = await getHookItems();
-  const sidebarHookItems = hookItems.reduce<DefaultTheme.SidebarItem[]>((acc, item) => {
-    const category = acc.find((group) => group.text === item.category);
+  const sidebarHookItems = hookItems.reduce<DefaultTheme.SidebarItem[]>((categoryItems, hookItem) => {
+    const category = categoryItems.find((group) => group.text === hookItem.category);
 
     if (!category) {
-      acc.push({ text: item.category, items: [item] });
+      categoryItems.push({ text: hookItem.category, items: [hookItem] });
     } else {
-      category.items?.push(item);
+      category.items!.push(hookItem);
     }
 
-    return acc;
+    return categoryItems;
   }, []);
   const homePageFeatures = hookItems.map((item) => ({
     title: item.text,

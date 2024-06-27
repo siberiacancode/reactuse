@@ -10,7 +10,7 @@ export interface UseRenderInfoReturn {
 /**
  * @name useRenderInfo
  * @description - Hook for getting information about component rerender
- * @category Component
+ * @category Lifecycle
  *
  * @param {string} [name='Unknown'] Component name
  * @param {boolean} [log=true] Toggle logging
