@@ -5,6 +5,7 @@ import { getHooks } from './getHooks';
 
 interface HookItem {
   text: string;
+  category: string;
   description: string;
   link: string;
 }
@@ -14,10 +15,10 @@ export const getHookItems = async (): Promise<HookItem[]> => {
 
   const sidebar = await Promise.all(
     hooks.map(async (hook) => {
-      const file = await getHookFile(hook);
+      const { content } = await getHookFile(hook);
 
       const jsdocCommentRegex = /\/\*\*\s*\n([^\\*]|(\*(?!\/)))*\*\//;
-      const match = file.match(jsdocCommentRegex);
+      const match = content.match(jsdocCommentRegex);
 
       if (!match) {
         console.error(`No jsdoc comment found for ${hook}`);
@@ -34,6 +35,7 @@ export const getHookItems = async (): Promise<HookItem[]> => {
       return {
         text: hook,
         description: jsdoc.description.description,
+        category: jsdoc.category?.name || 'Hooks',
         link: `/functions/hooks/${hook}`
       };
     })
