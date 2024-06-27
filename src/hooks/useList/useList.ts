@@ -21,6 +21,7 @@ export interface UseListReturn<Item> {
 /**
  * @name useList
  * @description - Hook that defines the logic when unmounting a component
+ * @category Utilities
  *
  * @template Item - The type of the item
  * @param {Item[] | (() => Item[])} initialList - The initial list of items
