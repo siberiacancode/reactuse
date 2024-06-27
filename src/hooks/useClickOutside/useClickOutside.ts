@@ -38,6 +38,7 @@ export type UseClickOutside = {
 /**
  * @name useClickOutside
  * @description - Hook to handle click events outside the specified target element(s)
+ * @category Sensors
  *
  * @overload
  * @template Target The target element(s)

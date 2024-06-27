@@ -41,6 +41,7 @@ export type UseCounter = {
 /**
  * @name useCounter
  * @description - Hook that manages a counter with increment, decrement, reset, and set functionalities
+ * @category Utilities
  *
  * @overload
  * @param {number} [initialValue=0] The initial number value
@@ -56,7 +57,7 @@ export type UseCounter = {
  *
  * @example
  * const { count, dec, inc, reset, set } = useCounter(5);
- * 
+ *
  * @example
  * const { count, dec, inc, reset, set } = useCounter({ initialValue: 5, min: 0, max: 10 });
  */

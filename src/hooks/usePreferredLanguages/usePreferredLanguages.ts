@@ -12,6 +12,7 @@ const subscribe = (callback: () => void) => {
 /**
  * @name usePreferredLanguages
  * @description Hook that returns a browser preferred languages from navigator
+ * @category Browser
  *
  * @returns {readonly string[]} An array of strings representing the user's preferred languages
  *

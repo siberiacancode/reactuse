@@ -5,6 +5,7 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
 /**
  * @name useEvent
  * @description - Hook that creates an event and returns a stable reference of it
+ * @category Browser
  *
  * @template Params The type of the params
  * @template Return The type of the return

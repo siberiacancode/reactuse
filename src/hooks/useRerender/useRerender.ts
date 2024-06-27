@@ -11,6 +11,7 @@ interface UseRerenderReturns {
 /**
  * @name useRerender
  * @description - Hook that defines the logic to force rerender a component
+ * @category Component
  *
  * @returns {UseRerenderReturns} An object containing the id and update function
  *

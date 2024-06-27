@@ -21,6 +21,7 @@ export type UseDocumentTitleReturn = [
 /**
  * @name useDocumentTitle
  * @description - Hook that manages the document title and allows updating it
+ * @category Browser
  *
  * @param {string} [value] The initial title. If not provided, the current document title will be used
  * @param {boolean} [options.restoreOnUnmount] Restore the previous title on unmount

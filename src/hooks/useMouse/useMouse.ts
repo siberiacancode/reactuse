@@ -44,6 +44,7 @@ export type UseMouse = {
 /**
  * @name useMouse
  * @description - Hook that manages a mouse position
+ * @category Sensors
  *
  * @overload
  * @template Target The target element

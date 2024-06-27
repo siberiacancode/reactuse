@@ -23,6 +23,7 @@ export interface UseEyeDropperReturn {
 /**
  * @name useEyeDropper
  * @description - Hook that gives you access to the eye dropper
+ * @category Browser
  *
  * @param {string} [initialValue=undefined] The initial value for the eye dropper
  * @returns {UseEyeDropperReturn} An object containing the supported status, the value and the open method

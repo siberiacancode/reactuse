@@ -4,6 +4,7 @@ import { useStorage } from '../useStorage/useStorage';
 /**
  * @name useLocalStorage
  * @description - Hook that manages local storage value
+ * @category State
  *
  * @template Value The type of the value
  * @param {string} key The key of the storage
