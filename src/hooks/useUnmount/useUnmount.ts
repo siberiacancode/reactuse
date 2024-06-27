@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 /**
  * @name useUnmount
  * @description - Hook that defines the logic when unmounting a component
+ * @category Lifecycle
  *
  * @param {() => void} callback The callback function to be invoked on component unmount
  * @returns {void}

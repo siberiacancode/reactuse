@@ -5,6 +5,7 @@ const getServerSnapshot = () => false;
 /**
  * @name useMediaQuery
  * @description - Hook that manages a media query
+ * @category Browser
  *
  * @param {string} query The media query string
  * @returns {boolean} A boolean indicating if the media query matches

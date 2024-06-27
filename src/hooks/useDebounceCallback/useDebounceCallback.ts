@@ -5,6 +5,7 @@ import { debounce } from '@/utils/helpers';
 /**
  * @name useDebounceCallback
  * @description - Hook that creates a debounced callback and returns a stable reference of it
+ * @category Utilities
  *
  * @template Params The type of the params
  * @template Return The type of the return

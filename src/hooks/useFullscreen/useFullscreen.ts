@@ -53,6 +53,7 @@ export type UseFullScreen = {
 /**
  * @name useFullscreen
  * @description - Hook to handle fullscreen events
+ * @category Browser
  *
  * @overload
  * @template Target The target element for fullscreen

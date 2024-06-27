@@ -13,6 +13,7 @@ export interface UseOrientationReturn {
 /**
  * @name useOrientation
  * @description - Hook that returns the current screen orientation
+ * @category Browser
  *
  * @returns {UseOrientationReturn} An object containing the current screen orientation
  *

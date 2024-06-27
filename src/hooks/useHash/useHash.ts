@@ -8,6 +8,7 @@ type UseHashReturn = [string, (value: string) => void];
 /**
  * @name useHash
  * @description - Hook that manages the hash value
+ * @category Browser
  *
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *

@@ -5,6 +5,7 @@ import { useDebounceCallback } from '../useDebounceCallback/useDebounceCallback'
 /**
  * @name useDebounceValue
  * @description - Hook that creates a debounced value and returns a stable reference of it
+ * @category Utilities
  *
  * @template Value The type of the value
  * @param {Value} value The value to be debounced

@@ -31,6 +31,7 @@ export interface UsePermissionReturn {
 /**
  *  @name usePermission
  *  @description - Hook that gives you the state of permission
+ *  @category Browser
  *
  *  @returns {UsePermissionReturn} An object containing the state and the supported status
  *

@@ -18,6 +18,7 @@ export interface UseTimeReturn {
 /**
  * @name useTime
  * @description - Hook that gives you current time in different values
+ * @category Time
  *
  * @returns {UseTimeReturn} An object containing the current time
  *

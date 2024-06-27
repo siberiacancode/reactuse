@@ -39,6 +39,7 @@ export type UseHotkeysKey = { key: string; code: string; alias: string };
 /**
  * @name useHotkeys
  * @description - Hook that listens for hotkeys
+ * @category Sensors
  *
  * @param {UseHotkeysHotkeys} hotkeys The key or keys to listen for
  * @param {(event: KeyboardEvent) => void} callback The callback function to be called when the hotkey is pressed
