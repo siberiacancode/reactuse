@@ -58,6 +58,7 @@ export const usePermission = (permissionDescriptorName: UsePermissionName) => {
 
   useEffect(() => {
     if (!supported) return;
+    query();
     window.addEventListener('change', query);
     return () => {
       window.removeEventListener('change', query);
