@@ -45,16 +45,16 @@ interface UseQueryReturn<Data> {
  * @name useQuery
  * @description - Hook that defines the logic when query data
  *
- * @template Data - The type of the data
- * @param {() => Promise<Data>} callback - The callback function to be invoked
- * @param {DependencyList} [options.keys] - The dependencies for the hook
- * @param {(data: Data) => void} [options.onSuccess] - The callback function to be invoked on success
- * @param {(error: Error) => void} [options.onError] - The callback function to be invoked on error
- * @param {UseQueryOptionsSelect<Data>} [options.select] - The select function to be invoked
- * @param {Data | (() => Data)} [options.initialData] - The initial data for the hook
- * @param {Data | (() => Data)} [options.placeholderData] - The placeholder data for the hook
- * @param {number} [options.refetchInterval] - The refetch interval
- * @param {boolean | number} [options.retry] - The retry count of requests
+ * @template Data The type of the data
+ * @param {() => Promise<Data>} callback The callback function to be invoked
+ * @param {DependencyList} [options.keys] The dependencies for the hook
+ * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success
+ * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error
+ * @param {UseQueryOptionsSelect<Data>} [options.select] The select function to be invoked
+ * @param {Data | (() => Data)} [options.initialData] The initial data for the hook
+ * @param {Data | (() => Data)} [options.placeholderData] The placeholder data for the hook
+ * @param {number} [options.refetchInterval] The refetch interval
+ * @param {boolean | number} [options.retry] The retry count of requests
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
