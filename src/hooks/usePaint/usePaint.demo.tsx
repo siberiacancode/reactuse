@@ -46,7 +46,7 @@ const Demo = () => {
         </div>
       </div>
 
-      <canvas ref={ref} style={{ backgroundColor: 'white' }} />
+      <canvas width={400} height={400} ref={ref} style={{ backgroundColor: 'white' }} />
       <br />
 
       <button type='button' onClick={clearCanvas}>
