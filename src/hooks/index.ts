@@ -71,3 +71,4 @@ export { useWebSocket } from './useWebSocket/useWebSocket';
 export { useWindowEvent } from './useWindowEvent/useWindowEvent';
 export { useWindowSize } from './useWindowSize/useWindowSize';
 export { useWizard } from './useWizard/useWizard';
+export { default as useUnix } from './hooks/useUnix/useUnix';
