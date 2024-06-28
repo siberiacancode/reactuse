@@ -49,6 +49,7 @@ export type UsePaint = {
 /**
  * @name usePaint
  * @description - Hook that allows you to draw in a specific area
+ * @category Browser
  *
  * @overload
  * @template Target The target element

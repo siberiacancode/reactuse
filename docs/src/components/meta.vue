@@ -41,10 +41,10 @@ const timeAgo = (timestamp, locale = 'en') => {
       <div>Category</div>
       <div><code>{{ category }}</code></div>
     </template>
-    <template v-if="lastModified">
+    <ClientOnly v-if="lastModified">
       <div>Last Changed</div>
       <div>{{ timeAgo(lastModified) }}</div>
-    </template>
+    </ClientOnly>
   </div>
 </template>
 
