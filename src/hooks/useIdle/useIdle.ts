@@ -28,6 +28,7 @@ export interface UseIdleReturn {
 /**
  * @name useIdle
  * @description - Hook that defines the logic when the user is idle
+ * @category Sensors
  *
  * @param {number} [milliseconds=ONE_MINUTE] The idle time in milliseconds
  * @param {boolean} [options.initialState=false] The options for the hook

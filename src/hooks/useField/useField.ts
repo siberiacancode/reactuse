@@ -82,8 +82,9 @@ export interface UseFieldReturn<Value> {
 }
 
 /**
- * @name UseField
+ * @name useField
  * @description - Hook to manage a form field
+ * @category Utilities
  *
  * @template Value The input value
  * @template Type The input value type

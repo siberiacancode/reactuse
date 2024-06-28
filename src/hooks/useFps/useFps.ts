@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 /**
  * @name useFps
  * @description - Hook that measures frames per second
+ * @category Sensors
  *
  * @returns {number} A number which determines frames per second
  *

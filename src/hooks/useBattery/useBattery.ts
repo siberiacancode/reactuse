@@ -27,6 +27,7 @@ interface UseBatteryStateReturn {
 /**
  * @name useBattery
  * @description - Hook for getting information about battery status
+ * @category Browser
  *
  * @returns {UseBatteryStateReturn} Object containing battery information & Battery API support
  *

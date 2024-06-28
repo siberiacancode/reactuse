@@ -6,8 +6,8 @@ export default {
 
     const params = await Promise.all(
       hooks.map(async (hook) => {
-        const file = await getHookFile(hook);
-        const jsdocMatch = matchJsdoc(file);
+        const { content, stats } = await getHookFile(hook);
+        const jsdocMatch = matchJsdoc(content);
 
         if (!jsdocMatch) {
           console.error(`No jsdoc comment found for ${hook}`);
@@ -26,6 +26,8 @@ export default {
             id: hook,
             name: hook,
             description: jsdoc.description.description,
+            category: jsdoc.category?.name,
+            lastModified: stats.mtime.getTime(),
             usage: jsdoc.usage.description,
             apiParameters: jsdoc.apiParameters
           }

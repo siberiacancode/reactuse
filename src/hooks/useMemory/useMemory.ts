@@ -22,6 +22,7 @@ export interface UseMemoryReturn {
 /**
  * @name useMemory
  * @description - Hook that gives you current memory usage
+ * @category Browser
  *
  * @returns {UseMemoryReturn} An object containing the current memory usage
  *

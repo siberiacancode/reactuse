@@ -13,6 +13,7 @@ interface UseTimeoutReturn {
 /**
  * @name useTimeout
  * @description - Hook that executes a callback function after a specified delay
+ * @category Time
  *
  * @param {() => void} callback The function to be executed after the timeout
  * @param {number} delay The delay in milliseconds before the timeout executes the callback function

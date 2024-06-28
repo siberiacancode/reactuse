@@ -26,6 +26,7 @@ type UseInterval = {
 /**
  * @name useInterval
  * @description - Hook that makes and interval and returns controlling functions
+ * @category Time
  *
  * @overload
  * @param {() => void} callback Any callback function
