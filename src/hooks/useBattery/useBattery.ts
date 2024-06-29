@@ -45,9 +45,9 @@ export const useBattery = () => {
   });
 
   useEffect(() => {
-    const isSupported =
+    const supported =
       navigator && 'getBattery' in navigator && typeof navigator.getBattery === 'function';
-    if (!isSupported) return setState({ ...state, loading: false });
+    if (!supported) return setState({ ...state, loading: false });
 
     let battery: BatteryManager | null;
 

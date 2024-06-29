@@ -124,10 +124,12 @@ export const useField = <
   const setValue = (value: Type) => {
     if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox') {
       inputRef.current.checked = value as boolean;
+      if (watchingRef.current) return rerender.update();
       return;
     }
 
     inputRef.current!.value = value as string;
+    if (watchingRef.current) return rerender.update();
   };
 
   const reset = () => {
