@@ -80,7 +80,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
       }
     );
 
-    observer.observe(element!);
+    observer.observe(element);
 
     return () => {
       observer.disconnect();
