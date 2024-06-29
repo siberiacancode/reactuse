@@ -1,32 +1,46 @@
 import { useEffect, useState } from 'react';
 
+/** The use geolocation return type */
 export interface UseGeolocationReturn {
+  /** The loading state */
   loading: boolean;
+  /** The error of the last position update */
   error: GeolocationPositionError | null;
+  /** The timestamp of the last position update */
   timestamp: number | null;
+  /** The accuracy of the last position update */
   accuracy: number | null;
+  /** The latitude of the last position update */
   latitude: number | null;
+  /** The longitude of the last position update */
   longitude: number | null;
+  /** The altitude of the last position update */
   altitude: number | null;
+  /** The altitude accuracy of the last position update */
   altitudeAccuracy: number | null;
+  /** The heading of the last position update */
   heading: number | null;
+  /** The speed of the last position update */
   speed: number | null;
 }
+
+/** The use geolocation params */
+export type UseGeolocationParams = PositionOptions;
 
 /**
  * @name useGeolocation
  * @description - Hook that returns the current geolocation
  * @category Browser
  *
- * @param {boolean} [options.enableHighAccuracy] Enable high accuracy
- * @param {number} [options.maximumAge] Maximum age
- * @param {number} [options.timeout] Timeout
+ * @param {boolean} [params.enableHighAccuracy] Enable high accuracy
+ * @param {number} [params.maximumAge] Maximum age
+ * @param {number} [params.timeout] Timeout
  * @returns {UseGeolocationReturn}
  *
  * @example
  * const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();
  */
-export const useGeolocation = (options?: PositionOptions): UseGeolocationReturn => {
+export const useGeolocation = (params?: UseGeolocationParams): UseGeolocationReturn => {
   const [value, setValue] = useState<{
     loading: boolean;
     error: GeolocationPositionError | null;
@@ -75,13 +89,13 @@ export const useGeolocation = (options?: PositionOptions): UseGeolocationReturn 
       });
     };
 
-    navigator.geolocation.getCurrentPosition(onEvent, onEventError, options);
-    const watchId = navigator.geolocation.watchPosition(onEvent, onEventError, options);
+    navigator.geolocation.getCurrentPosition(onEvent, onEventError, params);
+    const watchId = navigator.geolocation.watchPosition(onEvent, onEventError, params);
 
     return () => {
       navigator.geolocation.clearWatch(watchId);
     };
-  }, [options?.enableHighAccuracy, options?.maximumAge, options?.timeout]);
+  }, [params?.enableHighAccuracy, params?.maximumAge, params?.timeout]);
 
   return value;
 };
