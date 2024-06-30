@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 
+import { useEvent } from '@/hooks';
+
 export interface InitialTimeParams {
   days: number;
   hours: number;
   minutes: number;
   seconds: number;
-}
-
-export interface UseStopwatchParams {
-  enabled?: boolean;
-  initialTime?: InitialTimeParams;
+  count: number;
 }
 
 export interface UseStopwatchReturn {
@@ -19,7 +17,7 @@ export interface UseStopwatchReturn {
   hours: number;
   minutes: number;
   seconds: number;
-  elapsedSeconds: number;
+  count: number;
   pause: () => void;
   start: () => void;
   reset: () => void;
@@ -36,48 +34,68 @@ export interface UseStopwatchReturn {
  * const { seconds, minutes, start, pause, reset } = useStopwatch();
  */
 
-export const useStopwatch = ({ enabled, initialTime }: UseStopwatchParams): UseStopwatchReturn => {
+export const useStopwatch = (
+  enabled?: boolean,
+  initialTime?: InitialTimeParams
+): UseStopwatchReturn => {
   const [time, setTime] = useState(
-    initialTime || {
+    initialTime ?? {
       days: 0,
       hours: 0,
       minutes: 0,
-      seconds: 0
+      seconds: 0,
+      count: 0
     }
   );
   const [paused, setPaused] = useState(!enabled);
   const [over, setOver] = useState(false);
+
+  const onInterval = useEvent(() => {
+    const updatedCount = time.count + 1;
+
+    if (updatedCount % 60 === 0) {
+      return setTime(() => ({
+        ...time,
+        minutes: time.minutes + 1,
+        seconds: 0,
+        count: updatedCount
+      }));
+    }
+
+    if (updatedCount % (60 * 60) === 0) {
+      return setTime(() => ({
+        ...time,
+        hours: time.hours + 1,
+        minutes: 0,
+        seconds: 0,
+        count: updatedCount
+      }));
+    }
+
+    if (updatedCount % (60 * 60 * 24) === 0) {
+      return setTime(() => ({
+        ...time,
+        days: time.days + 1,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+        count: updatedCount
+      }));
+    }
+
+    setTime(() => ({
+      ...time,
+      seconds: time.seconds + 1,
+      count: updatedCount
+    }));
+  });
 
   useEffect(() => {
     if (paused) {
       return;
     }
     const interval = setInterval(() => {
-      setTime((prevTime) => {
-        let d = prevTime.days;
-        let h = prevTime.hours;
-        let m = prevTime.minutes;
-        let s = prevTime.seconds;
-
-        if (s + 1 >= 60) {
-          s = 0;
-          if (m + 1 >= 60) {
-            m = 0;
-            if (h + 1 >= 24) {
-              h = 0;
-              d += 1;
-            } else {
-              h += 1;
-            }
-          } else {
-            m += 1;
-          }
-        } else {
-          s += 1;
-        }
-
-        return { days: d, hours: h, minutes: m, seconds: s };
-      });
+      onInterval();
     }, 1000);
 
     return () => clearInterval(interval);
@@ -87,12 +105,11 @@ export const useStopwatch = ({ enabled, initialTime }: UseStopwatchParams): UseS
     paused,
     over,
     ...time,
-    elapsedSeconds: time.days * 86400 + time.hours * 3600 + time.minutes * 60 + time.seconds,
     pause: () => setPaused(true),
     start: () => setPaused(false),
     reset: () => {
       setOver(false);
-      setTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      setTime({ days: 0, hours: 0, minutes: 0, seconds: 0, count: 0 });
     },
     toggle: () => setPaused((prevPause) => !prevPause)
   };
