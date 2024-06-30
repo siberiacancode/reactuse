@@ -19,6 +19,7 @@ export { useFavicon } from './useFavicon/useFavicon';
 export { useField } from './useField/useField';
 export { useFps } from './useFps/useFps';
 export { useFullscreen } from './useFullscreen/useFullscreen';
+export { useGeolocation } from './useGeolocation/useGeolocation';
 export { useHash } from './useHash/useHash';
 export { useHotkeys } from './useHotkeys/useHotkeys';
 export { useHover } from './useHover/useHover';
