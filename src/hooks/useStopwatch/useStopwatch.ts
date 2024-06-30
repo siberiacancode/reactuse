@@ -61,16 +61,16 @@ type UseStopwatch = {
  * @description - Hook that creates a stopwatch functionality
  *
  * @overload
- * @param {number} [initialTime=0] - The initial time of the timer
- * @param {boolean} [options.enabled=true] - The enabled state of the timer
+ * @param {number} [initialTime=0] The initial time of the timer
+ * @param {boolean} [options.enabled=true] The enabled state of the timer
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
  * const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { enabled: false });
  *
  * @overload
- * @param {number} [options.initialTime=0] - The initial time of the timer
- * @param {boolean} [options.enabled=true] - The enabled state of the timer
+ * @param {number} [options.initialTime=0] -The initial time of the timer
+ * @param {boolean} [options.enabled=true] The enabled state of the timer
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
@@ -80,7 +80,7 @@ export const useStopwatch = ((...params: any[]) => {
   const initialTime =
     (typeof params[0] === 'number'
       ? (params[0] as number | undefined)
-      : (params[0] as UseStopwatchOptions & { initialTime?: number }).initialTime) ?? 0;
+      : (params[0] as UseStopwatchOptions & { initialTime?: number })?.initialTime) ?? 0;
 
   const options =
     typeof params[0] === 'number'
