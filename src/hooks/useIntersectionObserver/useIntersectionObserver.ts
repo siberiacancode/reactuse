@@ -69,6 +69,8 @@ export const useIntersectionObserver = ((...params: any[]) => {
     if (!enabled) return;
 
     const element = target ? getTargetElement(target) : internalRef.current;
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setEntry(entry);
@@ -80,7 +82,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
       }
     );
 
-    observer.observe(element!);
+    observer.observe(element);
 
     return () => {
       observer.disconnect();

@@ -11,6 +11,7 @@ type UseBooleanReturn = [
 /**
  * @name useBoolean
  * @description - Hook provides a boolean state and a function to toggle the boolean value
+ * @category Utilities
  *
  * @param {boolean} [initialValue=false] The initial boolean value
  * @returns {UseBooleanReturn} An object containing the boolean state value and utility functions to manipulate the state

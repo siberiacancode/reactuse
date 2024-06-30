@@ -23,6 +23,7 @@ export interface UseShareReturn {
 /**
  * @name useShare
  * @description - Hook that utilizes the share api
+ * @category Browser
  *
  * @param {UseShareParams} [params] The use share options
  * @returns {UseShareReturn}

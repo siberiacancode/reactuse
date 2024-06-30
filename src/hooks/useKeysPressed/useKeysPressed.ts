@@ -16,6 +16,7 @@ interface UseKeysPressedParams {
 /**
  * @name useKeysPressed
  * @description - Hook for get keys that were pressed
+ * @category Sensors
  *
  * @param {UseEventListenerTarget} [params.target=window] The target to attach the event listeners to
  * @param {boolean} [params.enabled=bollean] Enable or disable the event listeners

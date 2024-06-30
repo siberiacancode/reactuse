@@ -40,6 +40,7 @@ export const getConnection = () =>
 /**
  * @name useNetwork
  * @description - Hook to track network status
+ * @category Sensors
  *
  * @returns {UseNetworkReturn} An object containing the network status
  *

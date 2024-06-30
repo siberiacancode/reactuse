@@ -1,19 +1,24 @@
-import type { DefaultTheme } from 'vitepress';
-
 import { parseHookJsdoc } from '../parseHookJsdoc';
 
 import { getHookFile } from './getHookFile';
 import { getHooks } from './getHooks';
 
-export const getSidebarHookItems = async () => {
+interface HookItem {
+  text: string;
+  category: string;
+  description: string;
+  link: string;
+}
+
+export const getHookItems = async (): Promise<HookItem[]> => {
   const hooks = await getHooks();
 
   const sidebar = await Promise.all(
     hooks.map(async (hook) => {
-      const file = await getHookFile(hook);
+      const { content } = await getHookFile(hook);
 
       const jsdocCommentRegex = /\/\*\*\s*\n([^\\*]|(\*(?!\/)))*\*\//;
-      const match = file.match(jsdocCommentRegex);
+      const match = content.match(jsdocCommentRegex);
 
       if (!match) {
         console.error(`No jsdoc comment found for ${hook}`);
@@ -29,10 +34,12 @@ export const getSidebarHookItems = async () => {
 
       return {
         text: hook,
+        description: jsdoc.description.description,
+        category: jsdoc.category?.name,
         link: `/functions/hooks/${hook}`
       };
     })
   );
 
-  return sidebar.filter(Boolean) as DefaultTheme.SidebarItem[];
+  return sidebar.filter(Boolean) as HookItem[];
 };

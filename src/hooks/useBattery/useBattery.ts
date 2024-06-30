@@ -27,6 +27,7 @@ interface UseBatteryStateReturn {
 /**
  * @name useBattery
  * @description - Hook for getting information about battery status
+ * @category Browser
  *
  * @returns {UseBatteryStateReturn} Object containing battery information & Battery API support
  *
@@ -44,9 +45,9 @@ export const useBattery = () => {
   });
 
   useEffect(() => {
-    const isSupported =
+    const supported =
       navigator && 'getBattery' in navigator && typeof navigator.getBattery === 'function';
-    if (!isSupported) return setState({ ...state, loading: false });
+    if (!supported) return setState({ ...state, loading: false });
 
     let battery: BatteryManager | null;
 

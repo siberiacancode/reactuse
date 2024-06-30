@@ -19,12 +19,14 @@ interface UseQueryOptions<QueryData, Data> {
   placeholderData?: Data | (() => Data);
   /* The retry count of requests */
   retry?: boolean | number;
+  /* The refetch interval */
+  refetchInterval?: number;
 }
 
 /* The use query return type */
 interface UseQueryReturn<Data> {
   /* The state of the query */
-  data: Data | undefined;
+  data?: Data;
   /* The loading state of the query */
   isLoading: boolean;
   /* The error state of the query */
@@ -32,7 +34,7 @@ interface UseQueryReturn<Data> {
   /* The success state of the query */
   isSuccess: boolean;
   /* The success state of the query */
-  error: Error | undefined;
+  error?: Error;
   /* The refetch function */
   refetch: () => void;
   /* The refetch async function */
@@ -42,16 +44,18 @@ interface UseQueryReturn<Data> {
 /**
  * @name useQuery
  * @description - Hook that defines the logic when query data
+ * @category Utilities
  *
- * @template Data - The type of the data
- * @param {() => Promise<Data>} callback - The callback function to be invoked
- * @param {DependencyList} [options.keys] - The dependencies for the hook
- * @param {(data: Data) => void} [options.onSuccess] - The callback function to be invoked on success
- * @param {(error: Error) => void} [options.onError] - The callback function to be invoked on error
- * @param {UseQueryOptionsSelect<Data>} [options.select] - The select function to be invoked
- * @param {Data | (() => Data)} [options.initialData] - The initial data for the hook
- * @param {Data | (() => Data)} [options.placeholderData] - The placeholder data for the hook
- * @param {boolean | number} [options.retry] - The retry count of requests
+ * @template Data The type of the data
+ * @param {() => Promise<Data>} callback The callback function to be invoked
+ * @param {DependencyList} [options.keys] The dependencies for the hook
+ * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success
+ * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error
+ * @param {UseQueryOptionsSelect<Data>} [options.select] The select function to be invoked
+ * @param {Data | (() => Data)} [options.initialData] The initial data for the hook
+ * @param {Data | (() => Data)} [options.placeholderData] The placeholder data for the hook
+ * @param {number} [options.refetchInterval] The refetch interval
+ * @param {boolean | number} [options.retry] The retry count of requests
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
@@ -99,6 +103,14 @@ export const useQuery = <QueryData, Data = QueryData>(
         setIsError(true);
         if (action === 'refetch') setIsRefetching(false);
         retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
+      })
+      .finally(() => {
+        if (options?.refetchInterval) {
+          const interval = setInterval(() => {
+            request('refetch');
+            clearInterval(interval);
+          }, options?.refetchInterval);
+        }
       });
   };
 

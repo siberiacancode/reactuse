@@ -24,6 +24,7 @@ export interface UseTextSelectionReturn {
 /**
  * @name useTextSelection
  * @description - Hook that manages the text selection
+ * @category Sensors
  *
  * @returns {UseTextSelectionReturn} An object containing the current text selection
  *

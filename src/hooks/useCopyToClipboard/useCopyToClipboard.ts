@@ -20,6 +20,7 @@ interface UseCopyToClipboardReturn {
 /**
  * @name useCopyToClipboard
  * @description - Hook that manages a copy to clipboard
+ * @category Browser
  *
  * @returns {UseCopyToClipboardReturn} An object containing the boolean state value and utility functions to manipulate the state
  *

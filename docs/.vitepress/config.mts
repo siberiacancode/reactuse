@@ -1,10 +1,27 @@
 import { fileURLToPath } from 'node:url';
+import type { DefaultTheme } from 'vitepress';
 import { defineConfig } from 'vitepress';
 
-import { getSidebarHookItems } from '../src/utils';
+import { getHookItems } from '../src/utils';
 
 export default async () => {
-  const sidebarHookItems = await getSidebarHookItems();
+  const hookItems = await getHookItems();
+  const sidebarHookItems = hookItems.reduce<DefaultTheme.SidebarItem[]>((categoryItems, hookItem) => {
+    const category = categoryItems.find((group) => group.text === hookItem.category);
+
+    if (!category) {
+      categoryItems.push({ text: hookItem.category, items: [hookItem] });
+    } else {
+      category.items!.push(hookItem);
+    }
+
+    return categoryItems;
+  }, []);
+  const homePageFeatures = hookItems.map((item) => ({
+    title: item.text,
+    details: item.description,
+    link: item.link
+  }));
 
   return defineConfig({
     base: '/reactuse/',
@@ -18,6 +35,10 @@ export default async () => {
       }
     },
     transformPageData: (pageData) => {
+      if (pageData.relativePath === 'index.md') {
+        pageData.frontmatter.features = homePageFeatures
+      }
+
       if (pageData.relativePath.includes('hooks')) {
         pageData.title = pageData.params?.name;
         return;
@@ -65,10 +86,7 @@ export default async () => {
               text: 'Getting started',
               link: '/getting-started'
             },
-            {
-              text: 'Hooks',
-              items: [...sidebarHookItems]
-            }
+            ...sidebarHookItems
           ]
         }
       }

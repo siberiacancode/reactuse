@@ -33,13 +33,14 @@ interface UseMutationReturn<Body, Data> {
 /**
  * @name useMutation
  * @description - Hook that defines the logic when mutate data
+ * @category Utilities
  *
- * @template Body - The type of the body
- * @template Data - The type of the data
- * @param {(body: Body) => Promise<Data>} callback - The callback function to be invoked
- * @param {boolean | number} [options.retry] - The retry count of requests
- * @param {(data: Data) => void} [options.onSuccess] - The callback function to be invoked on success
- * @param {(error: Error) => void} [options.onError] - The callback function to be invoked on error
+ * @template Body The type of the body
+ * @template Data The type of the data
+ * @param {(body: Body) => Promise<Data>} callback The callback function to be invoked
+ * @param {boolean | number} [options.retry] The retry count of requests
+ * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success
+ * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error
  * @returns {UseMutationReturn<Data>} An object with the state of the mutation
  *
  * @example

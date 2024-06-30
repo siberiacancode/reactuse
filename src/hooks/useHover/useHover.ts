@@ -32,6 +32,7 @@ export type UseHover = {
 /**
  * @name useHover
  * @description - Hook that defines the logic when hovering an element
+ * @category Sensors
  *
  * @overload
  * @template Target The target element
