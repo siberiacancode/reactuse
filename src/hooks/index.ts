@@ -61,6 +61,7 @@ export { useSessionStorage } from './useSessionStorage/useSessionStorage';
 export { useSet } from './useSet/useSet';
 export { useShare } from './useShare/useShare';
 export { useStep } from './useStep/useStep';
+export { useStopwatch } from './useStopwatch/useStopwatch';
 export { useStorage } from './useStorage/useStorage';
 export { useTextSelection } from './useTextSelection/useTextSelection';
 export { useTime } from './useTime/useTime';
