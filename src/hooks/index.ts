@@ -37,6 +37,7 @@ export { useLocalStorage } from './useLocalStorage/useLocalStorage';
 export { useLogger } from './useLogger/useLogger';
 export { useLongPress } from './useLongPress/useLongPress';
 export { useMap } from './useMap/useMap';
+export { useMeasure } from './useMeasure/useMeasure';
 export { useMediaQuery } from './useMediaQuery/useMediaQuery';
 export { useMemory } from './useMemory/useMemory';
 export { useMount } from './useMount/useMount';
