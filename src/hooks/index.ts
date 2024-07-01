@@ -25,6 +25,7 @@ export { useHash } from './useHash/useHash';
 export { useHotkeys } from './useHotkeys/useHotkeys';
 export { useHover } from './useHover/useHover';
 export { useIdle } from './useIdle/useIdle';
+export { useImage } from './useImage/useImage';
 export { useIntersectionObserver } from './useIntersectionObserver/useIntersectionObserver';
 export { useInterval } from './useInterval/useInterval';
 export { useIsFirstRender } from './useIsFirstRender/useIsFirstRender';
