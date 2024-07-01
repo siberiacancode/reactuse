@@ -1,3 +1,6 @@
+export * from './cookie/getCookie';
+export * from './cookie/removeCookie';
+export * from './cookie/setCookie';
 export * from './debounce';
 export * from './getRetry';
 export * from './isClient';
