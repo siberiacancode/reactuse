@@ -3,107 +3,86 @@ import { renderHook } from '@testing-library/react';
 
 import { useMap } from '@/hooks/useMap/useMap';
 
-const DEFAULT_VALUE: [string, number][] = [
-  ['Dima', 25],
-  ['Danila', 1]
-];
-
 it('Should use map', () => {
   const { result } = renderHook(() => useMap());
 
-  expect(typeof result.current.value).toBe('object');
-  expect(typeof result.current.size).toBe('number');
+  expect(result.current.value).toEqual(new Map());
+  expect(result.current.size).toBe(0);
   expect(typeof result.current.set).toBe('function');
   expect(typeof result.current.remove).toBe('function');
   expect(typeof result.current.clear).toBe('function');
   expect(typeof result.current.reset).toBe('function');
 });
 
-it('Should initialize an empty map', () => {
-  const { result } = renderHook(() => useMap());
+it('Should set initial value', () => {
+  const { result } = renderHook(() => useMap([['value', 1]]));
 
-  expect(result.current.value).toEqual(new Map());
-  expect(result.current.size).toBe(0);
+  expect(result.current.value).toEqual(new Map([['value', 1]]));
+  expect(result.current.size).toBe(1);
 });
 
-it('Should use map with initial value', () => {
-  const { result } = renderHook(() => useMap(DEFAULT_VALUE));
+it('Should change value with set', () => {
+  const { result } = renderHook(() => useMap([['value', 1]]));
 
-  expect(result.current.value).toEqual(new Map(DEFAULT_VALUE));
-  expect(result.current.size).toBe(2);
+  act(() => result.current.set('value', 2));
+  expect(result.current.value).toEqual(new Map([['value', 2]]));
+  expect(result.current.size).toBe(1);
 });
 
-it('Should use map with change value', () => {
-  const { result } = renderHook(() => useMap(DEFAULT_VALUE));
+it('Should add new value', () => {
+  const { result } = renderHook(() => useMap([['Dima', 25]]));
 
-  act(() => result.current.set('Dima', 30));
+  expect(result.current.size).toBe(1);
+
+  act(() => result.current.set('Alex', 15));
   expect(result.current.value).toEqual(
     new Map([
-      ['Dima', 30],
-      ['Danila', 1]
+      ['Dima', 25],
+      ['Alex', 15]
     ])
   );
   expect(result.current.size).toBe(2);
 });
 
-it('Should use map with add new value', () => {
-  const { result } = renderHook(() => useMap(DEFAULT_VALUE));
+it('Should remove value', () => {
+  const { result } = renderHook(() => useMap([['value', 1]]));
 
-  expect(result.current.value).toEqual(new Map(DEFAULT_VALUE));
-  expect(result.current.size).toBe(2);
-
-  act(() => result.current.set('Alex', 15));
-
-  expect(result.current.value).toEqual(new Map([...DEFAULT_VALUE, ['Alex', 15]]));
-  expect(result.current.size).toBe(3);
-});
-
-it('Should use map with remove  value', () => {
-  const { result } = renderHook(() => useMap(DEFAULT_VALUE));
-
-  expect(result.current.value).toEqual(new Map(DEFAULT_VALUE));
-  expect(result.current.size).toBe(2);
-
-  act(() => result.current.remove('Dima'));
-
-  expect(result.current.value).toEqual(new Map([['Danila', 1]]));
   expect(result.current.size).toBe(1);
+  act(() => result.current.remove('value'));
+
+  expect(result.current.value).toEqual(new Map([]));
+  expect(result.current.size).toBe(0);
 });
 
-it('Should use map return true if key exist', () => {
-  const { result } = renderHook(() => useMap(DEFAULT_VALUE));
+it('Should return value of exist', () => {
+  const { result } = renderHook(() => useMap([['value', 1]]));
 
-  expect(result.current.has('Dima')).toEqual(true);
+  expect(result.current.has('value')).toEqual(true);
+  expect(result.current.has('non-exist')).toEqual(false);
 });
 
-it('Should use map return false if key not exist', () => {
-  const { result } = renderHook(() => useMap(DEFAULT_VALUE));
+it('Should clear the map', () => {
+  const { result } = renderHook(() => useMap([['value', 1]]));
 
-  expect(result.current.has('Alex')).toEqual(false);
-});
-
-it('Should use map clear the map', () => {
-  const { result } = renderHook(() => useMap(DEFAULT_VALUE));
-
-  expect(result.current.size).toBe(2);
+  expect(result.current.size).toBe(1);
 
   act(() => result.current.clear());
 
   expect(result.current.size).toBe(0);
 });
 
-it('Should use map reset the map', () => {
-  const { result } = renderHook(() => useMap(DEFAULT_VALUE));
+it('Should reset the map', () => {
+  const { result } = renderHook(() => useMap([['value', 1]]));
 
-  expect(result.current.size).toBe(2);
-
-  act(() => result.current.remove('Dima'));
-
-  expect(result.current.value).toEqual(new Map([['Danila', 1]]));
   expect(result.current.size).toBe(1);
+
+  act(() => result.current.clear());
+
+  expect(result.current.value).toEqual(new Map([]));
+  expect(result.current.size).toBe(0);
 
   act(() => result.current.reset());
 
-  expect(result.current.value).toEqual(new Map(DEFAULT_VALUE));
-  expect(result.current.size).toBe(2);
+  expect(result.current.value).toEqual(new Map([['value', 1]]));
+  expect(result.current.size).toBe(1);
 });
