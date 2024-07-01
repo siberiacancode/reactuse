@@ -17,6 +17,7 @@ export { useEventListener } from './useEventListener/useEventListener';
 export { useEyeDropper } from './useEyeDropper/useEyeDropper';
 export { useFavicon } from './useFavicon/useFavicon';
 export { useField } from './useField/useField';
+export { useFileDialog } from './useFileDialog/useFileDialog';
 export { useFps } from './useFps/useFps';
 export { useFullscreen } from './useFullscreen/useFullscreen';
 export { useGeolocation } from './useGeolocation/useGeolocation';

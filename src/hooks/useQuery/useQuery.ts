@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getRetry } from '@/utils/helpers';
 
 /* The use query return type */
-interface UseQueryOptions<QueryData, Data> {
+export interface UseQueryOptions<QueryData, Data> {
   /* The depends for the hook */
   keys?: DependencyList;
   /* The callback function to be invoked on success */
@@ -24,7 +24,7 @@ interface UseQueryOptions<QueryData, Data> {
 }
 
 /* The use query return type */
-interface UseQueryReturn<Data> {
+export interface UseQueryReturn<Data> {
   /* The state of the query */
   data?: Data;
   /* The loading state of the query */
