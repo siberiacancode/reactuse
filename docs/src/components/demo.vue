@@ -131,4 +131,8 @@ onMounted(async () => {
 :deep(input:focus, button:focus) {
   border: 1px solid var(--vp-c-brand);
 }
+
+:deep(pre) {
+  white-space: pre-wrap;
+}
 </style>
