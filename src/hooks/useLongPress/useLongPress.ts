@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { useEventListener } from '../useEventListener/useEventListener';
 
 // * The use long press target type */
-export type UseLongPressTarget = RefObject<Element | null> | (() => Element) | Element;
+export type UseLongPressTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
 // * The use long press options type */
 interface UseLongPressOptions {
@@ -76,7 +76,7 @@ export const useLongPress = ((...params: any[]) => {
   const options = (target ? params[2] : params[1]) as UseLongPressOptions | undefined;
 
   const [isLongPressActive, setIsLongPressActive] = useState(false);
-  const internalRef = useRef<Element>(null);
+  const internalRef = useRef<Element>();
   const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>();
   const isPressed = useRef(false);
 

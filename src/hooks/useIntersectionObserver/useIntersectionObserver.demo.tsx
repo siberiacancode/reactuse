@@ -24,12 +24,12 @@ const Demo = () => {
               marginTop: 80
             }}
           >
-            observer dom
+            observer element
           </div>
         </div>
       </div>
       <div style={{ marginTop: 16, color: intersectionObserver.inView ? '#87d068' : '#f50' }}>
-        inViewport: {intersectionObserver.inView ? 'visible' : 'hidden'}
+        in viewport: {intersectionObserver.inView ? 'visible' : 'hidden'}
       </div>
     </div>
   );

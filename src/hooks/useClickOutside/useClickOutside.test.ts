@@ -5,16 +5,17 @@ import { useClickOutside } from './useClickOutside';
 it('Should use click outside', () => {
   const { result } = renderHook(() => useClickOutside(vi.fn()));
 
-  expect(result.current).toEqual({ current: null });
+  expect(typeof result.current).toBe('function');
 });
 
-it('Should not call callback when ref connected to the document', () => {
+it('Should call callback when ref connected to the document', () => {
   const callback = vi.fn();
-
   const element = document.createElement('div');
 
   const { result } = renderHook(() => useClickOutside(callback));
-  Object.assign(result.current, { current: element });
+  act(() => result.current(element));
+
+  expect(callback).not.toBeCalled();
 
   act(() => {
     document.dispatchEvent(new Event('mousedown'));

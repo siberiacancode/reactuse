@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useEvent } from '../useEvent/useEvent';
 
 export type UseEventListenerTarget =
-  | RefObject<Element | null>
+  | RefObject<Element | null | undefined>
   | (() => Element)
   | Element
   | Window

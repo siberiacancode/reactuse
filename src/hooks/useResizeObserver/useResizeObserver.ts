@@ -1,8 +1,10 @@
 import type { RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+import { useRerender } from '../useRerender/useRerender';
+
 /** The resize observer target element type */
-type UseResizeObserverTarget = RefObject<Element | null> | (() => Element) | Element;
+type UseResizeObserverTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
 const getElement = (target: UseResizeObserverTarget) => {
   if (typeof target === 'function') {
@@ -36,7 +38,7 @@ export type UseResizeObserver = {
   <Target extends UseResizeObserverTarget | UseResizeObserverTarget[]>(
     options?: UseResizeObserverOptions,
     target?: never
-  ): UseResizeObserverReturn & { ref: RefObject<Target> };
+  ): UseResizeObserverReturn & { ref: (node: Target) => void };
 };
 
 /**
@@ -49,7 +51,7 @@ export type UseResizeObserver = {
  *  @param {boolean} [options.enabled=true] The IntersectionObserver options
  *  @param {boolean} [options.box] The IntersectionObserver options
  *  @param {(entries: ResizeObserverEntry[], observer: ResizeObserver) => void} [options.onChange] The callback to execute when resize is detected
- *  @returns {UseResizeObserverReturn} An object containing the resize observer state
+ *  @returns {UseResizeObserverReturn & { ref: (node: Target) => void }} An object containing the resize observer state
  *
  *  @example
  *  const { ref, entries } = useResizeObserver();
@@ -66,6 +68,7 @@ export type UseResizeObserver = {
  *  const { entries } = useResizeObserver(ref);
  */
 export const useResizeObserver = ((...params: any[]) => {
+  const rerender = useRerender();
   const target = (
     typeof params[0] === 'object' && !('current' in params[0]) ? undefined : params[0]
   ) as UseResizeObserverTarget | UseResizeObserverTarget[] | undefined;
@@ -74,7 +77,7 @@ export const useResizeObserver = ((...params: any[]) => {
 
   const [entries, setEntries] = useState<ResizeObserverEntry[]>([]);
 
-  const internalRef = useRef<Element>(null);
+  const internalRef = useRef<Element>();
   const internalOnChangeRef = useRef<UseResizeObserverOptions['onChange']>();
   internalOnChangeRef.current = options?.onChange;
 
@@ -111,8 +114,16 @@ export const useResizeObserver = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [target, options?.box, enabled]);
+  }, [internalRef.current, target, options?.box, enabled]);
 
   if (target) return { entries };
-  return { entries, ref: internalRef };
+  return {
+    ref: (node: Element) => {
+      if (!internalRef.current) {
+        internalRef.current = node;
+        rerender.update();
+      }
+    },
+    entries
+  };
 }) as UseResizeObserver;

@@ -28,60 +28,94 @@ it('Should reset counter', () => {
   expect(result.current.count).toBe(0);
 });
 
-describe('Counter setter', () => {
-  it('Should set counter', () => {
-    const { result } = renderHook(useCounter);
+it('Should set counter', () => {
+  const { result } = renderHook(useCounter);
 
-    act(() => result.current.set(5));
+  act(() => result.current.set(5));
+  expect(result.current.count).toBe(5);
+});
+
+it('Should set counter by callback', () => {
+  const { result } = renderHook(useCounter);
+
+  act(() => result.current.set((x) => x + 1));
+  expect(result.current.count).toBe(1);
+
+  act(() => result.current.set((x) => x - 1));
+  expect(result.current.count).toBe(0);
+});
+
+it('Should decrement counter', () => {
+  const { result } = renderHook(useCounter);
+
+  act(result.current.dec);
+  expect(result.current.count).toBe(-1);
+});
+
+it('Should decrement counter by value', () => {
+  const { result } = renderHook(useCounter);
+
+  act(() => result.current.dec(5));
+  expect(result.current.count).toBe(-5);
+});
+
+it('Should increment counter', () => {
+  const { result } = renderHook(useCounter);
+
+  act(result.current.inc);
+  expect(result.current.count).toBe(1);
+});
+
+it('Should increment counter by value', () => {
+  const { result } = renderHook(useCounter);
+
+  act(() => result.current.inc(5));
+  expect(result.current.count).toBe(5);
+});
+
+it('Should not exceed the max limit', () => {
+  const { result } = renderHook(() => useCounter(0, { max: 1 }));
+
+  act(result.current.inc);
+  expect(result.current.count).toBe(1);
+
+  act(result.current.inc);
+  expect(result.current.count).toBe(1);
+});
+
+it('Should set max limit if exceed limit', () => {
+  const { result } = renderHook(() => useCounter(0, { max: 5 }));
+
+  act(() => result.current.set(10));
+  expect(result.current.count).toBe(5);
+});
+
+it('Should not exceed the min limit', () => {
+  const { result } = renderHook(() => useCounter(1, { min: 0 }));
+
+  act(result.current.dec);
+  expect(result.current.count).toBe(0);
+
+  act(result.current.dec);
+  expect(result.current.count).toBe(0);
+});
+
+it('Should set min limit if exceed limit', () => {
+  const { result } = renderHook(() => useCounter({ min: -5 }));
+
+  act(() => result.current.set(-10));
+  expect(result.current.count).toBe(-5);
+});
+
+describe('Value is object', () => {
+  it('Should set initial value', () => {
+    const { result } = renderHook(() => useCounter({ initialValue: 5 }));
+
     expect(result.current.count).toBe(5);
   });
 
-  it('Should set counter by callback', () => {
-    const { result } = renderHook(useCounter);
-
-    act(() => result.current.set((x) => x + 1));
-    expect(result.current.count).toBe(1);
-
-    act(() => result.current.set((x) => x - 1));
-    expect(result.current.count).toBe(0);
-  });
-});
-
-describe('Counter decrement', () => {
-  it('Should decrement counter', () => {
-    const { result } = renderHook(useCounter);
-
-    act(result.current.dec);
-    expect(result.current.count).toBe(-1);
-  });
-
-  it('Should decrement counter by value', () => {
-    const { result } = renderHook(useCounter);
-
-    act(() => result.current.dec(5));
-    expect(result.current.count).toBe(-5);
-  });
-});
-
-describe('Counter increment', () => {
-  it('Should increment counter', () => {
-    const { result } = renderHook(useCounter);
-
-    act(result.current.inc);
-    expect(result.current.count).toBe(1);
-  });
-
-  it('Should increment counter by value', () => {
-    const { result } = renderHook(useCounter);
-
-    act(() => result.current.inc(5));
-    expect(result.current.count).toBe(5);
-  });
-});
-
-describe('Counter maximum', () => {
   it('Should not exceed the max limit', () => {
-    const { result } = renderHook(() => useCounter(0, { max: 1 }));
+    const { result } = renderHook(() => useCounter({ max: 1 }));
 
     act(result.current.inc);
     expect(result.current.count).toBe(1);
@@ -91,16 +125,14 @@ describe('Counter maximum', () => {
   });
 
   it('Should set max limit if exceed limit', () => {
-    const { result } = renderHook(() => useCounter(0, { max: 5 }));
+    const { result } = renderHook(() => useCounter({ max: 5 }));
 
     act(() => result.current.set(10));
     expect(result.current.count).toBe(5);
   });
-});
 
-describe('Counter minimum', () => {
   it('Should not exceed the min limit', () => {
-    const { result } = renderHook(() => useCounter(1, { min: 0 }));
+    const { result } = renderHook(() => useCounter({ min: 0 }));
 
     act(result.current.dec);
     expect(result.current.count).toBe(0);
@@ -114,51 +146,5 @@ describe('Counter minimum', () => {
 
     act(() => result.current.set(-10));
     expect(result.current.count).toBe(-5);
-  });
-});
-
-describe('Value is object', () => {
-  it('Should set initial value', () => {
-    const { result } = renderHook(() => useCounter({ initialValue: 5 }));
-
-    expect(result.current.count).toBe(5);
-  });
-
-  describe('Counter maximum', () => {
-    it('Should not exceed the max limit', () => {
-      const { result } = renderHook(() => useCounter({ max: 1 }));
-
-      act(result.current.inc);
-      expect(result.current.count).toBe(1);
-
-      act(result.current.inc);
-      expect(result.current.count).toBe(1);
-    });
-
-    it('Should set max limit if exceed limit', () => {
-      const { result } = renderHook(() => useCounter({ max: 5 }));
-
-      act(() => result.current.set(10));
-      expect(result.current.count).toBe(5);
-    });
-  });
-
-  describe('Counter minimum', () => {
-    it('Should not exceed the min limit', () => {
-      const { result } = renderHook(() => useCounter({ min: 0 }));
-
-      act(result.current.dec);
-      expect(result.current.count).toBe(0);
-
-      act(result.current.dec);
-      expect(result.current.count).toBe(0);
-    });
-
-    it('Should set min limit if exceed limit', () => {
-      const { result } = renderHook(() => useCounter({ min: -5 }));
-
-      act(() => result.current.set(-10));
-      expect(result.current.count).toBe(-5);
-    });
   });
 });

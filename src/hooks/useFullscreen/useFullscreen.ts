@@ -5,7 +5,7 @@ import screenfull from 'screenfull';
 import { useUnmount } from '../useUnmount/useUnmount';
 
 /** The use fullscreen target element type */
-export type UseFullScreenTarget = RefObject<Element | null> | (() => Element) | Element;
+export type UseFullScreenTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
 const getElement = (target: UseFullScreenTarget) => {
   if (typeof target === 'function') {

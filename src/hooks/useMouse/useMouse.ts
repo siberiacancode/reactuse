@@ -1,10 +1,10 @@
 import type { RefObject } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
+import { useRerender } from '../useRerender/useRerender';
 
 /** The use mouse target element type */
-type UseMouseTarget = RefObject<Element | null> | (() => Element) | Element;
+type UseMouseTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
 /** Function to get target element based on its type */
 const getElement = (target: UseMouseTarget) => {
@@ -38,7 +38,7 @@ export interface UseMouseReturn {
 export type UseMouse = {
   <Target extends UseMouseTarget>(target: Target): UseMouseReturn;
 
-  <Target extends UseMouseTarget>(target?: never): UseMouseReturn & { ref: RefObject<Target> };
+  <Target extends UseMouseTarget>(target?: never): UseMouseReturn & { ref: (node: Target) => void };
 };
 
 /**
@@ -56,12 +56,13 @@ export type UseMouse = {
  *
  * @overload
  * @template Target The target element
- * @returns {UseMouseReturn & { ref: RefObject<Target> }} An object with the current mouse position and a ref
+ * @returns {UseMouseReturn & { ref: (node: Target) => void }} An object with the current mouse position and a ref
  *
  * @example
  * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
 export const useMouse = ((...params: any[]) => {
+  const rerender = useRerender();
   const target = params[0] as UseMouseTarget | undefined;
 
   const [value, setValue] = useState({
@@ -73,9 +74,10 @@ export const useMouse = ((...params: any[]) => {
     elementPositionY: 0
   });
 
-  const internalRef = useRef<Element>(null);
+  const internalRef = useRef<Element>();
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
+    if (!target && !internalRef.current) return;
     const onMouseMove = (event: MouseEvent) => {
       const element = target ? getElement(target) : internalRef.current;
       if (!element) return;
@@ -107,8 +109,16 @@ export const useMouse = ((...params: any[]) => {
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
     };
-  }, []);
+  }, [internalRef.current, target]);
 
   if (target) return value;
-  return { ...value, ref: internalRef };
+  return {
+    ref: (node: Element) => {
+      if (!internalRef.current) {
+        internalRef.current = node;
+        rerender.update();
+      }
+    },
+    ...value
+  };
 }) as UseMouse;

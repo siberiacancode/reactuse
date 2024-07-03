@@ -41,7 +41,7 @@ export type UsePaintTarget =
   | (() => HTMLCanvasElement)
   | HTMLCanvasElement;
 
-export const getTargetElement = (target: UsePaintTarget) => {
+export const getElement = (target: UsePaintTarget) => {
   if (typeof target === 'function') {
     return target();
   }
@@ -222,7 +222,7 @@ export const usePaint = ((...params: any[]) => {
   };
 
   useEffect(() => {
-    const element = target ? getTargetElement(target) : internalRef.current;
+    const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
     contextRef.current = element.getContext('2d');
 
