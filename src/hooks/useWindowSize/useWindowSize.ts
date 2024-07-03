@@ -4,10 +4,8 @@ import { isClient } from '@/utils/helpers';
 
 /** The use window size return type */
 interface UseWindowSizeParams {
-  /** The initial window width */
-  initialWidth?: number;
-  /** The initial window height */
-  initialHeight?: number;
+  /** Whether to include the scrollbar in the window size calculation */
+  includeScrollbar?: boolean;
 }
 
 /** The use window size return type */
@@ -31,24 +29,41 @@ export interface UseWindowSizeReturn {
  * const { width, height } = useWindowSize();
  */
 export const useWindowSize = (params?: UseWindowSizeParams) => {
-  const [size, setSize] = useState({
-    width: isClient ? window.innerWidth : params?.initialWidth ?? Number.POSITIVE_INFINITY,
-    height: isClient ? window.innerHeight : params?.initialWidth ?? Number.POSITIVE_INFINITY
+  const includeScrollbar = params?.includeScrollbar ?? true;
+  const [size, setSize] = useState(() => {
+    if (!isClient) {
+      return {
+        width: Number.POSITIVE_INFINITY,
+        height: Number.POSITIVE_INFINITY
+      };
+    }
+
+    return {
+      width: includeScrollbar ? window.innerWidth : window.document.documentElement.clientWidth,
+      height: includeScrollbar ? window.innerHeight : window.document.documentElement.clientHeight
+    };
   });
 
   useEffect(() => {
     const onResize = () => {
-      setSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
+      if (includeScrollbar) {
+        setSize({
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
+      } else {
+        setSize({
+          width: window.document.documentElement.clientWidth,
+          height: window.document.documentElement.clientHeight
+        });
+      }
     };
 
     window.addEventListener('resize', onResize);
     return () => {
       window.removeEventListener('resize', onResize);
     };
-  }, []);
+  }, [params?.includeScrollbar]);
 
   return size;
 };

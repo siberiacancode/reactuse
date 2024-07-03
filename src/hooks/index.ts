@@ -1,5 +1,6 @@
 export { useBattery } from './useBattery/useBattery';
 export { useBoolean } from './useBoolean/useBoolean';
+export { useBreakpoints } from './useBreakpoints/useBreakpoints';
 export { useBrowserLanguage } from './useBrowserLanguage/useBrowserLanguage';
 export { useClickOutside } from './useClickOutside/useClickOutside';
 export { useClipboard } from './useClipboard/useClipboard';
@@ -53,6 +54,7 @@ export { usePageLeave } from './usePageLeave/usePageLeave';
 export { usePaint } from './usePaint/usePaint';
 export { usePermission } from './usePermission/usePermission';
 export { usePreferredColorScheme } from './usePreferredColorScheme/usePreferredColorScheme';
+export { usePreferredDark } from './usePreferredDark/usePreferredDark';
 export { usePreferredLanguages } from './usePreferredLanguages/usePreferredLanguages';
 export { usePrevious } from './usePrevious/usePrevious';
 export { useQuery } from './useQuery/useQuery';
