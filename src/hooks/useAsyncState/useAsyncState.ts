@@ -46,7 +46,7 @@ export interface UseAsyncStateReturn<Data, Params extends any[]> {
  * @overload
  * @param {Promise<Data> | ((signal: AbortSignal, ...args: Params) => Promise<Data>)} promise The promise or function that returns a promise
  * @param {Data} initialData The initial data value
- * @param {UseAsyncStateOptions<Data>?} [options={ imediate: false, resetOnExecute: false, delay: 0 }] Optional options for the async state
+ * @param {UseAsyncStateOptions<Data>?} [options={ immediate: false, resetOnExecute: false, delay: 0 }] Optional options for the async state
  * @return {UseAsyncStateReturn<Data, Params>} An object containing the current state and functions to interact with the state
  *
  * @example
