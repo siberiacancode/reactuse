@@ -70,12 +70,12 @@ export type UseEventListener = {
 };
 
 export const useEventListener = ((...params: any[]) => {
-  const target = (params[1] instanceof Function ? null : params[0]) as
+  const target = (params[1] instanceof Function ? undefined : params[0]) as
     | UseEventListenerTarget
     | undefined;
   const event = (target ? params[1] : params[0]) as string | string[];
   const events = Array.isArray(event) ? event : [event];
-  const listener = (target ? params[2] : params[1]) as (...arg: any[]) => void;
+  const listener = (target ? params[2] : params[1]) as (...arg: any[]) => void | undefined;
   const options: UseEventListenerOptions | undefined = target ? params[3] : params[2];
 
   const internalRef = useRef<Element | Document | Window>(null);

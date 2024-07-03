@@ -3,9 +3,9 @@ import { useRef } from 'react';
 import { useIntersectionObserver } from './useIntersectionObserver';
 
 const Demo = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { ref, inView } = useIntersectionObserver<HTMLDivElement>({
-    root: containerRef.current,
+  const rootRef = useRef<HTMLDivElement>(null);
+  const intersectionObserver = useIntersectionObserver<HTMLDivElement>({
+    root: rootRef,
     threshold: 1
   });
 
@@ -15,7 +15,7 @@ const Demo = () => {
         scroll here
         <div style={{ height: 800 }}>
           <div
-            ref={ref}
+            ref={intersectionObserver.ref}
             style={{
               border: '1px solid',
               height: 100,
@@ -28,8 +28,8 @@ const Demo = () => {
           </div>
         </div>
       </div>
-      <div style={{ marginTop: 16, color: inView ? '#87d068' : '#f50' }}>
-        inViewport: {inView ? 'visible' : 'hidden'}
+      <div style={{ marginTop: 16, color: intersectionObserver.inView ? '#87d068' : '#f50' }}>
+        inViewport: {intersectionObserver.inView ? 'visible' : 'hidden'}
       </div>
     </div>
   );
