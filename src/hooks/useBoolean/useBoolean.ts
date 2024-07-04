@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 /** The use boolean return type */
 type UseBooleanReturn = [
@@ -11,6 +11,7 @@ type UseBooleanReturn = [
 /**
  * @name useBoolean
  * @description - Hook provides a boolean state and a function to toggle the boolean value
+ * @category Utilities
  *
  * @param {boolean} [initialValue=false] The initial boolean value
  * @returns {UseBooleanReturn} An object containing the boolean state value and utility functions to manipulate the state
@@ -19,8 +20,8 @@ type UseBooleanReturn = [
  * const [on, toggle] = useBoolean()
  */
 export const useBoolean = (initialValue = false): UseBooleanReturn => {
-  const [value, setValue] = React.useState(initialValue);
-  const toggle = (value?: boolean) => setValue((prev) => value ?? !prev);
+  const [value, setValue] = useState(initialValue);
+  const toggle = (value?: boolean) => setValue((prevValue) => value ?? !prevValue);
 
   return [value, toggle];
 };

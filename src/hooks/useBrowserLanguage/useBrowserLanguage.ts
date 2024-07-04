@@ -10,6 +10,7 @@ const subscribe = (cb: () => void) => {
 /**
  * @name useBrowserLanguage
  * @description - Hook that returns the current browser language
+ * @category Browser
  *
  * @returns {string} The current browser language
  *

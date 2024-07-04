@@ -5,7 +5,7 @@ export const getDate = (now: Date = new Date()) => {
   const meridiemHours = hours % 12 === 0 ? 12 : hours % 12;
   const meridiemType = hours >= 12 ? 'pm' : 'am';
   const day = now.getDate();
-  const month = now.getMonth();
+  const month = now.getMonth() + 1;
   const year = now.getFullYear();
   const timestamp = now.getTime();
 

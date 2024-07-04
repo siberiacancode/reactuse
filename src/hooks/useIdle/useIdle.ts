@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { throttle } from '@/utils/helpers';
 
@@ -28,6 +28,7 @@ export interface UseIdleReturn {
 /**
  * @name useIdle
  * @description - Hook that defines the logic when the user is idle
+ * @category Sensors
  *
  * @param {number} [milliseconds=ONE_MINUTE] The idle time in milliseconds
  * @param {boolean} [options.initialState=false] The options for the hook
@@ -41,10 +42,10 @@ export const useIdle = (
   milliseconds = ONE_MINUTE,
   { initialValue = false, events = IDLE_EVENTS }: UseIdleOptions = {}
 ): UseIdleReturn => {
-  const [idle, setIdle] = React.useState(initialValue);
-  const [lastActive, setLastActive] = React.useState(Date.now());
+  const [idle, setIdle] = useState(initialValue);
+  const [lastActive, setLastActive] = useState(Date.now());
 
-  React.useEffect(() => {
+  useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
     const onTimeout = () => setIdle(true);
 

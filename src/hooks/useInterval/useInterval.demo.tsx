@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useInterval } from './useInterval';
 
@@ -16,8 +16,8 @@ const GREETINGS = [
 ];
 
 const Demo = () => {
-  const [word, setWord] = React.useState(GREETINGS[0]);
-  const [interval, setInterval] = React.useState(500);
+  const [word, setWord] = useState(GREETINGS[0]);
+  const [interval, setInterval] = useState(500);
 
   const { isActive, resume, pause } = useInterval(
     () => setWord(GREETINGS[Math.floor(Math.random() * GREETINGS.length)]),

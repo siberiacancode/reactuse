@@ -1,12 +1,12 @@
-import React from 'react';
+import type { RefObject } from 'react';
+import { useRef, useState } from 'react';
 import screenfull from 'screenfull';
 
 import { useUnmount } from '../useUnmount/useUnmount';
 
 /** The use fullscreen target element type */
-type UseFullScreenTarget = React.RefObject<Element | null> | (() => Element) | Element;
+export type UseFullScreenTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
-/** Function to get target element based on its type */
 const getElement = (target: UseFullScreenTarget) => {
   if (typeof target === 'function') {
     return target();
@@ -46,12 +46,13 @@ export type UseFullScreen = {
   <Target extends UseFullScreenTarget>(
     options?: UseFullScreenOptions,
     target?: never
-  ): UseFullScreenReturn & { ref: React.RefObject<Target> };
+  ): UseFullScreenReturn & { ref: RefObject<Target> };
 };
 
 /**
  * @name useFullscreen
  * @description - Hook to handle fullscreen events
+ * @category Browser
  *
  * @overload
  * @template Target The target element for fullscreen
@@ -69,7 +70,7 @@ export type UseFullScreen = {
  * @param {boolean} [options.initialValue=false] initial value of fullscreen
  * @param {() => void} [options.onEnter] on enter fullscreen
  * @param {() => void} [options.onExit] on exit fullscreen
- * @returns {UseFullScreenReturn & { ref: React.RefObject<Target> }} An object with the fullscreen state and methods
+ * @returns {UseFullScreenReturn & { ref: RefObject<Target> }} An object with the fullscreen state and methods
  *
  * @example
  * const { ref, enter, exit, toggle, value } = useFullscreen();
@@ -80,8 +81,8 @@ export const useFullscreen = ((...params: any[]) => {
     | undefined;
   const options = (target ? params[1] : params[0]) as UseFullScreenOptions | undefined;
 
-  const internalRef = React.useRef<Element>(null);
-  const [value, setValue] = React.useState(options?.initialValue ?? false);
+  const internalRef = useRef<Element>(null);
+  const [value, setValue] = useState(options?.initialValue ?? false);
 
   const onChange = () => {
     if (!screenfull.isEnabled) return;

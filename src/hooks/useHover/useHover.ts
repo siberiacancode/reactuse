@@ -1,4 +1,5 @@
-import React from 'react';
+import type { RefObject } from 'react';
+import { useRef, useState } from 'react';
 
 import { useEventListener } from '../useEventListener/useEventListener';
 
@@ -11,9 +12,9 @@ export interface UseHoverOptions {
 }
 
 //* The use hover target type */
-export type UseHoverTarget = React.RefObject<Element | null> | Element;
+export type UseHoverTarget = RefObject<Element | null | undefined> | Element;
 //* The use hover return type */
-export type UseHoverReturn<Target extends UseHoverTarget> = [React.RefObject<Target>, boolean];
+export type UseHoverReturn<Target extends UseHoverTarget> = [RefObject<Target>, boolean];
 
 export type UseHover = {
   <Target extends UseHoverTarget>(target: Target, callback?: () => void): boolean;
@@ -31,6 +32,7 @@ export type UseHover = {
 /**
  * @name useHover
  * @description - Hook that defines the logic when hovering an element
+ * @category Sensors
  *
  * @overload
  * @template Target The target element
@@ -89,8 +91,8 @@ export const useHover = ((...params: any[]) => {
         : { onEntry: params[0] }
   ) as UseHoverOptions | undefined;
 
-  const [hovering, setHovering] = React.useState(false);
-  const internalRef = React.useRef<Element>(null);
+  const [hovering, setHovering] = useState(false);
+  const internalRef = useRef<Element>();
 
   const onMouseEnter = () => {
     options?.onEntry?.();

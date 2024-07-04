@@ -1,4 +1,4 @@
-import React from 'react';
+import { useId, useState } from 'react';
 
 /** The use rerender return type */
 interface UseRerenderReturns {
@@ -11,6 +11,7 @@ interface UseRerenderReturns {
 /**
  * @name useRerender
  * @description - Hook that defines the logic to force rerender a component
+ * @category Lifecycle
  *
  * @returns {UseRerenderReturns} An object containing the id and update function
  *
@@ -18,7 +19,7 @@ interface UseRerenderReturns {
  * const { id, update } = useRerender();
  */
 export const useRerender = (): UseRerenderReturns => {
-  const id = React.useId();
-  const [value, setValue] = React.useState(id);
+  const id = useId();
+  const [value, setValue] = useState(id);
   return { id: value, update: () => setValue(Math.random().toString()) };
 };

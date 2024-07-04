@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
@@ -16,6 +16,7 @@ interface UseKeysPressedParams {
 /**
  * @name useKeysPressed
  * @description - Hook for get keys that were pressed
+ * @category Sensors
  *
  * @param {UseEventListenerTarget} [params.target=window] The target to attach the event listeners to
  * @param {boolean} [params.enabled=bollean] Enable or disable the event listeners
@@ -26,7 +27,7 @@ interface UseKeysPressedParams {
  */
 export const useKeysPressed = (params?: UseKeysPressedParams) => {
   const enabled = params?.enabled ?? true;
-  const [keys, setKeys] = React.useState<{ key: string; code: string }[]>([]);
+  const [keys, setKeys] = useState<{ key: string; code: string }[]>([]);
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (!enabled) return;

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useSyncExternalStore } from 'react';
 
 const getSnapshot = () => window.navigator.languages;
 const getServerSnapshot = () => [] as const;
@@ -12,6 +12,7 @@ const subscribe = (callback: () => void) => {
 /**
  * @name usePreferredLanguages
  * @description Hook that returns a browser preferred languages from navigator
+ * @category Browser
  *
  * @returns {readonly string[]} An array of strings representing the user's preferred languages
  *
@@ -19,4 +20,4 @@ const subscribe = (callback: () => void) => {
  * const languages = usePreferredLanguages();
  */
 export const usePreferredLanguages = () =>
-  React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

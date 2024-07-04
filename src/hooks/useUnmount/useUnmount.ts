@@ -1,8 +1,9 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * @name useUnmount
  * @description - Hook that defines the logic when unmounting a component
+ * @category Lifecycle
  *
  * @param {() => void} callback The callback function to be invoked on component unmount
  * @returns {void}
@@ -12,12 +13,12 @@ import React from 'react';
  */
 
 export const useUnmount = (callback: () => void) => {
-  const callbackRef = React.useRef(callback);
-  callbackRef.current = callback;
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
-  React.useEffect(
+  useEffect(
     () => () => {
-      callbackRef.current();
+      internalCallbackRef.current();
     },
     []
   );

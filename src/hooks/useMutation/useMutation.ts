@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useState } from 'react';
 
 import { getRetry } from '@/utils/helpers';
 
@@ -33,13 +33,14 @@ interface UseMutationReturn<Body, Data> {
 /**
  * @name useMutation
  * @description - Hook that defines the logic when mutate data
+ * @category Utilities
  *
- * @template Body - The type of the body
- * @template Data - The type of the data
- * @param {(body: Body) => Promise<Data>} callback - The callback function to be invoked
- * @param {boolean | number} [options.retry] - The retry count of requests
- * @param {(data: Data) => void} [options.onSuccess] - The callback function to be invoked on success
- * @param {(error: Error) => void} [options.onError] - The callback function to be invoked on error
+ * @template Body The type of the body
+ * @template Data The type of the data
+ * @param {(body: Body) => Promise<Data>} callback The callback function to be invoked
+ * @param {boolean | number} [options.retry] The retry count of requests
+ * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success
+ * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error
  * @returns {UseMutationReturn<Data>} An object with the state of the mutation
  *
  * @example
@@ -49,14 +50,14 @@ export const useMutation = <Body, Data>(
   callback: (body: Body) => Promise<Data>,
   options?: UseMutationOptions<Data>
 ) => {
-  const retryCountRef = React.useRef(options?.retry ? getRetry(options.retry) : 0);
+  const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
-  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const [error, setError] = React.useState<Error | null>(null);
-  const [data, setData] = React.useState<Data | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [data, setData] = useState<Data | null>(null);
 
   const request = (body: Body): Promise<Data | undefined> => {
     setIsLoading(true);

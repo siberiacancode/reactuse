@@ -1,13 +1,20 @@
-import { useCounter } from '@/hooks';
+import { useCounter } from '../useCounter/useCounter';
 
 import { usePageLeave } from './usePageLeave';
 
 const Demo = () => {
   const { count, inc } = useCounter(0);
 
-  usePageLeave(() => inc());
+  const isLeft = usePageLeave(() => inc());
 
-  return <>Mouse left the page {count} times</>;
+  return (
+    <>
+      <p>
+        Mouse left the page: <code>{String(isLeft)}</code>
+      </p>
+      <p>Count of left the page {count} times</p>
+    </>
+  );
 };
 
 export default Demo;

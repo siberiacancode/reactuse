@@ -1,16 +1,8 @@
-import React from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 
 /** The use counter options */
 export interface UseCounterOptions {
-  /** The min of count value */
-  min?: number;
-  /** The max of count value */
-  max?: number;
-}
-
-export interface UseCounterParams {
-  /** The initial number value, defaults to 0 */
-  initialValue?: number;
   /** The min of count value */
   min?: number;
   /** The max of count value */
@@ -22,7 +14,7 @@ export interface UseCounterReturn {
   /** The current count value */
   count: number;
   /** Function to set a specific value to the counter */
-  set: React.Dispatch<React.SetStateAction<number>>;
+  set: Dispatch<SetStateAction<number>>;
   /** Function to reset the counter to its initial value. */
   reset: () => void;
   /** Function to increment the counter */
@@ -34,12 +26,13 @@ export interface UseCounterReturn {
 export type UseCounter = {
   (initialValue?: number, options?: UseCounterOptions): UseCounterReturn;
 
-  ({ initialValue, max, min }: UseCounterParams, options?: never): UseCounterReturn;
+  (options: UseCounterOptions & { initialValue?: number }, initialValue?: never): UseCounterReturn;
 };
 
 /**
  * @name useCounter
  * @description - Hook that manages a counter with increment, decrement, reset, and set functionalities
+ * @category Utilities
  *
  * @overload
  * @param {number} [initialValue=0] The initial number value
@@ -55,21 +48,21 @@ export type UseCounter = {
  *
  * @example
  * const { count, dec, inc, reset, set } = useCounter(5);
- * 
+ *
  * @example
  * const { count, dec, inc, reset, set } = useCounter({ initialValue: 5, min: 0, max: 10 });
  */
 export const useCounter = ((...params: any[]) => {
   const initialValue =
-    typeof params[0] === 'number' ? params[0] : (params[0] as UseCounterParams)?.initialValue;
+    typeof params[0] === 'number'
+      ? params[0]
+      : (params[0] as UseCounterOptions & { initialValue?: number })?.initialValue;
   const { max = Number.POSITIVE_INFINITY, min = Number.NEGATIVE_INFINITY } =
     typeof params[0] === 'number'
       ? ((params[1] ?? {}) as UseCounterOptions)
-      : ((params[0] ?? {}) as UseCounterParams);
+      : ((params[0] ?? {}) as UseCounterOptions & { initialValue?: number });
 
-  const [count, setCount] = React.useState(initialValue ?? 0);
-
-  React.useEffect(() => {}, [min, max]);
+  const [count, setCount] = useState(initialValue ?? 0);
 
   const inc = (value: number = 1) => {
     setCount((prevCount) => {
@@ -92,7 +85,7 @@ export const useCounter = ((...params: any[]) => {
     setCount(value);
   };
 
-  const set = (value: React.SetStateAction<number>) => {
+  const set = (value: SetStateAction<number>) => {
     setCount((prevCount) => {
       const updatedCount = Math.max(
         min,

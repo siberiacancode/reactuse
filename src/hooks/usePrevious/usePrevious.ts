@@ -1,8 +1,9 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * @name usePrevious
  * @description - Hook that returns the previous value
+ * @category Utilities
  *
  * @template Value The type of the value
  * @param {Value} value The value to get the previous value
@@ -12,9 +13,9 @@ import React from 'react';
  * const prevValue = usePrevious(value);
  */
 export const usePrevious = <Value>(value: Value) => {
-  const ref = React.useRef<Value>();
+  const ref = useRef<Value>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     ref.current = value;
   });
 

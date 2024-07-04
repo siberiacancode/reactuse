@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
@@ -13,6 +13,7 @@ export interface UseOrientationReturn {
 /**
  * @name useOrientation
  * @description - Hook that returns the current screen orientation
+ * @category Browser
  *
  * @returns {UseOrientationReturn} An object containing the current screen orientation
  *
@@ -20,7 +21,7 @@ export interface UseOrientationReturn {
  * const { angle, type } = useOrientation();
  */
 export const useOrientation = (): UseOrientationReturn => {
-  const [orientation, setOrientation] = React.useState<{
+  const [orientation, setOrientation] = useState<{
     angle: number;
     type: OrientationType;
   }>({ angle: 0, type: 'landscape-primary' });

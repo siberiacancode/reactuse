@@ -1,4 +1,4 @@
-import React from 'react';
+import { useSyncExternalStore } from 'react';
 
 const getSnapshot = () => document.visibilityState;
 const getServerSnapshot = () => 'hidden' as const;
@@ -12,6 +12,7 @@ const subscribe = (callback: () => void) => {
 /**
  * @name useDocumentVisibility
  * @description – Hook that provides the current visibility state of the document
+ * @category Browser
  *
  * @returns {DocumentVisibilityState} The current visibility state of the document, which can be 'visible' or 'hidden'
  *
@@ -19,4 +20,4 @@ const subscribe = (callback: () => void) => {
  * const visibilityState = useDocumentVisibility();
  */
 export const useDocumentVisibility = () =>
-  React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

@@ -1,7 +1,7 @@
 <script setup>
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ref, computed, onMounted, defineAsyncComponent } from 'vue';
+import { shallowRef, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue';
 
 const props = defineProps({
   hook: {
@@ -13,12 +13,18 @@ const sourceLink = computed(() => {
   return `https://github.com/siberiacancode/reactuse/blob/main/src/hooks/${props.hook}/${props.hook}.demo.tsx`;
 });
 
-const demoRef = ref();
+const demoRef = shallowRef();
+const demoRoot = shallowRef();
 
 onMounted(async () => {
   const demoComponent = await import(`../../../src/hooks/${props.hook}/${props.hook}.demo.tsx`);
-  const root = createRoot(demoRef.value);
-  root.render(createElement(demoComponent.default, {}, null));
+  demoRoot.value = createRoot(demoRef.value);
+  demoRoot.value.render(createElement(demoComponent.default, {}, null));
+});
+
+onUnmounted(() => {
+  if (!demoRoot.value) return;
+  demoRoot.value.unmount();
 });
 </script>
 
@@ -99,6 +105,19 @@ onMounted(async () => {
   background: var(--vp-c-bg-soft);
 }
 
+:deep(select) {
+  display: block;
+  font-size: 0.9rem;
+  padding: 0.5em 1em 0.4em 1em;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 4px;
+  outline: none;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text);
+  margin: 0.5rem 0;
+  min-width: 20rem;
+}
+
 :deep(input) {
   display: block;
   font-size: 0.9rem;
@@ -108,8 +127,11 @@ onMounted(async () => {
   outline: none;
   background: var(--vp-c-bg);
   color: var(--vp-c-text);
-  min-width: 20rem;
   margin: 0.5rem 0;
+}
+
+:deep(input[type='text'], input[type='number'], input[type='tel']) {
+  min-width: 20rem;
 }
 
 :deep(input:focus, button:focus) {

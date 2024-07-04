@@ -1,10 +1,11 @@
-import React from 'react';
+import { useEffect } from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 
 /**
  * @name useLogger
  * @description - Hook for debugging lifecycle
+ * @category Lifecycle
  *
  * @param {string} name The name or identifier for the logger
  * @param {unknown[]} params Additional arguments to be logged
@@ -13,7 +14,7 @@ import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
  * useLogger('Component', [1, 2, 3]);
  */
 export const useLogger = (name: string, params: unknown[]) => {
-  React.useEffect(() => {
+  useEffect(() => {
     console.log(`${name} mounted`, ...params);
     return () => console.log(`${name} unmounted`);
   }, []);

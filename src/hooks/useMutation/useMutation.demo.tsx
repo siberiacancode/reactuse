@@ -1,12 +1,12 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { useMutation } from './useMutation';
 
 const createUser = (name: string) => Promise.resolve({ name });
 
 const Demo = () => {
-  const [name, setName] = React.useState('');
-  const [users, setUser] = React.useState([{ name: 'John' }]);
+  const [name, setName] = useState('');
+  const [users, setUser] = useState([{ name: 'John' }]);
 
   const createUserMutation = useMutation(createUser);
 

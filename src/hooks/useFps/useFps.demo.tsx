@@ -1,12 +1,12 @@
 import { useFps } from './useFps';
 
-const Demo: React.FC = () => {
+const Demo = () => {
   const fps = useFps();
 
   return (
-    <div>
-      <p>FPS: {fps}</p>
-    </div>
+    <p>
+      FPS: <code>{fps}</code>
+    </p>
   );
 };
 

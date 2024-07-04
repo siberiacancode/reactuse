@@ -1,8 +1,19 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
+import type { Connection } from '@/utils/types';
 
+declare global {
+  interface Navigator {
+    readonly connection: Connection;
+    readonly mozConnection: Connection;
+    readonly webkitConnection: Connection;
+  }
+}
+
+/** The type of network connection */
 export type ConnectionType = Connection['type'];
+/** The effective type of connection */
 export type ConnectionEffectiveType = Connection['effectiveType'];
 
 /** The use network return type */
@@ -29,6 +40,7 @@ export const getConnection = () =>
 /**
  * @name useNetwork
  * @description - Hook to track network status
+ * @category Sensors
  *
  * @returns {UseNetworkReturn} An object containing the network status
  *
@@ -36,7 +48,7 @@ export const getConnection = () =>
  * const { online, downlink, downlinkMax, effectiveType, rtt, saveData, type } = useNetwork();
  */
 export const useNetwork = (): UseNetworkReturn => {
-  const [value, setValue] = React.useState(() => {
+  const [value, setValue] = useState(() => {
     if (!isClient) {
       return {
         online: false,
@@ -62,7 +74,7 @@ export const useNetwork = (): UseNetworkReturn => {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const callback = () => {
       const online = navigator.onLine;
       const connection = getConnection();

@@ -1,11 +1,12 @@
-import React from 'react';
+import type { ComponentProps } from 'react';
+import { useEffect, useState } from 'react';
 
 /** The use script status */
 export type UseScriptStatus = 'loading' | 'ready' | 'error' | 'unknown';
 export const SCRIPT_STATUS_ATTRIBUTE_NAME = 'script-status';
 
 /** The use script options extends from attributes script tag */
-export interface UseScriptOptions extends React.ComponentProps<'script'> {
+export interface UseScriptOptions extends ComponentProps<'script'> {
   /** Whether to remove the script on unmount */
   removeOnUnmount?: boolean;
 }
@@ -13,6 +14,7 @@ export interface UseScriptOptions extends React.ComponentProps<'script'> {
 /**
  * @name useScript
  * @description - Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
+ * @category Browser
  *
  * @param {string} src The source of the script
  * @param {UseScriptOptions} [options] The options of the script extends from attributes script tag
@@ -24,7 +26,7 @@ export interface UseScriptOptions extends React.ComponentProps<'script'> {
  * const status = useScript('https://example.com/script.js');
  */
 export const useScript = (src: string, options: UseScriptOptions = {}) => {
-  const [status, setStatus] = React.useState<UseScriptStatus>(() => {
+  const [status, setStatus] = useState<UseScriptStatus>(() => {
     const script = document.querySelector(`script[src="${src}"]`) as HTMLScriptElement;
     const scriptStatus = script?.getAttribute(SCRIPT_STATUS_ATTRIBUTE_NAME) as UseScriptStatus;
     if (scriptStatus) return scriptStatus;
@@ -34,7 +36,7 @@ export const useScript = (src: string, options: UseScriptOptions = {}) => {
   });
   const { removeOnUnmount = true, async = true } = options;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const existedScript = document.querySelector(`script[src="${src}"]`) as HTMLScriptElement;
     const scriptStatus = existedScript?.getAttribute(
       SCRIPT_STATUS_ATTRIBUTE_NAME

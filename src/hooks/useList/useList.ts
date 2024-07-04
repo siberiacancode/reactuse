@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 /** The use list return type */
 export interface UseListReturn<Item> {
@@ -21,16 +21,17 @@ export interface UseListReturn<Item> {
 /**
  * @name useList
  * @description - Hook that defines the logic when unmounting a component
+ * @category Utilities
  *
- * @template Item - The type of the item
- * @param {Item[] | (() => Item[])} initialList - The initial list of items
+ * @template Item The type of the item
+ * @param {Item[] | (() => Item[])} initialList The initial list of items
  * @returns {UseListReturn} An object containing the current list and functions to interact with the list
  *
  * @example
  * const { value, set, push, removeAt, insertAt, updateAt, clear } = useList();
  */
 export const useList = <Item>(initialList: Item[] = []) => {
-  const [list, setList] = React.useState(initialList);
+  const [list, setList] = useState(initialList);
 
   const set = (list: Item[]) => setList(list);
 
