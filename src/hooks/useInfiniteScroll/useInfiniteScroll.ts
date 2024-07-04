@@ -45,23 +45,30 @@ export type UseInfiniteScroll = {
 };
 
 /**
- *  @name useInfiniteScroll
- *  @description - Hook that defines the logic for infinite scroll
+ * @name useInfiniteScroll
+ * @description - Hook that defines the logic for infinite scroll
  * @category Sensors
  *
  * @overload
- * @template Target The target element(s)
- * @param {Target} target The target element(s) to detect outside clicks for
+ * @template Target The target element
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
- * @param {UseInfiniteScrollOptions} [options] The options to use when detecting the scroll
- * @returns {boolean} Returns true if the callback is triggered
+ * @param {number} [options.distance=10] The distance in pixels to trigger the callback
+ * @param {string} [options.direction='bottom'] The direction to trigger the callback
+ * @returns {{ ref: (node: Target) => void; isLoading: boolean }} An object containing the ref and isLoading
  *
  * @example
- * useInfiniteScroll(() => console.log('infinite scroll'));
+ * const { ref, isLoading } = useInfiniteScroll(() => console.log('infinite scroll'));
  *
  * @overload
- * @template Target The target element(s)
+ * @template Target The target element
+ * @param {Target} target The target element to detect infinite scroll for
+ * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
+ * @param {number} [options.distance=10] The distance in pixels to trigger the callback
+ * @param {string} [options.direction='bottom'] The direction to trigger the callback
+ * @returns {boolean} A loading indicator of the infinite scroll
  *
+ * @example
+ * const isLoading = useInfiniteScroll(ref, () => console.log('infinite scroll'));
  */
 export const useInfiniteScroll = ((...params) => {
   const rerender = useRerender();
