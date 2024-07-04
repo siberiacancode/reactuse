@@ -51,7 +51,7 @@ export const useBattery = () => {
 
     let battery: BatteryManager | null;
 
-    const handleChange = () =>
+    const onChange = () =>
       setState({
         supported: true,
         loading: false,
@@ -63,20 +63,20 @@ export const useBattery = () => {
 
     navigator.getBattery().then((batteryManager) => {
       battery = batteryManager;
-      handleChange();
+      onChange();
 
-      batteryManager.addEventListener('levelchange', handleChange);
-      batteryManager.addEventListener('chargingchange', handleChange);
-      batteryManager.addEventListener('chargingtimechange', handleChange);
-      batteryManager.addEventListener('dischargingtimechange', handleChange);
+      batteryManager.addEventListener('levelchange', onChange);
+      batteryManager.addEventListener('chargingchange', onChange);
+      batteryManager.addEventListener('chargingtimechange', onChange);
+      batteryManager.addEventListener('dischargingtimechange', onChange);
     });
 
     return () => {
       if (!battery) return;
-      battery.removeEventListener('levelchange', handleChange);
-      battery.removeEventListener('chargingchange', handleChange);
-      battery.removeEventListener('chargingtimechange', handleChange);
-      battery.removeEventListener('dischargingtimechange', handleChange);
+      battery.removeEventListener('levelchange', onChange);
+      battery.removeEventListener('chargingchange', onChange);
+      battery.removeEventListener('chargingtimechange', onChange);
+      battery.removeEventListener('dischargingtimechange', onChange);
     };
   }, []);
 

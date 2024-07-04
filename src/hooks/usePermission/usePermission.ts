@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 import { useEvent } from '../useEvent/useEvent';
 
 export type UsePermissionName =
@@ -40,7 +38,7 @@ export interface UsePermissionReturn {
  */
 export const usePermission = (permissionDescriptorName: UsePermissionName) => {
   const [state, setState] = useState<PermissionState>('prompt');
-  const supported = isClient ? navigator && 'permissions' in navigator : false;
+  const supported = navigator && 'permissions' in navigator;
 
   const permissionDescriptor = { name: permissionDescriptorName };
 

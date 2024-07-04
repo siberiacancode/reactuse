@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 import { useInterval } from '../useInterval/useInterval';
 
 declare global {
@@ -30,7 +28,7 @@ export interface UseMemoryReturn {
  * const { supported, value } = useMemory();
  */
 export const useMemory = (): UseMemoryReturn => {
-  const supported = isClient ? 'memory' in performance : false;
+  const supported = performance && 'memory' in performance;
   const [value, setValue] = useState<Performance['memory']>({
     jsHeapSizeLimit: 0,
     totalJSHeapSize: 0,

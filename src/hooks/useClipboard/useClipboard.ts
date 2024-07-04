@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { isClient, isPermissionAllowed } from '@/utils/helpers';
+import { isPermissionAllowed } from '@/utils/helpers';
 
 import { usePermission } from '../usePermission/usePermission';
 
@@ -34,7 +34,7 @@ interface UseCopyToClipboardReturn {
  * const { supported, value, copy } = useClipboard();
  */
 export const useClipboard = (): UseCopyToClipboardReturn => {
-  const supported = isClient ? navigator && 'clipboard' in navigator : false;
+  const supported = navigator && 'clipboard' in navigator;
 
   const [value, setValue] = useState<string | null>(null);
   const clipboardReadPermission = usePermission('clipboard-read');
