@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useList } from '../useList/useList';
 
 import { useInfiniteScroll } from './useInfiniteScroll';
 
 const Demo = () => {
-  const [data, setData] = useState([1, 2, 3, 4, 5, 6]);
+  const list = useList([1, 2, 3, 4, 5, 6]);
+  const infiniteScroll = useInfiniteScroll<HTMLDivElement>(
+    async () => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      });
 
-  const ref = useInfiniteScroll<HTMLDivElement>(
-    () => {
-      setData((prevData) => {
-        const length = prevData.length + 1;
-        return [...prevData, ...new Array(5).fill(null).map((_, i) => length + i)];
+      list.set((prevList) => {
+        const length = prevList.length + 1;
+        return [...prevList, ...new Array(5).fill(null).map((_, i) => length + i)];
       });
     },
     { distance: 10 }
@@ -17,7 +20,7 @@ const Demo = () => {
 
   return (
     <div
-      ref={ref}
+      ref={infiniteScroll.ref}
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -31,7 +34,7 @@ const Demo = () => {
         borderRadius: '4px'
       }}
     >
-      {data.map((item) => (
+      {list.value.map((item) => (
         <div
           key={item}
           style={{
@@ -43,6 +46,7 @@ const Demo = () => {
           {item}
         </div>
       ))}
+      {infiniteScroll.isLoading && <div>Loading...</div>}
     </div>
   );
 };

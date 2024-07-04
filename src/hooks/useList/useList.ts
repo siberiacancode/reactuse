@@ -33,8 +33,6 @@ export interface UseListReturn<Item> {
 export const useList = <Item>(initialList: Item[] = []) => {
   const [list, setList] = useState(initialList);
 
-  const set = (list: Item[]) => setList(list);
-
   const push = (item: Item) => setList((prevList) => [...prevList, item]);
 
   const removeAt = (removeAtIndex: number) =>
@@ -55,5 +53,5 @@ export const useList = <Item>(initialList: Item[] = []) => {
 
   const reset = () => setList(initialList);
 
-  return { value: list, set, push, removeAt, insertAt, updateAt, clear, reset };
+  return { value: list, set: setList, push, removeAt, insertAt, updateAt, clear, reset };
 };

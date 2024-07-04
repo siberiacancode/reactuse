@@ -1,6 +1,11 @@
-import React from 'react';
+import type { RefObject } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export type UseInfiniteScrollTarget = React.RefObject<Element | null> | (() => Element) | Element;
+import { useEvent } from '../useEvent/useEvent';
+import { useRerender } from '../useRerender/useRerender';
+
+/** The use infinite scroll target element type */
+export type UseInfiniteScrollTarget = RefObject<Element | null> | (() => Element) | Element;
 
 const getElement = (target: UseInfiniteScrollTarget) => {
   if (typeof target === 'function') {
@@ -14,71 +19,103 @@ const getElement = (target: UseInfiniteScrollTarget) => {
   return target.current;
 };
 
+/** The use infinite scroll options type */
 export interface UseInfiniteScrollOptions {
+  /** The distance in pixels to trigger the callback */
   distance?: number;
+  /** The direction to trigger the callback */
   direction?: 'top' | 'bottom' | 'left' | 'right';
 }
-
-export type UseInfiniteScrollReturn<Target extends UseInfiniteScrollTarget> =
-  React.RefObject<Target>;
 
 export type UseInfiniteScroll = {
   <Target extends UseInfiniteScrollTarget>(
     target: Target,
     callback: (event: Event) => void,
     options?: UseInfiniteScrollOptions
-  ): void;
+  ): boolean;
 
   <Target extends UseInfiniteScrollTarget>(
     callback: (event: Event) => void,
     options?: UseInfiniteScrollOptions,
     target?: never
-  ): UseInfiniteScrollReturn<Target>;
+  ): {
+    ref: (node: Target) => void;
+    isLoading: boolean;
+  };
 };
 
+/**
+ *  @name useInfiniteScroll
+ *  @description - Hook that defines the logic for infinite scroll
+ * @category Sensors
+ *
+ * @overload
+ * @template Target The target element(s)
+ * @param {Target} target The target element(s) to detect outside clicks for
+ * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
+ * @param {UseInfiniteScrollOptions} [options] The options to use when detecting the scroll
+ * @returns {boolean} Returns true if the callback is triggered
+ *
+ * @example
+ * useInfiniteScroll(() => console.log('infinite scroll'));
+ *
+ * @overload
+ * @template Target The target element(s)
+ *
+ */
 export const useInfiniteScroll = ((...params) => {
+  const rerender = useRerender();
   const target = params[1] instanceof Function ? (params[0] as UseInfiniteScrollTarget) : undefined;
   const callback = params[1] instanceof Function ? params[1] : (params[0] as () => void);
-  const { direction = 'bottom', distance = 10 } =
-    (params[1] instanceof Function ? params[2] : params[1]) ?? {};
 
-  const internalRef = React.useRef<Element>(null);
-  const internalCallbackRef = React.useRef(callback);
+  const direction = (params[2] as UseInfiniteScrollOptions)?.direction ?? 'bottom';
+  const distance = (params[2] as UseInfiniteScrollOptions)?.distance ?? 10;
 
-  React.useEffect(() => {
-    internalCallbackRef.current = callback;
-  }, [callback]);
+  const [isLoading, setIsLoading] = useState(false);
+  const internalRef = useRef<Element>();
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
-  React.useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+  const onLoadMore = useEvent(async (event: Event) => {
+    if (isLoading) return;
+    const { clientHeight, scrollHeight, scrollTop, clientWidth, scrollWidth, scrollLeft } =
+      event.target as Element;
+    const scrollBottom = scrollHeight - (scrollTop + clientHeight);
+    const scrollRight = scrollWidth - (scrollLeft + clientWidth);
 
-    const onLoadMore = (event: Event) => {
-      if (!element) return;
-
-      const { clientHeight, scrollHeight, scrollTop, clientWidth, scrollWidth, scrollLeft } =
-        element;
-      const scrollBottom = scrollHeight - (scrollTop + clientHeight);
-      const scrollRight = scrollWidth - (scrollLeft + clientWidth);
-
-      const distances = {
-        bottom: scrollBottom,
-        top: scrollTop,
-        right: scrollRight,
-        left: scrollLeft
-      };
-
-      if (distances[direction] <= distance) {
-        internalCallbackRef.current(event);
-      }
+    const distances = {
+      bottom: scrollBottom,
+      top: scrollTop,
+      right: scrollRight,
+      left: scrollLeft
     };
 
-    element?.addEventListener('scroll', onLoadMore);
+    if (distances[direction] <= distance) {
+      setIsLoading(true);
+      await internalCallbackRef.current(event);
+      setIsLoading(false);
+    }
+  });
+
+  useEffect(() => {
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+
+    element.addEventListener('scroll', onLoadMore);
 
     return () => {
-      element?.removeEventListener('scroll', onLoadMore);
+      element.removeEventListener('scroll', onLoadMore);
     };
-  }, [direction, distance]);
+  }, [internalRef.current, target, direction, distance]);
 
-  if (target) return;
-  return internalRef;
+  if (target) return isLoading;
+  return {
+    ref: (node: Element) => {
+      if (!internalRef.current) {
+        internalRef.current = node;
+        rerender.update();
+      }
+    },
+    isLoading
+  };
 }) as UseInfiniteScroll;
