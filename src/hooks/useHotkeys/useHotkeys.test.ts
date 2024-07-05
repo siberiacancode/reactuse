@@ -22,7 +22,7 @@ it('The callback should be called when the hotkey is pressed', () => {
   expect(callback).toBeCalledTimes(1);
 });
 
-it("Shouldn't call callback when clicking outside of target", () => {
+it("Shouldn't call callback when pressing outside of target", () => {
   const callback = vi.fn();
 
   renderHook(() => useHotkeys('a', callback, { target: document }));
