@@ -1,5 +1,3 @@
-import { isClient } from '@/utils/helpers';
-
 /** The use share options type */
 export interface UseShareParams {
   /** The title of the share */
@@ -32,7 +30,7 @@ export interface UseShareReturn {
  * const { share, supported } = useShare();
  */
 export const useShare = (params?: UseShareParams) => {
-  const supported = isClient ? 'share' in navigator : false;
+  const supported = navigator && 'share' in navigator;
 
   const share = async (shareParams: ShareData) => {
     if (!supported) return;

@@ -1,22 +1,10 @@
 import type { RefObject } from 'react';
 import { useRef, useState } from 'react';
 
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
+import { useResizeObserver } from '../useResizeObserver/useResizeObserver';
 
 /** The use measure target element type */
-export type UseMeasureTarget = RefObject<Element | null> | (() => Element) | Element;
-
-const getElement = (target: UseMeasureTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
+export type UseMeasureTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
 /** The use measure return type */
 export type UseMeasureReturn = Pick<
@@ -51,7 +39,7 @@ export type UseMeasureScreen = {
  * const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();
  */
 export const useMeasure = (<Target extends UseMeasureTarget>(target?: Target) => {
-  const internalRef = useRef<Element>(null);
+  const internalRef = useRef<Element>();
   const [rect, setRect] = useState({
     x: 0,
     y: 0,
@@ -63,23 +51,14 @@ export const useMeasure = (<Target extends UseMeasureTarget>(target?: Target) =>
     right: 0
   });
 
-  useIsomorphicLayoutEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
-    console.log('@element', internalRef.current);
-    if (!element) return;
-
-    const observer = new window.ResizeObserver(([entry]) => {
+  useResizeObserver(target ?? internalRef, {
+    onChange: ([entry]) => {
       if (!entry) return;
 
       const { x, y, width, height, top, left, bottom, right } = entry.contentRect;
       setRect({ x, y, width, height, top, left, bottom, right });
-    });
-    observer.observe(element);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [target]);
+    }
+  });
 
   if (target) return rect;
   return { ref: internalRef, ...rect };

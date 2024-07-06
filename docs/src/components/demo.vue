@@ -1,7 +1,7 @@
 <script setup>
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ref, computed, onMounted, defineAsyncComponent } from 'vue';
+import { shallowRef, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue';
 
 const props = defineProps({
   hook: {
@@ -13,12 +13,18 @@ const sourceLink = computed(() => {
   return `https://github.com/siberiacancode/reactuse/blob/main/src/hooks/${props.hook}/${props.hook}.demo.tsx`;
 });
 
-const demoRef = ref();
+const demoRef = shallowRef();
+const demoRoot = shallowRef();
 
 onMounted(async () => {
   const demoComponent = await import(`../../../src/hooks/${props.hook}/${props.hook}.demo.tsx`);
-  const root = createRoot(demoRef.value);
-  root.render(createElement(demoComponent.default, {}, null));
+  demoRoot.value = createRoot(demoRef.value);
+  demoRoot.value.render(createElement(demoComponent.default, {}, null));
+});
+
+onUnmounted(() => {
+  if (!demoRoot.value) return;
+  demoRoot.value.unmount();
 });
 </script>
 

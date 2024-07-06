@@ -1,7 +1,5 @@
 import { useCallback, useRef } from 'react';
 
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
-
 /**
  * @name useEvent
  * @description - Hook that creates an event and returns a stable reference of it
@@ -18,14 +16,11 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
 export const useEvent = <Params extends unknown[], Return>(
   callback: (...args: Params) => Return
 ): ((...args: Params) => Return) => {
-  const callbackRef = useRef<typeof callback>(callback);
-
-  useIsomorphicLayoutEffect(() => {
-    callbackRef.current = callback;
-  }, [callback]);
+  const internalCallbackRef = useRef<typeof callback>(callback);
+  internalCallbackRef.current = callback;
 
   return useCallback((...args) => {
-    const fn = callbackRef.current;
+    const fn = internalCallbackRef.current;
     return fn(...args);
   }, []);
 };

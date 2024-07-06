@@ -12,7 +12,7 @@ export interface UseHoverOptions {
 }
 
 //* The use hover target type */
-export type UseHoverTarget = RefObject<Element | null> | Element;
+export type UseHoverTarget = RefObject<Element | null | undefined> | Element;
 //* The use hover return type */
 export type UseHoverReturn<Target extends UseHoverTarget> = [RefObject<Target>, boolean];
 
@@ -92,7 +92,7 @@ export const useHover = ((...params: any[]) => {
   ) as UseHoverOptions | undefined;
 
   const [hovering, setHovering] = useState(false);
-  const internalRef = useRef<Element>(null);
+  const internalRef = useRef<Element>();
 
   const onMouseEnter = () => {
     options?.onEntry?.();

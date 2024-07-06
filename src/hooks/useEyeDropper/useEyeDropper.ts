@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
 import type {
   ColorSelectionOptions,
   ColorSelectionResult,
@@ -34,7 +33,7 @@ export interface UseEyeDropperReturn {
 export const useEyeDropper = (
   initialValue: string | undefined = undefined
 ): UseEyeDropperReturn => {
-  const supported = isClient ? 'EyeDropper' in window : false;
+  const supported = window && 'EyeDropper' in window;
   const [value, setValue] = useState(initialValue);
 
   const open = async (colorSelectionOptions?: ColorSelectionOptions) => {

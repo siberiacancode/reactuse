@@ -13,16 +13,16 @@ const Demo = () => {
       }}
     >
       <p>
-        width: <code>{measure.width}</code>
+        width: <code>{Math.floor(measure.width)}</code>
       </p>
       <p>
-        height: <code>{measure.height}</code>
+        height: <code>{Math.floor(measure.height)}</code>
       </p>
       <p>
-        right: <code>{measure.right}</code>
+        right: <code>{Math.floor(measure.right)}</code>
       </p>
       <p>
-        bottom: <code>{measure.bottom}</code>
+        bottom: <code>{Math.floor(measure.bottom)}</code>
       </p>
     </div>
   );

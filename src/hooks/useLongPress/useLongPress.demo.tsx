@@ -1,14 +1,10 @@
-import { useRef } from 'react';
-
 import { useCounter } from '../useCounter/useCounter';
 
 import { useLongPress } from './useLongPress';
 
 const Demo = () => {
   const counter = useCounter();
-  const longPressedRef = useRef<HTMLButtonElement>(null);
-
-  const longPressing = useLongPress(longPressedRef, () => counter.inc());
+  const [longPressedRef, longPressing] = useLongPress<HTMLButtonElement>(() => counter.inc());
 
   return (
     <>

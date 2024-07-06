@@ -57,7 +57,9 @@ export interface UseFieldReturn<Value> {
   register: (params?: UseFieldRegisterParams) => {
     onBlur: () => void;
     onChange: () => void;
-    ref: (node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null) => void;
+    ref: (
+      node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null | undefined
+    ) => void;
   };
   /** The get value function */
   getValue: () => Value;
@@ -177,7 +179,7 @@ export const useField = <
   };
 
   const register = (registerParams?: UseFieldRegisterParams) => ({
-    ref: (node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null) => {
+    ref: (node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null | undefined) => {
       if (!inputRef.current && node) {
         if (params?.autoFocus) node.focus();
         inputRef.current = node as HTMLInputElement;

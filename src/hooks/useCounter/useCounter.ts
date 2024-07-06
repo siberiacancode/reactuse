@@ -9,15 +9,6 @@ export interface UseCounterOptions {
   max?: number;
 }
 
-export interface UseCounterParams {
-  /** The initial number value, defaults to 0 */
-  initialValue?: number;
-  /** The min of count value */
-  min?: number;
-  /** The max of count value */
-  max?: number;
-}
-
 /** The use counter return type */
 export interface UseCounterReturn {
   /** The current count value */
@@ -35,7 +26,7 @@ export interface UseCounterReturn {
 export type UseCounter = {
   (initialValue?: number, options?: UseCounterOptions): UseCounterReturn;
 
-  ({ initialValue, max, min }: UseCounterParams, options?: never): UseCounterReturn;
+  (options: UseCounterOptions & { initialValue?: number }, initialValue?: never): UseCounterReturn;
 };
 
 /**
@@ -63,11 +54,13 @@ export type UseCounter = {
  */
 export const useCounter = ((...params: any[]) => {
   const initialValue =
-    typeof params[0] === 'number' ? params[0] : (params[0] as UseCounterParams)?.initialValue;
+    typeof params[0] === 'number'
+      ? params[0]
+      : (params[0] as UseCounterOptions & { initialValue?: number })?.initialValue;
   const { max = Number.POSITIVE_INFINITY, min = Number.NEGATIVE_INFINITY } =
     typeof params[0] === 'number'
       ? ((params[1] ?? {}) as UseCounterOptions)
-      : ((params[0] ?? {}) as UseCounterParams);
+      : ((params[0] ?? {}) as UseCounterOptions & { initialValue?: number });
 
   const [count, setCount] = useState(initialValue ?? 0);
 

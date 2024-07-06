@@ -69,6 +69,7 @@ export const useFileDialog = ((...params: any[]) => {
   const [value, setValue] = useState<FileList | null>(null);
   const inputRef = useRef<HTMLInputElement>();
   const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
   const reset = () => {
     setValue(null);
