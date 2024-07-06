@@ -12,6 +12,32 @@ function sleep(ms: number, abortController: AbortController): Promise<void> {
   });
 }
 
+function cancelablePromiseFn<T>(
+  promiseFn: (signal: AbortSignal, ...args: any[]) => Promise<T>,
+  delay: number
+) {
+  const abortController = new AbortController();
+
+  return {
+    run: (...args: any[]) =>
+      new Promise<T>(async (resolve, reject) => {
+        if (delay > 0) {
+          await sleep(delay, abortController);
+        }
+
+        if (abortController.signal.aborted) {
+          reject(abortController.signal.reason);
+          return;
+        }
+
+        promiseFn(abortController.signal, ...args).then(resolve, reject);
+      }),
+    abort: (reason?: Error) => {
+      abortController.abort(reason);
+    }
+  };
+}
+
 export interface UseAsyncStateOptions<Data> {
   /** Delay in milliseconds */
   delay?: number;
@@ -44,7 +70,7 @@ export interface UseAsyncStateReturn<Data, Params extends any[]> {
  * @category Browser
  *
  * @overload
- * @param {Promise<Data> | ((signal: AbortSignal, ...args: Params) => Promise<Data>)} promise The promise or function that returns a promise
+ * @param {Promise<Data> | ((signal: AbortSignal, ...args: Params) => Promise<Data>)} promiseFn The promise or function that returns a promise
  * @param {Data} initialData The initial data value
  * @param {UseAsyncStateOptions<Data>?} [options={ imediate: false, resetOnExecute: false, delay: 0 }] Optional options for the async state
  * @return {UseAsyncStateReturn<Data, Params>} An object containing the current state and functions to interact with the state
@@ -53,7 +79,7 @@ export interface UseAsyncStateReturn<Data, Params extends any[]> {
  * const { data, error, isLoading, execute } = useAsyncState(promiseFn, null, { immediate: false, delay: 1000 });
  */
 export const useAsyncState = <Data, Params extends any[] = []>(
-  promise: Promise<Data> | ((signal: AbortSignal, ...args: Params) => Promise<Data>),
+  promiseFn: (signal: AbortSignal, ...args: Params) => Promise<Data>,
   initialData: Data,
   options?: UseAsyncStateOptions<Data>
 ): UseAsyncStateReturn<Data, Params> => {
@@ -68,46 +94,48 @@ export const useAsyncState = <Data, Params extends any[] = []>(
   const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>(undefined);
-  const abortController = useRef<AbortController | null>(null);
+  const abortFnRef = useRef<{ abort: (reason?: Error) => void } | null>(null);
 
-  function cancel(reason = new Error('canceled due to new execution')) {
-    if (abortController.current) {
-      abortController.current.abort(reason);
+  function cancel(reason?: Error) {
+    if (abortFnRef.current) {
+      abortFnRef.current.abort(reason);
+      setIsLoading(false);
+      if (reason) {
+        setError(reason);
+        onError(reason);
+      }
     }
   }
 
-  async function execute(...args: any[]) {
-    cancel();
+  function execute(...args: any[]) {
+    cancel(new Error('canceled due to new execution'));
 
-    setIsLoading(true);
-    setError(undefined);
     if (resetOnExecute) {
       setData(initialData);
     }
 
-    abortController.current = new AbortController();
-    const promiseTask =
-      typeof promise === 'function'
-        ? promise(abortController.current.signal, ...(args as Params))
-        : promise;
+    setIsLoading(true);
+    const { run, abort } = cancelablePromiseFn<Data>(promiseFn as any, delay);
+    abortFnRef.current = { abort };
 
-    try {
-      if (delay > 0) {
-        await sleep(delay, abortController.current);
-      }
+    const promise = run(...args)
+      .then((res) => {
+        setError(undefined);
+        setData(res);
+        onSuccess(res);
+        return res;
+      })
+      .catch((err) => {
+        setError(err);
+        onError(err);
+        return err;
+      })
+      .finally(() => {
+        setIsLoading(false);
+        abortFnRef.current = null;
+      });
 
-      const data = await promiseTask;
-      setData(data);
-      onSuccess(data);
-    } catch (err) {
-      setError(err);
-      onError(err);
-    } finally {
-      setIsLoading(false);
-      abortController.current = null;
-    }
-
-    return data;
+    return promise;
   }
 
   useEffect(() => {
@@ -118,7 +146,7 @@ export const useAsyncState = <Data, Params extends any[] = []>(
     data,
     error,
     isLoading,
-    cancel,
-    execute
+    execute,
+    cancel
   };
 };
