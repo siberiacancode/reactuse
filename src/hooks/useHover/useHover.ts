@@ -13,20 +13,21 @@ export interface UseHoverOptions {
 
 //* The use hover target type */
 export type UseHoverTarget = RefObject<Element | null | undefined> | Element;
-//* The use hover return type */
-export type UseHoverReturn<Target extends UseHoverTarget> = [RefObject<Target>, boolean];
 
 export type UseHover = {
   <Target extends UseHoverTarget>(target: Target, callback?: () => void): boolean;
 
   <Target extends UseHoverTarget>(target: Target, options?: UseHoverOptions): boolean;
 
-  <Target extends UseHoverTarget>(callback?: () => void, target?: never): UseHoverReturn<Target>;
+  <Target extends UseHoverTarget>(
+    callback?: () => void,
+    target?: never
+  ): [RefObject<Target>, boolean];
 
   <Target extends UseHoverTarget>(
     options?: UseHoverOptions,
     target?: never
-  ): UseHoverReturn<Target>;
+  ): [RefObject<Target>, boolean];
 };
 
 /**

@@ -37,7 +37,7 @@ export interface UseQueryReturn<Data> {
   error?: Error;
   /* The refetch function */
   refetch: () => void;
-  /* The refetch async function */
+  /* The refetching state of the query */
   isRefetching: boolean;
 }
 
