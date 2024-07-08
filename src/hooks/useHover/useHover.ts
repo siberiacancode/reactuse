@@ -78,7 +78,9 @@ export type UseHover = {
  */
 export const useHover = ((...params: any[]) => {
   const target = (
-    params[0] instanceof Function || !('current' in params[0]) ? undefined : params[0]
+    params[0] instanceof Function || !('current' in params[0] || params[0] instanceof Element)
+      ? undefined
+      : params[0]
   ) as UseHoverTarget | undefined;
 
   const options = (
