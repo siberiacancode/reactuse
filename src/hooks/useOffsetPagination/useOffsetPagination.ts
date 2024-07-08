@@ -22,7 +22,7 @@ export interface UseOffsetPaginationReturn {
 export const useOffsetPagination = ({
   total = Number.POSITIVE_INFINITY,
   pageSize = 10,
-  page,
+  page = 1,
   onPageChange = () => {},
   onPageCountChange = () => {},
   onPageSizeChange = () => {}
