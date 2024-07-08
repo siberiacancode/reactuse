@@ -77,8 +77,6 @@ export type UseHover = {
  * });
  */
 export const useHover = ((...params: any[]) => {
-  console.log('@', params[0] instanceof Function);
-
   const target = (
     params[0] instanceof Function || !('current' in params[0] || params[0] instanceof Element)
       ? undefined
@@ -107,8 +105,6 @@ export const useHover = ((...params: any[]) => {
     options?.onLeave?.();
     setHovering(false);
   };
-
-  console.log('@@', target);
 
   useEventListener(target ?? internalRef, 'mouseenter', onMouseEnter);
   useEventListener(target ?? internalRef, 'mouseleave', onMouseLeave);
