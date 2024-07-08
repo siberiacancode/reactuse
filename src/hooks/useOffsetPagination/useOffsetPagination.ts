@@ -19,32 +19,6 @@ export interface UseOffsetPaginationReturn {
   next: () => void;
 }
 
-/**
- * @name useFullscreen
- * @description - Hook to handle fullscreen events
- * @category Browser
- *
- * @overload
- * @template Target The target element for fullscreen
- * @param {Target} target The target element for fullscreen
- * @param {boolean} [options.initialValue=false] initial value of fullscreen
- * @param {() => void} [options.onEnter] on enter fullscreen
- * @param {() => void} [options.onExit] on exit fullscreen
- * @returns {UseFullScreenReturn} An object with the fullscreen state and methods
- *
- * @example
- * const { enter, exit, toggle, value } = useFullscreen(ref);
- *
- * @overload
- * @template Target The target element for fullscreen
- * @param {boolean} [options.initialValue=false] initial value of fullscreen
- * @param {() => void} [options.onEnter] on enter fullscreen
- * @param {() => void} [options.onExit] on exit fullscreen
- * @returns {UseFullScreenReturn & { ref: RefObject<Target> }} An object with the fullscreen state and methods
- *
- * @example
- * const { ref, enter, exit, toggle, value } = useFullscreen();
- */
 export const useOffsetPagination = ({
   total = Number.POSITIVE_INFINITY,
   pageSize = 10,
