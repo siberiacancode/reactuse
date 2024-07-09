@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 
 import { getRetry } from '@/utils/helpers';
 
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
+import { useMount } from '../useMount/useMount';
+
 /* The use query return type */
 export interface UseQueryOptions<QueryData, Data> {
   /* The depends for the hook */
@@ -75,6 +78,8 @@ export const useQuery = <QueryData, Data = QueryData>(
   const [error, setError] = useState<Error | undefined>(undefined);
   const [data, setData] = useState<Data | undefined>(options?.initialData);
 
+  const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
+
   const request = (action: 'init' | 'refetch') => {
     setIsLoading(true);
     if (action === 'refetch') setIsRefetching(true);
@@ -107,17 +112,30 @@ export const useQuery = <QueryData, Data = QueryData>(
       .finally(() => {
         if (options?.refetchInterval) {
           const interval = setInterval(() => {
-            request('refetch');
             clearInterval(interval);
+            request('refetch');
           }, options?.refetchInterval);
+          intervalIdRef.current = interval;
         }
       });
   };
 
   useEffect(() => {
+    if (!options?.refetchInterval) return;
+
+    return () => {
+      if (options?.refetchInterval) {
+        clearInterval(intervalIdRef.current);
+      }
+    };
+  }, [options?.refetchInterval, options?.retry, ...(options?.keys ?? [])]);
+
+  useMount(() => {
     if (options?.initialData) return;
     request('init');
-  }, options?.keys ?? []);
+  });
+
+  useDidUpdate(() => request('refetch'), options?.keys ?? []);
 
   const refetch = () => request('refetch');
 
