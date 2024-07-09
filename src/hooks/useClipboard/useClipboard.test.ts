@@ -53,7 +53,7 @@ it('Should copy value to clipboard if writeText not supported', async () => {
 
 it('Should read value from clipboard if readText not supported', async () => {
   mockNavigatorClipboardReadText.mockRejectedValueOnce(new Error('readText not supported'));
-  const { result } = renderHook(useClipboard);
+  const { result } = renderHook(() => useClipboard({ enabled: true }));
 
   mockDocumentGetSelection.mockReturnValue({ toString: () => 'copied' });
   await act(() => document.dispatchEvent(new Event('copy')));
@@ -66,7 +66,7 @@ it('Should read value from clipboard if readText not supported', async () => {
 });
 
 it('Should change value upon copy and cut events', async () => {
-  const { result } = renderHook(useClipboard);
+  const { result } = renderHook(() => useClipboard({ enabled: true }));
 
   mockNavigatorClipboardReadText.mockResolvedValue('copied');
   await act(() => document.dispatchEvent(new Event('copy')));
@@ -76,7 +76,7 @@ it('Should change value upon copy and cut events', async () => {
 });
 
 it('Should change value upon cut event', async () => {
-  const { result } = renderHook(useClipboard);
+  const { result } = renderHook(() => useClipboard({ enabled: true }));
 
   mockNavigatorClipboardReadText.mockResolvedValue('cut');
   await act(() => document.dispatchEvent(new Event('cut')));

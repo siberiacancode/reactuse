@@ -23,22 +23,31 @@ interface UseCopyToClipboardReturn {
   supported: boolean;
 }
 
+/** The use copy to clipboard params type */
+export interface UseCopyToClipboardParams {
+  /** Whether the copy to clipboard is enabled */
+  enabled: boolean;
+}
+
 /**
  * @name useClipboard
  * @description - Hook that manages a copy to clipboard
  * @category Browser
  *
+ * @param {boolean} [params.enabled=false] Whether the copy to clipboard is enabled
  * @returns {UseCopyToClipboardReturn} An object containing the boolean state value and utility functions to manipulate the state
  *
  * @example
  * const { supported, value, copy } = useClipboard();
  */
-export const useClipboard = (): UseCopyToClipboardReturn => {
+export const useClipboard = (params?: UseCopyToClipboardParams): UseCopyToClipboardReturn => {
   const supported = navigator && 'clipboard' in navigator;
 
   const [value, setValue] = useState<string | null>(null);
   const clipboardReadPermission = usePermission('clipboard-read');
   const clipboardWritePermissionWrite = usePermission('clipboard-write');
+
+  const enabled = params?.enabled ?? false;
 
   const set = async () => {
     try {
@@ -52,13 +61,15 @@ export const useClipboard = (): UseCopyToClipboardReturn => {
   };
 
   useEffect(() => {
+    if (!enabled) return;
+
     document.addEventListener('copy', set);
     document.addEventListener('cut', set);
     return () => {
       document.removeEventListener('copy', set);
       document.removeEventListener('cut', set);
     };
-  }, []);
+  }, [enabled]);
 
   const copy = useCallback(async (value: string) => {
     try {
