@@ -8,13 +8,10 @@ import { useEventListener } from '../useEventListener/useEventListener';
 export interface UseHotkeysOptions {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
-
   /** Enable or disable the event listeners */
   enabled?: boolean;
-
   /** Whether to prevent the default behavior of the event */
   preventDefault?: boolean;
-
   /** Alias map for hotkeys */
   aliasMap?: Record<string, string>;
 }

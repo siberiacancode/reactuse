@@ -59,6 +59,7 @@ type UseStopwatch = {
 /**
  * @name useStopwatch
  * @description - Hook that creates a stopwatch functionality
+ * @category Time
  *
  * @overload
  * @param {number} [initialTime=0] The initial time of the timer

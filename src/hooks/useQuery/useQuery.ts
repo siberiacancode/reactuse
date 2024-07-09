@@ -24,6 +24,8 @@ export interface UseQueryOptions<QueryData, Data> {
   retry?: boolean | number;
   /* The refetch interval */
   refetchInterval?: number;
+  /* The enabled state of the query */
+  enabled?: boolean;
 }
 
 /* The use query return type */
@@ -68,6 +70,7 @@ export const useQuery = <QueryData, Data = QueryData>(
   callback: () => Promise<QueryData>,
   options?: UseQueryOptions<QueryData, Data>
 ): UseQueryReturn<Data> => {
+  const enabled = options?.enabled ?? true;
   const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -131,7 +134,7 @@ export const useQuery = <QueryData, Data = QueryData>(
   }, [options?.refetchInterval, options?.retry, ...(options?.keys ?? [])]);
 
   useMount(() => {
-    if (options?.initialData) return;
+    if (options?.initialData || !enabled) return;
     request('init');
   });
 

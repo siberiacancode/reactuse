@@ -1,13 +1,16 @@
+import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
+
 import { useStorage } from './useStorage';
 
 const Demo = () => {
-  const [text, setText, removeText] = useStorage('siberiacancode-use-storage', '');
+  useLocalStorage('test2');
+  const { value, set, remove } = useStorage('siberiacancode-use-storage', '');
 
   return (
     <div>
-      <p>Value: {String(text)}</p>
-      <input type='text' value={text ?? ''} onChange={(event) => setText(event.target.value)} />
-      <button type='button' onClick={removeText}>
+      <p>Value: {String(value)}</p>
+      <input type='text' value={value ?? ''} onChange={(event) => set(event.target.value)} />
+      <button type='button' onClick={remove}>
         Remove
       </button>
     </div>

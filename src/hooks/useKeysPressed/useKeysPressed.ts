@@ -8,7 +8,6 @@ import { useEventListener } from '../useEventListener/useEventListener';
 interface UseKeysPressedParams {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
-
   /** Enable or disable the event listeners */
   enabled?: boolean;
 }
