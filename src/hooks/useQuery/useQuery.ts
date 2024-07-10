@@ -86,7 +86,6 @@ export const useQuery = <QueryData, Data = QueryData>(
   const request = (action: 'init' | 'refetch') => {
     setIsLoading(true);
     if (action === 'refetch') setIsRefetching(true);
-
     callback()
       .then((response) => {
         const data = options?.select ? options?.select(response) : response;
@@ -123,22 +122,21 @@ export const useQuery = <QueryData, Data = QueryData>(
       });
   };
 
-  useEffect(() => {
-    if (!options?.refetchInterval) return;
-
-    return () => {
-      if (options?.refetchInterval) {
-        clearInterval(intervalIdRef.current);
-      }
-    };
-  }, [options?.refetchInterval, options?.retry, ...(options?.keys ?? [])]);
-
   useMount(() => {
-    if (options?.initialData || !enabled) return;
+    if (!enabled) return;
     request('init');
   });
 
-  useDidUpdate(() => request('refetch'), options?.keys ?? []);
+  useDidUpdate(() => {
+    if (!enabled) return;
+    request('refetch');
+  }, [enabled, ...(options?.keys ?? [])]);
+
+  useEffect(() => {
+    return () => {
+      clearInterval(intervalIdRef.current);
+    };
+  }, [enabled, options?.refetchInterval, options?.retry, ...(options?.keys ?? [])]);
 
   const refetch = () => request('refetch');
 
