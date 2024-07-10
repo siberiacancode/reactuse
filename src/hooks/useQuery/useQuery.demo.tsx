@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { useCounter } from '../useCounter/useCounter';
 
 import { useQuery } from './useQuery';
@@ -14,11 +12,8 @@ const getPokemon = (id: number) =>
 
 const Demo = () => {
   const counter = useCounter(1);
-  const [enabled, toggle] = useState(true);
   const getPokemonQuery = useQuery(() => getPokemon(counter.count), {
-    keys: [counter.count],
-    refetchInterval: 1000,
-    enabled
+    keys: [counter.count]
   });
 
   return (
@@ -26,7 +21,7 @@ const Demo = () => {
       <button type='button' disabled={counter.count === 1} onClick={() => counter.dec()}>
         Prev
       </button>
-      <button type='button' onClick={() => toggle(!enabled)}>
+      <button type='button' onClick={() => counter.inc()}>
         Next
       </button>
 
