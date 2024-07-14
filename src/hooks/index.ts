@@ -1,3 +1,4 @@
+export { useAsync } from './useAsync/useAsync';
 export { useBattery } from './useBattery/useBattery';
 export { useBoolean } from './useBoolean/useBoolean';
 export { useBreakpoints } from './useBreakpoints/useBreakpoints';

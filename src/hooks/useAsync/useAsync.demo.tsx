@@ -1,6 +1,6 @@
 import { useCounter } from '../useCounter/useCounter';
 
-import { useQuery } from './useQuery';
+import { useAsync } from './useAsync';
 
 interface Pokemon {
   id: number;
@@ -12,13 +12,11 @@ const getPokemon = (id: number) =>
 
 const Demo = () => {
   const counter = useCounter(1);
-  const getPokemonQuery = useQuery(() => getPokemon(counter.value), {
-    keys: [counter.value]
-  });
+  const getPokemonQuery = useAsync(() => getPokemon(counter.value), [counter.value]});
 
   return (
     <>
-      <button type='button' disabled={counter.value === 1} onClick={() => counter.dec()}>
+      <button type='button' disabled={counter.count === 1} onClick={() => counter.dec()}>
         Prev
       </button>
       <button type='button' onClick={() => counter.inc()}>

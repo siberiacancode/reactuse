@@ -64,7 +64,7 @@ export interface UseQueryReturn<Data> {
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
- * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useQuery(() => fetch('https://example.com/data'));
+ * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useQuery(() => fetch('url'));
  */
 export const useQuery = <QueryData, Data = QueryData>(
   callback: () => Promise<QueryData>,

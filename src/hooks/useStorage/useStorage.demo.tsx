@@ -8,7 +8,9 @@ const Demo = () => {
 
   return (
     <div>
-      <p>Value: {String(value)}</p>
+      <p>
+        String: <code>{value ?? 'value is undefined'}</code>
+      </p>
       <input type='text' value={value ?? ''} onChange={(event) => set(event.target.value)} />
       <button type='button' onClick={remove}>
         Remove

@@ -1,23 +1,23 @@
 import { useCounter } from './useCounter';
 
 const Demo = () => {
-  const { count, inc, dec, reset, set } = useCounter();
+  const counter = useCounter();
 
   return (
     <>
       <p>
-        Count: <code>{count}</code>
+        Count: <code>{counter.value}</code>
       </p>
-      <button type='button' onClick={() => inc()}>
+      <button type='button' onClick={() => counter.inc()}>
         Increment
       </button>
-      <button type='button' onClick={() => dec()}>
+      <button type='button' onClick={() => counter.dec()}>
         Decrement
       </button>
-      <button type='button' onClick={() => set(5)}>
+      <button type='button' onClick={() => counter.set(5)}>
         Set (5)
       </button>
-      <button type='button' onClick={reset}>
+      <button type='button' onClick={counter.reset}>
         Reset
       </button>
     </>

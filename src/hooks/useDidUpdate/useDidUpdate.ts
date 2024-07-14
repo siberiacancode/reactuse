@@ -23,6 +23,9 @@ export const useDidUpdate = (effect: EffectCallback, deps?: DependencyList) => {
       return;
     }
 
-    return effect();
+    const effectReturns = effect();
+    if (effectReturns && typeof effectReturns === 'function') {
+      return effectReturns;
+    }
   }, deps);
 };

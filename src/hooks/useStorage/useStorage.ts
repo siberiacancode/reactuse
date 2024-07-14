@@ -111,13 +111,13 @@ export const useStorage = <Value>(
 
   useIsomorphicLayoutEffect(() => {
     const value = getStorageItem(storage, key);
-    if (value === undefined && !initialValue) return;
-
-    setStorageItem(
-      storage,
-      key,
-      serializer(initialValue instanceof Function ? initialValue() : initialValue)
-    );
+    if (value === undefined && initialValue !== undefined) {
+      setStorageItem(
+        storage,
+        key,
+        serializer(initialValue instanceof Function ? initialValue() : initialValue)
+      );
+    }
   }, [key]);
 
   const remove = () => removeStorageItem(storage, key);

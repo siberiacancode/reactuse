@@ -12,7 +12,7 @@ const Demo = () => {
         Long pressed: <code>{longPressing.toString()}</code>
       </p>
       <p>
-        Clicked: <code>{counter.count}</code>
+        Clicked: <code>{counter.value}</code>
       </p>
       <button type='button' ref={longPressedRef}>
         Long press

@@ -11,16 +11,16 @@ const Demo = () => {
 
   useDidUpdate(() => {
     setUseDidUpdateTriggered(true);
-  }, [counter.count]);
+  }, [counter.value]);
 
   useEffect(() => {
     setUseEffectTriggered(true);
-  }, [counter.count]);
+  }, [counter.value]);
 
   return (
     <div>
       <p>
-        Count: <code>{counter.count}</code>
+        Count: <code>{counter.value}</code>
       </p>
       <p>
         Use effect triggered: <code>{String(useEffectTriggered)}</code>
