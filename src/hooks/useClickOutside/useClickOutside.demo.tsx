@@ -21,12 +21,12 @@ const Demo = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        border: `1px solid ${counter.count < 5 ? 'red' : 'green'}`
+        border: `1px solid ${counter.value < 5 ? 'red' : 'green'}`
       }}
     >
       <p>Click more than 5 times:</p>
       <p>
-        <code>{counter.count}</code>
+        <code>{counter.value}</code>
       </p>
     </div>
   );
