@@ -75,8 +75,14 @@ export const useInfiniteScroll = ((...params) => {
   const target = params[1] instanceof Function ? (params[0] as UseInfiniteScrollTarget) : undefined;
   const callback = params[1] instanceof Function ? params[1] : (params[0] as () => void);
 
-  const direction = (params[2] as UseInfiniteScrollOptions)?.direction ?? 'bottom';
-  const distance = (params[2] as UseInfiniteScrollOptions)?.distance ?? 10;
+  const direction =
+    (params[2] as UseInfiniteScrollOptions)?.direction ??
+    (params[1] as UseInfiniteScrollOptions)?.direction ??
+    'bottom';
+  const distance =
+    (params[2] as UseInfiniteScrollOptions)?.distance ??
+    (params[1] as UseInfiniteScrollOptions)?.distance ??
+    10;
 
   const [isLoading, setIsLoading] = useState(false);
   const internalRef = useRef<Element>();
