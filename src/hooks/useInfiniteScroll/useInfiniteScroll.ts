@@ -74,9 +74,12 @@ export const useInfiniteScroll = ((...params) => {
   const rerender = useRerender();
   const target = params[1] instanceof Function ? (params[0] as UseInfiniteScrollTarget) : undefined;
   const callback = params[1] instanceof Function ? params[1] : (params[0] as () => void);
+  const options = (
+    params[1] instanceof Function ? params[2] : params[1]
+  ) as UseInfiniteScrollOptions;
 
-  const direction = (params[2] as UseInfiniteScrollOptions)?.direction ?? 'bottom';
-  const distance = (params[2] as UseInfiniteScrollOptions)?.distance ?? 10;
+  const direction = options?.direction ?? 'bottom';
+  const distance = options?.distance ?? 10;
 
   const [isLoading, setIsLoading] = useState(false);
   const internalRef = useRef<Element>();
