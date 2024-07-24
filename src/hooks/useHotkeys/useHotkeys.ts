@@ -4,7 +4,7 @@ import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
 import { useEventListener } from '../useEventListener/useEventListener';
 
-/** The use hotkeys params */
+/** The use hotkeys params type */
 export interface UseHotkeysOptions {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;

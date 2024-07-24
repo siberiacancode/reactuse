@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 import { useRerender } from '../useRerender/useRerender';
 
-/** The use field params */
+/** The use field params type */
 export interface UseFieldParams<Value> {
   /** The initial value */
   initialValue?: Value;
@@ -18,7 +18,7 @@ export interface UseFieldParams<Value> {
   validateOnMount?: boolean;
 }
 
-/** The use field register params */
+/** The use field register params type */
 export interface UseFieldRegisterParams {
   /** The required validation */
   required?: string;

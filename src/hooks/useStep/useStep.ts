@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-/** The use step params */
+/** The use step params type */
 interface UseStepParams {
   /** Initial value for step */
   initial: number;

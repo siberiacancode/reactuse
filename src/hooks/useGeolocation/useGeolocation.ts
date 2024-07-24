@@ -24,7 +24,7 @@ export interface UseGeolocationReturn {
   speed: number | null;
 }
 
-/** The use geolocation params */
+/** The use geolocation params type */
 export type UseGeolocationParams = PositionOptions;
 
 /**

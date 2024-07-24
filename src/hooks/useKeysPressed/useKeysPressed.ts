@@ -4,7 +4,7 @@ import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
 import { useEventListener } from '../useEventListener/useEventListener';
 
-/** The use keys pressed params */
+/** The use keys pressed params type */
 interface UseKeysPressedParams {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
