@@ -1,10 +1,10 @@
 import { useCounter } from '../useCounter/useCounter';
 
-import { useRafCallback } from './useRafCallback';
+import { useRaf } from './useRaf';
 
 const Demo = () => {
   const counter = useCounter();
-  const { isActive, resume, pause } = useRafCallback(() => counter.inc());
+  const { active, resume, pause } = useRaf(() => counter.inc());
 
   return (
     <>
@@ -12,7 +12,7 @@ const Demo = () => {
         Count: <code>{counter.value}</code>
       </p>
 
-      {isActive ? (
+      {active ? (
         <button type='button' onClick={pause}>
           Pause
         </button>

@@ -63,7 +63,7 @@ export { usePreferredReducedMotion } from './usePreferredReducedMotion/usePrefer
 export { usePrevious } from './usePrevious/usePrevious';
 export { useQuery } from './useQuery/useQuery';
 export { useQueue } from './useQueue/useQueue';
-export { useRafCallback } from './useRafCallback/useRafCallback';
+export { useRafCallback } from './useRaf/useRaf';
 export { useRafValue } from './useRafValue/useRafValue';
 export { useRenderCount } from './useRenderCount/useRenderCount';
 export { useRenderInfo } from './useRenderInfo/useRenderInfo';

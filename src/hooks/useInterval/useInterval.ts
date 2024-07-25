@@ -11,7 +11,7 @@ export interface UseIntervalOptions {
 /** The use interval return type */
 export interface UseIntervalReturn {
   /** Is the interval active */
-  isActive: boolean;
+  active: boolean;
   /** Pause the interval */
   pause: () => void;
   /** Resume the interval */
@@ -35,7 +35,7 @@ type UseInterval = {
  * @returns {UseIntervalReturn}
  *
  * @example
- * const { isActive, pause, resume } = useInterval(() => console.log('inside interval'), 2500);
+ * const { active, pause, resume } = useInterval(() => console.log('inside interval'), 2500);
  *
  * @overload
  * @param {() => void} callback Any callback function
@@ -43,7 +43,7 @@ type UseInterval = {
  * @param {boolean} [options.immediate=true] Start the interval immediately
  *
  * @example
- * const { isActive, pause, resume } = useInterval(() => console.log('inside interval'), { interval: 2500 });
+ * const { active, pause, resume } = useInterval(() => console.log('inside interval'), { interval: 2500 });
  */
 export const useInterval = ((...params: any[]): UseIntervalReturn => {
   const callback = params[0] as () => void;
@@ -57,7 +57,7 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
       : (params[2] as UseIntervalOptions | undefined);
   const enabled = options?.enabled ?? true;
 
-  const [isActive, setIsActive] = useState<boolean>(enabled ?? true);
+  const [active, setActive] = useState<boolean>(enabled ?? true);
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
   const internalCallback = useEvent(callback);
@@ -72,19 +72,19 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
   }, [enabled, interval]);
 
   const pause = () => {
-    setIsActive(false);
+    setActive(false);
     clearInterval(intervalIdRef.current);
   };
 
   const resume = () => {
     if (interval <= 0) return;
-    setIsActive(true);
+    setActive(true);
     clearInterval(intervalIdRef.current);
     intervalIdRef.current = setInterval(internalCallback, interval);
   };
 
   return {
-    isActive,
+    active,
     pause,
     resume
   };
