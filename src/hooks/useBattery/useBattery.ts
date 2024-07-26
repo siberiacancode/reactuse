@@ -9,7 +9,7 @@ declare global {
 }
 
 /** State for hook use battery */
-interface UseBatteryStateReturn {
+export interface UseBatteryStateReturn {
   /** Is battery API supported? */
   supported: boolean;
   /** Is battery information loading? */

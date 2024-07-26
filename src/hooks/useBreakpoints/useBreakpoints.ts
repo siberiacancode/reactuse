@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { useRerender } from '../useRerender/useRerender';
 
+/** The breakpoints type */
 export type Breakpoints<Breakpoint extends string = string> = Record<Breakpoint, number>;
 
 /** The use breakpoints strategy */

@@ -14,8 +14,11 @@ declare global {
 
 /** The color selection return type */
 export interface UseEyeDropperReturn {
+  /** The eye dropper supported status */
   supported: boolean;
+  /** The eye dropper value */
   value?: string;
+  /** The eye dropper open method */
   open: (colorSelectionOptions?: ColorSelectionOptions) => Promise<ColorSelectionResult>;
 }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 /** The use map return type */
-interface UseMapReturn<Key, Value> {
+export interface UseMapReturn<Key, Value> {
   /** The current map */
   value: Map<Key, Value>;
   /** The size of the map */

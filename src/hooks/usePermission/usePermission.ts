@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useEvent } from '../useEvent/useEvent';
 
+/** The permission name */
 export type UsePermissionName =
   | PermissionName
   | 'accelerometer'
@@ -20,9 +21,13 @@ export type UsePermissionName =
   | 'push'
   | 'speaker';
 
+/** The use permission return type */
 export interface UsePermissionReturn {
+  /** The permission state */
   state: PermissionState;
+  /** The permission supported status */
   supported: boolean;
+  /** The permission query function */
   query: () => Promise<PermissionState>;
 }
 

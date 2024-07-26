@@ -14,7 +14,7 @@ export const legacyCopyToClipboard = (value: string) => {
 };
 
 /** The use copy to clipboard return type */
-interface UseCopyToClipboardReturn {
+export interface UseCopyToClipboardReturn {
   /** The copied value */
   value: string | null;
   /** Function to copy to clipboard  */

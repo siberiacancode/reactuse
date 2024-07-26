@@ -5,7 +5,7 @@ import type { UseEventListenerTarget } from '../useEventListener/useEventListene
 import { useEventListener } from '../useEventListener/useEventListener';
 
 /** The use keys pressed params type */
-interface UseKeysPressedParams {
+export interface UseKeysPressedParams {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
   /** Enable or disable the event listeners */

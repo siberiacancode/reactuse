@@ -22,6 +22,7 @@ export { useField } from './useField/useField';
 export { useFileDialog } from './useFileDialog/useFileDialog';
 export { useFps } from './useFps/useFps';
 export { useFullscreen } from './useFullscreen/useFullscreen';
+export { useGamepad } from './useGamepad/useGamepad';
 export { useGeolocation } from './useGeolocation/useGeolocation';
 export { useHash } from './useHash/useHash';
 export { useHotkeys } from './useHotkeys/useHotkeys';

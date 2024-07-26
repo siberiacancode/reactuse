@@ -7,7 +7,7 @@ import { useEventListener } from '../useEventListener/useEventListener';
 export type UseLongPressTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
 // * The use long press options type */
-interface UseLongPressOptions {
+export interface UseLongPressOptions {
   // * The threshold time in milliseconds
   threshold?: number;
   // * The callback function to be invoked on long press start

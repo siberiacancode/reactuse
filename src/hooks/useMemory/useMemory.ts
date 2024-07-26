@@ -12,8 +12,11 @@ declare global {
   }
 }
 
+/** The use memory return type */
 export interface UseMemoryReturn {
+  /** The memory supported status */
   supported: boolean;
+  /** The current memory usage */
   value: Performance['memory'];
 }
 
