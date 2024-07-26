@@ -50,6 +50,7 @@ export { useMount } from './useMount/useMount';
 export { useMouse } from './useMouse/useMouse';
 export { useMutation } from './useMutation/useMutation';
 export { useNetwork } from './useNetwork/useNetwork';
+export { useOffsetPagination } from './useOffsetPagination/useOffsetPagination';
 export { useOnline } from './useOnline/useOnline';
 export { useOperatingSystem } from './useOperatingSystem/useOperatingSystem';
 export { useOrientation } from './useOrientation/useOrientation';

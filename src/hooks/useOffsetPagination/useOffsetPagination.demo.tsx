@@ -10,42 +10,39 @@ const Demo = () => {
     Array.from({ length: PAGE_SIZE }, (_, i) => ({ id: i }))
   );
 
-  const [page, setPage] = useState(1);
-
-  const onPageChange = (page: number) => {
-    setPage(page);
-    setData(Array.from({ length: PAGE_SIZE }, (_, i) => ({ id: PAGE_SIZE * (page - 1) + i })));
-  };
-
-  const { currentPage, currentPageSize, isFirstPage, isLastPage, next, pageCount, prev } =
+  const { page, currentPageSize, isFirstPage, isLastPage, next, set, pageCount, prev } =
     useOffsetPagination({
-      page,
-      onPageChange,
+      initialPage: 1,
+      onPageChange: ({ page }) =>
+        setData(Array.from({ length: PAGE_SIZE }, (_, i) => ({ id: PAGE_SIZE * (page - 1) + i }))),
       total: TOTAL,
       pageSize: PAGE_SIZE
     });
 
   return (
     <div>
-      <div>
-        <div>pageCount: {pageCount}</div>
-        <div>currentPageSize: {currentPageSize}</div>
-        <div>currentPage: {currentPage}</div>
-        <div>isFirstPage: {String(isFirstPage)}</div>
-        <div>isLastPage: {String(isLastPage)}</div>
-      </div>
+      <p>
+        pageCount: <code>{pageCount}</code>
+      </p>
+      <p>
+        currentPageSize: <code>{currentPageSize}</code>
+      </p>
+      <p>
+        currentPage: <code>{page}</code>
+      </p>
+      <p>
+        isFirstPage: <code>{String(isFirstPage)}</code>
+      </p>
+      <p>
+        isLastPage: <code>{String(isLastPage)}</code>
+      </p>
 
       <div>
         <button type='button' disabled={isFirstPage} onClick={prev}>
           prev
         </button>
         {Array.from({ length: pageCount }, (_, i) => (
-          <button
-            key={i}
-            type='button'
-            disabled={i + 1 === currentPage}
-            onClick={() => setPage(i + 1)}
-          >
+          <button key={i} type='button' disabled={i + 1 === page} onClick={() => set(i + 1)}>
             {i + 1}{' '}
           </button>
         ))}
