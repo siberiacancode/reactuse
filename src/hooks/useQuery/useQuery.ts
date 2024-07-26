@@ -28,6 +28,13 @@ export interface UseQueryOptions<QueryData, Data> {
   enabled?: boolean;
 }
 
+interface UseQueryCallbackParams {
+  /* The abort signal */
+  signal: AbortSignal;
+  /* The depends for the hook */
+  keys: DependencyList;
+}
+
 /* The use query return type */
 export interface UseQueryReturn<Data> {
   /* The state of the query */
@@ -44,6 +51,10 @@ export interface UseQueryReturn<Data> {
   refetch: () => void;
   /* The refetching state of the query */
   isRefetching: boolean;
+  /* The abort function */
+  abort: AbortController['abort'];
+  /*  The aborted state of the query */
+  isAborted: boolean;
 }
 
 /**
@@ -67,7 +78,7 @@ export interface UseQueryReturn<Data> {
  * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useQuery(() => fetch('url'));
  */
 export const useQuery = <QueryData, Data = QueryData>(
-  callback: () => Promise<QueryData>,
+  callback: (params: UseQueryCallbackParams) => Promise<QueryData>,
   options?: UseQueryOptions<QueryData, Data>
 ): UseQueryReturn<Data> => {
   const enabled = options?.enabled ?? true;
@@ -77,16 +88,28 @@ export const useQuery = <QueryData, Data = QueryData>(
   const [isError, setIsError] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
   const [isSuccess, setIsSuccess] = useState(!!options?.initialData);
+  const [isAborted, setIsAborted] = useState(!!options?.initialData);
 
   const [error, setError] = useState<Error | undefined>(undefined);
   const [data, setData] = useState<Data | undefined>(options?.initialData);
 
+  const abortControllerRef = useRef<AbortController>(new AbortController());
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
 
+  const keys = options?.keys ?? [];
+
+  const abort = () => {
+    abortControllerRef.current.abort();
+    abortControllerRef.current = new AbortController();
+    abortControllerRef.current.signal.onabort = () => setIsAborted(true);
+  };
+
   const request = (action: 'init' | 'refetch') => {
+    abort();
     setIsLoading(true);
+
     if (action === 'refetch') setIsRefetching(true);
-    callback()
+    callback({ signal: abortControllerRef.current.signal, keys })
       .then((response) => {
         const data = options?.select ? options?.select(response) : response;
         options?.onSuccess?.(data as Data);
@@ -130,13 +153,13 @@ export const useQuery = <QueryData, Data = QueryData>(
   useDidUpdate(() => {
     if (!enabled) return;
     request('refetch');
-  }, [enabled, ...(options?.keys ?? [])]);
+  }, [enabled, ...keys]);
 
   useEffect(() => {
     return () => {
       clearInterval(intervalIdRef.current);
     };
-  }, [enabled, options?.refetchInterval, options?.retry, ...(options?.keys ?? [])]);
+  }, [enabled, options?.refetchInterval, options?.retry, ...keys]);
 
   const refetch = () => request('refetch');
 
@@ -146,12 +169,14 @@ export const useQuery = <QueryData, Data = QueryData>(
       : options?.placeholderData;
 
   return {
+    abort,
     data: data ?? placeholderData,
     error,
     refetch,
     isLoading,
     isError,
     isSuccess,
-    isRefetching
+    isRefetching,
+    isAborted
   };
 };
