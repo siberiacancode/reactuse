@@ -65,19 +65,13 @@ export const useScript = (src: string, options: UseScriptOptions = {}) => {
       setStatus('error');
     };
 
-    const removeEventListeners = () => {
-      script.removeEventListener('load', onLoad);
-      script.removeEventListener('error', onError);
-    };
-
     script.addEventListener('load', onLoad);
     script.addEventListener('error', onError);
 
     return () => {
-      if (removeOnUnmount) {
-        script.remove();
-        removeEventListeners();
-      }
+      if (removeOnUnmount) script.remove();
+      script.removeEventListener('load', onLoad);
+      script.removeEventListener('error', onError);
     };
   }, [src, removeOnUnmount]);
 
