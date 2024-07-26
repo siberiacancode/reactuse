@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useEvent } from '../useEvent/useEvent';
 import { useRaf } from '../useRaf/useRaf';
 
 declare global {
@@ -58,19 +59,19 @@ export const useGamepad = () => {
     );
   }, []);
 
+  const onConnected = useEvent((event: Event) => {
+    const { gamepad } = event as GamepadEvent;
+    setGamepads({ ...gamepads, [gamepad.index]: createGamepad(gamepad) });
+  });
+
+  const onDisconnected = useEvent((event: Event) => {
+    const { gamepad } = event as GamepadEvent;
+    const updatedGamepads = { ...gamepads };
+    delete updatedGamepads[gamepad.index];
+    setGamepads(updatedGamepads);
+  });
+
   useEffect(() => {
-    const onConnected = (event: Event) => {
-      const { gamepad } = event as GamepadEvent;
-      setGamepads({ ...gamepads, [gamepad.index]: createGamepad(gamepad) });
-    };
-
-    const onDisconnected = (event: Event) => {
-      const { gamepad } = event as GamepadEvent;
-      const updatedGamepads = { ...gamepads };
-      delete updatedGamepads[gamepad.index];
-      setGamepads(updatedGamepads);
-    };
-
     document.addEventListener('gamepadconnected', onConnected);
     document.addEventListener('gamepaddisconnected', onDisconnected);
 
