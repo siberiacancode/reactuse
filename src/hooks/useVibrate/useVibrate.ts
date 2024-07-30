@@ -41,6 +41,7 @@ let interval: NodeJS.Timeout;
 /**
  * @name useVibrate
  * @description - Hook that provides Vibrate API
+ * @category Browser
  *
  * @overload
  * @param {(number|number[])} pattern Pattern for vibration
