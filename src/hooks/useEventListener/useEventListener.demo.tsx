@@ -9,10 +9,6 @@ const Demo = () => {
     }
   );
 
-  useEventListener(window, 'click', (event) => console.log('@click 2', event.target), {
-    passive: true
-  });
-
   return (
     <div
       id='content'

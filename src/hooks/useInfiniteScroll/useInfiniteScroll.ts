@@ -2,7 +2,6 @@ import type { RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { useEvent } from '../useEvent/useEvent';
-import { useRerender } from '../useRerender/useRerender';
 
 /** The use infinite scroll target element type */
 export type UseInfiniteScrollTarget = RefObject<Element | null> | (() => Element) | Element;
@@ -71,7 +70,6 @@ export type UseInfiniteScroll = {
  * const isLoading = useInfiniteScroll(ref, () => console.log('infinite scroll'));
  */
 export const useInfiniteScroll = ((...params) => {
-  const rerender = useRerender();
   const target = params[1] instanceof Function ? (params[0] as UseInfiniteScrollTarget) : undefined;
   const callback = params[1] instanceof Function ? params[1] : (params[0] as () => void);
   const options = (
@@ -82,7 +80,7 @@ export const useInfiniteScroll = ((...params) => {
   const distance = options?.distance ?? 10;
 
   const [isLoading, setIsLoading] = useState(false);
-  const internalRef = useRef<Element>();
+  const [internalRef, setInternalRef] = useState<Element>();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
 
@@ -108,7 +106,8 @@ export const useInfiniteScroll = ((...params) => {
   });
 
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+    if (!target && !internalRef) return;
+    const element = target ? getElement(target) : internalRef;
     if (!element) return;
 
     element.addEventListener('scroll', onLoadMore);
@@ -116,16 +115,11 @@ export const useInfiniteScroll = ((...params) => {
     return () => {
       element.removeEventListener('scroll', onLoadMore);
     };
-  }, [internalRef.current, target, direction, distance]);
+  }, [internalRef, target, direction, distance]);
 
   if (target) return isLoading;
   return {
-    ref: (node: Element) => {
-      if (!internalRef.current) {
-        internalRef.current = node;
-        rerender.update();
-      }
-    },
+    ref: setInternalRef,
     isLoading
   };
 }) as UseInfiniteScroll;

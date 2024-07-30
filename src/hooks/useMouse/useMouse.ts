@@ -1,7 +1,5 @@
 import type { RefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
-
-import { useRerender } from '../useRerender/useRerender';
+import { useEffect, useState } from 'react';
 
 /** The use mouse target element type */
 type UseMouseTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
@@ -62,7 +60,6 @@ export type UseMouse = {
  * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
 export const useMouse = ((...params: any[]) => {
-  const rerender = useRerender();
   const target = params[0] as UseMouseTarget | undefined;
 
   const [value, setValue] = useState({
@@ -74,12 +71,12 @@ export const useMouse = ((...params: any[]) => {
     elementPositionY: 0
   });
 
-  const internalRef = useRef<Element>();
+  const [internalRef, setInternalRef] = useState<Element>();
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
+    if (!target && !internalRef) return;
     const onMouseMove = (event: MouseEvent) => {
-      const element = target ? getElement(target) : internalRef.current;
+      const element = target ? getElement(target) : internalRef;
       if (!element) return;
 
       const updatedValue = {
@@ -109,16 +106,11 @@ export const useMouse = ((...params: any[]) => {
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
     };
-  }, [internalRef.current, target]);
+  }, [internalRef, target]);
 
   if (target) return value;
   return {
-    ref: (node: Element) => {
-      if (!internalRef.current) {
-        internalRef.current = node;
-        rerender.update();
-      }
-    },
+    ref: setInternalRef,
     ...value
   };
 }) as UseMouse;

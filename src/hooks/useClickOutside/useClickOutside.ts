@@ -1,7 +1,5 @@
 import type { RefObject } from 'react';
-import { useEffect, useRef } from 'react';
-
-import { useRerender } from '../useRerender/useRerender';
+import { useEffect, useRef, useState } from 'react';
 
 /** The use click outside target element type */
 type UseClickOutsideTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
@@ -53,19 +51,18 @@ export type UseClickOutside = {
  * const ref = useClickOutside<HMLDiTvElement>(() => console.log('click outside'));
  */
 export const useClickOutside = ((...params: any[]) => {
-  const rerender = useRerender();
   const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
     | UseClickOutsideTarget
     | UseClickOutsideTarget[]
     | undefined;
   const callback = (params[1] ? params[1] : params[0]) as (event: Event) => void;
 
-  const internalRef = useRef<Element>();
+  const [internalRef, setInternalRef] = useState<Element>();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
+    if (!target && !internalRef) return;
     const handler = (event: Event) => {
       if (Array.isArray(target)) {
         if (!target.length) return;
@@ -80,7 +77,7 @@ export const useClickOutside = ((...params: any[]) => {
         return;
       }
 
-      const element = target ? getElement(target) : internalRef.current;
+      const element = target ? getElement(target) : internalRef;
 
       if (element && !element.contains(event.target as Node)) {
         internalCallbackRef.current(event);
@@ -94,13 +91,8 @@ export const useClickOutside = ((...params: any[]) => {
       document.removeEventListener('mousedown', handler);
       document.removeEventListener('touchstart', handler);
     };
-  }, [internalRef.current, target]);
+  }, [internalRef, target]);
 
   if (target) return;
-  return (node: Element) => {
-    if (!internalRef.current) {
-      internalRef.current = node;
-      rerender.update();
-    }
-  };
+  return setInternalRef;
 }) as UseClickOutside;

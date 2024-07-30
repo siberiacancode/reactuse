@@ -1,7 +1,7 @@
 import type { RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-import { useRerender } from '../useRerender/useRerender';
+import { getElement } from '@/utils/helpers';
 
 /** The intersection observer target element type */
 export type UseIntersectionObserverTarget =
@@ -15,32 +15,6 @@ export interface UseIntersectionObserverOptions extends Omit<IntersectionObserve
   onChange?: (entry: IntersectionObserverEntry) => void;
   root?: IntersectionObserverInit['root'] | RefObject<Element | null | undefined>;
 }
-
-const getTargetElement = (target: UseIntersectionObserverTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
-
-const getRootElement = (root: UseIntersectionObserverOptions['root']) => {
-  if (!root) return document;
-
-  if (root instanceof Element) {
-    return root;
-  }
-
-  if (root instanceof Document) {
-    return root;
-  }
-
-  return root.current;
-};
 
 /** The intersection observer return type */
 export interface UseIntersectionObserverReturn {
@@ -87,7 +61,6 @@ export type UseIntersectionObserver = {
  * const { entry, inView } = useIntersectionObserver(ref);
  */
 export const useIntersectionObserver = ((...params: any[]) => {
-  const rerender = useRerender();
   const target = (
     typeof params[0] === 'object' && !('current' in params[0]) ? undefined : params[0]
   ) as UseIntersectionObserverTarget | undefined;
@@ -96,13 +69,13 @@ export const useIntersectionObserver = ((...params: any[]) => {
 
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
 
-  const internalRef = useRef<Element>();
+  const [internalRef, setInternalRef] = useState<Element>();
   const internalOnChangeRef = useRef<UseIntersectionObserverOptions['onChange']>();
   internalOnChangeRef.current = options?.onChange;
 
   useEffect(() => {
-    if (!enabled || !internalRef.current) return;
-    const element = target ? getTargetElement(target) : internalRef.current;
+    if (!enabled || !internalRef) return;
+    const element = target ? getElement(target) : internalRef;
     if (!element) return;
 
     const observer = new IntersectionObserver(
@@ -112,32 +85,20 @@ export const useIntersectionObserver = ((...params: any[]) => {
       },
       {
         ...options,
-        root: getRootElement(options?.root)
+        root: options?.root ? (getElement(options?.root) as Element | Document) : document
       }
     );
 
-    observer.observe(element);
+    observer.observe(element as Element);
 
     return () => {
       observer.disconnect();
     };
-  }, [
-    internalRef.current,
-    target,
-    options?.rootMargin,
-    options?.threshold,
-    options?.root,
-    enabled
-  ]);
+  }, [target, internalRef, options?.rootMargin, options?.threshold, options?.root, enabled]);
 
   if (target) return { entry, inView: !!entry?.isIntersecting };
   return {
-    ref: (node: Element) => {
-      if (!internalRef.current) {
-        internalRef.current = node;
-        rerender.update();
-      }
-    },
+    ref: setInternalRef,
     entry,
     inView: !!entry?.isIntersecting
   };
