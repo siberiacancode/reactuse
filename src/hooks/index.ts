@@ -1,4 +1,5 @@
 export { useBattery } from './useBattery/useBattery';
+export { useBluetooth } from './useBluetooth/useBluetooth';
 export { useBoolean } from './useBoolean/useBoolean';
 export { useBreakpoints } from './useBreakpoints/useBreakpoints';
 export { useBrowserLanguage } from './useBrowserLanguage/useBrowserLanguage';
