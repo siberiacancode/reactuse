@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 /**
  * @name useFps
  * @description - Hook that measures frames per second
+ * @category Sensors
  *
  * @returns {number} A number which determines frames per second
  *
@@ -15,7 +16,7 @@ export const useFps = () => {
   useEffect(() => {
     let frameCount = 0;
     let startTime = performance.now();
-    let requestId: number;
+    let rafId: number;
 
     const onRequestAnimationFrame = () => {
       frameCount += 1;
@@ -29,13 +30,13 @@ export const useFps = () => {
         startTime = currentTime;
       }
 
-      requestId = requestAnimationFrame(onRequestAnimationFrame);
+      rafId = requestAnimationFrame(onRequestAnimationFrame);
     };
 
-    requestId = requestAnimationFrame(onRequestAnimationFrame);
+    rafId = requestAnimationFrame(onRequestAnimationFrame);
 
     return () => {
-      cancelAnimationFrame(requestId);
+      cancelAnimationFrame(rafId);
     };
   }, []);
 

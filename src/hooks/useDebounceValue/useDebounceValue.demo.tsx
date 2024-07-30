@@ -5,12 +5,12 @@ import { useDebounceValue } from './useDebounceValue';
 const Demo = () => {
   const counter = useCounter();
 
-  const debouncedCounterCount = useDebounceValue(counter.count, 500);
+  const debouncedCounterCount = useDebounceValue(counter.value, 500);
 
   return (
     <div>
       <p>
-        Value: <code>{counter.count}</code>
+        Value: <code>{counter.value}</code>
       </p>
       <p>
         Debounced value: <code>{debouncedCounterCount}</code>

@@ -9,7 +9,7 @@ declare global {
 }
 
 /** State for hook use battery */
-interface UseBatteryStateReturn {
+export interface UseBatteryStateReturn {
   /** Is battery API supported? */
   supported: boolean;
   /** Is battery information loading? */
@@ -27,6 +27,7 @@ interface UseBatteryStateReturn {
 /**
  * @name useBattery
  * @description - Hook for getting information about battery status
+ * @category Browser
  *
  * @returns {UseBatteryStateReturn} Object containing battery information & Battery API support
  *
@@ -44,13 +45,13 @@ export const useBattery = () => {
   });
 
   useEffect(() => {
-    const isSupported =
+    const supported =
       navigator && 'getBattery' in navigator && typeof navigator.getBattery === 'function';
-    if (!isSupported) return setState({ ...state, loading: false });
+    if (!supported) return setState({ ...state, loading: false });
 
     let battery: BatteryManager | null;
 
-    const handleChange = () =>
+    const onChange = () =>
       setState({
         supported: true,
         loading: false,
@@ -62,20 +63,20 @@ export const useBattery = () => {
 
     navigator.getBattery().then((batteryManager) => {
       battery = batteryManager;
-      handleChange();
+      onChange();
 
-      batteryManager.addEventListener('levelchange', handleChange);
-      batteryManager.addEventListener('chargingchange', handleChange);
-      batteryManager.addEventListener('chargingtimechange', handleChange);
-      batteryManager.addEventListener('dischargingtimechange', handleChange);
+      batteryManager.addEventListener('levelchange', onChange);
+      batteryManager.addEventListener('chargingchange', onChange);
+      batteryManager.addEventListener('chargingtimechange', onChange);
+      batteryManager.addEventListener('dischargingtimechange', onChange);
     });
 
     return () => {
       if (!battery) return;
-      battery.removeEventListener('levelchange', handleChange);
-      battery.removeEventListener('chargingchange', handleChange);
-      battery.removeEventListener('chargingtimechange', handleChange);
-      battery.removeEventListener('dischargingtimechange', handleChange);
+      battery.removeEventListener('levelchange', onChange);
+      battery.removeEventListener('chargingchange', onChange);
+      battery.removeEventListener('chargingtimechange', onChange);
+      battery.removeEventListener('dischargingtimechange', onChange);
     };
   }, []);
 

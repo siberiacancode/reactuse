@@ -12,26 +12,28 @@ export interface UseHoverOptions {
 }
 
 //* The use hover target type */
-export type UseHoverTarget = RefObject<Element | null> | Element;
-//* The use hover return type */
-export type UseHoverReturn<Target extends UseHoverTarget> = [RefObject<Target>, boolean];
+export type UseHoverTarget = RefObject<Element | null | undefined> | Element;
 
 export type UseHover = {
   <Target extends UseHoverTarget>(target: Target, callback?: () => void): boolean;
 
   <Target extends UseHoverTarget>(target: Target, options?: UseHoverOptions): boolean;
 
-  <Target extends UseHoverTarget>(callback?: () => void, target?: never): UseHoverReturn<Target>;
+  <Target extends UseHoverTarget>(
+    callback?: () => void,
+    target?: never
+  ): [RefObject<Target>, boolean];
 
   <Target extends UseHoverTarget>(
     options?: UseHoverOptions,
     target?: never
-  ): UseHoverReturn<Target>;
+  ): [RefObject<Target>, boolean];
 };
 
 /**
  * @name useHover
  * @description - Hook that defines the logic when hovering an element
+ * @category Sensors
  *
  * @overload
  * @template Target The target element
@@ -77,7 +79,9 @@ export type UseHover = {
  */
 export const useHover = ((...params: any[]) => {
   const target = (
-    params[0] instanceof Function || !('current' in params[0]) ? undefined : params[0]
+    params[0] instanceof Function || !('current' in params[0] || params[0] instanceof Element)
+      ? undefined
+      : params[0]
   ) as UseHoverTarget | undefined;
 
   const options = (
@@ -91,7 +95,7 @@ export const useHover = ((...params: any[]) => {
   ) as UseHoverOptions | undefined;
 
   const [hovering, setHovering] = useState(false);
-  const internalRef = useRef<Element>(null);
+  const internalRef = useRef<Element>();
 
   const onMouseEnter = () => {
     options?.onEntry?.();

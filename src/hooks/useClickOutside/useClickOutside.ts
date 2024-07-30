@@ -1,12 +1,9 @@
 import type { RefObject } from 'react';
-import { useEffect, useRef } from 'react';
-
-import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
+import { useEffect, useRef, useState } from 'react';
 
 /** The use click outside target element type */
-type UseClickOutsideTarget = RefObject<Element | null> | (() => Element) | Element;
+type UseClickOutsideTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
-/** Function to get target element based on its type */
 const getElement = (target: UseClickOutsideTarget) => {
   if (typeof target === 'function') {
     return target();
@@ -19,10 +16,6 @@ const getElement = (target: UseClickOutsideTarget) => {
   return target.current;
 };
 
-/** The use click outside return type */
-export type UseClickOutsideReturn<Target extends UseClickOutsideTarget | UseClickOutsideTarget[]> =
-  RefObject<Target>;
-
 export type UseClickOutside = {
   <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
     target: Target,
@@ -32,12 +25,13 @@ export type UseClickOutside = {
   <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
     callback: (event: Event) => void,
     target?: never
-  ): UseClickOutsideReturn<Target>;
+  ): (node: Target) => void;
 };
 
 /**
  * @name useClickOutside
  * @description - Hook to handle click events outside the specified target element(s)
+ * @category Sensors
  *
  * @overload
  * @template Target The target element(s)
@@ -51,7 +45,7 @@ export type UseClickOutside = {
  * @overload
  * @template Target The target element(s)
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
- * @returns {UseClickOutsideReturn<Target>} A React ref to attach to the target element
+ * @returns {(node: Target) => void} A React ref to attach to the target element
  *
  * @example
  * const ref = useClickOutside<HMLDiTvElement>(() => console.log('click outside'));
@@ -59,18 +53,16 @@ export type UseClickOutside = {
 export const useClickOutside = ((...params: any[]) => {
   const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
     | UseClickOutsideTarget
-    | Array<UseClickOutsideTarget>
+    | UseClickOutsideTarget[]
     | undefined;
   const callback = (params[1] ? params[1] : params[0]) as (event: Event) => void;
 
-  const internalRef = useRef<Element>(null);
+  const [internalRef, setInternalRef] = useState<Element>();
   const internalCallbackRef = useRef(callback);
-
-  useDidUpdate(() => {
-    internalCallbackRef.current = callback;
-  }, [callback]);
+  internalCallbackRef.current = callback;
 
   useEffect(() => {
+    if (!target && !internalRef) return;
     const handler = (event: Event) => {
       if (Array.isArray(target)) {
         if (!target.length) return;
@@ -85,7 +77,7 @@ export const useClickOutside = ((...params: any[]) => {
         return;
       }
 
-      const element = target ? getElement(target) : internalRef.current;
+      const element = target ? getElement(target) : internalRef;
 
       if (element && !element.contains(event.target as Node)) {
         internalCallbackRef.current(event);
@@ -99,8 +91,8 @@ export const useClickOutside = ((...params: any[]) => {
       document.removeEventListener('mousedown', handler);
       document.removeEventListener('touchstart', handler);
     };
-  }, []);
+  }, [internalRef, target]);
 
   if (target) return;
-  return internalRef;
+  return setInternalRef;
 }) as UseClickOutside;

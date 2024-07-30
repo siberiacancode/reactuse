@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { throttle } from '@/utils/helpers';
 
-interface UseIdleOptions {
+//* The use idle options type */
+export interface UseIdleOptions {
+  //* The idle state */
   initialValue?: boolean;
+  //* The idle events */
   events?: Array<keyof DocumentEventMap>;
 }
 
@@ -28,6 +31,7 @@ export interface UseIdleReturn {
 /**
  * @name useIdle
  * @description - Hook that defines the logic when the user is idle
+ * @category Sensors
  *
  * @param {number} [milliseconds=ONE_MINUTE] The idle time in milliseconds
  * @param {boolean} [options.initialState=false] The options for the hook

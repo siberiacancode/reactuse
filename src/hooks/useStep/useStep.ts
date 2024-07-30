@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-/** The use step params */
+/** The use step params type */
 interface UseStepParams {
   /** Initial value for step */
   initial: number;
@@ -33,6 +33,7 @@ const FIRST_STEP_VALUE = 1;
 /**
  * @name useStep
  * @description - Hook that create stepper
+ * @category Utilities
  *
  * @overload
  * @param {number} max Maximum number of steps

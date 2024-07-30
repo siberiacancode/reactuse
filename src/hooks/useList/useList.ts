@@ -21,9 +21,10 @@ export interface UseListReturn<Item> {
 /**
  * @name useList
  * @description - Hook that defines the logic when unmounting a component
+ * @category Utilities
  *
- * @template Item - The type of the item
- * @param {Item[] | (() => Item[])} initialList - The initial list of items
+ * @template Item The type of the item
+ * @param {Item[] | (() => Item[])} initialList The initial list of items
  * @returns {UseListReturn} An object containing the current list and functions to interact with the list
  *
  * @example
@@ -31,8 +32,6 @@ export interface UseListReturn<Item> {
  */
 export const useList = <Item>(initialList: Item[] = []) => {
   const [list, setList] = useState(initialList);
-
-  const set = (list: Item[]) => setList(list);
 
   const push = (item: Item) => setList((prevList) => [...prevList, item]);
 
@@ -54,5 +53,5 @@ export const useList = <Item>(initialList: Item[] = []) => {
 
   const reset = () => setList(initialList);
 
-  return { value: list, set, push, removeAt, insertAt, updateAt, clear, reset };
+  return { value: list, set: setList, push, removeAt, insertAt, updateAt, clear, reset };
 };

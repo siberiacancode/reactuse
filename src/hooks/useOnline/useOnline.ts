@@ -14,6 +14,7 @@ const subscribe = (callback: () => void) => {
 /**
  * @name useOnline
  * @description - Hook that manages if the user is online
+ * @category Sensors
  *
  * @returns {boolean} A boolean indicating if the user is online
  *

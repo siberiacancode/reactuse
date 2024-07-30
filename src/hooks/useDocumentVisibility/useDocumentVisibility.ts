@@ -12,6 +12,7 @@ const subscribe = (callback: () => void) => {
 /**
  * @name useDocumentVisibility
  * @description – Hook that provides the current visibility state of the document
+ * @category Browser
  *
  * @returns {DocumentVisibilityState} The current visibility state of the document, which can be 'visible' or 'hidden'
  *

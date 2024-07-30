@@ -43,10 +43,11 @@ interface UseSetReturn<Value> {
 /**
  * @name useSet
  * @description - Hook that manages a set structure
+ * @category Utilities
  *
  * @template Value The type of the value
  * @param {Value[]} [values] The initial array of the set
- * @returns {UseSetReturn} An object containing the current set and functions to interact with the set
+ * @returns {UseSetReturn<Value>} An object containing the current set and functions to interact with the set
  *
  * @example
  * const { value, add, remove, clear, reset, toggle, union, intersection, difference, symmetricDifference, size, has } = useSet([1, 2, 3]);

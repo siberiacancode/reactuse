@@ -4,11 +4,10 @@ import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
 import { useEventListener } from '../useEventListener/useEventListener';
 
-/** The use keys pressed params */
-interface UseKeysPressedParams {
+/** The use keys pressed params type */
+export interface UseKeysPressedParams {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
-
   /** Enable or disable the event listeners */
   enabled?: boolean;
 }
@@ -16,6 +15,7 @@ interface UseKeysPressedParams {
 /**
  * @name useKeysPressed
  * @description - Hook for get keys that were pressed
+ * @category Sensors
  *
  * @param {UseEventListenerTarget} [params.target=window] The target to attach the event listeners to
  * @param {boolean} [params.enabled=bollean] Enable or disable the event listeners

@@ -1,3 +1,3 @@
 export * from './getHookFile';
+export * from './getHookItems';
 export * from './getHooks';
-export * from './getSidebarHookItems';

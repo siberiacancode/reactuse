@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 import { useRerender } from '../useRerender/useRerender';
 
-/** The use field params */
+/** The use field params type */
 export interface UseFieldParams<Value> {
   /** The initial value */
   initialValue?: Value;
@@ -18,7 +18,7 @@ export interface UseFieldParams<Value> {
   validateOnMount?: boolean;
 }
 
-/** The use field register params */
+/** The use field register params type */
 export interface UseFieldRegisterParams {
   /** The required validation */
   required?: string;
@@ -57,7 +57,9 @@ export interface UseFieldReturn<Value> {
   register: (params?: UseFieldRegisterParams) => {
     onBlur: () => void;
     onChange: () => void;
-    ref: (node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null) => void;
+    ref: (
+      node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null | undefined
+    ) => void;
   };
   /** The get value function */
   getValue: () => Value;
@@ -82,8 +84,9 @@ export interface UseFieldReturn<Value> {
 }
 
 /**
- * @name UseField
+ * @name useField
  * @description - Hook to manage a form field
+ * @category Utilities
  *
  * @template Value The input value
  * @template Type The input value type
@@ -123,10 +126,12 @@ export const useField = <
   const setValue = (value: Type) => {
     if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox') {
       inputRef.current.checked = value as boolean;
+      if (watchingRef.current) return rerender.update();
       return;
     }
 
     inputRef.current!.value = value as string;
+    if (watchingRef.current) return rerender.update();
   };
 
   const reset = () => {
@@ -174,7 +179,7 @@ export const useField = <
   };
 
   const register = (registerParams?: UseFieldRegisterParams) => ({
-    ref: (node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null) => {
+    ref: (node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null | undefined) => {
       if (!inputRef.current && node) {
         if (params?.autoFocus) node.focus();
         inputRef.current = node as HTMLInputElement;

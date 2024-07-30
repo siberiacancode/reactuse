@@ -5,9 +5,8 @@ import screenfull from 'screenfull';
 import { useUnmount } from '../useUnmount/useUnmount';
 
 /** The use fullscreen target element type */
-type UseFullScreenTarget = RefObject<Element | null> | (() => Element) | Element;
+export type UseFullScreenTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
-/** Function to get target element based on its type */
 const getElement = (target: UseFullScreenTarget) => {
   if (typeof target === 'function') {
     return target();
@@ -53,6 +52,7 @@ export type UseFullScreen = {
 /**
  * @name useFullscreen
  * @description - Hook to handle fullscreen events
+ * @category Browser
  *
  * @overload
  * @template Target The target element for fullscreen

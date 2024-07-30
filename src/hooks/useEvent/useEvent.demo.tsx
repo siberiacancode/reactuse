@@ -32,7 +32,7 @@ const Demo = () => {
   return (
     <>
       <p>
-        Count is: <code>{counter.count}</code>
+        Count is: <code>{counter.value}</code>
       </p>
       <MemoComponent onClick={onClick} />
     </>

@@ -4,19 +4,30 @@ import { isClient } from '@/utils/helpers';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
+/* The use storage initial value type */
 export type UseStorageInitialValue<Value> = Value | (() => Value);
+
+/* The use storage options type */
 export interface UseStorageOptions<Value> {
+  /* The serializer function to be invoked */
   serializer?: (value: Value) => string;
+  /* The deserializer function to be invoked */
   deserializer?: (value: string) => Value;
+  /* The storage to be used */
   storage?: Storage;
+  /* The initial value of the storage */
   initialValue?: UseStorageInitialValue<Value>;
 }
 
-export type UseStorageReturn<Value> = [
-  value: Value,
-  set: (value: Value) => void,
-  remove: () => void
-];
+/* The use storage return type */
+export type UseStorageReturn<Value> = {
+  /* The value of the storage */
+  value: Value;
+  /* The loading state of the storage */
+  set: (value: Value) => void;
+  /* The error state of the storage */
+  remove: () => void;
+};
 
 export const dispatchStorageEvent = (params: Partial<StorageEvent>) =>
   window.dispatchEvent(new StorageEvent('storage', params));
@@ -48,6 +59,21 @@ const storageSubscribe = (callback: () => void) => {
 
 const getServerSnapshot = () => undefined;
 
+/**
+ * @name useStorage
+ * @description - Hook that manages storage value
+ * @category Utilities
+ *
+ * @param {string} key The key of the storage
+ * @param {(value: Value) => string} [params.serializer] The serializer function
+ * @param {(value: string) => Value} [params.deserializer] The deserializer function
+ * @param {Storage} [params.storage] The storage
+ * @param {UseStorageInitialValue<Value>} [params.initialValue] The initial value of the storage
+ * @returns {UseStorageReturn<Value>} The value and the set function
+ *
+ * @example
+ * const { value, set, remove } = useStorage('key', 'value');
+ */
 export const useStorage = <Value>(
   key: string,
   params?: UseStorageInitialValue<Value> | UseStorageOptions<Value>
@@ -85,18 +111,26 @@ export const useStorage = <Value>(
 
   useIsomorphicLayoutEffect(() => {
     const value = getStorageItem(storage, key);
-    if (value !== undefined && !initialValue) return;
-
-    setStorageItem(
-      storage,
-      key,
-      serializer(initialValue instanceof Function ? initialValue() : initialValue)
-    );
+    if (value === undefined && initialValue !== undefined) {
+      setStorageItem(
+        storage,
+        key,
+        serializer(initialValue instanceof Function ? initialValue() : initialValue)
+      );
+    }
   }, [key]);
 
   const remove = () => removeStorageItem(storage, key);
 
   if (!isClient)
-    return [initialValue instanceof Function ? initialValue() : initialValue, set, remove] as const;
-  return [store ? deserializer(store) : undefined, set, remove] as const;
+    return {
+      value: initialValue instanceof Function ? initialValue() : initialValue,
+      set,
+      remove
+    };
+  return {
+    value: store ? deserializer(store) : undefined,
+    set,
+    remove
+  };
 };

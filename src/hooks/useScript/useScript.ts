@@ -14,6 +14,7 @@ export interface UseScriptOptions extends ComponentProps<'script'> {
 /**
  * @name useScript
  * @description - Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
+ * @category Browser
  *
  * @param {string} src The source of the script
  * @param {UseScriptOptions} [options] The options of the script extends from attributes script tag
@@ -64,19 +65,13 @@ export const useScript = (src: string, options: UseScriptOptions = {}) => {
       setStatus('error');
     };
 
-    const removeEventListeners = () => {
-      script.removeEventListener('load', onLoad);
-      script.removeEventListener('error', onError);
-    };
-
     script.addEventListener('load', onLoad);
     script.addEventListener('error', onError);
 
     return () => {
-      if (removeOnUnmount) {
-        script.remove();
-        removeEventListeners();
-      }
+      if (removeOnUnmount) script.remove();
+      script.removeEventListener('load', onLoad);
+      script.removeEventListener('error', onError);
     };
   }, [src, removeOnUnmount]);
 

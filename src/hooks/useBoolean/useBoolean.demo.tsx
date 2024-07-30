@@ -6,7 +6,7 @@ const Demo = () => {
   return (
     <div>
       <p>
-        Value: <code>{on.toString()}</code>
+        Value: <code>{String(on)}</code>
       </p>
       <button type='button' onClick={() => toggle()}>
         Toggle

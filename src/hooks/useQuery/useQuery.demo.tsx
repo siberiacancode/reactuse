@@ -12,13 +12,13 @@ const getPokemon = (id: number) =>
 
 const Demo = () => {
   const counter = useCounter(1);
-  const getPokemonQuery = useQuery(() => getPokemon(counter.count), {
-    keys: [counter.count]
+  const getPokemonQuery = useQuery(() => getPokemon(counter.value), {
+    keys: [counter.value]
   });
 
   return (
     <>
-      <button type='button' disabled={counter.count === 1} onClick={() => counter.dec()}>
+      <button type='button' disabled={counter.value === 1} onClick={() => counter.dec()}>
         Prev
       </button>
       <button type='button' onClick={() => counter.inc()}>
