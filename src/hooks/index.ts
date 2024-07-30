@@ -83,6 +83,7 @@ export { useTime } from './useTime/useTime';
 export { useTimeout } from './useTimeout/useTimeout';
 export { useToggle } from './useToggle/useToggle';
 export { useUnmount } from './useUnmount/useUnmount';
+export { useVibrate } from './useVibrate/useVibrate';
 export { useWebSocket } from './useWebSocket/useWebSocket';
 export { useWindowEvent } from './useWindowEvent/useWindowEvent';
 export { useWindowSize } from './useWindowSize/useWindowSize';
