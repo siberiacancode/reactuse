@@ -1,25 +1,31 @@
 import { useCallback, useEffect, useState } from 'react';
 
+/** State for hook UseBluetooth */
 export interface UseBluetoothReturn {
+  /** Indicates if Bluetooth API is supported by the browser */
   isSupported: boolean;
+  /** Indicates if Bluetooth device is currently connected */
   isConnected: boolean;
+  /** Describe connected Bluetooth device */
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   device: BluetoothDevice | undefined;
+  /** Function to request Bluetooth device from the user */
   requestDevice: () => Promise<void>;
+  /** The GATT server for connected Bluetooth device */
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   server: BluetoothRemoteGATTServer | undefined;
+  /** Any error that may have occurred */
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   error: unknown | null;
 }
 
-export interface UseBluetoothRequestDeviceOptions {
-  filters?: BluetoothLEScanFilter[] | undefined;
-  optionalServices?: BluetoothServiceUUID[] | undefined;
-}
-
-export interface UseBluetoothOptions extends UseBluetoothRequestDeviceOptions {
+/** Params for useBluetooth hook */
+export interface UseBluetoothOptions {
+  /** If true, hook will request all available Bluetooth devices */
   acceptAllDevices?: boolean;
+  /** Array of filters to apply when scanning Bluetooth devices */
   filters?: BluetoothLEScanFilter[] | undefined;
+  /** Array of optional services that the application can use */
   optionalServices?: BluetoothServiceUUID[] | undefined;
 }
 
@@ -28,6 +34,9 @@ export interface UseBluetoothOptions extends UseBluetoothRequestDeviceOptions {
  * @description - Hook for getting information about bluetooth
  * @category Browser
  *
+ * @param {boolean} [options.acceptAllDevices=false] The options to request all Bluetooth devices
+ * @param {Array<keyof BluetoothLEScanFilter>} [options.filters=undefined] Array of filters to apply when scanning Bluetooth devices
+ * @param {Array<keyof BluetoothServiceUUID>} [options.optionalServices=undefined] Array of optional services that the application can use
  * @returns {UseBluetoothReturn} Object containing battery information & Battery API support
  *
  * @example
