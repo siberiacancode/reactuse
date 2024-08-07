@@ -20,7 +20,7 @@ const Demo = () => {
         Bluetooth Web API: <code>supported</code>
       </p>
       <button onClick={requestDevice}>Click</button>
-      <p>{error && `Error: ${error.message}`}</p>
+      <p>{error && `Error: ${error}`}</p>
     </>
   );
 };

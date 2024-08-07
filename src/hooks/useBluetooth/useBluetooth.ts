@@ -7,16 +7,13 @@ export interface UseBluetoothReturn {
   /** Indicates if Bluetooth device is currently connected */
   isConnected: boolean;
   /** Describe connected Bluetooth device */
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   device: BluetoothDevice | undefined;
   /** Function to request Bluetooth device from the user */
   requestDevice: () => Promise<void>;
   /** The GATT server for connected Bluetooth device */
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   server: BluetoothRemoteGATTServer | undefined;
   /** Any error that may have occurred */
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-  error: unknown | null;
+  error: string | null;
 }
 
 /** Params for useBluetooth hook */
@@ -50,14 +47,11 @@ export const useBluetooth = (options?: UseBluetoothOptions): UseBluetoothReturn 
     optionalServices = undefined
   } = options || {};
 
-  const [isSupported, setIsSupported] = useState<boolean>(false);
-  const [isConnected, setIsConnected] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  const [isSupported, setIsSupported] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
   const [device, setDevice] = useState<BluetoothDevice | undefined>(undefined);
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   const [server, setServer] = useState<BluetoothRemoteGATTServer | undefined>(undefined);
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-  const [error, setError] = useState<unknown | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setIsSupported(navigator && 'bluetooth' in navigator);
@@ -79,7 +73,8 @@ export const useBluetooth = (options?: UseBluetoothOptions): UseBluetoothReturn 
 
       setDevice(selectedDevice);
     } catch (err) {
-      setError(err);
+      if (err instanceof Error) setError(err.message);
+      else setError('Unknown error');
     }
   }, [acceptAllDevices, filters, optionalServices, isSupported, navigator]);
 
@@ -94,7 +89,8 @@ export const useBluetooth = (options?: UseBluetoothOptions): UseBluetoothReturn 
           setServer(gattServer);
           setIsConnected(gattServer.connected);
         } catch (err) {
-          setError(err);
+          if (err instanceof Error) setError(err.message);
+          else setError('Unknown error');
         }
       }
     };
