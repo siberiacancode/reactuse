@@ -22,7 +22,7 @@ interface UseTimeoutReturn {
  * @example
  * const { clear, ready } = useTimeout(() => {}, 5000);
  */
-export function useTimeout(callback: () => void, delay: number): UseTimeoutReturn {
+export const useTimeout = (callback: () => void, delay: number): UseTimeoutReturn => {
   const [ready, setReady] = useState(false);
 
   const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>();
@@ -45,4 +45,4 @@ export function useTimeout(callback: () => void, delay: number): UseTimeoutRetur
   };
 
   return { ready, clear };
-}
+};

@@ -5,3 +5,6 @@ export * from './isClient';
 export * from './isPermissionAllowed';
 export * from './throttle';
 export * from './time/getDate';
+export * from './time/getDelayFromExpiryTimestamp';
+export * from './time/getSecondsFromExpiry';
+export * from './time/getTimeFromSeconds';

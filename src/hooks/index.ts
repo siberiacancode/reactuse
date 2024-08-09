@@ -81,6 +81,7 @@ export { useStorage } from './useStorage/useStorage';
 export { useTextSelection } from './useTextSelection/useTextSelection';
 export { useTime } from './useTime/useTime';
 export { useTimeout } from './useTimeout/useTimeout';
+export { useTimer } from './useTimer/useTimer';
 export { useToggle } from './useToggle/useToggle';
 export { useUnmount } from './useUnmount/useUnmount';
 export { useWebSocket } from './useWebSocket/useWebSocket';
