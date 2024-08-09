@@ -81,7 +81,7 @@ export const useFullscreen = ((...params: any[]) => {
     | undefined;
   const options = (target ? params[1] : params[0]) as UseFullScreenOptions | undefined;
 
-  const internalRef = useRef<Element>(null);
+  const internalRef = useRef<Element>();
   const [value, setValue] = useState(options?.initialValue ?? false);
 
   const onChange = () => {

@@ -41,7 +41,7 @@ export type UseHotkeysKey = { key: string; code: string; alias: string };
  * @param {UseHotkeysHotkeys} hotkeys The key or keys to listen for
  * @param {(event: KeyboardEvent) => void} callback The callback function to be called when the hotkey is pressed
  * @param {UseEventListenerTarget} [options.target=window] The target to attach the event listeners to
- * @param {boolean} [options.enabled=true] Enable or disable the event listeners
+ * @param {boolean} [options.enabled=true] The enable or disable the event listeners
  * @param {boolean} [options.preventDefault=true] Whether to prevent the default behavior of the event
  * @param {Record<string, string>} [options.aliasMap] Alias map for hotkeys
  * @returns {useKeysPressedReturns} Array of strings with keys that were press

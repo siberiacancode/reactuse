@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
-import { useMutationObserver } from '../useMutationObserver';
+import { useMutationObserver } from '../useMutationObserver/useMutationObserver';
 
 /** The use document title options type */
 export interface UseDocumentTitleOptions {
@@ -38,13 +38,13 @@ export function useDocumentTitle(
   const [title, setTitle] = useState(value ?? document.title);
 
   useMutationObserver(
+    document.head.querySelector('title')!,
     () => {
       if (document && document.title !== title) {
         setTitle(document.title);
       }
     },
-    { childList: true },
-    document.head.querySelector('title')
+    { childList: true }
   );
 
   useIsomorphicLayoutEffect(() => {
