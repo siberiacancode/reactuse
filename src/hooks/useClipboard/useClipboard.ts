@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { isPermissionAllowed } from '@/utils/helpers';
-
 import { usePermission } from '../usePermission/usePermission';
+
+export const isPermissionAllowed = (status: PermissionState) =>
+  status === 'granted' || status === 'prompt';
 
 export const legacyCopyToClipboard = (value: string) => {
   const tempTextArea = document.createElement('textarea');

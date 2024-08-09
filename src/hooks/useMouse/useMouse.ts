@@ -1,21 +1,10 @@
 import type { RefObject } from 'react';
 import { useEffect, useState } from 'react';
 
+import { getElement } from '@/utils/helpers';
+
 /** The use mouse target element type */
 type UseMouseTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
-
-/** Function to get target element based on its type */
-const getElement = (target: UseMouseTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
 
 /** The use mouse return type */
 export interface UseMouseReturn {
@@ -76,7 +65,7 @@ export const useMouse = ((...params: any[]) => {
   useEffect(() => {
     if (!target && !internalRef) return;
     const onMouseMove = (event: MouseEvent) => {
-      const element = target ? getElement(target) : internalRef;
+      const element = (target ? getElement(target) : internalRef) as Element;
       if (!element) return;
 
       const updatedValue = {

@@ -1,22 +1,12 @@
 import type { RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+import { getElement } from '@/utils/helpers';
+
 import { useEvent } from '../useEvent/useEvent';
 
 /** The use infinite scroll target element type */
 export type UseInfiniteScrollTarget = RefObject<Element | null> | (() => Element) | Element;
-
-const getElement = (target: UseInfiniteScrollTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
 
 /** The use infinite scroll options type */
 export interface UseInfiniteScrollOptions {
@@ -107,7 +97,7 @@ export const useInfiniteScroll = ((...params) => {
 
   useEffect(() => {
     if (!target && !internalRef) return;
-    const element = target ? getElement(target) : internalRef;
+    const element = (target ? getElement(target) : internalRef) as Element;
     if (!element) return;
 
     element.addEventListener('scroll', onLoadMore);

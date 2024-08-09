@@ -25,7 +25,7 @@ export interface UseMutationObserverOptions extends MutationObserverInit {
   enabled?: boolean;
 }
 
-export type UseResizeObserver = {
+export type UseMutationObserver = {
   <Target extends UseMutationObserverTarget | UseMutationObserverTarget[]>(
     target: Target,
     callback: MutationCallback,
@@ -129,4 +129,4 @@ export const useMutationObserver = ((...params: any[]) => {
     stop,
     observer
   };
-}) as UseResizeObserver;
+}) as UseMutationObserver;

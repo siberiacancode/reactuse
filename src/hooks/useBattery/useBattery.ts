@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import type { BatteryManager } from '@/utils/types';
+export interface BatteryManager extends EventTarget {
+  charging: boolean;
+  chargingTime: number;
+  dischargingTime: number;
+  level: number;
+}
 
 declare global {
   interface Navigator {

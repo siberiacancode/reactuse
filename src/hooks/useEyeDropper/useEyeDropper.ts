@@ -1,10 +1,20 @@
 import { useState } from 'react';
 
-import type {
-  ColorSelectionOptions,
-  ColorSelectionResult,
-  EyeDropperConstructor
-} from '@/utils/types';
+export interface ColorSelectionOptions {
+  signal?: AbortSignal;
+}
+
+export interface ColorSelectionResult {
+  sRGBHex: string;
+}
+
+export interface EyeDropper {
+  open: (options?: ColorSelectionOptions) => Promise<ColorSelectionResult>;
+}
+
+export interface EyeDropperConstructor {
+  new (): EyeDropper;
+}
 
 declare global {
   interface Window {

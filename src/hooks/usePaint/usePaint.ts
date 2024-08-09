@@ -1,6 +1,8 @@
 import type { RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+import { getElement } from '@/utils/helpers';
+
 import { useEvent } from '../useEvent/useEvent';
 
 import { Paint } from './helpers/Paint';
@@ -40,18 +42,6 @@ export type UsePaintTarget =
   | RefObject<HTMLCanvasElement>
   | (() => HTMLCanvasElement)
   | HTMLCanvasElement;
-
-export const getElement = (target: UsePaintTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
 
 export type UsePaint = {
   <Target extends UsePaintTarget>(target: Target, options?: UsePaintOptions): UsePaintReturn;
@@ -222,7 +212,7 @@ export const usePaint = ((...params: any[]) => {
   };
 
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+    const element = (target ? getElement(target) : internalRef.current) as HTMLCanvasElement;
     if (!element) return;
     contextRef.current = element.getContext('2d');
 

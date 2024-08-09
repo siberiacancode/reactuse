@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 /** The use boolean return type */
-type UseBooleanReturn = [
+export type UseBooleanReturn = [
   /** The current boolean state value */
   value: boolean,
   /** Function to toggle the boolean state */

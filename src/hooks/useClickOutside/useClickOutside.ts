@@ -1,20 +1,10 @@
 import type { RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+import { getElement } from '@/utils/helpers';
+
 /** The use click outside target element type */
 type UseClickOutsideTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
-
-const getElement = (target: UseClickOutsideTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
 
 export type UseClickOutside = {
   <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
@@ -68,7 +58,7 @@ export const useClickOutside = ((...params: any[]) => {
         if (!target.length) return;
 
         const isClickedOutsideElements = target.every((target) => {
-          const element = getElement(target);
+          const element = getElement(target) as Element;
           return element && !element.contains(event.target as Node);
         });
 
@@ -77,7 +67,7 @@ export const useClickOutside = ((...params: any[]) => {
         return;
       }
 
-      const element = target ? getElement(target) : internalRef;
+      const element = (target ? getElement(target) : internalRef) as Element;
 
       if (element && !element.contains(event.target as Node)) {
         internalCallbackRef.current(event);
