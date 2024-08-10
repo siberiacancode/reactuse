@@ -54,7 +54,7 @@ export interface UseQueryReturn<Data> {
   /* The abort function */
   abort: AbortController['abort'];
   /*  The aborted state of the query */
-  isAborted: boolean;
+  aborted: boolean;
 }
 
 /**
@@ -75,7 +75,7 @@ export interface UseQueryReturn<Data> {
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
- * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useQuery(() => fetch('url'));
+ * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));
  */
 export const useQuery = <QueryData, Data = QueryData>(
   callback: (params: UseQueryCallbackParams) => Promise<QueryData>,
@@ -88,7 +88,7 @@ export const useQuery = <QueryData, Data = QueryData>(
   const [isError, setIsError] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
   const [isSuccess, setIsSuccess] = useState(!!options?.initialData);
-  const [isAborted, setIsAborted] = useState(!!options?.initialData);
+  const [aborted, setAborted] = useState(!!options?.initialData);
 
   const [error, setError] = useState<Error | undefined>(undefined);
   const [data, setData] = useState<Data | undefined>(options?.initialData);
@@ -101,7 +101,7 @@ export const useQuery = <QueryData, Data = QueryData>(
   const abort = () => {
     abortControllerRef.current.abort();
     abortControllerRef.current = new AbortController();
-    abortControllerRef.current.signal.onabort = () => setIsAborted(true);
+    abortControllerRef.current.signal.onabort = () => setAborted(true);
   };
 
   const request = (action: 'init' | 'refetch') => {
@@ -118,6 +118,7 @@ export const useQuery = <QueryData, Data = QueryData>(
         setIsLoading(false);
         setError(undefined);
         setIsError(false);
+        setAborted(false);
         if (action === 'refetch') setIsRefetching(false);
       })
       .catch((error: Error) => {
@@ -129,6 +130,7 @@ export const useQuery = <QueryData, Data = QueryData>(
         setData(undefined);
         setIsSuccess(false);
         setIsLoading(false);
+        setAborted(false);
         setError(error);
         setIsError(true);
         if (action === 'refetch') setIsRefetching(false);
@@ -177,6 +179,6 @@ export const useQuery = <QueryData, Data = QueryData>(
     isError,
     isSuccess,
     isRefetching,
-    isAborted
+    aborted
   };
 };
