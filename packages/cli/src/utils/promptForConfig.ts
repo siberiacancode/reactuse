@@ -5,7 +5,8 @@ import { z } from 'zod';
 
 export const configSchema = z
   .object({
-    hookPath: z.string()
+    hookPath: z.string(),
+    utilsPath: z.string()
   })
   .strict();
 
@@ -20,19 +21,20 @@ export const promptForConfig = async (cwd: string) => {
     {
       type: 'text',
       name: 'hooksLocated',
-      message: `Where will hook be loaded?`,
-      initial: `src/shared/hooks`
+      message: `Configure the import alias for hooks`,
+      initial: `@/shared/hooks`
     },
     {
       type: 'text',
       name: 'utilsLocated',
-      message: `Where will utils be loaded?`,
-      initial: `src/shared/utils`
+      message: `Configure the import alias for utils`,
+      initial: `@/lib/utils`
     }
   ]);
 
   const config = configSchema.parse({
-    hookPath: options.hooksLocated
+    hookPath: options.hooksLocated,
+    utilsPath: options.utilsLocated
   });
 
   const targetPath = path.resolve(cwd, `reactuse.config.json`);

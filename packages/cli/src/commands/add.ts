@@ -6,11 +6,13 @@
 import chalk from 'chalk';
 import { existsSync, promises as fs } from 'fs';
 import path from 'path';
+import { loadConfig } from 'tsconfig-paths';
 import type { Argv } from 'yargs';
 
 import { downloadHookList, fetchAvailableHooks } from '@/utils/fetchAvailableHooks';
 import { getConfig } from '@/utils/getConfig';
 import { logger } from '@/utils/logger';
+import { resolveImport } from '@/utils/resolveImport';
 import { selectHooksFromList } from '@/utils/selectHooksFromList';
 import type { AddOptionsSchema } from '@/utils/types';
 import { addOptionsSchema } from '@/utils/types';
@@ -60,7 +62,13 @@ export const add = {
     const selectedHooksFromCmd = options.hooks?.length;
     const allHookList = await fetchAvailableHooks();
 
-    const pathToLoadHooks = config.hookPath;
+    const tsConfig = await loadConfig(cwd);
+
+    if (tsConfig.resultType === 'failed') {
+      throw new Error(`Failed to load tsconfig.json. ${tsConfig.message ?? ''}`.trim());
+    }
+
+    const pathToLoadHooks = (await resolveImport(config.hookPath, tsConfig)) as string;
 
     if (!existsSync(pathToLoadHooks)) {
       await fs.mkdir(pathToLoadHooks, { recursive: true });
