@@ -23,11 +23,11 @@ export interface UseCounterReturn {
   dec: (value?: number) => void;
 }
 
-export type UseCounter = {
+export interface UseCounter {
   (initialValue?: number, options?: UseCounterOptions): UseCounterReturn;
 
   (options: UseCounterOptions & { initialValue?: number }, initialValue?: never): UseCounterReturn;
-};
+}
 
 /**
  * @name useCounter

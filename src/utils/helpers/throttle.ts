@@ -8,7 +8,7 @@ export const throttle = <Params extends any[]>(
     if (!isCalled) {
       callback(...args);
       isCalled = true;
-      setTimeout(function () {
+      setTimeout(() => {
         isCalled = false;
       }, delay);
     }

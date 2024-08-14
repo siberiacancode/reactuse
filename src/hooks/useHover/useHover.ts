@@ -14,7 +14,7 @@ export interface UseHoverOptions {
 //* The use hover target type */
 export type UseHoverTarget = RefObject<Element | null | undefined> | Element;
 
-export type UseHover = {
+export interface UseHover {
   <Target extends UseHoverTarget>(target: Target, callback?: () => void): boolean;
 
   <Target extends UseHoverTarget>(target: Target, options?: UseHoverOptions): boolean;
@@ -28,7 +28,7 @@ export type UseHover = {
     options?: UseHoverOptions,
     target?: never
   ): [RefObject<Target>, boolean];
-};
+}
 
 /**
  * @name useHover

@@ -6,7 +6,7 @@ import { useEventListener } from '../useEventListener/useEventListener';
 
 export type UseKeyPressEventKey = string | string[];
 
-export type UseKeyPressEvent = {
+export interface UseKeyPressEvent {
   (
     key: UseKeyPressEventKey,
     target: Window,
@@ -34,7 +34,7 @@ export type UseKeyPressEvent = {
     options?: UseEventListenerOptions,
     target?: never
   ): void;
-};
+}
 
 export const useKeyPressEvent = ((...params: any[]) => {
   const keys = (Array.isArray(params[0]) ? params[0] : [params[0]]) as UseKeyPressEventKey;

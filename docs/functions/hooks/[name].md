@@ -32,4 +32,3 @@ import { {{ $params.name }} } from '@siberiacancode/reactuse';
 ## Contributors
 
 <Contributors :hook="$params.name" />
-

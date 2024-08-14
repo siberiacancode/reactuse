@@ -20,7 +20,7 @@ export interface UseResizeObserverReturn {
   entries: ResizeObserverEntry[];
 }
 
-export type UseResizeObserver = {
+export interface UseResizeObserver {
   <Target extends UseResizeObserverTarget | UseResizeObserverTarget[]>(
     target: Target,
     options?: UseResizeObserverOptions
@@ -30,7 +30,7 @@ export type UseResizeObserver = {
     options?: UseResizeObserverOptions,
     target?: never
   ): UseResizeObserverReturn & { ref: (node: Target) => void };
-};
+}
 
 /**
  *  @name useResizeObserver

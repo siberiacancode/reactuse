@@ -2,14 +2,14 @@ import type { UseEventListenerTarget } from '../useEventListener/useEventListene
 import { useEventListener } from '../useEventListener/useEventListener';
 
 /** The use key press options type */
-export type UseKeyboardParams = {
+export interface UseKeyboardParams {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
   /** The callback function to be invoked on key down */
   onKeyDown?: (event: KeyboardEvent) => void;
   /** The callback function to be invoked on key up */
   onKeyUp?: (event: KeyboardEvent) => void;
-};
+}
 
 /**
  * @name useKeyboard

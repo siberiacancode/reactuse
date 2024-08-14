@@ -14,7 +14,7 @@ const Demo = () => {
       {!!gamepads.length && (
         <>
           {gamepads.map((gamepad) => (
-            <div>
+            <div key={gamepad.id}>
               <p>
                 id: <code>{gamepad.id}</code>
               </p>

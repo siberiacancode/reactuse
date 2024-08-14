@@ -3,7 +3,7 @@ import { useStep } from './useStep';
 const Step1 = () => <p>First step</p>;
 const Step2 = () => <p>Second step</p>;
 const Step3 = () => <p>Third step</p>;
-const STEPS = [<Step1 />, <Step2 />, <Step3 />];
+const STEPS = [<Step1 key={1} />, <Step2 key={2} />, <Step3 key={3} />];
 
 const Demo = () => {
   const { currentStep, isFirst, isLast, next, back, reset } = useStep(STEPS.length);

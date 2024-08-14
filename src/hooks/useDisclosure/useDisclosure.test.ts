@@ -34,7 +34,7 @@ it('Should change value after open', () => {
   expect(result.current.opened).toBeTruthy();
 });
 
-it('Should change value after open', () => {
+it('Should change value after close', () => {
   const { result } = renderHook(() => useDisclosure(true));
 
   act(result.current.close);

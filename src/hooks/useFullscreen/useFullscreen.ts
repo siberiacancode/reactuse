@@ -27,7 +27,7 @@ export interface UseFullScreenReturn {
   value: boolean;
 }
 
-export type UseFullScreen = {
+export interface UseFullScreen {
   <Target extends UseFullScreenTarget>(
     target: Target,
     options?: UseFullScreenOptions
@@ -37,7 +37,7 @@ export type UseFullScreen = {
     options?: UseFullScreenOptions,
     target?: never
   ): UseFullScreenReturn & { ref: (node: Target) => void };
-};
+}
 
 /**
  * @name useFullscreen
