@@ -4,31 +4,33 @@ export default eslint(
   {
     typescript: true,
     react: true,
-    jsx: true
+    jsx: true,
+    vue: true,
+    stylistic: true
   },
   {
-    name: 'hooks',
+    name: 'siberiacancode/hooks',
     files: ['**/hooks/**/*.ts'],
     rules: {
       'jsdoc/no-defaults': 'off'
     }
   },
   {
-    name: 'demo',
+    name: 'siberiacancode/demo',
     files: ['**/*.demo.tsx'],
     rules: {
       'no-alert': 'off'
     }
   },
   {
-    name: 'md',
+    name: 'siberiacancode/md',
     files: ['**/*.md'],
     rules: {
       'style/max-len': 'off'
     }
   },
   {
-    name: 'docs',
+    name: 'siberiacancode/docs',
     files: ['**/docs/**/*.ts'],
     rules: {
       'regexp/no-super-linear-backtracking': 'off'

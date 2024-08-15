@@ -1980,10 +1980,10 @@
     rollup "^4.11.0"
     rollup-plugin-dts "^6.1.0"
 
-"@siberiacancode/eslint@^2.0.6":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@siberiacancode/eslint/-/eslint-2.0.6.tgz#513051d28be7669e9c003ac929967affb184c976"
-  integrity sha512-RiDbHR6jpl6eeHcrW+tBNy026aUtWCKBm+zEoGs6gX8AhUcWmtKqo9s63vWc1w21khFGb84YtDe9qEdI09vUJw==
+"@siberiacancode/eslint@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@siberiacancode/eslint/-/eslint-2.1.0.tgz#a8314e565af41f9e7dc70283f2669381cf4f77b0"
+  integrity sha512-ZvCR8HghrT7T10iNKd+ag9njBvAE6TAWIqtIj+VvdbreKVXrRezgWVk/t5GU/JSBIn7Q8RvSsYG8AiR12dG6Og==
   dependencies:
     "@antfu/eslint-config" "^2.25.1"
     "@eslint-react/eslint-plugin" "^1.10.0"
@@ -1993,13 +1993,6 @@
     eslint-plugin-react-hooks "^4.6.2"
     eslint-plugin-react-refresh "^0.4.9"
     eslint-plugin-simple-import-sort "^12.1.1"
-
-"@siberiacancode/prettier@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@siberiacancode/prettier/-/prettier-1.1.1.tgz#dbde19874913c7a84c93e19ccbc7a1c97c685547"
-  integrity sha512-DHZN5JGW7hitS3f4viJDv1XlOnMllYmlig7KIk3c8OFQqStDqdYtlFb1KGtMs+QvpVc1zwAQ+xBEDOWKMjLAPA==
-  dependencies:
-    prettier "^3.2.5"
 
 "@siberiacancode/vitest@^1.2.4":
   version "1.2.4"
@@ -5607,11 +5600,6 @@ prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
-
-prettier@^3.2.5:
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.2.5.tgz#e52bc3090586e824964a8813b09aba6233b28368"
-  integrity sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==
 
 pretty-format@^27.0.2:
   version "27.5.1"
