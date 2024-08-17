@@ -4,14 +4,19 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
 
 export type Primitive = boolean | string | number | symbol | bigint | undefined | null;
 
-export type UseOptimisticOptions<S> = S extends Primitive
+export type UseOptimisticOptions<State> = State extends Primitive
   ? { autoUpdate?: boolean }
   : { autoUpdate?: false };
 
-export type AsyncUpdateOptimistic<O, S> = (optimisticValue: O) => Promise<S>;
+export type AsyncOptimisticStateUpdateAction<Optimistic, State> = (
+  optimisticValue: Optimistic
+) => Promise<State>;
 
-export interface UpdateOptimistic<S, O> {
-  (optimisticValue: O, promisedValue: Promise<S> | AsyncUpdateOptimistic<O, S>): Promise<S>;
+export interface UpdateOptimistic<State, Optimistic> {
+  (
+    optimisticValue: Optimistic,
+    promisedValue: Promise<State> | AsyncOptimisticStateUpdateAction<Optimistic, State>
+  ): Promise<State>;
 }
 
 /**
@@ -35,19 +40,19 @@ export interface UpdateOptimistic<S, O> {
  * ...
  * const addItem = (newItem: Item) => updateOptimistic(newItem, asyncAction);
  */
-export const useOptimistic = <S, O = S>(
-  value: S,
-  updateFn: (currentState: S, optimisticValue: O) => S,
-  options?: UseOptimisticOptions<S>
-): [S, UpdateOptimistic<S, O>] => {
-  const [state, setState] = useState<S>(value);
+export const useOptimistic = <State, Optimistic = State>(
+  value: State,
+  updateFn: (currentState: State, optimisticValue: Optimistic) => State,
+  options?: UseOptimisticOptions<State>
+): [State, UpdateOptimistic<State, Optimistic>] => {
+  const [state, setState] = useState<State>(value);
   const handlerRef = useRef(updateFn);
 
   useIsomorphicLayoutEffect(() => {
     handlerRef.current = updateFn;
   }, [updateFn]);
 
-  const handleOptimisticUpdate = (optimisticValue: O) => {
+  const handleOptimisticUpdate = (optimisticValue: Optimistic) => {
     setState((currentState) => handlerRef.current(currentState, optimisticValue));
   };
 
@@ -56,7 +61,10 @@ export const useOptimistic = <S, O = S>(
     setState(value);
   }, [value]);
 
-  const updateState: UpdateOptimistic<S, O> = async (optimisticValue, promisedValue) => {
+  const updateState: UpdateOptimistic<State, Optimistic> = async (
+    optimisticValue,
+    promisedValue
+  ) => {
     handleOptimisticUpdate(optimisticValue);
 
     const updatedValue = await (typeof promisedValue === 'function'
