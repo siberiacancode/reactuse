@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useSet } from './useSet';
 
 const Demo = () => {
   const [input, setInput] = useState('');
-  const scopes = useSet(['@siberiacancode', '@siberiacancode-tests', '@shared']);
+  const scopes = useSet([
+    '@siberiacancode',
+    '@siberiacancode-tests',
+    '@shared'
+  ]);
 
   return (
     <>
@@ -28,9 +32,9 @@ const Demo = () => {
 
       <div style={{ marginTop: 8 }}>
         {Array.from(scopes.value).map((scope, index) => (
-          <>
+          <Fragment key={index}>
             <code key={index}>{scope}</code>{' '}
-          </>
+          </Fragment>
         ))}
       </div>
     </>

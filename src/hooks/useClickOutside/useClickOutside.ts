@@ -6,7 +6,7 @@ import { getElement } from '@/utils/helpers';
 /** The use click outside target element type */
 type UseClickOutsideTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
-export type UseClickOutside = {
+export interface UseClickOutside {
   <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
     target: Target,
     callback: (event: Event) => void
@@ -16,7 +16,7 @@ export type UseClickOutside = {
     callback: (event: Event) => void,
     target?: never
   ): (node: Target) => void;
-};
+}
 
 /**
  * @name useClickOutside

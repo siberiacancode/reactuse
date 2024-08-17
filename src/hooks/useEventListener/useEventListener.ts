@@ -16,7 +16,7 @@ export type UseEventListenerOptions = boolean | AddEventListenerOptions;
 
 export type UseEventListenerReturn<Target extends UseEventListenerTarget> = RefObject<Target>;
 
-export type UseEventListener = {
+export interface UseEventListener {
   <Event extends keyof WindowEventMap = keyof WindowEventMap>(
     target: Window,
     event: Event | Event[],
@@ -57,7 +57,7 @@ export type UseEventListener = {
     options?: UseEventListenerOptions,
     target?: never
   ): UseEventListenerReturn<Target>;
-};
+}
 
 export const useEventListener = ((...params: any[]) => {
   const target = (params[1] instanceof Function ? undefined : params[0]) as

@@ -20,14 +20,14 @@ export interface UseStorageOptions<Value> {
 }
 
 /* The use storage return type */
-export type UseStorageReturn<Value> = {
+export interface UseStorageReturn<Value> {
   /* The value of the storage */
   value: Value;
   /* The loading state of the storage */
   set: (value: Value) => void;
   /* The error state of the storage */
   remove: () => void;
-};
+}
 
 export const dispatchStorageEvent = (params: Partial<StorageEvent>) =>
   window.dispatchEvent(new StorageEvent('storage', params));
@@ -96,7 +96,7 @@ export const useStorage = <Value>(
 
     try {
       return JSON.parse(value) as Value;
-    } catch (error) {
+    } catch {
       return value as Value;
     }
   };

@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import type { Spec } from 'comment-parser';
+
 import { isDefaultType } from '../utils/isDefaultType';
 
 const props = defineProps<{
   apiParameters: Spec[];
 }>();
 
-type Group = {
+interface Group {
   id: number;
   parameters: Spec[];
   returns: Spec | null;
-};
+}
 
 let groupIndex = 0;
 const groups: Group[] = [{ id: groupIndex, parameters: [], returns: null }];
 
 props.apiParameters.forEach((parameter, index) => {
   if (parameter.tag === 'overload') {
-    const isFirstOverload =
-      props.apiParameters.findIndex((parameter) => parameter.tag === 'overload') === index;
+    const isFirstOverload
+      = props.apiParameters.findIndex((parameter) => parameter.tag === 'overload') === index;
     if (!isFirstOverload) {
       groupIndex++;
       groups.push({ id: groupIndex, parameters: [], returns: null });
@@ -37,7 +38,9 @@ props.apiParameters.forEach((parameter, index) => {
 
 <template>
   <div v-for="group in groups" :key="group.id">
-    <h3 v-if="group.parameters.length">Parameters</h3>
+    <h3 v-if="group.parameters.length">
+      Parameters
+    </h3>
     <table v-if="group.parameters.length">
       <thead>
         <tr>

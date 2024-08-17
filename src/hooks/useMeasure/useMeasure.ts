@@ -12,11 +12,11 @@ export type UseMeasureReturn = Pick<
   'x' | 'y' | 'top' | 'left' | 'right' | 'bottom' | 'height' | 'width'
 >;
 
-export type UseMeasureScreen = {
+export interface UseMeasureScreen {
   <Target extends UseMeasureTarget>(target: Target): UseMeasureReturn;
 
   <Target extends UseMeasureTarget>(target?: never): UseMeasureReturn & { ref: RefObject<Target> };
-};
+}
 
 /**
  * @name useMeasure

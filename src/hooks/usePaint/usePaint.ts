@@ -43,14 +43,14 @@ export type UsePaintTarget =
   | (() => HTMLCanvasElement)
   | HTMLCanvasElement;
 
-export type UsePaint = {
+export interface UsePaint {
   <Target extends UsePaintTarget>(target: Target, options?: UsePaintOptions): UsePaintReturn;
 
   (
     options?: UsePaintOptions,
     target?: never
   ): { ref: RefObject<HTMLCanvasElement> } & UsePaintReturn;
-};
+}
 
 /**
  * @name usePaint

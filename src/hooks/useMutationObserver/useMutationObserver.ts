@@ -25,7 +25,7 @@ export interface UseMutationObserverOptions extends MutationObserverInit {
   enabled?: boolean;
 }
 
-export type UseMutationObserver = {
+export interface UseMutationObserver {
   <Target extends UseMutationObserverTarget | UseMutationObserverTarget[]>(
     target: Target,
     callback: MutationCallback,
@@ -37,7 +37,7 @@ export type UseMutationObserver = {
     options?: UseMutationObserverOptions,
     target?: never
   ): UseMutationObserverReturn & { ref: (node: Target) => void };
-};
+}
 
 /**
  * @name useMutationObserver

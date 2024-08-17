@@ -54,7 +54,7 @@ export const usePermission = (permissionDescriptorName: UsePermissionName) => {
       );
       setState(permissionStatus.state);
       return permissionStatus.state;
-    } catch (error) {
+    } catch {
       setState('prompt');
       return 'prompt';
     }

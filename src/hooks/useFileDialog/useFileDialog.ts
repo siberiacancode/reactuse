@@ -25,14 +25,14 @@ export interface UseFileDialogReturn {
   reset: () => void;
 }
 
-export type UseFileDialog = {
+export interface UseFileDialog {
   (
     callback?: (value: FileList | null) => void,
     options?: UseFileDialogOptions
   ): UseFileDialogReturn;
 
   (options?: UseFileDialogOptions, callback?: never): UseFileDialogReturn;
-};
+}
 
 /**
  * @name useFileDialog

@@ -37,11 +37,11 @@ export interface UseOtpCredentialReturn {
   aborted: boolean;
 }
 
-export type UseOtpCredential = {
+export interface UseOtpCredential {
   (callback?: UseOtpCredentialCallback): UseOtpCredentialReturn;
 
   (params?: UseOtpCredentialParams): UseOtpCredentialReturn;
-};
+}
 
 /**
  * @name useOtpCredential

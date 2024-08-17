@@ -52,10 +52,10 @@ export interface UseStopwatchOptions {
   enabled?: boolean;
 }
 
-type UseStopwatch = {
+interface UseStopwatch {
   (initialTime?: number, options?: UseStopwatchOptions): UseStopwatchReturn;
   (options?: UseStopwatchOptions & { initialTime?: number }): UseStopwatchReturn;
-};
+}
 /**
  * @name useStopwatch
  * @description - Hook that creates a stopwatch functionality
