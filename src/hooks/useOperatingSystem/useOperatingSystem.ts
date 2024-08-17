@@ -8,9 +8,9 @@ export const getOperatingSystem = (): OperatingSystem => {
 
   const { userAgent } = window.navigator;
 
-  if (/(Macintosh)|(MacIntel)|(MacPPC)|(Mac68K)/i.test(userAgent)) return 'macos';
-  if (/(iPhone)|(iPad)|(iPod)/i.test(userAgent)) return 'ios';
-  if (/(Win32)|(Win64)|(Windows)|(WinCE)/i.test(userAgent)) return 'windows';
+  if (/Macintosh|MacIntel|MacPPC|Mac68K/i.test(userAgent)) return 'macos';
+  if (/iPhone|iPad|iPod/i.test(userAgent)) return 'ios';
+  if (/Win32|Win64|Windows|WinCE/i.test(userAgent)) return 'windows';
   if (/Android/i.test(userAgent)) return 'android';
   if (/Linux/i.test(userAgent)) return 'linux';
 

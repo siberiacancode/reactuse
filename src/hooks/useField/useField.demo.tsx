@@ -96,8 +96,7 @@ const Demo = () => {
                 null,
                 2
               )
-            )
-          }
+            )}
         >
           Submit
         </button>

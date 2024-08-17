@@ -23,6 +23,7 @@ const MemoComponent = memo(({ onClick }: MemoComponentProps) => {
     </>
   );
 });
+MemoComponent.displayName = 'MemoComponent';
 
 const Demo = () => {
   const counter = useCounter();

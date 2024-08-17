@@ -16,7 +16,7 @@ export interface UseInfiniteScrollOptions {
   direction?: 'top' | 'bottom' | 'left' | 'right';
 }
 
-export type UseInfiniteScroll = {
+export interface UseInfiniteScroll {
   <Target extends UseInfiniteScrollTarget>(
     target: Target,
     callback: (event: Event) => void,
@@ -31,7 +31,7 @@ export type UseInfiniteScroll = {
     ref: (node: Target) => void;
     isLoading: boolean;
   };
-};
+}
 
 /**
  * @name useInfiniteScroll

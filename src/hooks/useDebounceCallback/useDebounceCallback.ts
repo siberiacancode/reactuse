@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import { debounce } from '@/utils/helpers';
 
+import { useEvent } from '../useEvent/useEvent';
+
 /**
  * @name useDebounceCallback
  * @description - Hook that creates a debounced callback and returns a stable reference of it
@@ -20,7 +22,8 @@ export const useDebounceCallback = <Params extends unknown[], Return>(
   callback: (...args: Params) => Return,
   delay: number
 ) => {
-  const debounced = useMemo(() => debounce(callback, delay), [delay]);
+  const internalCallback = useEvent(callback);
+  const debounced = useMemo(() => debounce(internalCallback, delay), [delay]);
 
   return debounced;
 };

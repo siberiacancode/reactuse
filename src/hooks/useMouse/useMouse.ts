@@ -22,11 +22,11 @@ export interface UseMouseReturn {
   elementPositionY: number;
 }
 
-export type UseMouse = {
+export interface UseMouse {
   <Target extends UseMouseTarget>(target: Target): UseMouseReturn;
 
   <Target extends UseMouseTarget>(target?: never): UseMouseReturn & { ref: (node: Target) => void };
-};
+}
 
 /**
  * @name useMouse

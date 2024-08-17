@@ -31,7 +31,11 @@ export const isHotkeyMatch = (hotkey: string, keys: UseHotkeysKey[]) =>
     );
 
 export type UseHotkeysHotkeys = string[] | string;
-export type UseHotkeysKey = { key: string; code: string; alias: string };
+export interface UseHotkeysKey {
+  key: string;
+  code: string;
+  alias: string;
+}
 
 /**
  * @name useHotkeys

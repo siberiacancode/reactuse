@@ -7,10 +7,10 @@ import { useEventListener } from '../useEventListener/useEventListener';
 export type UseKeyPressKey = string | string[];
 
 /** The use key press options type */
-export type UseKeyPressOptions = {
+export interface UseKeyPressOptions {
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
-};
+}
 
 /**
  * @name useKeyPress
