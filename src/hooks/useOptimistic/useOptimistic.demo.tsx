@@ -8,14 +8,12 @@ interface TestValue {
 const stringifyValue = (value: any) => JSON.stringify(value, null, 2);
 
 const Demo = () => {
-  const optimistic = useOptimistic<TestValue>(
+  const [optimisticValue, updateOptimistic] = useOptimistic<TestValue>(
     { amount: 0, status: 'initial' },
-    {
-      onUpdate: (updated, current) => ({
-        status: updated.status,
-        amount: current.amount + updated.amount
-      })
-    }
+    (updated, current) => ({
+      status: updated.status,
+      amount: current.amount + updated.amount
+    })
   );
 
   const onClick = () => {
@@ -32,7 +30,7 @@ const Demo = () => {
       );
     });
 
-    optimistic.update(
+    updateOptimistic(
       {
         amount: newValue,
         status: 'optimistic'
@@ -49,7 +47,7 @@ const Demo = () => {
       <br />
       <pre lang='json'>
         <b>Optimistic value:</b>
-        <p>{stringifyValue(optimistic.value)}</p>
+        <p>{stringifyValue(optimisticValue)}</p>
       </pre>
     </>
   );
