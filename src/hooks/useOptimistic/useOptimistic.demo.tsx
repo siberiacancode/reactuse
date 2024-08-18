@@ -1,53 +1,49 @@
-import { useOptimistic } from './useOptimistic';
+import { useState } from "react";
+import { useOptimistic } from "./useOptimistic";
 
-interface TestValue {
-  amount: number;
-  status: 'optimistic' | 'initial' | 'actual';
+interface TestItem {
+  id: number;
+  status: "optimistic" | "actual";
 }
 
-const stringifyValue = (value: any) => JSON.stringify(value, null, 2);
-
 const Demo = () => {
-  const [optimisticValue, updateOptimistic] = useOptimistic<TestValue>(
-    { amount: 0, status: 'initial' },
-    (updated, current) => ({
-      status: updated.status,
-      amount: current.amount + updated.amount
-    })
+  const [externalItems, setExternalItems] = useState<TestItem[]>([
+    { id: 1, status: "actual" },
+  ]);
+
+  const [optimisticState, updateOptimistic] = useOptimistic(
+    externalItems,
+    (_, optimisticValue) => optimisticValue
   );
 
   const onClick = () => {
-    const newValue = 1;
+    const newItem: TestItem = {
+      id: externalItems.length + 1,
+      status: "optimistic",
+    };
 
-    const promise = new Promise<TestValue>((resolve) => {
-      setTimeout(
-        () =>
-          resolve({
-            amount: newValue,
-            status: 'actual'
-          }),
-        2000
-      );
+    const promise = new Promise<void>((resolve) => {
+      setTimeout(() => {
+        setExternalItems((prevItems) => [
+          ...prevItems,
+          { ...newItem, status: "actual" },
+        ]);
+        resolve();
+      }, 2000);
     });
 
-    updateOptimistic(
-      {
-        amount: newValue,
-        status: 'optimistic'
-      },
-      promise
-    );
+    updateOptimistic([...optimisticState, newItem], promise);
   };
 
   return (
     <>
-      <button type='button' onClick={onClick}>
+      <button type="button" onClick={onClick}>
         Update
       </button>
       <br />
-      <pre lang='json'>
-        <b>Optimistic value:</b>
-        <p>{stringifyValue(optimisticValue)}</p>
+      <pre lang="json">
+        <b>Optimistic state:</b>
+        <p>{JSON.stringify(optimisticState, null, 2)}</p>
       </pre>
     </>
   );
