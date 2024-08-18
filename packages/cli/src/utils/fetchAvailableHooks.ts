@@ -3,8 +3,8 @@
 import fs from 'fs/promises';
 import ora from 'ora';
 
-import { fetchImportDependencies } from '@/utils/fetchImportDependencies';
-import { findImports } from '@/utils/findImports';
+import { fetchUtilsDependencies } from '@/utils/fetchUtilsDependencies';
+import { findImportUtils } from '@/utils/findImportUtils';
 import { logger } from '@/utils/logger';
 
 export interface HookList {
@@ -79,9 +79,9 @@ export const downloadHookList = async (
     for (const hook of hooks) {
       spinner.text = `Installing ${hook}...`;
       const hookPath = await downloadHook(hook, pathToLoad);
-      const imports = await findImports(hookPath);
+      const utilsImport = await findImportUtils(hookPath);
 
-      await fetchImportDependencies(imports, pathToLoadUtils);
+      await fetchUtilsDependencies(utilsImport, pathToLoadUtils);
     }
     spinner.succeed('All hooks have been installed!');
   } catch (error) {

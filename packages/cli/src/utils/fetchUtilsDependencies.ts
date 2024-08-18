@@ -43,7 +43,7 @@ const downloadUtil = async (utilName: string, path: string) => {
   }
 };
 
-export const fetchImportDependencies = async (imports: string[], pathToLoadUtils: string) => {
+export const fetchUtilsDependencies = async (imports: string[], pathToLoadUtils: string) => {
   if (!imports.length) return;
 
   if (!existsSync(pathToLoadUtils)) {

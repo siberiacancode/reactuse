@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 
-export const findImports = async (filePath: string) => {
+export const findImportUtils = async (filePath: string) => {
   const code = await fs.readFile(filePath, 'utf-8');
   const regex = /import\s+\{\s*([^}]+)\s*\}\s+from\s+['"]@\/utils[^'"]*['"]/g;
   let match;
