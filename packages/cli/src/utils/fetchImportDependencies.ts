@@ -12,8 +12,8 @@ const updateUtilIndexFile = (utilName: string, utilsDir: string) => {
 
   if (!indexExist) {
     writeFileSync(indexPath, '');
-    appendFileSync(indexPath, exportStatement, 'utf-8');
   }
+  appendFileSync(indexPath, exportStatement, 'utf-8');
 };
 
 const downloadUtil = async (utilName: string, path: string) => {
