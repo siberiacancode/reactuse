@@ -1,80 +1,65 @@
-import { useCallback, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { throttle } from '@/utils/helpers';
-
-import { useEventListener } from '../useEventListener/useEventListener';
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
-
-export interface UseDeviceMotionListenerParams {
-  target?: Window;
-  options?: boolean | AddEventListenerOptions;
-  callback?: (event: DeviceMotionEvent) => void;
-}
 
 export interface DeviceMotionData {
   interval: DeviceMotionEvent['interval'];
   rotationRate: Exclude<DeviceMotionEvent['rotationRate'], null>;
   acceleration: Exclude<DeviceMotionEvent['acceleration'], null>;
-  accelerationIncludingGravity: Exclude<DeviceMotionEvent['accelerationIncludingGravity'], null>;
+  accelerationIncludingGravity: Exclude<
+    DeviceMotionEvent['accelerationIncludingGravity'],
+    null
+  >;
 }
-
-const DEFAULT_DEVICE_MOTION_DATA: DeviceMotionData = {
-  interval: 0,
-  rotationRate: { alpha: null, beta: null, gamma: null },
-  acceleration: { x: null, y: null, z: null },
-  accelerationIncludingGravity: { x: null, y: null, z: null }
-};
-
-const DEFAULT_DEVICE_MOTION_EVENT_DATA_UPDATE_DELAY = 500;
 
 /**
  * @name useDeviceMotion
- * @description Hook that provides data of the {@link https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent DeviceMotionEvent (MDN)}
+ * @description Hook that provides DeviceMotionEvent data
  * @category Utilities
  *
- * @param {Number} delay The data update delay
- * @param {UseDeviceMotionListenerParams} listener The event listener parameters
- * @returns {Function getDeviceMotion(): DeviceMotionData} - The function that returns the DeviceMotionEvent data
- *
- * @example
- * const getDeviceMotion = useDeviceMotion(1000);
- * ...
- * const { interval, rotationRate, acceleration, accelerationIncludingGravity } = getDeviceMotion();
+ * @param {number} delay The data update delay
+ * @param {Function} callback The event listener callback
+ * @returns {DeviceMotionData} DeviceMotionEvent data
  */
 export const useDeviceMotion = (
-  delay = DEFAULT_DEVICE_MOTION_EVENT_DATA_UPDATE_DELAY,
-  listener: UseDeviceMotionListenerParams = {}
+  delay: number,
+  callback?: (event: DeviceMotionEvent) => void
 ) => {
-  const deviceMotionRef = useRef(DEFAULT_DEVICE_MOTION_DATA);
-  const handlerRef = useRef(listener.callback);
+  const [deviceMotionData, setDeviceMotionData] = useState<DeviceMotionData>({
+    interval: 0,
+    rotationRate: { alpha: null, beta: null, gamma: null },
+    acceleration: { x: null, y: null, z: null },
+    accelerationIncludingGravity: { x: null, y: null, z: null }
+  });
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
-  useIsomorphicLayoutEffect(() => {
-    handlerRef.current = listener.callback;
-  }, [listener.callback]);
-
-  const onDeviceMotion = useCallback(
-    throttle<[DeviceMotionEvent]>((event) => {
-      handlerRef.current?.(event);
-      deviceMotionRef.current = {
+  useEffect(() => {
+    const onDeviceMotion = throttle<[DeviceMotionEvent]>((event) => {
+      internalCallbackRef.current?.(event);
+      setDeviceMotionData((prevState) => ({
         interval: event.interval,
         rotationRate: {
-          ...deviceMotionRef.current.rotationRate,
+          ...prevState.rotationRate,
           ...event.rotationRate
         },
         acceleration: {
-          ...deviceMotionRef.current.acceleration,
+          ...prevState.acceleration,
           ...event.acceleration
         },
         accelerationIncludingGravity: {
-          ...deviceMotionRef.current.accelerationIncludingGravity,
+          ...prevState.accelerationIncludingGravity,
           ...event.accelerationIncludingGravity
         }
-      };
-    }, delay),
-    [delay]
-  );
+      }));
+    }, delay);
 
-  useEventListener(listener.target ?? window, 'devicemotion', onDeviceMotion, listener.options);
+    window.addEventListener('devicemotion', onDeviceMotion);
 
-  return useCallback(() => deviceMotionRef.current, []);
+    return () => {
+      window.removeEventListener('devicemotion', onDeviceMotion);
+    };
+  }, [delay]);
+
+  return deviceMotionData;
 };
