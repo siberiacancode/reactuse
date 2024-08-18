@@ -28,7 +28,7 @@ export const promptForConfig = async (cwd: string) => {
       type: 'text',
       name: 'utilsLocated',
       message: `Configure the import alias for utils`,
-      initial: `@/lib/utils`
+      initial: `@/utils/helpers`
     }
   ]);
 

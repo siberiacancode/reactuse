@@ -1,8 +1,10 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access,no-await-in-loop */
 import fs from 'fs/promises';
 import ora from 'ora';
 
+import { fetchImportDependencies } from '@/utils/fetchImportDependencies';
+import { findImports } from '@/utils/findImports';
 import { logger } from '@/utils/logger';
 
 export interface HookList {
@@ -59,19 +61,27 @@ export const downloadHook = async (hookName: string, path: string) => {
     const buffer = Buffer.from(arrayBuffer);
 
     await fs.writeFile(hookPath, buffer);
+
+    return hookPath;
   } catch (e) {
     logger.error(`\n Error downloading ${hookName} hook. Try again.`);
     process.exit(1);
   }
 };
 
-export const downloadHookList = async (hooks: string[], pathToLoad: string) => {
+export const downloadHookList = async (
+  hooks: string[],
+  pathToLoad: string,
+  pathToLoadUtils: string
+) => {
   const spinner = ora(`Installing hooks...`).start();
   try {
     for (const hook of hooks) {
       spinner.text = `Installing ${hook}...`;
-      // eslint-disable-next-line no-await-in-loop
-      await downloadHook(hook, pathToLoad);
+      const hookPath = await downloadHook(hook, pathToLoad);
+      const imports = await findImports(hookPath);
+
+      await fetchImportDependencies(imports, pathToLoadUtils);
     }
     spinner.succeed('All hooks have been installed!');
   } catch (error) {

@@ -69,23 +69,24 @@ export const add = {
     }
 
     const pathToLoadHooks = (await resolveImport(config.hookPath, tsConfig)) as string;
+    const pathToLoadUtils = (await resolveImport(config.utilsPath, tsConfig)) as string;
 
     if (!existsSync(pathToLoadHooks)) {
       await fs.mkdir(pathToLoadHooks, { recursive: true });
     }
 
     if (options.hooks) {
-      await downloadHookList(options.hooks, pathToLoadHooks);
+      await downloadHookList(options.hooks, pathToLoadHooks, pathToLoadUtils);
     }
 
     if (options.all) {
       const hookNames = allHookList.map((hook) => hook.name);
-      await downloadHookList(hookNames, pathToLoadHooks);
+      await downloadHookList(hookNames, pathToLoadHooks, pathToLoadUtils);
     }
 
     if (!selectedHooksFromCmd) {
       const hookNames = await selectHooksFromList(allHookList, options);
-      await downloadHookList(hookNames, pathToLoadHooks);
+      await downloadHookList(hookNames, pathToLoadHooks, pathToLoadUtils);
     }
   }
 };
