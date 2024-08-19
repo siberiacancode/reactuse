@@ -2,56 +2,64 @@ import { useEffect, useRef, useState } from 'react';
 
 import { throttle } from '@/utils/helpers';
 
-export interface DeviceMotionData {
+export interface UseDeviceMotionReturn {
   interval: DeviceMotionEvent['interval'];
-  rotationRate: Exclude<DeviceMotionEvent['rotationRate'], null>;
-  acceleration: Exclude<DeviceMotionEvent['acceleration'], null>;
-  accelerationIncludingGravity: Exclude<
-    DeviceMotionEvent['accelerationIncludingGravity'],
-    null
-  >;
+  acceleration: DeviceMotionEventAcceleration
+  accelerationIncludingGravity: DeviceMotionEventAcceleration
+  rotationRate: DeviceMotionEventRotationRate
+}
+
+export interface UseDeviceMotionParams {
+  delay?: number;
+  callback?: (event: DeviceMotionEvent) => void;
+  enabled?: boolean;
 }
 
 /**
  * @name useDeviceMotion
- * @description Hook that provides DeviceMotionEvent data
+ * @description Hook that work with device motion
  * @category Utilities
  *
- * @param {number} delay The data update delay
- * @param {Function} callback The event listener callback
- * @returns {DeviceMotionData} DeviceMotionEvent data
+ * @param {number} [delay=1000] The delay in milliseconds
+ * @param {(event: DeviceMotionEvent) => void} [callback] The callback function to be invoked
+ * @param {boolean} [enabled=true] Whether to enable the hook
+ * @returns {UseDeviceMotionReturn} The device motion data and interval
+ *
+ * @example
+ * const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion();
  */
-export const useDeviceMotion = (
-  delay: number,
-  callback?: (event: DeviceMotionEvent) => void
-) => {
-  const [deviceMotionData, setDeviceMotionData] = useState<DeviceMotionData>({
+export const useDeviceMotion = (params?: UseDeviceMotionParams) => {
+  const enabled = params?.enabled ?? true;
+  const delay = params?.delay ?? 1000;
+  const [deviceMotionData, setDeviceMotionData] = useState<UseDeviceMotionReturn>({
     interval: 0,
     rotationRate: { alpha: null, beta: null, gamma: null },
     acceleration: { x: null, y: null, z: null },
     accelerationIncludingGravity: { x: null, y: null, z: null }
   });
-  const internalCallbackRef = useRef(callback);
-  internalCallbackRef.current = callback;
+  const internalCallbackRef = useRef(params?.callback);
+  internalCallbackRef.current = params?.callback;
 
   useEffect(() => {
+    if (!enabled) return;
+
     const onDeviceMotion = throttle<[DeviceMotionEvent]>((event) => {
       internalCallbackRef.current?.(event);
-      setDeviceMotionData((prevState) => ({
+      setDeviceMotionData({
         interval: event.interval,
         rotationRate: {
-          ...prevState.rotationRate,
+          ...deviceMotionData.rotationRate,
           ...event.rotationRate
         },
         acceleration: {
-          ...prevState.acceleration,
+          ...deviceMotionData.acceleration,
           ...event.acceleration
         },
         accelerationIncludingGravity: {
-          ...prevState.accelerationIncludingGravity,
+          ...deviceMotionData.accelerationIncludingGravity,
           ...event.accelerationIncludingGravity
         }
-      }));
+      });
     }, delay);
 
     window.addEventListener('devicemotion', onDeviceMotion);
@@ -59,7 +67,7 @@ export const useDeviceMotion = (
     return () => {
       window.removeEventListener('devicemotion', onDeviceMotion);
     };
-  }, [delay]);
+  }, [delay, enabled]);
 
   return deviceMotionData;
 };
