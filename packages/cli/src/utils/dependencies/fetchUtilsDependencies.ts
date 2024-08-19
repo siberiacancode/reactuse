@@ -3,12 +3,13 @@
 import { appendFileSync, existsSync, promises as fs, writeFileSync } from 'fs';
 import path from 'node:path';
 
+import { FETCH_REPO_URL } from '@/utils/constants';
 import { logger } from '@/utils/logger';
 
 const updateUtilIndexFile = (utilName: string, utilsDir: string) => {
   const indexPath = path.join(utilsDir, 'index.ts');
   const indexExist = existsSync(indexPath);
-  const exportStatement = `export * from './${utilName}';\n`;
+  const exportStatement = `export * from './${utilName}'\n`;
 
   if (!indexExist) {
     writeFileSync(indexPath, '');
@@ -17,7 +18,7 @@ const updateUtilIndexFile = (utilName: string, utilsDir: string) => {
 };
 
 const downloadUtil = async (utilName: string, path: string) => {
-  const utilUrl = `https://raw.githubusercontent.com/siberiacancode/reactuse/main/src/utils/helpers/${utilName}.ts`;
+  const utilUrl = `${FETCH_REPO_URL}/utils/helpers/${utilName}.ts`;
   const utilPath = `${path}/${utilName}.ts`;
 
   try {
@@ -54,6 +55,4 @@ export const fetchUtilsDependencies = async (imports: string[], pathToLoadUtils:
     await downloadUtil(importName, pathToLoadUtils);
     updateUtilIndexFile(importName, pathToLoadUtils);
   }
-
-  return 1;
 };

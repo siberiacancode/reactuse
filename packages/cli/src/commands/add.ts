@@ -10,8 +10,8 @@ import { loadConfig } from 'tsconfig-paths';
 import type { Argv } from 'yargs';
 
 import { getConfig } from '@/utils/config/getConfig';
-import { downloadHookList } from '@/utils/hooks/downloadHookList';
 import { fetchAvailableHooks } from '@/utils/hooks/fetchAvailableHooks';
+import { fetchHookList } from '@/utils/hooks/fetchHookList';
 import { selectHooksFromList } from '@/utils/hooks/selectHooksFromList';
 import { resolveImport } from '@/utils/imports/resolveImport';
 import { logger } from '@/utils/logger';
@@ -77,17 +77,17 @@ export const add = {
     }
 
     if (options.hooks) {
-      await downloadHookList(options.hooks, pathToLoadHooks, pathToLoadUtils);
+      await fetchHookList(options.hooks, pathToLoadHooks, pathToLoadUtils);
     }
 
     if (options.all) {
       const hookNames = allHookList.map((hook) => hook.name);
-      await downloadHookList(hookNames, pathToLoadHooks, pathToLoadUtils);
+      await fetchHookList(hookNames, pathToLoadHooks, pathToLoadUtils, true);
     }
 
     if (!selectedHooksFromCmd) {
       const hookNames = await selectHooksFromList(allHookList, options);
-      await downloadHookList(hookNames, pathToLoadHooks, pathToLoadUtils);
+      await fetchHookList(hookNames, pathToLoadHooks, pathToLoadUtils);
     }
   }
 };

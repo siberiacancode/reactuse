@@ -1,10 +1,18 @@
+import { existsSync } from 'fs';
 import fs from 'fs/promises';
 
+import { FETCH_REPO_URL } from '@/utils/constants';
 import { logger } from '@/utils/logger';
 
-export const downloadHook = async (hookName: string, path: string) => {
-  const hookUrl = `https://raw.githubusercontent.com/siberiacancode/reactuse/main/src/hooks/${hookName}/${hookName}.ts`;
-  const hookPath = `${path}/${hookName}.ts`;
+export const fetchHook = async (hookName: string, path: string) => {
+  const hookUrl = `${FETCH_REPO_URL}/hooks/${hookName}/${hookName}.ts`;
+  const hookDirName = `${path}/${hookName}`;
+  const pathToLoadHooks = `${hookDirName}/${hookName}.ts`;
+
+  if (!existsSync(hookDirName)) {
+    await fs.mkdir(hookDirName, { recursive: true });
+  }
+
   try {
     const response = await fetch(hookUrl);
 
@@ -19,9 +27,9 @@ export const downloadHook = async (hookName: string, path: string) => {
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    await fs.writeFile(hookPath, buffer);
+    await fs.writeFile(pathToLoadHooks, buffer);
 
-    return hookPath;
+    return [pathToLoadHooks, hookDirName];
   } catch (e) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     logger.error(`\n Error downloading ${hookName} hook. Try again.`);
