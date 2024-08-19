@@ -1,50 +1,46 @@
-import { useState } from "react";
-import { useOptimistic } from "./useOptimistic";
+import { useState } from 'react';
+import { flushSync } from 'react-dom';
 
-interface TestItem {
-  id: number;
-  status: "optimistic" | "actual";
-}
+import { useCounter } from '../useCounter/useCounter';
+import { useMutation } from '../useMutation/useMutation';
+
+import { useOptimistic } from './useOptimistic';
 
 const Demo = () => {
-  const [externalItems, setExternalItems] = useState<TestItem[]>([
-    { id: 1, status: "actual" },
-  ]);
+  const likes = useCounter();
+  const postLikeMutation = useMutation(() => new Promise((resolve) => {
+    setTimeout(() => {
+      const updatedLikes = likes.value + 1;
+      flushSync(() => {
+        likes.set(updatedLikes);
+      });
+      resolve(updatedLikes);
+    }, 1000);
+  }));
 
-  const [optimisticState, updateOptimistic] = useOptimistic(
-    externalItems,
+  const [optimisticLikes, updateOptimistic] = useOptimistic(
+    likes.value,
     (_, optimisticValue) => optimisticValue
   );
 
   const onClick = () => {
-    const newItem: TestItem = {
-      id: externalItems.length + 1,
-      status: "optimistic",
-    };
-
-    const promise = new Promise<void>((resolve) => {
-      setTimeout(() => {
-        setExternalItems((prevItems) => [
-          ...prevItems,
-          { ...newItem, status: "actual" },
-        ]);
-        resolve();
-      }, 2000);
-    });
-
-    updateOptimistic([...optimisticState, newItem], promise);
+    const promise = postLikeMutation.mutateAsync();
+    updateOptimistic(likes.value + 1, promise);
   };
 
   return (
     <>
-      <button type="button" onClick={onClick}>
-        Update
+      <button type='button' onClick={onClick}>
+        likes {optimisticLikes}
       </button>
       <br />
-      <pre lang="json">
-        <b>Optimistic state:</b>
-        <p>{JSON.stringify(optimisticState, null, 2)}</p>
-      </pre>
+      <p>
+        Optimistic value: <code>{optimisticLikes}</code>
+      </p>
+
+      <p>
+        Actual value: <code>{likes.value}</code>
+      </p>
     </>
   );
 };

@@ -19,9 +19,9 @@ interface UseMutationReturn<Body, Data> {
   /* The error of the mutation */
   error: Error | null;
   /* The mutate function */
-  mutate: (body: Body, options?: UseMutationOptions<Data>) => void;
+  mutate: (body?: Body, options?: UseMutationOptions<Data>) => void;
   /* The mutate async function */
-  mutateAsync: (body: Body, options?: UseMutationOptions<Data>) => Promise<Data>;
+  mutateAsync: (body?: Body, options?: UseMutationOptions<Data>) => Promise<Data>;
   /* The loading state of the mutation */
   isLoading: boolean;
   /* The error state of the mutation */
