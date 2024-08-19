@@ -9,11 +9,11 @@ import path from 'path';
 import { loadConfig } from 'tsconfig-paths';
 import type { Argv } from 'yargs';
 
-import { downloadHookList, fetchAvailableHooks } from '@/utils/fetchAvailableHooks';
-import { getConfig } from '@/utils/getConfig';
+import { getConfig } from '@/utils/config/getConfig';
+import { downloadHookList, fetchAvailableHooks } from '@/utils/hooks/fetchAvailableHooks';
+import { selectHooksFromList } from '@/utils/hooks/selectHooksFromList';
+import { resolveImport } from '@/utils/imports/resolveImport';
 import { logger } from '@/utils/logger';
-import { resolveImport } from '@/utils/resolveImport';
-import { selectHooksFromList } from '@/utils/selectHooksFromList';
 import type { AddOptionsSchema } from '@/utils/types';
 import { addOptionsSchema } from '@/utils/types';
 

@@ -7,8 +7,8 @@ import { existsSync } from 'fs';
 import path from 'path';
 import type { Argv } from 'yargs';
 
+import { promptForConfig } from '@/utils/config/promptForConfig';
 import { logger } from '@/utils/logger';
-import { promptForConfig } from '@/utils/promptForConfig';
 import type { InitOptionsSchema } from '@/utils/types';
 import { initOptionsSchema } from '@/utils/types';
 

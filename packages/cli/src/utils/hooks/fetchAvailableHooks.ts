@@ -3,8 +3,8 @@
 import fs from 'fs/promises';
 import ora from 'ora';
 
-import { fetchUtilsDependencies } from '@/utils/fetchUtilsDependencies';
-import { findImportUtils } from '@/utils/findImportUtils';
+import { fetchUtilsDependencies } from '@/utils/dependencies/fetchUtilsDependencies';
+import { findImportUtils } from '@/utils/imports/findImportUtils';
 import { logger } from '@/utils/logger';
 
 export interface HookList {

@@ -3,7 +3,7 @@
 
 import prompts from 'prompts';
 
-import type { HookList } from '@/utils/fetchAvailableHooks';
+import type { HookList } from '@/utils/hooks/fetchAvailableHooks';
 import { logger } from '@/utils/logger';
 import type { AddOptionsSchema } from '@/utils/types';
 

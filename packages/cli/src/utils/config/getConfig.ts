@@ -3,7 +3,7 @@
 
 import { cosmiconfig } from 'cosmiconfig';
 
-import { configSchema } from '@/utils/promptForConfig';
+import { configSchema } from '@/utils/config/promptForConfig';
 
 export const getConfig = async (cwd: string) => {
   const explorer = cosmiconfig('configHooks', {
