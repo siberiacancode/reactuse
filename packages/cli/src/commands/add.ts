@@ -10,7 +10,8 @@ import { loadConfig } from 'tsconfig-paths';
 import type { Argv } from 'yargs';
 
 import { getConfig } from '@/utils/config/getConfig';
-import { downloadHookList, fetchAvailableHooks } from '@/utils/hooks/fetchAvailableHooks';
+import { downloadHookList } from '@/utils/hooks/downloadHookList';
+import { fetchAvailableHooks } from '@/utils/hooks/fetchAvailableHooks';
 import { selectHooksFromList } from '@/utils/hooks/selectHooksFromList';
 import { resolveImport } from '@/utils/imports/resolveImport';
 import { logger } from '@/utils/logger';
