@@ -56,6 +56,7 @@ export * from './useNetwork/useNetwork';
 export * from './useOffsetPagination/useOffsetPagination';
 export * from './useOnline/useOnline';
 export * from './useOperatingSystem/useOperatingSystem';
+export * from './useOptimistic/useOptimistic';
 export * from './useOrientation/useOrientation';
 export * from './useOtpCredential/useOtpCredential';
 export * from './usePageLeave/usePageLeave';
