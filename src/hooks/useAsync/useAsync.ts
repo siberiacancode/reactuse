@@ -50,7 +50,7 @@ export const useAsync = <Data>(
       .finally(() => {
         setIsLoading(false);
       });
-  }, [deps]);
+  }, deps);
 
   return {
     data,

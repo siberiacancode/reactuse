@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { flushSync } from 'react-dom';
-
 import { useCounter } from '../useCounter/useCounter';
 import { useMutation } from '../useMutation/useMutation';
 
@@ -8,15 +5,13 @@ import { useOptimistic } from './useOptimistic';
 
 const Demo = () => {
   const likes = useCounter();
-  const postLikeMutation = useMutation(() => new Promise((resolve) => {
+  const postLikeMutation = useMutation(() => new Promise((resolve) =>
     setTimeout(() => {
       const updatedLikes = likes.value + 1;
-      flushSync(() => {
-        likes.set(updatedLikes);
-      });
+      likes.set(updatedLikes);
       resolve(updatedLikes);
-    }, 1000);
-  }));
+    }, 1000)
+  ));
 
   const [optimisticLikes, updateOptimistic] = useOptimistic(
     likes.value,
@@ -37,7 +32,6 @@ const Demo = () => {
       <p>
         Optimistic value: <code>{optimisticLikes}</code>
       </p>
-
       <p>
         Actual value: <code>{likes.value}</code>
       </p>
