@@ -5,6 +5,7 @@ export * from './useBreakpoints/useBreakpoints';
 export * from './useBrowserLanguage/useBrowserLanguage';
 export * from './useClickOutside/useClickOutside';
 export * from './useClipboard/useClipboard';
+export * from './useColorMode/useColorMode';
 export * from './useCounter/useCounter';
 export * from './useCssVar/useCssVar';
 export * from './useDebounceCallback/useDebounceCallback';
