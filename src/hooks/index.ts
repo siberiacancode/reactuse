@@ -62,6 +62,7 @@ export * from './useOrientation/useOrientation';
 export * from './useOtpCredential/useOtpCredential';
 export * from './usePageLeave/usePageLeave';
 export * from './usePaint/usePaint';
+export * from './useParallax/useParallax';
 export * from './usePermission/usePermission';
 export * from './usePreferredColorScheme/usePreferredColorScheme';
 export * from './usePreferredContrast/usePreferredContrast';
