@@ -10,8 +10,11 @@ export interface UseDeviceMotionReturn {
 }
 
 export interface UseDeviceMotionParams {
+  /** The delay in milliseconds */
   delay?: number;
+  /** The callback function to be invoked */
   callback?: (event: DeviceMotionEvent) => void;
+  /** Whether to enable the hook */
   enabled?: boolean;
 }
 
@@ -31,7 +34,7 @@ export interface UseDeviceMotionParams {
 export const useDeviceMotion = (params?: UseDeviceMotionParams) => {
   const enabled = params?.enabled ?? true;
   const delay = params?.delay ?? 1000;
-  const [deviceMotionData, setDeviceMotionData] = useState<UseDeviceMotionReturn>({
+  const [value, setValue] = useState<UseDeviceMotionReturn>({
     interval: 0,
     rotationRate: { alpha: null, beta: null, gamma: null },
     acceleration: { x: null, y: null, z: null },
@@ -45,18 +48,18 @@ export const useDeviceMotion = (params?: UseDeviceMotionParams) => {
 
     const onDeviceMotion = throttle<[DeviceMotionEvent]>((event) => {
       internalCallbackRef.current?.(event);
-      setDeviceMotionData({
+      setValue({
         interval: event.interval,
         rotationRate: {
-          ...deviceMotionData.rotationRate,
+          ...value.rotationRate,
           ...event.rotationRate
         },
         acceleration: {
-          ...deviceMotionData.acceleration,
+          ...value.acceleration,
           ...event.acceleration
         },
         accelerationIncludingGravity: {
-          ...deviceMotionData.accelerationIncludingGravity,
+          ...value.accelerationIncludingGravity,
           ...event.accelerationIncludingGravity
         }
       });
@@ -69,5 +72,5 @@ export const useDeviceMotion = (params?: UseDeviceMotionParams) => {
     };
   }, [delay, enabled]);
 
-  return deviceMotionData;
+  return value;
 };

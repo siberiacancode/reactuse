@@ -1,12 +1,12 @@
 import { useDeviceMotion } from './useDeviceMotion';
 
 const Demo = () => {
-  const deviceMotionData = useDeviceMotion();
+  const deviceMotion = useDeviceMotion();
 
   return (
     <pre lang='json'>
       <b>Device motion data:</b>
-      <p>{JSON.stringify(deviceMotionData, null, 2)}</p>
+      <p>{JSON.stringify(deviceMotion, null, 2)}</p>
     </pre>
   );
 };

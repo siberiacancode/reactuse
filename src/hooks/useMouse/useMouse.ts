@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getElement } from '@/utils/helpers';
 
 /** The use mouse target element type */
-type UseMouseTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
+export type UseMouseTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
 /** The use mouse return type */
 export interface UseMouseReturn {
@@ -12,6 +12,8 @@ export interface UseMouseReturn {
   x: number;
   /** The current mouse y position */
   y: number;
+  /** The current element */
+  element: Element;
   /** The current element x position */
   elementX: number;
   /** The current element y position */
@@ -63,6 +65,7 @@ export const useMouse = ((...params: any[]) => {
   const [internalRef, setInternalRef] = useState<Element>();
 
   useEffect(() => {
+    console.log('@@@@@', target);
     if (!target && !internalRef) return;
     const onMouseMove = (event: MouseEvent) => {
       const element = (target ? getElement(target) : internalRef) as Element;
@@ -91,15 +94,15 @@ export const useMouse = ((...params: any[]) => {
     };
 
     document.addEventListener('mousemove', onMouseMove);
-
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
     };
   }, [internalRef, target]);
 
-  if (target) return value;
+  if (target) return { ...value, element: target ?? internalRef };
   return {
     ref: setInternalRef,
-    ...value
+    ...value,
+    element: target ?? internalRef
   };
 }) as UseMouse;
