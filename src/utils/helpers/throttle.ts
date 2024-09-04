@@ -4,9 +4,9 @@ export const throttle = <Params extends any[]>(
 ): ((...args: Params) => void) => {
   let isCalled = false;
 
-  return function (...args) {
+  return function (this: any, ...args) {
     if (!isCalled) {
-      callback(...args);
+      callback.apply(this, args);
       isCalled = true;
       setTimeout(() => {
         isCalled = false;
