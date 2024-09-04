@@ -20,6 +20,7 @@ export interface UseIntervalReturn {
 
 interface UseInterval {
   (callback: () => void, interval?: number, options?: UseIntervalOptions): UseIntervalReturn;
+
   (callback: () => void, options?: UseIntervalOptions & { interval?: number }): UseIntervalReturn;
 }
 

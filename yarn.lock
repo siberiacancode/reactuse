@@ -1994,6 +1994,13 @@
     eslint-plugin-react-refresh "^0.4.9"
     eslint-plugin-simple-import-sort "^12.1.1"
 
+"@siberiacancode/prettier@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@siberiacancode/prettier/-/prettier-1.1.1.tgz#dbde19874913c7a84c93e19ccbc7a1c97c685547"
+  integrity sha512-DHZN5JGW7hitS3f4viJDv1XlOnMllYmlig7KIk3c8OFQqStDqdYtlFb1KGtMs+QvpVc1zwAQ+xBEDOWKMjLAPA==
+  dependencies:
+    prettier "^3.2.5"
+
 "@siberiacancode/vitest@^1.2.4":
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@siberiacancode/vitest/-/vitest-1.2.4.tgz#6982189d38774dd854acd3444c2ba9dbadee3257"
@@ -5600,6 +5607,11 @@ prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
+
+prettier@^3.2.5:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.3.3.tgz#30c54fe0be0d8d12e6ae61dbb10109ea00d53105"
+  integrity sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==
 
 pretty-format@^27.0.2:
   version "27.5.1"

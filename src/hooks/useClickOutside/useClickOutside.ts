@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { getElement } from '@/utils/helpers';
 
 /** The use click outside target element type */
-type UseClickOutsideTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
+export type UseClickOutsideTarget =
+  | RefObject<Element | null | undefined>
+  | (() => Element)
+  | Element;
 
 export interface UseClickOutside {
   <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(

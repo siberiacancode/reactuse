@@ -8,13 +8,15 @@ const Demo = () => {
       <p>
         Date{' '}
         <code>
-          {month}/{day}/{year}
+          {String(month).padStart(2, '0')}/{String(day).padStart(2, '0')}/
+          {String(year).padStart(2, '0')}
         </code>
       </p>
       <p>
         Time{' '}
         <code>
-          {hours}:{minutes}:{seconds}
+          {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:
+          {String(seconds).padStart(2, '0')}
         </code>
       </p>
 

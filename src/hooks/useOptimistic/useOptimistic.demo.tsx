@@ -5,13 +5,16 @@ import { useOptimistic } from './useOptimistic';
 
 const Demo = () => {
   const likes = useCounter();
-  const postLikeMutation = useMutation(() => new Promise((resolve) =>
-    setTimeout(() => {
-      const updatedLikes = likes.value + 1;
-      likes.set(updatedLikes);
-      resolve(updatedLikes);
-    }, 1000)
-  ));
+  const postLikeMutation = useMutation(
+    () =>
+      new Promise((resolve) =>
+        setTimeout(() => {
+          const updatedLikes = likes.value + 1;
+          likes.set(updatedLikes);
+          resolve(updatedLikes);
+        }, 1000)
+      )
+  );
 
   const [optimisticLikes, updateOptimistic] = useOptimistic(
     likes.value,

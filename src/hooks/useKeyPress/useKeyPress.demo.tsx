@@ -6,7 +6,7 @@ const Demo = () => {
   return (
     <div>
       <p>Press A keyboard button</p>
-      [&nbsp;{pressedKeys && 'You pressed \'a\' button'}&nbsp;]
+      [&nbsp;{pressedKeys && "You pressed 'a' button"}&nbsp;]
     </div>
   );
 };

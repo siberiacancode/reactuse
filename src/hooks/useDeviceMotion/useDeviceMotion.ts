@@ -4,9 +4,9 @@ import { throttle } from '@/utils/helpers';
 
 export interface UseDeviceMotionReturn {
   interval: DeviceMotionEvent['interval'];
-  acceleration: DeviceMotionEventAcceleration
-  accelerationIncludingGravity: DeviceMotionEventAcceleration
-  rotationRate: DeviceMotionEventRotationRate
+  acceleration: DeviceMotionEventAcceleration;
+  accelerationIncludingGravity: DeviceMotionEventAcceleration;
+  rotationRate: DeviceMotionEventRotationRate;
 }
 
 export interface UseDeviceMotionParams {

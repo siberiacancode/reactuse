@@ -20,20 +20,15 @@ const timeAgo = (timestamp, locale = 'en') => {
 
   if (years > 0) {
     value = rtf.format(0 - years, 'year');
-  }
-  else if (months > 0) {
+  } else if (months > 0) {
     value = rtf.format(0 - months, 'month');
-  }
-  else if (days > 0) {
+  } else if (days > 0) {
     value = rtf.format(0 - days, 'day');
-  }
-  else if (hours > 0) {
+  } else if (hours > 0) {
     value = rtf.format(0 - hours, 'hour');
-  }
-  else if (minutes > 0) {
+  } else if (minutes > 0) {
     value = rtf.format(0 - minutes, 'minute');
-  }
-  else {
+  } else {
     value = rtf.format(0 - diff, 'second');
   }
   return value;

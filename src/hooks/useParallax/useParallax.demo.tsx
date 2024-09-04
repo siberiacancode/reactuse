@@ -14,30 +14,22 @@ const Demo = () => {
 
   const layer0 = {
     ...layerBase,
-    transform: `translateX(${parallax.value.tilt * 10}px) translateY(${
-      parallax.value.roll * 10
-    }px)`
+    transform: `translateX(${parallax.value.tilt * 10}px) translateY(${parallax.value.roll * 10}px)`
   };
 
   const layer1 = {
     ...layerBase,
-    transform: `translateX(${parallax.value.tilt * 20}px) translateY(${
-      parallax.value.roll * 20
-    }px)`
+    transform: `translateX(${parallax.value.tilt * 20}px) translateY(${parallax.value.roll * 20}px)`
   };
 
   const layer2 = {
     ...layerBase,
-    transform: `translateX(${parallax.value.tilt * 30}px) translateY(${
-      parallax.value.roll * 30
-    }px)`
+    transform: `translateX(${parallax.value.tilt * 30}px) translateY(${parallax.value.roll * 30}px)`
   };
 
   const layer3 = {
     ...layerBase,
-    transform: `translateX(${parallax.value.tilt * 40}px) translateY(${
-      parallax.value.roll * 40
-    }px)`
+    transform: `translateX(${parallax.value.tilt * 40}px) translateY(${parallax.value.roll * 40}px)`
   };
 
   const cardStyle = {
@@ -49,9 +41,7 @@ const Demo = () => {
     overflow: 'hidden',
     transition: '.3s ease-out all',
     boxShadow: '0 0 20px 0 rgba(255, 255, 255, 0.25)',
-    transform: `rotateX(${parallax.value.roll * 20}deg) rotateY(${
-      parallax.value.tilt * 20
-    }deg)`
+    transform: `rotateX(${parallax.value.roll * 20}deg) rotateY(${parallax.value.tilt * 20}deg)`
   };
 
   const containerStyle: CSSProperties = {
@@ -112,10 +102,8 @@ const Demo = () => {
       </div>
       <div>
         Credit of images to{' '}
-        <a
-          href='https://codepen.io/jaromvogel'
-          target='__blank'
-        >Jarom Vogel
+        <a href='https://codepen.io/jaromvogel' target='__blank'>
+          Jarom Vogel
         </a>
       </div>
     </div>

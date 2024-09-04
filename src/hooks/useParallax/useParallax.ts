@@ -8,38 +8,37 @@ import { useScreenOrientation } from '../useScreenOrientation/useScreenOrientati
 /** The use parallax value type */
 export interface UseParallaxValue {
   /** Roll value. Scaled to `-0.5 ~ 0.5` */
-  roll: number
+  roll: number;
   /** Tilt value. Scaled to `-0.5 ~ 0.5` */
-  tilt: number
+  tilt: number;
   /** Sensor source, can be `mouse` or `deviceOrientation` */
-  source: 'deviceOrientation' | 'mouse'
+  source: 'deviceOrientation' | 'mouse';
 }
 
 /** The use parallax options type */
 export interface UseParallaxOptions {
   /** Device orientation tilt adjust function */
-  deviceOrientationTiltAdjust?: (value: number) => number
+  deviceOrientationTiltAdjust?: (value: number) => number;
   /** Device orientation roll adjust function */
-  deviceOrientationRollAdjust?: (value: number) => number
+  deviceOrientationRollAdjust?: (value: number) => number;
   /** Mouse tilt adjust function */
-  mouseTiltAdjust?: (value: number) => number
+  mouseTiltAdjust?: (value: number) => number;
   /** Mouse roll adjust function */
-  mouseRollAdjust?: (value: number) => number
+  mouseRollAdjust?: (value: number) => number;
 }
 
 interface UseParallaxReturn {
-  value: UseParallaxValue
+  value: UseParallaxValue;
 }
 
 export interface UseParallax {
-  <Target extends UseMouseTarget>(
-    target: Target,
-    options?: UseParallaxOptions
-  ): UseParallaxReturn
+  <Target extends UseMouseTarget>(target: Target, options?: UseParallaxOptions): UseParallaxReturn;
 
-  <Target extends UseMouseTarget>(params?: UseParallaxOptions): UseParallaxReturn & {
-    ref: (node: Target) => void
-  }
+  <Target extends UseMouseTarget>(
+    params?: UseParallaxOptions
+  ): UseParallaxReturn & {
+    ref: (node: Target) => void;
+  };
 }
 
 /**
@@ -64,8 +63,12 @@ export interface UseParallax {
  * const { ref, roll, tilt, source } = useParallax();
  */
 export const useParallax = ((...params: any[]) => {
-  const target = params[0] instanceof Function || (params[0] && 'current' in params[0]) || params[0] instanceof Element ?
-    params[0] : undefined;
+  const target =
+    params[0] instanceof Function ||
+    (params[0] && 'current' in params[0]) ||
+    params[0] instanceof Element
+      ? params[0]
+      : undefined;
   const {
     deviceOrientationRollAdjust = (value) => value,
     deviceOrientationTiltAdjust = (value) => value,
@@ -80,8 +83,9 @@ export const useParallax = ((...params: any[]) => {
   const deviceOrientation = useDeviceOrientation();
 
   const getSource = () => {
-    const isDeviceOrientation = deviceOrientation.supported
-      && (deviceOrientation.value.alpha || deviceOrientation.value.gamma);
+    const isDeviceOrientation =
+      deviceOrientation.supported &&
+      (deviceOrientation.value.alpha || deviceOrientation.value.gamma);
 
     if (isDeviceOrientation) return 'deviceOrientation';
     return 'mouse';
@@ -108,8 +112,7 @@ export const useParallax = ((...params: any[]) => {
           value = -deviceOrientation.value.beta! / 90;
       }
       return deviceOrientationRollAdjust(value);
-    }
-    else {
+    } else {
       const y = mouse.y - mouse.elementPositionY;
       const height = mouse.element.getBoundingClientRect().height;
       const value = -(y - height / 2) / height;
@@ -138,8 +141,7 @@ export const useParallax = ((...params: any[]) => {
           value = deviceOrientation.value.gamma! / 90;
       }
       return deviceOrientationTiltAdjust(value);
-    }
-    else {
+    } else {
       const x = mouse.x - mouse.elementPositionX;
       const width = mouse.element.getBoundingClientRect().width;
       const value = (x - width / 2) / width;

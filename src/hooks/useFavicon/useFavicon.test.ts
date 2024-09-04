@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react';
 import { useFavicon } from './useFavicon';
 
 afterEach(() => {
-  const favicon = document.querySelector('link[rel*=\'icon\']');
+  const favicon = document.querySelector("link[rel*='icon']");
   if (favicon) favicon.remove();
 });
 
@@ -17,7 +17,7 @@ it('Should use favicon', () => {
 it('Should be set initial favicon', () => {
   const { result } = renderHook(() => useFavicon('https://www.google.com/favicon.ico'));
 
-  const favicon = document.querySelector('link[rel*=\'icon\']');
+  const favicon = document.querySelector("link[rel*='icon']");
   expect(favicon).toBeInstanceOf(HTMLLinkElement);
   expect(result.current.href).toBe('https://www.google.com/favicon.ico');
 });
@@ -39,7 +39,7 @@ it('Should be set the new favicon', () => {
 
   act(() => result.current.set('https://www.google.com/favicon.ico'));
 
-  const favicon = document.querySelector('link[rel*=\'icon\']');
+  const favicon = document.querySelector("link[rel*='icon']");
   expect(favicon).toBeInstanceOf(HTMLLinkElement);
   expect(result.current.href).toBe('https://www.google.com/favicon.ico');
 });

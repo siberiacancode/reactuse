@@ -2,31 +2,39 @@ import { useEffect, useState } from 'react';
 
 declare global {
   interface ScreenOrientation {
-    lock: (orientation: OrientationLockType) => Promise<void>
+    lock: (orientation: OrientationLockType) => Promise<void>;
   }
 }
 
 /* The use device orientation value type */
 export interface UseScreenOrientationValue {
   /** The current angle */
-  angle: number
+  angle: number;
   /** The current orientation type */
-  orientationType: OrientationType
+  orientationType: OrientationType;
 }
 
 /* The screen lock orientation type */
-export type OrientationLockType = 'any' | 'natural' | 'landscape' | 'portrait' | 'portrait-primary' | 'portrait-secondary' | 'landscape-primary' | 'landscape-secondary';
+export type OrientationLockType =
+  | 'any'
+  | 'natural'
+  | 'landscape'
+  | 'portrait'
+  | 'portrait-primary'
+  | 'portrait-secondary'
+  | 'landscape-primary'
+  | 'landscape-secondary';
 
 /* The use device orientation return type */
 export interface useScreenOrientationReturn {
   /** Whether the screen orientation is supported */
-  supported: boolean
+  supported: boolean;
   /** The current screen orientation value */
-  value: UseScreenOrientationValue
+  value: UseScreenOrientationValue;
   /** Lock the screen orientation */
-  lock: (orientation: OrientationLockType) => void
+  lock: (orientation: OrientationLockType) => void;
   /** Unlock the screen orientation */
-  unlock: () => void
+  unlock: () => void;
 }
 
 /**
@@ -71,8 +79,7 @@ export const useScreenOrientation = (): useScreenOrientationReturn => {
   };
 
   const unlock = () => {
-    if (supported && typeof screenOrientation.unlock === 'function')
-      screenOrientation.unlock();
+    if (supported && typeof screenOrientation.unlock === 'function') screenOrientation.unlock();
   };
 
   return {

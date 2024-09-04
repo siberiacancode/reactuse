@@ -12,8 +12,7 @@ export default async () => {
 
       if (!category) {
         categoryItems.push({ text: hookItem.category, items: [hookItem] });
-      }
-      else {
+      } else {
         category.items!.push(hookItem);
       }
 
@@ -65,8 +64,7 @@ export default async () => {
             pattern: ({ filePath, params }) => {
               if (filePath.includes('hooks') && params?.name) {
                 return `https://github.com/siberiacancode/reactuse/blob/main/src/hooks/${params.name}/${params.name}.ts`;
-              }
-              else {
+              } else {
                 return `https://github.com/siberiacancode/reactuse/blob/main/docs/${filePath}`;
               }
             },

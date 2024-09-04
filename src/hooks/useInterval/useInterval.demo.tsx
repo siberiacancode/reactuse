@@ -37,17 +37,15 @@ const Demo = () => {
           type='number'
         />
       </p>
-      {active
-        ? (
-          <button type='button' onClick={pause}>
-            Pause
-          </button>
-        )
-        : (
-          <button type='button' onClick={resume}>
-            Resume
-          </button>
-        )}
+      {active ? (
+        <button type='button' onClick={pause}>
+          Pause
+        </button>
+      ) : (
+        <button type='button' onClick={resume}>
+          Resume
+        </button>
+      )}
     </div>
   );
 };

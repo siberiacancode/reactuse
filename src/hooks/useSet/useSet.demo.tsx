@@ -4,11 +4,7 @@ import { useSet } from './useSet';
 
 const Demo = () => {
   const [input, setInput] = useState('');
-  const scopes = useSet([
-    '@siberiacancode',
-    '@siberiacancode-tests',
-    '@shared'
-  ]);
+  const scopes = useSet(['@siberiacancode', '@siberiacancode-tests', '@shared']);
 
   return (
     <>

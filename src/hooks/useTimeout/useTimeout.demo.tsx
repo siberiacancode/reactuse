@@ -1,7 +1,7 @@
 import { useTimeout } from './useTimeout';
 
 const Demo = () => {
-  const timeout = useTimeout(() => {}, 5000);
+  const timeout = useTimeout(() => console.log('ready'), 5000);
 
   return (
     <div>

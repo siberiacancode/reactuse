@@ -18,8 +18,8 @@ const groups: Group[] = [{ id: groupIndex, parameters: [], returns: null }];
 
 props.apiParameters.forEach((parameter, index) => {
   if (parameter.tag === 'overload') {
-    const isFirstOverload
-      = props.apiParameters.findIndex((parameter) => parameter.tag === 'overload') === index;
+    const isFirstOverload =
+      props.apiParameters.findIndex((parameter) => parameter.tag === 'overload') === index;
     if (!isFirstOverload) {
       groupIndex++;
       groups.push({ id: groupIndex, parameters: [], returns: null });
@@ -38,9 +38,7 @@ props.apiParameters.forEach((parameter, index) => {
 
 <template>
   <div v-for="group in groups" :key="group.id">
-    <h3 v-if="group.parameters.length">
-      Parameters
-    </h3>
+    <h3 v-if="group.parameters.length">Parameters</h3>
     <table v-if="group.parameters.length">
       <thead>
         <tr>

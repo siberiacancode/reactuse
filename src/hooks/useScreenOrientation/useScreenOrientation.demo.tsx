@@ -6,12 +6,16 @@ const Demo = () => {
   return (
     <>
       <p>
-        For best results, please use a mobile or tablet device
-        or use your browser's native inspector to simulate an orientation change
+        For best results, please use a mobile or tablet device or use your browsers native inspector
+        to simulate an orientation change
       </p>
 
-      <div>Orientation Type: <code>{screenOrientation.value.orientationType}</code></div>
-      <div>Orientation Angle: <code>{screenOrientation.value.angle}</code></div>
+      <div>
+        Orientation Type: <code>{screenOrientation.value.orientationType}</code>
+      </div>
+      <div>
+        Orientation Angle: <code>{screenOrientation.value.angle}</code>
+      </div>
     </>
   );
 };
