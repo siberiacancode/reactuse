@@ -81,7 +81,21 @@ export const useStorage = <Value>(
   const options = (typeof params === 'object' ? params : undefined) as UseStorageOptions<Value>;
   const initialValue = (options ? options?.initialValue : params) as UseStorageInitialValue<Value>;
 
-  const storage = options?.storage ?? window.localStorage;
+  const set = (value: Value) => {
+    if (value === null) return removeStorageItem(storage, key);
+    setStorageItem(storage, key, serializer(value));
+  };
+  const remove = () => removeStorageItem(storage, key);
+
+
+  if (!isClient)
+    return {
+      value: initialValue instanceof Function ? initialValue() : initialValue,
+      set,
+      remove
+    };
+
+  const storage = options?.storage ?? window?.localStorage;
   const serializer = (value: Value) => {
     if (options?.serializer) return options.serializer(value);
     return JSON.stringify(value);
@@ -104,11 +118,6 @@ export const useStorage = <Value>(
   const getSnapshot = () => getStorageItem(storage, key);
   const store = useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
 
-  const set = (value: Value) => {
-    if (value === null) return removeStorageItem(storage, key);
-    setStorageItem(storage, key, serializer(value));
-  };
-
   useIsomorphicLayoutEffect(() => {
     const value = getStorageItem(storage, key);
     if (value === undefined && initialValue !== undefined) {
@@ -120,14 +129,7 @@ export const useStorage = <Value>(
     }
   }, [key]);
 
-  const remove = () => removeStorageItem(storage, key);
 
-  if (!isClient)
-    return {
-      value: initialValue instanceof Function ? initialValue() : initialValue,
-      set,
-      remove
-    };
   return {
     value: store ? deserializer(store) : undefined,
     set,

@@ -5,8 +5,7 @@ export default eslint(
     typescript: true,
     react: true,
     jsx: true,
-    vue: true,
-    stylistic: true
+    vue: true
   },
   {
     name: 'siberiacancode/hooks',
