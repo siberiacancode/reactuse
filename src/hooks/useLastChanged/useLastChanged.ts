@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 
 /** The use last changed options type  */
 export interface UseLastChangedOptions {
@@ -20,9 +22,7 @@ export interface UseLastChangedOptions {
 export const useLastChanged = (source: any, options?: UseLastChangedOptions): number | null => {
   const [lastChanged, setLastChanged] = useState(options?.initialValue ?? null);
 
-  useEffect(() => {
-    setLastChanged(Date.now());
-  }, [source]);
+  useDidUpdate(() => setLastChanged(Date.now()), [source]);
 
   return lastChanged;
 };
