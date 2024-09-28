@@ -1,22 +1,43 @@
-import { useFilePicker } from './useFilePicker';
+import type { UseFilePickerOptions } from './useFilePicker';
+import { FilePickerValidationError, useFilePicker } from './useFilePicker';
 
 const Demo = () => {
-  const { onChange, files, errors } = useFilePicker({
-    maxSize: 539_953,
-    accept: '.doc'
-  });
+  const options: UseFilePickerOptions = {
+    accept: ['.pdf', '.docx', '.doc'],
+    minSize: 1024,
+    maxSize: 1024 * 1024 * 10
+  };
+
+  const { files, errors, onChange, reset } = useFilePicker(options);
 
   return (
     <section>
-      <input type='file' onChange={onChange} />
-      {files.map((file) => (
-        <p key={file.name}>{file.name}</p>
-      ))}
-      {errors.map((error) => (
-        <p key={error.fileName}>
-          {error.fileName}: {error.errorType}
-        </p>
-      ))}
+      <input type='file' multiple onChange={onChange} />
+      <button type='button' onClick={reset}>
+        Reset
+      </button>
+
+      <h3>Selected Files:</h3>
+      <ul>
+        {files.map((file) => (
+          <li key={file.name}>{file.name}</li>
+        ))}
+      </ul>
+
+      <h3>Errors:</h3>
+      <ul>
+        {errors.map((error) => (
+          <li key={error.fileName}>
+            {error.fileName}
+            {' – '}
+            {error.errorType === FilePickerValidationError.WrongExtension
+              ? 'Wrong Extension'
+              : error.errorType === FilePickerValidationError.TooLarge
+                ? 'Too Large'
+                : 'Too Small'}
+          </li>
+        ))}
+      </ul>
     </section>
   );
 };
