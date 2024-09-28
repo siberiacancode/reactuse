@@ -23,6 +23,7 @@ export * from './useEyeDropper/useEyeDropper';
 export * from './useFavicon/useFavicon';
 export * from './useField/useField';
 export * from './useFileDialog/useFileDialog';
+export * from './useFilePicker/useFilePicker';
 export * from './useFocus/useFocus';
 export * from './useFps/useFps';
 export * from './useFullscreen/useFullscreen';
