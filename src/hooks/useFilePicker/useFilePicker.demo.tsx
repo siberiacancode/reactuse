@@ -1,9 +1,8 @@
 import { useFilePicker } from './useFilePicker';
 
-// TODO: Extend example
 const Demo = () => {
   const { onChange, files, errors } = useFilePicker({
-    maxSize: 1024,
+    maxSize: 539_953,
     accept: '.doc'
   });
 
@@ -14,7 +13,9 @@ const Demo = () => {
         <p key={file.name}>{file.name}</p>
       ))}
       {errors.map((error) => (
-        <p key={error}>{error}</p>
+        <p key={error.fileName}>
+          {error.fileName}: {error.errorType}
+        </p>
       ))}
     </section>
   );

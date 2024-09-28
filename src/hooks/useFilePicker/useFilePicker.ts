@@ -1,18 +1,35 @@
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
+/* The use file picker error variants */
+export enum FilePickerValidationError {
+  WrongExtension = 'wrong-extension',
+  TooLarge = 'too-large',
+  TooSmall = 'too-small'
+}
+
+/* The use file picker error type */
+export interface UseFilePickerError {
+  /** The file name */
+  fileName: string;
+  /** The error variant */
+  errorType: FilePickerValidationError;
+}
+
 /* The use file picker options */
 export interface UseFilePickerOptions {
+  /** The default files set */
+  defaultFiles?: File[];
   /** The accept extensions */
   accept?: string | string[];
-  /** The minimal size of each file */
+  /** The minimal size of each file in bytes */
   minSize?: number;
-  /** The maximal size of each file */
+  /** The maximal size of each file in bytes */
   maxSize?: number;
   /** The success callback */
   onFilesSelected?: (files: File[]) => void;
   /** The error callback */
-  onFilesRejected?: (errors: string[]) => void;
+  onFilesRejected?: (errors: UseFilePickerError[]) => void;
 }
 
 /* The use file picker return type */
@@ -20,7 +37,7 @@ export interface UseFilePickerReturn {
   /** The selected files list */
   files: File[];
   /** The possible errors */
-  errors: string[];
+  errors: UseFilePickerError[];
   /** The file input change callback */
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   /** The reset function */
@@ -31,13 +48,23 @@ export interface UseFilePickerReturn {
  * @name useFilePicker
  * @description - Hook to handle and validate file input
  * @category Browser
- * TODO: Add params description
+ *
+ * @param {File[]} [options.defaultFiles] The default files set
+ * @param {string | string[]} [options.accept] The accepted file extensions
+ * @param {number} [options.minSize] The minimal bytes size of accepted file
+ * @param {number} [options.maxSize] The maximal bytes size of accepted file
+ * @param {number} [options.onFilesSelected] The callback called if there are no validation errors after attaching files
+ * @param {number} [options.onFilesRejected] The callback called if there are errors after attaching files
+ * @returns {UseFilePickerReturn} An object containing the selected files
+ *
+ * @example
+ * const { value errors, reset, onChange } = useFileDialog({ minSize: 1024, accept: ['.docx', '.doc'] });
  */
 export const useFilePicker = (options: UseFilePickerOptions): UseFilePickerReturn => {
-  const { accept, minSize, maxSize, onFilesSelected, onFilesRejected } = options;
+  const { defaultFiles = [], accept, minSize, maxSize, onFilesSelected, onFilesRejected } = options;
 
-  const [files, setFiles] = useState<File[]>([]);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>(defaultFiles);
+  const [errors, setErrors] = useState<UseFilePickerError[]>([]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.currentTarget.files;
@@ -46,26 +73,34 @@ export const useFilePicker = (options: UseFilePickerOptions): UseFilePickerRetur
     }
 
     const newFiles: File[] = [];
-    const newErrors: string[] = [];
+    const newErrors: UseFilePickerError[] = [];
 
     for (const file of selectedFiles) {
-      if (accept && !Array.isArray(accept) && !file.name.endsWith(accept)) {
-        newErrors.push(`File ${file.name} does not match the accepted type.`);
-        continue;
-      }
+      const notMatchesExtension =
+        (accept && !Array.isArray(accept) && !file.name.endsWith(accept)) ||
+        (Array.isArray(accept) && !accept.some((type) => file.name.endsWith(type)));
 
-      if (Array.isArray(accept) && !accept.some((type) => file.name.endsWith(type))) {
-        newErrors.push(`File ${file.name} does not match the accepted type.`);
+      if (notMatchesExtension) {
+        newErrors.push({
+          fileName: file.name,
+          errorType: FilePickerValidationError.WrongExtension
+        });
         continue;
       }
 
       if (minSize && file.size < minSize) {
-        newErrors.push(`File ${file.name} is too small.`);
+        newErrors.push({
+          fileName: file.name,
+          errorType: FilePickerValidationError.TooSmall
+        });
         continue;
       }
 
       if (maxSize && file.size > maxSize) {
-        newErrors.push(`File ${file.name} is too large.`);
+        newErrors.push({
+          fileName: file.name,
+          errorType: FilePickerValidationError.TooLarge
+        });
         continue;
       }
 
@@ -75,11 +110,9 @@ export const useFilePicker = (options: UseFilePickerOptions): UseFilePickerRetur
     setFiles(newFiles);
     setErrors(newErrors);
 
-    if (onFilesSelected) {
+    if (!newErrors.length && onFilesSelected) {
       onFilesSelected(newFiles);
-    }
-
-    if (onFilesRejected && newErrors.length > 0) {
+    } else if (onFilesRejected) {
       onFilesRejected(newErrors);
     }
   };
