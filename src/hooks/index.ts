@@ -42,6 +42,7 @@ export * from './useKeyboard/useKeyboard';
 export * from './useKeyPress/useKeyPress';
 export * from './useKeyPressEvent/useKeyPressEvent';
 export * from './useKeysPressed/useKeysPressed';
+export * from './useLastChanged/useLastChanged';
 export * from './useList/useList';
 export * from './useLocalStorage/useLocalStorage';
 export * from './useLogger/useLogger';
