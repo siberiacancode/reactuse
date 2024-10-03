@@ -45,7 +45,6 @@ export const useAsync = <Data>(
       .catch((error: Error) => {
         setError(error);
         setIsError(true);
-        setIsLoading(false);
       })
       .finally(() => {
         setIsLoading(false);
