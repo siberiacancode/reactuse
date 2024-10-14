@@ -74,7 +74,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
   internalOnChangeRef.current = options?.onChange;
 
   useEffect(() => {
-    if (!enabled || !internalRef) return;
+    if (!enabled && !target && !internalRef) return;
     const element = target ? getElement(target) : internalRef;
     if (!element) return;
 
