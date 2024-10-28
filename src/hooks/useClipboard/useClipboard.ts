@@ -8,6 +8,8 @@ export const isPermissionAllowed = (status: PermissionState) =>
 export const legacyCopyToClipboard = (value: string) => {
   const tempTextArea = document.createElement('textarea');
   tempTextArea.value = value;
+  tempTextArea.readOnly = true;
+  tempTextArea.style.fontSize = '16px';
   document.body.appendChild(tempTextArea);
   tempTextArea.select();
   document.execCommand('copy');
