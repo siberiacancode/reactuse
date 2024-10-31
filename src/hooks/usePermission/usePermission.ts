@@ -42,6 +42,8 @@ export interface UsePermissionReturn {
  *  @description - Hook that gives you the state of permission
  *  @category Browser
  *
+ *  @param {UsePermissionName} permissionDescriptorName - The permission name
+ *  @param {boolean} [options.enabled=true] - Whether the permission is enabled
  *  @returns {UsePermissionReturn} An object containing the state and the supported status
  *
  *  @example
