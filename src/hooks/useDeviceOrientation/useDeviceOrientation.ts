@@ -41,7 +41,6 @@ export const useDeviceOrientation = (): UseDeviceOrientationReturn => {
   });
 
   useEffect(() => {
-    console.log('@@@@@@', window, 'DeviceOrientationEvent' in window);
     if (!supported) return;
 
     const onDeviceOrientation = (event: DeviceOrientationEvent) =>
