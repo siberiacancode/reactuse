@@ -21,6 +21,12 @@ export type UsePermissionName =
   | 'push'
   | 'speaker';
 
+/** The use permission options type */
+export interface UsePermissionOptions {
+  /** Whether the permission is enabled */
+  enabled: boolean;
+}
+
 /** The use permission return type */
 export interface UsePermissionReturn {
   /** The permission state */
@@ -41,9 +47,13 @@ export interface UsePermissionReturn {
  *  @example
  *  const { state, supported, query } = usePermission('microphone');
  */
-export const usePermission = (permissionDescriptorName: UsePermissionName) => {
+export const usePermission = (
+  permissionDescriptorName: UsePermissionName,
+  options?: UsePermissionOptions
+) => {
   const [state, setState] = useState<PermissionState>('prompt');
   const supported = navigator && 'permissions' in navigator;
+  const enabled = options?.enabled ?? true;
 
   const permissionDescriptor = { name: permissionDescriptorName };
 
@@ -61,13 +71,13 @@ export const usePermission = (permissionDescriptorName: UsePermissionName) => {
   });
 
   useEffect(() => {
-    if (!supported) return;
+    if (!supported || !enabled) return;
     query();
     window.addEventListener('change', query);
     return () => {
       window.removeEventListener('change', query);
     };
-  }, [permissionDescriptorName]);
+  }, [permissionDescriptorName, enabled]);
 
   return {
     state,
