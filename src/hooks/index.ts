@@ -1,3 +1,4 @@
+export * from './useActiveElement/useActiveElement';
 export * from './useAsync/useAsync';
 export * from './useBattery/useBattery';
 export * from './useBoolean/useBoolean';
@@ -96,6 +97,7 @@ export * from './useToggle/useToggle';
 export * from './useUnmount/useUnmount';
 export * from './useWebSocket/useWebSocket';
 export * from './useWindowEvent/useWindowEvent';
+export * from './useWindowFocus/useWindowFocus';
 export * from './useWindowScroll/useWindowScroll';
 export * from './useWindowSize/useWindowSize';
 export * from './useWizard/useWizard';

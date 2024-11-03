@@ -19,7 +19,7 @@ export interface UseWindowSizeReturn {
 /**
  * @name useWindowSize
  * @description - Hook that manages a window size
- * @category Browser
+ * @category Elements
  *
  * @param {number} [params.initialWidth=Number.POSITIVE_INFINITY] The initial window width
  * @param {number} [params.initialHeight=Number.POSITIVE_INFINITY] The initial window height
