@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import { useTimer } from '../useTimer/useTimer';
