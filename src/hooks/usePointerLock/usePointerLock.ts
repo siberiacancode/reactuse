@@ -1,20 +1,12 @@
-import type { MouseEvent, MutableRefObject, RefObject } from 'react';
-import { useRef, useState } from 'react';
+import type { MouseEvent, RefObject } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useEventListener } from '../useEventListener/useEventListener';
-
-type MaybeHTMLElement = HTMLElement | undefined | null;
-type MaybeElementRef<T> = RefObject<T | null | undefined>;
-
-interface UsePointerLockOptions {
-  document?: Document;
-}
+type UsePointerLockTarget = RefObject<Element | undefined | null>;
 
 interface UsePointerLockReturn {
-  isSupported: boolean;
-  triggerElement: MutableRefObject<MaybeHTMLElement>;
-  element: MaybeHTMLElement;
-  lock: (event: MouseEvent<HTMLDivElement> | Event) => void;
+  supported: boolean;
+  element?: Element;
+  lock: (event: MouseEvent<Element> | Event) => void;
   unlock: () => boolean;
 }
 
@@ -23,63 +15,61 @@ interface UsePointerLockReturn {
  * @description - Reactive pointer lock
  * @category Sensors
  *
- * @param {MaybeElementRef<MaybeHTMLElement>} target
- * @param {Document} [options.document = window.document]
+ * @param {RefObject<Element>} target
  * @returns {UsePointerLockReturn} An object containing the current pointer lock element and functions to interact with the pointer lock
  *
  * @example
- * const { isSupported, lock, unlock, element, triggerElement } = usePointerLock();
+ * const { supported, lock, unlock, element } = usePointerLock();
  */
 
-export const usePointerLock = (
-  target?: MaybeElementRef<MaybeHTMLElement>,
-  options: UsePointerLockOptions = {}
-): UsePointerLockReturn => {
-  const { document = window.document } = options;
-  const isSupported = !!document && 'pointerLockElement' in document;
+export const usePointerLock = (target?: UsePointerLockTarget): UsePointerLockReturn => {
+  const supported = !!document && 'pointerLockElement' in document;
 
-  const [element, setElement] = useState<MaybeHTMLElement>();
-  const triggerElement = useRef<MaybeHTMLElement>();
-  const targetElement = useRef<MaybeHTMLElement>();
+  const [element, setElement] = useState<Element>();
 
-  useEventListener(document, 'pointerlockchange', () => {
-    if (!isSupported) return;
+  const handlePointerLockChange = () => {
+    if (!supported) return;
 
-    const currentElement = document!.pointerLockElement ?? element;
+    const currentElement = document.pointerLockElement ?? element;
 
-    if (targetElement && currentElement === targetElement.current) {
-      setElement(document.pointerLockElement as MaybeHTMLElement);
-      if (!element) {
-        targetElement.current = triggerElement.current = null;
-      }
+    if (currentElement && currentElement === element) {
+      setElement(document.pointerLockElement as Element);
     }
-  });
+  };
+  const handlePointerLockError = () => {
+    if (!supported) return;
 
-  useEventListener(document, 'pointerlockerror', () => {
-    if (!isSupported) return;
+    const currentElement = document.pointerLockElement ?? element;
 
-    const currentElement = document!.pointerLockElement ?? element;
-
-    if (currentElement === (target?.current || triggerElement.current)) {
-      const action = document!.pointerLockElement ? 'release' : 'acquire';
+    if (currentElement && currentElement === element) {
+      const action = document.pointerLockElement ? 'release' : 'acquire';
 
       throw new Error(`Failed to ${action} pointer lock.`);
     }
-  });
+  };
 
-  const lock = (event: MouseEvent<HTMLDivElement> | Event) => {
-    if (!isSupported) throw new Error('Pointer Lock API is not supported by your browser.');
+  useEffect(() => {
+    if (!supported) return;
 
-    triggerElement.current = event instanceof Event ? (event.currentTarget as HTMLElement) : null;
+    document.addEventListener('pointerlockchange', handlePointerLockChange);
+    document.addEventListener('pointerlockerror', handlePointerLockError);
 
-    targetElement.current =
-      event instanceof Event ? (target?.current ?? triggerElement.current) : event.currentTarget;
+    return () => {
+      document.removeEventListener('pointerlockchange', handlePointerLockChange);
+      document.removeEventListener('pointerlockerror', handlePointerLockError);
+    };
+  }, [supported, element]);
 
-    if (!targetElement) throw new Error('Target element undefined.');
+  const lock = (event: MouseEvent<Element> | Event) => {
+    if (!supported) return;
 
-    targetElement.current?.requestPointerLock();
+    const targetElement = event instanceof Event ? target?.current : event.currentTarget;
 
-    setElement(targetElement.current);
+    if (!targetElement) return;
+
+    targetElement.requestPointerLock();
+
+    setElement(targetElement);
   };
 
   const unlock = () => {
@@ -87,14 +77,13 @@ export const usePointerLock = (
 
     document.exitPointerLock();
 
-    setElement(null);
+    setElement(undefined);
 
     return true;
   };
 
   return {
-    isSupported,
-    triggerElement,
+    supported,
     element,
     lock,
     unlock
