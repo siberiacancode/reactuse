@@ -4,7 +4,6 @@ import { useEvent } from '../useEvent/useEvent';
 
 /** The permission name */
 export type UsePermissionName =
-  | PermissionName
   | 'accelerometer'
   | 'accessibility-events'
   | 'ambient-light-sensor'
@@ -19,7 +18,8 @@ export type UsePermissionName =
   | 'payment-handler'
   | 'persistent-storage'
   | 'push'
-  | 'speaker';
+  | 'speaker'
+  | PermissionName;
 
 /** The use permission options type */
 export interface UsePermissionOptions {
@@ -54,7 +54,7 @@ export const usePermission = (
   options?: UsePermissionOptions
 ) => {
   const [state, setState] = useState<PermissionState>('prompt');
-  const supported = navigator && 'permissions' in navigator;
+  const supported = typeof navigator !== 'undefined' && 'permissions' in navigator;
   const enabled = options?.enabled ?? true;
 
   const permissionDescriptor = { name: permissionDescriptorName };

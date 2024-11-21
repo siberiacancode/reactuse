@@ -1,9 +1,10 @@
 import type { RefObject } from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
-export type UseFocusTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
+export type UseFocusTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
 
 /** The use focus options type */
 export interface UseFocusOptions {
@@ -13,12 +14,12 @@ export interface UseFocusOptions {
 
 /** The use focus return type */
 export interface UseFocusReturn {
-  /** Is the target focused */
-  focus: () => void;
-  /** Is the target focused */
-  blur: () => void;
   /** The boolean state value of the target */
   focused: boolean;
+  /** Is the target focused */
+  blur: () => void;
+  /** Is the target focused */
+  focus: () => void;
 }
 
 export interface UseFocus {

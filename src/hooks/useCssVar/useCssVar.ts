@@ -1,4 +1,5 @@
 import type { RefObject } from 'react';
+
 import { useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
@@ -7,7 +8,7 @@ import { useMount } from '../useMount/useMount';
 import { useMutationObserver } from '../useMutationObserver/useMutationObserver';
 
 /** The css variable target element type */
-export type UseCssVarTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
+export type UseCssVarTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
 
 /** The css variable return type */
 export interface UseCssVarReturn {

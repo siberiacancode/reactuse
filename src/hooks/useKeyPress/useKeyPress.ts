@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
+
 import { useEventListener } from '../useEventListener/useEventListener';
 
 /** The key or keys to listen for */

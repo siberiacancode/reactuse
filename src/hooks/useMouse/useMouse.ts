@@ -1,27 +1,28 @@
 import type { RefObject } from 'react';
+
 import { useEffect, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
 /** The use mouse target element type */
-export type UseMouseTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
+export type UseMouseTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
 
 /** The use mouse return type */
 export interface UseMouseReturn {
-  /** The current mouse x position */
-  x: number;
-  /** The current mouse y position */
-  y: number;
   /** The current element */
   element: Element;
-  /** The current element x position */
-  elementX: number;
-  /** The current element y position */
-  elementY: number;
   /** The current element position x */
   elementPositionX: number;
   /** The current element position y */
   elementPositionY: number;
+  /** The current element x position */
+  elementX: number;
+  /** The current element y position */
+  elementY: number;
+  /** The current mouse x position */
+  x: number;
+  /** The current mouse y position */
+  y: number;
 }
 
 export interface UseMouse {

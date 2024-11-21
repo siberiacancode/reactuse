@@ -1,5 +1,4 @@
 import { useToggle } from '../useToggle/useToggle';
-
 import { useImage } from './useImage';
 
 const Demo = () => {
@@ -12,8 +11,8 @@ const Demo = () => {
       {!image.isLoading && image.data && (
         <img
           alt='demo'
-          style={{ width: 300, height: 200 }}
           src={`https://place-hold.it/300x200/${color}`}
+          style={{ width: 300, height: 200 }}
         />
       )}
       <button type='button' onClick={() => toggle()}>

@@ -11,7 +11,6 @@ const Demo = () => {
 
   return (
     <div
-      id='content'
       ref={ref}
       style={{
         width: 200,
@@ -21,6 +20,7 @@ const Demo = () => {
         alignItems: 'center',
         border: '1px solid red'
       }}
+      id='content'
     >
       content
     </div>

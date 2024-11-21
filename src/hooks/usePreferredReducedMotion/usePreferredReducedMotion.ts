@@ -1,7 +1,7 @@
 import { useMediaQuery } from '../useMediaQuery/useMediaQuery';
 
 /** The use preferred reduced motion return type */
-export type UsePreferredReducedMotionReturn = 'reduce' | 'no-preference';
+export type UsePreferredReducedMotionReturn = 'no-preference' | 'reduce';
 
 /**
  * @name usePreferredReducedMotion

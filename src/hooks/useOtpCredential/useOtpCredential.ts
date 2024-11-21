@@ -19,22 +19,22 @@ export type UseOtpCredentialCallback = (otp: Credential | null) => void;
 
 /* The use otp credential options type */
 export interface UseOtpCredentialParams {
-  /* The callback function to be invoked on success */
-  onSuccess: (credential: Credential | null) => void;
   /* The callback function to be invoked on error */
   onError: (error: any) => void;
+  /* The callback function to be invoked on success */
+  onSuccess: (credential: Credential | null) => void;
 }
 
 /* The use otp credential return type */
 export interface UseOtpCredentialReturn {
-  /* The supported state of the otp credential */
-  supported: boolean;
-  /* The get otp credential function */
-  get: () => Promise<Credential | null>;
   /* The abort function */
   abort: AbortController['abort'];
   /*  The aborted state of the query */
   aborted: boolean;
+  /* The supported state of the otp credential */
+  supported: boolean;
+  /* The get otp credential function */
+  get: () => Promise<Credential | null>;
 }
 
 export interface UseOtpCredential {
@@ -74,7 +74,7 @@ export const useOtpCredential = ((...params: any[]) => {
       ? (params[0] as UseOtpCredentialParams | undefined)?.onError
       : undefined;
 
-  const supported = navigator && 'OTPCredential' in window;
+  const supported = typeof navigator !== 'undefined' && 'OTPCredential' in window;
   const [aborted, setAborted] = useState(false);
 
   const abortControllerRef = useRef<AbortController>(new AbortController());

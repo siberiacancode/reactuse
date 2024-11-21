@@ -1,12 +1,13 @@
 import type { MouseEvent, RefObject } from 'react';
+
 import { useEffect, useState } from 'react';
 
-type UsePointerLockTarget = RefObject<Element | undefined | null>;
+type UsePointerLockTarget = RefObject<Element | null | undefined>;
 
 interface UsePointerLockReturn {
-  supported: boolean;
   element?: Element;
-  lock: (event: MouseEvent<Element> | Event) => void;
+  supported: boolean;
+  lock: (event: Event | MouseEvent<Element>) => void;
   unlock: () => boolean;
 }
 
@@ -60,7 +61,7 @@ export const usePointerLock = (target?: UsePointerLockTarget): UsePointerLockRet
     };
   }, [supported, element]);
 
-  const lock = (event: MouseEvent<Element> | Event) => {
+  const lock = (event: Event | MouseEvent<Element>) => {
     if (!supported) return;
 
     const element = event instanceof Event ? target?.current : event.currentTarget;

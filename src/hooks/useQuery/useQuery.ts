@@ -1,4 +1,5 @@
 import type { DependencyList } from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 
 import { getRetry } from '@/utils/helpers';
@@ -8,53 +9,53 @@ import { useMount } from '../useMount/useMount';
 
 /* The use query return type */
 export interface UseQueryOptions<QueryData, Data> {
-  /* The depends for the hook */
-  keys?: DependencyList;
-  /* The callback function to be invoked on success */
-  onSuccess?: (data: Data) => void;
-  /* The callback function to be invoked on error */
-  onError?: (error: Error) => void;
-  /* The select function to be invoked */
-  select?: (data: QueryData) => Data;
-  /* The initial data for the hook */
-  initialData?: Data | (() => Data);
-  /* The placeholder data for the hook */
-  placeholderData?: Data | (() => Data);
-  /* The retry count of requests */
-  retry?: boolean | number;
-  /* The refetch interval */
-  refetchInterval?: number;
   /* The enabled state of the query */
   enabled?: boolean;
+  /* The initial data for the hook */
+  initialData?: (() => Data) | Data;
+  /* The depends for the hook */
+  keys?: DependencyList;
+  /* The placeholder data for the hook */
+  placeholderData?: (() => Data) | Data;
+  /* The refetch interval */
+  refetchInterval?: number;
+  /* The retry count of requests */
+  retry?: boolean | number;
+  /* The callback function to be invoked on error */
+  onError?: (error: Error) => void;
+  /* The callback function to be invoked on success */
+  onSuccess?: (data: Data) => void;
+  /* The select function to be invoked */
+  select?: (data: QueryData) => Data;
 }
 
 interface UseQueryCallbackParams {
-  /* The abort signal */
-  signal: AbortSignal;
   /* The depends for the hook */
   keys: DependencyList;
+  /* The abort signal */
+  signal: AbortSignal;
 }
 
 /* The use query return type */
 export interface UseQueryReturn<Data> {
-  /* The state of the query */
-  data?: Data;
-  /* The loading state of the query */
-  isLoading: boolean;
-  /* The error state of the query */
-  isError: boolean;
-  /* The success state of the query */
-  isSuccess: boolean;
-  /* The success state of the query */
-  error?: Error;
-  /* The refetch function */
-  refetch: () => void;
-  /* The refetching state of the query */
-  isRefetching: boolean;
   /* The abort function */
   abort: AbortController['abort'];
   /*  The aborted state of the query */
   aborted: boolean;
+  /* The state of the query */
+  data?: Data;
+  /* The success state of the query */
+  error?: Error;
+  /* The error state of the query */
+  isError: boolean;
+  /* The loading state of the query */
+  isLoading: boolean;
+  /* The refetching state of the query */
+  isRefetching: boolean;
+  /* The success state of the query */
+  isSuccess: boolean;
+  /* The refetch function */
+  refetch: () => void;
 }
 
 /**

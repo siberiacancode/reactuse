@@ -10,10 +10,10 @@ interface UseWindowSizeParams {
 
 /** The use window size return type */
 export interface UseWindowSizeReturn {
-  /** The current window width */
-  width: number;
   /** The current window height */
   height: number;
+  /** The current window width */
+  width: number;
 }
 
 /**

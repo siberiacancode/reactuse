@@ -1,22 +1,23 @@
 import type { RefObject } from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
 /** The mutation observer target element type */
 export type UseMutationObserverTarget =
-  | RefObject<Element | null | undefined>
   | (() => Element)
+  | Document
   | Element
-  | Window
-  | Document;
+  | RefObject<Element | null | undefined>
+  | Window;
 
 /** The mutation observer return type */
 export interface UseMutationObserverReturn {
-  /** The mutation observer entries */
-  stop: () => void;
   /** The mutation observer instance */
   observer: MutationObserver;
+  /** The mutation observer entries */
+  stop: () => void;
 }
 
 /** The mutation observer options type */

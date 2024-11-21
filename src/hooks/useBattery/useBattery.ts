@@ -13,12 +13,8 @@ declare global {
   }
 }
 
-/** State for hook use battery */
-export interface UseBatteryStateReturn {
-  /** Is battery API supported? */
-  supported: boolean;
-  /** Is battery information loading? */
-  loading: boolean;
+/** The use battery value type */
+export interface UseBatteryValue {
   /** Is charging battery? */
   charging: boolean;
   /** Time until the battery is fully charged */
@@ -27,6 +23,16 @@ export interface UseBatteryStateReturn {
   dischargingTime: number;
   /** Battery charge level from 0 to 1 */
   level: number;
+  /** Is battery information loading? */
+  loading: boolean;
+}
+
+/** The use battery return type */
+export interface UseBatteryStateReturn {
+  /** Battery API support */
+  supported: boolean;
+  /** The use battery value type  */
+  value: UseBatteryValue;
 }
 
 /**
@@ -39,9 +45,12 @@ export interface UseBatteryStateReturn {
  * @example
  * const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();
  */
-export const useBattery = () => {
-  const [state, setState] = useState<UseBatteryStateReturn>({
-    supported: false,
+export const useBattery = (): UseBatteryStateReturn => {
+  const supported =
+    typeof navigator !== 'undefined' &&
+    'getBattery' in navigator &&
+    typeof navigator.getBattery === 'function';
+  const [value, setValue] = useState<UseBatteryValue>({
     loading: true,
     level: 0,
     charging: false,
@@ -50,15 +59,12 @@ export const useBattery = () => {
   });
 
   useEffect(() => {
-    const supported =
-      navigator && 'getBattery' in navigator && typeof navigator.getBattery === 'function';
-    if (!supported) return setState({ ...state, loading: false });
+    if (!supported) return setValue({ ...value, loading: false });
 
     let battery: BatteryManager | null;
 
     const onChange = () =>
-      setState({
-        supported: true,
+      setValue({
         loading: false,
         level: battery?.level ?? 0,
         charging: battery?.charging ?? false,
@@ -85,5 +91,5 @@ export const useBattery = () => {
     };
   }, []);
 
-  return state;
+  return { supported, value };
 };

@@ -8,7 +8,7 @@ const Demo = () => {
     <>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px' }}>
         {Array.from({ length: 6 }, (_, i) => i + 1).map((id) => (
-          <input key={id} type='text' data-id={String(id)} placeholder={String(id)} />
+          <input key={id} data-id={String(id)} placeholder={String(id)} type='text' />
         ))}
       </div>
 

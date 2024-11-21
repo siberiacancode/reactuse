@@ -1,25 +1,26 @@
 import type { RefObject } from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
 /** The intersection observer target element type */
 export type UseIntersectionObserverTarget =
-  | RefObject<Element | null | undefined>
   | (() => Element)
-  | Element;
+  | Element
+  | RefObject<Element | null | undefined>;
 
 /** The intersection observer options type */
 export interface UseIntersectionObserverOptions extends Omit<IntersectionObserverInit, 'root'> {
   enabled?: boolean;
-  onChange?: (entry: IntersectionObserverEntry) => void;
   root?: IntersectionObserverInit['root'] | RefObject<Element | null | undefined>;
+  onChange?: (entry: IntersectionObserverEntry) => void;
 }
 
 /** The intersection observer return type */
 export interface UseIntersectionObserverReturn {
-  inView: boolean;
   entry?: IntersectionObserverEntry;
+  inView: boolean;
 }
 
 export interface UseIntersectionObserver {
@@ -85,7 +86,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
       },
       {
         ...options,
-        root: options?.root ? (getElement(options?.root) as Element | Document) : document
+        root: options?.root ? (getElement(options?.root) as Document | Element) : document
       }
     );
 

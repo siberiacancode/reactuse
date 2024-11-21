@@ -1,5 +1,5 @@
-import { act } from 'react';
 import { renderHook } from '@testing-library/react';
+import { act } from 'react';
 
 import { useMap } from '@/hooks/useMap/useMap';
 

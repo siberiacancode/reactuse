@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 /** The operating system type */
-export type OperatingSystem = 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux';
+export type OperatingSystem = 'android' | 'ios' | 'linux' | 'macos' | 'undetermined' | 'windows';
 
 export const getOperatingSystem = (): OperatingSystem => {
   if (typeof window === 'undefined') return 'undetermined';

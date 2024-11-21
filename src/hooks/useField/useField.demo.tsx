@@ -1,5 +1,4 @@
 import { useRenderCount } from '../useRenderCount/useRenderCount';
-
 import { useField } from './useField';
 
 const Demo = () => {
@@ -46,8 +45,8 @@ const Demo = () => {
 
       <div>
         <input
-          type='text'
           placeholder='Name'
+          type='text'
           {...nameInput.register({
             required: 'field is required',
             minLength: {

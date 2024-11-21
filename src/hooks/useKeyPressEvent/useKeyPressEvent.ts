@@ -2,6 +2,7 @@ import type {
   UseEventListenerOptions,
   UseEventListenerTarget
 } from '../useEventListener/useEventListener';
+
 import { useEventListener } from '../useEventListener/useEventListener';
 
 export type UseKeyPressEventKey = string | string[];

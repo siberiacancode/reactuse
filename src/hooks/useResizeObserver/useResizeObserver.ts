@@ -1,13 +1,14 @@
 import type { RefObject } from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
 /** The resize observer target element type */
 export type UseResizeObserverTarget =
-  | RefObject<Element | null | undefined>
   | (() => Element)
-  | Element;
+  | Element
+  | RefObject<Element | null | undefined>;
 
 /** The resize observer options type */
 export interface UseResizeObserverOptions extends ResizeObserverOptions {

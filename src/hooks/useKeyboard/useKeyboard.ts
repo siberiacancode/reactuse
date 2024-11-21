@@ -1,4 +1,5 @@
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
+
 import { useEventListener } from '../useEventListener/useEventListener';
 
 /** The use key press options type */

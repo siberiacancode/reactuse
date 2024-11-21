@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
 import type { UseMouseTarget } from '../useMouse/useMouse';
+
+import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
 import { useMouse } from '../useMouse/useMouse';
 import { useScreenOrientation } from '../useScreenOrientation/useScreenOrientation';
 
@@ -9,22 +10,22 @@ import { useScreenOrientation } from '../useScreenOrientation/useScreenOrientati
 export interface UseParallaxValue {
   /** Roll value. Scaled to `-0.5 ~ 0.5` */
   roll: number;
-  /** Tilt value. Scaled to `-0.5 ~ 0.5` */
-  tilt: number;
   /** Sensor source, can be `mouse` or `deviceOrientation` */
   source: 'deviceOrientation' | 'mouse';
+  /** Tilt value. Scaled to `-0.5 ~ 0.5` */
+  tilt: number;
 }
 
 /** The use parallax options type */
 export interface UseParallaxOptions {
-  /** Device orientation tilt adjust function */
-  deviceOrientationTiltAdjust?: (value: number) => number;
   /** Device orientation roll adjust function */
   deviceOrientationRollAdjust?: (value: number) => number;
-  /** Mouse tilt adjust function */
-  mouseTiltAdjust?: (value: number) => number;
+  /** Device orientation tilt adjust function */
+  deviceOrientationTiltAdjust?: (value: number) => number;
   /** Mouse roll adjust function */
   mouseRollAdjust?: (value: number) => number;
+  /** Mouse tilt adjust function */
+  mouseTiltAdjust?: (value: number) => number;
 }
 
 interface UseParallaxReturn {

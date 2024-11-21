@@ -1,5 +1,4 @@
 import { act, renderHook } from '@testing-library/react';
-
 import 'core-js/proposals/set-methods-v2';
 
 import { useSet } from './useSet';

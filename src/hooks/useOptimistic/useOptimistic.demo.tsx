@@ -1,6 +1,5 @@
 import { useCounter } from '../useCounter/useCounter';
 import { useMutation } from '../useMutation/useMutation';
-
 import { useOptimistic } from './useOptimistic';
 
 const Demo = () => {

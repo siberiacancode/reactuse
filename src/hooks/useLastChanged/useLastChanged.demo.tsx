@@ -10,8 +10,8 @@ const Demo = () => {
     <div>
       <input
         placeholder='Type something...'
-        onChange={(event) => setInputValue(event.target.value)}
         value={inputValue}
+        onChange={(event) => setInputValue(event.target.value)}
       />
       <p>Last changed: {value}</p>
     </div>

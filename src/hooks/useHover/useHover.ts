@@ -1,4 +1,5 @@
 import type { RefObject } from 'react';
+
 import { useRef, useState } from 'react';
 
 import { useEventListener } from '../useEventListener/useEventListener';
@@ -12,7 +13,7 @@ export interface UseHoverOptions {
 }
 
 //* The use hover target type */
-export type UseHoverTarget = RefObject<Element | null | undefined> | Element;
+export type UseHoverTarget = Element | RefObject<Element | null | undefined>;
 
 export interface UseHover {
   <Target extends UseHoverTarget>(target: Target, callback?: () => void): boolean;

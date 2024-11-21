@@ -1,4 +1,5 @@
 import type { DependencyList, EffectCallback } from 'react';
+
 import { useRef } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';

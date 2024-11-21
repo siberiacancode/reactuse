@@ -1,8 +1,9 @@
 import type { MouseEventHandler, RefObject, TouchEventHandler } from 'react';
+
 import { useRef, useState } from 'react';
 
 // * The use long press target type */
-export type UseLongPressTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
+export type UseLongPressTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
 
 export type LongPressReactEvents<Target extends Element = Element> =
   | MouseEventHandler<Target>
@@ -12,24 +13,24 @@ export type LongPressReactEvents<Target extends Element = Element> =
 export interface UseLongPressOptions {
   // * The threshold time in milliseconds
   threshold?: number;
-  // * The callback function to be invoked on long press start
-  onStart?: (event: LongPressReactEvents) => void;
-  // * The callback function to be invoked on long press end
-  onFinish?: (event: LongPressReactEvents) => void;
   // * The callback function to be invoked on long press cancel
   onCancel?: (event: LongPressReactEvents) => void;
+  // * The callback function to be invoked on long press end
+  onFinish?: (event: LongPressReactEvents) => void;
+  // * The callback function to be invoked on long press start
+  onStart?: (event: LongPressReactEvents) => void;
 }
 
 // * The use long press bind type */
 export interface UseLongPressBind {
   /** The callback function to be invoked on mouse down */
   onMouseDown: MouseEventHandler<Element>;
-  /** The callback function to be invoked on touch start */
-  onTouchStart: TouchEventHandler<Element>;
   /** The callback function to be invoked on mouse up */
   onMouseUp: MouseEventHandler<Element>;
   /** The callback function to be invoked on touch end */
   onTouchEnd: TouchEventHandler<Element>;
+  /** The callback function to be invoked on touch start */
+  onTouchStart: TouchEventHandler<Element>;
 }
 
 // * The use long press return type */
