@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useState } from 'react';
 
 /**
  * @name usePrevious
@@ -13,11 +13,13 @@ import { useEffect, useRef } from 'react';
  * const prevValue = usePrevious(value);
  */
 export const usePrevious = <Value>(value: Value) => {
-  const ref = useRef<Value>();
+  const [current, setCurrent] = useState(value);
+  const [previous, setPrevious] = useState<Value>();
 
-  useEffect(() => {
-    ref.current = value;
-  });
+  if (value !== current) {
+    setCurrent(value);
+    setPrevious(current);
+  }
 
-  return ref.current;
+  return previous;
 };
