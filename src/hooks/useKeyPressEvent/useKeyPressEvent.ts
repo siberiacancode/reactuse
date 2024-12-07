@@ -37,6 +37,20 @@ export interface UseKeyPressEvent {
   ): void;
 }
 
+/**
+ * @name useKeyPressEvent
+ * @description - Hook that listents for key press and execute callback function
+ * @category Sensors
+ *
+ * @param {UseKeyPressEventKey} key The key or array of keys to listen for
+ * @param {UseEventListenerTarget} [target=window] The target to attach the event listener to
+ * @param {(event: KeyboardEvent) => void} callback The callback function to be executed when the specified key or keys are pressed
+ * @param {UseEventListenerOptions} [options] The options for the event listener
+ * @returns {void}
+ *
+ * @example
+ * useKeyPressEvent('Enter', () => console.log('Enter key pressed'));
+ */
 export const useKeyPressEvent = ((...params: any[]) => {
   const keys = (Array.isArray(params[0]) ? params[0] : [params[0]]) as UseKeyPressEventKey;
   const target = (params[1] instanceof Function ? null : params[1]) as
