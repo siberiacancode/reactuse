@@ -12,7 +12,7 @@ const Demo = () => {
         Press <code>Enter</code> key
       </p>
       <p>
-        Count of Enter key presses: <code>{counter.value}</code>
+        Count of key presses: <code>{counter.value}</code>
       </p>
     </div>
   );

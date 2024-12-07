@@ -1,13 +1,9 @@
 import type { CSSProperties } from 'react';
 
-import { useRef } from 'react';
-
 import { useElementSize } from './useElementSize';
 
 const Demo = () => {
-  const element = useRef<HTMLTextAreaElement>(null);
-
-  const { height, width } = useElementSize(element);
+  const elementSize = useElementSize<HTMLTextAreaElement>();
 
   const containerStyle: CSSProperties = {
     display: 'flex',
@@ -24,7 +20,7 @@ const Demo = () => {
   return (
     <div style={containerStyle}>
       <span>Resize the box to see changes</span>
-      <textarea ref={element} style={textareaStyle} value={`width: ${width}\nheight: ${height}`} />
+      <textarea ref={elementSize.ref} style={textareaStyle} value={`width: ${elementSize.value.width}\nheight: ${elementSize.value.height}`} />
     </div>
   );
 };
