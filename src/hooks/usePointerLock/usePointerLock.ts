@@ -13,7 +13,7 @@ interface UsePointerLockReturn {
 
 /**
  * @name usePointerLock
- * @description Hook that provides reactive pointer lock
+ * @description - Hook that provides reactive pointer lock
  * @category Sensors
  *
  * @param {UsePointerLockTarget} target The target element for the pointer lock
