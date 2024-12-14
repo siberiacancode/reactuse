@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react';
 export interface UseAsyncReturn<Data> {
   /* The state of the query */
   data?: Data;
+  /* The error of the query */
+  error?: Error;
+  /* The error state of the query  */
+  isError: boolean;
   /* The loading state of the query */
   isLoading: boolean;
-  /* The error state of the query */
-  isError: boolean;
-  /* The success state of the query */
-  error?: Error;
 }
 
 /**

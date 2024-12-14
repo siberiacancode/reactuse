@@ -28,7 +28,7 @@ export const Demo = () => {
     <div>
       <div>{observed ? 'Observed attribute change to node' : 'No changes observed yet'}</div>
 
-      <button ref={buttonRef} type='button' onClick={addAttribute} disabled={observed}>
+      <button ref={buttonRef} disabled={observed} type='button' onClick={addAttribute}>
         {observed ? 'Added Attribute To Node' : 'Add Attribute To Node'}
       </button>
     </div>

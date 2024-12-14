@@ -3,19 +3,19 @@ import { useEffect, useRef, useState } from 'react';
 import { throttle } from '@/utils/helpers';
 
 export interface UseDeviceMotionReturn {
-  interval: DeviceMotionEvent['interval'];
   acceleration: DeviceMotionEventAcceleration;
   accelerationIncludingGravity: DeviceMotionEventAcceleration;
+  interval: DeviceMotionEvent['interval'];
   rotationRate: DeviceMotionEventRotationRate;
 }
 
 export interface UseDeviceMotionParams {
   /** The delay in milliseconds */
   delay?: number;
-  /** The callback function to be invoked */
-  callback?: (event: DeviceMotionEvent) => void;
   /** Whether to enable the hook */
   enabled?: boolean;
+  /** The callback function to be invoked */
+  callback?: (event: DeviceMotionEvent) => void;
 }
 
 /**

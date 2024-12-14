@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 /* The use file dialog options */
-export interface UseFileDialogOptions extends Pick<ComponentProps<'input'>, 'multiple' | 'accept'> {
+export interface UseFileDialogOptions extends Pick<ComponentProps<'input'>, 'accept' | 'multiple'> {
   /** The capture value */
   capture?: string;
   /** The reset value */

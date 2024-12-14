@@ -10,16 +10,16 @@ interface UseWindowSizeParams {
 
 /** The use window size return type */
 export interface UseWindowSizeReturn {
-  /** The current window width */
-  width: number;
   /** The current window height */
   height: number;
+  /** The current window width */
+  width: number;
 }
 
 /**
  * @name useWindowSize
  * @description - Hook that manages a window size
- * @category Browser
+ * @category Elements
  *
  * @param {number} [params.initialWidth=Number.POSITIVE_INFINITY] The initial window width
  * @param {number} [params.initialHeight=Number.POSITIVE_INFINITY] The initial window height

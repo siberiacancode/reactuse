@@ -23,13 +23,13 @@ const Demo = () => {
         Is last step: <code>{String(isLast)}</code>
       </p>
       {StepComponent}
-      <button type='button' disabled={isFirst} onClick={back}>
+      <button disabled={isFirst} type='button' onClick={back}>
         Back
       </button>
-      <button type='button' disabled={isLast} onClick={next}>
+      <button disabled={isLast} type='button' onClick={next}>
         Next
       </button>
-      <button type='button' disabled={isFirst} onClick={reset}>
+      <button disabled={isFirst} type='button' onClick={reset}>
         Reset
       </button>
     </>

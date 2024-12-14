@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
+import type { Paint } from './helpers/Paint';
+
 import { useField } from '../useField/useField';
 import { useInterval } from '../useInterval/useInterval';
 import { useKeyPressEvent } from '../useKeyPressEvent/useKeyPressEvent';
-
-import type { Paint } from './helpers/Paint';
 import { usePaint } from './usePaint';
 
 // мобильное устройство
@@ -45,15 +45,15 @@ const Demo = () => {
 
         <div>
           <label>Opacity</label>
-          <input min='0' max='1' step='0.1' type='range' {...opacityInput.register()} />
+          <input max='1' min='0' step='0.1' type='range' {...opacityInput.register()} />
         </div>
         <div>
           <label>Radius</label>
-          <input min='3' max='20' type='range' {...radiusInput.register()} />
+          <input max='20' min='3' type='range' {...radiusInput.register()} />
         </div>
       </div>
 
-      <canvas ref={paint.ref} width='500' height='500' style={{ backgroundColor: 'white' }} />
+      <canvas ref={paint.ref} height='500' style={{ backgroundColor: 'white' }} width='500' />
       <br />
       <p>
         press key <code>c</code> to clear

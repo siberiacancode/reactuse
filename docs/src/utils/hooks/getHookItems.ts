@@ -4,10 +4,10 @@ import { getHookFile } from './getHookFile';
 import { getHooks } from './getHooks';
 
 interface HookItem {
-  text: string;
   category: string;
   description: string;
   link: string;
+  text: string;
 }
 
 export const getHookItems = async (): Promise<HookItem[]> => {

@@ -1,5 +1,4 @@
 import { useCounter } from '../useCounter/useCounter';
-
 import { useDebounceCallback } from './useDebounceCallback';
 
 const Demo = () => {

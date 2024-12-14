@@ -1,5 +1,4 @@
 import { useRenderCount } from '../useRenderCount/useRenderCount';
-
 import { useRerender } from './useRerender';
 
 const Demo = () => {

@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react';
 import { useEffect, useState } from 'react';
 
 /** The use script status */
-export type UseScriptStatus = 'loading' | 'ready' | 'error' | 'unknown';
+export type UseScriptStatus = 'error' | 'loading' | 'ready' | 'unknown';
 export const SCRIPT_STATUS_ATTRIBUTE_NAME = 'script-status';
 
 /** The use script options extends from attributes script tag */
