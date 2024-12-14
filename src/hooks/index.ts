@@ -66,6 +66,7 @@ export * from './usePageLeave/usePageLeave';
 export * from './usePaint/usePaint';
 export * from './useParallax/useParallax';
 export * from './usePermission/usePermission';
+export * from './usePostMessage/usePostMessage';
 export * from './usePreferredColorScheme/usePreferredColorScheme';
 export * from './usePreferredContrast/usePreferredContrast';
 export * from './usePreferredDark/usePreferredDark';
