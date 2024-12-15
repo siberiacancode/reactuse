@@ -6,7 +6,7 @@ import { useRerender } from '../useRerender/useRerender';
 export type Breakpoints<Breakpoint extends string = string> = Record<Breakpoint, number>;
 
 /** The use breakpoints strategy */
-export type UseBreakpointsStrategy = 'desktop-first' | 'mobile-first';
+export type UseBreakpointsStrategy = 'mobile-first' | 'desktop-first';
 
 const match = (query: string) => window.matchMedia(query).matches;
 

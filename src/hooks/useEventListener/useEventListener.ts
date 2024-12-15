@@ -6,11 +6,11 @@ import { getElement } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
 
 export type UseEventListenerTarget =
-  | (() => Element)
-  | Document
-  | Element
   | RefObject<Element | null | undefined>
-  | Window;
+  | (() => Element)
+  | Element
+  | Window
+  | Document;
 
 export type UseEventListenerOptions = boolean | AddEventListenerOptions;
 
@@ -65,7 +65,7 @@ export const useEventListener = ((...params: any[]) => {
     | undefined;
   const event = (target ? params[1] : params[0]) as string | string[];
   const events = Array.isArray(event) ? event : [event];
-  const listener = (target ? params[2] : params[1]) as (...arg: any[]) => undefined | void;
+  const listener = (target ? params[2] : params[1]) as (...arg: any[]) => void | undefined;
   const options: UseEventListenerOptions | undefined = target ? params[3] : params[2];
 
   const [internalRef, setInternalRef] = useState<Element>();

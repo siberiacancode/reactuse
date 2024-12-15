@@ -18,14 +18,14 @@ interface UseStepReturn {
   isFirst: boolean;
   /** Boolean value if current step is last */
   isLast: boolean;
-  /** Go to back step */
-  back: () => void;
   /** Go to next step */
   next: () => void;
+  /** Go to back step */
+  back: () => void;
   /** Reset current step to initial value */
   reset: () => void;
   /** Go to custom step */
-  set: (value: number | 'first' | 'last') => void;
+  set: (value: number | 'last' | 'first') => void;
 }
 
 const FIRST_STEP_VALUE = 1;
@@ -74,7 +74,7 @@ export const useStep = (params: number | UseStepParams): UseStepReturn => {
 
   const reset = () => setCurrentStep(initialStep.current);
 
-  const set = (value: number | 'first' | 'last') => {
+  const set = (value: number | 'last' | 'first') => {
     if (value === 'first') return setCurrentStep(initialStep.current);
     if (value === 'last') return setCurrentStep(max);
     if (value >= max) return setCurrentStep(max);

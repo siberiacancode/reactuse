@@ -5,10 +5,9 @@ import { isClient } from '@/utils/helpers';
 export interface Connection extends EventTarget {
   readonly downlink: number;
   readonly downlinkMax: number;
-  readonly effectiveType: '2g' | '3g' | '4g' | 'slow-2g';
+  readonly effectiveType: 'slow-2g' | '2g' | '3g' | '4g';
   readonly rtt: number;
   readonly saveData: boolean;
-  onChange: (event: Event) => void;
   readonly type:
     | 'bluetooth'
     | 'cellular'
@@ -19,6 +18,7 @@ export interface Connection extends EventTarget {
     | 'unknown'
     | 'wifi'
     | 'wimax';
+  onChange: (event: Event) => void;
 }
 
 declare global {
@@ -36,14 +36,14 @@ export type ConnectionEffectiveType = Connection['effectiveType'];
 
 /** The use network return type */
 export interface UseNetworkReturn {
+  /** Indicates if the device is currently online */
+  online: boolean;
   /** The estimated downlink speed in megabits per seconds */
   downlink?: Connection['downlink'];
   /** The maximum downlink speed, if available */
   downlinkMax?: Connection['downlinkMax'];
   /** The effective type of connection (e.g., '2g', '3g', '4g') */
   effectiveType?: Connection['effectiveType'];
-  /** Indicates if the device is currently online */
-  online: boolean;
   /** The estimated round-trip time in milliseconds */
   rtt?: Connection['rtt'];
   /** Indicates if the user has enabled data saving mode */

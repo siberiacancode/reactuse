@@ -5,18 +5,18 @@ import { getElement } from '@/utils/helpers';
 
 /** The mutation observer target element type */
 export type UseMutationObserverTarget =
-  | (() => Element)
-  | Document
-  | Element
   | RefObject<Element | null | undefined>
-  | Window;
+  | (() => Element)
+  | Element
+  | Window
+  | Document;
 
 /** The mutation observer return type */
 export interface UseMutationObserverReturn {
-  /** The mutation observer instance */
-  observer: MutationObserver;
   /** The mutation observer entries */
   stop: () => void;
+  /** The mutation observer instance */
+  observer: MutationObserver;
 }
 
 /** The mutation observer options type */

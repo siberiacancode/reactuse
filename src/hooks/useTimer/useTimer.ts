@@ -27,22 +27,22 @@ export interface UseTimerOptions {
 
 /** The use timer return type */
 export interface UseTimerReturn {
+  /** flag to indicate if timer is running or not */
+  running: boolean;
   /** The day count of the timer */
   days: number;
   /** The hour count of the timer */
   hours: number;
   /** The minute count of the timer */
   minutes: number;
-  /** flag to indicate if timer is running or not */
-  running: boolean;
   /** The second count of the timer */
   seconds: number;
   /** The function to pause the timer */
   pause: () => void;
-  /** The function to restart the timer */
-  restart: (time: number, autostart?: boolean) => void;
   /** The function to start the timer */
   start: () => void;
+  /** The function to restart the timer */
+  restart: (time: number, autostart?: boolean) => void;
   /** The function to toggle the timer */
   toggle: () => void;
 }

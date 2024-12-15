@@ -1,5 +1,6 @@
 import { useField } from '../useField/useField';
 import { useList } from '../useList/useList';
+
 import { useMutation } from './useMutation';
 
 const createUser = (name: string) => Promise.resolve({ name });
@@ -17,8 +18,8 @@ const Demo = () => {
       <p>User list</p>
       <input {...nameField.register()} />
       <button
-        disabled={!name}
         type='button'
+        disabled={!name}
         onClick={async () => {
           const createUserResponse = await createUserMutation.mutateAsync(name);
           userList.push(createUserResponse);

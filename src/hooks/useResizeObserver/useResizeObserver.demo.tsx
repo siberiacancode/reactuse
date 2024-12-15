@@ -14,7 +14,7 @@ const Demo = () => {
   return (
     <>
       <p>Resize the box to see changes</p>
-      <textarea disabled ref={resizeObserver.ref} value={text} />
+      <textarea ref={resizeObserver.ref} disabled value={text} />
     </>
   );
 };

@@ -1,11 +1,11 @@
 import type { RefObject } from 'react';
 
 export type GetElementTarget =
-  | (() => Element)
-  | Document
-  | Element
   | RefObject<Element | null | undefined>
-  | Window;
+  | (() => Element)
+  | Element
+  | Window
+  | Document;
 
 export const getElement = <Target extends GetElementTarget>(target: Target) => {
   if (typeof target === 'function') {

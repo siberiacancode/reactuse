@@ -2,30 +2,30 @@ import { useState } from 'react';
 
 /** The use set return type */
 interface UseSetReturn<Value> {
-  /** The size of the set */
-  size: number;
   /** The current set */
   value: Set<Value>;
-  /** Function to add a value to the set */
-  add: (value: Value) => void;
-  /** Function to clear the set */
-  clear: () => void;
-  /** Function to get the symmetric difference of two sets */
-  difference: (other: Set<Value>) => void;
+  /** The size of the set */
+  size: number;
   /** Function to check if a value exists in the set */
   has: (value: Value) => boolean;
-  /** Function to get the difference of two sets */
-  intersection: (other: Set<Value>) => void;
+  /** Function to add a value to the set */
+  add: (value: Value) => void;
   /** Function to remove a value from the set */
   remove: (value: Value) => void;
+  /** Function to clear the set */
+  clear: () => void;
   /** Function to toggle a value in the set */
   reset: () => void;
-  /** Function to get the symmetric difference of two sets */
-  symmetricDifference: (other: Set<Value>) => void;
   /** Function to toggle a value in the set */
   toggle: (value: Value) => void;
   /** Function to get the union of two sets */
   union: (other: Set<Value>) => void;
+  /** Function to get the difference of two sets */
+  intersection: (other: Set<Value>) => void;
+  /** Function to get the symmetric difference of two sets */
+  difference: (other: Set<Value>) => void;
+  /** Function to get the symmetric difference of two sets */
+  symmetricDifference: (other: Set<Value>) => void;
 }
 
 /**

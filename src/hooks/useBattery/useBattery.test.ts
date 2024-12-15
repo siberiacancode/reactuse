@@ -33,28 +33,24 @@ it('Should use battery', async () => {
   const { result } = renderHook(useBattery);
 
   expect(result.current).toEqual({
-    supported: true,
-    value: {
-      loading: true,
-      level: 0,
-      charging: false,
-      chargingTime: 0,
-      dischargingTime: 0
-    }
+    supported: false,
+    loading: true,
+    level: 0,
+    charging: false,
+    chargingTime: 0,
+    dischargingTime: 0
   });
 
   expect(navigator.getBattery).toBeCalledTimes(1);
 
   await waitFor(() =>
     expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: true,
-        chargingTime: 0,
-        dischargingTime: 5,
-        level: 1,
-        loading: false
-      }
+      charging: true,
+      chargingTime: 0,
+      dischargingTime: 5,
+      level: 1,
+      loading: false,
+      supported: true
     })
   );
 });
@@ -69,14 +65,12 @@ it('Should handle levelchange event', async () => {
 
   await waitFor(() =>
     expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: true,
-        chargingTime: 0,
-        dischargingTime: 5,
-        level: 2,
-        loading: false
-      }
+      charging: true,
+      chargingTime: 0,
+      dischargingTime: 5,
+      level: 2,
+      loading: false,
+      supported: true
     })
   );
 });
@@ -91,14 +85,12 @@ it('Should handle chargingchange event', async () => {
 
   await waitFor(() =>
     expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: false,
-        chargingTime: 0,
-        dischargingTime: 5,
-        level: 2,
-        loading: false
-      }
+      charging: false,
+      chargingTime: 0,
+      dischargingTime: 5,
+      level: 2,
+      loading: false,
+      supported: true
     })
   );
 });
@@ -113,14 +105,12 @@ it('Should handle chargingtimechange event', async () => {
 
   await waitFor(() =>
     expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: false,
-        chargingTime: 1,
-        dischargingTime: 5,
-        level: 2,
-        loading: false
-      }
+      charging: false,
+      chargingTime: 1,
+      dischargingTime: 5,
+      level: 2,
+      loading: false,
+      supported: true
     })
   );
 });
@@ -135,14 +125,12 @@ it('Should handle dischargingtimechange event', async () => {
 
   await waitFor(() =>
     expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: false,
-        chargingTime: 1,
-        dischargingTime: 6,
-        level: 2,
-        loading: false
-      }
+      charging: false,
+      chargingTime: 1,
+      dischargingTime: 6,
+      level: 2,
+      loading: false,
+      supported: true
     })
   );
 });

@@ -6,10 +6,10 @@ import { useEventListener } from '../useEventListener/useEventListener';
 
 /** The use keys pressed params type */
 export interface UseKeysPressedParams {
-  /** Enable or disable the event listeners */
-  enabled?: boolean;
   /** The target to attach the event listeners to */
   target?: UseEventListenerTarget;
+  /** Enable or disable the event listeners */
+  enabled?: boolean;
 }
 
 /**

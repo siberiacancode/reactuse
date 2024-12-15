@@ -6,14 +6,14 @@ import { getElement } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
 
 /** The use infinite scroll target element type */
-export type UseInfiniteScrollTarget = (() => Element) | Element | RefObject<Element | null>;
+export type UseInfiniteScrollTarget = RefObject<Element | null> | (() => Element) | Element;
 
 /** The use infinite scroll options type */
 export interface UseInfiniteScrollOptions {
-  /** The direction to trigger the callback */
-  direction?: 'bottom' | 'left' | 'right' | 'top';
   /** The distance in pixels to trigger the callback */
   distance?: number;
+  /** The direction to trigger the callback */
+  direction?: 'top' | 'bottom' | 'left' | 'right';
 }
 
 export interface UseInfiniteScroll {

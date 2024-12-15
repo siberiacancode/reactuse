@@ -78,24 +78,24 @@ const Demo = () => {
         <div style={cardStyle}>
           <div style={cardContentStyle}>
             <img
-              alt='layer0'
-              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_3.png'
               style={layer0}
+              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_3.png'
+              alt='layer0'
             />
             <img
-              alt='layer1'
-              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_2.png'
               style={layer1}
+              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_2.png'
+              alt='layer1'
             />
             <img
-              alt='layer2'
-              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_1.png'
               style={layer2}
+              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_1.png'
+              alt='layer2'
             />
             <img
-              alt='layer3'
-              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_0.png'
               style={layer3}
+              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_0.png'
+              alt='layer3'
             />
           </div>
         </div>

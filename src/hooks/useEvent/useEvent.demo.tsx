@@ -2,6 +2,7 @@ import { memo } from 'react';
 
 import { useCounter } from '../useCounter/useCounter';
 import { useRenderCount } from '../useRenderCount/useRenderCount';
+
 import { useEvent } from './useEvent';
 
 interface MemoComponentProps {

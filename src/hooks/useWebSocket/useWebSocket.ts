@@ -4,25 +4,25 @@ import { getRetry } from '@/utils/helpers';
 
 import { useEvent } from '../useEvent/useEvent';
 
-export type UseWebSocketUrl = (() => string) | string;
+export type UseWebSocketUrl = string | (() => string);
 
 export interface UseWebSocketOptions {
-  protocols?: Array<'soap' | 'wasm'>;
-  retry?: boolean | number;
   onConnected?: (webSocket: WebSocket) => void;
   onDisconnected?: (event: CloseEvent, webSocket: WebSocket) => void;
   onError?: (event: Event, webSocket: WebSocket) => void;
   onMessage?: (event: MessageEvent, webSocket: WebSocket) => void;
+  retry?: boolean | number;
+  protocols?: Array<'soap' | 'wasm'>;
 }
 
-export type UseWebSocketStatus = 'connected' | 'connecting' | 'disconnected' | 'failed';
+export type UseWebSocketStatus = 'connecting' | 'failed' | 'connected' | 'disconnected';
 
 export interface UseWebSocketReturn {
-  client?: WebSocket;
+  status: UseWebSocketStatus;
   close: WebSocket['close'];
   send: WebSocket['send'];
-  status: UseWebSocketStatus;
   open: () => void;
+  client?: WebSocket;
 }
 
 /**
@@ -52,7 +52,7 @@ export const useWebSocket = (
 
   const [status, setStatus] = useState<UseWebSocketStatus>('connecting');
 
-  const send = (data: string | ArrayBufferLike | ArrayBufferView | Blob) =>
+  const send = (data: string | Blob | ArrayBufferLike | ArrayBufferView) =>
     webSocketRef.current?.send(data);
 
   const close = () => {

@@ -17,13 +17,13 @@ export interface UseScreenOrientationValue {
 /* The screen lock orientation type */
 export type OrientationLockType =
   | 'any'
-  | 'landscape-primary'
-  | 'landscape-secondary'
-  | 'landscape'
   | 'natural'
+  | 'landscape'
+  | 'portrait'
   | 'portrait-primary'
   | 'portrait-secondary'
-  | 'portrait';
+  | 'landscape-primary'
+  | 'landscape-secondary';
 
 /* The use device orientation return type */
 export interface useScreenOrientationReturn {
@@ -48,8 +48,7 @@ export interface useScreenOrientationReturn {
  * const { supported, value, lock, unlock } = useScreenOrientation();
  */
 export const useScreenOrientation = (): useScreenOrientationReturn => {
-  const supported =
-    typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
+  const supported = window && 'screen' in window && 'orientation' in window.screen;
   const screenOrientation = (supported ? window.screen.orientation : {}) as ScreenOrientation;
 
   const [value, setValue] = useState<UseScreenOrientationValue>(() => {

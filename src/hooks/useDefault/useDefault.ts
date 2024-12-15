@@ -13,7 +13,7 @@ import { useState } from 'react';
  * @example
  * const [value, setValue] = useDefault(initialValue, defaultValue);
  */
-export const useDefault = <Value>(initialValue: (() => Value) | Value, defaultValue: Value) => {
-  const [value, setValue] = useState<Value | null | undefined>(initialValue);
+export const useDefault = <Value>(initialValue: Value | (() => Value), defaultValue: Value) => {
+  const [value, setValue] = useState<Value | undefined | null>(initialValue);
   return [value === undefined || value === null ? defaultValue : value, setValue] as const;
 };

@@ -3,24 +3,24 @@ import { useState } from 'react';
 
 /** The use counter options */
 export interface UseCounterOptions {
-  /** The max of count value */
-  max?: number;
   /** The min of count value */
   min?: number;
+  /** The max of count value */
+  max?: number;
 }
 
 /** The use counter return type */
 export interface UseCounterReturn {
-  /** Function to set a specific value to the counter */
-  set: Dispatch<SetStateAction<number>>;
   /** The current count value */
   value: number;
-  /** Function to decrement the counter */
-  dec: (value?: number) => void;
-  /** Function to increment the counter */
-  inc: (value?: number) => void;
+  /** Function to set a specific value to the counter */
+  set: Dispatch<SetStateAction<number>>;
   /** Function to reset the counter to its initial value. */
   reset: () => void;
+  /** Function to increment the counter */
+  inc: (value?: number) => void;
+  /** Function to decrement the counter */
+  dec: (value?: number) => void;
 }
 
 export interface UseCounter {

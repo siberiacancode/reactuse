@@ -1,4 +1,5 @@
 import { useCounter } from '../useCounter/useCounter';
+
 import { useAsync } from './useAsync';
 
 interface Pokemon {
@@ -15,7 +16,7 @@ const Demo = () => {
 
   return (
     <>
-      <button disabled={counter.value === 1} type='button' onClick={() => counter.dec()}>
+      <button type='button' disabled={counter.value === 1} onClick={() => counter.dec()}>
         Prev
       </button>
       <button type='button' onClick={() => counter.inc()}>
@@ -28,8 +29,8 @@ const Demo = () => {
             Name: <code>{getPokemonQuery.data.name}</code>
           </p>
           <img
-            alt={getPokemonQuery.data.name}
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonQuery.data.id}.png`}
+            alt={getPokemonQuery.data.name}
           />
         </div>
       )}

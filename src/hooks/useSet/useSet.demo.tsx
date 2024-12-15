@@ -10,9 +10,9 @@ const Demo = () => {
     <>
       <div style={{ display: 'flex', gap: 8 }}>
         <input
+          placeholder='Enter scope'
           value={input}
           onChange={(event) => setInput(event.currentTarget.value)}
-          placeholder='Enter scope'
         />
 
         <button

@@ -17,7 +17,7 @@ export type UseRafValueReturn<Value> = [Value, (value: Value) => void];
  * @example
  * const [value, setValue] = useRafValue(initialValue);
  */
-export const useRafValue = <Value>(initialValue: (() => Value) | Value) => {
+export const useRafValue = <Value>(initialValue: Value | (() => Value)) => {
   const rafIdRef = useRef(0);
   const [value, setValue] = useState(initialValue);
 

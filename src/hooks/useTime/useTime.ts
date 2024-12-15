@@ -5,14 +5,14 @@ import { getDate } from '@/utils/helpers';
 import { useInterval } from '../useInterval/useInterval';
 
 export interface UseTimeReturn {
-  day: number;
+  seconds: number;
+  minutes: number;
   hours: number;
   meridiemHours: { value: number; type: string };
-  minutes: number;
+  day: number;
   month: number;
-  seconds: number;
-  timestamp: number;
   year: number;
+  timestamp: number;
 }
 
 /**

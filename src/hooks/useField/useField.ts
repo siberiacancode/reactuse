@@ -4,16 +4,16 @@ import { useRerender } from '../useRerender/useRerender';
 
 /** The use field params type */
 export interface UseFieldParams<Value> {
-  /** The auto focus */
-  autoFocus?: boolean;
-  /** The initial touched */
-  initialTouched?: boolean;
   /** The initial value */
   initialValue?: Value;
-  /** The validate on blur */
-  validateOnBlur?: boolean;
+  /** The initial touched */
+  initialTouched?: boolean;
+  /** The auto focus */
+  autoFocus?: boolean;
   /** The validate on mount */
   validateOnChange?: boolean;
+  /** The validate on blur */
+  validateOnBlur?: boolean;
   /** The validate on mount */
   validateOnMount?: boolean;
 }
@@ -22,20 +22,18 @@ export interface UseFieldParams<Value> {
 export interface UseFieldRegisterParams {
   /** The required validation */
   required?: string;
-  /** The custom validation */
-  validate?: (value: string) => Promise<string | true>;
   /** The min value validation */
   max?: {
     value: number;
     message: string;
   };
-  /** The max length validation */
-  maxLength?: {
+  /** The max value validation */
+  min?: {
     value: number;
     message: string;
   };
-  /** The max value validation */
-  min?: {
+  /** The max length validation */
+  maxLength?: {
     value: number;
     message: string;
   };
@@ -49,38 +47,40 @@ export interface UseFieldRegisterParams {
     value: RegExp;
     message: string;
   };
+  /** The custom validation */
+  validate?: (value: string) => Promise<string | true>;
 }
 
 /** The use field return type */
 export interface UseFieldReturn<Value> {
+  /** The register function */
+  register: (params?: UseFieldRegisterParams) => {
+    onBlur: () => void;
+    onChange: () => void;
+    ref: (
+      node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null | undefined
+    ) => void;
+  };
+  /** The get value function */
+  getValue: () => Value;
+  /** The  set value function */
+  setValue: (value: Value) => void;
   /** The dirty state */
   dirty: boolean;
   /** The error state */
   error?: string;
   /** The set error function */
   touched: boolean;
-  /** The set error function */
-  clearError: () => void;
   /** The focus function */
   focus: () => void;
-  /** The get value function */
-  getValue: () => Value;
-  /** The register function */
-  register: (params?: UseFieldRegisterParams) => {
-    onBlur: () => void;
-    onChange: () => void;
-    ref: (
-      node: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null | undefined
-    ) => void;
-  };
+  /** The watch function */
+  watch: () => Value;
   /** The reset function */
   reset: () => void;
   /** The set error function */
   setError: (error: string) => void;
-  /** The  set value function */
-  setValue: (value: Value) => void;
-  /** The watch function */
-  watch: () => Value;
+  /** The set error function */
+  clearError: () => void;
 }
 
 /**
@@ -102,7 +102,7 @@ export interface UseFieldReturn<Value> {
  * const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();
  */
 export const useField = <
-  Value extends boolean | string = string,
+  Value extends string | boolean = string,
   Type = Value extends string ? string : boolean
 >(
   params?: UseFieldParams<Value>
@@ -179,7 +179,7 @@ export const useField = <
   };
 
   const register = (registerParams?: UseFieldRegisterParams) => ({
-    ref: (node: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null | undefined) => {
+    ref: (node: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null | undefined) => {
       if (!inputRef.current && node) {
         if (params?.autoFocus) node.focus();
         inputRef.current = node as HTMLInputElement;

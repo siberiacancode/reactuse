@@ -7,7 +7,7 @@ import { getElement } from '@/utils/helpers';
 import { useUnmount } from '../useUnmount/useUnmount';
 
 /** The use fullscreen target element type */
-export type UseFullScreenTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
+export type UseFullScreenTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
 
 /** The use fullscreen options type */
 export interface UseFullScreenOptions {
@@ -21,10 +21,10 @@ export interface UseFullScreenOptions {
 
 /** The use click outside return type */
 export interface UseFullScreenReturn {
-  value: boolean;
   enter: () => void;
   exit: () => void;
   toggle: () => void;
+  value: boolean;
 }
 
 export interface UseFullScreen {

@@ -3,13 +3,13 @@ import { useState } from 'react';
 /* The type of the options */
 interface UseMutationOptions<Data> {
   /* The retry count of requests */
-  retry?: ((failureCount: number, error: Error) => boolean) | boolean | number;
+  retry?: boolean | number | ((failureCount: number, error: Error) => boolean);
   /* The retry delay of requests */
-  retryDelay?: ((retry: number, error: Error) => number) | number;
-  /* The callback function to be invoked on error */
-  onError?: (error: Error) => void;
+  retryDelay?: number | ((retry: number, error: Error) => number);
   /* The callback function to be invoked on success */
   onSuccess?: (data: Data) => void;
+  /* The callback function to be invoked on error */
+  onError?: (error: Error) => void;
 }
 
 /* The use mutation return type */
@@ -18,16 +18,16 @@ interface UseMutationReturn<Body, Data> {
   data: Data | null;
   /* The error of the mutation */
   error: Error | null;
-  /* The error state of the mutation */
-  isError: boolean;
-  /* The loading state of the mutation */
-  isLoading: boolean;
-  /* The success state of the mutation */
-  isSuccess: boolean;
   /* The mutate function */
   mutate: (body?: Body, options?: UseMutationOptions<Data>) => void;
   /* The mutate async function */
   mutateAsync: (body?: Body, options?: UseMutationOptions<Data>) => Promise<Data>;
+  /* The loading state of the mutation */
+  isLoading: boolean;
+  /* The error state of the mutation */
+  isError: boolean;
+  /* The success state of the mutation */
+  isSuccess: boolean;
 }
 
 export interface RequestOptions<Data> extends UseMutationOptions<Data> {

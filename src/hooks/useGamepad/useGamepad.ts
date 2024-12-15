@@ -11,12 +11,12 @@ declare global {
 
 /** The use gamepad return type  */
 export interface UseGamepadStateReturn {
-  /** The gamepad active status */
-  active: boolean;
-  /** The gamepad state */
-  gamepads: Gamepad[];
   /** The gamepad supported status */
   supported: boolean;
+  /** The gamepad state */
+  gamepads: Gamepad[];
+  /** The gamepad active status */
+  active: boolean;
 }
 
 /**
@@ -30,7 +30,7 @@ export interface UseGamepadStateReturn {
  * const { supported, gamepads, active } = useGamepad();
  */
 export const useGamepad = () => {
-  const supported = typeof navigator !== 'undefined' && 'getGamepads' in navigator;
+  const supported = navigator && 'getGamepads' in navigator;
   const [gamepads, setGamepads] = useState<Record<number, Gamepad>>({});
 
   const { active } = useRaf(() => {}, { enabled: !!Object.keys(gamepads).length });

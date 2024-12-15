@@ -1,4 +1,5 @@
 import { useCounter } from '../useCounter/useCounter';
+
 import { useClickOutside } from './useClickOutside';
 
 const Demo = () => {

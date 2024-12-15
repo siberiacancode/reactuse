@@ -3,8 +3,8 @@ import { useRef } from 'react';
 export interface UseRenderInfoReturn {
   component: string;
   renders: number;
+  timestamp: null | number;
   sinceLast: number;
-  timestamp: number | null;
 }
 
 /**

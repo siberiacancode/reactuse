@@ -9,9 +9,9 @@ const Demo = () => {
   return (
     <div>
       <input
-        value={inputValue}
-        onChange={(event) => setInputValue(event.target.value)}
         placeholder='Type something...'
+        onChange={(event) => setInputValue(event.target.value)}
+        value={inputValue}
       />
       <p>Last changed: {value}</p>
     </div>

@@ -1,4 +1,5 @@
 import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
+
 import { useStorage } from './useStorage';
 
 const Demo = () => {

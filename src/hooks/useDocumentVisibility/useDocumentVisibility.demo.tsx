@@ -1,27 +1,28 @@
-import { useState } from 'react';
-
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
-import { useTimer } from '../useTimer/useTimer';
+
 import { useDocumentVisibility } from './useDocumentVisibility';
 
-const START_MESSAGE = '💡 Minimize the page or switch tab then return';
-
 const Demo = () => {
-  const [message, setMessage] = useState(START_MESSAGE);
   const documentVisibility = useDocumentVisibility();
 
-  const timer = useTimer(3000, () => {
-    setMessage(START_MESSAGE);
-  });
-
   useDidUpdate(() => {
+    console.log(`Current document visibility state: ${documentVisibility}`);
+
     if (documentVisibility === 'visible') {
-      setMessage('🎉 Welcome back!');
-      timer.start();
+      alert(`Current document visibility state: ${documentVisibility}`);
     }
   }, [documentVisibility]);
 
-  return <p>{message}</p>;
+  return (
+    <div>
+      <p>
+        Switch to another tab and then return here
+        <br />
+        <br />
+        Visibility status: <code>{documentVisibility}</code>
+      </p>
+    </div>
+  );
 };
 
 export default Demo;

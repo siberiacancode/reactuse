@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
 import { useField } from '../useField/useField';
+
 import { useWebSocket } from './useWebSocket';
 
 interface Message {
-  date: Date;
   text: string;
   type: 'client' | 'server';
+  date: Date;
 }
 
 const Demo = () => {

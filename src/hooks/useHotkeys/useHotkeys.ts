@@ -6,14 +6,14 @@ import { useEventListener } from '../useEventListener/useEventListener';
 
 /** The use hotkeys params type */
 export interface UseHotkeysOptions {
-  /** Alias map for hotkeys */
-  aliasMap?: Record<string, string>;
+  /** The target to attach the event listeners to */
+  target?: UseEventListenerTarget;
   /** Enable or disable the event listeners */
   enabled?: boolean;
   /** Whether to prevent the default behavior of the event */
   preventDefault?: boolean;
-  /** The target to attach the event listeners to */
-  target?: UseEventListenerTarget;
+  /** Alias map for hotkeys */
+  aliasMap?: Record<string, string>;
 }
 
 export const isHotkeyMatch = (hotkey: string, keys: UseHotkeysKey[]) =>
@@ -30,11 +30,11 @@ export const isHotkeyMatch = (hotkey: string, keys: UseHotkeysKey[]) =>
       )
     );
 
-export type UseHotkeysHotkeys = string | string[];
+export type UseHotkeysHotkeys = string[] | string;
 export interface UseHotkeysKey {
-  alias: string;
-  code: string;
   key: string;
+  code: string;
+  alias: string;
 }
 
 /**

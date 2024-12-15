@@ -4,10 +4,10 @@ import { throttle } from '@/utils/helpers';
 
 //* The use idle options type */
 export interface UseIdleOptions {
-  //* The idle events */
-  events?: Array<keyof DocumentEventMap>;
   //* The idle state */
   initialValue?: boolean;
+  //* The idle events */
+  events?: Array<keyof DocumentEventMap>;
 }
 
 const IDLE_EVENTS = [
