@@ -107,8 +107,8 @@ export const useQuery = <QueryData, Data = QueryData>(
 
   const request = (action: 'init' | 'refetch') => {
     abort();
-    setIsLoading(true);
 
+    if (action === 'init') setIsLoading(true);
     if (action === 'refetch') setIsRefetching(true);
     callback({ signal: abortControllerRef.current.signal, keys })
       .then((response) => {
@@ -116,10 +116,10 @@ export const useQuery = <QueryData, Data = QueryData>(
         options?.onSuccess?.(data as Data);
         setData(data as Data);
         setIsSuccess(true);
-        setIsLoading(false);
         setError(undefined);
         setIsError(false);
         setAborted(false);
+        if (action === 'init') setIsLoading(false);
         if (action === 'refetch') setIsRefetching(false);
       })
       .catch((error: Error) => {
@@ -130,10 +130,10 @@ export const useQuery = <QueryData, Data = QueryData>(
         options?.onError?.(error);
         setData(undefined);
         setIsSuccess(false);
-        setIsLoading(false);
         setAborted(false);
         setError(error);
         setIsError(true);
+        if (action === 'init') setIsLoading(false);
         if (action === 'refetch') setIsRefetching(false);
         retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
       })
