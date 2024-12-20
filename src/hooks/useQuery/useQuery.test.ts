@@ -60,13 +60,13 @@ describe('useQuery', () => {
   });
 
   it('should abort request', async () => {
-    const fetchWithAbortTest = ({ signal }: { signal: AbortSignal }) =>
+    const fetchWithAbort = ({ signal }: { signal: AbortSignal }) =>
       new Promise((resolve, reject) => {
         signal.addEventListener('abort', () => reject(new Error('Aborted')));
         setTimeout(() => resolve('data'), 100);
       });
 
-    const { result } = renderHook(() => useQuery(({ signal }) => fetchWithAbortTest({ signal })));
+    const { result } = renderHook(() => useQuery(({ signal }) => fetchWithAbort({ signal })));
 
     expect(result.current.isLoading).toBe(true);
     expect(result.current.aborted).toBe(false);
@@ -80,9 +80,17 @@ describe('useQuery', () => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.isError).toBe(true);
       expect(result.current.error).toEqual(new Error('Aborted'));
-      // FIXME: always returns false
-      // expect(result.current.aborted).toBe(true);
+      expect(result.current.aborted).toBe(true);
       expect(result.current.data).toBeUndefined();
+    });
+
+    act(() => {
+      result.current.refetch();
+    });
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.aborted).toBe(false);
     });
   });
 
