@@ -112,6 +112,7 @@ export const useQuery = <QueryData, Data = QueryData>(
     abort();
 
     setIsFetching(true);
+    setAborted(false);
     if (action === 'init') setIsLoading(true);
     if (action === 'refetch') setIsRefetching(true);
     callback({ signal: abortControllerRef.current.signal, keys })
@@ -122,7 +123,6 @@ export const useQuery = <QueryData, Data = QueryData>(
         setIsSuccess(true);
         setError(undefined);
         setIsError(false);
-        setAborted(false);
         setIsFetching(false);
         if (action === 'init') setIsLoading(false);
         if (action === 'refetch') setIsRefetching(false);
