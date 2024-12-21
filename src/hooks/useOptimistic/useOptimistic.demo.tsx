@@ -1,21 +1,8 @@
-import { useState } from 'react';
-
 import { useCounter } from '../useCounter/useCounter';
 import { useMutation } from '../useMutation/useMutation';
 import { useOptimistic } from './useOptimistic';
 
 const Demo = () => {
-  const [messages, setMessages] = useState({
-    name: 'dima'
-  });
-
-  const [optimisticMessages, updateOptimistic] = useOptimistic<string[], string>(
-    messages,
-    (currentState, optimisticValue) => ({
-      name: optimisticValue
-    })
-  );
-
   const likes = useCounter();
   const postLikeMutation = useMutation(
     () =>
@@ -28,25 +15,28 @@ const Demo = () => {
       )
   );
 
-  // const [optimisticLikes, updateOptimistic] = useOptimistic(
-  //   likes.value,
-  //   (_, optimisticValue) => optimisticValue
-  // );
+  const [optimisticLikes, updateOptimistic] = useOptimistic(
+    likes.value,
+    (_, optimisticValue) => optimisticValue
+  );
 
-  const onClick = async () => {
-    updateOptimistic('asd');
-    await postLikeMutation.mutateAsync();
-    setMessages({ name: 'dima' });
+  const onClick = () => {
+    const promise = postLikeMutation.mutateAsync();
+    updateOptimistic(likes.value + 1, promise);
   };
 
   return (
     <>
       <button type='button' onClick={onClick}>
-        click
+        likes {optimisticLikes}
       </button>
       <br />
-      {JSON.stringify(optimisticMessages)}
-      {String(postLikeMutation.isLoading)}
+      <p>
+        Optimistic value: <code>{optimisticLikes}</code>
+      </p>
+      <p>
+        Actual value: <code>{likes.value}</code>
+      </p>
     </>
   );
 };

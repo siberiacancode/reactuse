@@ -20,7 +20,7 @@ export type UseOptimisticReturn<State> = [
  * @example
  * const [optimisticValue, updateOptimistic] = useOptimistic<number>(count, (currentState, optimisticValue) => currentState + optimisticValue);
  */
-export const useOptimistic0 = <State, OptimisticState = State>(
+export const useOptimistic = <State, OptimisticState = State>(
   externalState: State,
   update: (currentState: State, optimisticState: OptimisticState) => State
 ) => {
@@ -39,25 +39,6 @@ export const useOptimistic0 = <State, OptimisticState = State>(
   const updateState = (optimisticValue: OptimisticState, promise: Promise<any>) => {
     setState((currentState) => internalUpdateRef.current(currentState, optimisticValue));
     return promise.finally(() => setPromised(true));
-  };
-
-  return [state, updateState] as const;
-};
-
-export const useOptimistic = <State, OptimisticState = State>(
-  externalState: State,
-  update: (currentState: State, optimisticState: OptimisticState) => State
-) => {
-  const [state, setState] = useState<State>(externalState);
-  const internalUpdateRef = useRef(update);
-  internalUpdateRef.current = update;
-
-  useDidUpdate(() => {
-    setState(externalState);
-  }, [externalState]);
-
-  const updateState = (optimisticValue: OptimisticState) => {
-    setState((currentState) => internalUpdateRef.current(currentState, optimisticValue));
   };
 
   return [state, updateState] as const;
