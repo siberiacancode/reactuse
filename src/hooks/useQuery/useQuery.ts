@@ -48,6 +48,8 @@ export interface UseQueryReturn<Data> {
   error?: Error;
   /* The error state of the query */
   isError: boolean;
+  /* The fetching state of the query */
+  isFetching: boolean;
   /* The loading state of the query */
   isLoading: boolean;
   /* The refetching state of the query */
@@ -76,7 +78,7 @@ export interface UseQueryReturn<Data> {
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
- * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));
+ * const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));
  */
 export const useQuery = <QueryData, Data = QueryData>(
   callback: (params: UseQueryCallbackParams) => Promise<QueryData>,
@@ -85,6 +87,7 @@ export const useQuery = <QueryData, Data = QueryData>(
   const enabled = options?.enabled ?? true;
   const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
 
+  const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
@@ -107,8 +110,10 @@ export const useQuery = <QueryData, Data = QueryData>(
 
   const request = (action: 'init' | 'refetch') => {
     abort();
-    setIsLoading(true);
 
+    setIsFetching(true);
+    setAborted(false);
+    if (action === 'init') setIsLoading(true);
     if (action === 'refetch') setIsRefetching(true);
     callback({ signal: abortControllerRef.current.signal, keys })
       .then((response) => {
@@ -116,10 +121,10 @@ export const useQuery = <QueryData, Data = QueryData>(
         options?.onSuccess?.(data as Data);
         setData(data as Data);
         setIsSuccess(true);
-        setIsLoading(false);
         setError(undefined);
         setIsError(false);
-        setAborted(false);
+        setIsFetching(false);
+        if (action === 'init') setIsLoading(false);
         if (action === 'refetch') setIsRefetching(false);
       })
       .catch((error: Error) => {
@@ -130,10 +135,10 @@ export const useQuery = <QueryData, Data = QueryData>(
         options?.onError?.(error);
         setData(undefined);
         setIsSuccess(false);
-        setIsLoading(false);
-        setAborted(false);
         setError(error);
         setIsError(true);
+        setIsFetching(false);
+        if (action === 'init') setIsLoading(false);
         if (action === 'refetch') setIsRefetching(false);
         retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
       })
@@ -176,6 +181,7 @@ export const useQuery = <QueryData, Data = QueryData>(
     data: data ?? placeholderData,
     error,
     refetch,
+    isFetching,
     isLoading,
     isError,
     isSuccess,
