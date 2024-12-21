@@ -7,7 +7,7 @@ interface Pokemon {
 }
 
 const getPokemon = (id: number) =>
-  fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()) as Promise<Pokemon>;
+  fetch(`https://pokeapi.co/api/v2/pokemon2/${id}`).then((res) => res.json()) as Promise<Pokemon>;
 
 const Demo = () => {
   const counter = useCounter(1);

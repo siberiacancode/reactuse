@@ -13,7 +13,7 @@ beforeAll(() => {
 it('Should use on device orientation', () => {
   const { result } = renderHook(useDeviceOrientation);
 
-  expect(result.current.supported).toBe(true);
+  expect(result.current.supported).toBeTruthy();
   expect(result.current.value.alpha).toBeNull();
   expect(result.current.value.beta).toBeNull();
   expect(result.current.value.gamma).toBeNull();
@@ -38,5 +38,5 @@ it('Should set new values when device orientation change', () => {
   expect(result.current.value.alpha).toBe(30);
   expect(result.current.value.beta).toBe(60);
   expect(result.current.value.gamma).toBe(90);
-  expect(result.current.value.absolute).toBe(true);
+  expect(result.current.value.absolute).toBeTruthy();
 });
