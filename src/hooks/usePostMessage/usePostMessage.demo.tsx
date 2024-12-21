@@ -1,22 +1,43 @@
+import { useState } from 'react';
+
 import { usePostMessage } from './usePostMessage';
 
 const Demo = () => {
-  const { postMessage } = usePostMessage<string>((event) => {
-    if (location.origin === event.origin) {
-      console.log('MessageEvent: ', event);
+  const [messages, setMessages] = useState<string[]>([]);
+
+  const postMessage = usePostMessage<{ type: 'delete' } | { type: 'send'; value: string }>('*', (message) => {
+    console.log('Message received', message);
+
+    if (message.type === 'send') {
+      setMessages((prevMessages) => [...prevMessages, message.value]);
+    }
+
+    if (message.type === 'delete') {
+      setMessages((prevMessages) => prevMessages.slice(0, prevMessages.length - 1));
     }
   });
 
-  const onClick = () => {
-    postMessage(window, 'Custom Message', {
-      targetOrigin: '*'
-    });
-  };
+  const onSendClick = () =>
+    postMessage({ type: 'send', value: (Math.random() + 1).toString(36).substring(3) });
+  const onDeleteClick = () => postMessage({ type: 'delete' });
 
   return (
-    <section>
-      <button onClick={onClick}>Click to post message</button>
-    </section>
+    <>
+      <div>
+        {messages.length ? 'Messages' : 'No messages'}
+        {!!messages.length && (
+          <ul>
+            {messages.map((message) => (
+              <li key={message}>
+                <code>{message}</code>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <button type='button' onClick={onSendClick}>Send message</button>
+      <button type='button' onClick={onDeleteClick}>Delete message</button>
+    </>
   );
 };
 

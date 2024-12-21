@@ -20,7 +20,11 @@ const Demo = () => {
   return (
     <div style={containerStyle}>
       <span>Resize the box to see changes</span>
-      <textarea ref={elementSize.ref} style={textareaStyle} value={`width: ${elementSize.value.width}\nheight: ${elementSize.value.height}`} />
+      <textarea
+        ref={elementSize.ref}
+        style={textareaStyle}
+        value={`width: ${elementSize.value.width}\nheight: ${elementSize.value.height}`}
+      />
     </div>
   );
 };

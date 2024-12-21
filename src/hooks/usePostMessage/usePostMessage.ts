@@ -1,72 +1,51 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-/** The possible entity types */
-type PossibleEntity = Window | Worker | MessagePort;
-
-/** The use post message entity arguments */
-type PostMessageEntityArguments<Entity extends PossibleEntity> = Entity['postMessage'] extends (
-  message: unknown,
-  ...rest: infer Rest
-) => void
-  ? Rest
-  : never;
-
-/** The use post message return type */
-export interface UsePostMessageReturn<MessagePayload> {
-  postMessage: <Entity extends PossibleEntity>(
-    targetSource: Entity,
-    message: MessagePayload,
-    ...args: PostMessageEntityArguments<Entity>
-  ) => void;
-}
+export type UsePostMessageReturn<Message> = (message: Message) => void;
 
 /**
  * @name usePostMessage
- * @description - Hook that allows you to use `postMessage` function
+ * @description - Hook that allows you to receive messages from other origins
  * @category Browser
  *
  * @overload
- * @template MessagePayload The message data type
- * @param {(message: MessageEvent<MessagePayload>) => void} onMessage callback to get received message event
- * @returns {UsePostMessageReturn} An object with a patched `postMethod` function
+ * @template Message The message data type
+ * @param {string | string[]} origin The origin of the message
+ * @param {(message: Message) => Message} callback callback to get received message
+ * @returns {(message: Message) => void} An object containing the current message
  *
  * @example
- * const { postMessage } = usePostMessage();
+ * const postMessage = usePostMessage();
  */
-export const usePostMessage = <MessagePayload = unknown>(
-  onMessage?: (message: MessageEvent<MessagePayload>) => void
-): UsePostMessageReturn<MessagePayload> => {
-  const postMessage = <Entity extends PossibleEntity>(
-    targetSource: Entity,
-    message: MessagePayload,
-    ...args: unknown[]
-  ) => {
-    if (targetSource instanceof Window) {
-      targetSource.postMessage(message, ...(args as PostMessageEntityArguments<Window>));
-    } else if (targetSource instanceof Worker) {
-      targetSource.postMessage(message, ...(args as PostMessageEntityArguments<Worker>));
-    } else {
-      targetSource.postMessage(message, ...(args as PostMessageEntityArguments<MessagePort>));
-    }
-  };
+export const usePostMessage = <Message>(
+  origin: string | '*' | string[],
+  callback: (message: Message, event: MessageEvent<Message>) => void
+): UsePostMessageReturn<Message> => {
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
   useEffect(() => {
-    const controller = new AbortController();
+    const onMessage = (event: MessageEvent<Message>) => {
+      if (
+        (Array.isArray(origin) && (!origin.includes(event.origin) || !origin.includes('*'))) ||
+        (event.origin !== origin && origin !== '*')
+      )
+        return;
 
-    window.addEventListener(
-      'message',
-      (event: MessageEvent<MessagePayload>) => {
-        onMessage?.(event);
-      },
-      { signal: controller.signal }
-    );
-
-    return () => {
-      controller.abort();
+      internalCallbackRef.current(event.data as Message, event);
     };
-  }, [onMessage]);
 
-  return {
-    postMessage
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, []);
+
+  const postMessage = (message: Message) => {
+    if (Array.isArray(origin)) {
+      origin.forEach((origin) => window.postMessage(message, origin));
+      return;
+    }
+
+    window.postMessage(message, origin);
   };
+
+  return postMessage;
 };
