@@ -33,9 +33,8 @@ export interface UseVibrateReturn {
  * @category Browser
  *
  * @overload
- * @param {(number|number[])} pattern Pattern for vibration
- * @param {boolean} [options.loop] Indicates thar vibration will be endless
- * @param {boolean} [options.enabled] Alternate way to enable vibration
+ * @param {UseVibratePattern} options.pattern The pattern for vibration
+ * @param {number} [options.interval = 0] Time in milliseconds between vibrations
  * @returns {UseVibrateReturn} An object containing support indicator, start vibration and stop vibration functions
  *
  * @example
