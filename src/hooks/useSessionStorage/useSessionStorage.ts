@@ -1,4 +1,5 @@
 import type { UseStorageInitialValue, UseStorageOptions } from '../useStorage/useStorage';
+
 import { useStorage } from '../useStorage/useStorage';
 
 /**

@@ -1,5 +1,4 @@
 import { useCounter } from '../useCounter/useCounter';
-
 import { useRaf } from './useRaf';
 
 const Demo = () => {

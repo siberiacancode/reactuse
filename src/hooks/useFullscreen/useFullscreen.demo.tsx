@@ -1,19 +1,19 @@
 import { useFullscreen } from './useFullscreen';
 
 const Demo = () => {
-  const { ref, value, enter, exit, toggle } = useFullscreen<HTMLDivElement>();
+  const fullscreen = useFullscreen<HTMLDivElement>();
 
   return (
-    <div ref={ref}>
+    <div ref={fullscreen.ref}>
       <div>
-        <p>{value ? 'fullscreen' : 'not fullscreen'}</p>
-        <button type='button' onClick={enter}>
+        <p>{fullscreen.value ? 'fullscreen' : 'not fullscreen'}</p>
+        <button type='button' onClick={fullscreen.enter}>
           Enter
         </button>
-        <button type='button' onClick={exit}>
+        <button type='button' onClick={fullscreen.exit}>
           Exit
         </button>
-        <button type='button' onClick={toggle}>
+        <button type='button' onClick={fullscreen.toggle}>
           Toggle
         </button>
       </div>

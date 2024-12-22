@@ -1,5 +1,4 @@
 import { useList } from '../useList/useList';
-
 import { useInfiniteScroll } from './useInfiniteScroll';
 
 const Demo = () => {
@@ -12,7 +11,12 @@ const Demo = () => {
 
       list.set((prevList) => {
         const length = prevList.length + 1;
-        return [...prevList, ...new Array(5).fill(null).map((_, i) => length + i)];
+        return [
+          ...prevList,
+          ...Array.from({ length: 5 })
+            .fill(null)
+            .map((_, i) => length + i)
+        ];
       });
     },
     { distance: 10 }

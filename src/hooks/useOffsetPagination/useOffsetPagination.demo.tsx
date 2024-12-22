@@ -38,15 +38,15 @@ const Demo = () => {
       </p>
 
       <div>
-        <button type='button' disabled={isFirstPage} onClick={prev}>
+        <button disabled={isFirstPage} type='button' onClick={prev}>
           prev
         </button>
         {Array.from({ length: pageCount }, (_, i) => (
-          <button key={i} type='button' disabled={i + 1 === page} onClick={() => set(i + 1)}>
+          <button key={i} disabled={i + 1 === page} type='button' onClick={() => set(i + 1)}>
             {i + 1}{' '}
           </button>
         ))}
-        <button type='button' disabled={isLastPage} onClick={next}>
+        <button disabled={isLastPage} type='button' onClick={next}>
           next
         </button>
       </div>

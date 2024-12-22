@@ -1,16 +1,17 @@
 import type { DependencyList } from 'react';
+
 import { useEffect, useState } from 'react';
 
 /* The use query return type */
 export interface UseAsyncReturn<Data> {
   /* The state of the query */
   data?: Data;
+  /* The error of the query */
+  error?: Error;
+  /* The error state of the query  */
+  isError: boolean;
   /* The loading state of the query */
   isLoading: boolean;
-  /* The error state of the query */
-  isError: boolean;
-  /* The success state of the query */
-  error?: Error;
 }
 
 /**
@@ -45,12 +46,11 @@ export const useAsync = <Data>(
       .catch((error: Error) => {
         setError(error);
         setIsError(true);
-        setIsLoading(false);
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [deps]);
+  }, deps);
 
   return {
     data,

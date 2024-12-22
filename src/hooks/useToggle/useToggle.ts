@@ -1,4 +1,5 @@
 import type { SetStateAction } from 'react';
+
 import { useReducer } from 'react';
 
 /** The use toggle return type */

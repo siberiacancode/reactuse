@@ -1,22 +1,23 @@
 import type { UseQueryOptions, UseQueryReturn } from '../useQuery/useQuery';
+
 import { useQuery } from '../useQuery/useQuery';
 
 /** The use image options */
 export interface UseImageOptions {
-  /** The srcset of the image */
-  srcset?: string;
-  /** The sizes of the image */
-  sizes?: string;
   /** The alt of the image */
   alt?: string;
   /** The class of the image */
   class?: string;
-  /** The loading of the image */
-  loading?: HTMLImageElement['loading'];
   /** The crossorigin of the image */
   crossorigin?: string;
+  /** The loading of the image */
+  loading?: HTMLImageElement['loading'];
   /** The referrer policy of the image */
   referrerPolicy?: HTMLImageElement['referrerPolicy'];
+  /** The sizes of the image */
+  sizes?: string;
+  /** The srcset of the image */
+  srcset?: string;
 }
 
 /** The use image return type */
@@ -68,7 +69,7 @@ export const useImage = (
   options?: UseImageOptions,
   useQueryOptions: Omit<
     UseQueryOptions<HTMLImageElement, HTMLImageElement>,
-    'select' | 'initialData' | 'placeholderData'
+    'initialData' | 'placeholderData' | 'select'
   > = {}
 ) =>
   useQuery(() => loadImage(src, options), {

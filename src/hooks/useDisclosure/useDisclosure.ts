@@ -2,20 +2,20 @@ import { useState } from 'react';
 
 /** The use disclosure options type */
 export interface UseDisclosureOptions {
-  /** The callback function to be invoked on open */
-  onOpen?: () => void;
   /** The callback function to be invoked on close */
   onClose?: () => void;
+  /** The callback function to be invoked on open */
+  onOpen?: () => void;
 }
 
 /** The use disclosure return type */
 export interface UseDisclosureReturn {
   /** The opened value */
   opened: boolean;
-  /** Function to open the modal */
-  open: () => void;
   /** Function to close the modal */
   close: () => void;
+  /** Function to open the modal */
+  open: () => void;
   /** Function to toggle the modal */
   toggle: () => void;
 }

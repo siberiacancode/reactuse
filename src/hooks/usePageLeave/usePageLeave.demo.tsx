@@ -1,5 +1,4 @@
 import { useCounter } from '../useCounter/useCounter';
-
 import { usePageLeave } from './usePageLeave';
 
 const Demo = () => {

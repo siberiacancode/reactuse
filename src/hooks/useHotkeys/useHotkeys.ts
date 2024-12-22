@@ -1,19 +1,20 @@
 import { useState } from 'react';
 
-import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
+
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import { useEventListener } from '../useEventListener/useEventListener';
 
 /** The use hotkeys params type */
 export interface UseHotkeysOptions {
-  /** The target to attach the event listeners to */
-  target?: UseEventListenerTarget;
+  /** Alias map for hotkeys */
+  aliasMap?: Record<string, string>;
   /** Enable or disable the event listeners */
   enabled?: boolean;
   /** Whether to prevent the default behavior of the event */
   preventDefault?: boolean;
-  /** Alias map for hotkeys */
-  aliasMap?: Record<string, string>;
+  /** The target to attach the event listeners to */
+  target?: UseEventListenerTarget;
 }
 
 export const isHotkeyMatch = (hotkey: string, keys: UseHotkeysKey[]) =>
@@ -30,8 +31,12 @@ export const isHotkeyMatch = (hotkey: string, keys: UseHotkeysKey[]) =>
       )
     );
 
-export type UseHotkeysHotkeys = string[] | string;
-export type UseHotkeysKey = { key: string; code: string; alias: string };
+export type UseHotkeysHotkeys = string | string[];
+export interface UseHotkeysKey {
+  alias: string;
+  code: string;
+  key: string;
+}
 
 /**
  * @name useHotkeys
@@ -41,7 +46,7 @@ export type UseHotkeysKey = { key: string; code: string; alias: string };
  * @param {UseHotkeysHotkeys} hotkeys The key or keys to listen for
  * @param {(event: KeyboardEvent) => void} callback The callback function to be called when the hotkey is pressed
  * @param {UseEventListenerTarget} [options.target=window] The target to attach the event listeners to
- * @param {boolean} [options.enabled=true] Enable or disable the event listeners
+ * @param {boolean} [options.enabled=true] The enable or disable the event listeners
  * @param {boolean} [options.preventDefault=true] Whether to prevent the default behavior of the event
  * @param {Record<string, string>} [options.aliasMap] Alias map for hotkeys
  * @returns {useKeysPressedReturns} Array of strings with keys that were press

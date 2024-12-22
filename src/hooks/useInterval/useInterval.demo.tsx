@@ -32,9 +32,9 @@ const Demo = () => {
       <p>
         interval: {interval}
         <input
+          type='number'
           value={interval}
           onChange={(event) => setInterval(Number(event.target.value))}
-          type='number'
         />
       </p>
       {active ? (

@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { isPermissionAllowed } from '@/utils/helpers';
-
 import { usePermission } from '../usePermission/usePermission';
+
+export const isPermissionAllowed = (status: PermissionState) =>
+  status === 'granted' || status === 'prompt';
 
 export const legacyCopyToClipboard = (value: string) => {
   const tempTextArea = document.createElement('textarea');
   tempTextArea.value = value;
+  tempTextArea.readOnly = true;
+  tempTextArea.style.fontSize = '16px';
   document.body.appendChild(tempTextArea);
   tempTextArea.select();
   document.execCommand('copy');
@@ -15,12 +18,12 @@ export const legacyCopyToClipboard = (value: string) => {
 
 /** The use copy to clipboard return type */
 export interface UseCopyToClipboardReturn {
+  /** Whether the copy to clipboard is supported */
+  supported: boolean;
   /** The copied value */
   value: string | null;
   /** Function to copy to clipboard  */
   copy: (value: string) => Promise<void>;
-  /** Whether the copy to clipboard is supported */
-  supported: boolean;
 }
 
 /** The use copy to clipboard params type */
@@ -41,7 +44,7 @@ export interface UseCopyToClipboardParams {
  * const { supported, value, copy } = useClipboard();
  */
 export const useClipboard = (params?: UseCopyToClipboardParams): UseCopyToClipboardReturn => {
-  const supported = navigator && 'clipboard' in navigator;
+  const supported = typeof navigator !== 'undefined' && 'clipboard' in navigator;
 
   const [value, setValue] = useState<string | null>(null);
   const clipboardReadPermission = usePermission('clipboard-read');

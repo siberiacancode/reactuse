@@ -1,24 +1,27 @@
 import type { RefObject } from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 
-import { useEvent } from '../useEvent/useEvent';
+import { getElement } from '@/utils/helpers';
 
-import { Paint } from './helpers/Paint';
 import type { Point } from './helpers/Pointer';
+
+import { useEvent } from '../useEvent/useEvent';
+import { Paint } from './helpers/Paint';
 
 const DEFAULT_BRUSH_RADIUS = 10;
 
 export interface UsePaintOptions {
   /** Brush color */
   color?: string;
+  /** Initial lines */
+  initialLines?: Paint['lines'];
+  /** Brush opacity */
+  opacity?: number;
   /** Brush radius */
   radius?: number;
   /** Smooth brush movement */
   smooth?: boolean;
-  /** Brush opacity */
-  opacity?: number;
-  /** Initial lines */
-  initialLines?: Paint['lines'];
   /** Callback when the mouse is down */
   onMouseDown?: (event: MouseEvent, paint: Paint) => void;
   /** Callback when the mouse is moved */
@@ -29,38 +32,26 @@ export interface UsePaintOptions {
 
 export interface UsePaintReturn {
   drawing: boolean;
-  clear: () => void;
-  undo: () => void;
-  draw: (points: Point[], color: string, opacity: number, radius: number) => void;
   lines: Paint['lines'];
+  clear: () => void;
+  draw: (points: Point[], color: string, opacity: number, radius: number) => void;
+  undo: () => void;
 }
 
 /** The use paint return type */
 export type UsePaintTarget =
-  | RefObject<HTMLCanvasElement>
   | (() => HTMLCanvasElement)
-  | HTMLCanvasElement;
+  | HTMLCanvasElement
+  | RefObject<HTMLCanvasElement>;
 
-export const getElement = (target: UsePaintTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
-
-export type UsePaint = {
+export interface UsePaint {
   <Target extends UsePaintTarget>(target: Target, options?: UsePaintOptions): UsePaintReturn;
 
   (
     options?: UsePaintOptions,
     target?: never
   ): { ref: RefObject<HTMLCanvasElement> } & UsePaintReturn;
-};
+}
 
 /**
  * @name usePaint
@@ -222,7 +213,7 @@ export const usePaint = ((...params: any[]) => {
   };
 
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+    const element = (target ? getElement(target) : internalRef.current) as HTMLCanvasElement;
     if (!element) return;
     contextRef.current = element.getContext('2d');
 

@@ -4,18 +4,18 @@ import { useState } from 'react';
 export interface UseListReturn<Item> {
   /** The current list of items */
   value: Item[];
-  /** Sets the list of items */
-  set: (list: Item[]) => void;
+  /** Clears the list */
+  clear: () => void;
+  /** Inserts an item at the specified index */
+  insertAt: (insertAtIndex: number, item: Item) => void;
   /** Adds an item to the list */
   push: (item: Item) => void;
   /** Removes an item from the list */
   removeAt: (removeAtIndex: number) => void;
-  /** Inserts an item at the specified index */
-  insertAt: (insertAtIndex: number, item: Item) => void;
+  /** Sets the list of items */
+  set: (list: Item[]) => void;
   /** Updates an item at the specified index */
   updateAt: (updateAtIndex: number, item: Item) => void;
-  /** Clears the list */
-  clear: () => void;
 }
 
 /**

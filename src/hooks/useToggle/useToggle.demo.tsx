@@ -4,7 +4,7 @@ const Demo = () => {
   const [value, toggle] = useToggle(['blue', 'orange', 'black', 'teal', 'purple'] as const);
 
   return (
-    <button type='button' style={{ backgroundColor: value }} onClick={() => toggle()}>
+    <button style={{ backgroundColor: value }} type='button' onClick={() => toggle()}>
       {value}
     </button>
   );

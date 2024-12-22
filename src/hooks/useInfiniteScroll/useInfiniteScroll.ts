@@ -1,38 +1,23 @@
 import type { RefObject } from 'react';
+
 import { useEffect, useRef, useState } from 'react';
+
+import { getElement } from '@/utils/helpers';
 
 import { useEvent } from '../useEvent/useEvent';
 
 /** The use infinite scroll target element type */
-export type UseInfiniteScrollTarget = RefObject<Element | null> | (() => Element) | Element;
-
-const getElement = (target: UseInfiniteScrollTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
+export type UseInfiniteScrollTarget = (() => Element) | Element | RefObject<Element | null>;
 
 /** The use infinite scroll options type */
 export interface UseInfiniteScrollOptions {
+  /** The direction to trigger the callback */
+  direction?: 'bottom' | 'left' | 'right' | 'top';
   /** The distance in pixels to trigger the callback */
   distance?: number;
-  /** The direction to trigger the callback */
-  direction?: 'top' | 'bottom' | 'left' | 'right';
 }
 
-export type UseInfiniteScroll = {
-  <Target extends UseInfiniteScrollTarget>(
-    target: Target,
-    callback: (event: Event) => void,
-    options?: UseInfiniteScrollOptions
-  ): boolean;
-
+export interface UseInfiniteScroll {
   <Target extends UseInfiniteScrollTarget>(
     callback: (event: Event) => void,
     options?: UseInfiniteScrollOptions,
@@ -41,7 +26,13 @@ export type UseInfiniteScroll = {
     ref: (node: Target) => void;
     isLoading: boolean;
   };
-};
+
+  <Target extends UseInfiniteScrollTarget>(
+    target: Target,
+    callback: (event: Event) => void,
+    options?: UseInfiniteScrollOptions
+  ): boolean;
+}
 
 /**
  * @name useInfiniteScroll
@@ -107,7 +98,7 @@ export const useInfiniteScroll = ((...params) => {
 
   useEffect(() => {
     if (!target && !internalRef) return;
-    const element = target ? getElement(target) : internalRef;
+    const element = (target ? getElement(target) : internalRef) as Element;
     if (!element) return;
 
     element.addEventListener('scroll', onLoadMore);

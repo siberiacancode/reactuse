@@ -1,20 +1,14 @@
 import type { RefObject } from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 
+import { getElement } from '@/utils/helpers';
+
 /** The resize observer target element type */
-type UseResizeObserverTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
-
-const getElement = (target: UseResizeObserverTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
+export type UseResizeObserverTarget =
+  | (() => Element)
+  | Element
+  | RefObject<Element | null | undefined>;
 
 /** The resize observer options type */
 export interface UseResizeObserverOptions extends ResizeObserverOptions {
@@ -27,7 +21,7 @@ export interface UseResizeObserverReturn {
   entries: ResizeObserverEntry[];
 }
 
-export type UseResizeObserver = {
+export interface UseResizeObserver {
   <Target extends UseResizeObserverTarget | UseResizeObserverTarget[]>(
     target: Target,
     options?: UseResizeObserverOptions
@@ -37,7 +31,7 @@ export type UseResizeObserver = {
     options?: UseResizeObserverOptions,
     target?: never
   ): UseResizeObserverReturn & { ref: (node: Target) => void };
-};
+}
 
 /**
  *  @name useResizeObserver
@@ -91,7 +85,7 @@ export const useResizeObserver = ((...params: any[]) => {
       target.forEach((target) => {
         const element = getElement(target);
         if (!element) return;
-        observer.observe(element, options);
+        observer.observe(element as Element, options);
       });
 
       return () => {
@@ -106,7 +100,7 @@ export const useResizeObserver = ((...params: any[]) => {
       setEntries(entries);
       internalOnChangeRef.current?.(entries, observer);
     });
-    observer.observe(element, options);
+    observer.observe(element as Element, options);
 
     return () => {
       observer.disconnect();

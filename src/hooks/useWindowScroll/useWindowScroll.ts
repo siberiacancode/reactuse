@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { isClient } from '@/utils/helpers';
 
-export type ScrollPosition = {
+export interface ScrollPosition {
   x: number;
   y: number;
-};
+}
 
 export const scrollTo = ({
   x,
@@ -27,7 +27,7 @@ export const scrollTo = ({
  *
  * @example
  * const { value, scrollTo } = useWindowScroll();
- * */
+ */
 export const useWindowScroll = () => {
   const [value, setValue] = useState<ScrollPosition>({
     x: isClient ? window.scrollX : Number.POSITIVE_INFINITY,
