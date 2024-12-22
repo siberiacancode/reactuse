@@ -7,6 +7,7 @@ import { getElement } from '@/utils/helpers';
 /** The use click outside target element type */
 export type UseClickOutsideTarget =
   | (() => Element)
+  | string
   | Element
   | RefObject<Element | null | undefined>;
 

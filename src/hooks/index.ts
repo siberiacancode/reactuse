@@ -92,6 +92,7 @@ export * from './useShare/useShare';
 export * from './useStep/useStep';
 export * from './useStopwatch/useStopwatch';
 export * from './useStorage/useStorage';
+export * from './useTextDirection/useTextDirection';
 export * from './useTextSelection/useTextSelection';
 export * from './useTime/useTime';
 export * from './useTimeout/useTimeout';

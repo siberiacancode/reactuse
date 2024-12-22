@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
-interface ElementSize {
+//* The element size value type */
+export interface UseElementSizeValue {
   height: number;
   width: number;
 }
@@ -12,21 +13,22 @@ interface ElementSize {
 /** The use element size target element type */
 export type UseElementSizeTarget =
   | (() => Element)
+  | string
   | Element
   | RefObject<Element | null | undefined>;
 
 export interface UseElementSizeReturn {
-  value: ElementSize;
+  value: UseElementSizeValue;
 }
 
 export interface UseElementSize {
   <Target extends UseElementSizeTarget>(
     target: Target,
-    initialSize?: ElementSize
+    initialValue?: UseElementSizeValue
   ): UseElementSizeReturn;
 
   <Target extends UseElementSizeTarget>(
-    initialSize?: ElementSize,
+    initialValue?: UseElementSizeValue,
     target?: never
   ): { ref: (node: Target) => void } & UseElementSizeReturn;
 }
@@ -39,27 +41,28 @@ export interface UseElementSize {
  * @overload
  * @template Target The target element type.
  * @param {UseElementSizeTarget} target The target element to observe.
- * @param {ElementSize} [initialSize = { width: 0, height: 0 }]
+ * @param {UseElementSizeValue} [initialValue = { width: 0, height: 0 }]
  * @returns {UseElementSizeReturn} An object containing the current width and height of the element.
  *
  * @example
  * const { value } = useElementSize(elementRef);
  *
  * @overload
- * @param {ElementSize} [initialSize = { width: 0, height: 0 }] The initial size of the element.
- * @returns { { ref: (node: Target) => void } & UseElementSizeReturn } A reference function to attach to the element to observe size changes.
+ * @param {UseElementSizeValue} [initialValue = { width: 0, height: 0 }] The initial size of the element.
+ * @returns { { ref: (node: Target) => void } & UseElementSizeReturn } An object containing the current width and height of the element.
  *
  * @example
  * const { ref, value } = useElementSize({ width: 100, height: 100 });
  */
 export const useElementSize = ((...params: any[]) => {
-  const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
-    | UseElementSizeTarget
-    | undefined;
+  const target = (
+    params[0] && typeof params[0].width !== 'number' && typeof params[0].height !== 'number'
+      ? params[0]
+      : undefined
+  ) as UseElementSizeTarget | undefined;
+  const initialValue = (target ? params[1] : params[0]) as UseElementSizeValue | undefined;
 
-  const initialSize = (target ? params[1] : params[0]) as ElementSize | undefined;
-
-  const [size, setSize] = useState(initialSize ?? { width: 0, height: 0 });
+  const [size, setSize] = useState(initialValue ?? { width: 0, height: 0 });
   const [internalRef, setInternalRef] = useState<Element>();
 
   useEffect(() => {
