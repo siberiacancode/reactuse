@@ -16,7 +16,7 @@ export interface UseVibrateReturn {
   /** The start function */
   start: (interval: number) => void;
   /** The vibrate function */
-  vibrate: (pattern?: UseVibratePattern) => void;
+  trigger: (pattern?: UseVibratePattern) => void;
 }
 
 /**
@@ -38,7 +38,7 @@ export const useVibrate = (pattern: UseVibratePattern, interval: number = 0) => 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
   const [active, setActive] = useState(false);
 
-  const vibrate = (internalPattern: UseVibratePattern = pattern) => {
+  const trigger = (internalPattern: UseVibratePattern = pattern) => {
     if (!supported) return;
     navigator.vibrate(internalPattern);
   };
@@ -60,7 +60,7 @@ export const useVibrate = (pattern: UseVibratePattern, interval: number = 0) => 
     if (!supported) return;
     if (intervalIdRef.current) clearInterval(intervalIdRef.current);
     setActive(true);
-    intervalIdRef.current = setInterval(vibrate, intervalInterval);
+    intervalIdRef.current = setInterval(trigger, intervalInterval);
   };
 
   useEffect(() => {
@@ -71,5 +71,5 @@ export const useVibrate = (pattern: UseVibratePattern, interval: number = 0) => 
     };
   }, [interval, pattern]);
 
-  return { supported, vibrate, stop, active, pause, resume };
+  return { supported, trigger, stop, active, pause, resume };
 };
