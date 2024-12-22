@@ -21,6 +21,8 @@ export interface UseQueryOptions<QueryData, Data> {
   refetchInterval?: number;
   /* The retry count of requests */
   retry?: boolean | number;
+  /* The retry delay of requests */
+  retryDelay?: ((retry: number, error: Error) => number) | number;
   /* The callback function to be invoked on error */
   onError?: (error: Error) => void;
   /* The callback function to be invoked on success */
@@ -40,14 +42,14 @@ interface UseQueryCallbackParams {
 export interface UseQueryReturn<Data> {
   /* The abort function */
   abort: AbortController['abort'];
-  /*  The aborted state of the query */
-  aborted: boolean;
   /* The state of the query */
   data?: Data;
   /* The success state of the query */
   error?: Error;
   /* The error state of the query */
   isError: boolean;
+  /* The fetching state of the query */
+  isFetching: boolean;
   /* The loading state of the query */
   isLoading: boolean;
   /* The refetching state of the query */
@@ -76,7 +78,7 @@ export interface UseQueryReturn<Data> {
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
- * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));
+ * const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));
  */
 export const useQuery = <QueryData, Data = QueryData>(
   callback: (params: UseQueryCallbackParams) => Promise<QueryData>,
@@ -84,12 +86,13 @@ export const useQuery = <QueryData, Data = QueryData>(
 ): UseQueryReturn<Data> => {
   const enabled = options?.enabled ?? true;
   const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
+  const alreadyRequested = useRef(false);
 
+  const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
   const [isSuccess, setIsSuccess] = useState(!!options?.initialData);
-  const [aborted, setAborted] = useState(!!options?.initialData);
 
   const [error, setError] = useState<Error | undefined>(undefined);
   const [data, setData] = useState<Data | undefined>(options?.initialData);
@@ -102,13 +105,16 @@ export const useQuery = <QueryData, Data = QueryData>(
   const abort = () => {
     abortControllerRef.current.abort();
     abortControllerRef.current = new AbortController();
-    abortControllerRef.current.signal.onabort = () => setAborted(true);
   };
 
   const request = (action: 'init' | 'refetch') => {
     abort();
-    setIsLoading(true);
 
+    setIsFetching(true);
+    if (action === 'init') {
+      alreadyRequested.current = true;
+      setIsLoading(true);
+    }
     if (action === 'refetch') setIsRefetching(true);
     callback({ signal: abortControllerRef.current.signal, keys })
       .then((response) => {
@@ -116,24 +122,34 @@ export const useQuery = <QueryData, Data = QueryData>(
         options?.onSuccess?.(data as Data);
         setData(data as Data);
         setIsSuccess(true);
-        setIsLoading(false);
         setError(undefined);
         setIsError(false);
-        setAborted(false);
+        setIsFetching(false);
+        if (action === 'init') setIsLoading(false);
         if (action === 'refetch') setIsRefetching(false);
       })
       .catch((error: Error) => {
         if (retryCountRef.current > 0) {
           retryCountRef.current -= 1;
+          const retryDelay =
+            typeof options?.retryDelay === 'function'
+              ? options?.retryDelay(retryCountRef.current, error)
+              : options?.retryDelay;
+
+          if (retryDelay) {
+            setTimeout(() => request(action), retryDelay);
+            return;
+          }
+
           return request(action);
         }
         options?.onError?.(error);
         setData(undefined);
         setIsSuccess(false);
-        setIsLoading(false);
-        setAborted(false);
         setError(error);
         setIsError(true);
+        setIsFetching(false);
+        if (action === 'init') setIsLoading(false);
         if (action === 'refetch') setIsRefetching(false);
         retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
       })
@@ -155,7 +171,7 @@ export const useQuery = <QueryData, Data = QueryData>(
 
   useDidUpdate(() => {
     if (!enabled) return;
-    request('refetch');
+    request(alreadyRequested.current ? 'refetch' : 'init');
   }, [enabled, ...keys]);
 
   useEffect(() => {
@@ -176,10 +192,10 @@ export const useQuery = <QueryData, Data = QueryData>(
     data: data ?? placeholderData,
     error,
     refetch,
+    isFetching,
     isLoading,
     isError,
     isSuccess,
-    isRefetching,
-    aborted
+    isRefetching
   };
 };

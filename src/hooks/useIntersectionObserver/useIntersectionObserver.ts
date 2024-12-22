@@ -25,14 +25,14 @@ export interface UseIntersectionObserverReturn {
 
 export interface UseIntersectionObserver {
   <Target extends UseIntersectionObserverTarget>(
-    target: Target,
-    options?: UseIntersectionObserverOptions
-  ): UseIntersectionObserverReturn;
-
-  <Target extends UseIntersectionObserverTarget>(
     options?: UseIntersectionObserverOptions,
     target?: never
   ): UseIntersectionObserverReturn & { ref: (node: Target) => void };
+
+  <Target extends UseIntersectionObserverTarget>(
+    target: Target,
+    options?: UseIntersectionObserverOptions
+  ): UseIntersectionObserverReturn;
 }
 
 /**

@@ -5,7 +5,11 @@ import { useEffect, useState } from 'react';
 import { getElement } from '@/utils/helpers';
 
 /** The use mouse target element type */
-export type UseMouseTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
+export type UseMouseTarget =
+  | (() => Element)
+  | string
+  | Element
+  | RefObject<Element | null | undefined>;
 
 /** The use mouse return type */
 export interface UseMouseReturn {
@@ -51,9 +55,7 @@ export interface UseMouse {
  * @example
  * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
-export const useMouse = ((...params: any[]) => {
-  const target = params[0] as UseMouseTarget | undefined;
-
+export const useMouse = ((target) => {
   const [value, setValue] = useState({
     x: 0,
     y: 0,
@@ -66,7 +68,6 @@ export const useMouse = ((...params: any[]) => {
   const [internalRef, setInternalRef] = useState<Element>();
 
   useEffect(() => {
-    console.log('@@@@@', target);
     if (!target && !internalRef) return;
     const onMouseMove = (event: MouseEvent) => {
       const element = (target ? getElement(target) : internalRef) as Element;

@@ -2,6 +2,7 @@ import type { RefObject } from 'react';
 
 export type GetElementTarget =
   | (() => Element)
+  | string
   | Document
   | Element
   | RefObject<Element | null | undefined>
@@ -10,6 +11,10 @@ export type GetElementTarget =
 export const getElement = <Target extends GetElementTarget>(target: Target) => {
   if (typeof target === 'function') {
     return target();
+  }
+
+  if (typeof target === 'string') {
+    return document.querySelector(target);
   }
 
   if (target instanceof Document) {

@@ -8,7 +8,11 @@ import { useMount } from '../useMount/useMount';
 import { useMutationObserver } from '../useMutationObserver/useMutationObserver';
 
 /** The css variable target element type */
-export type UseCssVarTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
+export type UseCssVarTarget =
+  | (() => Element)
+  | Element
+  | RefObject<Element | null | undefined>
+  | undefined;
 
 /** The css variable return type */
 export interface UseCssVarReturn {
@@ -19,13 +23,13 @@ export interface UseCssVarReturn {
 }
 
 export interface UseCssVar {
+  (key: string, initialValue?: string): UseCssVarReturn;
+
   <Target extends UseCssVarTarget>(
     target: Target,
     key: string,
     initialValue?: string
   ): UseCssVarReturn;
-
-  (key: string, initialValue?: string): UseCssVarReturn;
 }
 
 /**

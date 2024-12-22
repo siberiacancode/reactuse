@@ -45,8 +45,8 @@ const Demo = () => {
 
       <div>
         <input
-          placeholder='Name'
           type='text'
+          placeholder='Name'
           {...nameInput.register({
             required: 'field is required',
             minLength: {

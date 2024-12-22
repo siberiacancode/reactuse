@@ -2,7 +2,7 @@ import { useFocus } from './useFocus';
 
 const Demo = () => {
   const textFocus = useFocus<HTMLParagraphElement>();
-  const inputFocus = useFocus<HTMLInputElement>({ initialFocus: true });
+  const inputFocus = useFocus<HTMLInputElement>({ initialValue: true });
 
   return (
     <>

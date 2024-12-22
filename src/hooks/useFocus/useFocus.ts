@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
+/** The use focus target type */
 export type UseFocusTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
 
 /** The use focus options type */
 export interface UseFocusOptions {
   /** The initial focus state of the target */
-  initialFocus?: boolean;
+  initialValue?: boolean;
 }
 
 /** The use focus return type */
@@ -23,11 +24,11 @@ export interface UseFocusReturn {
 }
 
 export interface UseFocus {
-  <Target extends UseFocusTarget>(target: Target, options?: UseFocusOptions): UseFocusReturn;
-
   <Target extends UseFocusTarget>(
     options?: UseFocusOptions
   ): UseFocusReturn & { ref: (node: Target) => void };
+
+  <Target extends UseFocusTarget>(target: Target, options?: UseFocusOptions): UseFocusReturn;
 }
 
 /**
@@ -38,14 +39,14 @@ export interface UseFocus {
  * @overload
  * @template Target The target element
  * @param {Target} target The target element to focus
- * @param {boolean} [options.initialFocus=false] The initial focus state of the target
+ * @param {boolean} [options.initialValue=false] The initial focus state of the target
  * @returns {UseFocusReturn} An object with a `focus` boolean state value
  *
  * @example
  * const { focus, blur, focused } = useFocus(target);
  *
  * @overload
- * @param {boolean} [options.initialFocus=false] The initial focus state of the target
+ * @param {boolean} [options.initialValue=false] The initial focus state of the target
  * @returns {UseFocusReturn} An object with a `focus` boolean state value
  *
  * @example
@@ -54,12 +55,10 @@ export interface UseFocus {
 export const useFocus = ((...params: any[]) => {
   const target =
     (params[0] && 'current' in params[0]) || params[0] instanceof Element ? params[0] : undefined;
-  const initialFocus =
-    (target
-      ? (params[1] as UseFocusOptions)?.initialFocus
-      : (params[0] as UseFocusOptions)?.initialFocus) ?? false;
+  const options = ((target ? params[1] : params[0]) as UseFocusOptions) ?? {};
+  const initialValue = options.initialValue ?? false;
 
-  const [focused, setFocused] = useState(initialFocus);
+  const [focused, setFocused] = useState(initialValue);
   const [internalRef, setInternalRef] = useState<Element>();
 
   const elementRef = useRef<HTMLElement>();
@@ -76,7 +75,7 @@ export const useFocus = ((...params: any[]) => {
       if (!focus || (event.target as HTMLElement).matches?.(':focus-visible')) setFocused(true);
     };
     const onBlur = () => setFocused(false);
-    if (initialFocus) element.focus();
+    if (initialValue) element.focus();
 
     element.addEventListener('focus', onFocus);
     element.addEventListener('blur', onBlur);
