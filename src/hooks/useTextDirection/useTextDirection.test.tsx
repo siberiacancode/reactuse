@@ -24,7 +24,7 @@ it('Should return initial value', () => {
   expect(value).toBe('rtl');
 });
 
-it('Should set the direction attribute on a div element', async () => {
+it('Should set the direction attribute on a div element', () => {
   const div = document.createElement('div');
 
   document.body.appendChild(div);
