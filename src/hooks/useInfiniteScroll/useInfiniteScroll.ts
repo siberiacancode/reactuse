@@ -19,12 +19,6 @@ export interface UseInfiniteScrollOptions {
 
 export interface UseInfiniteScroll {
   <Target extends UseInfiniteScrollTarget>(
-    target: Target,
-    callback: (event: Event) => void,
-    options?: UseInfiniteScrollOptions
-  ): boolean;
-
-  <Target extends UseInfiniteScrollTarget>(
     callback: (event: Event) => void,
     options?: UseInfiniteScrollOptions,
     target?: never
@@ -32,6 +26,12 @@ export interface UseInfiniteScroll {
     ref: (node: Target) => void;
     isLoading: boolean;
   };
+
+  <Target extends UseInfiniteScrollTarget>(
+    target: Target,
+    callback: (event: Event) => void,
+    options?: UseInfiniteScrollOptions
+  ): boolean;
 }
 
 /**

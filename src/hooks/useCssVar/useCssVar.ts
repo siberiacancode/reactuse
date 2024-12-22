@@ -23,13 +23,13 @@ export interface UseCssVarReturn {
 }
 
 export interface UseCssVar {
+  (key: string, initialValue?: string): UseCssVarReturn;
+
   <Target extends UseCssVarTarget>(
     target: Target,
     key: string,
     initialValue?: string
   ): UseCssVarReturn;
-
-  (key: string, initialValue?: string): UseCssVarReturn;
 }
 
 /**
