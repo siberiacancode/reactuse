@@ -3,14 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 /** The use vibrate pattern type */
 export type UseVibratePattern = number | number[];
 
-/** The use vibrate params type */
-export interface UseVibrateParams {
-  /** Time in milliseconds between vibrations */
-  interval?: number;
-  /** Pattern for vibration */
-  pattern: UseVibratePattern;
-}
-
 /** The use vibrate return type */
 export interface UseVibrateReturn {
   /** The support indicator */
@@ -21,8 +13,8 @@ export interface UseVibrateReturn {
   pause: () => void;
   /** The resume function */
   resume: () => void;
-  /** The stop function */
-  stop: () => void;
+  /** The start function */
+  start: (interval: number) => void;
   /** The vibrate function */
   vibrate: (pattern?: UseVibratePattern) => void;
 }
@@ -38,48 +30,46 @@ export interface UseVibrateReturn {
  * @returns {UseVibrateReturn} An object containing support indicator, start vibration and stop vibration functions
  *
  * @example
- * const { supported, vibrating, vibrate, stop } = useVibrate(1000);
+ * const { supported, active, vibrate, stop, pause, resume } = useVibrate(1000);
  */
-export const useVibrate = (params: UseVibrateParams) => {
+export const useVibrate = (pattern: UseVibratePattern, interval: number = 0) => {
   const supported = typeof navigator !== 'undefined' && 'vibrate' in navigator;
 
-  const interval = params.interval ?? 0;
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
-  const [vibrating, setVibrating] = useState(false);
+  const [active, setActive] = useState(false);
 
-  const vibrate = (pattern: UseVibratePattern = params.pattern) => {
+  const vibrate = (internalPattern: UseVibratePattern = pattern) => {
     if (!supported) return;
-    navigator.vibrate(pattern);
-    setVibrating(true);
+    navigator.vibrate(internalPattern);
   };
 
   const stop = () => {
     if (!supported) return;
-
-    setVibrating(false);
     navigator.vibrate(0);
-
+    setActive(false);
     if (intervalIdRef.current) clearInterval(intervalIdRef.current);
   };
 
   const pause = () => {
     if (!supported) return;
+    setActive(false);
     if (intervalIdRef.current) clearInterval(intervalIdRef.current);
   };
 
-  const resume = () => {
+  const resume = (intervalInterval: number = interval) => {
     if (!supported) return;
     if (intervalIdRef.current) clearInterval(intervalIdRef.current);
-    intervalIdRef.current = setInterval(vibrate, interval);
+    setActive(true);
+    intervalIdRef.current = setInterval(vibrate, intervalInterval);
   };
 
   useEffect(() => {
-    if (!supported || typeof params.interval === 'undefined') return;
-    intervalIdRef.current = setInterval(vibrate, interval);
+    if (!supported || interval <= 0) return;
+    resume(interval);
     return () => {
-      clearInterval(intervalIdRef.current);
+      stop();
     };
-  }, [params.interval, params.pattern]);
+  }, [interval, pattern]);
 
-  return { supported, vibrate, stop, vibrating, pause, resume };
+  return { supported, vibrate, stop, active, pause, resume };
 };
