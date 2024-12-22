@@ -5,7 +5,6 @@ const Demo = () => {
 
   return (
     <>
-      <h1>Vibration is <code>{vibrate.active ? 'vibrating' : 'not vibrating'}</code></h1>
       <p>Most modern mobile devices include vibration hardware, which lets software code provides physical feedback to the user by causing the device to shake.</p>
       <button type='button' onClick={() => vibrate.trigger()}>
         Vibrate
