@@ -1,46 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
+/** The use vibrate pattern type */
+export type UseVibratePattern = number | number[];
 
-/** The use vibration params */
+/** The use vibrate params type */
 export interface UseVibrateParams {
+  /** Time in milliseconds between vibrations */
+  interval?: number;
   /** Pattern for vibration */
-  pattern: number | number[];
-  /** Alternate way to enable vibration */
-  enabled?: boolean;
-  /** Indicates thar vibration will be endless */
-  loop?: boolean;
+  pattern: UseVibratePattern;
 }
 
-/** The use vibration options */
-export interface UseVibrateOptions {
-  /** Alternate way to enable vibration */
-  enabled?: boolean;
-  /** Indicates thar vibration will be endless */
-  loop?: boolean;
-}
-
-/** The use vibration return type */
+/** The use vibrate return type */
 export interface UseVibrateReturn {
-  /** Indicates that the device supports Vibration API */
-  isSupported: boolean;
-  /** Indicates that the device is vibrating */
-  isVibrating: boolean;
-  /** Start vibration function */
-  vibrate: (pattern?: number | number[]) => void;
-  /** Stop vibration function */
+  /** The support indicator */
+  supported: boolean;
+  /** The vibrating indicator */
+  vibrating: boolean;
+  /** The pause function */
+  pause: () => void;
+  /** The resume function */
+  resume: () => void;
+  /** The stop function */
   stop: () => void;
+  /** The vibrate function */
+  vibrate: (pattern?: UseVibratePattern) => void;
 }
 
-export type UseVibrate = {
-  (pattern: number | number[], options?: UseVibrateOptions): UseVibrateReturn;
-  ({ pattern, loop, enabled }: UseVibrateParams, options?: never): UseVibrateReturn;
-};
-
-let interval: NodeJS.Timeout;
 /**
  * @name useVibrate
- * @description - Hook that provides Vibrate API
+ * @description - Hook that provides vibrate api
  * @category Browser
  *
  * @overload
@@ -50,80 +39,48 @@ let interval: NodeJS.Timeout;
  * @returns {UseVibrateReturn} An object containing support indicator, start vibration and stop vibration functions
  *
  * @example
- * const { isSupported, isVibrating, vibrate, stop } = useVibrate(1000);
- *
- * @overload
- * @param {(number|number[])} params.pattern Pattern for vibration
- * @param {boolean} [params.loop] Indicates thar vibration will be endless
- * @param {boolean} [params.enabled] Alternate way to enable vibration
- * @returns {UseVibrateReturn} An object containing support indicator, vibrating indicator, start vibration and stop vibration functions
- *
- * @example
- * const { isSupported, isVibrating, vibrate, stop } = useVibrate({pattern: [200, 100, 200], loop: true});
- * */
-export const useVibrate: UseVibrate = (...params) => {
-  const pattern =
-    typeof params[0] === 'number' || Array.isArray(params[0]) ? params[0] : params[0]?.pattern;
-  const { loop, enabled } =
-    typeof params[0] === 'number' || Array.isArray(params[0]) ? params[1] ?? {} : params[0] ?? {};
+ * const { supported, vibrating, vibrate, stop } = useVibrate(1000);
+ */
+export const useVibrate = (params: UseVibrateParams) => {
+  const supported = typeof navigator !== 'undefined' && 'vibrate' in navigator;
 
-  const [isSupported, setIsSupported] = useState(false);
-  const [isVibrating, setIsVibrating] = useState(false);
+  const interval = params.interval ?? 0;
+  const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
+  const [vibrating, setVibrating] = useState(false);
 
-  useEffect(() => {
-    if (isClient && navigator && 'vibrate' in navigator) {
-      setIsSupported(true);
-    }
-  }, []);
-
-  const vibrate = (curPattern = pattern) => {
-    if (!isSupported || isVibrating) return;
-
-    const duration = Array.isArray(curPattern) ? curPattern.reduce((a, b) => a + b) : curPattern;
-
-    setIsVibrating(true);
-    navigator.vibrate(curPattern);
-
-    if (loop) {
-      interval = setInterval(() => {
-        navigator.vibrate(curPattern);
-      }, duration);
-    } else {
-      setTimeout(() => {
-        setIsVibrating(false);
-      }, duration);
-    }
+  const vibrate = (pattern: UseVibratePattern = params.pattern) => {
+    if (!supported) return;
+    navigator.vibrate(pattern);
+    setVibrating(true);
   };
 
   const stop = () => {
-    if (!isSupported) return;
+    if (!supported) return;
 
-    setIsVibrating(false);
+    setVibrating(false);
     navigator.vibrate(0);
 
-    if (loop) {
-      clearInterval(interval);
-    }
+    if (intervalIdRef.current) clearInterval(intervalIdRef.current);
+  };
+
+  const pause = () => {
+    if (!supported) return;
+    if (intervalIdRef.current) clearInterval(intervalIdRef.current);
+  };
+
+  const resume = () => {
+    if (!supported) return;
+    if (intervalIdRef.current) clearInterval(intervalIdRef.current);
+    intervalIdRef.current = setInterval(vibrate, interval);
   };
 
   useEffect(() => {
-    if (!isSupported || isVibrating) return;
-
-    if (enabled) {
-      vibrate();
-    }
-
+    if (!supported || typeof params.interval === 'undefined') return;
+    intervalIdRef.current = setInterval(vibrate, interval);
     return () => {
-      if (enabled) {
-        setIsVibrating(false);
-        navigator.vibrate(0);
-
-        if (loop) {
-          clearInterval(interval);
-        }
-      }
+      clearInterval(intervalIdRef.current);
     };
-  }, [enabled]);
+  }, [params.interval, params.pattern]);
 
-  return { isSupported, vibrate, stop, isVibrating } as const;
+  return { supported, vibrate, stop, vibrating, pause, resume };
 };
