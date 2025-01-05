@@ -1,5 +1,6 @@
-import { fileURLToPath } from 'node:url';
 import type { DefaultTheme } from 'vitepress';
+
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitepress';
 
 import { getHookItems } from '../src/utils';
@@ -44,7 +45,6 @@ export default async () => {
 
       if (pageData.relativePath.includes('hooks')) {
         pageData.title = pageData.params?.name;
-        return;
       }
     },
     head: [

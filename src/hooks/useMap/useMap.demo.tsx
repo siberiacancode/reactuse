@@ -1,5 +1,4 @@
 import { useField } from '../useField/useField';
-
 import { useMap } from './useMap';
 
 const Demo = () => {
@@ -15,7 +14,7 @@ const Demo = () => {
     <>
       <div style={{ display: 'flex', gap: 8 }}>
         <input placeholder='Name' {...nameInput.register()} />
-        <input placeholder='Age' type='number' {...ageInput.register()} />
+        <input type='number' placeholder='Age' {...ageInput.register()} />
 
         <button
           type='button'

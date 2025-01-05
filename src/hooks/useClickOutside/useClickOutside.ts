@@ -1,24 +1,17 @@
 import type { RefObject } from 'react';
-import { useEffect, useRef } from 'react';
 
-import { useRerender } from '../useRerender/useRerender';
+import { useEffect, useRef, useState } from 'react';
+
+import { getElement } from '@/utils/helpers';
 
 /** The use click outside target element type */
-type UseClickOutsideTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
+export type UseClickOutsideTarget =
+  | (() => Element)
+  | string
+  | Element
+  | RefObject<Element | null | undefined>;
 
-const getElement = (target: UseClickOutsideTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
-
-export type UseClickOutside = {
+export interface UseClickOutside {
   <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
     target: Target,
     callback: (event: Event) => void
@@ -28,7 +21,7 @@ export type UseClickOutside = {
     callback: (event: Event) => void,
     target?: never
   ): (node: Target) => void;
-};
+}
 
 /**
  * @name useClickOutside
@@ -53,25 +46,24 @@ export type UseClickOutside = {
  * const ref = useClickOutside<HMLDiTvElement>(() => console.log('click outside'));
  */
 export const useClickOutside = ((...params: any[]) => {
-  const rerender = useRerender();
   const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
     | UseClickOutsideTarget
     | UseClickOutsideTarget[]
     | undefined;
   const callback = (params[1] ? params[1] : params[0]) as (event: Event) => void;
 
-  const internalRef = useRef<Element>();
+  const [internalRef, setInternalRef] = useState<Element>();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
+    if (!target && !internalRef) return;
     const handler = (event: Event) => {
       if (Array.isArray(target)) {
         if (!target.length) return;
 
         const isClickedOutsideElements = target.every((target) => {
-          const element = getElement(target);
+          const element = getElement(target) as Element;
           return element && !element.contains(event.target as Node);
         });
 
@@ -80,7 +72,7 @@ export const useClickOutside = ((...params: any[]) => {
         return;
       }
 
-      const element = target ? getElement(target) : internalRef.current;
+      const element = (target ? getElement(target) : internalRef) as Element;
 
       if (element && !element.contains(event.target as Node)) {
         internalCallbackRef.current(event);
@@ -94,13 +86,8 @@ export const useClickOutside = ((...params: any[]) => {
       document.removeEventListener('mousedown', handler);
       document.removeEventListener('touchstart', handler);
     };
-  }, [internalRef.current, target]);
+  }, [internalRef, target]);
 
   if (target) return;
-  return (node: Element) => {
-    if (!internalRef.current) {
-      internalRef.current = node;
-      rerender.update();
-    }
-  };
+  return setInternalRef;
 }) as UseClickOutside;

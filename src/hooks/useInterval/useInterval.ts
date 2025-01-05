@@ -18,10 +18,11 @@ export interface UseIntervalReturn {
   resume: () => void;
 }
 
-type UseInterval = {
+interface UseInterval {
   (callback: () => void, interval?: number, options?: UseIntervalOptions): UseIntervalReturn;
+
   (callback: () => void, options?: UseIntervalOptions & { interval?: number }): UseIntervalReturn;
-};
+}
 
 /**
  * @name useInterval

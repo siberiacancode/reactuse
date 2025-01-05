@@ -1,4 +1,5 @@
 import type { UseEventListenerOptions } from '../useEventListener/useEventListener';
+
 import { useEventListener } from '../useEventListener/useEventListener';
 
 /**

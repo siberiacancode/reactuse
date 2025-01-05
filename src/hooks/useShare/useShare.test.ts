@@ -13,13 +13,13 @@ it('Should use share', () => {
   const { result } = renderHook(useShare);
 
   expect(typeof result.current.share).toBe('function');
-  expect(result.current.supported).toBe(true);
+  expect(result.current.supported).toBeTruthy();
 });
 
 // it('Should use share on server side', () => {
 //   const { result } = renderHookServer(useShare);
 
-//   expect(result.current.supported).toBe(false);
+//   expect(result.current.supported).toBeFalsy();
 // });
 
 it('Should share data', () => {

@@ -1,22 +1,23 @@
 import type { RefObject } from 'react';
+
 import { useRef, useState } from 'react';
 
 import { useResizeObserver } from '../useResizeObserver/useResizeObserver';
 
 /** The use measure target element type */
-export type UseMeasureTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
+export type UseMeasureTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
 
 /** The use measure return type */
 export type UseMeasureReturn = Pick<
   DOMRectReadOnly,
-  'x' | 'y' | 'top' | 'left' | 'right' | 'bottom' | 'height' | 'width'
+  'bottom' | 'height' | 'left' | 'right' | 'top' | 'width' | 'x' | 'y'
 >;
 
-export type UseMeasureScreen = {
+export interface UseMeasureScreen {
   <Target extends UseMeasureTarget>(target: Target): UseMeasureReturn;
 
   <Target extends UseMeasureTarget>(target?: never): UseMeasureReturn & { ref: RefObject<Target> };
-};
+}
 
 /**
  * @name useMeasure

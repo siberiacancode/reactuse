@@ -14,8 +14,8 @@ const Step1 = ({ onNext }: Step1Props) => (
   </>
 );
 interface Step2Props {
-  onNext: () => void;
   onBack: () => void;
+  onNext: () => void;
 }
 const Step2 = ({ onNext, onBack }: Step2Props) => (
   <>
@@ -71,7 +71,7 @@ const Demo = () => {
         />
       )}
       {wizard.currentStepId === 'step2' && (
-        <Step2 onNext={() => wizard.set('step3')} onBack={wizard.back} />
+        <Step2 onBack={wizard.back} onNext={() => wizard.set('step3')} />
       )}
       {wizard.currentStepId === 'step3' && <Step3 />}
 

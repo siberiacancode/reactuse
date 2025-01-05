@@ -3,7 +3,7 @@ import { useStep } from './useStep';
 const Step1 = () => <p>First step</p>;
 const Step2 = () => <p>Second step</p>;
 const Step3 = () => <p>Third step</p>;
-const STEPS = [<Step1 />, <Step2 />, <Step3 />];
+const STEPS = [<Step1 key={1} />, <Step2 key={2} />, <Step3 key={3} />];
 
 const Demo = () => {
   const { currentStep, isFirst, isLast, next, back, reset } = useStep(STEPS.length);
@@ -23,13 +23,13 @@ const Demo = () => {
         Is last step: <code>{String(isLast)}</code>
       </p>
       {StepComponent}
-      <button type='button' disabled={isFirst} onClick={back}>
+      <button disabled={isFirst} type='button' onClick={back}>
         Back
       </button>
-      <button type='button' disabled={isLast} onClick={next}>
+      <button disabled={isLast} type='button' onClick={next}>
         Next
       </button>
-      <button type='button' disabled={isFirst} onClick={reset}>
+      <button disabled={isFirst} type='button' onClick={reset}>
         Reset
       </button>
     </>

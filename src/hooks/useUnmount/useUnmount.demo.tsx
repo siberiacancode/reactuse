@@ -1,5 +1,4 @@
 import { useBoolean } from '../useBoolean/useBoolean';
-
 import { useUnmount } from './useUnmount';
 
 const Component = () => {

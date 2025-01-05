@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { useCounter } from '../useCounter/useCounter';
-
 import { useDidUpdate } from './useDidUpdate';
 
 const Demo = () => {

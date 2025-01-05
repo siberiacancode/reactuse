@@ -1,18 +1,17 @@
 import { useCounter } from '../useCounter/useCounter';
-
 import { useClickOutside } from './useClickOutside';
 
 const Demo = () => {
   const counter = useCounter();
 
-  const ref = useClickOutside<HTMLDivElement>(() => {
+  const clickOutsideRef = useClickOutside<HTMLDivElement>(() => {
     console.log('click outside');
     counter.inc();
   });
 
   return (
     <div
-      ref={ref}
+      ref={clickOutsideRef}
       style={{
         width: 200,
         height: 200,

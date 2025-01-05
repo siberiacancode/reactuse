@@ -14,7 +14,7 @@ const Demo = () => {
           {eyeDropper.value ? eyeDropper.value : 'choose color'}
         </span>
       </p>
-      <button type='button' disabled={!eyeDropper.supported} onClick={() => eyeDropper.open()}>
+      <button disabled={!eyeDropper.supported} type='button' onClick={() => eyeDropper.open()}>
         Open eye dropper
       </button>
     </>

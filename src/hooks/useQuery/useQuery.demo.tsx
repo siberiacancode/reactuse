@@ -1,5 +1,4 @@
 import { useCounter } from '../useCounter/useCounter';
-
 import { useQuery } from './useQuery';
 
 interface Pokemon {
@@ -8,7 +7,7 @@ interface Pokemon {
 }
 
 const getPokemon = (id: number) =>
-  fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()) as Promise<Pokemon>;
+  fetch(`https://pokeapi.co/api/v2/pokemon2/${id}`).then((res) => res.json()) as Promise<Pokemon>;
 
 const Demo = () => {
   const counter = useCounter(1);
@@ -18,7 +17,7 @@ const Demo = () => {
 
   return (
     <>
-      <button type='button' disabled={counter.value === 1} onClick={() => counter.dec()}>
+      <button disabled={counter.value === 1} type='button' onClick={() => counter.dec()}>
         Prev
       </button>
       <button type='button' onClick={() => counter.inc()}>
@@ -31,8 +30,8 @@ const Demo = () => {
             Name: <code>{getPokemonQuery.data.name}</code>
           </p>
           <img
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonQuery.data.id}.png`}
             alt={getPokemonQuery.data.name}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonQuery.data.id}.png`}
           />
         </div>
       )}
