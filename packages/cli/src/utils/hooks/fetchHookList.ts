@@ -1,5 +1,3 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable no-await-in-loop,@typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access */
 import ora from 'ora';
 
 import { fetchUtilsDependencies } from '@/utils/dependencies/fetchUtilsDependencies';
@@ -28,10 +26,10 @@ export const fetchHookList = async (
       if (hooksDepsImport.length && isAllOption) {
         await fetchHookList(hooksDepsImport, hooksDirectory, utilsDirectory);
       }
+
+      spinner.succeed('All hooks have been installed!');
     }
   } catch (error) {
-    spinner.fail('Error downloading hooks. Try again.');
-  } finally {
-    spinner.succeed('All hooks have been installed!');
+    spinner.fail(`Error downloading hooks. Try again. Error - ${error}`);
   }
 };

@@ -1,8 +1,10 @@
-import * as fs from 'fs/promises';
+import * as fs from 'node:fs/promises';
 
 const REGEX = {
-  utils: /import\s+\{\s*([^}]+)\s*\}\s+from\s+['"]@\/utils[^'"]*['"]/g,
-  dependencyHooks: /import\s+\{\s*([^}]+)\s*\}\s+from\s+['"][^'"]*\/use\w*\/[^'"]*['"]/g
+  utils: /import\s+\{\s*([^}\s,]+(?:\s*,\s*[^}\s,]+)*)\s*\}\s+from\s+['"]@\/utils[^'"]*['"]/g,
+
+  dependencyHooks:
+    /import\s+\{\s*([^}\s,]+(?:\s*,\s*[^}\s,]+)*)\s*\}\s+from\s+['"][^'"]*\/use\w*\/[^'"]*['"]/g
 };
 export const findImports = async (filePath: string, regex: keyof typeof REGEX) => {
   const code = await fs.readFile(filePath, 'utf-8');

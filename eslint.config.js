@@ -34,5 +34,13 @@ export default eslint(
     rules: {
       'regexp/no-super-linear-backtracking': 'off'
     }
+  },
+  {
+    name: 'siberiacancode/cli',
+    files: ['**/packages/cli/**/*.ts'],
+    rules: {
+      'node/prefer-global/process': 'off',
+      'node/prefer-global/buffer': 'off'
+    }
   }
 );

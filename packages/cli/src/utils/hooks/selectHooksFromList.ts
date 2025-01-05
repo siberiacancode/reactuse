@@ -1,11 +1,8 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import prompts from 'prompts';
 
-import type { HookList } from '@/utils/hooks/fetchAvailableHooks';
+import type { AddOptionsSchema, HookList } from '@/utils/types';
+
 import { logger } from '@/utils/logger';
-import type { AddOptionsSchema } from '@/utils/types';
 
 export const selectHooksFromList = async (
   hookList: HookList[],

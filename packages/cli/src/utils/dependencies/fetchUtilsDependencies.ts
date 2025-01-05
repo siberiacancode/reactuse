@@ -1,6 +1,4 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-unsafe-member-access,no-await-in-loop */
-import { appendFileSync, existsSync, promises as fs, writeFileSync } from 'fs';
+import { appendFileSync, existsSync, promises as fs, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
 import { FETCH_REPO_URL } from '@/utils/constants';
@@ -39,7 +37,7 @@ const downloadUtil = async (utilName: string, path: string) => {
 
     return utilPath;
   } catch (error) {
-    logger.error(`\n Error downloading ${utilName} util. Try again.`);
+    logger.error(`\n Error downloading ${utilName} util. Try again. Error - ${error}`);
     process.exit(1);
   }
 };

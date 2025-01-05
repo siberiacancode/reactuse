@@ -1,5 +1,5 @@
-import { existsSync } from 'fs';
-import fs from 'fs/promises';
+import { existsSync } from 'node:fs';
+import fs from 'node:fs/promises';
 
 import { FETCH_REPO_URL } from '@/utils/constants';
 import { logger } from '@/utils/logger';
@@ -30,9 +30,8 @@ export const fetchHook = async (hookName: string, path: string) => {
     await fs.writeFile(pathToLoadHooks, buffer);
 
     return [pathToLoadHooks, hookDirName];
-  } catch (e) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    logger.error(`\n Error downloading ${hookName} hook. Try again.`);
+  } catch (error) {
+    logger.error(`\n Error downloading ${hookName} hook. Try again. Error - ${error}`);
     process.exit(1);
   }
 };

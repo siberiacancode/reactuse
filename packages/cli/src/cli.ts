@@ -1,6 +1,3 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 

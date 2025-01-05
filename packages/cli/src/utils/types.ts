@@ -1,15 +1,15 @@
 import { z } from 'zod';
 
 export interface HookList {
+  download_url: string;
+  git_url: string;
+  html_url: string;
   name: string;
   path: string;
   sha: string;
   size: number;
-  url: string;
-  html_url: string;
-  git_url: string;
-  download_url: string;
   type: 'dir' | 'file';
+  url: string;
   _links: {
     self: string;
     git: string;

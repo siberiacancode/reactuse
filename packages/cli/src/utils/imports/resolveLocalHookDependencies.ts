@@ -1,11 +1,10 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable no-await-in-loop */
-import { existsSync } from 'fs';
-import fs from 'fs/promises';
+import { existsSync } from 'node:fs';
+import fs from 'node:fs/promises';
+
+import type { HookList } from '@/utils/types';
 
 import { API_REPO_URL } from '@/utils/constants';
 import { logger } from '@/utils/logger';
-import type { HookList } from '@/utils/types';
 
 const fetchLocalHookDependencies = async (hookName: string) => {
   const fetchUrl = `${API_REPO_URL}/hooks/${hookName}`;
@@ -19,11 +18,9 @@ const fetchLocalHookDependencies = async (hookName: string) => {
 
     const repoData = (await response.json()) as HookList[];
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return repoData.filter((hook) => hook.type === 'dir');
-  } catch (e) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    logger.error('Error fetch local dependency of hook. Try again.');
+  } catch (error) {
+    logger.error(`Error fetch local dependency of hook. Try again. Error - ${error}`);
     process.exit(1);
   }
 };
@@ -44,9 +41,8 @@ export const downloadUtility = async (
     const buffer = Buffer.from(arrayBuffer);
 
     await fs.writeFile(`${pathToLoadDependencies}/${utilName}`, buffer);
-  } catch (e) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    logger.error(`\n Error downloading ${utilName} util. Try again.`);
+  } catch (error) {
+    logger.error(`\n Error downloading ${utilName} util. Try again. Error - ${error}`);
     process.exit(1);
   }
 };
@@ -62,12 +58,10 @@ const fetchAndDownloadHookDependencies = async (url: string, pathToLoadDependenc
     const depsUtils = (await response.json()) as HookList[];
 
     for (const dep of depsUtils) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
       await downloadUtility(dep.name, dep.download_url, pathToLoadDependencies);
     }
   } catch (error) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    logger.error('Error fetch hook deps. Try again.');
+    logger.error(`Error fetch hook deps. Try again. Error - ${error}`);
     process.exit(1);
   }
 };
@@ -77,7 +71,6 @@ export const resolveLocalHookDependencies = async (hookName: string, path: strin
 
   if (directoryDependencies.length) {
     for (const directory of directoryDependencies) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const directoryName = directory.name;
       const pathToLoadDependencies = `${path}/${directoryName}`;
       const apiPath = `${API_REPO_URL}/hooks/${hookName}/${directoryName}`;
