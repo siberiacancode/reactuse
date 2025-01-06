@@ -14,7 +14,7 @@ export type UseMouseTarget =
 /** The use mouse return type */
 export interface UseMouseReturn {
   /** The current element */
-  element: Element;
+  element?: Element;
   /** The current element position x */
   elementPositionX: number;
   /** The current element position y */
@@ -56,9 +56,10 @@ export interface UseMouse {
  * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
 export const useMouse = ((target) => {
-  const [value, setValue] = useState({
+  const [value, setValue] = useState<UseMouseReturn>({
     x: 0,
     y: 0,
+    element: undefined,
     elementX: 0,
     elementY: 0,
     elementPositionX: 0,
@@ -84,6 +85,7 @@ export const useMouse = ((target) => {
       const elementX = event.pageX - elementPositionX;
       const elementY = event.pageY - elementPositionY;
 
+      updatedValue.element = element;
       updatedValue.elementX = elementX;
       updatedValue.elementY = elementY;
       updatedValue.elementPositionX = elementPositionX;
@@ -101,10 +103,9 @@ export const useMouse = ((target) => {
     };
   }, [internalRef, target]);
 
-  if (target) return { ...value, element: target ?? internalRef };
+  if (target) return value;
   return {
     ref: setInternalRef,
-    ...value,
-    element: target ?? internalRef
+    ...value
   };
 }) as UseMouse;

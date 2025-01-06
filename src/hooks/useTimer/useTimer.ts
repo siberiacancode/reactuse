@@ -21,6 +21,8 @@ export const getTimeFromSeconds = (timestamp: number) => {
 export interface UseTimerOptions {
   /** Whether the timer should start automatically */
   autostart?: boolean;
+  /** The function to be executed when the timer is expired */
+  onExpire?: () => void;
   /** Callback function to be executed on each tick of the timer */
   onTick?: (seconds: number) => void;
 }
@@ -47,24 +49,38 @@ export interface UseTimerReturn {
   toggle: () => void;
 }
 
+export interface UseTimer {
+  (timestamp: number, callback: () => void): UseTimerReturn;
+  (timestamp: number, options?: UseTimerOptions): UseTimerReturn;
+}
+
 /**
  * @name useTimer
  * @description - Hook that creates a timer functionality
  * @category Time
  *
+ * @overload
  * @param {number} timestamp The timestamp value that define for how long the timer will be running
  * @param {() => void} callback The function to be executed once countdown timer is expired
- * @param {boolean} options.autostart The flag to decide if timer should start automatically
- * @param {(timestamp: number) => void} options.onTick The function to be executed on each tick of the timer
  *
  * @example
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, running } = useTimer(1000, () => console.log('ready'));
+ *
+ * @overload
+ * @param {number} timestamp The timestamp value that define for how long the timer will be running
+ * @param {boolean} options.autostart The flag to decide if timer should start automatically
+ * @param {() => void} options.onExpire The function to be executed when the timer is expired
+ * @param {(timestamp: number) => void} options.onTick The function to be executed on each tick of the timer
+ *
+ * @example
+ * const { days, hours, minutes, seconds, toggle, pause, start, restart, running } = useTimer(1000);
  */
-export const useTimer = (
-  timestamp: number,
-  callback: () => void,
-  options?: UseTimerOptions
-): UseTimerReturn => {
+export const useTimer = ((...params: any[]) => {
+  const timestamp = params[0];
+  const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] }) as
+    | UseTimerOptions
+    | undefined;
+
   const autostart = options?.autostart ?? true;
 
   const [seconds, setSeconds] = useState(Math.ceil(timestamp / 1000));
@@ -88,7 +104,7 @@ export const useTimer = (
 
       if (updatedSeconds === 0) {
         setRunning(false);
-        callback();
+        options?.onExpire?.();
       }
     },
     1000,
@@ -103,4 +119,4 @@ export const useTimer = (
     restart,
     running
   };
-};
+}) as UseTimer;

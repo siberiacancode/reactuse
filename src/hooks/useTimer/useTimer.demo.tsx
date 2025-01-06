@@ -1,7 +1,7 @@
 import { useTimer } from './useTimer';
 
 const Demo = () => {
-  const timer = useTimer(3_600_000, () => console.log('expire'));
+  const timer = useTimer(3_600_000);
 
   return (
     <>
