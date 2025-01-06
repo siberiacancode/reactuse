@@ -82,7 +82,7 @@ export const useParallax = ((...params: any[]) => {
     deviceOrientationTiltAdjust = (value) => value,
     mouseRollAdjust = (value) => value,
     mouseTiltAdjust = (value) => value
-  } = (target ? (params[1] ?? {}) : {}) as UseParallaxOptions;
+  } = ((target ? params[1] : params[0]) ?? {}) as UseParallaxOptions;
 
   const [value, setValue] = useState({
     roll: 0,
