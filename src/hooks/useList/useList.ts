@@ -20,7 +20,7 @@ export interface UseListReturn<Item> {
 
 /**
  * @name useList
- * @description - Hook that defines the logic when unmounting a component
+ * @description - Hook that provides state and helper methods to manage a list of items
  * @category Utilities
  *
  * @template Item The type of the item
