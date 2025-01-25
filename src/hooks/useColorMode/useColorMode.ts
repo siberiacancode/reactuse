@@ -20,8 +20,8 @@ export interface UseColorModeOptions<MODE extends string = BasicColorMode> {
   initialValue?: BasicColorMode | MODE;
   modes?: Record<BasicColorMode | MODE, string>;
   selector?: string;
+  storage?: 'localStorage' | 'sessionStorage';
   storageKey?: string | null;
-  storageType?: 'localStorage' | 'sessionStorage'; // New option for storage type
   onChanged?: (
     mode: BasicColorMode | MODE,
     defaultHandler: (mode: BasicColorMode | MODE) => void
@@ -49,11 +49,11 @@ export const useColorMode = <MODE extends string = BasicColorMode>(
     initialValue = 'auto',
     storageKey = 'reactuse-color-scheme',
     modes = {},
-    storageType = 'localStorage',
+    storage: _storage = 'localStorage',
     onChanged
   } = options ?? {};
 
-  const storage = storageType === 'sessionStorage' ? sessionStorage : localStorage;
+  const storage = _storage === 'sessionStorage' ? sessionStorage : localStorage;
 
   const [value, setValue] = useState(
     storageKey
