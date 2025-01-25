@@ -21,6 +21,7 @@ export interface UseColorModeOptions<MODE extends string = BasicColorMode> {
   modes?: Record<BasicColorMode | MODE, string>;
   selector?: string;
   storageKey?: string | null;
+  storageType?: 'localStorage' | 'sessionStorage'; // New option for storage type
   onChanged?: (
     mode: BasicColorMode | MODE,
     defaultHandler: (mode: BasicColorMode | MODE) => void
@@ -48,12 +49,15 @@ export const useColorMode = <MODE extends string = BasicColorMode>(
     initialValue = 'auto',
     storageKey = 'reactuse-color-scheme',
     modes = {},
+    storageType = 'localStorage',
     onChanged
   } = options ?? {};
 
+  const storage = storageType === 'sessionStorage' ? sessionStorage : localStorage;
+
   const [value, setValue] = useState(
     storageKey
-      ? (localStorage.getItem(storageKey) as BasicColorMode | MODE | null) || initialValue
+      ? (storage.getItem(storageKey) as BasicColorMode | MODE | null) || initialValue
       : initialValue
   );
 
@@ -93,12 +97,12 @@ export const useColorMode = <MODE extends string = BasicColorMode>(
           ? 'dark'
           : 'light';
 
-    if (storageKey) localStorage.setItem(storageKey, value);
+    if (storageKey) storage.setItem(storageKey, value);
 
     const defaultOnChanged = (mode: BasicColorMode | MODE) => updateHTMLAttrs(mode);
 
     onChanged ? onChanged(mode, defaultOnChanged) : defaultOnChanged(mode);
-  }, [value]);
+  }, [value, storage, storageKey, onChanged]);
 
   return { value, set: setValue };
 };
