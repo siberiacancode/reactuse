@@ -89,13 +89,10 @@ export const useColorMode = <MODE extends string = BasicColorMode>(
     }
   };
 
+  const auto = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
   useEffect(() => {
-    const mode =
-      value !== 'auto'
-        ? value
-        : window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light';
+    const mode = value !== 'auto' ? value : auto;
 
     if (storageKey) storage.setItem(storageKey, value);
 
@@ -104,5 +101,5 @@ export const useColorMode = <MODE extends string = BasicColorMode>(
     onChanged ? onChanged(mode, defaultOnChanged) : defaultOnChanged(mode);
   }, [value, storage, storageKey, onChanged]);
 
-  return { value, set: setValue };
+  return { value, auto, set: setValue };
 };
