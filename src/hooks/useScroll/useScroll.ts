@@ -6,24 +6,34 @@ import { useEvent } from '../useEvent/useEvent';
 import { useEventListener } from '../useEventListener/useEventListener';
 
 interface UseScrollOptions {
+  /** Behavior of scrolling */
   behavior?: ScrollBehavior;
 
+  /**  Listener options for scroll event. */
   eventListenerOptions?: boolean | AddEventListenerOptions;
 
+  /** The check time when scrolling ends. */
   idle?: number;
 
+  /** Throttle time for scroll event, it’s disabled by default. */
   throttle?: number;
 
+  /** The initial x position. */
   x?: number;
 
+  /** The initial y position. */
   y?: number;
 
+  /** On error callback. */
   onError?: (error: unknown) => void;
 
+  /** Trigger it when scrolling. */
   onScroll?: (e: Event) => void;
 
+  /** Trigger it when scrolling ends. */
   onStop?: (e: Event) => void;
 
+  /** Offset arrived states by x pixels. */
   offset?: {
     left?: number;
     right?: number;
@@ -33,15 +43,24 @@ interface UseScrollOptions {
 }
 
 interface useScrollReturn {
+  /** State of scrolling. */
   isScrolling: boolean;
+
+  /** The initial x position. */
   x: number;
+
+  /** The initial y position. */
   y: number;
+
+  /** State of arrived scroll. */
   arrivedState: {
     left: boolean;
     right: boolean;
     top: boolean;
     bottom: boolean;
   };
+
+  /** State of scroll direction. */
   directions: {
     left: boolean;
     right: boolean;
@@ -54,7 +73,7 @@ interface useScrollReturn {
  * @name useScroll
  * @category Sensors
  *
- * @description Hook to track the scroll position of a scrollable element.
+ * @description Reactive scroll position and state.
  *
  * @param {RefObject<HTMLElement>} ref - React ref object pointing to a scrollable element.
  * @param {UseScrollOptions} [options] - Optional configuration options for the hook.
@@ -92,7 +111,7 @@ export const useScroll = (
     onError = (e: unknown) => {
       console.error(e);
     }
-  } = options || {};
+  } = options ?? {};
 
   const [scrollX, setScrollX] = useState(x);
   const [scrollY, setScrollY] = useState(y);
