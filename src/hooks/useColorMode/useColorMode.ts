@@ -14,14 +14,21 @@ export type BasicColorMode = 'auto' | 'dark' | 'light';
 
 /** The use color mode options */
 export interface UseColorModeOptions<MODE extends string = BasicColorMode> {
+  /** HTML attribute applying the target element */
   attribute?: string;
+  /**  Disable transition on switch */
   disableTransition?: boolean;
-  emitAuto?: boolean;
+  /** The initial color mode */
   initialValue?: BasicColorMode | MODE;
+  /** Prefix when adding value to the attribute */
   modes?: Record<BasicColorMode | MODE, string>;
+  /** CSS Selector for the target element applying to */
   selector?: string;
+  /** Storage object, can be localStorage or sessionStorage */
   storage?: 'localStorage' | 'sessionStorage';
+  /** Key to persist the data into localStorage/sessionStorage. Pass `null` to disable persistence */
   storageKey?: string | null;
+  /**A custom handler for handle the updates. When specified, the default behavior will be overridden */
   onChanged?: (
     mode: BasicColorMode | MODE,
     defaultHandler: (mode: BasicColorMode | MODE) => void
@@ -29,15 +36,22 @@ export interface UseColorModeOptions<MODE extends string = BasicColorMode> {
 }
 
 /** The use color mode return type */
-export type UseColorModeReturn<T extends string = BasicColorMode> = BasicColorMode | T;
+export interface UseColorModeReturn<MODE extends string = BasicColorMode> {
+  /** The value of the auto mode */
+  auto: BasicColorMode;
+  /** The current color mode value */
+  value: BasicColorMode | MODE;
+  /** Function to set the color mode */
+  set: (mode: BasicColorMode | MODE) => void;
+}
 
 /**
  * @name useColorMode
- * @description - Hook for recording the timestamp of the last change
+ * @description - Hook for get and set color mode (dark / light / customs) with auto data persistence.
  * @category Browser
  *
- * @param {UseColorModeOptions} options The options for configuring color mode behavior.
- * @returns {UseColorModeReturn} The current color mode value.
+ * @param {UseColorModeOptions} options The options for configuring color mode hook.
+ * @returns {UseColorModeReturn} The object containing the current color mode and a function to set the color mode.
  */
 export const useColorMode = <MODE extends string = BasicColorMode>(
   options?: UseColorModeOptions<MODE>
