@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 export interface UseDevicePixelRatioReturn {
-  /** The ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device */
+  /** The ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device. Equals to null if only `supported` = `false`. */
   ratio: number | null;
-  /** Whether devicePixelRatio is available */
+  /** Indicates if devicePixelRatio is available */
   supported: boolean;
 }
 
@@ -12,7 +12,7 @@ export interface UseDevicePixelRatioReturn {
  * @description - Hook that returns the ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device
  * @category Display
  *
- * @returns {UseDevicePixelRatioReturn} The ratio of the resolution in physical pixels to the resolution in CSS pixels
+ * @returns {UseDevicePixelRatioReturn} The ratio and supported flag
  *
  * @example
  * const { supported, ratio } = useDevicePixelRatio();
@@ -26,23 +26,16 @@ export const useDevicePixelRatio = (): UseDevicePixelRatioReturn => {
     typeof window.devicePixelRatio === 'number';
 
   useEffect(() => {
-    if (!supported) {
-      return;
-    }
+    if (!supported) return;
 
-    const updatePixelRatio = () => {
-      setRatio(window.devicePixelRatio);
-    };
+    const updatePixelRatio = () => setRatio(window.devicePixelRatio);
 
     updatePixelRatio();
 
     const media = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
     media.addEventListener('change', updatePixelRatio);
-
-    return () => {
-      media.removeEventListener('change', updatePixelRatio);
-    };
-  }, []);
+    return () => media.removeEventListener('change', updatePixelRatio);
+  }, [supported]);
 
   return { supported, ratio };
 };
