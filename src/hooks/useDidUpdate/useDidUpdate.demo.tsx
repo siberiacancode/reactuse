@@ -8,9 +8,7 @@ const Demo = () => {
   const [useEffectTriggered, setUseEffectTriggered] = useState(false);
   const [useDidUpdateTriggered, setUseDidUpdateTriggered] = useState(false);
 
-  useDidUpdate(() => {
-    setUseDidUpdateTriggered(true);
-  }, [counter.value]);
+  useDidUpdate(() => setUseDidUpdateTriggered(true), [counter.value]);
 
   useEffect(() => {
     setUseEffectTriggered(true);

@@ -40,21 +40,21 @@ export const useDisclosure = (
   const [opened, setOpened] = useState(initialValue);
 
   const open = () =>
-    setOpened((isOpened) => {
-      if (!isOpened) {
+    setOpened((opened) => {
+      if (!opened) {
         options?.onOpen?.();
         return true;
       }
-      return isOpened;
+      return opened;
     });
 
   const close = () =>
-    setOpened((isOpened) => {
-      if (isOpened) {
+    setOpened((opened) => {
+      if (opened) {
         options?.onClose?.();
         return false;
       }
-      return isOpened;
+      return opened;
     });
 
   const toggle = () => (opened ? close() : open());
