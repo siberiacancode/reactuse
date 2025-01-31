@@ -7,9 +7,7 @@ const Demo = () => {
     const latestCount = useLatest(count);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setCount(latestCountRef.current + 1);
-        }, 1000);
+        const interval = setInterval(() => setCount(count + 1), 1000);
         return () => clearInterval(interval);
     }, []);
 
