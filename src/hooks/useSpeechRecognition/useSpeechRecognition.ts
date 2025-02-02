@@ -6,24 +6,13 @@ interface SpeechRecognitionCallbacks {
   onEnd?: () => void;
   /** Callback invoked when an error occurs during recognition. */
   onError?: (error: SpeechRecognitionErrorEvent) => void;
-  /**
-   * Callback invoked when recognition produces a result.
-   *
-   * When `options.interimResults` is true, this callback is called with interim results as the user speaks.
-   * When `options.maxAlternatives` is greater than 1, the third parameter contains an array of all alternative transcripts.
-   *
-   * @param transcript - The transcript text (final or interim, depending on the result).
-   * @param isFinal - Indicates whether the transcript is final.
-   * @param alternatives - (Optional) An array of alternative transcripts (if more than one alternative is requested).
-   */
+  /** Callback invoked when recognition produces a result. When `options.interimResults` is true, this callback is called with interim results as the user speaks. When `options.maxAlternatives` is greater than 1, the third parameter contains an array of all alternative transcripts. */
   onResult?: (transcript: string, isFinal: boolean, alternatives?: string[]) => void;
   /** Callback invoked when speech recognition begins capturing audio. */
   onStart?: () => void;
 }
 
-/**
- * Parameters for configuring the useSpeechRecognition hook.
- */
+/** Parameters for configuring the useSpeechRecognition hook. */
 interface UseSpeechRecognitionOptions extends SpeechRecognitionCallbacks {
   /** If true, recognition continues even after pauses in speech. Default is false. */
   continuous?: SpeechRecognition['continuous'];
@@ -31,23 +20,13 @@ interface UseSpeechRecognitionOptions extends SpeechRecognitionCallbacks {
   grammars?: SpeechRecognition['grammars'];
   /** If true, interim (non-final) results are provided as the user speaks. Default is false. */
   interimResults?: SpeechRecognition['interimResults'];
-  /**
-   * The language in which recognition should occur.
-   *
-   * Must be a valid BCP 47 language tag (e.g., "en-US", "ru-RU"). Default is "en-US".
-   */
+  /** The language in which recognition should occur. Must be a valid BCP 47 language tag (e.g., "en-US", "ru-RU"). Default is "en-US". */
   language?: SpeechRecognition['lang'];
-  /**
-   * The maximum number of alternative transcripts returned for a given recognition result.
-   *
-   * Must be a positive integer. Default is 1.
-   */
+  /** The maximum number of alternative transcripts returned for a given recognition result. Must be a positive integer. Default is 1. */
   maxAlternatives?: SpeechRecognition['maxAlternatives'];
 }
 
-/**
- * Represents the transcript state maintained by the hook.
- */
+/** Represents the transcript state maintained by the hook. */
 interface Transcript {
   /** The latest interim transcript (if `interimResults` is true). */
   interimTranscript: string;
@@ -55,9 +34,7 @@ interface Transcript {
   transcript: string;
 }
 
-/**
- * The return type of the useSpeechRecognition hook.
- */
+/** The return type of the useSpeechRecognition hook. */
 interface UseSpeechRecognitionReturn extends Transcript {
   /** The last error event encountered, or null if there is no error. */
   error: SpeechRecognitionErrorEvent | null;
