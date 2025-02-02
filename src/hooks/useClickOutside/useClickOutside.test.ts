@@ -17,12 +17,9 @@ it('Should call callback when ref connected to the document', () => {
 
   expect(callback).not.toBeCalled();
 
-  act(() => {
-    document.dispatchEvent(new Event('mousedown'));
-    document.dispatchEvent(new Event('touchstart'));
-  });
+  act(() => document.dispatchEvent(new Event('click')));
 
-  expect(callback).toBeCalledTimes(2);
+  expect(callback).toBeCalledTimes(1);
 });
 
 it('Should call callback when clicked outside the element', () => {
@@ -33,12 +30,9 @@ it('Should call callback when clicked outside the element', () => {
 
   expect(callback).not.toBeCalled();
 
-  act(() => {
-    document.dispatchEvent(new Event('mousedown'));
-    document.dispatchEvent(new Event('touchstart'));
-  });
+  act(() => document.dispatchEvent(new Event('click')));
 
-  expect(callback).toBeCalledTimes(2);
+  expect(callback).toBeCalledTimes(1);
 });
 
 it('Should call callback when clicked outside the ref', () => {
@@ -49,12 +43,9 @@ it('Should call callback when clicked outside the ref', () => {
 
   expect(callback).not.toBeCalled();
 
-  act(() => {
-    document.dispatchEvent(new Event('mousedown'));
-    document.dispatchEvent(new Event('touchstart'));
-  });
+  act(() => document.dispatchEvent(new Event('click')));
 
-  expect(callback).toBeCalledTimes(2);
+  expect(callback).toBeCalledTimes(1);
 });
 
 it('Should call callback when clicked outside the function that returns an element', () => {
@@ -65,12 +56,9 @@ it('Should call callback when clicked outside the function that returns an eleme
 
   expect(callback).not.toBeCalled();
 
-  act(() => {
-    document.dispatchEvent(new Event('mousedown'));
-    document.dispatchEvent(new Event('touchstart'));
-  });
+  act(() => document.dispatchEvent(new Event('click')));
 
-  expect(callback).toBeCalledTimes(2);
+  expect(callback).toBeCalledTimes(1);
 });
 
 it('Should not call callback when clicked inside the ref', () => {
@@ -80,10 +68,7 @@ it('Should not call callback when clicked inside the ref', () => {
 
   renderHook(() => useClickOutside(ref, callback));
 
-  act(() => {
-    ref.current.dispatchEvent(new Event('mousedown'));
-    ref.current.dispatchEvent(new Event('touchstart'));
-  });
+  act(() => ref.current.dispatchEvent(new Event('click')));
 
   expect(callback).not.toBeCalled();
 });
@@ -96,10 +81,7 @@ it('Should not call callback when clicked inside the element', () => {
 
   renderHook(() => useClickOutside(element, callback));
 
-  act(() => {
-    element.dispatchEvent(new Event('mousedown'));
-    element.dispatchEvent(new Event('touchstart'));
-  });
+  act(() => element.dispatchEvent(new Event('click')));
 
   expect(callback).not.toBeCalled();
 });
@@ -113,10 +95,7 @@ it('Should not call callback when clicked inside the function that returns an el
 
   renderHook(() => useClickOutside(getElement, callback));
 
-  act(() => {
-    element.dispatchEvent(new Event('mousedown'));
-    element.dispatchEvent(new Event('touchstart'));
-  });
+  act(() => element.dispatchEvent(new Event('click')));
 
   expect(callback).not.toBeCalled();
 });
@@ -136,7 +115,7 @@ it('Should call callback when clicked outside the element (multiple targets)', (
 
   renderHook(() => useClickOutside([element, ref, getElement], callback));
 
-  act(() => document.dispatchEvent(new Event('mousedown')));
+  act(() => document.dispatchEvent(new Event('click')));
 
   expect(callback).toBeCalledTimes(1);
 });

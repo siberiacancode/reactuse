@@ -10,24 +10,30 @@ const Demo = () => {
   });
 
   return (
-    <div
-      ref={clickOutsideRef}
-      style={{
-        width: 200,
-        height: 200,
-        display: 'flex',
-        userSelect: 'none',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        border: `1px solid ${counter.value < 5 ? 'red' : 'green'}`
-      }}
-    >
-      <p>Click more than 5 times:</p>
-      <p>
-        <code>{counter.value}</code>
-      </p>
+    <div>
+      <p>Click more than five times: <code>{counter.value}</code></p>
+
+
+      <div
+        ref={clickOutsideRef}
+        style={{
+          padding: '50px 25px',
+          position: 'relative',
+          display: 'flex',
+          userSelect: 'none',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          borderRadius: '10px',
+          alignItems: 'center',
+          border: `1.5px solid ${counter.value < 5 ? 'red' : 'green'}`
+        }}
+      >
+        {counter.value <= 5 && 'Click outside'}
+        {counter.value > 5 && counter.value <= 25 && 'Nice work'}
+        {counter.value > 25 && 'That are a lot of clicks'}
+      </div>
     </div>
+
   );
 };
 
