@@ -4,44 +4,24 @@ import { useDevicePixelRatio } from './useDevicePixelRatio';
 
 describe('useDevicePixelRatio', () => {
   describe('in unsupported environment', () => {
-    it('should return supported as false when devicePixelRatio is not present', () => {
-      const originalDPR = window.devicePixelRatio;
-      Object.defineProperty(window, 'devicePixelRatio', {
-        value: undefined,
-        configurable: true
-      });
+    afterEach(() => void vi.unstubAllGlobals());
 
+    it('should return supported as false when devicePixelRatio is not present', () => {
+      vi.stubGlobal('devicePixelRatio', undefined);
       const { result } = renderHook(() => useDevicePixelRatio());
       expect(result.current.supported).toBeFalsy();
       expect(result.current.ratio).toBeNull();
-
-      Object.defineProperty(window, 'devicePixelRatio', {
-        value: originalDPR,
-        configurable: true
-      });
     });
 
     it('should return supported as false when matchMedia is not a function', () => {
-      const originalMatchMedia = window.matchMedia;
-      Object.defineProperty(window, 'matchMedia', {
-        value: undefined,
-        writable: true
-      });
-
+      vi.stubGlobal('matchMedia', undefined);
       const { result } = renderHook(() => useDevicePixelRatio());
       expect(result.current.supported).toBeFalsy();
       expect(result.current.ratio).toBeNull();
-
-      Object.defineProperty(window, 'matchMedia', {
-        value: originalMatchMedia,
-        writable: true
-      });
     });
   });
 
   describe('in supported environment', () => {
-    let originalMatchMedia: typeof window.matchMedia;
-    let originalDPR: number;
     const mediaQueryListMock = {
       matches: false,
       onchange: null,
@@ -53,26 +33,16 @@ describe('useDevicePixelRatio', () => {
     };
 
     beforeEach(() => {
-      originalMatchMedia = window.matchMedia;
-      originalDPR = window.devicePixelRatio;
-
-      Object.defineProperty(window, 'devicePixelRatio', {
-        value: 2,
-        configurable: true
-      });
-
-      window.matchMedia = vi
-        .fn<[string], MediaQueryList>()
-        .mockImplementation((query) => ({ ...mediaQueryListMock, media: query }));
+      vi.stubGlobal('devicePixelRatio', 2);
+      vi.stubGlobal(
+        'matchMedia',
+        vi
+          .fn<[string], MediaQueryList>()
+          .mockImplementation((query) => ({ ...mediaQueryListMock, media: query }))
+      );
     });
 
-    afterEach(() => {
-      window.matchMedia = originalMatchMedia;
-      Object.defineProperty(window, 'devicePixelRatio', {
-        value: originalDPR,
-        configurable: true
-      });
-    });
+    afterEach(() => void vi.unstubAllGlobals());
 
     it('should return initial devicePixelRatio and supported', () => {
       const { result } = renderHook(() => useDevicePixelRatio());
