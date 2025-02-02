@@ -92,6 +92,7 @@ export * from './useScript/useScript';
 export * from './useSessionStorage/useSessionStorage';
 export * from './useSet/useSet';
 export * from './useShare/useShare';
+export * from './useSpeechRecognition/useSpeechRecognition';
 export * from './useStep/useStep';
 export * from './useStopwatch/useStopwatch';
 export * from './useStorage/useStorage';
