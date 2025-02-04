@@ -46,7 +46,7 @@ export interface UseMouse {
  * @returns {UseMouseReturn} An object with the current mouse position
  *
  * @example
- * const { x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse(target);
+ * const { x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse(ref);
  *
  * @overload
  * @template Target The target element

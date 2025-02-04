@@ -54,7 +54,7 @@ export interface UseParallax {
  * @returns {UseParallaxReturn} An object with the current mouse position
  *
  * @example
- * const { roll, tilt, source } = useParallax(target);
+ * const { roll, tilt, source } = useParallax(ref);
  *
  * @overload
  * @template Target The target element for the parallax effect

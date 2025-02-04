@@ -43,7 +43,7 @@ export interface UseFocus {
  * @returns {UseFocusReturn} An object with a `focus` boolean state value
  *
  * @example
- * const { focus, blur, focused } = useFocus(target);
+ * const { focus, blur, focused } = useFocus(ref);
  *
  * @overload
  * @param {boolean} [options.initialValue=false] The initial focus state of the target
