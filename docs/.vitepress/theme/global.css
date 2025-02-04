@@ -8,7 +8,7 @@
 
 .dark {
   --vp-c-bg: #181818;
-  --vp-c-bg-soft: rgb(32, 32, 32);
+  --vp-c-bg-soft: #1f1f1f;
   --vp-c-bg-alt: #1d1c1c;
   --vp-c-bg-elv: #2a2a2a;
 }
