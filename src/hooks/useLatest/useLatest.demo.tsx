@@ -1,20 +1,17 @@
-import { useEffect, useState } from 'react';
-
+import { useCounter } from '../useCounter/useCounter';
 import { useLatest } from './useLatest';
 
 const Demo = () => {
-    const [count, setCount] = useState(0);
-    const latestCount = useLatest(count);
-
-    useEffect(() => {
-        const interval = setInterval(() => setCount(count + 1), 1000);
-        return () => clearInterval(interval);
-    }, []);
+    const counter = useCounter();
+    const latestCount = useLatest(counter.value);
 
     return (
         <div>
-            <p>Count: <code>{count}</code></p>
-            <p>Latest count: <code>{latestCount}</code></p>
+            <p>You clicked <code>{counter.value}</code> times, latest count is <code>{latestCount}</code></p>
+
+            <button className='button' type='button' onClick={() => counter.inc()}>
+                Increment
+            </button>
         </div>
     );
 };
