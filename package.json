@@ -78,6 +78,7 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/doctrine": "^0.0.9",
+    "@types/dom-speech-recognition": "^0.0.4",
     "@types/node": "^22.13.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.2",
