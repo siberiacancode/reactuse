@@ -118,7 +118,7 @@ export const useSpeechRecognition = (
   const reset = useCallback(() => {
     setError(null);
     setTranscript(DEFAULT_TRANSCRIPT);
-  }, [supported]);
+  }, []);
 
   const onStart = useCallback(() => {
     reset();
@@ -138,8 +138,8 @@ export const useSpeechRecognition = (
       let finalTranscript = '';
       let interimTranscript = '';
       let isFinal = false;
+      let alternativesForLastResult: string[] | null = null;
 
-      const alternativesForLastResult: string[] = [];
       const results = Array.from(event.results);
 
       results.forEach((recognitionResult, index) => {
@@ -153,8 +153,8 @@ export const useSpeechRecognition = (
 
         if (index === results.length - 1) {
           isFinal = recognitionResult.isFinal;
-          alternativesForLastResult.push(
-            ...Array.from(recognitionResult).map((result) => result.transcript)
+          alternativesForLastResult = Array.from(recognitionResult).map(
+            (result) => result.transcript
           );
         }
       });
@@ -163,7 +163,7 @@ export const useSpeechRecognition = (
       const transcriptForCallback = isFinal ? finalTranscript : interimTranscript;
 
       if (options.maxAlternatives !== undefined && options.maxAlternatives > 1) {
-        onResultCallback?.(transcriptForCallback, isFinal, alternativesForLastResult);
+        onResultCallback?.(transcriptForCallback, isFinal, alternativesForLastResult ?? []);
         return;
       }
 
@@ -228,6 +228,7 @@ export const useSpeechRecognition = (
     speechRecognitionRef.current = null;
   }, [reset, onEndCallback]);
 
+  // NOTE(@rupeq): do this on unmount only w/o defining the deps array
   useEffect(() => () => abort(), []);
 
   return { supported, listening, error, start, stop, abort, reset, ...transcript };
