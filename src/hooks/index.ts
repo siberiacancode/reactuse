@@ -89,6 +89,7 @@ export * from './useRerender/useRerender';
 export * from './useResizeObserver/useResizeObserver';
 export * from './useScreenOrientation/useScreenOrientation';
 export * from './useScript/useScript';
+export * from './useScroll/useScroll';
 export * from './useSessionStorage/useSessionStorage';
 export * from './useSet/useSet';
 export * from './useShare/useShare';
