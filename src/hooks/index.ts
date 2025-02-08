@@ -1,6 +1,7 @@
 export * from './useActiveElement/useActiveElement';
 export * from './useAsync/useAsync';
 export * from './useBattery/useBattery';
+export * from './useBluetooth/useBluetooth';
 export * from './useBoolean/useBoolean';
 export * from './useBreakpoints/useBreakpoints';
 export * from './useBrowserLanguage/useBrowserLanguage';
