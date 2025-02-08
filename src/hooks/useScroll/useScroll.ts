@@ -4,18 +4,19 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
-interface UseScrollOptions {
+const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
+
+/** The use scroll target element type */
+export type UseScrollTarget =
+  | string
+  | Document
+  | Element
+  | RefObject<Element | null | undefined>
+  | Window;
+
+export interface UseScrollOptions {
   /** Behavior of scrolling */
   behavior?: ScrollBehavior;
-
-  /**  Listener options for scroll event. */
-  eventListenerOptions?: boolean | AddEventListenerOptions;
-
-  /** The check time when scrolling ends. */
-  idle?: number;
-
-  /** Throttle time for scroll event, it’s disabled by default. */
-  throttle?: number;
 
   /** The initial x position. */
   x?: number;
@@ -23,14 +24,11 @@ interface UseScrollOptions {
   /** The initial y position. */
   y?: number;
 
-  /** On error callback. */
-  onError?: (error: unknown) => void;
+  //* The on scroll callback */
+  onScroll?: (params: UseScrollCallbackParams, event: Event) => void;
 
-  /** Trigger it when scrolling. */
-  onScroll?: (e: Event) => void;
-
-  /** Trigger it when scrolling ends. */
-  onStop?: (e: Event) => void;
+  //* The on end scroll callback */
+  onStop?: (event: Event) => void;
 
   /** Offset arrived states by x pixels. */
   offset?: {
@@ -41,9 +39,7 @@ interface UseScrollOptions {
   };
 }
 
-interface UseScrollReturn {
-  /** State of scrolling */
-  scrolling: boolean;
+export interface UseScrollCallbackParams {
   /** The element x position */
   x: number;
   /** The element y position */
@@ -64,22 +60,23 @@ interface UseScrollReturn {
   };
 }
 
-/** The use scroll target element type */
-export type UseScrollTarget =
-  | (() => Element)
-  | string
-  | Document
-  | Element
-  | RefObject<Element | null | undefined>
-  | Window;
-
 export interface UseScroll {
-  <Target extends UseScrollTarget>(target: Target, options?: UseScrollOptions): UseScrollReturn;
+  <Target extends UseScrollTarget>(
+    target: Target,
+    callback?: (params: UseScrollCallbackParams, event: Event) => void
+  ): boolean;
+
+  <Target extends UseScrollTarget>(target: Target, options?: UseScrollOptions): boolean;
+
+  <Target extends UseScrollTarget>(
+    callback?: (params: UseScrollCallbackParams, event: Event) => void,
+    target?: never
+  ): [(node: Target) => void, boolean];
 
   <Target extends UseScrollTarget>(
     options?: UseScrollOptions,
     target?: never
-  ): { ref: (node: Target) => void } & UseScrollReturn;
+  ): [(node: Target) => void, boolean];
 }
 
 /**
@@ -87,43 +84,77 @@ export interface UseScroll {
  * @description - Hook that allows you to control scroll a element
  * @category Sensors
  *
- * @param {RefObject<HTMLElement>} ref - React ref object pointing to a scrollable element.
- * @param {UseScrollOptions} [options] - Optional configuration options for the hook.
- * @returns {useScrollReturn} An object containing the current scroll position, scrolling state, and scroll direction.
+ * @overload
+ * @template Target The target element(s)
+ * @param {number} [options.x] The initial x position
+ * @param {number} [options.y] The initial y position
+ * @param {ScrollBehavior} [options.behavior] The behavior of scrolling
+ * @param {number} [options.offset.left] The left offset for arrived states
+ * @param {number} [options.offset.right]  The right offset for arrived states
+ * @param {number} [options.offset.top] The top offset for arrived states
+ * @param {number} [options.offset.bottom] The bottom offset for arrived states
+ * @param {(params: UseScrollCallbackParams, event: Event) => void} [options.onScroll] The callback function to be invoked on scroll
+ * @param {(e: Event) => void} [options.onStop] The callback function to be invoked on scroll end
+ * @returns {boolean} The state of scrolling
  *
  * @example
- * const { x, y, isScrolling, arrivedState, directions } = useScroll(ref);
+ * const scrolling = useScroll(ref, options);
+ *
+ * @overload
+ * @template Target The target element(s)
+ * @param {(params: UseScrollCallbackParams, event: Event) => void} [callback] The callback function to be invoked on scroll
+ * @returns {boolean} The state of scrolling
+ *
+ * @example
+ * const scrolling = useScroll(ref, () => console.log('callback'));
+ *
+ * @overload
+ * @template Target The target element(s)
+ * @param {Target} target The target element(s) to detect outside clicks for
+ * @param {number} [options.x] The initial x position
+ * @param {number} [options.y] The initial y position
+ * @param {ScrollBehavior} [options.behavior] The behavior of scrolling
+ * @param {number} [options.offset.left] The left offset for arrived states
+ * @param {number} [options.offset.right]  The right offset for arrived states
+ * @param {number} [options.offset.top] The top offset for arrived states
+ * @param {number} [options.offset.bottom] The bottom offset for arrived states
+ * @param {(params: UseScrollCallbackParams, event: Event) => void} [options.onScroll] The callback function to be invoked on scroll
+ * @param {(e: Event) => void} [options.onStop] The callback function to be invoked on scroll end
+ * @returns {[(node: Target) => void, boolean]} The state of scrolling
+ *
+ * @example
+ * const [ref, scrolling] = useScroll(options);
+ *
+ * @overload
+ * @template Target The target element(s)
+ * @param {Target} target The target element(s) to detect outside clicks for
+ * @param {(params: UseScrollCallbackParams, event: Event) => void} [callback] The callback function to be invoked on scroll
+ * @returns {[(node: Target) => void, boolean]} The state of scrolling
+ *
+ * @example
+ * const [ref, scrolling] = useScroll(() => console.log('callback'));
  */
-const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
-
 export const useScroll = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as UseScrollTarget | undefined;
-  const options = (target ? params[1] : params[0]) as UseScrollOptions | undefined;
+  console.log('target', target);
+  const options = (
+    target
+      ? typeof params[1] === 'object'
+        ? params[1]
+        : { onScroll: params[1] }
+      : typeof params[0] === 'object'
+        ? params[0]
+        : { onScroll: params[0] }
+  ) as UseScrollOptions | undefined;
+
   const [internalRef, setInternalRef] = useState<Element>();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
 
   const { x = 0, y = 0, behavior = 'auto' } = options ?? {};
 
-  const [scroll, setScroll] = useState({
-    x,
-    y,
-    arrived: {
-      left: true,
-      right: false,
-      top: true,
-      bottom: false
-    },
-    directions: {
-      left: false,
-      right: false,
-      top: false,
-      bottom: false
-    }
-  });
-
   const [scrolling, setScrolling] = useState(false);
-  const lastScrollTime = useRef<number>(Date.now());
+  const scrollPositionRef = useRef({ x, y });
 
   useLayoutEffect(() => {
     if (!target && !internalRef) return;
@@ -136,18 +167,7 @@ export const useScroll = ((...params: any[]) => {
       top: y,
       behavior
     });
-  }, [x, y]);
-
-  // const onScrollEnd = DebounceFn((e: Event) => {
-  //   const currentTime = Date.now();
-  //   if (currentTime - lastScrollTime.current >= idle) {
-  //     setIsScrolling(false);
-  //     setDirections({ left: false, right: false, top: false, bottom: false });
-  //     onStop(e);
-  //   }
-  // }, throttle + idle);
-
-  // const throttleOnScroll = throttle(onScrollHandler, throttle);
+  }, []);
 
   useEffect(() => {
     if (!target && !internalRef) return;
@@ -157,67 +177,54 @@ export const useScroll = ((...params: any[]) => {
 
     const onScrollEnd = (event: Event) => {
       setScrolling(false);
-      setScroll((prevScroll) => ({
-        ...prevScroll,
-        directions: {
-          left: false,
-          right: false,
-          top: false,
-          bottom: false
-        }
-      }));
       options?.onStop?.(event);
     };
 
     const onScroll = (event: Event) => {
-      try {
-        const target = (
-          event.target === document ? (event.target as Document).documentElement : event.target
-        ) as HTMLElement;
+      setScrolling(true);
+      const target = (
+        event.target === document ? (event.target as Document).documentElement : event.target
+      ) as HTMLElement;
 
-        const { display, flexDirection, direction } = target.style;
-        const directionMultipler = direction === 'rtl' ? -1 : 1;
+      const { display, flexDirection, direction } = target.style;
+      const directionMultiplier = direction === 'rtl' ? -1 : 1;
 
-        const scrollLeft = target.scrollLeft;
-        let scrollTop = target.scrollTop;
-        if (target === window.document && !scrollTop) scrollTop = window.document.body.scrollTop;
+      const scrollLeft = target.scrollLeft;
+      let scrollTop = target.scrollTop;
+      if (target instanceof Document && !scrollTop) scrollTop = window.document.body.scrollTop;
 
-        const offset = internalOptionsRef.current?.offset;
-        const left = scrollLeft * directionMultipler <= (offset?.left ?? 0);
-        const right =
-          scrollLeft * directionMultipler + target.clientWidth >=
-          target.scrollWidth - (offset?.right ?? 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
-        const top = scrollTop <= (offset?.top ?? 0);
-        const bottom =
-          scrollTop + target.clientHeight >=
-          target.scrollHeight - (offset?.bottom ?? 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
+      const offset = internalOptionsRef.current?.offset;
+      const left = scrollLeft * directionMultiplier <= (offset?.left ?? 0);
+      const right =
+        scrollLeft * directionMultiplier + target.clientWidth >=
+        target.scrollWidth - (offset?.right ?? 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
+      const top = scrollTop <= (offset?.top ?? 0);
+      const bottom =
+        scrollTop + target.clientHeight >=
+        target.scrollHeight - (offset?.bottom ?? 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
 
-        const isColumnReverse = display === 'flex' && flexDirection === 'column-reverse';
-        const isRowReverse = display === 'flex' && flexDirection === 'column-reverse';
+      const isColumnReverse = display === 'flex' && flexDirection === 'column-reverse';
+      const isRowReverse = display === 'flex' && flexDirection === 'column-reverse';
 
-        setScrolling(true);
-        setScroll((prevScroll) => ({
-          x: scrollLeft,
-          y: scrollTop,
-          directions: {
-            left: scrollLeft < prevScroll.x,
-            right: scrollLeft > prevScroll.x,
-            top: scrollTop < prevScroll.y,
-            bottom: scrollTop > prevScroll.y
-          },
-          arrived: {
-            left: isRowReverse ? right : left,
-            right: isRowReverse ? left : right,
-            top: isColumnReverse ? bottom : top,
-            bottom: isColumnReverse ? top : bottom
-          }
-        }));
+      const params = {
+        x: scrollLeft,
+        y: scrollTop,
+        directions: {
+          left: scrollLeft < scrollPositionRef.current.x,
+          right: scrollLeft > scrollPositionRef.current.x,
+          top: scrollTop < scrollPositionRef.current.y,
+          bottom: scrollTop > scrollPositionRef.current.y
+        },
+        arrived: {
+          left: isRowReverse ? right : left,
+          right: isRowReverse ? left : right,
+          top: isColumnReverse ? bottom : top,
+          bottom: isColumnReverse ? top : bottom
+        }
+      };
 
-        lastScrollTime.current = Date.now();
-        internalOptionsRef.current?.onScroll?.(event);
-      } catch (error) {
-        internalOptionsRef.current?.onError?.(error);
-      }
+      scrollPositionRef.current = { x: scrollLeft, y: scrollTop };
+      internalOptionsRef.current?.onScroll?.(params, event);
     };
 
     element.addEventListener('scroll', onScroll);
@@ -229,6 +236,6 @@ export const useScroll = ((...params: any[]) => {
     };
   }, [target, internalRef]);
 
-  if (target) return { ...scroll, scrolling };
-  return { ref: setInternalRef, ...scroll, scrolling };
+  if (target) return scrolling;
+  return [setInternalRef, scrolling];
 }) as UseScroll;
