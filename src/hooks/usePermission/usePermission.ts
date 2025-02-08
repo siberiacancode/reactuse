@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 import { useEvent } from '../useEvent/useEvent';
 
+/** The permission name */
 export type UsePermissionName =
-  | PermissionName
   | 'accelerometer'
   | 'accessibility-events'
   | 'ambient-light-sensor'
@@ -20,26 +18,44 @@ export type UsePermissionName =
   | 'payment-handler'
   | 'persistent-storage'
   | 'push'
-  | 'speaker';
+  | 'speaker'
+  | PermissionName;
 
+/** The use permission options type */
+export interface UsePermissionOptions {
+  /** Whether the permission is enabled */
+  enabled: boolean;
+}
+
+/** The use permission return type */
 export interface UsePermissionReturn {
+  /** The permission state */
   state: PermissionState;
+  /** The permission supported status */
   supported: boolean;
+  /** The permission query function */
   query: () => Promise<PermissionState>;
 }
 
 /**
  *  @name usePermission
  *  @description - Hook that gives you the state of permission
+ *  @category Browser
  *
+ *  @param {UsePermissionName} permissionDescriptorName - The permission name
+ *  @param {boolean} [options.enabled=true] - Whether the permission is enabled
  *  @returns {UsePermissionReturn} An object containing the state and the supported status
  *
  *  @example
  *  const { state, supported, query } = usePermission('microphone');
  */
-export const usePermission = (permissionDescriptorName: UsePermissionName) => {
+export const usePermission = (
+  permissionDescriptorName: UsePermissionName,
+  options?: UsePermissionOptions
+) => {
   const [state, setState] = useState<PermissionState>('prompt');
-  const supported = isClient ? navigator && 'permissions' in navigator : false;
+  const supported = typeof navigator !== 'undefined' && 'permissions' in navigator;
+  const enabled = options?.enabled ?? true;
 
   const permissionDescriptor = { name: permissionDescriptorName };
 
@@ -50,20 +66,20 @@ export const usePermission = (permissionDescriptorName: UsePermissionName) => {
       );
       setState(permissionStatus.state);
       return permissionStatus.state;
-    } catch (error) {
+    } catch {
       setState('prompt');
       return 'prompt';
     }
   });
 
   useEffect(() => {
-    if (!supported) return;
+    if (!supported || !enabled) return;
     query();
     window.addEventListener('change', query);
     return () => {
       window.removeEventListener('change', query);
     };
-  }, [permissionDescriptorName]);
+  }, [permissionDescriptorName, enabled]);
 
   return {
     state,

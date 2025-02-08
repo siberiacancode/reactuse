@@ -2,7 +2,6 @@ import { memo } from 'react';
 
 import { useCounter } from '../useCounter/useCounter';
 import { useRenderCount } from '../useRenderCount/useRenderCount';
-
 import { useEvent } from './useEvent';
 
 interface MemoComponentProps {
@@ -23,6 +22,7 @@ const MemoComponent = memo(({ onClick }: MemoComponentProps) => {
     </>
   );
 });
+MemoComponent.displayName = 'MemoComponent';
 
 const Demo = () => {
   const counter = useCounter();
@@ -32,7 +32,7 @@ const Demo = () => {
   return (
     <>
       <p>
-        Count is: <code>{counter.count}</code>
+        Count is: <code>{counter.value}</code>
       </p>
       <MemoComponent onClick={onClick} />
     </>

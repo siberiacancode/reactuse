@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-/** The use step params */
+/** The use step params type */
 interface UseStepParams {
   /** Initial value for step */
   initial: number;
@@ -18,14 +18,14 @@ interface UseStepReturn {
   isFirst: boolean;
   /** Boolean value if current step is last */
   isLast: boolean;
-  /** Go to next step */
-  next: () => void;
   /** Go to back step */
   back: () => void;
+  /** Go to next step */
+  next: () => void;
   /** Reset current step to initial value */
   reset: () => void;
   /** Go to custom step */
-  set: (value: number | 'last' | 'first') => void;
+  set: (value: number | 'first' | 'last') => void;
 }
 
 const FIRST_STEP_VALUE = 1;
@@ -33,6 +33,7 @@ const FIRST_STEP_VALUE = 1;
 /**
  * @name useStep
  * @description - Hook that create stepper
+ * @category Utilities
  *
  * @overload
  * @param {number} max Maximum number of steps
@@ -73,7 +74,7 @@ export const useStep = (params: number | UseStepParams): UseStepReturn => {
 
   const reset = () => setCurrentStep(initialStep.current);
 
-  const set = (value: number | 'last' | 'first') => {
+  const set = (value: number | 'first' | 'last') => {
     if (value === 'first') return setCurrentStep(initialStep.current);
     if (value === 'last') return setCurrentStep(max);
     if (value >= max) return setCurrentStep(max);

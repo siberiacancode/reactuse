@@ -4,30 +4,31 @@ import { getRetry } from '@/utils/helpers';
 
 import { useEvent } from '../useEvent/useEvent';
 
-export type UseWebSocketUrl = string | (() => string);
+export type UseWebSocketUrl = (() => string) | string;
 
 export interface UseWebSocketOptions {
+  protocols?: Array<'soap' | 'wasm'>;
+  retry?: boolean | number;
   onConnected?: (webSocket: WebSocket) => void;
   onDisconnected?: (event: CloseEvent, webSocket: WebSocket) => void;
   onError?: (event: Event, webSocket: WebSocket) => void;
   onMessage?: (event: MessageEvent, webSocket: WebSocket) => void;
-  retry?: boolean | number;
-  protocols?: Array<'soap' | 'wasm'>;
 }
 
-export type UseWebSocketStatus = 'connecting' | 'failed' | 'connected' | 'disconnected';
+export type UseWebSocketStatus = 'connected' | 'connecting' | 'disconnected' | 'failed';
 
 export interface UseWebSocketReturn {
-  status: UseWebSocketStatus;
+  client?: WebSocket;
   close: WebSocket['close'];
   send: WebSocket['send'];
+  status: UseWebSocketStatus;
   open: () => void;
-  client?: WebSocket;
 }
 
 /**
  * @name useWebSocket
  * @description - Hook that connects to a WebSocket server and handles incoming and outgoing messages
+ * @category Network
  *
  * @param {UseWebSocketUrl} url The URL of the WebSocket server
  * @param {(webSocket: WebSocket) => void} [options.onConnected] The callback function that is called when the WebSocket connection is established
@@ -51,7 +52,7 @@ export const useWebSocket = (
 
   const [status, setStatus] = useState<UseWebSocketStatus>('connecting');
 
-  const send = (data: string | Blob | ArrayBufferLike | ArrayBufferView) =>
+  const send = (data: string | ArrayBufferLike | ArrayBufferView | Blob) =>
     webSocketRef.current?.send(data);
 
   const close = () => {

@@ -1,4 +1,5 @@
 import type { DependencyList, EffectCallback } from 'react';
+
 import { useRef } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
@@ -6,6 +7,7 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
 /**
  * @name useDidUpdate
  * @description – Hook that behaves like useEffect, but skips the effect on the initial render
+ * @category Lifecycle
  *
  * @param {EffectCallback} effect The effect callback
  * @param {DependencyList} [deps] The dependencies list for the effect

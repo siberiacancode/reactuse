@@ -1,24 +1,14 @@
 import type { RefObject } from 'react';
-import { useRef, useState } from 'react';
+
+import { useState } from 'react';
 import screenfull from 'screenfull';
+
+import { getElement } from '@/utils/helpers';
 
 import { useUnmount } from '../useUnmount/useUnmount';
 
 /** The use fullscreen target element type */
-type UseFullScreenTarget = RefObject<Element | null> | (() => Element) | Element;
-
-/** Function to get target element based on its type */
-const getElement = (target: UseFullScreenTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
+export type UseFullScreenTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
 
 /** The use fullscreen options type */
 export interface UseFullScreenOptions {
@@ -32,13 +22,13 @@ export interface UseFullScreenOptions {
 
 /** The use click outside return type */
 export interface UseFullScreenReturn {
+  value: boolean;
   enter: () => void;
   exit: () => void;
   toggle: () => void;
-  value: boolean;
 }
 
-export type UseFullScreen = {
+export interface UseFullScreen {
   <Target extends UseFullScreenTarget>(
     target: Target,
     options?: UseFullScreenOptions
@@ -47,12 +37,13 @@ export type UseFullScreen = {
   <Target extends UseFullScreenTarget>(
     options?: UseFullScreenOptions,
     target?: never
-  ): UseFullScreenReturn & { ref: RefObject<Target> };
-};
+  ): UseFullScreenReturn & { ref: (node: Target) => void };
+}
 
 /**
  * @name useFullscreen
  * @description - Hook to handle fullscreen events
+ * @category Browser
  *
  * @overload
  * @template Target The target element for fullscreen
@@ -81,7 +72,7 @@ export const useFullscreen = ((...params: any[]) => {
     | undefined;
   const options = (target ? params[1] : params[0]) as UseFullScreenOptions | undefined;
 
-  const internalRef = useRef<Element>(null);
+  const [internalRef, setInternalRef] = useState<Element>();
   const [value, setValue] = useState(options?.initialValue ?? false);
 
   const onChange = () => {
@@ -98,7 +89,7 @@ export const useFullscreen = ((...params: any[]) => {
   };
 
   const enter = () => {
-    const element = target ? getElement(target) : internalRef.current;
+    const element = (target ? getElement(target) : internalRef) as Element;
     if (!element) return;
 
     if (screenfull.isEnabled) {
@@ -125,7 +116,7 @@ export const useFullscreen = ((...params: any[]) => {
   });
 
   return {
-    ...(!target && { ref: internalRef }),
+    ...(!target && { ref: setInternalRef }),
     enter,
     exit,
     toggle,

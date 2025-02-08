@@ -1,18 +1,17 @@
 import { useCounter } from '../useCounter/useCounter';
-
 import { usePageLeave } from './usePageLeave';
 
 const Demo = () => {
-  const { count, inc } = useCounter(0);
+  const counter = useCounter(0);
 
-  const isLeft = usePageLeave(() => inc());
+  const isLeft = usePageLeave(() => counter.inc());
 
   return (
     <>
       <p>
         Mouse left the page: <code>{String(isLeft)}</code>
       </p>
-      <p>Count of left the page {count} times</p>
+      <p>Count of left the page {counter.value} times</p>
     </>
   );
 };

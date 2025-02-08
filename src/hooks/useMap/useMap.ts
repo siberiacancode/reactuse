@@ -1,26 +1,27 @@
 import { useState } from 'react';
 
 /** The use map return type */
-interface UseMapReturn<Key, Value> {
-  /** The current map */
-  value: Map<Key, Value>;
+export interface UseMapReturn<Key, Value> {
   /** The size of the map */
   size: number;
-  /** Function to check if a value exists in the map */
-  has: (key: Key) => boolean;
-  /** Function to add a value to the map */
-  set: (key: Key, value: Value) => void;
-  /** Function to remove a value from the map */
-  remove: (key: Key) => void;
+  /** The current map */
+  value: Map<Key, Value>;
   /** Function to clear the map */
   clear: () => void;
+  /** Function to check if a value exists in the map */
+  has: (key: Key) => boolean;
+  /** Function to remove a value from the map */
+  remove: (key: Key) => void;
   /** Function to toggle a value in the map */
   reset: () => void;
+  /** Function to add a value to the map */
+  set: (key: Key, value: Value) => void;
 }
 
 /**
  * @name useMap
  * @description - Hook that manages a map structure
+ * @category Utilities
  *
  * @template Value The type of the value
  * @param {Value[]} [values] The initial array of the map

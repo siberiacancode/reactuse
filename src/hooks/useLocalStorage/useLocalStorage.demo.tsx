@@ -1,7 +1,7 @@
 import { useLocalStorage } from './useLocalStorage';
 
 const Demo = () => {
-  const [value, setValue, removeValue] = useLocalStorage('siberiacancode-use-local-storage', 0);
+  const { value, set, remove } = useLocalStorage('siberiacancode-use-local-storage', 0);
 
   return (
     <div>
@@ -10,20 +10,20 @@ const Demo = () => {
       </p>
       {value !== undefined && (
         <>
-          <button type='button' onClick={() => setValue(value + 1)}>
+          <button type='button' onClick={() => set(value + 1)}>
             Increment
           </button>
-          <button type='button' onClick={() => setValue(value - 1)}>
+          <button type='button' onClick={() => set(value - 1)}>
             Decrement
           </button>
         </>
       )}
       {value === undefined && (
-        <button type='button' onClick={() => setValue(0)}>
+        <button type='button' onClick={() => set(0)}>
           Set
         </button>
       )}
-      <button type='button' onClick={() => removeValue()}>
+      <button type='button' onClick={remove}>
         Remove
       </button>
     </div>

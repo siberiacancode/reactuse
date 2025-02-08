@@ -3,13 +3,14 @@ import { useRef } from 'react';
 export interface UseRenderInfoReturn {
   component: string;
   renders: number;
-  timestamp: null | number;
   sinceLast: number;
+  timestamp: number | null;
 }
 
 /**
  * @name useRenderInfo
  * @description - Hook for getting information about component rerender
+ * @category Lifecycle
  *
  * @param {string} [name='Unknown'] Component name
  * @param {boolean} [log=true] Toggle logging

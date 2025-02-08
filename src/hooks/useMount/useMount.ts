@@ -1,9 +1,11 @@
 import type { EffectCallback } from 'react';
+
 import { useEffect } from 'react';
 
 /**
  * @name useMount
  * @description - Hook that executes a callback when the component mounts
+ * @category Lifecycle
  *
  * @param {EffectCallback} effect The callback to execute
  *

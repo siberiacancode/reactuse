@@ -1,5 +1,4 @@
 import { useCounter } from '../useCounter/useCounter';
-
 import { useDebounceCallback } from './useDebounceCallback';
 
 const Demo = () => {
@@ -11,7 +10,7 @@ const Demo = () => {
   return (
     <div>
       <p>
-        Value: <code>{counter.count}</code>
+        Value: <code>{counter.value}</code>
       </p>
       <button type='button' onClick={() => debouncedCounterInc()}>
         Debounced increment

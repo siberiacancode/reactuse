@@ -1,9 +1,11 @@
 import type { UseStorageInitialValue, UseStorageOptions } from '../useStorage/useStorage';
+
 import { useStorage } from '../useStorage/useStorage';
 
 /**
  * @name useSessionStorage
  * @description - Hook that manages session storage value
+ * @category Browser
  *
  * @template Value The type of the value
  * @param {string} key The key of the storage
@@ -11,7 +13,7 @@ import { useStorage } from '../useStorage/useStorage';
  * @param {UseStorageOptions<Value>} [options] The options of the storage
  *
  * @example
- * const [value, setValue, removeValue] = useSessionStorage('key', 'value');
+ * const { value, set, remove } = useSessionStorage('key', 'value');
  */
 export const useSessionStorage = <Value>(
   key: string,

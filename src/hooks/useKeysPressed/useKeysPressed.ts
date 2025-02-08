@@ -1,21 +1,22 @@
 import { useState } from 'react';
 
-import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
+
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import { useEventListener } from '../useEventListener/useEventListener';
 
-/** The use keys pressed params */
-interface UseKeysPressedParams {
-  /** The target to attach the event listeners to */
-  target?: UseEventListenerTarget;
-
+/** The use keys pressed params type */
+export interface UseKeysPressedParams {
   /** Enable or disable the event listeners */
   enabled?: boolean;
+  /** The target to attach the event listeners to */
+  target?: UseEventListenerTarget;
 }
 
 /**
  * @name useKeysPressed
  * @description - Hook for get keys that were pressed
+ * @category Sensors
  *
  * @param {UseEventListenerTarget} [params.target=window] The target to attach the event listeners to
  * @param {boolean} [params.enabled=bollean] Enable or disable the event listeners

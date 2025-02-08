@@ -6,6 +6,7 @@ export type UsePreferredColorSchemeReturn = 'dark' | 'light' | 'no-preference';
 /**
  * @name usePreferredColorScheme
  * @description - Hook that returns user preferred color scheme
+ * @category Browser
  *
  * @returns {UsePreferredColorSchemeReturn} String of preferred color scheme
  *

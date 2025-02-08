@@ -1,33 +1,35 @@
-import { useState } from 'react';
-
+import { useField } from '../useField/useField';
+import { useList } from '../useList/useList';
 import { useMutation } from './useMutation';
 
 const createUser = (name: string) => Promise.resolve({ name });
 
 const Demo = () => {
-  const [name, setName] = useState('');
-  const [users, setUser] = useState([{ name: 'John' }]);
+  const nameField = useField({ initialValue: '' });
+  const userList = useList([{ name: 'John' }]);
 
   const createUserMutation = useMutation(createUser);
+
+  const name = nameField.watch();
 
   return (
     <>
       <p>User list</p>
-      <input value={name} onChange={(event) => setName(event.target.value)} />
+      <input {...nameField.register()} />
       <button
-        type='button'
         disabled={!name}
+        type='button'
         onClick={async () => {
           const createUserResponse = await createUserMutation.mutateAsync(name);
-          setUser([...users, createUserResponse]);
-          setName('');
+          userList.push(createUserResponse);
+          nameField.setValue('');
         }}
       >
         Create
       </button>
 
       <ul>
-        {users.map((user) => (
+        {userList.value.map((user) => (
           <li key={user.name}>{user.name}</li>
         ))}
       </ul>

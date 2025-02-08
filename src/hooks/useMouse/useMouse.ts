@@ -1,49 +1,44 @@
 import type { RefObject } from 'react';
-import { useRef, useState } from 'react';
 
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
+import { useEffect, useState } from 'react';
+
+import { getElement } from '@/utils/helpers';
 
 /** The use mouse target element type */
-type UseMouseTarget = RefObject<Element | null> | (() => Element) | Element;
-
-/** Function to get target element based on its type */
-const getElement = (target: UseMouseTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
+export type UseMouseTarget =
+  | (() => Element)
+  | string
+  | Element
+  | RefObject<Element | null | undefined>;
 
 /** The use mouse return type */
 export interface UseMouseReturn {
-  /** The current mouse x position */
-  x: number;
-  /** The current mouse y position */
-  y: number;
-  /** The current element x position */
-  elementX: number;
-  /** The current element y position */
-  elementY: number;
+  /** The current element */
+  element?: Element;
   /** The current element position x */
   elementPositionX: number;
   /** The current element position y */
   elementPositionY: number;
+  /** The current element x position */
+  elementX: number;
+  /** The current element y position */
+  elementY: number;
+  /** The current mouse x position */
+  x: number;
+  /** The current mouse y position */
+  y: number;
 }
 
-export type UseMouse = {
+export interface UseMouse {
   <Target extends UseMouseTarget>(target: Target): UseMouseReturn;
 
-  <Target extends UseMouseTarget>(target?: never): UseMouseReturn & { ref: RefObject<Target> };
-};
+  <Target extends UseMouseTarget>(target?: never): UseMouseReturn & { ref: (node: Target) => void };
+}
 
 /**
  * @name useMouse
  * @description - Hook that manages a mouse position
+ * @category Sensors
  *
  * @overload
  * @template Target The target element
@@ -51,32 +46,32 @@ export type UseMouse = {
  * @returns {UseMouseReturn} An object with the current mouse position
  *
  * @example
- * const { x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse(target);
+ * const { x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse(ref);
  *
  * @overload
  * @template Target The target element
- * @returns {UseMouseReturn & { ref: RefObject<Target> }} An object with the current mouse position and a ref
+ * @returns {UseMouseReturn & { ref: (node: Target) => void }} An object with the current mouse position and a ref
  *
  * @example
  * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
-export const useMouse = ((...params: any[]) => {
-  const target = params[0] as UseMouseTarget | undefined;
-
-  const [value, setValue] = useState({
+export const useMouse = ((target) => {
+  const [value, setValue] = useState<UseMouseReturn>({
     x: 0,
     y: 0,
+    element: undefined,
     elementX: 0,
     elementY: 0,
     elementPositionX: 0,
     elementPositionY: 0
   });
 
-  const internalRef = useRef<Element>(null);
+  const [internalRef, setInternalRef] = useState<Element>();
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
+    if (!target && !internalRef) return;
     const onMouseMove = (event: MouseEvent) => {
-      const element = target ? getElement(target) : internalRef.current;
+      const element = (target ? getElement(target) : internalRef) as Element;
       if (!element) return;
 
       const updatedValue = {
@@ -90,6 +85,7 @@ export const useMouse = ((...params: any[]) => {
       const elementX = event.pageX - elementPositionX;
       const elementY = event.pageY - elementPositionY;
 
+      updatedValue.element = element;
       updatedValue.elementX = elementX;
       updatedValue.elementY = elementY;
       updatedValue.elementPositionX = elementPositionX;
@@ -102,12 +98,14 @@ export const useMouse = ((...params: any[]) => {
     };
 
     document.addEventListener('mousemove', onMouseMove);
-
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
     };
-  }, []);
+  }, [internalRef, target]);
 
   if (target) return value;
-  return { ...value, ref: internalRef };
+  return {
+    ref: setInternalRef,
+    ...value
+  };
 }) as UseMouse;

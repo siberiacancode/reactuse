@@ -4,19 +4,30 @@ import { isClient } from '@/utils/helpers';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
-export type UseStorageInitialValue<Value> = Value | (() => Value);
+/* The use storage initial value type */
+export type UseStorageInitialValue<Value> = (() => Value) | Value;
+
+/* The use storage options type */
 export interface UseStorageOptions<Value> {
-  serializer?: (value: Value) => string;
-  deserializer?: (value: string) => Value;
-  storage?: Storage;
+  /* The initial value of the storage */
   initialValue?: UseStorageInitialValue<Value>;
+  /* The storage to be used */
+  storage?: Storage;
+  /* The deserializer function to be invoked */
+  deserializer?: (value: string) => Value;
+  /* The serializer function to be invoked */
+  serializer?: (value: Value) => string;
 }
 
-export type UseStorageReturn<Value> = [
-  value: Value,
-  set: (value: Value) => void,
-  remove: () => void
-];
+/* The use storage return type */
+export interface UseStorageReturn<Value> {
+  /* The value of the storage */
+  value: Value;
+  /* The error state of the storage */
+  remove: () => void;
+  /* The loading state of the storage */
+  set: (value: Value) => void;
+}
 
 export const dispatchStorageEvent = (params: Partial<StorageEvent>) =>
   window.dispatchEvent(new StorageEvent('storage', params));
@@ -48,6 +59,21 @@ const storageSubscribe = (callback: () => void) => {
 
 const getServerSnapshot = () => undefined;
 
+/**
+ * @name useStorage
+ * @description - Hook that manages storage value
+ * @category Utilities
+ *
+ * @param {string} key The key of the storage
+ * @param {(value: Value) => string} [params.serializer] The serializer function
+ * @param {(value: string) => Value} [params.deserializer] The deserializer function
+ * @param {Storage} [params.storage] The storage
+ * @param {UseStorageInitialValue<Value>} [params.initialValue] The initial value of the storage
+ * @returns {UseStorageReturn<Value>} The value and the set function
+ *
+ * @example
+ * const { value, set, remove } = useStorage('key', 'value');
+ */
 export const useStorage = <Value>(
   key: string,
   params?: UseStorageInitialValue<Value> | UseStorageOptions<Value>
@@ -55,11 +81,18 @@ export const useStorage = <Value>(
   const options = (typeof params === 'object' ? params : undefined) as UseStorageOptions<Value>;
   const initialValue = (options ? options?.initialValue : params) as UseStorageInitialValue<Value>;
 
-  const storage = options?.storage ?? window.localStorage;
   const serializer = (value: Value) => {
     if (options?.serializer) return options.serializer(value);
     return JSON.stringify(value);
   };
+
+  const storage = options?.storage ?? window?.localStorage;
+
+  const set = (value: Value) => {
+    if (value === null) return removeStorageItem(storage, key);
+    setStorageItem(storage, key, serializer(value));
+  };
+  const remove = () => removeStorageItem(storage, key);
 
   const deserializer = (value: string) => {
     if (options?.deserializer) return options.deserializer(value);
@@ -70,7 +103,7 @@ export const useStorage = <Value>(
 
     try {
       return JSON.parse(value) as Value;
-    } catch (error) {
+    } catch {
       return value as Value;
     }
   };
@@ -78,25 +111,27 @@ export const useStorage = <Value>(
   const getSnapshot = () => getStorageItem(storage, key);
   const store = useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
 
-  const set = (value: Value) => {
-    if (value === null) return removeStorageItem(storage, key);
-    setStorageItem(storage, key, serializer(value));
-  };
-
   useIsomorphicLayoutEffect(() => {
     const value = getStorageItem(storage, key);
-    if (value !== undefined && !initialValue) return;
-
-    setStorageItem(
-      storage,
-      key,
-      serializer(initialValue instanceof Function ? initialValue() : initialValue)
-    );
+    if (value === undefined && initialValue !== undefined) {
+      setStorageItem(
+        storage,
+        key,
+        serializer(initialValue instanceof Function ? initialValue() : initialValue)
+      );
+    }
   }, [key]);
 
-  const remove = () => removeStorageItem(storage, key);
-
   if (!isClient)
-    return [initialValue instanceof Function ? initialValue() : initialValue, set, remove] as const;
-  return [store ? deserializer(store) : undefined, set, remove] as const;
+    return {
+      value: initialValue instanceof Function ? initialValue() : initialValue,
+      set,
+      remove
+    };
+
+  return {
+    value: store ? deserializer(store) : undefined,
+    set,
+    remove
+  };
 };

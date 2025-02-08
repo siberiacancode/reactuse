@@ -1,11 +1,20 @@
 import { useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
-import type {
-  ColorSelectionOptions,
-  ColorSelectionResult,
-  EyeDropperConstructor
-} from '@/utils/types';
+export interface ColorSelectionOptions {
+  signal?: AbortSignal;
+}
+
+export interface ColorSelectionResult {
+  sRGBHex: string;
+}
+
+export interface EyeDropper {
+  open: (options?: ColorSelectionOptions) => Promise<ColorSelectionResult>;
+}
+
+export interface EyeDropperConstructor {
+  new (): EyeDropper;
+}
 
 declare global {
   interface Window {
@@ -15,14 +24,18 @@ declare global {
 
 /** The color selection return type */
 export interface UseEyeDropperReturn {
+  /** The eye dropper supported status */
   supported: boolean;
+  /** The eye dropper value */
   value?: string;
+  /** The eye dropper open method */
   open: (colorSelectionOptions?: ColorSelectionOptions) => Promise<ColorSelectionResult>;
 }
 
 /**
  * @name useEyeDropper
  * @description - Hook that gives you access to the eye dropper
+ * @category Browser
  *
  * @param {string} [initialValue=undefined] The initial value for the eye dropper
  * @returns {UseEyeDropperReturn} An object containing the supported status, the value and the open method
@@ -33,7 +46,7 @@ export interface UseEyeDropperReturn {
 export const useEyeDropper = (
   initialValue: string | undefined = undefined
 ): UseEyeDropperReturn => {
-  const supported = isClient ? 'EyeDropper' in window : false;
+  const supported = typeof window !== 'undefined' && 'EyeDropper' in window;
   const [value, setValue] = useState(initialValue);
 
   const open = async (colorSelectionOptions?: ColorSelectionOptions) => {

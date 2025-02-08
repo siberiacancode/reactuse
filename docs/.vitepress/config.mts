@@ -1,10 +1,31 @@
+import type { DefaultTheme } from 'vitepress';
+
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitepress';
 
 import { getHookItems } from '../src/utils';
 
 export default async () => {
-  const sidebarHookItems = await getHookItems();
+  const hookItems = await getHookItems();
+  const sidebarHookItems = hookItems.reduce<DefaultTheme.SidebarItem[]>(
+    (categoryItems, hookItem) => {
+      const category = categoryItems.find((group) => group.text === hookItem.category);
+
+      if (!category) {
+        categoryItems.push({ text: hookItem.category, items: [hookItem] });
+      } else {
+        category.items!.push(hookItem);
+      }
+
+      return categoryItems;
+    },
+    []
+  );
+  const homePageFeatures = hookItems.map((item) => ({
+    title: item.text,
+    details: item.description,
+    link: item.link
+  }));
 
   return defineConfig({
     base: '/reactuse/',
@@ -19,16 +40,11 @@ export default async () => {
     },
     transformPageData: (pageData) => {
       if (pageData.relativePath === 'index.md') {
-        pageData.frontmatter.features = sidebarHookItems.map((item) => ({
-          title: item.text,
-          details: item.description,
-          link: item.link
-        }))
+        pageData.frontmatter.features = homePageFeatures;
       }
 
       if (pageData.relativePath.includes('hooks')) {
         pageData.title = pageData.params?.name;
-        return;
       }
     },
     head: [
@@ -45,9 +61,6 @@ export default async () => {
         label: 'English',
         lang: 'en',
         themeConfig: {
-          search: {
-            provider: 'local'
-          },
           editLink: {
             pattern: ({ filePath, params }) => {
               if (filePath.includes('hooks') && params?.name) {
@@ -73,10 +86,7 @@ export default async () => {
               text: 'Getting started',
               link: '/getting-started'
             },
-            {
-              text: 'Hooks',
-              items: [...sidebarHookItems]
-            }
+            ...sidebarHookItems
           ]
         }
       }
@@ -95,6 +105,14 @@ export default async () => {
       // }
     },
     themeConfig: {
+      search: {
+        provider: 'algolia',
+        options: {
+          appId: '62LROXAB1F',
+          apiKey: 'c1ff07348583383446ca32068eb1300f',
+          indexName: 'siberiacancodeio'
+        }
+      },
       socialLinks: [
         { icon: 'github', link: 'https://github.com/siberiacancode/reactuse' },
         { icon: 'npm', link: 'https://www.npmjs.com/package/@siberiacancode/reactuse' },

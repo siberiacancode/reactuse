@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 import { useInterval } from '../useInterval/useInterval';
 
 declare global {
@@ -14,14 +12,18 @@ declare global {
   }
 }
 
+/** The use memory return type */
 export interface UseMemoryReturn {
+  /** The memory supported status */
   supported: boolean;
+  /** The current memory usage */
   value: Performance['memory'];
 }
 
 /**
  * @name useMemory
  * @description - Hook that gives you current memory usage
+ * @category Browser
  *
  * @returns {UseMemoryReturn} An object containing the current memory usage
  *
@@ -29,7 +31,7 @@ export interface UseMemoryReturn {
  * const { supported, value } = useMemory();
  */
 export const useMemory = (): UseMemoryReturn => {
-  const supported = isClient ? 'memory' in performance : false;
+  const supported = performance && 'memory' in performance;
   const [value, setValue] = useState<Performance['memory']>({
     jsHeapSizeLimit: 0,
     totalJSHeapSize: 0,

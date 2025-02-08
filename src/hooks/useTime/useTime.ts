@@ -5,19 +5,20 @@ import { getDate } from '@/utils/helpers';
 import { useInterval } from '../useInterval/useInterval';
 
 export interface UseTimeReturn {
-  seconds: number;
-  minutes: number;
+  day: number;
   hours: number;
   meridiemHours: { value: number; type: string };
-  day: number;
+  minutes: number;
   month: number;
-  year: number;
+  seconds: number;
   timestamp: number;
+  year: number;
 }
 
 /**
  * @name useTime
  * @description - Hook that gives you current time in different values
+ * @category Time
  *
  * @returns {UseTimeReturn} An object containing the current time
  *

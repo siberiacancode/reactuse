@@ -11,19 +11,20 @@ export const getRangesSelection = (selection: Selection) => {
 
 /** The use text selection return type */
 export interface UseTextSelectionReturn {
-  /** The current selection text */
-  text: string;
   /** The current selection ranges */
   ranges: Range[];
   /** The current selection rects */
   rects: DOMRect[];
   /** The current selection */
   selection: Selection | null;
+  /** The current selection text */
+  text: string;
 }
 
 /**
  * @name useTextSelection
  * @description - Hook that manages the text selection
+ * @category Sensors
  *
  * @returns {UseTextSelectionReturn} An object containing the current text selection
  *

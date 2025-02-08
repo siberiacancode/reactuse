@@ -1,12 +1,12 @@
 import { parseHookJsdoc } from '../parseHookJsdoc';
-
 import { getHookFile } from './getHookFile';
 import { getHooks } from './getHooks';
 
 interface HookItem {
-  text: string;
+  category: string;
   description: string;
   link: string;
+  text: string;
 }
 
 export const getHookItems = async (): Promise<HookItem[]> => {
@@ -14,10 +14,10 @@ export const getHookItems = async (): Promise<HookItem[]> => {
 
   const sidebar = await Promise.all(
     hooks.map(async (hook) => {
-      const file = await getHookFile(hook);
+      const { content } = await getHookFile(hook);
 
       const jsdocCommentRegex = /\/\*\*\s*\n([^\\*]|(\*(?!\/)))*\*\//;
-      const match = file.match(jsdocCommentRegex);
+      const match = content.match(jsdocCommentRegex);
 
       if (!match) {
         console.error(`No jsdoc comment found for ${hook}`);
@@ -26,7 +26,7 @@ export const getHookItems = async (): Promise<HookItem[]> => {
 
       const jsdoc = parseHookJsdoc(match[0].trim());
 
-      if (!jsdoc.description || !jsdoc.usage) {
+      if (!jsdoc.description || !jsdoc.usages.length) {
         console.error(`No content found for ${hook}`);
         return null;
       }
@@ -34,6 +34,7 @@ export const getHookItems = async (): Promise<HookItem[]> => {
       return {
         text: hook,
         description: jsdoc.description.description,
+        category: jsdoc.category?.name,
         link: `/functions/hooks/${hook}`
       };
     })
