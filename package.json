@@ -81,6 +81,7 @@
     "@types/node": "^22.13.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.2",
+    "@types/web-bluetooth": "^0.0.20",
     "comment-parser": "^1.4.1",
     "core-js": "^3.40.0",
     "doctrine": "^3.0.0",
