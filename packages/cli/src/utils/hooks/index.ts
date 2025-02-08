@@ -60,7 +60,7 @@ const updateUtilIndexFile = async (utilName: string, utilsPath: string) => {
 };
 
 const downloadUtil = async (utilName: string, path: string) => {
-  const utilUrl = `${FETCH_REPO_URL}/utils/helpers/${utilName}.ts`;
+  let utilUrl = `${FETCH_REPO_URL}/utils/helpers/${utilName}.ts`;
   const utilPath = `${path}/${utilName}.ts`;
 
   if (!existsSync(path)) {
@@ -68,6 +68,7 @@ const downloadUtil = async (utilName: string, path: string) => {
   }
 
   try {
+    if (utilName === 'getDate') utilUrl = `${FETCH_REPO_URL}/utils/helpers/time/${utilName}.ts`;
     const response = await fetch(utilUrl);
 
     const arrayBuffer = await response.arrayBuffer();
