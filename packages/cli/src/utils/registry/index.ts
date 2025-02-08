@@ -1,6 +1,7 @@
 import type { RegistryList } from '@/utils/types';
 
-const baseUrl = 'http://localhost:5173/reactuse/registry.json';
+const baseUrl =
+  process.env.COMPONENTS_REGISTRY_URL ?? 'https://siberiacancode.github.io/reactuse/registry.json';
 
 const fetchRegistry = async () => {
   try {
