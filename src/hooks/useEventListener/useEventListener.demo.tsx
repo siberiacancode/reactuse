@@ -3,7 +3,7 @@ import { useEventListener } from './useEventListener';
 const Demo = () => {
   const ref = useEventListener<HTMLDivElement>(
     'click',
-    (event) => console.log('@click 1', event.target),
+    (event) => console.log('@click', event.target),
     {
       passive: true
     }

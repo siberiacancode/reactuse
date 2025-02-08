@@ -1,6 +1,6 @@
 import type { RefObject } from 'react';
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
@@ -15,15 +15,6 @@ export type UseScrollTarget =
   | Window;
 
 export interface UseScrollOptions {
-  /** Behavior of scrolling */
-  behavior?: ScrollBehavior;
-
-  /** The initial x position. */
-  x?: number;
-
-  /** The initial y position. */
-  y?: number;
-
   //* The on scroll callback */
   onScroll?: (params: UseScrollCallbackParams, event: Event) => void;
 
@@ -85,14 +76,12 @@ export interface UseScroll {
  * @category Sensors
  *
  * @overload
- * @template Target The target element(s)
- * @param {number} [options.x] The initial x position
- * @param {number} [options.y] The initial y position
- * @param {ScrollBehavior} [options.behavior] The behavior of scrolling
- * @param {number} [options.offset.left] The left offset for arrived states
- * @param {number} [options.offset.right]  The right offset for arrived states
- * @param {number} [options.offset.top] The top offset for arrived states
- * @param {number} [options.offset.bottom] The bottom offset for arrived states
+ * @template Target The target element
+ * @param {ScrollBehavior} [options.behavior = 'auto'] The behavior of scrolling
+ * @param {number} [options.offset.left = 0] The left offset for arrived states
+ * @param {number} [options.offset.right = 0]  The right offset for arrived states
+ * @param {number} [options.offset.top = 0] The top offset for arrived states
+ * @param {number} [options.offset.bottom = 0] The bottom offset for arrived states
  * @param {(params: UseScrollCallbackParams, event: Event) => void} [options.onScroll] The callback function to be invoked on scroll
  * @param {(e: Event) => void} [options.onStop] The callback function to be invoked on scroll end
  * @returns {boolean} The state of scrolling
@@ -101,7 +90,7 @@ export interface UseScroll {
  * const scrolling = useScroll(ref, options);
  *
  * @overload
- * @template Target The target element(s)
+ * @template Target The target element
  * @param {(params: UseScrollCallbackParams, event: Event) => void} [callback] The callback function to be invoked on scroll
  * @returns {boolean} The state of scrolling
  *
@@ -109,15 +98,13 @@ export interface UseScroll {
  * const scrolling = useScroll(ref, () => console.log('callback'));
  *
  * @overload
- * @template Target The target element(s)
- * @param {Target} target The target element(s) to detect outside clicks for
- * @param {number} [options.x] The initial x position
- * @param {number} [options.y] The initial y position
- * @param {ScrollBehavior} [options.behavior] The behavior of scrolling
- * @param {number} [options.offset.left] The left offset for arrived states
- * @param {number} [options.offset.right]  The right offset for arrived states
- * @param {number} [options.offset.top] The top offset for arrived states
- * @param {number} [options.offset.bottom] The bottom offset for arrived states
+ * @template Target The target element
+ * @param {Target} target The target element to scroll
+ * @param {ScrollBehavior} [options.behavior = 'auto'] The behavior of scrolling
+ * @param {number} [options.offset.left = 0] The left offset for arrived states
+ * @param {number} [options.offset.right = 0]  The right offset for arrived states
+ * @param {number} [options.offset.top = 0] The top offset for arrived states
+ * @param {number} [options.offset.bottom = 0] The bottom offset for arrived states
  * @param {(params: UseScrollCallbackParams, event: Event) => void} [options.onScroll] The callback function to be invoked on scroll
  * @param {(e: Event) => void} [options.onStop] The callback function to be invoked on scroll end
  * @returns {[(node: Target) => void, boolean]} The state of scrolling
@@ -126,8 +113,8 @@ export interface UseScroll {
  * const [ref, scrolling] = useScroll(options);
  *
  * @overload
- * @template Target The target element(s)
- * @param {Target} target The target element(s) to detect outside clicks for
+ * @template Target The target element
+ * @param {Target} target The target element to scroll
  * @param {(params: UseScrollCallbackParams, event: Event) => void} [callback] The callback function to be invoked on scroll
  * @returns {[(node: Target) => void, boolean]} The state of scrolling
  *
@@ -136,7 +123,6 @@ export interface UseScroll {
  */
 export const useScroll = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as UseScrollTarget | undefined;
-  console.log('target', target);
   const options = (
     target
       ? typeof params[1] === 'object'
@@ -151,23 +137,8 @@ export const useScroll = ((...params: any[]) => {
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
 
-  const { x = 0, y = 0, behavior = 'auto' } = options ?? {};
-
   const [scrolling, setScrolling] = useState(false);
-  const scrollPositionRef = useRef({ x, y });
-
-  useLayoutEffect(() => {
-    if (!target && !internalRef) return;
-    const element = (target ? getElement(target) : internalRef) as Element;
-
-    if (!element) return;
-
-    element.scrollTo({
-      left: x,
-      top: y,
-      behavior
-    });
-  }, []);
+  const scrollPositionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     if (!target && !internalRef) return;
