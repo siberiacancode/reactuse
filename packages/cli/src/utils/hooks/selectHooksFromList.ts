@@ -1,30 +1,36 @@
 import prompts from 'prompts';
 
-import type { AddOptionsSchema, HookList } from '@/utils/types';
+import type { AddOptionsSchema, RegistryList } from '@/utils/types';
 
 import { logger } from '@/utils/logger';
 
 export const selectHooksFromList = async (
-  hookList: HookList[],
+  registry: RegistryList[],
   options: AddOptionsSchema
 ): Promise<string[]> => {
-  const { hooks } = await prompts({
-    type: 'multiselect',
-    name: 'hooks',
-    message: 'Which hooks would you like to add?',
-    hint: 'Space to select. A to toggle all. Enter to submit.',
-    instructions: false,
-    choices: hookList.map((entry) => ({
-      title: entry.name,
-      value: entry.name,
-      selected: options.all ? true : options.hooks?.includes(entry.name)
-    }))
-  });
+  let selectedHooks = options.all ? registry.map((hook) => hook.name) : options.hooks;
 
-  if (!hooks?.length) {
+  if (!options.hooks?.length && !options.all) {
+    const { hooks } = await prompts({
+      type: 'multiselect',
+      name: 'hooks',
+      message: 'Which hooks would you like to add?',
+      hint: 'Space to select. A to toggle all. Enter to submit.',
+      instructions: false,
+      choices: registry.map((hook) => ({
+        title: hook.name,
+        value: hook.name,
+        selected: options.all ? true : options.hooks?.includes(hook.name)
+      }))
+    });
+
+    selectedHooks = hooks;
+  }
+
+  if (!selectedHooks?.length) {
     logger.warn('No hooks selected. Exiting.');
     process.exit(0);
   }
 
-  return hooks;
+  return selectedHooks;
 };

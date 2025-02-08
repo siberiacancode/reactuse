@@ -1,15 +1,12 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-
-import { existsSync } from 'fs';
-import path from 'path';
 import type { Argv } from 'yargs';
+
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+
+import type { InitOptionsSchema } from '@/utils/types';
 
 import { promptForConfig } from '@/utils/config/promptForConfig';
 import { logger } from '@/utils/logger';
-import type { InitOptionsSchema } from '@/utils/types';
 import { initOptionsSchema } from '@/utils/types';
 
 export const init = {

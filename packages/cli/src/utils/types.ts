@@ -1,20 +1,9 @@
 import { z } from 'zod';
 
-export interface HookList {
-  download_url: string;
-  git_url: string;
-  html_url: string;
+export interface RegistryList {
+  hookDependency: string[];
   name: string;
-  path: string;
-  sha: string;
-  size: number;
-  type: 'dir' | 'file';
-  url: string;
-  _links: {
-    self: string;
-    git: string;
-    html: string;
-  };
+  utilsDependency: string[];
 }
 
 export const addOptionsSchema = z.object({
