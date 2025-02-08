@@ -54,7 +54,7 @@ export interface UseParallax {
  * @returns {UseParallaxReturn} An object with the current mouse position
  *
  * @example
- * const { roll, tilt, source } = useParallax(target);
+ * const { roll, tilt, source } = useParallax(ref);
  *
  * @overload
  * @template Target The target element for the parallax effect
@@ -70,18 +70,25 @@ export const useParallax = ((...params: any[]) => {
     params[0] instanceof Element
       ? params[0]
       : undefined;
-  const {
-    deviceOrientationRollAdjust = (value) => value,
-    deviceOrientationTiltAdjust = (value) => value,
-    mouseRollAdjust = (value) => value,
-    mouseTiltAdjust = (value) => value
-  } = (target ? params[1] : {}) as UseParallaxOptions;
 
   const [internalRef, setInternalRef] = useState<Element>();
 
   const mouse = useMouse(target ?? internalRef);
   const screenOrientation = useScreenOrientation();
   const deviceOrientation = useDeviceOrientation();
+
+  const {
+    deviceOrientationRollAdjust = (value) => value,
+    deviceOrientationTiltAdjust = (value) => value,
+    mouseRollAdjust = (value) => value,
+    mouseTiltAdjust = (value) => value
+  } = ((target ? params[1] : params[0]) ?? {}) as UseParallaxOptions;
+
+  const [value, setValue] = useState({
+    roll: 0,
+    tilt: 0,
+    source: 'mouse'
+  });
 
   const getSource = () => {
     const isDeviceOrientation =
@@ -114,6 +121,7 @@ export const useParallax = ((...params: any[]) => {
       }
       return deviceOrientationRollAdjust(value);
     } else {
+      if (!mouse.element) return 0;
       const y = mouse.y - mouse.elementPositionY;
       const height = mouse.element.getBoundingClientRect().height;
       const value = -(y - height / 2) / height;
@@ -143,18 +151,13 @@ export const useParallax = ((...params: any[]) => {
       }
       return deviceOrientationTiltAdjust(value);
     } else {
+      if (!mouse.element) return 0;
       const x = mouse.x - mouse.elementPositionX;
       const width = mouse.element.getBoundingClientRect().width;
       const value = (x - width / 2) / width;
       return mouseTiltAdjust(value);
     }
   };
-
-  const [value, setValue] = useState({
-    roll: 0,
-    source: 'mouse',
-    tilt: 0
-  });
 
   useEffect(() => {
     if (!mouse.element) return;

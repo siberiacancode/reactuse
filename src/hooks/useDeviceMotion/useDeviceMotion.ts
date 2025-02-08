@@ -20,7 +20,7 @@ export interface UseDeviceMotionParams {
 
 /**
  * @name useDeviceMotion
- * @description Hook that work with device motion
+ * @description - Hook that work with device motion
  * @category Utilities
  *
  * @param {number} [delay=1000] The delay in milliseconds

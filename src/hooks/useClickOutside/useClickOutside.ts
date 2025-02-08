@@ -17,7 +17,7 @@ export interface UseClickOutside {
     callback: (event: Event) => void
   ): void;
 
-  <Target extends UseClickOutsideTarget | UseClickOutsideTarget[]>(
+  <Target extends UseClickOutsideTarget>(
     callback: (event: Event) => void,
     target?: never
   ): (node: Target) => void;
@@ -43,7 +43,7 @@ export interface UseClickOutside {
  * @returns {(node: Target) => void} A React ref to attach to the target element
  *
  * @example
- * const ref = useClickOutside<HMLDiTvElement>(() => console.log('click outside'));
+ * const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
  */
 export const useClickOutside = ((...params: any[]) => {
   const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
@@ -79,12 +79,10 @@ export const useClickOutside = ((...params: any[]) => {
       }
     };
 
-    document.addEventListener('mousedown', handler);
-    document.addEventListener('touchstart', handler);
+    document.addEventListener('click', handler);
 
     return () => {
-      document.removeEventListener('mousedown', handler);
-      document.removeEventListener('touchstart', handler);
+      document.removeEventListener('click', handler);
     };
   }, [internalRef, target]);
 

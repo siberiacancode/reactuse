@@ -20,7 +20,10 @@ const Demo = () => {
       </p>
       <hr />
       <div style={buttonContainerStyle}>
-        <button type='button' onClick={() => textDirection.set(textDirection.value === 'ltr' ? 'rtl' : 'ltr')}>
+        <button
+          type='button'
+          onClick={() => textDirection.set(textDirection.value === 'ltr' ? 'rtl' : 'ltr')}
+        >
           {textDirection.value === 'ltr' && 'LTR'}
           {textDirection.value === 'rtl' && 'RTL'}
         </button>
