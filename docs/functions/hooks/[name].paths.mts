@@ -1,4 +1,4 @@
-import { codeToHtml } from 'shiki'
+import { codeToHtml } from 'shiki';
 
 import { getHookFile, getHooks, matchJsdoc, parseHookJsdoc } from '../../src/utils';
 
@@ -30,7 +30,7 @@ export default {
             acc += usage.description;
           }
           return acc;
-        }, '')
+        }, '');
 
         const usage = await codeToHtml(usages, {
           lang: 'typescript',
@@ -40,7 +40,6 @@ export default {
           },
           defaultColor: false
         });
-
 
         const example = await codeToHtml(`import { ${hook} } from '@siberiacancode/reactuse';`, {
           lang: 'typescript',
@@ -77,4 +76,3 @@ export default {
     return params.filter(Boolean);
   }
 };
-

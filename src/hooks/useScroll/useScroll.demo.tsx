@@ -1,89 +1,44 @@
-import { useState, type CSSProperties } from 'react';
+import { useState } from 'react';
 
 import { useScroll, UseScrollCallbackParams } from './useScroll';
 import { useDebounceCallback } from '../useDebounceCallback/useDebounceCallback';
 
-const container: CSSProperties = {
-  width: '100%',
-  height: '300px',
-  overflow: 'scroll',
-  backgroundColor: 'rgba(128, 128, 128, 0.05)',
-  borderRadius: '8px'
-}
-
-const inner: CSSProperties = {
-  width: '500px',
-  height: '400px',
-  position: 'relative'
-}
-
-const topLeft: CSSProperties = {
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  backgroundColor: 'rgba(128, 128, 128, 0.05)',
-  padding: '4px 8px'
-}
-
-const bottomLeft: CSSProperties = {
-  position: 'absolute',
-  left: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(128, 128, 128, 0.05)',
-  padding: '4px 8px'
-}
-
-const topRight: CSSProperties = {
-  position: 'absolute',
-  right: 0,
-  top: 0,
-  backgroundColor: 'rgba(128, 128, 128, 0.05)',
-  padding: '4px 8px'
-}
-
-const bottomRight: CSSProperties = {
-  position: 'absolute',
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(128, 128, 128, 0.05)',
-  padding: '4px 8px'
-}
-
-const center: CSSProperties = {
-  position: 'absolute',
-  left: '33.33%',
-  top: '33.33%',
-  backgroundColor: 'rgba(128, 128, 128, 0.05)',
-  padding: '4px 8px'
-}
-
-const info: CSSProperties = { display: 'flex', justifyContent: 'center', flexDirection: 'column', width: '100%', alignItems: 'center' }
-
 const Demo = () => {
   const [scroll, setScroll] = useState({ x: 0, y: 0 });
 
-  const debouncedScrollCallback = useDebounceCallback((params: UseScrollCallbackParams) => setScroll({ x: Math.floor(params.x), y: Math.floor(params.y) }), 100);
+  const debouncedScrollCallback = useDebounceCallback(
+    (params: UseScrollCallbackParams) =>
+      setScroll({ x: Math.floor(params.x), y: Math.floor(params.y) }),
+    100
+  );
+
   const [scrollRef, scrolling] = useScroll<HTMLDivElement>(debouncedScrollCallback);
 
   return (
     <div>
-      <div style={{ display: 'flex', gap: 10 }} >
-        <div ref={scrollRef} style={container}>
-          <div style={inner}>
-            <div style={topLeft}>TopLeft</div>
-            <div style={bottomLeft}>BottomLeft</div>
-            <div style={topRight}>TopRight</div>
-            <div style={bottomRight}>BottomRight</div>
-            <div style={center}>Scroll Me</div>
+      <div className='flex gap-10'>
+        <div ref={scrollRef} className='h-[300px] w-full overflow-scroll rounded-lg bg-zinc-800'>
+          <div className='relative h-[400px] w-[500px]'>
+            <div className='absolute top-0 left-0 bg-zinc-600 p-1'>TopLeft</div>
+            <div className='absolute bottom-0 left-0 bg-zinc-600 p-1'>BottomLeft</div>
+            <div className='absolute top-0 right-0 bg-zinc-600 p-1'>TopRight</div>
+            <div className='absolute right-0 bottom-0 bg-zinc-600 p-1'>BottomRight</div>
+            <div className='absolute top-1/3 left-1/3 bg-zinc-600 p-1'>Scroll Me</div>
           </div>
         </div>
 
-        <div style={info}>
+        <div className='flex w-full flex-col items-center justify-center'>
           <div>
             <b>Scroll position:</b>
-            <div>scrolling: <code>{String(scrolling)}</code></div>
-            <div>x: <code>{scroll.x}</code></div>
-            <div>y: <code>{scroll.y}</code></div>
+            <div>
+              scrolling: <code>{String(scrolling)}</code>
+            </div>
+            <div>
+              x: <code>{scroll.x}</code>
+            </div>
+            <div>
+              y: <code>{scroll.y}</code>
+            </div>
           </div>
         </div>
       </div>

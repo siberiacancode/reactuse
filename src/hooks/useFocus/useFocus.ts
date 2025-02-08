@@ -5,11 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
 
 /** The use focus target type */
-export type UseFocusTarget =
-  | (() => Element)
-  | string
-  | Element
-  | RefObject<Element | null | undefined>;
+export type UseFocusTarget = string | Element | RefObject<Element | null | undefined>;
 
 /** The use focus options type */
 export interface UseFocusOptions {

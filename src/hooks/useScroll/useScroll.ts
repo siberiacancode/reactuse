@@ -77,13 +77,13 @@ export interface UseScroll {
  *
  * @overload
  * @template Target The target element
- * @param {ScrollBehavior} [options.behavior = 'auto'] The behavior of scrolling
- * @param {number} [options.offset.left = 0] The left offset for arrived states
- * @param {number} [options.offset.right = 0]  The right offset for arrived states
- * @param {number} [options.offset.top = 0] The top offset for arrived states
- * @param {number} [options.offset.bottom = 0] The bottom offset for arrived states
+ * @param {ScrollBehavior} [options.behavior=auto] The behavior of scrolling
+ * @param {number} [options.offset.left=0] The left offset for arrived states
+ * @param {number} [options.offset.right=0]  The right offset for arrived states
+ * @param {number} [options.offset.top=0] The top offset for arrived states
+ * @param {number} [options.offset.bottom=0] The bottom offset for arrived states
  * @param {(params: UseScrollCallbackParams, event: Event) => void} [options.onScroll] The callback function to be invoked on scroll
- * @param {(e: Event) => void} [options.onStop] The callback function to be invoked on scroll end
+ * @param {(event: Event) => void} [options.onStop] The callback function to be invoked on scroll end
  * @returns {boolean} The state of scrolling
  *
  * @example
@@ -100,13 +100,13 @@ export interface UseScroll {
  * @overload
  * @template Target The target element
  * @param {Target} target The target element to scroll
- * @param {ScrollBehavior} [options.behavior = 'auto'] The behavior of scrolling
- * @param {number} [options.offset.left = 0] The left offset for arrived states
- * @param {number} [options.offset.right = 0]  The right offset for arrived states
- * @param {number} [options.offset.top = 0] The top offset for arrived states
- * @param {number} [options.offset.bottom = 0] The bottom offset for arrived states
+ * @param {ScrollBehavior} [options.behavior=auto] The behavior of scrolling
+ * @param {number} [options.offset.left=0] The left offset for arrived states
+ * @param {number} [options.offset.right=0]  The right offset for arrived states
+ * @param {number} [options.offset.top=0] The top offset for arrived states
+ * @param {number} [options.offset.bottom=0] The bottom offset for arrived states
  * @param {(params: UseScrollCallbackParams, event: Event) => void} [options.onScroll] The callback function to be invoked on scroll
- * @param {(e: Event) => void} [options.onStop] The callback function to be invoked on scroll end
+ * @param {(event: Event) => void} [options.onStop] The callback function to be invoked on scroll end
  * @returns {[(node: Target) => void, boolean]} The state of scrolling
  *
  * @example

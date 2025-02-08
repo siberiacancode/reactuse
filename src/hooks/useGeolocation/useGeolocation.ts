@@ -26,21 +26,6 @@ export interface UseGeolocationReturn {
 
 /** The use geolocation params type */
 export type UseGeolocationParams = PositionOptions;
-/** The use geolocation state type */
-type UseGeolocationState = UseGeolocationReturn;
-
-const DEFAULT_STATE: UseGeolocationState = {
-  loading: true,
-  error: null,
-  timestamp: Date.now(),
-  accuracy: 0,
-  latitude: Number.POSITIVE_INFINITY,
-  longitude: Number.POSITIVE_INFINITY,
-  altitude: null,
-  altitudeAccuracy: null,
-  heading: null,
-  speed: null
-};
 
 /**
  * @name useGeolocation
@@ -56,7 +41,18 @@ const DEFAULT_STATE: UseGeolocationState = {
  * const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();
  */
 export const useGeolocation = (params?: UseGeolocationParams): UseGeolocationReturn => {
-  const [value, setValue] = useState<UseGeolocationState>(DEFAULT_STATE);
+  const [value, setValue] = useState<UseGeolocationReturn>({
+    loading: true,
+    error: null,
+    timestamp: Date.now(),
+    accuracy: 0,
+    latitude: Number.POSITIVE_INFINITY,
+    longitude: Number.POSITIVE_INFINITY,
+    altitude: null,
+    altitudeAccuracy: null,
+    heading: null,
+    speed: null
+  });
 
   useEffect(() => {
     const onEvent = ({ coords, timestamp }: GeolocationPosition) => {

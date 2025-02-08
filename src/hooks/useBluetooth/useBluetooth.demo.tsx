@@ -1,11 +1,22 @@
+import { useState } from 'react';
 import { useBluetooth } from './useBluetooth';
 
 const Demo = () => {
-  const { isSupported, requestDevice, error } = useBluetooth({
+  const [error, setError] = useState<string | undefined>(undefined);
+  const bluetooth = useBluetooth({
     acceptAllDevices: true
   });
 
-  if (!isSupported) {
+  const onRequestDeviceClick = async () => {
+    try {
+      setError(undefined);
+      await bluetooth.requestDevice();
+    } catch (error) {
+      if (error instanceof Error) setError(error.message);
+    }
+  };
+
+  if (!bluetooth.supported) {
     return (
       <p>
         Bluetooth Web API:
@@ -17,10 +28,21 @@ const Demo = () => {
   return (
     <>
       <p>
-        Bluetooth Web API: <code>supported</code>
+        Bluetooth Web API supported
       </p>
-      <button onClick={requestDevice}>Click</button>
-      <p>{error && `Error: ${error}`}</p>
+      {bluetooth.connected && (
+        <div className='rounded-md bg-green-500 p-3 text-white'>
+          <p>Connected</p>
+        </div>
+      )}
+
+      {!bluetooth.connected && (
+        <div className='bg-orange-800 text-white p-3 rounded-md'>
+          <p>Not Connected</p>
+        </div>
+      )}
+      <button onClick={onRequestDeviceClick}>Request device</button>
+      {error && <p>Errors: <code className="block p-5 whitespace-pre">{error}</code></p>}
     </>
   );
 };

@@ -34,6 +34,7 @@ export default async () => {
     vite: {
       resolve: {
         alias: {
+          '@/docs': fileURLToPath(new URL('../../docs', import.meta.url)),
           '@': fileURLToPath(new URL('../../src', import.meta.url))
         }
       }
