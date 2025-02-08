@@ -19,7 +19,7 @@ const Demo = () => {
   const [word, setWord] = useState(GREETINGS[0]);
   const [interval, setInterval] = useState(500);
 
-  const { isActive, resume, pause } = useInterval(
+  const { active, resume, pause } = useInterval(
     () => setWord(GREETINGS[Math.floor(Math.random() * GREETINGS.length)]),
     interval
   );
@@ -32,12 +32,12 @@ const Demo = () => {
       <p>
         interval: {interval}
         <input
+          type='number'
           value={interval}
           onChange={(event) => setInterval(Number(event.target.value))}
-          type='number'
         />
       </p>
-      {isActive ? (
+      {active ? (
         <button type='button' onClick={pause}>
           Pause
         </button>

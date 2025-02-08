@@ -1,7 +1,7 @@
 <script setup>
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
-import { shallowRef, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue';
+import { computed, onMounted, onUnmounted, shallowRef } from 'vue';
 
 const props = defineProps({
   hook: {

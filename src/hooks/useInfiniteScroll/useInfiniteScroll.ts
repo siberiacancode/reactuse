@@ -1,39 +1,23 @@
 import type { RefObject } from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 
+import { getElement } from '@/utils/helpers';
+
 import { useEvent } from '../useEvent/useEvent';
-import { useRerender } from '../useRerender/useRerender';
 
 /** The use infinite scroll target element type */
-export type UseInfiniteScrollTarget = RefObject<Element | null> | (() => Element) | Element;
-
-const getElement = (target: UseInfiniteScrollTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
+export type UseInfiniteScrollTarget = (() => Element) | Element | RefObject<Element | null>;
 
 /** The use infinite scroll options type */
 export interface UseInfiniteScrollOptions {
+  /** The direction to trigger the callback */
+  direction?: 'bottom' | 'left' | 'right' | 'top';
   /** The distance in pixels to trigger the callback */
   distance?: number;
-  /** The direction to trigger the callback */
-  direction?: 'top' | 'bottom' | 'left' | 'right';
 }
 
-export type UseInfiniteScroll = {
-  <Target extends UseInfiniteScrollTarget>(
-    target: Target,
-    callback: (event: Event) => void,
-    options?: UseInfiniteScrollOptions
-  ): boolean;
-
+export interface UseInfiniteScroll {
   <Target extends UseInfiniteScrollTarget>(
     callback: (event: Event) => void,
     options?: UseInfiniteScrollOptions,
@@ -42,7 +26,13 @@ export type UseInfiniteScroll = {
     ref: (node: Target) => void;
     isLoading: boolean;
   };
-};
+
+  <Target extends UseInfiniteScrollTarget>(
+    target: Target,
+    callback: (event: Event) => void,
+    options?: UseInfiniteScrollOptions
+  ): boolean;
+}
 
 /**
  * @name useInfiniteScroll
@@ -71,15 +61,17 @@ export type UseInfiniteScroll = {
  * const isLoading = useInfiniteScroll(ref, () => console.log('infinite scroll'));
  */
 export const useInfiniteScroll = ((...params) => {
-  const rerender = useRerender();
   const target = params[1] instanceof Function ? (params[0] as UseInfiniteScrollTarget) : undefined;
   const callback = params[1] instanceof Function ? params[1] : (params[0] as () => void);
+  const options = (
+    params[1] instanceof Function ? params[2] : params[1]
+  ) as UseInfiniteScrollOptions;
 
-  const direction = (params[2] as UseInfiniteScrollOptions)?.direction ?? 'bottom';
-  const distance = (params[2] as UseInfiniteScrollOptions)?.distance ?? 10;
+  const direction = options?.direction ?? 'bottom';
+  const distance = options?.distance ?? 10;
 
   const [isLoading, setIsLoading] = useState(false);
-  const internalRef = useRef<Element>();
+  const [internalRef, setInternalRef] = useState<Element>();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
 
@@ -105,7 +97,8 @@ export const useInfiniteScroll = ((...params) => {
   });
 
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+    if (!target && !internalRef) return;
+    const element = (target ? getElement(target) : internalRef) as Element;
     if (!element) return;
 
     element.addEventListener('scroll', onLoadMore);
@@ -113,16 +106,11 @@ export const useInfiniteScroll = ((...params) => {
     return () => {
       element.removeEventListener('scroll', onLoadMore);
     };
-  }, [internalRef.current, target, direction, distance]);
+  }, [internalRef, target, direction, distance]);
 
   if (target) return isLoading;
   return {
-    ref: (node: Element) => {
-      if (!internalRef.current) {
-        internalRef.current = node;
-        rerender.update();
-      }
-    },
+    ref: setInternalRef,
     isLoading
   };
 }) as UseInfiniteScroll;

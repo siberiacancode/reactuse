@@ -1,8 +1,9 @@
 import type { ComponentProps } from 'react';
+
 import { useEffect, useState } from 'react';
 
 /** The use script status */
-export type UseScriptStatus = 'loading' | 'ready' | 'error' | 'unknown';
+export type UseScriptStatus = 'error' | 'loading' | 'ready' | 'unknown';
 export const SCRIPT_STATUS_ATTRIBUTE_NAME = 'script-status';
 
 /** The use script options extends from attributes script tag */
@@ -65,19 +66,13 @@ export const useScript = (src: string, options: UseScriptOptions = {}) => {
       setStatus('error');
     };
 
-    const removeEventListeners = () => {
-      script.removeEventListener('load', onLoad);
-      script.removeEventListener('error', onError);
-    };
-
     script.addEventListener('load', onLoad);
     script.addEventListener('error', onError);
 
     return () => {
-      if (removeOnUnmount) {
-        script.remove();
-        removeEventListeners();
-      }
+      if (removeOnUnmount) script.remove();
+      script.removeEventListener('load', onLoad);
+      script.removeEventListener('error', onError);
     };
   }, [src, removeOnUnmount]);
 

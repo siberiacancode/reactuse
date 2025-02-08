@@ -1,14 +1,13 @@
 import { useState } from 'react';
 
 import { useField } from '../useField/useField';
-
 import { useWebSocket } from './useWebSocket';
 
-type Message = {
+interface Message {
+  date: Date;
   text: string;
   type: 'client' | 'server';
-  date: Date;
-};
+}
 
 const Demo = () => {
   const messageInput = useField({ initialValue: '' });

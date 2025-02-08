@@ -1,7 +1,7 @@
 import { useMediaQuery } from '../useMediaQuery/useMediaQuery';
 
 /** The use preferred contrast return type */
-export type UsePreferredContrastReturn = 'more' | 'less' | 'custom' | 'no-preference';
+export type UsePreferredContrastReturn = 'custom' | 'less' | 'more' | 'no-preference';
 
 /**
  * @name usePreferredContrast

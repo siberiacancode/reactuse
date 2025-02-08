@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { useCounter } from '../useCounter/useCounter';
-
 import { useDidUpdate } from './useDidUpdate';
 
 const Demo = () => {
@@ -9,18 +8,16 @@ const Demo = () => {
   const [useEffectTriggered, setUseEffectTriggered] = useState(false);
   const [useDidUpdateTriggered, setUseDidUpdateTriggered] = useState(false);
 
-  useDidUpdate(() => {
-    setUseDidUpdateTriggered(true);
-  }, [counter.count]);
+  useDidUpdate(() => setUseDidUpdateTriggered(true), [counter.value]);
 
   useEffect(() => {
     setUseEffectTriggered(true);
-  }, [counter.count]);
+  }, [counter.value]);
 
   return (
     <div>
       <p>
-        Count: <code>{counter.count}</code>
+        Count: <code>{counter.value}</code>
       </p>
       <p>
         Use effect triggered: <code>{String(useEffectTriggered)}</code>

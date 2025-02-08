@@ -1,13 +1,12 @@
 import { parseHookJsdoc } from '../parseHookJsdoc';
-
 import { getHookFile } from './getHookFile';
 import { getHooks } from './getHooks';
 
 interface HookItem {
-  text: string;
   category: string;
   description: string;
   link: string;
+  text: string;
 }
 
 export const getHookItems = async (): Promise<HookItem[]> => {
@@ -27,7 +26,7 @@ export const getHookItems = async (): Promise<HookItem[]> => {
 
       const jsdoc = parseHookJsdoc(match[0].trim());
 
-      if (!jsdoc.description || !jsdoc.usage) {
+      if (!jsdoc.description || !jsdoc.usages.length) {
         console.error(`No content found for ${hook}`);
         return null;
       }

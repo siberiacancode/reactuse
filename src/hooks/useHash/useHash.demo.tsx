@@ -1,5 +1,4 @@
 import { useMount } from '../useMount/useMount';
-
 import { useHash } from './useHash';
 
 const Demo = () => {

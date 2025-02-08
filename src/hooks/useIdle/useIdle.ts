@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { throttle } from '@/utils/helpers';
 
-interface UseIdleOptions {
-  initialValue?: boolean;
+//* The use idle options type */
+export interface UseIdleOptions {
+  //* The idle events */
   events?: Array<keyof DocumentEventMap>;
+  //* The idle state */
+  initialValue?: boolean;
 }
 
 const IDLE_EVENTS = [

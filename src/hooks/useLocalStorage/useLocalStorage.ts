@@ -1,4 +1,5 @@
 import type { UseStorageInitialValue, UseStorageOptions } from '../useStorage/useStorage';
+
 import { useStorage } from '../useStorage/useStorage';
 
 /**
@@ -12,7 +13,7 @@ import { useStorage } from '../useStorage/useStorage';
  * @param {UseStorageOptions<Value>} [options] The options of the storage
  *
  * @example
- * const [value, setValue, removeValue] = useLocalStorage('key', 'value');
+ * const { value, set, remove } = useLocalStorage('key', 'value');
  */
 export const useLocalStorage = <Value>(
   key: string,

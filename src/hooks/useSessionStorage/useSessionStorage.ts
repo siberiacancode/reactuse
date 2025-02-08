@@ -1,4 +1,5 @@
 import type { UseStorageInitialValue, UseStorageOptions } from '../useStorage/useStorage';
+
 import { useStorage } from '../useStorage/useStorage';
 
 /**
@@ -12,7 +13,7 @@ import { useStorage } from '../useStorage/useStorage';
  * @param {UseStorageOptions<Value>} [options] The options of the storage
  *
  * @example
- * const [value, setValue, removeValue] = useSessionStorage('key', 'value');
+ * const { value, set, remove } = useSessionStorage('key', 'value');
  */
 export const useSessionStorage = <Value>(
   key: string,

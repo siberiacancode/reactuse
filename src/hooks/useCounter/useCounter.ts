@@ -1,33 +1,34 @@
 import type { Dispatch, SetStateAction } from 'react';
+
 import { useState } from 'react';
 
 /** The use counter options */
 export interface UseCounterOptions {
-  /** The min of count value */
-  min?: number;
   /** The max of count value */
   max?: number;
+  /** The min of count value */
+  min?: number;
 }
 
 /** The use counter return type */
 export interface UseCounterReturn {
-  /** The current count value */
-  count: number;
   /** Function to set a specific value to the counter */
   set: Dispatch<SetStateAction<number>>;
-  /** Function to reset the counter to its initial value. */
-  reset: () => void;
-  /** Function to increment the counter */
-  inc: (value?: number) => void;
+  /** The current count value */
+  value: number;
   /** Function to decrement the counter */
   dec: (value?: number) => void;
+  /** Function to increment the counter */
+  inc: (value?: number) => void;
+  /** Function to reset the counter to its initial value. */
+  reset: () => void;
 }
 
-export type UseCounter = {
+export interface UseCounter {
   (initialValue?: number, options?: UseCounterOptions): UseCounterReturn;
 
   (options: UseCounterOptions & { initialValue?: number }, initialValue?: never): UseCounterReturn;
-};
+}
 
 /**
  * @name useCounter
@@ -62,39 +63,39 @@ export const useCounter = ((...params: any[]) => {
       ? ((params[1] ?? {}) as UseCounterOptions)
       : ((params[0] ?? {}) as UseCounterOptions & { initialValue?: number });
 
-  const [count, setCount] = useState(initialValue ?? 0);
+  const [value, setValue] = useState(initialValue ?? 0);
 
   const inc = (value: number = 1) => {
-    setCount((prevCount) => {
-      if (typeof max === 'number' && count === max) return prevCount;
-      return Math.max(Math.min(max, prevCount + value), min);
+    setValue((prevValue) => {
+      if (typeof max === 'number' && prevValue === max) return prevValue;
+      return Math.max(Math.min(max, prevValue + value), min);
     });
   };
 
   const dec = (value: number = 1) => {
-    setCount((prevCount) => {
-      if (typeof min === 'number' && prevCount === min) return prevCount;
-      return Math.min(Math.max(min, prevCount - value), max);
+    setValue((prevValue) => {
+      if (typeof min === 'number' && prevValue === min) return prevValue;
+      return Math.min(Math.max(min, prevValue - value), max);
     });
   };
 
   const reset = () => {
     const value = initialValue ?? 0;
-    if (typeof max === 'number' && value > max) return setCount(max);
-    if (typeof min === 'number' && value < min) return setCount(min);
-    setCount(value);
+    if (typeof max === 'number' && value > max) return setValue(max);
+    if (typeof min === 'number' && value < min) return setValue(min);
+    setValue(value);
   };
 
   const set = (value: SetStateAction<number>) => {
-    setCount((prevCount) => {
+    setValue((prevValue) => {
       const updatedCount = Math.max(
         min,
-        Math.min(max, typeof value === 'number' ? value : value(prevCount))
+        Math.min(max, typeof value === 'number' ? value : value(prevValue))
       );
 
       return updatedCount;
     });
   };
 
-  return { count, set, inc, dec, reset } as const;
+  return { value, set, inc, dec, reset };
 }) as UseCounter;

@@ -1,4 +1,5 @@
 import type { Point } from './Pointer';
+
 import { Pointer } from './Pointer';
 
 export class Paint {

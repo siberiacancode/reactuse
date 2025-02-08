@@ -1,10 +1,20 @@
 import { useState } from 'react';
 
-import type {
-  ColorSelectionOptions,
-  ColorSelectionResult,
-  EyeDropperConstructor
-} from '@/utils/types';
+export interface ColorSelectionOptions {
+  signal?: AbortSignal;
+}
+
+export interface ColorSelectionResult {
+  sRGBHex: string;
+}
+
+export interface EyeDropper {
+  open: (options?: ColorSelectionOptions) => Promise<ColorSelectionResult>;
+}
+
+export interface EyeDropperConstructor {
+  new (): EyeDropper;
+}
 
 declare global {
   interface Window {
@@ -14,8 +24,11 @@ declare global {
 
 /** The color selection return type */
 export interface UseEyeDropperReturn {
+  /** The eye dropper supported status */
   supported: boolean;
+  /** The eye dropper value */
   value?: string;
+  /** The eye dropper open method */
   open: (colorSelectionOptions?: ColorSelectionOptions) => Promise<ColorSelectionResult>;
 }
 
@@ -33,7 +46,7 @@ export interface UseEyeDropperReturn {
 export const useEyeDropper = (
   initialValue: string | undefined = undefined
 ): UseEyeDropperReturn => {
-  const supported = window && 'EyeDropper' in window;
+  const supported = typeof window !== 'undefined' && 'EyeDropper' in window;
   const [value, setValue] = useState(initialValue);
 
   const open = async (colorSelectionOptions?: ColorSelectionOptions) => {

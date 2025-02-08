@@ -8,7 +8,7 @@ const Demo = () => {
       <button type='button' onClick={() => fileDialog.open()}>
         Choose files
       </button>
-      <button type='button' disabled={!fileDialog.value} onClick={() => fileDialog.reset()}>
+      <button disabled={!fileDialog.value} type='button' onClick={() => fileDialog.reset()}>
         Reset
       </button>
       {fileDialog.value && (

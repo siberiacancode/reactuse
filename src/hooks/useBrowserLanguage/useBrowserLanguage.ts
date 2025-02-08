@@ -2,9 +2,9 @@ import { useSyncExternalStore } from 'react';
 
 const getSnapshot = () => navigator.language;
 const getServerSnapshot = () => 'undetermined';
-const subscribe = (cb: () => void) => {
-  window.addEventListener('languagechange', cb);
-  return () => window.removeEventListener('languagechange', cb);
+const subscribe = (callback: () => void) => {
+  window.addEventListener('languagechange', callback);
+  return () => window.removeEventListener('languagechange', callback);
 };
 
 /**

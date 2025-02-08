@@ -1,8 +1,6 @@
-import { TextEncoder } from 'util';
+import { TextEncoder } from 'node:util';
 
-import '@testing-library/jest-dom/vitest';
-
-global.TextEncoder = TextEncoder;
+globalThis.TextEncoder = TextEncoder;
 
 afterEach(() => {
   vi.clearAllMocks();

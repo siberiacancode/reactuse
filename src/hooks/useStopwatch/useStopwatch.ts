@@ -22,26 +22,26 @@ const getStopwatchTime = (time: number) => {
 
 /** The use stopwatch return type */
 export interface UseStopwatchReturn {
-  /** The paused state of the stopwatch */
-  paused: boolean;
-  /** The over state of the stopwatch */
-  over: boolean;
+  /** The total count of the stopwatch */
+  count: number;
   /** The day count of the stopwatch */
   days: number;
   /** The hour count of the stopwatch */
   hours: number;
   /** The minute count of the stopwatch */
   minutes: number;
+  /** The over state of the stopwatch */
+  over: boolean;
+  /** The paused state of the stopwatch */
+  paused: boolean;
   /** The second count of the stopwatch */
   seconds: number;
-  /** The total count of the stopwatch */
-  count: number;
   /** The function to pause the stopwatch */
   pause: () => void;
-  /** The function to start the stopwatch */
-  start: () => void;
   /** The function to reset the stopwatch */
   reset: () => void;
+  /** The function to start the stopwatch */
+  start: () => void;
   /** The function to toggle the stopwatch */
   toggle: () => void;
 }
@@ -52,13 +52,14 @@ export interface UseStopwatchOptions {
   enabled?: boolean;
 }
 
-type UseStopwatch = {
+interface UseStopwatch {
   (initialTime?: number, options?: UseStopwatchOptions): UseStopwatchReturn;
   (options?: UseStopwatchOptions & { initialTime?: number }): UseStopwatchReturn;
-};
+}
 /**
  * @name useStopwatch
  * @description - Hook that creates a stopwatch functionality
+ * @category Time
  *
  * @overload
  * @param {number} [initialTime=0] The initial time of the timer

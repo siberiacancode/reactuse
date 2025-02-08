@@ -1,45 +1,39 @@
 import type { RefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
 
-import { useRerender } from '../useRerender/useRerender';
+import { useEffect, useState } from 'react';
+
+import { getElement } from '@/utils/helpers';
 
 /** The use mouse target element type */
-type UseMouseTarget = RefObject<Element | null | undefined> | (() => Element) | Element;
-
-/** Function to get target element based on its type */
-const getElement = (target: UseMouseTarget) => {
-  if (typeof target === 'function') {
-    return target();
-  }
-
-  if (target instanceof Element) {
-    return target;
-  }
-
-  return target.current;
-};
+export type UseMouseTarget =
+  | (() => Element)
+  | string
+  | Element
+  | RefObject<Element | null | undefined>;
 
 /** The use mouse return type */
 export interface UseMouseReturn {
-  /** The current mouse x position */
-  x: number;
-  /** The current mouse y position */
-  y: number;
-  /** The current element x position */
-  elementX: number;
-  /** The current element y position */
-  elementY: number;
+  /** The current element */
+  element?: Element;
   /** The current element position x */
   elementPositionX: number;
   /** The current element position y */
   elementPositionY: number;
+  /** The current element x position */
+  elementX: number;
+  /** The current element y position */
+  elementY: number;
+  /** The current mouse x position */
+  x: number;
+  /** The current mouse y position */
+  y: number;
 }
 
-export type UseMouse = {
+export interface UseMouse {
   <Target extends UseMouseTarget>(target: Target): UseMouseReturn;
 
   <Target extends UseMouseTarget>(target?: never): UseMouseReturn & { ref: (node: Target) => void };
-};
+}
 
 /**
  * @name useMouse
@@ -52,7 +46,7 @@ export type UseMouse = {
  * @returns {UseMouseReturn} An object with the current mouse position
  *
  * @example
- * const { x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse(target);
+ * const { x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse(ref);
  *
  * @overload
  * @template Target The target element
@@ -61,25 +55,23 @@ export type UseMouse = {
  * @example
  * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
-export const useMouse = ((...params: any[]) => {
-  const rerender = useRerender();
-  const target = params[0] as UseMouseTarget | undefined;
-
-  const [value, setValue] = useState({
+export const useMouse = ((target) => {
+  const [value, setValue] = useState<UseMouseReturn>({
     x: 0,
     y: 0,
+    element: undefined,
     elementX: 0,
     elementY: 0,
     elementPositionX: 0,
     elementPositionY: 0
   });
 
-  const internalRef = useRef<Element>();
+  const [internalRef, setInternalRef] = useState<Element>();
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
+    if (!target && !internalRef) return;
     const onMouseMove = (event: MouseEvent) => {
-      const element = target ? getElement(target) : internalRef.current;
+      const element = (target ? getElement(target) : internalRef) as Element;
       if (!element) return;
 
       const updatedValue = {
@@ -93,6 +85,7 @@ export const useMouse = ((...params: any[]) => {
       const elementX = event.pageX - elementPositionX;
       const elementY = event.pageY - elementPositionY;
 
+      updatedValue.element = element;
       updatedValue.elementX = elementX;
       updatedValue.elementY = elementY;
       updatedValue.elementPositionX = elementPositionX;
@@ -105,20 +98,14 @@ export const useMouse = ((...params: any[]) => {
     };
 
     document.addEventListener('mousemove', onMouseMove);
-
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
     };
-  }, [internalRef.current, target]);
+  }, [internalRef, target]);
 
   if (target) return value;
   return {
-    ref: (node: Element) => {
-      if (!internalRef.current) {
-        internalRef.current = node;
-        rerender.update();
-      }
-    },
+    ref: setInternalRef,
     ...value
   };
 }) as UseMouse;

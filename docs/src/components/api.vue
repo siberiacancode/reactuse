@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import type { Spec } from 'comment-parser';
+
 import { isDefaultType } from '../utils/isDefaultType';
 
 const props = defineProps<{
   apiParameters: Spec[];
 }>();
 
-type Group = {
+interface Group {
   id: number;
   parameters: Spec[];
   returns: Spec | null;
-};
+}
 
 let groupIndex = 0;
 const groups: Group[] = [{ id: groupIndex, parameters: [], returns: null }];

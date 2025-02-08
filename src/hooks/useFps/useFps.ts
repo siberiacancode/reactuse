@@ -16,7 +16,7 @@ export const useFps = () => {
   useEffect(() => {
     let frameCount = 0;
     let startTime = performance.now();
-    let requestId: number;
+    let rafId: number;
 
     const onRequestAnimationFrame = () => {
       frameCount += 1;
@@ -30,13 +30,13 @@ export const useFps = () => {
         startTime = currentTime;
       }
 
-      requestId = requestAnimationFrame(onRequestAnimationFrame);
+      rafId = requestAnimationFrame(onRequestAnimationFrame);
     };
 
-    requestId = requestAnimationFrame(onRequestAnimationFrame);
+    rafId = requestAnimationFrame(onRequestAnimationFrame);
 
     return () => {
-      cancelAnimationFrame(requestId);
+      cancelAnimationFrame(rafId);
     };
   }, []);
 

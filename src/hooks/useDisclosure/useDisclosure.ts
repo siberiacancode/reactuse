@@ -1,14 +1,22 @@
 import { useState } from 'react';
 
-interface UseDisclosureOptions {
-  onOpen?: () => void;
+/** The use disclosure options type */
+export interface UseDisclosureOptions {
+  /** The callback function to be invoked on close */
   onClose?: () => void;
+  /** The callback function to be invoked on open */
+  onOpen?: () => void;
 }
 
-interface UseDisclosureReturn {
+/** The use disclosure return type */
+export interface UseDisclosureReturn {
+  /** The opened value */
   opened: boolean;
-  open: () => void;
+  /** Function to close the modal */
   close: () => void;
+  /** Function to open the modal */
+  open: () => void;
+  /** Function to toggle the modal */
   toggle: () => void;
 }
 
@@ -17,7 +25,7 @@ interface UseDisclosureReturn {
  * @description - Hook that allows you to open and close a modal
  * @category Utilities
  *
- * @param {boolean} initialValue The initial value of the component
+ * @param {boolean} [initialValue=false] The initial value of the component
  * @param {() => void} [options.onOpen] The callback function to be invoked on open
  * @param {() => void} [options.onClose] The callback function to be invoked on close
  * @returns {UseDisclosureReturn} An object with the opened, open, close, and toggle properties
@@ -32,21 +40,21 @@ export const useDisclosure = (
   const [opened, setOpened] = useState(initialValue);
 
   const open = () =>
-    setOpened((isOpened) => {
-      if (!isOpened) {
+    setOpened((opened) => {
+      if (!opened) {
         options?.onOpen?.();
         return true;
       }
-      return isOpened;
+      return opened;
     });
 
   const close = () =>
-    setOpened((isOpened) => {
-      if (isOpened) {
+    setOpened((opened) => {
+      if (opened) {
         options?.onClose?.();
         return false;
       }
-      return isOpened;
+      return opened;
     });
 
   const toggle = () => (opened ? close() : open());

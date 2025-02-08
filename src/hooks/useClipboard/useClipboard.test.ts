@@ -6,7 +6,7 @@ const mockNavigatorClipboardWriteText = vi.fn();
 const mockNavigatorClipboardReadText = vi.fn();
 Object.assign(navigator, {
   clipboard: {
-    ...global.navigator.clipboard,
+    ...globalThis.navigator.clipboard,
     writeText: mockNavigatorClipboardWriteText,
     readText: mockNavigatorClipboardReadText
   }
@@ -23,7 +23,7 @@ it('Should use copy to clipboard', () => {
   const { result } = renderHook(useClipboard);
 
   expect(result.current.value).toBeNull();
-  expect(result.current.supported).toBe(true);
+  expect(result.current.supported).toBeTruthy();
   expect(typeof result.current.copy).toBe('function');
 });
 
@@ -43,7 +43,6 @@ it('Should copy value to clipboard if writeText not supported', async () => {
 
   await act(() => result.current.copy('string'));
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { execCommand } = document;
 
   expect(result.current.value).toBe('string');
@@ -53,12 +52,11 @@ it('Should copy value to clipboard if writeText not supported', async () => {
 
 it('Should read value from clipboard if readText not supported', async () => {
   mockNavigatorClipboardReadText.mockRejectedValueOnce(new Error('readText not supported'));
-  const { result } = renderHook(useClipboard);
+  const { result } = renderHook(() => useClipboard({ enabled: true }));
 
   mockDocumentGetSelection.mockReturnValue({ toString: () => 'copied' });
   await act(() => document.dispatchEvent(new Event('copy')));
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { getSelection } = document;
 
   expect(result.current.value).toBe('copied');
@@ -66,7 +64,7 @@ it('Should read value from clipboard if readText not supported', async () => {
 });
 
 it('Should change value upon copy and cut events', async () => {
-  const { result } = renderHook(useClipboard);
+  const { result } = renderHook(() => useClipboard({ enabled: true }));
 
   mockNavigatorClipboardReadText.mockResolvedValue('copied');
   await act(() => document.dispatchEvent(new Event('copy')));
@@ -76,7 +74,7 @@ it('Should change value upon copy and cut events', async () => {
 });
 
 it('Should change value upon cut event', async () => {
-  const { result } = renderHook(useClipboard);
+  const { result } = renderHook(() => useClipboard({ enabled: true }));
 
   mockNavigatorClipboardReadText.mockResolvedValue('cut');
   await act(() => document.dispatchEvent(new Event('cut')));

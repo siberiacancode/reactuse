@@ -3,19 +3,14 @@ import { useEventListener } from './useEventListener';
 const Demo = () => {
   const ref = useEventListener<HTMLDivElement>(
     'click',
-    (event) => console.log('@click 1', event.target),
+    (event) => console.log('@click', event.target),
     {
       passive: true
     }
   );
 
-  useEventListener(window, 'click', (event) => console.log('@click 2', event.target), {
-    passive: true
-  });
-
   return (
     <div
-      id='content'
       ref={ref}
       style={{
         width: 200,
@@ -25,6 +20,7 @@ const Demo = () => {
         alignItems: 'center',
         border: '1px solid red'
       }}
+      id='content'
     >
       content
     </div>
