@@ -102,8 +102,8 @@ export interface UseFieldReturn<Value> {
  * const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();
  */
 export const useField = <
-  Value extends boolean | string = string,
-  Type = Value extends string ? string : boolean
+  Value extends boolean | number | string = string,
+  Type = Value extends string ? string : Value extends boolean ? boolean : number
 >(
   params?: UseFieldParams<Value>
 ): UseFieldReturn<Type> => {

@@ -91,6 +91,8 @@ export const useMutationObserver = ((...params: any[]) => {
   const [internalRef, setInternalRef] = useState<Element>();
   const internalCallbackRef = useRef<MutationCallback>(callback);
   internalCallbackRef.current = callback;
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
 
   useEffect(() => {
     if (!enabled && !target && !internalRef) return;
@@ -102,7 +104,7 @@ export const useMutationObserver = ((...params: any[]) => {
       target.forEach((target) => {
         const element = getElement(target);
         if (!element) return;
-        observer.observe(element as Element, options);
+        observer.observe(element as Element, internalOptionsRef.current);
       });
 
       return () => {
@@ -115,12 +117,12 @@ export const useMutationObserver = ((...params: any[]) => {
 
     const observer = new MutationObserver(internalCallbackRef.current);
     setObserver(observer);
-    observer.observe(element as Element, options);
+    observer.observe(element as Element, internalOptionsRef.current);
 
     return () => {
       observer.disconnect();
     };
-  }, [internalRef, target, ...Object.values(options ?? {})]);
+  }, [internalRef, target]);
 
   const stop = () => observer?.disconnect();
 

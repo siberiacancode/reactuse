@@ -2,10 +2,14 @@ import type { RefObject } from 'react';
 
 import { useEffect, useRef, useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
 
 /** The use focus target type */
-export type UseFocusTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
+export type UseFocusTarget =
+  | (() => Element)
+  | string
+  | Element
+  | RefObject<Element | null | undefined>;
 
 /** The use focus options type */
 export interface UseFocusOptions {
@@ -53,8 +57,7 @@ export interface UseFocus {
  * const { ref, focus, blur, focused } = useFocus();
  */
 export const useFocus = ((...params: any[]) => {
-  const target =
-    (params[0] && 'current' in params[0]) || params[0] instanceof Element ? params[0] : undefined;
+  const target = isTarget(params[0]) ? params[0] : undefined;
   const options = ((target ? params[1] : params[0]) as UseFocusOptions) ?? {};
   const initialValue = options.initialValue ?? false;
 

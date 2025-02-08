@@ -67,7 +67,7 @@ export const useEventListener = ((...params: any[]) => {
   const event = (target ? params[1] : params[0]) as string | string[];
   const events = Array.isArray(event) ? event : [event];
   const listener = (target ? params[2] : params[1]) as (...arg: any[]) => undefined | void;
-  const options: UseEventListenerOptions | undefined = target ? params[3] : params[2];
+  const options = (target ? params[3] : params[2]) as UseEventListenerOptions | undefined;
 
   const [internalRef, setInternalRef] = useState<Element>();
   const internalListener = useEvent(listener);
