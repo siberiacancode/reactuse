@@ -45,8 +45,8 @@ const Demo = () => {
 
       <div>
         <input
-          placeholder='Name'
           type='text'
+          placeholder='Name'
           {...nameInput.register({
             required: 'field is required',
             minLength: {
@@ -55,7 +55,7 @@ const Demo = () => {
             }
           })}
         />
-        {nameInput.error && <span style={{ color: 'red' }}>{nameInput.error}</span>}
+        {nameInput.error && <span className='text-red-400'>{nameInput.error}</span>}
       </div>
 
       <select {...sexSelect.register()}>
@@ -66,7 +66,7 @@ const Demo = () => {
       <textarea placeholder='About' rows={5} {...aboutTextArea.register()} />
 
       <label htmlFor='checkbox'>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className='flex items-center gap-3'>
           <input id='checkbox' type='checkbox' {...rememberThisComputerCheckbox.register()} />
           <span>Remember this computer?</span>
         </div>

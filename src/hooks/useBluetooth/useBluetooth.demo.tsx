@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { useBluetooth } from './useBluetooth';
 
 const Demo = () => {
@@ -27,9 +28,7 @@ const Demo = () => {
 
   return (
     <>
-      <p>
-        Bluetooth Web API supported
-      </p>
+      <p>Bluetooth Web API supported</p>
       {bluetooth.connected && (
         <div className='rounded-md bg-green-500 p-3 text-white'>
           <p>Connected</p>
@@ -37,12 +36,18 @@ const Demo = () => {
       )}
 
       {!bluetooth.connected && (
-        <div className='bg-orange-800 text-white p-3 rounded-md'>
+        <div className='rounded-md bg-orange-800 p-3 text-white'>
           <p>Not Connected</p>
         </div>
       )}
-      <button onClick={onRequestDeviceClick}>Request device</button>
-      {error && <p>Errors: <code className="block p-5 whitespace-pre">{error}</code></p>}
+      <button type='button' onClick={onRequestDeviceClick}>
+        Request device
+      </button>
+      {error && (
+        <p>
+          Errors: <code className='block p-5 whitespace-pre'>{error}</code>
+        </p>
+      )}
     </>
   );
 };

@@ -10,10 +10,10 @@ const Demo = () => {
         {Array.from({ length: 6 }, (_, i) => i + 1).map((id) => (
           <input
             key={id}
-            data-id={String(id)}
-            placeholder={String(id)}
-            type='text'
             className='rounded border p-2'
+            data-id={String(id)}
+            type='text'
+            placeholder={String(id)}
           />
         ))}
       </div>

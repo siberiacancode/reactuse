@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { useEvent } from '@/hooks';
-
 const getStopwatchTime = (time: number) => {
   if (!time)
     return {
@@ -91,48 +89,50 @@ export const useStopwatch = ((...params: any[]) => {
   const [time, setTime] = useState(getStopwatchTime(initialTime));
   const [paused, setPaused] = useState(!options?.enabled);
 
-  const onInterval = useEvent(() => {
-    const updatedCount = time.count + 1;
-
-    if (updatedCount % 60 === 0) {
-      return setTime({
-        ...time,
-        minutes: time.minutes + 1,
-        seconds: 0,
-        count: updatedCount
-      });
-    }
-
-    if (updatedCount % (60 * 60) === 0) {
-      return setTime({
-        ...time,
-        hours: time.hours + 1,
-        minutes: 0,
-        seconds: 0,
-        count: updatedCount
-      });
-    }
-
-    if (updatedCount % (60 * 60 * 24) === 0) {
-      return setTime({
-        ...time,
-        days: time.days + 1,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-        count: updatedCount
-      });
-    }
-
-    setTime({
-      ...time,
-      seconds: time.seconds + 1,
-      count: updatedCount
-    });
-  });
-
   useEffect(() => {
     if (paused) return;
+    const onInterval = () => {
+      setTime((prevTime) => {
+        const updatedCount = prevTime.count + 1;
+
+        if (updatedCount % 60 === 0) {
+          return {
+            ...prevTime,
+            minutes: prevTime.minutes + 1,
+            seconds: 0,
+            count: updatedCount
+          };
+        }
+
+        if (updatedCount % (60 * 60) === 0) {
+          return {
+            ...prevTime,
+            hours: prevTime.hours + 1,
+            minutes: 0,
+            seconds: 0,
+            count: updatedCount
+          };
+        }
+
+        if (updatedCount % (60 * 60 * 24) === 0) {
+          return {
+            ...prevTime,
+            days: prevTime.days + 1,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+            count: updatedCount
+          };
+        }
+
+        return {
+          ...prevTime,
+          seconds: prevTime.seconds + 1,
+          count: updatedCount
+        };
+      });
+    };
+
     const interval = setInterval(() => onInterval(), 1000);
     return () => clearInterval(interval);
   }, [paused]);

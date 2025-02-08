@@ -11,7 +11,7 @@ const Demo = () => {
   return (
     <>
       <p>
-        Clipboard Permission: read <b>{clipboardReadPermission.state}</b> | write{' '}
+        Clipboard permission: read <b>{clipboardReadPermission.state}</b> | write{' '}
         <b>{clipboardWritePermissionWrite.state}</b>
       </p>
 
@@ -20,11 +20,9 @@ const Demo = () => {
       </p>
       <input {...textField.register()} />
 
-      <div style={{ display: 'flex' }}>
-        <button type='button' onClick={() => clipboard.copy(textField.getValue())}>
-          Copy
-        </button>
-      </div>
+      <button type='button' onClick={() => clipboard.copy(textField.getValue())}>
+        Copy
+      </button>
     </>
   );
 };

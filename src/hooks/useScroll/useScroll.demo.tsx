@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
-import { useScroll, UseScrollCallbackParams } from './useScroll';
+import type { UseScrollCallbackParams } from './useScroll';
+
 import { useDebounceCallback } from '../useDebounceCallback/useDebounceCallback';
+import { useScroll } from './useScroll';
 
 const Demo = () => {
   const [scroll, setScroll] = useState({ x: 0, y: 0 });
