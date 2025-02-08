@@ -1,6 +1,6 @@
 import type { Ora } from 'ora';
 
-import { appendFileSync, existsSync, writeFileSync } from 'node:fs';
+import { existsSync, writeFileSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -44,15 +44,19 @@ const downloadHook = async (hookName: string, path: string, aliasesUtilsPathToRe
   }
 };
 
-const updateUtilIndexFile = (utilName: string, utilsPath: string) => {
+const updateUtilIndexFile = async (utilName: string, utilsPath: string) => {
   const indexPath = path.join(utilsPath, 'index.ts');
   const indexExist = existsSync(indexPath);
-  const exportStatement = `export * from './${utilName}'\n`;
+  const exportStatement = `export * from './${utilName}';\n`;
 
   if (!indexExist) {
     writeFileSync(indexPath, '');
   }
-  appendFileSync(indexPath, exportStatement, 'utf-8');
+  const indexFileContent = await fs.readFile(indexPath, 'utf-8');
+
+  if (!indexFileContent.includes(exportStatement)) {
+    await fs.appendFile(indexPath, exportStatement, 'utf-8');
+  }
 };
 
 const downloadUtil = async (utilName: string, path: string) => {
@@ -139,7 +143,9 @@ export const downloadHooks = async (
     resolveHookDependencies(registryIndex, findedHook.hookDependency)
   );
 
-  const utilDependencies = Array.from(resolveUtilDependencies(registryIndex, hookDependencies));
+  const utilDependencies = Array.from(
+    resolveUtilDependencies(registryIndex, [...hookDependencies, findedHook.name])
+  );
 
   for (const hook of Array.from(hookDependencies)) {
     spinner.text = `Installing hook ${hook} as Dependecy`;
