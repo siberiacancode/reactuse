@@ -68,7 +68,7 @@ export const useElementSize = ((...params: any[]) => {
   useEffect(() => {
     if (!target && !internalRef) return;
     const element = (target ? getElement(target) : internalRef) as Element;
-
+    if (element) return;
     const observer = new ResizeObserver(([entry]) => {
       const { inlineSize: width, blockSize: height } = entry.borderBoxSize[0];
 

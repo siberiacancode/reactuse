@@ -18,19 +18,22 @@ const Demo = () => {
   return (
     <div>
       <div ref={scrollTo.ref} style={{ overflow: 'auto', height: 300, padding: 20 }}>
-        <div style={blockStyle}>First amazing block</div>
-        <div style={blockStyle}>Second amazing block</div>
-        <div style={blockStyle}>Third amazing block</div>
+        <div style={blockStyle}><code>First</code> amazing block</div>
+        <div style={blockStyle}><code>Second</code> amazing block</div>
+        <div style={blockStyle}><code>Third</code>  amazing block</div>
       </div>
-      <div>
-        <button type='button' onClick={() => scrollTo.trigger({ x: 0, y: 0 })}>
-          Scroll to block 1
+      <p>
+        Scroll to:
+      </p>
+      <div className='flex w-full gap-2'>
+        <button type='button' onClick={() => scrollTo.trigger({ x: 0, y: 0, behavior: 'smooth' })}>
+          1
         </button>
-        <button type='button' onClick={() => scrollTo.trigger({ x: 0, y: 260 })}>
-          Scroll to block 2
+        <button type='button' onClick={() => scrollTo.trigger({ x: 0, y: 260, behavior: 'smooth' })}>
+          2
         </button>
-        <button type='button' onClick={() => scrollTo.trigger({ x: 0, y: 520 })}>
-          Scroll to block 3
+        <button type='button' onClick={() => scrollTo.trigger({ x: 0, y: 520, behavior: 'smooth' })}>
+          3
         </button>
       </div>
     </div>

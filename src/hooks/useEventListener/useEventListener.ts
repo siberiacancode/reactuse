@@ -73,9 +73,8 @@ export const useEventListener = ((...params: any[]) => {
   const internalListener = useEvent(listener);
 
   useEffect(() => {
-    if (!target && !internalRef) return;
     const callback = (event: Event) => internalListener(event);
-    const element = target ? getElement(target) : internalRef;
+    const element = target ? getElement(target) : (internalRef ?? window);
     if (element) {
       events.forEach((event) => element.addEventListener(event, callback, options));
       return () => {

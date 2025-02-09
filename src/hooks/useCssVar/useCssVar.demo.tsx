@@ -1,8 +1,7 @@
 import { useCssVar } from './useCssVar';
 
 const Demo = () => {
-  const key = '--color';
-  const colorVar = useCssVar(key, '#7fa998');
+  const colorVar = useCssVar('--color', '#7fa998');
 
   const switchColor = () => {
     if (colorVar.value === '#df8543') colorVar.set('#7fa998');
