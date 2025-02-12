@@ -16,7 +16,7 @@ import { useEvent } from '../useEvent/useEvent';
  * @returns {(...args: Params) => Return} The callback with debounce
  *
  * @example
- * const debounced = useDebounceCallback(() => console.log('callback'), 500);
+ * const debouncedCallback = useDebounceCallback(() => console.log('callback'), 500);
  */
 export const useDebounceCallback = <Params extends unknown[], Return>(
   callback: (...args: Params) => Return,

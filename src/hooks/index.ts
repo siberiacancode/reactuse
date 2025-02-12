@@ -100,6 +100,8 @@ export * from './useStopwatch/useStopwatch';
 export * from './useStorage/useStorage';
 export * from './useTextDirection/useTextDirection';
 export * from './useTextSelection/useTextSelection';
+export * from './useThrottleCallback/useThrottleCallback';
+export * from './useThrottleValue/useThrottleValue';
 export * from './useTime/useTime';
 export * from './useTimeout/useTimeout';
 export * from './useTimer/useTimer';
