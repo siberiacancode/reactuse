@@ -4,7 +4,7 @@ import { useThrottleValue } from './useThrottleValue';
 const Demo = () => {
   const counter = useCounter();
 
-  const throttledCounterCount = useThrottleValue(counter.value, 2000);
+  const throttledCounterCount = useThrottleValue(counter.value, 1000);
 
   return (
     <div>
