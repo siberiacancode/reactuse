@@ -16,6 +16,7 @@ export * from './useDebounceValue/useDebounceValue';
 export * from './useDefault/useDefault';
 export * from './useDeviceMotion/useDeviceMotion';
 export * from './useDeviceOrientation/useDeviceOrientation';
+export * from './useDevicePixelRatio/useDevicePixelRatio';
 export * from './useDidUpdate/useDidUpdate';
 export * from './useDisclosure/useDisclosure';
 export * from './useDocumentEvent/useDocumentEvent';
