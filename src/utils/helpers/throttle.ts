@@ -3,14 +3,27 @@ export const throttle = <Params extends any[]>(
   delay: number
 ): ((...args: Params) => void) => {
   let isCalled = false;
+  let lastArgs: Params | null = null;
 
-  return function (this: any, ...args) {
-    if (!isCalled) {
-      callback.apply(this, args);
-      isCalled = true;
-      setTimeout(() => {
-        isCalled = false;
-      }, delay);
+  const timer = () => {
+    if (!lastArgs) {
+      isCalled = false;
+      return;
     }
+
+    callback.apply(this, lastArgs);
+    lastArgs = null;
+    setTimeout(timer, delay);
+  };
+
+  return function (this: any, ...args: Params) {
+    if (isCalled) {
+      lastArgs = args;
+      return;
+    }
+
+    callback.apply(this, args);
+    isCalled = true;
+    setTimeout(timer, delay);
   };
 };

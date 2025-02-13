@@ -8,7 +8,6 @@ const Demo = () => {
       <p>Resize the box to see changes</p>
       <textarea
         ref={elementSize.ref}
-        className='200px 200px'
         style={{ resize: 'both' }}
         value={`width: ${elementSize.value.width}\nheight: ${elementSize.value.height}`}
       />

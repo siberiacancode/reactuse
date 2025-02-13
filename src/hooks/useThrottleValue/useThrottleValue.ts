@@ -17,9 +17,9 @@ import { useThrottleCallback } from '../useThrottleCallback/useThrottleCallback'
  */
 export const useThrottleValue = <Value>(value: Value, delay: number) => {
   const previousValueRef = useRef(value);
-  const [throttledValue, setDebounceValue] = useState(value);
+  const [throttledValue, setThrottleValue] = useState(value);
 
-  const throttledSetState = useThrottleCallback(setDebounceValue, delay);
+  const throttledSetState = useThrottleCallback(setThrottleValue, delay);
 
   useEffect(() => {
     if (previousValueRef.current === value) return;
