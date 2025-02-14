@@ -10,7 +10,7 @@ it('Should use timeout', () => {
   const { result } = renderHook(() => useTimeout(vi.fn(), 5000));
 
   expect(result.current.ready).toBeFalsy();
-  expect(typeof result.current.clear).toBe('function');
+  expect(result.current.clear).toBeTypeOf('function');
 });
 
 it('Should call callback after the timer expires', () => {

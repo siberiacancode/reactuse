@@ -2,7 +2,9 @@ import type { RefObject } from 'react';
 
 import { useEffect, useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import type { HookRef } from '@/utils/helpers';
+
+import { createHookRef, getElement, isTarget } from '@/utils/helpers';
 
 //* The element size value type */
 export interface UseElementSizeValue {
@@ -11,12 +13,9 @@ export interface UseElementSizeValue {
 }
 
 /** The use element size target element type */
-export type UseElementSizeTarget =
-  | (() => Element)
-  | string
-  | Element
-  | RefObject<Element | null | undefined>;
+export type UseElementSizeTarget = string | Element | RefObject<Element | null | undefined>;
 
+/** The use element size return type */
 export interface UseElementSizeReturn {
   value: UseElementSizeValue;
 }
@@ -30,7 +29,7 @@ export interface UseElementSize {
   <Target extends UseElementSizeTarget>(
     initialValue?: UseElementSizeValue,
     target?: never
-  ): { ref: (node: Target) => void } & UseElementSizeReturn;
+  ): { ref: HookRef<Target> } & UseElementSizeReturn;
 }
 
 /**
@@ -39,29 +38,24 @@ export interface UseElementSize {
  * @category Elements
  *
  * @overload
- * @template Target The target element type.
- * @param {UseElementSizeTarget} target The target element to observe.
- * @param {UseElementSizeValue} [initialValue = { width: 0, height: 0 }]
- * @returns {UseElementSizeReturn} An object containing the current width and height of the element.
+ * @template Target The target element type
+ * @param {UseElementSizeTarget} target The target element to observe
+ * @param {UseElementSizeValue} [initialValue] The initial size of the element.
+ * @returns {UseElementSizeReturn} An object containing the current width and height of the element
  *
  * @example
- * const { value } = useElementSize(elementRef);
+ * const { value } = useElementSize(ref);
  *
  * @overload
- * @param {UseElementSizeValue} [initialValue = { width: 0, height: 0 }] The initial size of the element.
- * @returns { { ref: (node: Target) => void } & UseElementSizeReturn } An object containing the current width and height of the element.
+ * @param {UseElementSizeValue} [initialValue] The initial size of the element
+ * @returns { { ref: (node: Target) => void } & UseElementSizeReturn } An object containing the current width and height of the element
  *
  * @example
- * const { ref, value } = useElementSize({ width: 100, height: 100 });
+ * const { ref, value } = useElementSize();
  */
 export const useElementSize = ((...params: any[]) => {
-  const target = (
-    params[0] && typeof params[0].width !== 'number' && typeof params[0].height !== 'number'
-      ? params[0]
-      : undefined
-  ) as UseElementSizeTarget | undefined;
-  const initialValue = (target ? params[1] : params[0]) as UseElementSizeValue | undefined;
-
+  const target = (isTarget(params[0]) ? params[0] : undefined) as UseElementSizeTarget | undefined;
+  const initialValue = (target ? params[1] : params[0]) as UseElementSizeTarget | undefined;
   const [size, setSize] = useState(initialValue ?? { width: 0, height: 0 });
   const [internalRef, setInternalRef] = useState<Element>();
 
@@ -70,8 +64,9 @@ export const useElementSize = ((...params: any[]) => {
     const element = (target ? getElement(target) : internalRef) as Element;
 
     if (!element) return;
+
     const observer = new ResizeObserver(([entry]) => {
-      const { inlineSize: width, blockSize: height } = entry.borderBoxSize[0];
+      const { width, height } = entry.contentRect;
       setSize({ width, height });
     });
 
@@ -83,5 +78,8 @@ export const useElementSize = ((...params: any[]) => {
   }, [internalRef, target]);
 
   if (target) return { value: size };
-  return { ref: setInternalRef, value: size };
+  return {
+    ref: createHookRef(internalRef, setInternalRef),
+    value: size
+  };
 }) as UseElementSize;

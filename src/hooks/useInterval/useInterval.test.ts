@@ -9,8 +9,8 @@ beforeEach(() => {
 it('Should use interval', () => {
   const { result } = renderHook(() => useInterval(vi.fn, 1000));
   expect(result.current.active).toBeTruthy();
-  expect(typeof result.current.pause).toBe('function');
-  expect(typeof result.current.resume).toBe('function');
+  expect(result.current.pause).toBeTypeOf('function');
+  expect(result.current.resume).toBeTypeOf('function');
 });
 
 it('Should pause and resume properly', () => {

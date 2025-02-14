@@ -7,7 +7,7 @@ it('Should use default', () => {
   const [state, setState] = result.current;
 
   expect(state).toBe(5);
-  expect(typeof setState).toBe('function');
+  expect(setState).toBeTypeOf('function');
 });
 
 it('Should return initial value', () => {

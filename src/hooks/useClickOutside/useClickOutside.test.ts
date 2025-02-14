@@ -5,7 +5,7 @@ import { useClickOutside } from './useClickOutside';
 it('Should use click outside', () => {
   const { result } = renderHook(() => useClickOutside(vi.fn()));
 
-  expect(typeof result.current).toBe('function');
+  expect(result.current).toBeTypeOf('function');
 });
 
 it('Should call callback when ref connected to the document', () => {

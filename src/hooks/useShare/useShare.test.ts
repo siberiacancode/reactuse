@@ -12,7 +12,7 @@ Object.assign(navigator, {
 it('Should use share', () => {
   const { result } = renderHook(useShare);
 
-  expect(typeof result.current.share).toBe('function');
+  expect(result.current.share).toBeTypeOf('function');
   expect(result.current.supported).toBeTruthy();
 });
 
