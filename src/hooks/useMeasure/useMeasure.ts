@@ -1,7 +1,8 @@
 import type { RefObject } from 'react';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
+import { useRefState } from '../useRefState/useRefState';
 import { useResizeObserver } from '../useResizeObserver/useResizeObserver';
 
 /** The use measure target element type */
@@ -40,7 +41,7 @@ export interface UseMeasureScreen {
  * const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();
  */
 export const useMeasure = (<Target extends UseMeasureTarget>(target?: Target) => {
-  const internalRef = useRef<Element>();
+  const internalRef = useRefState<Element>();
   const [rect, setRect] = useState({
     x: 0,
     y: 0,
@@ -52,7 +53,7 @@ export const useMeasure = (<Target extends UseMeasureTarget>(target?: Target) =>
     right: 0
   });
 
-  useResizeObserver(target ?? internalRef, {
+  useResizeObserver((target ?? internalRef.current) as Element, {
     onChange: ([entry]) => {
       if (!entry) return;
 
