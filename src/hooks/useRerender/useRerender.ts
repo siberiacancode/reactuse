@@ -14,6 +14,6 @@ type UseRerenderReturn = () => void;
  * const rerender = useRerender();
  */
 export const useRerender = (): UseRerenderReturn => {
-  const [, rerender] = useReducer((value) => (value === 0 ? 1 : 0), 0);
+  const rerender = useReducer(() => ({}), {})[1];
   return rerender;
 };
