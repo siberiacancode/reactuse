@@ -2,13 +2,17 @@ import type { RefObject } from 'react';
 
 import { useEffect, useState } from 'react';
 
-import type { HookRef } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
 
-import { createHookRef, getElement, isTarget } from '@/utils/helpers';
+import type { StateRef } from '../useRefState/useRefState';
 
-//* The element size value type */
+import { useRefState } from '../useRefState/useRefState';
+
+/** The element size value type */
 export interface UseElementSizeValue {
+  /** The element's height */
   height: number;
+  /** The element's width */
   width: number;
 }
 
@@ -29,7 +33,7 @@ export interface UseElementSize {
   <Target extends UseElementSizeTarget>(
     initialValue?: UseElementSizeValue,
     target?: never
-  ): { ref: HookRef<Target> } & UseElementSizeReturn;
+  ): { ref: StateRef<Target> } & UseElementSizeReturn;
 }
 
 /**
@@ -48,7 +52,7 @@ export interface UseElementSize {
  *
  * @overload
  * @param {UseElementSizeValue} [initialValue] The initial size of the element
- * @returns { { ref: (node: Target) => void } & UseElementSizeReturn } An object containing the current width and height of the element
+ * @returns { { ref: StateRef<Target> } & UseElementSizeReturn } An object containing the current width and height of the element
  *
  * @example
  * const { ref, value } = useElementSize();
@@ -56,12 +60,13 @@ export interface UseElementSize {
 export const useElementSize = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as UseElementSizeTarget | undefined;
   const initialValue = (target ? params[1] : params[0]) as UseElementSizeTarget | undefined;
+
   const [size, setSize] = useState(initialValue ?? { width: 0, height: 0 });
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
 
   useEffect(() => {
-    if (!target && !internalRef) return;
-    const element = (target ? getElement(target) : internalRef) as Element;
+    if (!target && !internalRef.current) return;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
 
     if (!element) return;
 
@@ -75,11 +80,11 @@ export const useElementSize = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [internalRef, target]);
+  }, [internalRef.current, target]);
 
   if (target) return { value: size };
   return {
-    ref: createHookRef(internalRef, setInternalRef),
+    ref: internalRef,
     value: size
   };
 }) as UseElementSize;

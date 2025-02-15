@@ -2,7 +2,11 @@ import type { RefObject } from 'react';
 
 import { useEffect, useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
 
 /** The use text direction target element type */
 export type UseTextDirectionTarget =
@@ -18,9 +22,9 @@ export type UseTextDirectionValue = 'auto' | 'ltr' | 'rtl';
 export interface UseTextDirectionReturn {
   /** The current direction */
   value: UseTextDirectionValue;
-  //** The function to remove the direction */
+  /*** The function to remove the direction */
   remove: () => void;
-  //** The function to set the direction */
+  /*** The function to set the direction */
   set: (value: UseTextDirectionValue | null) => void;
 }
 
@@ -33,7 +37,7 @@ export interface UseTextDirection {
   <Target extends UseTextDirectionTarget>(
     initialValue?: UseTextDirectionValue,
     target?: never
-  ): UseTextDirectionReturn & { ref: (node: Target) => void };
+  ): UseTextDirectionReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -53,64 +57,60 @@ export interface UseTextDirection {
  * @overload
  * @template Target The target element type.
  * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element.
- * @returns { { ref: (node: Target) => void } & UseTextDirectionReturn } An object containing the current text direction of the element.
+ * @returns { { ref: StateRef<Target> } & UseTextDirectionReturn } An object containing the current text direction of the element.
  *
  * @example
  * const { ref, value, set, remove } = useTextDirection();
  */
 
 export const useTextDirection = ((...params: any[]) => {
-  const target = (
-    typeof params[0] !== 'string' || !['auto', 'ltr', 'rtl'].includes(params[0])
-      ? params[0]
-      : undefined
-  ) as UseTextDirectionTarget | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as
+    | UseTextDirectionTarget
+    | undefined;
   const initialValue = ((target ? params[1] : params[0]) as UseTextDirectionValue) ?? 'ltr';
 
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
 
-  const getDir = () => {
-    const element = (target ? getElement(target) : internalRef) as Element;
+  const getDirection = () => {
+    const element = (target ? getElement(target) : internalRef.current) as Element;
     return (element?.getAttribute('dir') as UseTextDirectionValue) ?? initialValue;
   };
 
-  const [value, setValue] = useState<UseTextDirectionValue>(getDir());
+  const [value, setValue] = useState<UseTextDirectionValue>(getDirection());
 
   const remove = () => {
-    const element = (target ? getElement(target) : internalRef) as Element;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
     element?.removeAttribute('dir');
   };
 
   const set = (value: UseTextDirectionValue) => {
-    const element = (target ? getElement(target) : internalRef) as Element;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
     setValue(value);
-    element?.setAttribute('dir', value);
+    element.setAttribute('dir', value);
   };
 
   useEffect(() => {
     if (!target && !internalRef) return;
 
-    const element = (target ? getElement(target) : internalRef) as Element;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
-    const observer = new MutationObserver(() => {
-      getDir();
-    });
+    const observer = new MutationObserver(() => getDirection());
 
     observer.observe(element, { attributes: true });
 
     return () => {
       observer.disconnect();
     };
-  }, [internalRef, target]);
+  }, [internalRef.current, target]);
 
   if (target) return { value, set, remove };
   return {
-    ref: setInternalRef,
+    ref: internalRef,
     value,
     set,
     remove

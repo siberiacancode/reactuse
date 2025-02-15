@@ -84,6 +84,7 @@ export * from './useQuery/useQuery';
 export * from './useQueue/useQueue';
 export * from './useRaf/useRaf';
 export * from './useRafValue/useRafValue';
+export * from './useRefState/useRefState';
 export * from './useRenderCount/useRenderCount';
 export * from './useRenderInfo/useRenderInfo';
 export * from './useRerender/useRerender';

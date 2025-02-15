@@ -17,7 +17,7 @@ const Demo = () => {
 
   return (
     <div>
-      <div ref={scrollTo.ref} style={{ overflow: 'auto', height: 300, padding: 20 }}>
+      <div ref={scrollTo.ref} className='overflow-auto p-5 h-[300px]'>
         <div style={blockStyle}><code>First</code> amazing block</div>
         <div style={blockStyle}><code>Second</code> amazing block</div>
         <div style={blockStyle}><code>Third</code>  amazing block</div>

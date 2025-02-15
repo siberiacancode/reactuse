@@ -4,6 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
+
 const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
 
 /** The use scroll target element type */
@@ -15,10 +19,10 @@ export type UseScrollTarget =
   | Window;
 
 export interface UseScrollOptions {
-  //* The on scroll callback */
+  /** The on scroll callback */
   onScroll?: (params: UseScrollCallbackParams, event: Event) => void;
 
-  //* The on end scroll callback */
+  /** The on end scroll callback */
   onStop?: (event: Event) => void;
 
   /** Offset arrived states by x pixels. */
@@ -62,12 +66,12 @@ export interface UseScroll {
   <Target extends UseScrollTarget>(
     callback?: (params: UseScrollCallbackParams, event: Event) => void,
     target?: never
-  ): [(node: Target) => void, boolean];
+  ): [StateRef<Target>, boolean];
 
   <Target extends UseScrollTarget>(
     options?: UseScrollOptions,
     target?: never
-  ): [(node: Target) => void, boolean];
+  ): [StateRef<Target>, boolean];
 }
 
 /**
@@ -107,7 +111,7 @@ export interface UseScroll {
  * @param {number} [options.offset.bottom=0] The bottom offset for arrived states
  * @param {(params: UseScrollCallbackParams, event: Event) => void} [options.onScroll] The callback function to be invoked on scroll
  * @param {(event: Event) => void} [options.onStop] The callback function to be invoked on scroll end
- * @returns {[(node: Target) => void, boolean]} The state of scrolling
+ * @returns {[StateRef<Target>, boolean]} The state of scrolling
  *
  * @example
  * const [ref, scrolling] = useScroll(options);
@@ -116,7 +120,7 @@ export interface UseScroll {
  * @template Target The target element
  * @param {Target} target The target element to scroll
  * @param {(params: UseScrollCallbackParams, event: Event) => void} [callback] The callback function to be invoked on scroll
- * @returns {[(node: Target) => void, boolean]} The state of scrolling
+ * @returns {[StateRef<Target>, boolean]} The state of scrolling
  *
  * @example
  * const [ref, scrolling] = useScroll(() => console.log('callback'));
@@ -133,7 +137,7 @@ export const useScroll = ((...params: any[]) => {
         : { onScroll: params[0] }
   ) as UseScrollOptions | undefined;
 
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
 
@@ -141,8 +145,8 @@ export const useScroll = ((...params: any[]) => {
   const scrollPositionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    if (!target && !internalRef) return;
-    const element = (target ? getElement(target) : internalRef) as Element;
+    if (!target && !internalRef.current) return;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
 
     if (!element) return;
 
@@ -205,8 +209,8 @@ export const useScroll = ((...params: any[]) => {
       element.removeEventListener('scroll', onScroll);
       element.removeEventListener('scrollend', onScrollEnd);
     };
-  }, [target, internalRef]);
+  }, [target, internalRef.current]);
 
   if (target) return scrolling;
-  return [setInternalRef, scrolling];
+  return [internalRef, scrolling];
 }) as UseScroll;

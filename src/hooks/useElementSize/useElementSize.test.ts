@@ -1,9 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 
-import type { HookRef } from '@/utils/helpers';
-
 import { getElement } from '@/utils/helpers';
 
+import type { StateRef } from '../useRefState/useRefState';
 import type { UseElementSizeReturn } from './useElementSize';
 
 import { useElementSize } from './useElementSize';
@@ -11,8 +10,8 @@ import { useElementSize } from './useElementSize';
 export function createTrigger<Callback extends (...args: any[]) => void>() {
   const observers = new Map();
   return {
-    callback(target: Element, ...args: Partial<Parameters<Callback>>) {
-      const observe = observers.get(target);
+    callback(element: Element, ...args: Partial<Parameters<Callback>>) {
+      const observe = observers.get(element);
       observe(...args);
     },
     add(element: Element, callback: Callback) {
@@ -65,7 +64,7 @@ targets.forEach((target) => {
       const { result } = renderHook(() => {
         if (target)
           return useElementSize(target) as {
-            ref: HookRef<HTMLDivElement>;
+            ref: StateRef<HTMLDivElement>;
           } & UseElementSizeReturn;
         return useElementSize<HTMLDivElement>();
       });
@@ -73,7 +72,7 @@ targets.forEach((target) => {
       if (!target) expect(result.current.ref).toBeTypeOf('function');
     });
 
-    it('Should set intitial value', () => {
+    it('Should set initial value', () => {
       const { result } = renderHook(() => {
         if (target) return useElementSize(target, { width: 200, height: 200 });
         return useElementSize<HTMLDivElement>({ width: 200, height: 200 });
@@ -86,7 +85,7 @@ targets.forEach((target) => {
       const { result } = renderHook(() => {
         if (target)
           return useElementSize(target) as {
-            ref: HookRef<HTMLDivElement>;
+            ref: StateRef<HTMLDivElement>;
           } & UseElementSizeReturn;
         return useElementSize<HTMLDivElement>();
       });
@@ -113,7 +112,7 @@ targets.forEach((target) => {
       const { result, unmount } = renderHook(() => {
         if (target)
           return useElementSize(target) as {
-            ref: HookRef<HTMLDivElement>;
+            ref: StateRef<HTMLDivElement>;
           } & UseElementSizeReturn;
         return useElementSize<HTMLDivElement>();
       });

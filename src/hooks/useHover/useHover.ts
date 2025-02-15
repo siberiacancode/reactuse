@@ -4,14 +4,18 @@ import { useEffect, useRef, useState } from 'react';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
-//* The use hover target type */
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
+
+/** The use hover target type */
 export type UseHoverTarget = string | Element | RefObject<Element | null | undefined>;
 
-//* The use hover options type */
+/** The use hover options type */
 export interface UseHoverOptions {
-  //* The on entry callback */
+  /** The on entry callback */
   onEntry?: (event: Event) => void;
-  //* The on leave callback */
+  /** The on leave callback */
   onLeave?: (event: Event) => void;
 }
 
@@ -23,12 +27,12 @@ export interface UseHover {
   <Target extends UseHoverTarget>(
     callback?: (event: Event) => void,
     target?: never
-  ): [(node: Target) => void, boolean];
+  ): [StateRef<Target>, boolean];
 
   <Target extends UseHoverTarget>(
     options?: UseHoverOptions,
     target?: never
-  ): [(node: Target) => void, boolean];
+  ): [StateRef<Target>, boolean];
 }
 
 /**
@@ -86,13 +90,13 @@ export const useHover = ((...params: any[]) => {
   ) as UseHoverOptions | undefined;
 
   const [hovering, setHovering] = useState(false);
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
 
   useEffect(() => {
-    if (!target && !internalRef) return;
-    const element = (target ? getElement(target) : internalRef) as Element;
+    if (!target && !internalRef.current) return;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
 
     if (!element) return;
 
@@ -113,8 +117,8 @@ export const useHover = ((...params: any[]) => {
       element.removeEventListener('mouseenter', onMouseEnter);
       element.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, [target, internalRef]);
+  }, [target, internalRef.current]);
 
   if (target) return hovering;
-  return [setInternalRef, hovering] as const;
+  return [internalRef, hovering] as const;
 }) as UseHover;

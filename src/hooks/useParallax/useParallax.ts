@@ -4,6 +4,7 @@ import type { UseMouseTarget } from '../useMouse/useMouse';
 
 import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
 import { useMouse } from '../useMouse/useMouse';
+import { useRefState } from '../useRefState/useRefState';
 import { useScreenOrientation } from '../useScreenOrientation/useScreenOrientation';
 
 /** The use parallax value type */
@@ -71,9 +72,9 @@ export const useParallax = ((...params: any[]) => {
       ? params[0]
       : undefined;
 
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
 
-  const mouse = useMouse(target ?? internalRef);
+  const mouse = useMouse(target ?? internalRef.current);
   const screenOrientation = useScreenOrientation();
   const deviceOrientation = useDeviceOrientation();
 
@@ -184,5 +185,5 @@ export const useParallax = ((...params: any[]) => {
   ]);
 
   if (target) return { value };
-  return { ref: setInternalRef, value };
+  return { ref: internalRef, value };
 }) as UseParallax;

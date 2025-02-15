@@ -1,8 +1,12 @@
 import type { RefObject } from 'react';
 
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect } from 'react';
 
 import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
 
 /** The use scroll target element type */
 export type UseScrollToTarget =
@@ -14,12 +18,17 @@ export type UseScrollToTarget =
 
 /** The use scroll to options type */
 export interface UseScrollToOptions {
+  /** The scrolling behavior */
   behavior?: ScrollBehavior;
+  /** The horizontal position to scroll to */
   x: number;
+  /** The vertical position to scroll to */
   y: number;
 }
 
+/** The use scroll to return type */
 export interface UseScrollToReturn {
+  /** The state of scrolling */
   trigger: (params: { x: number; y: number; behavior?: ScrollBehavior }) => void;
 }
 
@@ -28,7 +37,7 @@ export interface UseScrollTo {
 
   <Target extends UseScrollToTarget>(
     options?: UseScrollToOptions
-  ): UseScrollToReturn & { ref: (ref: Target) => void };
+  ): UseScrollToReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -45,14 +54,14 @@ export interface UseScrollTo {
  * @returns {boolean} The state of scrolling
  *
  * @example
- * const ref = useScrollTo(ref, options);
+ * const trigger = useScrollTo(ref, options);
  *
  * @overload
  * @template Target The target element(s)
  * @param {number} options.x The horizontal position to scroll to
  * @param {number} options.y The vertical position to scroll to
  * @param {ScrollBehavior} [options.behavior = 'auto'] The scrolling behavior
- * @returns {(node: Target) => void} The state of scrolling
+ * @returns {StateRef<Target>} The state of scrolling
  *
  * @example
  * const { ref, trigger } = useScrollTo(options);
@@ -61,21 +70,21 @@ export const useScrollTo = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as UseScrollToTarget | undefined;
   const options = ((target ? params[1] : params[0]) as UseScrollToOptions) ?? {};
   const { x, y, behavior = 'auto' } = options;
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
 
   useLayoutEffect(() => {
-    if (!target && !internalRef) return;
-    const element = (target ? getElement(target) : internalRef) as Element;
+    if (!target && !internalRef.current) return;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
     element.scrollTo({ top: y, left: x, behavior });
-  }, [x, y, behavior, target, internalRef]);
+  }, [target, internalRef.current, x, y, behavior]);
 
   const trigger = ({ x, y, behavior }: UseScrollToOptions) => {
-    const element = (target ? getElement(target) : internalRef) as Element;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
     element.scrollTo({ left: x, top: y, behavior });
   };
 
   if (target) return trigger;
-  return { ref: setInternalRef, trigger };
+  return { ref: internalRef, trigger };
 }) as UseScrollTo;
