@@ -40,7 +40,7 @@ export const useTextSelection = (): UseTextSelectionReturn => {
   useEffect(() => {
     const onSelectionChange = () => {
       setSelection(document.getSelection());
-      rerender.update();
+      rerender();
     };
 
     document.addEventListener('selectionchange', onSelectionChange);

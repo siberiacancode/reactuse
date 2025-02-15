@@ -19,7 +19,7 @@ const Demo = () => {
       <p>
         Timestamp: <code>{renderInfo.timestamp}</code>
       </p>
-      <button type='button' onClick={rerender.update}>
+      <button type='button' onClick={rerender}>
         Rerender
       </button>
     </>

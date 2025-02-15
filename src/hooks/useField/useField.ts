@@ -126,12 +126,12 @@ export const useField = <
   const setValue = (value: Type) => {
     if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox') {
       inputRef.current.checked = value as boolean;
-      if (watchingRef.current) return rerender.update();
+      if (watchingRef.current) return rerender();
       return;
     }
 
     inputRef.current!.value = value as string;
-    if (watchingRef.current) return rerender.update();
+    if (watchingRef.current) return rerender();
   };
 
   const reset = () => {
@@ -197,7 +197,7 @@ export const useField = <
       }
     },
     onChange: async () => {
-      if (watchingRef.current) return rerender.update();
+      if (watchingRef.current) return rerender();
       if (inputRef.current!.value !== initialValue) setDirty(true);
       if (dirty && inputRef.current!.value === initialValue) setDirty(false);
       if (registerParams && params?.validateOnChange) await validate(registerParams);
