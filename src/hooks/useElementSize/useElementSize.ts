@@ -1,11 +1,12 @@
 import type { RefObject } from 'react';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The element size value type */
@@ -59,23 +60,32 @@ export interface UseElementSize {
  */
 export const useElementSize = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as UseElementSizeTarget | undefined;
-  const initialValue = (target ? params[1] : params[0]) as UseElementSizeTarget | undefined;
+  const initialValue = (target ? params[1] : params[0]) as UseElementSizeValue | undefined;
 
   const [size, setSize] = useState(initialValue ?? { width: 0, height: 0 });
   const internalRef = useRefState<Element>();
 
-  useEffect(() => {
-    if (!target && !internalRef.current) return;
+  useIsomorphicLayoutEffect(() => {
     const element = (target ? getElement(target) : internalRef.current) as Element;
 
     if (!element) return;
 
-    const observer = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
-      setSize({ width, height });
-    });
+    const callback = () => {
+      const rect = element.getBoundingClientRect();
+      setSize((prev) => {
+        if (prev.width !== rect.width || prev.height !== rect.height) {
+          return {
+            width: rect.width,
+            height: rect.height
+          };
+        }
+        return prev;
+      });
+    };
 
-    if (element) observer.observe(element);
+    const observer = new ResizeObserver(callback);
+    observer.observe(element);
+    callback();
 
     return () => {
       observer.disconnect();
