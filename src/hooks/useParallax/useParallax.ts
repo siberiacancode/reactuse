@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import type { UseMouseTarget } from '../useMouse/useMouse';
+import type { StateRef } from '../useRefState/useRefState';
 
 import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
 import { useMouse } from '../useMouse/useMouse';
@@ -39,7 +40,7 @@ export interface UseParallax {
   <Target extends UseMouseTarget>(
     params?: UseParallaxOptions
   ): UseParallaxReturn & {
-    ref: (node: Target) => void;
+    ref: StateRef<Target>;
   };
 }
 
@@ -52,7 +53,7 @@ export interface UseParallax {
  * @template Target The target element for the parallax effect
  * @param {Target} target The target element for the parallax effect
  * @param {UseParallaxOptions} options The options for the parallax effect
- * @returns {UseParallaxReturn} An object with the current mouse position
+ * @returns {UseParallaxReturn} An object of parallax values
  *
  * @example
  * const { roll, tilt, source } = useParallax(ref);
@@ -60,6 +61,7 @@ export interface UseParallax {
  * @overload
  * @template Target The target element for the parallax effect
  * @param {UseParallaxOptions} options The options for the parallax effect
+ * @returns {UseParallaxReturn & { ref: StateRef<Target> }} An object of parallax values
  *
  * @example
  * const { ref, roll, tilt, source } = useParallax();

@@ -2,17 +2,18 @@ import type { RefObject } from 'react';
 
 import { useEffect, useRef, useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
 /** The mutation observer target element type */
 export type UseMutationObserverTarget =
-  | (() => Element)
+  | string
   | Document
   | Element
-  | RefObject<Element | null | undefined>
-  | Window;
+  | RefObject<Element | null | undefined>;
 
 /** The mutation observer return type */
 export interface UseMutationObserverReturn {
@@ -29,17 +30,17 @@ export interface UseMutationObserverOptions extends MutationObserverInit {
 }
 
 export interface UseMutationObserver {
-  <Target extends UseMutationObserverTarget | UseMutationObserverTarget[]>(
+  <Target extends UseMutationObserverTarget>(
     target: Target,
     callback: MutationCallback,
     options?: UseMutationObserverOptions
   ): UseMutationObserverReturn;
 
-  <Target extends UseMutationObserverTarget | UseMutationObserverTarget[]>(
+  <Target extends UseMutationObserverTarget>(
     callback: MutationCallback,
     options?: UseMutationObserverOptions,
     target?: never
-  ): UseMutationObserverReturn & { ref: (node: Target) => void };
+  ): UseMutationObserverReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -58,7 +59,7 @@ export interface UseMutationObserver {
  * @param {boolean} [options.characterDataOldValue] Set to true if characterData is set to true or omitted and target's data before the mutation needs to be recorded
  * @param {boolean} [options.attributeOldValue]  Set to a list of attribute local names (without namespace) if not all attribute mutations need to be observed and attributes is true or omitted
  * @param {string[]} [options.attributeFilter] Set to a list of attribute local names (without namespace) if not all attribute mutations need to be observed and attributes is true or omitted
- * @returns {UseMutationObserverReturn & { ref: (node: Target) => void }} An object containing the mutation observer state
+ * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} An object containing the mutation observer state
  *
  * @example
  * const { ref, observer, stop } = useMutationObserver(() => console.log('callback'))
@@ -81,16 +82,16 @@ export interface UseMutationObserver {
  * const { observer, stop } = useMutationObserver(ref, () => console.log('callback'))
  */
 export const useMutationObserver = ((...params: any[]) => {
-  const target = (
-    typeof params[0] === 'object' && !('current' in params[0]) ? undefined : params[0]
-  ) as UseMutationObserverTarget | UseMutationObserverTarget[] | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as
+    | UseMutationObserverTarget
+    | undefined;
   const callback = (target ? params[1] : params[0]) as MutationCallback;
   const options = (target ? params[2] : params[1]) as UseMutationObserverOptions | undefined;
 
   const [observer, setObserver] = useState<MutationObserver>();
   const enabled = options?.enabled ?? true;
 
-  const internalRef = useRefState<Element>();
+  const internalRef = useRefState<Element>(window.document.documentElement);
   const internalCallbackRef = useRef<MutationCallback>(callback);
   internalCallbackRef.current = callback;
   const internalOptionsRef = useRef(options);
@@ -98,21 +99,6 @@ export const useMutationObserver = ((...params: any[]) => {
 
   useEffect(() => {
     if (!enabled && !target && !internalRef.current) return;
-
-    if (Array.isArray(target)) {
-      if (!target.length) return;
-      const observer = new MutationObserver(internalCallbackRef.current);
-      setObserver(observer);
-      target.forEach((target) => {
-        const element = getElement(target);
-        if (!element) return;
-        observer.observe(element as Element, internalOptionsRef.current);
-      });
-
-      return () => {
-        observer.disconnect();
-      };
-    }
 
     const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;

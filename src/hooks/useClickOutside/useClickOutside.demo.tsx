@@ -21,7 +21,7 @@ const Demo = () => {
         ref={clickOutsideRef}
         className={cn(
           'relative flex flex-col items-center justify-center rounded-lg border border-red-500 p-12',
-          { 'border-green-500': counter.value < 5 }
+          { 'border-green-500': counter.value > 5 }
         )}
       >
         {counter.value <= 5 && 'Click outside'}

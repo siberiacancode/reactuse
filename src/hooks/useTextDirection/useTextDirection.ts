@@ -100,7 +100,7 @@ export const useTextDirection = ((...params: any[]) => {
     const direction = getDirection();
     element.setAttribute('dir', direction);
     setValue(direction);
-    console.log('@', direction);
+
     const observer = new MutationObserver(getDirection);
 
     observer.observe(element, { attributes: true });

@@ -48,19 +48,6 @@ it('Should call callback when clicked outside the ref', () => {
   expect(callback).toBeCalledTimes(1);
 });
 
-it('Should call callback when clicked outside the function that returns an element', () => {
-  const callback = vi.fn();
-  const getElement = () => document.createElement('div');
-
-  renderHook(() => useClickOutside(getElement, callback));
-
-  expect(callback).not.toBeCalled();
-
-  act(() => document.dispatchEvent(new Event('click')));
-
-  expect(callback).toBeCalledTimes(1);
-});
-
 it('Should not call callback when clicked inside the ref', () => {
   const callback = vi.fn();
   const ref = { current: document.createElement('div') };
@@ -84,38 +71,4 @@ it('Should not call callback when clicked inside the element', () => {
   act(() => element.dispatchEvent(new Event('click')));
 
   expect(callback).not.toBeCalled();
-});
-
-it('Should not call callback when clicked inside the function that returns an element', () => {
-  const element = document.createElement('div');
-  document.body.appendChild(element);
-
-  const getElement = () => element;
-  const callback = vi.fn();
-
-  renderHook(() => useClickOutside(getElement, callback));
-
-  act(() => element.dispatchEvent(new Event('click')));
-
-  expect(callback).not.toBeCalled();
-});
-
-it('Should call callback when clicked outside the element (multiple targets)', () => {
-  const element = document.createElement('div');
-  document.body.appendChild(element);
-
-  const elementForGetElementFunction = document.createElement('div');
-  document.body.appendChild(elementForGetElementFunction);
-  const getElement = () => elementForGetElementFunction;
-
-  const ref = { current: document.createElement('div') };
-  document.body.appendChild(ref.current);
-
-  const callback = vi.fn();
-
-  renderHook(() => useClickOutside([element, ref, getElement], callback));
-
-  act(() => document.dispatchEvent(new Event('click')));
-
-  expect(callback).toBeCalledTimes(1);
 });

@@ -1,7 +1,6 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
-import { useMutationObserver } from '../useMutationObserver/useMutationObserver';
 
 /** The use document title options type */
 export interface UseDocumentTitleOptions {
@@ -37,24 +36,6 @@ export function useDocumentTitle(
   const prevTitleRef = useRef(document.title);
   const [title, setTitle] = useState(value ?? document.title);
 
-  useMutationObserver(
-    document.head.querySelector('title')!,
-    () => {
-      if (document && document.title !== title) {
-        setTitle(document.title);
-      }
-    },
-    { childList: true }
-  );
-
-  useIsomorphicLayoutEffect(() => {
-    if (options?.restoreOnUnmount) {
-      return () => {
-        document.title = prevTitleRef.current;
-      };
-    }
-  }, []);
-
   const set = (value: string) => {
     const updatedValue = value.trim();
     if (updatedValue.length > 0) document.title = updatedValue;
@@ -64,6 +45,31 @@ export function useDocumentTitle(
     if (typeof value !== 'string') return;
     set(value);
   }, [value]);
+
+  useIsomorphicLayoutEffect(() => {
+    const observer = new MutationObserver(() => {
+      setTitle((prevTitle) => {
+        if (document && document.title !== prevTitle) {
+          return document.title;
+        }
+        return prevTitle;
+      });
+    });
+
+    observer.observe(document.head.querySelector('title')!, { childList: true });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (options?.restoreOnUnmount) {
+      return () => {
+        document.title = prevTitleRef.current;
+      };
+    }
+  }, []);
 
   return [title, set];
 }
