@@ -1,54 +1,113 @@
 import { act, renderHook } from '@testing-library/react';
 
+import type { StateRef } from '../useRefState/useRefState';
+import type { UseTextDirectionReturn } from './useTextDirection';
+
 import { useTextDirection } from './useTextDirection';
 
-it('Should use text direction', () => {
-  const { result } = renderHook(() => useTextDirection());
-  const { ref, remove, set, value } = result.current;
+const targets = [
+  undefined,
+  '#target',
+  document.getElementById('target'),
+  { current: document.getElementById('target') }
+];
+const element = document.getElementById('target')! as HTMLDivElement;
 
-  expect(value).toBe('ltr');
-  expect(typeof set).toBe('function');
-  expect(typeof remove).toBe('function');
-  expect(typeof ref).toBe('function');
-});
+targets.forEach((target) => {
+  describe(`${target}`, () => {
+    it('Should use text direction', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useTextDirection(target) as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseTextDirectionReturn;
+        return useTextDirection<HTMLDivElement>();
+      });
 
-it('Should return initial value', () => {
-  const div = document.createElement('div');
+      if (!target) act(() => result.current.ref(element));
 
-  div.setAttribute('dir', 'rtl');
-  document.body.appendChild(div);
+      expect(result.current.value).toBe('ltr');
+      expect(result.current.remove).toBeTypeOf('function');
+      expect(result.current.set).toBeTypeOf('function');
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
 
-  const { result } = renderHook(() => useTextDirection(div));
-  const { value } = result.current;
+      expect(element.getAttribute('dir')).toBe('ltr');
+    });
 
-  expect(value).toBe('rtl');
-});
+    it('Should return initial value', () => {
+      element.setAttribute('dir', 'rtl');
 
-it('Should set the direction attribute on a div element', () => {
-  const div = document.createElement('div');
+      const { result } = renderHook(() => {
+        if (target)
+          return useTextDirection(target) as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseTextDirectionReturn;
+        return useTextDirection<HTMLDivElement>();
+      });
 
-  document.body.appendChild(div);
+      if (!target) act(() => result.current.ref(element));
 
-  const { result } = renderHook(() => useTextDirection<HTMLDivElement>(div));
-  const { set, remove } = result.current;
+      expect(result.current.value).toBe('rtl');
+      element.removeAttribute('dir');
+    });
 
-  expect(div.getAttribute('dir')).toBe(null);
+    it('Should set initial value', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useTextDirection(target, 'rtl') as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseTextDirectionReturn;
+        return useTextDirection<HTMLDivElement>('rtl');
+      });
 
-  act(() => {
-    set('ltr');
+      if (!target) act(() => result.current.ref(element));
+
+      expect(result.current.value).toBe('rtl');
+      element.removeAttribute('dir');
+    });
+
+    it('Should set the direction attribute on a element', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useTextDirection(target) as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseTextDirectionReturn;
+        return useTextDirection<HTMLDivElement>();
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      act(() => result.current.set('ltr'));
+
+      expect(element.getAttribute('dir')).toBe('ltr');
+      expect(result.current.value).toBe('ltr');
+
+      act(() => result.current.set('rtl'));
+
+      expect(element.getAttribute('dir')).toBe('rtl');
+      expect(result.current.value).toBe('rtl');
+
+      element.removeAttribute('dir');
+    });
+
+    it('Should remove the direction attribute on a element', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useTextDirection(target) as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseTextDirectionReturn;
+        return useTextDirection<HTMLDivElement>();
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      expect(element.getAttribute('dir')).toBe('ltr');
+      expect(result.current.value).toBe('ltr');
+
+      act(() => result.current.remove());
+
+      expect(element.hasAttribute('dir')).toBeFalsy();
+      expect(result.current.value).toBe('ltr');
+    });
   });
-
-  expect(div.getAttribute('dir')).toBe('ltr');
-
-  act(() => {
-    set('rtl');
-  });
-
-  expect(div.getAttribute('dir')).toBe('rtl');
-
-  act(() => {
-    remove();
-  });
-
-  expect(div.getAttribute('dir')).toBe(null);
 });

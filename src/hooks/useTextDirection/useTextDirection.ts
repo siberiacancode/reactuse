@@ -1,19 +1,16 @@
 import type { RefObject } from 'react';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { getElement } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The use text direction target element type */
-export type UseTextDirectionTarget =
-  | (() => Element)
-  | string
-  | Element
-  | RefObject<Element | null | undefined>;
+export type UseTextDirectionTarget = string | Element | RefObject<Element | null | undefined>;
 
 /** The use text direction value type */
 export type UseTextDirectionValue = 'auto' | 'ltr' | 'rtl';
@@ -52,7 +49,7 @@ export interface UseTextDirection {
  * @returns {UseTextDirectionReturn} An object containing the current text direction of the element.
  *
  * @example
- * const { value, set, remove } = useTextDirection(elementRef);
+ * const { value, set, remove } = useTextDirection(ref);
  *
  * @overload
  * @template Target The target element type.
@@ -62,11 +59,12 @@ export interface UseTextDirection {
  * @example
  * const { ref, value, set, remove } = useTextDirection();
  */
-
 export const useTextDirection = ((...params: any[]) => {
-  const target = (isTarget(params[0]) ? params[0] : undefined) as
-    | UseTextDirectionTarget
-    | undefined;
+  const target = (
+    typeof params[0] !== 'string' || !['auto', 'ltr', 'rtl'].includes(params[0])
+      ? params[0]
+      : undefined
+  ) as UseTextDirectionTarget | undefined;
   const initialValue = ((target ? params[1] : params[0]) as UseTextDirectionValue) ?? 'ltr';
 
   const internalRef = useRefState<Element>();
@@ -93,13 +91,17 @@ export const useTextDirection = ((...params: any[]) => {
     element.setAttribute('dir', value);
   };
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!target && !internalRef) return;
 
     const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
-    const observer = new MutationObserver(() => getDirection());
+    const direction = getDirection();
+    element.setAttribute('dir', direction);
+    setValue(direction);
+    console.log('@', direction);
+    const observer = new MutationObserver(getDirection);
 
     observer.observe(element, { attributes: true });
 
