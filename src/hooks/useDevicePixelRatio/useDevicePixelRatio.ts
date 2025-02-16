@@ -11,7 +11,7 @@ export interface UseDevicePixelRatioReturn {
 /**
  * @name useDevicePixelRatio
  * @description - Hook that returns the ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device
- * @category Display
+ * @category Utilities
  *
  * @returns {UseDevicePixelRatioReturn} The ratio and supported flag
  *
