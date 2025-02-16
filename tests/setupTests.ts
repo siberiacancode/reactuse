@@ -13,7 +13,12 @@ if (typeof window !== 'undefined' && typeof window.MediaQueryListEvent === 'unde
     }
   }
 
-  (window as any).MediaQueryListEvent = MockMediaQueryListEvent;
+(window as any).MediaQueryListEvent = MockMediaQueryListEvent;
+
+if (typeof document !== 'undefined') {
+  const target = document.createElement('div');
+  target.id = 'target';
+  document.body.appendChild(target);
 }
 
 afterEach(() => {

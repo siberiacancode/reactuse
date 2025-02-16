@@ -1,11 +1,7 @@
 import { useCssVar } from './useCssVar';
 
 const Demo = () => {
-  const key = '--color';
-  const colorVar = useCssVar(key, '#7fa998');
-  const style = {
-    color: 'var(--color)'
-  };
+  const colorVar = useCssVar('--color', '#7fa998');
 
   const switchColor = () => {
     if (colorVar.value === '#df8543') colorVar.set('#7fa998');
@@ -14,7 +10,7 @@ const Demo = () => {
 
   return (
     <>
-      <p style={style}>Sample text, {colorVar.value}</p>
+      <p style={{ color: 'var(--color)' }}>Sample text, {colorVar.value}</p>
       <button type='button' onClick={switchColor}>
         Change Color
       </button>

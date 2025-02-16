@@ -1,14 +1,16 @@
 import type { RefObject } from 'react';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import screenfull from 'screenfull';
 
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
 
-import { useUnmount } from '../useUnmount/useUnmount';
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
 
 /** The use fullscreen target element type */
-export type UseFullScreenTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
+export type UseFullScreenTarget = string | Element | RefObject<Element | null | undefined>;
 
 /** The use fullscreen options type */
 export interface UseFullScreenOptions {
@@ -22,9 +24,13 @@ export interface UseFullScreenOptions {
 
 /** The use click outside return type */
 export interface UseFullScreenReturn {
+  /** The fullscreen state */
   value: boolean;
+  /** The fullscreen enter method */
   enter: () => void;
+  /** The fullscreen exit method */
   exit: () => void;
+  /** The fullscreen toggle method */
   toggle: () => void;
 }
 
@@ -37,7 +43,7 @@ export interface UseFullScreen {
   <Target extends UseFullScreenTarget>(
     options?: UseFullScreenOptions,
     target?: never
-  ): UseFullScreenReturn & { ref: (node: Target) => void };
+  ): UseFullScreenReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -67,13 +73,11 @@ export interface UseFullScreen {
  * const { ref, enter, exit, toggle, value } = useFullscreen();
  */
 export const useFullscreen = ((...params: any[]) => {
-  const target = (typeof params[1] === 'undefined' ? undefined : params[0]) as
-    | UseFullScreenTarget
-    | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as UseFullScreenTarget | undefined;
   const options = (target ? params[1] : params[0]) as UseFullScreenOptions | undefined;
 
-  const [internalRef, setInternalRef] = useState<Element>();
   const [value, setValue] = useState(options?.initialValue ?? false);
+  const internalRef = useRefState<Element>();
 
   const onChange = () => {
     if (!screenfull.isEnabled) return;
@@ -89,7 +93,7 @@ export const useFullscreen = ((...params: any[]) => {
   };
 
   const enter = () => {
-    const element = (target ? getElement(target) : internalRef) as Element;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
     if (screenfull.isEnabled) {
@@ -111,12 +115,22 @@ export const useFullscreen = ((...params: any[]) => {
     enter();
   };
 
-  useUnmount(() => {
-    if (screenfull.isEnabled) screenfull.off('change', onChange);
-  });
+  useEffect(
+    () => () => {
+      if (screenfull.isEnabled) screenfull.off('change', onChange);
+    },
+    []
+  );
 
+  if (target)
+    return {
+      enter,
+      exit,
+      toggle,
+      value
+    };
   return {
-    ...(!target && { ref: setInternalRef }),
+    ref: internalRef,
     enter,
     exit,
     toggle,

@@ -1,6 +1,4 @@
-import { useState } from 'react';
-
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
+import { useEffect, useState } from 'react';
 
 /** The use orientation return type */
 export interface UseOrientationReturn {
@@ -26,7 +24,7 @@ export const useOrientation = (): UseOrientationReturn => {
     type: OrientationType;
   }>({ angle: 0, type: 'landscape-primary' });
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     const onChange = () => {
       const { angle, type } = window.screen.orientation;
       setOrientation({
@@ -35,8 +33,8 @@ export const useOrientation = (): UseOrientationReturn => {
       });
     };
 
-    window.screen.orientation?.addEventListener('change', onChange);
-    return () => window.screen.orientation?.removeEventListener('change', onChange);
+    window.screen.orientation.addEventListener('change', onChange);
+    return () => window.screen.orientation.removeEventListener('change', onChange);
   }, []);
 
   return orientation;

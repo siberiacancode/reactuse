@@ -11,7 +11,7 @@ it('Should use document title', () => {
   const [title, setTitle] = result.current;
 
   expect(title).toBe('default title');
-  expect(typeof setTitle).toBe('function');
+  expect(setTitle).toBeTypeOf('function');
 });
 
 it('Should be set initial title', () => {

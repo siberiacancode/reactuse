@@ -7,7 +7,7 @@ it('Should use counter', () => {
   const [on, toggle] = result.current;
 
   expect(on).toBeFalsy();
-  expect(typeof toggle).toBe('function');
+  expect(toggle).toBeTypeOf('function');
 });
 
 it('Should set initial value', () => {

@@ -1,4 +1,4 @@
-import { codeToHtml } from 'shiki'
+import { codeToHtml } from 'shiki';
 
 import { getHookFile, getHooks, matchJsdoc, parseHookJsdoc } from '../../src/utils';
 
@@ -30,7 +30,7 @@ export default {
             acc += usage.description;
           }
           return acc;
-        }, '')
+        }, '');
 
         const usage = await codeToHtml(usages, {
           lang: 'typescript',
@@ -40,7 +40,6 @@ export default {
           },
           defaultColor: false
         });
-
 
         const example = await codeToHtml(`import { ${hook} } from '@siberiacancode/reactuse';`, {
           lang: 'typescript',
@@ -66,15 +65,19 @@ export default {
       })
     );
 
-    // const features = params
-    //   .filter(Boolean)
-    //   .map((param) => {
-    //     return `\n- title: ${param?.params.name}\n  details: ${param?.params.description}\n  link: /functions/hooks/${param?.params.name}`;
-    //   })
-    //   .join(' ');
-    // console.log('@', features);
+    const pages = params.filter(Boolean);
 
-    return params.filter(Boolean);
+    console.log('\nHooks injection report\n');
+    console.log('\x1b[32mInjected: ' + pages.length + '\x1b[0m');
+    console.log('\x1b[33mSkipped: ' + (hooks.length - pages.length) + '\x1b[0m');
+    console.log('Total: ' + hooks.length);
+
+    // console.table([
+    //   { Status: 'Injected', Count: injected },
+    //   { Status: 'Skipped', Count: skipped },
+    //   { Status: 'Total', Count: total }
+    // ]);
+
+    return pages;
   }
 };
-

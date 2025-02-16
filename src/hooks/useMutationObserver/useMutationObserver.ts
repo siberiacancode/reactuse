@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
+import { useRefState } from '../useRefState/useRefState';
+
 /** The mutation observer target element type */
 export type UseMutationObserverTarget =
   | (() => Element)
@@ -88,12 +90,14 @@ export const useMutationObserver = ((...params: any[]) => {
   const [observer, setObserver] = useState<MutationObserver>();
   const enabled = options?.enabled ?? true;
 
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
   const internalCallbackRef = useRef<MutationCallback>(callback);
   internalCallbackRef.current = callback;
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
 
   useEffect(() => {
-    if (!enabled && !target && !internalRef) return;
+    if (!enabled && !target && !internalRef.current) return;
 
     if (Array.isArray(target)) {
       if (!target.length) return;
@@ -102,7 +106,7 @@ export const useMutationObserver = ((...params: any[]) => {
       target.forEach((target) => {
         const element = getElement(target);
         if (!element) return;
-        observer.observe(element as Element, options);
+        observer.observe(element as Element, internalOptionsRef.current);
       });
 
       return () => {
@@ -110,23 +114,23 @@ export const useMutationObserver = ((...params: any[]) => {
       };
     }
 
-    const element = target ? getElement(target) : internalRef;
+    const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
     const observer = new MutationObserver(internalCallbackRef.current);
     setObserver(observer);
-    observer.observe(element as Element, options);
+    observer.observe(element, internalOptionsRef.current);
 
     return () => {
       observer.disconnect();
     };
-  }, [internalRef, target, ...Object.values(options ?? {})]);
+  }, [target, internalRef.current]);
 
   const stop = () => observer?.disconnect();
 
   if (target) return { stop, observer };
   return {
-    ref: setInternalRef,
+    ref: internalRef,
     stop,
     observer
   };

@@ -2,10 +2,14 @@ import type { RefObject } from 'react';
 
 import { useEffect, useRef, useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
 
 /** The use focus target type */
-export type UseFocusTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
+export type UseFocusTarget = string | Element | RefObject<Element | null | undefined>;
 
 /** The use focus options type */
 export interface UseFocusOptions {
@@ -26,7 +30,7 @@ export interface UseFocusReturn {
 export interface UseFocus {
   <Target extends UseFocusTarget>(
     options?: UseFocusOptions
-  ): UseFocusReturn & { ref: (node: Target) => void };
+  ): UseFocusReturn & { ref: StateRef<Target> };
 
   <Target extends UseFocusTarget>(target: Target, options?: UseFocusOptions): UseFocusReturn;
 }
@@ -53,13 +57,12 @@ export interface UseFocus {
  * const { ref, focus, blur, focused } = useFocus();
  */
 export const useFocus = ((...params: any[]) => {
-  const target =
-    (params[0] && 'current' in params[0]) || params[0] instanceof Element ? params[0] : undefined;
+  const target = isTarget(params[0]) ? params[0] : undefined;
   const options = ((target ? params[1] : params[0]) as UseFocusOptions) ?? {};
   const initialValue = options.initialValue ?? false;
 
   const [focused, setFocused] = useState(initialValue);
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
 
   const elementRef = useRef<HTMLElement>();
 
@@ -67,7 +70,8 @@ export const useFocus = ((...params: any[]) => {
   const blur = () => elementRef.current?.blur();
 
   useEffect(() => {
-    const element = (target ? getElement(target) : internalRef) as HTMLElement;
+    if (!target && !internalRef.current) return;
+    const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
     if (!element) return;
     elementRef.current = element;
 
@@ -84,11 +88,11 @@ export const useFocus = ((...params: any[]) => {
       element.removeEventListener('focus', onFocus);
       element.removeEventListener('blur', onBlur);
     };
-  }, [internalRef, target]);
+  }, [target, internalRef.current]);
 
   if (target) return { focus, blur, focused };
   return {
-    ref: setInternalRef,
+    ref: internalRef,
     focus,
     blur,
     focused

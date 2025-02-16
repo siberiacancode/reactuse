@@ -6,15 +6,9 @@ const Demo = () => {
 
   return (
     <>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `.demo:focus { opacity: 0.7; box-shadow: 0 0 2px 1px var(--vp-c-brand); } `
-        }}
-      />
       <p
         ref={textFocus.ref}
-        className='demo'
-        style={{ padding: '2px', borderRadius: '2px' }}
+        className='p-1 focus:rounded-sm focus:opacity-70 focus:shadow-[0_0_2px_1px_var(--vp-c-brand)]'
         tabIndex={0}
       >
         Paragraph that can be focused

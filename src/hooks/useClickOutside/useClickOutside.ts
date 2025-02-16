@@ -1,8 +1,10 @@
 import type { RefObject } from 'react';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { getElement } from '@/utils/helpers';
+
+import { useRefState } from '../useRefState/useRefState';
 
 /** The use click outside target element type */
 export type UseClickOutsideTarget =
@@ -52,12 +54,12 @@ export const useClickOutside = ((...params: any[]) => {
     | undefined;
   const callback = (params[1] ? params[1] : params[0]) as (event: Event) => void;
 
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
 
   useEffect(() => {
-    if (!target && !internalRef) return;
+    if (!target && !internalRef.current) return;
     const handler = (event: Event) => {
       if (Array.isArray(target)) {
         if (!target.length) return;
@@ -72,7 +74,7 @@ export const useClickOutside = ((...params: any[]) => {
         return;
       }
 
-      const element = (target ? getElement(target) : internalRef) as Element;
+      const element = (target ? getElement(target) : internalRef.current) as Element;
 
       if (element && !element.contains(event.target as Node)) {
         internalCallbackRef.current(event);
@@ -84,8 +86,8 @@ export const useClickOutside = ((...params: any[]) => {
     return () => {
       document.removeEventListener('click', handler);
     };
-  }, [internalRef, target]);
+  }, [internalRef.current, target]);
 
   if (target) return;
-  return setInternalRef;
+  return internalRef;
 }) as UseClickOutside;

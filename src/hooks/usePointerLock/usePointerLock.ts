@@ -1,13 +1,12 @@
-import type { MouseEvent, RefObject } from 'react';
+import type { MouseEvent } from 'react';
 
 import { useEffect, useState } from 'react';
 
-type UsePointerLockTarget = RefObject<Element | null | undefined>;
-
+/** The use pointer lock return type */
 interface UsePointerLockReturn {
   element?: Element;
   supported: boolean;
-  lock: (event: Event | MouseEvent<Element>) => void;
+  lock: (event: MouseEvent) => void;
   unlock: () => boolean;
 }
 
@@ -16,16 +15,13 @@ interface UsePointerLockReturn {
  * @description - Hook that provides reactive pointer lock
  * @category Sensors
  *
- * @param {UsePointerLockTarget} target The target element for the pointer lock
  * @returns {UsePointerLockReturn} An object containing the pointer lock element and functions to interact with the pointer lock
  *
  * @example
  * const { supported, lock, unlock, element } = usePointerLock();
  */
-
-export const usePointerLock = (target?: UsePointerLockTarget): UsePointerLockReturn => {
-  const supported = !!document && 'pointerLockElement' in document;
-
+export const usePointerLock = (): UsePointerLockReturn => {
+  const supported = typeof document !== 'undefined' && 'pointerLockElement' in document;
   const [element, setElement] = useState<Element>();
 
   useEffect(() => {
@@ -59,25 +55,25 @@ export const usePointerLock = (target?: UsePointerLockTarget): UsePointerLockRet
       document.removeEventListener('pointerlockchange', handlePointerLockChange);
       document.removeEventListener('pointerlockerror', handlePointerLockError);
     };
-  }, [supported, element]);
+  }, []);
 
-  const lock = (event: Event | MouseEvent<Element>) => {
-    if (!supported) return;
+  const lock = (event: MouseEvent) => {
+    if (!supported) return false;
 
-    const element = event instanceof Event ? target?.current : event.currentTarget;
+    if (event instanceof Event) return false;
 
-    if (!element) return;
+    event.currentTarget.requestPointerLock();
 
-    element.requestPointerLock();
-
-    setElement(element);
+    setElement(event.currentTarget);
+    return true;
   };
 
   const unlock = () => {
+    if (!supported) return false;
+
     if (!element) return false;
 
     document.exitPointerLock();
-
     setElement(undefined);
 
     return true;

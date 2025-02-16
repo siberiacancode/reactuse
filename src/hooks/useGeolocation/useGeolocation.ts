@@ -41,18 +41,7 @@ export type UseGeolocationParams = PositionOptions;
  * const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();
  */
 export const useGeolocation = (params?: UseGeolocationParams): UseGeolocationReturn => {
-  const [value, setValue] = useState<{
-    loading: boolean;
-    error: GeolocationPositionError | null;
-    timestamp: number | null;
-    accuracy: number | null;
-    latitude: number | null;
-    longitude: number | null;
-    altitude: number | null;
-    altitudeAccuracy: number | null;
-    heading: number | null;
-    speed: number | null;
-  }>({
+  const [value, setValue] = useState<UseGeolocationReturn>({
     loading: true,
     error: null,
     timestamp: Date.now(),

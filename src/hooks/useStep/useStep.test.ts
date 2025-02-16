@@ -11,9 +11,9 @@ it('Should use step', () => {
   expect(result.current.counts).toBe(3);
   expect(result.current.isFirst).toBeTruthy();
   expect(result.current.isLast).toBeFalsy();
-  expect(typeof result.current.next).toBe('function');
-  expect(typeof result.current.back).toBe('function');
-  expect(typeof result.current.reset).toBe('function');
+  expect(result.current.next).toBeTypeOf('function');
+  expect(result.current.back).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
 });
 
 it('Should increase the step', () => {

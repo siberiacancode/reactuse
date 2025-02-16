@@ -1,36 +1,31 @@
-import { Fragment, useState } from 'react';
-
+import { useField } from '../useField/useField';
 import { useSet } from './useSet';
 
 const Demo = () => {
-  const [input, setInput] = useState('');
+  const scopeInput = useField({ initialValue: '' });
   const scopes = useSet(['@siberiacancode', '@siberiacancode-tests', '@shared']);
 
   return (
     <>
-      <div style={{ display: 'flex', gap: 8 }}>
-        <input
-          placeholder='Enter scope'
-          value={input}
-          onChange={(event) => setInput(event.currentTarget.value)}
-        />
+      <div className='flex gap-2'>
+        <input {...scopeInput.register()} placeholder='Enter scope' />
 
         <button
           type='button'
           onClick={() => {
-            scopes.add(input.trim().toLowerCase());
-            setInput('');
+            scopes.add(scopeInput.getValue().trim().toLowerCase());
+            scopeInput.reset();
           }}
         >
           Add
         </button>
       </div>
 
-      <div style={{ marginTop: 8 }}>
+      <div className='mt-4 flex gap-2'>
         {Array.from(scopes.value).map((scope, index) => (
-          <Fragment key={index}>
-            <code key={index}>{scope}</code>{' '}
-          </Fragment>
+          <div key={index} className='cursor-pointer' onClick={() => scopes.remove(scope)}>
+            <code>{scope}</code>
+          </div>
         ))}
       </div>
     </>

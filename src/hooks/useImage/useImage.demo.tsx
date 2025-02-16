@@ -7,13 +7,9 @@ const Demo = () => {
 
   return (
     <p>
-      {image.isLoading && <div style={{ width: 300, height: 200 }}>Loading...</div>}
+      {image.isLoading && <div className='h-xs w-xs'>Loading...</div>}
       {!image.isLoading && image.data && (
-        <img
-          alt='demo'
-          src={`https://place-hold.it/300x200/${color}`}
-          style={{ width: 300, height: 200 }}
-        />
+        <img alt='demo' className='h-xs w-xs' src={`https://place-hold.it/300x200/${color}`} />
       )}
       <button type='button' onClick={() => toggle()}>
         Change

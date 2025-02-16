@@ -10,26 +10,18 @@ const Demo = () => {
   });
 
   return (
-    <div>
-      <div style={{ width: 300, height: 300, overflow: 'scroll', border: '1px solid' }}>
-        scroll here
-        <div style={{ height: 800 }}>
-          <div
-            ref={intersectionObserver.ref}
-            style={{
-              border: '1px solid',
-              height: 100,
-              width: 100,
-              textAlign: 'center',
-              marginTop: 80
-            }}
-          >
-            observer element
-          </div>
-        </div>
+    <div className="text-center">
+      <div className="text-center">
+        Element <code className="font-bold">{intersectionObserver.inView ? 'inside' : 'outside'}</code> the viewport
       </div>
-      <div style={{ marginTop: 16, color: intersectionObserver.inView ? '#87d068' : '#f50' }}>
-        in viewport: {intersectionObserver.inView ? 'visible' : 'hidden'}
+
+      <div ref={rootRef} className="border-2 border-dashed border-gray-400 h-52 my-8 overflow-y-scroll rounded-xl">
+        <p className="text-center py-8 mb-72 italic text-xl opacity-80">
+          Scroll me down!
+        </p>
+        <div ref={intersectionObserver.ref} className="border-2 border-dashed border-blue-500 p-4 max-h-40 mx-8 mb-96 rounded-xl">
+          <p>Hello world!</p>
+        </div>
       </div>
     </div>
   );

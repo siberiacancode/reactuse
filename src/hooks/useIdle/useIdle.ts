@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { throttle } from '@/utils/helpers';
 
-//* The use idle options type */
+/** The use idle options type */
 export interface UseIdleOptions {
-  //* The idle events */
+  /** The idle events */
   events?: Array<keyof DocumentEventMap>;
-  //* The idle state */
+  /** The idle state */
   initialValue?: boolean;
 }
 
@@ -20,11 +20,11 @@ const IDLE_EVENTS = [
 ] satisfies Array<keyof DocumentEventMap>;
 const ONE_MINUTE = 60e3;
 
-//* The use idle return type */
+/** The use idle return type */
 export interface UseIdleReturn {
-  //* The idle state */
+  /** The idle state */
   idle: boolean;
-  //* The last active time */
+  /** The last active time */
   lastActive: number;
 }
 

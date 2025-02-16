@@ -63,7 +63,7 @@ export const useBreakpoints = <Breakpoint extends string>(
   };
 
   useEffect(() => {
-    const onResize = () => rerender.update();
+    const onResize = () => rerender();
     window.addEventListener('resize', onResize);
     return () => {
       window.removeEventListener('resize', onResize);

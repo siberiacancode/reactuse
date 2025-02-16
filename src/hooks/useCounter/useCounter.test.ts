@@ -6,10 +6,10 @@ it('Should use counter', () => {
   const { result } = renderHook(useCounter);
 
   expect(result.current.value).toBe(0);
-  expect(typeof result.current.inc).toBe('function');
-  expect(typeof result.current.dec).toBe('function');
-  expect(typeof result.current.reset).toBe('function');
-  expect(typeof result.current.set).toBe('function');
+  expect(result.current.inc).toBeTypeOf('function');
+  expect(result.current.dec).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+  expect(result.current.set).toBeTypeOf('function');
 });
 
 it('Should set initial value', () => {

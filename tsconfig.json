@@ -7,11 +7,12 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
+      "@/docs/*": ["./docs/*"],
       "@/*": ["./src/*"],
       "@/tests": ["./tests"]
     },
     "resolveJsonModule": true,
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "@types/web-bluetooth"],
     "allowJs": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,
