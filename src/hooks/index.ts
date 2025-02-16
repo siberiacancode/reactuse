@@ -96,6 +96,7 @@ export * from './useSessionStorage/useSessionStorage';
 export * from './useSet/useSet';
 export * from './useShare/useShare';
 export * from './useStep/useStep';
+export * from './useSticky/useSticky';
 export * from './useStopwatch/useStopwatch';
 export * from './useStorage/useStorage';
 export * from './useTextDirection/useTextDirection';
