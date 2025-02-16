@@ -29,7 +29,7 @@ export interface UseBatteryValue {
 
 /** The use battery return type */
 export interface UseBatteryStateReturn {
-  /** Battery API support */
+  /** Whether the battery api is supported*/
   supported: boolean;
   /** The use battery value type  */
   value: UseBatteryValue;

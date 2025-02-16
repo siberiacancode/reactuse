@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { createTrigger } from '@/tests';
 import { getElement } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -7,23 +8,7 @@ import type { UseElementSizeReturn } from './useElementSize';
 
 import { useElementSize } from './useElementSize';
 
-export function createTrigger<Callback extends (...args: any[]) => void>() {
-  const observers = new Map();
-  return {
-    callback(element: Element, ...args: Partial<Parameters<Callback>>) {
-      const observe = observers.get(element);
-      observe(...args);
-    },
-    add(element: Element, callback: Callback) {
-      observers.set(element, callback);
-    },
-    delete(element: Element) {
-      observers.delete(element);
-    }
-  };
-}
-
-const trigger = createTrigger<ResizeObserverCallback>();
+const trigger = createTrigger<ResizeObserverCallback, Element>();
 const mockResizeObserverDisconnect = vi.fn();
 const mockResizeObserverObserve = vi.fn();
 const mockResizeObserver = class ResizeObserver {
@@ -44,7 +29,9 @@ const mockResizeObserver = class ResizeObserver {
   };
   unobserve = vi.fn();
 };
-globalThis.ResizeObserver = mockResizeObserver;
+
+beforeEach(() => void vi.stubGlobal('ResizeObserver', mockResizeObserver));
+afterEach(() => void vi.unstubAllGlobals());
 
 const targets = [
   undefined,

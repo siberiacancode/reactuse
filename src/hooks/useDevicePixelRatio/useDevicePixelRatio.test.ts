@@ -1,88 +1,98 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { createTrigger } from '@/tests';
+
 import { useDevicePixelRatio } from './useDevicePixelRatio';
 
-describe('useDevicePixelRatio', () => {
-  describe('in unsupported environment', () => {
-    afterEach(() => void vi.unstubAllGlobals());
+const trigger = createTrigger<() => void, string>();
+const mockMediaQueryListAddEventListener = vi.fn();
+const mockMediaQueryListRemoveEventListener = vi.fn();
+const MockMediaQueryList = class MediaQueryList {
+  query: string;
 
-    it('should return supported as false when devicePixelRatio is not present', () => {
-      vi.stubGlobal('devicePixelRatio', undefined);
-      const { result } = renderHook(() => useDevicePixelRatio());
-      expect(result.current.supported).toBeFalsy();
-      expect(result.current.ratio).toBeNull();
-    });
+  constructor(query: string) {
+    this.query = query;
+  }
 
-    it('should return supported as false when matchMedia is not a function', () => {
-      vi.stubGlobal('matchMedia', undefined);
-      const { result } = renderHook(() => useDevicePixelRatio());
-      expect(result.current.supported).toBeFalsy();
-      expect(result.current.ratio).toBeNull();
-    });
+  addEventListener = (_type: keyof MediaQueryListEventMap, listener: any) => {
+    trigger.add(this.query, listener);
+    mockMediaQueryListAddEventListener();
+  };
+  removeEventListener = () => {
+    trigger.delete(this.query);
+    mockMediaQueryListRemoveEventListener();
+  };
+
+  matches = false;
+  onchange = vi.fn();
+  addListener = vi.fn();
+  removeListener = vi.fn();
+  dispatchEvent = vi.fn();
+};
+
+beforeEach(() => {
+  vi.stubGlobal('devicePixelRatio', 1);
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn<[string], MediaQueryList>().mockImplementation((query) => {
+      const mockMediaQueryList = new MockMediaQueryList(query);
+      return { ...mockMediaQueryList, media: query };
+    })
+  );
+});
+
+afterEach(() => {
+  void vi.unstubAllGlobals();
+  mockMediaQueryListAddEventListener.mockClear();
+  mockMediaQueryListRemoveEventListener.mockClear();
+});
+
+it('Should use device pixel ratio', () => {
+  const { result } = renderHook(useDevicePixelRatio);
+
+  expect(result.current.ratio).toEqual(window.devicePixelRatio);
+  expect(result.current.supported).toBeTruthy();
+});
+
+it('Should correct return for unsupported matchMedia', () => {
+  vi.stubGlobal('matchMedia', undefined);
+  const { result } = renderHook(useDevicePixelRatio);
+
+  expect(result.current.ratio).toEqual(1);
+  expect(result.current.supported).toBeFalsy();
+});
+
+it('Should correct return for unsupported devicePixelRatio', () => {
+  vi.stubGlobal('devicePixelRatio', undefined);
+  const { result } = renderHook(useDevicePixelRatio);
+
+  expect(result.current.ratio).toEqual(1);
+  expect(result.current.supported).toBeFalsy();
+});
+
+it('Should handle media query change', () => {
+  const { result } = renderHook(useDevicePixelRatio);
+  expect(result.current.ratio).toEqual(1);
+
+  Object.defineProperty(window, 'devicePixelRatio', {
+    value: 3,
+    configurable: true
   });
 
-  describe('in supported environment', () => {
-    const mediaQueryListMock = {
-      matches: false,
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn()
-    };
+  expect(mockMediaQueryListAddEventListener).toHaveBeenCalledTimes(1);
+  expect(mockMediaQueryListRemoveEventListener).toHaveBeenCalledTimes(0);
 
-    beforeEach(() => {
-      vi.stubGlobal('devicePixelRatio', 2);
-      vi.stubGlobal(
-        'matchMedia',
-        vi
-          .fn<[string], MediaQueryList>()
-          .mockImplementation((query) => ({ ...mediaQueryListMock, media: query }))
-      );
-    });
+  act(() => trigger.callback(`(resolution: 1dppx)`));
 
-    afterEach(() => void vi.unstubAllGlobals());
+  expect(mockMediaQueryListAddEventListener).toHaveBeenCalledTimes(2);
+  expect(mockMediaQueryListRemoveEventListener).toHaveBeenCalledTimes(1);
+  expect(result.current.ratio).toEqual(3);
+});
 
-    it('should return initial devicePixelRatio and supported', () => {
-      const { result } = renderHook(() => useDevicePixelRatio());
-      expect(result.current.supported).toBeTruthy();
-      expect(result.current.ratio).toEqual(2);
-    });
+it('Should disconnect on onmount', () => {
+  const { unmount } = renderHook(useDevicePixelRatio);
 
-    it('should return ratio when devicePixelRatio changes', () => {
-      const { result } = renderHook(() => useDevicePixelRatio());
-      expect(result.current.ratio).toEqual(2);
+  unmount();
 
-      const listener = mediaQueryListMock.addEventListener.mock.calls[0][1];
-      expect(typeof listener).toEqual('function');
-
-      Object.defineProperty(window, 'devicePixelRatio', {
-        value: 3,
-        configurable: true
-      });
-
-      act(() => {
-        listener(new MediaQueryListEvent('change'));
-      });
-
-      expect(result.current.ratio).toEqual(3);
-    });
-
-    it('should remove event listener on unmount', () => {
-      const { unmount } = renderHook(() => useDevicePixelRatio());
-
-      expect(mediaQueryListMock.addEventListener).toHaveBeenCalledWith(
-        'change',
-        expect.any(Function)
-      );
-
-      unmount();
-
-      expect(mediaQueryListMock.removeEventListener).toHaveBeenCalledWith(
-        'change',
-        expect.any(Function)
-      );
-    });
-  });
+  expect(mockMediaQueryListRemoveEventListener).toHaveBeenCalledTimes(1);
 });

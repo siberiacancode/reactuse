@@ -1,1 +1,2 @@
-export { renderHookServer } from './renderHookServer';
+export * from './createTrigger';
+export * from './renderHookServer';

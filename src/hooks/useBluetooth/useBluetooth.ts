@@ -8,7 +8,7 @@ export interface UseBluetoothReturn {
   device?: BluetoothDevice;
   /** The GATT server for connected bluetooth device */
   server?: BluetoothRemoteGATTServer;
-  /** Indicates if bluetooth API is supported by the browser */
+  /** Whether the bluetooth is supported*/
   supported: boolean;
   /** Function to request bluetooth device from the user */
   requestDevice: () => Promise<void>;
