@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 import { getElement } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -8,7 +8,7 @@ import type { UseElementSizeReturn } from './useElementSize';
 
 import { useElementSize } from './useElementSize';
 
-const trigger = createTrigger<ResizeObserverCallback, Element>();
+const trigger = createTrigger<Element, ResizeObserverCallback>();
 const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
 const mockResizeObserverDisconnect = vi.fn();
 const mockResizeObserverObserve = vi.fn();
@@ -57,6 +57,19 @@ targets.forEach((target) => {
           } & UseElementSizeReturn;
         return useElementSize<HTMLDivElement>();
       });
+      expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
+    });
+
+    it('Should use element size on server side', () => {
+      const { result } = renderHookServer(() => {
+        if (target)
+          return useElementSize(target) as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseElementSizeReturn;
+        return useElementSize<HTMLDivElement>();
+      });
+
       expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
       if (!target) expect(result.current.ref).toBeTypeOf('function');
     });

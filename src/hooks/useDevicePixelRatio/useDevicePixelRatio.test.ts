@@ -4,7 +4,7 @@ import { createTrigger } from '@/tests';
 
 import { useDevicePixelRatio } from './useDevicePixelRatio';
 
-const trigger = createTrigger<() => void, string>();
+const trigger = createTrigger<string, () => void>();
 const mockMediaQueryListAddEventListener = vi.fn();
 const mockMediaQueryListRemoveEventListener = vi.fn();
 const MockMediaQueryList = class MediaQueryList {

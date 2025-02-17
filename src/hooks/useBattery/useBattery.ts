@@ -76,10 +76,10 @@ export const useBattery = (): UseBatteryStateReturn => {
       battery = batteryManager;
       onChange();
 
-      batteryManager.addEventListener('levelchange', onChange);
-      batteryManager.addEventListener('chargingchange', onChange);
-      batteryManager.addEventListener('chargingtimechange', onChange);
-      batteryManager.addEventListener('dischargingtimechange', onChange);
+      battery.addEventListener('levelchange', onChange);
+      battery.addEventListener('chargingchange', onChange);
+      battery.addEventListener('chargingtimechange', onChange);
+      battery.addEventListener('dischargingtimechange', onChange);
     });
 
     return () => {

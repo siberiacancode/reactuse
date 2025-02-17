@@ -29,12 +29,12 @@ export const useDevicePixelRatio = (): UseDevicePixelRatioReturn => {
   useEffect(() => {
     if (!supported) return;
 
-    const updatePixelRatio = () => setRatio(window.devicePixelRatio);
+    const onChange = () => setRatio(window.devicePixelRatio);
 
     const media = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
-    media.addEventListener('change', updatePixelRatio);
+    media.addEventListener('change', onChange);
     return () => {
-      media.removeEventListener('change', updatePixelRatio);
+      media.removeEventListener('change', onChange);
     };
   }, [ratio]);
 

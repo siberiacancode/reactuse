@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 
 import { useRerender } from '../useRerender/useRerender';
 
@@ -45,7 +45,6 @@ const createRefState = <Value>(initialValue: Value | undefined, rerender: () => 
  */
 export const useRefState = <Value>(initialValue?: Value) => {
   const rerender = useRerender();
-  const ref = useRef(createRefState<Value>(initialValue, rerender));
-
-  return ref.current;
+  const [ref] = useState(() => createRefState<Value>(initialValue, rerender));
+  return ref;
 };

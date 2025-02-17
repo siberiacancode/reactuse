@@ -12,7 +12,7 @@ it('Should use preferred languages', () => {
   expect(result.current).toEqual(['en', 'en-US', 'fr', 'fr-FR']);
 });
 
-it('Should use preferred languages on server', () => {
+it('Should use preferred languages on server side', () => {
   const { result } = renderHookServer(usePreferredLanguages);
   expect(result.current).toEqual([]);
 });

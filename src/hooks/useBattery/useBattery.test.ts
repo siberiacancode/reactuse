@@ -1,23 +1,25 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 
+import { createTrigger, renderHookServer } from '@/tests';
+
 import { useBattery } from './useBattery';
 
-const events: Record<string, () => void> = {};
+const trigger = createTrigger<string, () => void>();
 const mockBatteryManager = {
   charging: true,
   chargingTime: 0,
   dischargingTime: 5,
   level: 1,
   addEventListener: (type: string, callback: () => void) => {
-    events[type] = callback;
+    trigger.add(type, callback);
   },
   removeEventListener: (type: string, callback: () => void) => {
-    if (events[type] === callback) {
-      delete events[type];
+    if (trigger.get(type) === callback) {
+      trigger.delete(type);
     }
   },
   dispatchEvent: (event: Event) => {
-    events[event.type]?.();
+    trigger.callback(event.type);
     return true;
   }
 };
@@ -59,24 +61,37 @@ it('Should use battery', async () => {
   );
 });
 
-it('Should correct return for unsupported', async () => {
+it('Should use battery on server side', async () => {
+  const { result } = renderHookServer(useBattery);
+
+  expect(result.current).toEqual({
+    supported: false,
+    value: {
+      charging: false,
+      chargingTime: 0,
+      dischargingTime: 0,
+      level: 0,
+      loading: true
+    }
+  });
+});
+
+it('Should use battery for unsupported', async () => {
   Object.assign(navigator, {
     getBattery: undefined
   });
   const { result } = renderHook(useBattery);
 
-  await waitFor(() =>
-    expect(result.current).toEqual({
-      supported: false,
-      value: {
-        charging: false,
-        chargingTime: 0,
-        dischargingTime: 0,
-        level: 0,
-        loading: false
-      }
-    })
-  );
+  expect(result.current).toEqual({
+    supported: false,
+    value: {
+      charging: false,
+      chargingTime: 0,
+      dischargingTime: 0,
+      level: 0,
+      loading: false
+    }
+  });
 });
 
 it('Should handle levelchange event', async () => {

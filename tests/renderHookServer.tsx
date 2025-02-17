@@ -1,3 +1,4 @@
+/* eslint-disable ts/ban-ts-comment */
 import type { ReactNode } from 'react';
 
 import { hydrateRoot } from 'react-dom/client';
@@ -16,6 +17,17 @@ export const renderHookServer = <Hook extends () => any>(
     wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
   } = {}
 ): { result: { current: ReturnType<Hook> }; hydrate: () => void } => {
+  const originalWindow = globalThis.window;
+  const originalNavigator = globalThis.navigator;
+  const originalDocument = globalThis.document;
+  // @ts-ignore
+  delete globalThis.window;
+  // @ts-ignore
+  delete globalThis.navigator
+  // @ts-ignore
+  delete globalThis.document
+
+
   const results: Array<ReturnType<Hook>> = [];
   const result = {
     get current() {
@@ -38,6 +50,9 @@ export const renderHookServer = <Hook extends () => any>(
   );
 
   const serverOutput = renderToString(component);
+  globalThis.window = originalWindow;
+  globalThis.navigator = originalNavigator;
+  globalThis.document = originalDocument;
 
   const hydrate = () => {
     const root = document.createElement('div');
