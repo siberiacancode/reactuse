@@ -9,6 +9,7 @@ import type { UseElementSizeReturn } from './useElementSize';
 import { useElementSize } from './useElementSize';
 
 const trigger = createTrigger<ResizeObserverCallback, Element>();
+const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
 const mockResizeObserverDisconnect = vi.fn();
 const mockResizeObserverObserve = vi.fn();
 const mockResizeObserver = class ResizeObserver {
@@ -32,7 +33,6 @@ const mockResizeObserver = class ResizeObserver {
 
 beforeEach(() => void vi.stubGlobal('ResizeObserver', mockResizeObserver));
 afterEach(() => void vi.unstubAllGlobals());
-afterEach(() => void vi.restoreAllMocks());
 
 const targets = [
   undefined,
@@ -49,6 +49,7 @@ targets.forEach((target) => {
 
   describe(`${target}`, () => {
     it('Should use element size', () => {
+      mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result } = renderHook(() => {
         if (target)
           return useElementSize(target) as {
@@ -61,19 +62,23 @@ targets.forEach((target) => {
     });
 
     it('Should set initial value', () => {
+      mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 200, 200));
       const { result } = renderHook(() => {
-        if (target) return useElementSize(target, { width: 200, height: 200 });
-        return useElementSize<HTMLDivElement>({ width: 200, height: 200 });
+        if (target)
+          return useElementSize(target) as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseElementSizeReturn;
+        return useElementSize<HTMLDivElement>();
       });
 
-      if (!target) {
-        expect(result.current.value).toStrictEqual({ width: 200, height: 200 });
-      } else {
-        expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
-      }
+      if (!target)
+        act(() => result.current.ref(document.getElementById('target')! as HTMLDivElement));
+
+      expect(result.current.value).toStrictEqual({ width: 200, height: 200 });
     });
 
     it('Should change value after resize', () => {
+      mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result } = renderHook(() => {
         if (target)
           return useElementSize(target) as {
@@ -91,13 +96,9 @@ targets.forEach((target) => {
         const element = (target ? getElement(target) : result.current.ref.current) as Element;
         if (!element) return;
 
-        vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(
-          () => new DOMRect(0, 0, 200, 200)
-        );
+        mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 200, 200));
 
-        trigger.callback(element, [
-          { contentRect: { width: 200, height: 200 } }
-        ] as unknown as ResizeObserverEntry[]);
+        trigger.callback(element);
       });
 
       expect(mockResizeObserverObserve).toHaveBeenCalledTimes(1);
@@ -105,6 +106,7 @@ targets.forEach((target) => {
     });
 
     it('Should disconnect on onmount', () => {
+      mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result, unmount } = renderHook(() => {
         if (target)
           return useElementSize(target) as {

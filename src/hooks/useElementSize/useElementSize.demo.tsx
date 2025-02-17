@@ -7,11 +7,11 @@ const Demo = () => {
     <div className='flex flex-col gap-4'>
       <p>Resize the box to see changes</p>
       <textarea
-        ref={elementSize.ref}
         disabled
+        ref={elementSize.ref}
         className='h-[200px] w-[200px]'
         style={{ resize: 'both' }}
-        value={`width: ${elementSize.value.width}\nheight: ${elementSize.value.height}`}
+        value={`width: ${Math.floor(elementSize.value.width)}\nheight: ${Math.floor(elementSize.value.height)}`}
       />
     </div>
   );

@@ -56,3 +56,22 @@ it('Should trigger rerender when the value is updated via current property', () 
 
   expect(renderCount).toBe(2);
 });
+
+const values = [1, {}];
+values.forEach((value) => {
+  it(`Should trigger dont rerender when the value ${value} is equal to the current value`, () => {
+    let renderCount = 0;
+    const { result } = renderHook(() => {
+      renderCount++;
+      return useRefState(value);
+    });
+
+    expect(renderCount).toBe(1);
+
+    act(() => {
+      result.current.current = value;
+    });
+
+    expect(renderCount).toBe(1);
+  });
+});

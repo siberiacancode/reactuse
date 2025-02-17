@@ -26,13 +26,9 @@ export interface UseElementSizeReturn {
 }
 
 export interface UseElementSize {
-  <Target extends UseElementSizeTarget>(
-    target: Target,
-    initialValue?: UseElementSizeValue
-  ): UseElementSizeReturn;
+  <Target extends UseElementSizeTarget>(target: Target): UseElementSizeReturn;
 
   <Target extends UseElementSizeTarget>(
-    initialValue?: UseElementSizeValue,
     target?: never
   ): { ref: StateRef<Target> } & UseElementSizeReturn;
 }
@@ -45,14 +41,12 @@ export interface UseElementSize {
  * @overload
  * @template Target The target element type
  * @param {UseElementSizeTarget} target The target element to observe
- * @param {UseElementSizeValue} [initialValue] The initial size of the element.
  * @returns {UseElementSizeReturn} An object containing the current width and height of the element
  *
  * @example
  * const { value } = useElementSize(ref);
  *
  * @overload
- * @param {UseElementSizeValue} [initialValue] The initial size of the element
  * @returns { { ref: StateRef<Target> } & UseElementSizeReturn } An object containing the current width and height of the element
  *
  * @example
@@ -60,9 +54,7 @@ export interface UseElementSize {
  */
 export const useElementSize = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as UseElementSizeTarget | undefined;
-  const initialValue = (target ? params[1] : params[0]) as UseElementSizeValue | undefined;
-
-  const [size, setSize] = useState(initialValue ?? { width: 0, height: 0 });
+  const [size, setSize] = useState({ width: 0, height: 0 });
   const internalRef = useRefState<Element>();
 
   useIsomorphicLayoutEffect(() => {
@@ -70,22 +62,18 @@ export const useElementSize = ((...params: any[]) => {
 
     if (!element) return;
 
-    const callback = () => {
-      const rect = element.getBoundingClientRect();
-      setSize((prev) => {
-        if (prev.width !== rect.width || prev.height !== rect.height) {
-          return {
-            width: rect.width,
-            height: rect.height
-          };
-        }
-        return prev;
-      });
-    };
+    const { width, height } = element.getBoundingClientRect();
+    setSize({
+      width,
+      height
+    });
 
-    const observer = new ResizeObserver(callback);
+    const observer = new ResizeObserver(() => {
+      const { width, height } = element.getBoundingClientRect();
+      setSize({ width, height });
+    });
+
     observer.observe(element);
-    callback();
 
     return () => {
       observer.disconnect();

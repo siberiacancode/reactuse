@@ -10,10 +10,9 @@ export interface StateRef<Value> {
 const createRefState = <Value>(initialValue: Value | undefined, rerender: () => void) => {
   let temp = initialValue;
   function ref(value: Value) {
-    if (temp !== value) {
-      temp = value;
-      rerender();
-    }
+    if (temp === value) return;
+    temp = value;
+    rerender();
   }
 
   Object.defineProperty(ref, 'current', {
@@ -21,10 +20,9 @@ const createRefState = <Value>(initialValue: Value | undefined, rerender: () => 
       return temp;
     },
     set(value: Value) {
-      if (temp !== value) {
-        temp = value;
-        rerender();
-      }
+      if (temp === value) return;
+      temp = value;
+      rerender();
     },
     configurable: true,
     enumerable: true
