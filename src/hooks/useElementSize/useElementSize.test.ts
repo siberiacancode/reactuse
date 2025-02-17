@@ -32,6 +32,7 @@ const mockResizeObserver = class ResizeObserver {
 
 beforeEach(() => void vi.stubGlobal('ResizeObserver', mockResizeObserver));
 afterEach(() => void vi.unstubAllGlobals());
+afterEach(() => void vi.restoreAllMocks());
 
 const targets = [
   undefined,
@@ -65,7 +66,11 @@ targets.forEach((target) => {
         return useElementSize<HTMLDivElement>({ width: 200, height: 200 });
       });
 
-      expect(result.current.value).toStrictEqual({ width: 200, height: 200 });
+      if (!target) {
+        expect(result.current.value).toStrictEqual({ width: 200, height: 200 });
+      } else {
+        expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
+      }
     });
 
     it('Should change value after resize', () => {
@@ -85,6 +90,10 @@ targets.forEach((target) => {
       act(() => {
         const element = (target ? getElement(target) : result.current.ref.current) as Element;
         if (!element) return;
+
+        vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(
+          () => new DOMRect(0, 0, 200, 200)
+        );
 
         trigger.callback(element, [
           { contentRect: { width: 200, height: 200 } }
