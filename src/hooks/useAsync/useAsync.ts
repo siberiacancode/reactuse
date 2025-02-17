@@ -30,13 +30,14 @@ export const useAsync = <Data>(
   callback: () => Promise<Data>,
   deps: DependencyList
 ): UseAsyncReturn<Data> => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   const [error, setError] = useState<Error | undefined>(undefined);
   const [data, setData] = useState<Data | undefined>(undefined);
 
   useEffect(() => {
+    setIsLoading(true);
     callback()
       .then((response) => {
         setData(response);
