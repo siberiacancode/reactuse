@@ -1,0 +1,707 @@
+[
+  {
+    "name": "useActiveElement",
+    "hookDependency": [
+      "useMutationObserver"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useAsync",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useBattery",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useBoolean",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useBreakpoints",
+    "hookDependency": [
+      "useRerender"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useBrowserLanguage",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useClickOutside",
+    "hookDependency": [],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useClipboard",
+    "hookDependency": [
+      "usePermission"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useConst",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useCounter",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useCssVar",
+    "hookDependency": [
+      "useMount",
+      "useMutationObserver"
+    ],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useDebounceCallback",
+    "hookDependency": [
+      "useEvent"
+    ],
+    "utilsDependency": [
+      "debounce"
+    ]
+  },
+  {
+    "name": "useDebounceValue",
+    "hookDependency": [
+      "useDebounceCallback"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useDefault",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useDeviceMotion",
+    "hookDependency": [],
+    "utilsDependency": [
+      "throttle"
+    ]
+  },
+  {
+    "name": "useDeviceOrientation",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useDidUpdate",
+    "hookDependency": [
+      "useIsomorphicLayoutEffect"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useDisclosure",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useDocumentEvent",
+    "hookDependency": [
+      "useEventListener"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useDocumentTitle",
+    "hookDependency": [
+      "useIsomorphicLayoutEffect",
+      "useMutationObserver"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useDocumentVisibility",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useElementSize",
+    "hookDependency": [],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useEvent",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useEventListener",
+    "hookDependency": [
+      "useEvent"
+    ],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useEyeDropper",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useFavicon",
+    "hookDependency": [
+      "useDidUpdate",
+      "useMount"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useField",
+    "hookDependency": [
+      "useRerender"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useFileDialog",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useFocus",
+    "hookDependency": [],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useFps",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useFullscreen",
+    "hookDependency": [
+      "useUnmount"
+    ],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useGamepad",
+    "hookDependency": [
+      "useEvent",
+      "useRaf"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useGeolocation",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useHash",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useHotkeys",
+    "hookDependency": [
+      "useDidUpdate",
+      "useEventListener"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useHover",
+    "hookDependency": [
+      "useEventListener"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useIdle",
+    "hookDependency": [],
+    "utilsDependency": [
+      "throttle"
+    ]
+  },
+  {
+    "name": "useImage",
+    "hookDependency": [
+      "useQuery"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useInfiniteScroll",
+    "hookDependency": [
+      "useEvent"
+    ],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useIntersectionObserver",
+    "hookDependency": [],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useInterval",
+    "hookDependency": [
+      "useEvent"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useIsFirstRender",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useIsomorphicLayoutEffect",
+    "hookDependency": [],
+    "utilsDependency": [
+      "isClient"
+    ]
+  },
+  {
+    "name": "useKeyPress",
+    "hookDependency": [
+      "useEventListener"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useKeyPressEvent",
+    "hookDependency": [
+      "useEventListener"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useKeyboard",
+    "hookDependency": [
+      "useEventListener"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useKeysPressed",
+    "hookDependency": [
+      "useDidUpdate",
+      "useEventListener"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useLastChanged",
+    "hookDependency": [
+      "useDidUpdate"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useLatest",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useList",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useLocalStorage",
+    "hookDependency": [
+      "useStorage"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useLogger",
+    "hookDependency": [
+      "useDidUpdate"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useLongPress",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useMap",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useMeasure",
+    "hookDependency": [
+      "useResizeObserver"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useMediaQuery",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useMemory",
+    "hookDependency": [
+      "useInterval"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useMount",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useMouse",
+    "hookDependency": [],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useMutation",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useMutationObserver",
+    "hookDependency": [],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useNetwork",
+    "hookDependency": [],
+    "utilsDependency": [
+      "isClient"
+    ]
+  },
+  {
+    "name": "useOffsetPagination",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useOnline",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useOperatingSystem",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useOptimistic",
+    "hookDependency": [
+      "useDidUpdate"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useOrientation",
+    "hookDependency": [
+      "useIsomorphicLayoutEffect"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useOtpCredential",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePageLeave",
+    "hookDependency": [
+      "useEvent"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePaint",
+    "hookDependency": [
+      "useEvent"
+    ],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useParallax",
+    "hookDependency": [
+      "useDeviceOrientation",
+      "useMouse",
+      "useScreenOrientation"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePermission",
+    "hookDependency": [
+      "useEvent"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePointerLock",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePostMessage",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePreferredColorScheme",
+    "hookDependency": [
+      "useMediaQuery"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePreferredContrast",
+    "hookDependency": [
+      "useMediaQuery"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePreferredDark",
+    "hookDependency": [
+      "useMediaQuery"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePreferredLanguages",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePreferredReducedMotion",
+    "hookDependency": [
+      "useMediaQuery"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "usePrevious",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useQuery",
+    "hookDependency": [
+      "useDidUpdate",
+      "useMount"
+    ],
+    "utilsDependency": [
+      "getRetry"
+    ]
+  },
+  {
+    "name": "useQueue",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useRaf",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useRafValue",
+    "hookDependency": [
+      "useUnmount"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useRenderCount",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useRenderInfo",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useRerender",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useResizeObserver",
+    "hookDependency": [],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useScreenOrientation",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useScript",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useSessionStorage",
+    "hookDependency": [
+      "useStorage"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useSet",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useShare",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useStep",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useStopwatch",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useStorage",
+    "hookDependency": [
+      "useIsomorphicLayoutEffect"
+    ],
+    "utilsDependency": [
+      "isClient"
+    ]
+  },
+  {
+    "name": "useTextDirection",
+    "hookDependency": [],
+    "utilsDependency": [
+      "getElement"
+    ]
+  },
+  {
+    "name": "useTextSelection",
+    "hookDependency": [
+      "useRerender"
+    ],
+    "utilsDependency": [
+      "isClient"
+    ]
+  },
+  {
+    "name": "useTime",
+    "hookDependency": [
+      "useInterval"
+    ],
+    "utilsDependency": [
+      "getDate"
+    ]
+  },
+  {
+    "name": "useTimeout",
+    "hookDependency": [
+      "useEvent"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useTimer",
+    "hookDependency": [
+      "useInterval"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useToggle",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useUnmount",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useVibrate",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useWebSocket",
+    "hookDependency": [
+      "useEvent"
+    ],
+    "utilsDependency": [
+      "getRetry"
+    ]
+  },
+  {
+    "name": "useWindowEvent",
+    "hookDependency": [
+      "useEventListener"
+    ],
+    "utilsDependency": []
+  },
+  {
+    "name": "useWindowFocus",
+    "hookDependency": [],
+    "utilsDependency": []
+  },
+  {
+    "name": "useWindowScroll",
+    "hookDependency": [],
+    "utilsDependency": [
+      "isClient"
+    ]
+  },
+  {
+    "name": "useWindowSize",
+    "hookDependency": [],
+    "utilsDependency": [
+      "isClient"
+    ]
+  },
+  {
+    "name": "useWizard",
+    "hookDependency": [],
+    "utilsDependency": []
+  }
+]
