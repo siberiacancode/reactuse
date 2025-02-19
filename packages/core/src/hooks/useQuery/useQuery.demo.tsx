@@ -7,7 +7,7 @@ interface Pokemon {
 }
 
 const getPokemon = (id: number) =>
-  fetch(`https://pokeapi.co/api/v2/pokemon2/${id}`).then((res) => res.json()) as Promise<Pokemon>;
+  fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()) as Promise<Pokemon>;
 
 const Demo = () => {
   const counter = useCounter(1);
@@ -24,15 +24,24 @@ const Demo = () => {
         Next
       </button>
 
+      {getPokemonQuery.isLoading && (
+        <div className='flex animate-pulse flex-col gap-2'>
+          <div className='h-7 w-40 rounded-md bg-neutral-600' />
+          <div className='size-96 rounded-md bg-neutral-600' />
+        </div>
+      )}
+
       {getPokemonQuery.data && (
-        <div>
+        <div className='flex flex-col gap-2'>
           <p>
             Name: <code>{getPokemonQuery.data.name}</code>
           </p>
-          <img
-            alt={getPokemonQuery.data.name}
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonQuery.data.id}.png`}
-          />
+          <div className='size-96'>
+            <img
+              alt={getPokemonQuery.data.name}
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonQuery.data.id}.png`}
+            />
+          </div>
         </div>
       )}
     </>

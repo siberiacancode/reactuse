@@ -28,7 +28,7 @@ const Demo = () => {
         </button>
       </div>
 
-      <div className='mt-4 flex gap-2 flex-col'>
+      <div className='mt-4 flex flex-col gap-2'>
         {Array.from(users.value).map(([name, age], index) => (
           <div key={index}>
             {name}: <code>{age}</code>

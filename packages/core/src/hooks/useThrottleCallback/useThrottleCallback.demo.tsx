@@ -5,13 +5,12 @@ const Demo = () => {
   const clickCounter = useCounter();
   const throttledCounter = useCounter();
 
-
   const throttledIncrement = useThrottleCallback(throttledCounter.inc, 1000);
 
   const onClick = () => {
     throttledIncrement();
     clickCounter.inc();
-  }
+  };
 
   return (
     <div>

@@ -51,8 +51,8 @@ export const useClickOutside = ((...params: any[]) => {
   internalCallbackRef.current = callback;
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
-    const handler = (event: Event) => {
+    if (!target && !internalRef.state) return;
+    const onClick = (event: Event) => {
       const element = (target ? getElement(target) : internalRef.current) as Element;
 
       if (element && !element.contains(event.target as Node)) {
@@ -60,12 +60,12 @@ export const useClickOutside = ((...params: any[]) => {
       }
     };
 
-    document.addEventListener('click', handler);
+    document.addEventListener('click', onClick);
 
     return () => {
-      document.removeEventListener('click', handler);
+      document.removeEventListener('click', onClick);
     };
-  }, [internalRef.current, target]);
+  }, [target, internalRef.state]);
 
   if (target) return;
   return internalRef;

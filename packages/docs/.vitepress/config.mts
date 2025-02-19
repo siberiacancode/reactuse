@@ -40,14 +40,15 @@ export default async () => {
       }
     },
     transformPageData: (pageData) => {
-      pageData.frontmatter.head ??= []
+      pageData.frontmatter.head ??= [];
       pageData.frontmatter.head.push([
         'meta',
         {
           name: 'og:image',
-          content: 'https://repository-images.githubusercontent.com/799880708/be8887a4-0cf5-4929-a5f0-dba8d70a7d1f'
+          content:
+            'https://repository-images.githubusercontent.com/799880708/be8887a4-0cf5-4929-a5f0-dba8d70a7d1f'
         }
-      ])
+      ]);
 
       if (pageData.relativePath === 'index.md') {
         pageData.frontmatter.features = homePageFeatures;

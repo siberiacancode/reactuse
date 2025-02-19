@@ -68,9 +68,9 @@ export default {
     const pages = params.filter(Boolean);
 
     console.log('\nHooks injection report\n');
-    console.log('\x1b[32mInjected: ' + pages.length + '\x1b[0m');
-    console.log('\x1b[33mSkipped: ' + (hooks.length - pages.length) + '\x1b[0m');
-    console.log('Total: ' + hooks.length);
+    console.log(`\x1B[32mInjected: ${pages.length}\x1B[0m`);
+    console.log(`\x1B[33mSkipped: ${hooks.length - pages.length}\x1B[0m`);
+    console.log(`Total: ${hooks.length}`);
 
     // console.table([
     //   { Status: 'Injected', Count: injected },

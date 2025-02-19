@@ -15,7 +15,7 @@ it('Should not call callback after rerender', () => {
 
   rerender();
 
-  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledOnce();
 });
 
 it('Should not call callback on unmount', () => {
@@ -24,5 +24,5 @@ it('Should not call callback on unmount', () => {
 
   unmount();
 
-  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledOnce();
 });

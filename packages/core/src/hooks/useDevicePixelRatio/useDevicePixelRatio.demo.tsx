@@ -7,7 +7,11 @@ const Demo = () => {
     return <p>Device pixel ratio is not supported.</p>;
   }
 
-  return <p>Device pixel ratio (try to zoom page in and out): <code>{ratio}</code></p>;
+  return (
+    <p>
+      Device pixel ratio (try to zoom page in and out): <code>{ratio}</code>
+    </p>
+  );
 };
 
 export default Demo;

@@ -98,7 +98,7 @@ export const useMutationObserver = ((...params: any[]) => {
   internalOptionsRef.current = options;
 
   useEffect(() => {
-    if (!enabled && !target && !internalRef.current) return;
+    if (!enabled && !target && !internalRef.state) return;
 
     const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
@@ -110,7 +110,7 @@ export const useMutationObserver = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.current]);
+  }, [target, internalRef.state]);
 
   const stop = () => observer?.disconnect();
 

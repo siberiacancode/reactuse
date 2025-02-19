@@ -1,9 +1,42 @@
 {
-  "name": "reactuse",
-  "version": "0.0.90",
-  "private": true,
-  "workspaces": [
-    "packages/*"
+  "name": "@siberiacancode/reactuse",
+  "version": "0.0.91",
+  "description": "Ultimate tool",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "contributors": [
+    {
+      "name": "Dmitry Babin",
+      "url": "https://github.com/debabin"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://siberiacancode.github.io/reactuse/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siberiacancode/reactuse.git"
+  },
+  "bugs": "https://github.com/siberiacancode/reactuse/issues",
+  "keywords": [
+    "react",
+    "react hooks",
+    "react use",
+    "use",
+    "hooks"
+  ],
+  "sideEffects": false,
+  "exports": {
+    "types": "./dist/types/index.d.ts",
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.cjs"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
   ],
   "scripts": {
     "lint-staged": "lint-staged",

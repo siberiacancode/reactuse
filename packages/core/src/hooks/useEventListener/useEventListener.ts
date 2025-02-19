@@ -127,16 +127,16 @@ export const useEventListener = ((...params: any[]) => {
   const internalListener = useEvent(listener);
 
   useEffect(() => {
-    const callback = (event: Event) => internalListener(event);
     const element = target ? getElement(target) : internalRef.current;
-
     if (!element) return;
+
+    const callback = (event: Event) => internalListener(event);
 
     events.forEach((event) => element.addEventListener(event, callback, options));
     return () => {
       events.forEach((event) => element.removeEventListener(event, callback, options));
     };
-  }, [target, internalRef.current, event, options]);
+  }, [target, internalRef.state, event, options]);
 
   if (target) return;
   return internalRef;

@@ -15,11 +15,12 @@ const Demo = () => {
     <div className='flex flex-col gap-4'>
       <p>Resize the box to see changes</p>
       <textarea
-        ref={resizeObserver.ref}
         disabled
+        ref={resizeObserver.ref}
         className='h-[200px] w-[200px]'
         style={{ resize: 'both' }}
-        value={text} />
+        value={text}
+      />
     </div>
   );
 };

@@ -79,9 +79,11 @@ export const useIntersectionObserver = ((...params: any[]) => {
   internalOnChangeRef.current = options?.onChange;
 
   useEffect(() => {
-    if (!enabled && !target && !internalRef.current) return;
+    if (!enabled && !target && !internalRef.state) return;
+
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setEntry(entry);
@@ -98,14 +100,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [
-    target,
-    internalRef.current,
-    options?.rootMargin,
-    options?.threshold,
-    options?.root,
-    enabled
-  ]);
+  }, [target, internalRef.state, options?.rootMargin, options?.threshold, options?.root, enabled]);
 
   if (target) return { entry, inView: !!entry?.isIntersecting };
   return {
