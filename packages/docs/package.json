@@ -1,0 +1,7 @@
+{
+  "name": "@siberiacancode/docs",
+  "version": "1.0.0",
+  "dependencies": {
+    "@siberiacancode/reactuse": "workspace:*"
+  }
+}

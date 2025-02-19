@@ -1,4 +1,4 @@
-import { cn } from '@/docs/src/utils';
+import { cn } from 'packages/docs/src/utils';
 
 import { useCounter } from '../useCounter/useCounter';
 import { useClickOutside } from './useClickOutside';

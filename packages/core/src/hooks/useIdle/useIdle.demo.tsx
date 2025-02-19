@@ -1,4 +1,4 @@
-import { cn } from '@/docs/src/utils';
+import { cn } from 'packages/docs/src/utils';
 
 import { useIdle } from './useIdle';
 

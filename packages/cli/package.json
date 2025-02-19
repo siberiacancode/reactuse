@@ -1,5 +1,5 @@
 {
-  "name": "@siberiacancode/reactuse-cli",
+  "name": "@siberiacancode/cli",
   "type": "module",
   "description": "Add hooks to your apps.",
   "license": "MIT",
@@ -20,7 +20,7 @@
   ],
   "exports": "./dist/index.js",
   "bin": {
-    "reactuse-cli": "dist/index.js"
+    "reactuse": "dist/index.js"
   },
   "files": [
     "dist"
@@ -34,6 +34,7 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@siberiacancode/reactuse": "workspace:*",
     "acorn": "^8.14.0",
     "acorn-typescript": "^1.4.13",
     "chalk": "5.2.0",
@@ -43,7 +44,6 @@
     "ora": "^6.1.2",
     "please-upgrade-node": "^3.2.0",
     "prompts": "^2.4.2",
-    "screenfull": "^6.0.2",
     "tsconfig-paths": "^4.2.0",
     "yargs": "^17.7.2",
     "zod": "^3.23.8"

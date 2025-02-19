@@ -1,0 +1,102 @@
+{
+  "name": "@siberiacancode/reactuse",
+  "version": "0.0.90",
+  "description": "Ultimate tool",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "contributors": [
+    {
+      "name": "Dmitry Babin",
+      "url": "https://github.com/debabin"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://siberiacancode.github.io/reactuse/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siberiacancode/reactuse.git"
+  },
+  "bugs": "https://github.com/siberiacancode/reactuse/issues",
+  "keywords": [
+    "react",
+    "react hooks",
+    "react use",
+    "use",
+    "hooks"
+  ],
+  "sideEffects": false,
+  "exports": {
+    "types": "./dist/types/index.d.ts",
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.cjs"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepublishOnly": "pnpm type && pnpm unit-test run && pnpm build",
+    "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
+    "lint": "eslint . --fix",
+    "type": "tsc --noEmit",
+    "format": "prettier --write .",
+    "pretty": "pnpm type && pnpm lint && pnpm format",
+    "unit-test": "vitest",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "peerDependencies": {
+    "@types/react": "^18.0.0",
+    "react": "^17.0.2 || ^18.0.0",
+    "react-dom": "^17.0.2 || ^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "screenfull": "^6.0.2",
+    "vitest": "^3.0.6"
+  },
+  "devDependencies": {
+    "@siberiacancode/builder": "^1.3.17",
+    "@siberiacancode/eslint": "^2.8.0",
+    "@siberiacancode/prettier": "^1.2.0",
+    "@siberiacancode/vitest": "^1.2.4",
+    "@tailwindcss/postcss": "^4.0.7",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.2.0",
+    "@types/doctrine": "^0.0.9",
+    "@types/node": "^22.13.4",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/web-bluetooth": "^0.0.20",
+    "clsx": "^2.1.1",
+    "comment-parser": "^1.4.1",
+    "core-js": "^3.40.0",
+    "doctrine": "^3.0.0",
+    "markdown-table": "^3.0.4",
+    "postcss": "^8.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "shx": "^0.3.4",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss": "^4.0.7",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vitepress": "^1.6.3"
+  }
+}

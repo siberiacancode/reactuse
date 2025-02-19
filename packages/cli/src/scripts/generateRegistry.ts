@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { isRegistryFileExist } from 'scripts/utils/checkRegistryFile';
-import { fetchAndBuildRegistry } from 'scripts/utils/fetchAndBuildRegistry';
+
+import { isRegistryFileExist } from '@/scripts/utils/checkRegistryFile';
+import { fetchAndBuildRegistry } from '@/scripts/utils/fetchAndBuildRegistry';
 
 export const ROOT_PATH = path.resolve(path.resolve(), '../../');
 export const REGISTRY_PATH = path.join(path.resolve(), 'registry', 'registry.json');

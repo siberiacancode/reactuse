@@ -1,15 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { REGISTRY_PATH } from 'scripts/generateRegistry';
+
+import type { HookRegistry } from '@/utils/types';
+
+import { REGISTRY_PATH } from '@/scripts/generateRegistry';
 import {
   extractHookDependencies,
   extractLocalDependencies,
   extractUtilsDependencies
-} from 'scripts/utils/dependencies';
-import { fetchAvailableHooks } from 'scripts/utils/fetchAvailableHooks';
-
-import type { HookRegistry } from '@/utils/types';
-
+} from '@/scripts/utils/dependencies';
+import { fetchAvailableHooks } from '@/scripts/utils/fetchAvailableHooks';
 import { FETCH_REPO_URL } from '@/utils/constants';
 import { logger } from '@/utils/logger';
 

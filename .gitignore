@@ -1,6 +1,6 @@
 # vite press
-docs/.vitepress/cache
-docs/.vitepress/dist
+/packages/docs/.vitepress/cache
+packages/docs/.vitepress/dist
 
 # Microsoft Azure Build Output
 csx/
@@ -161,7 +161,8 @@ Temporary Items
 
 # Local
 .env
-dist
+dist/
+build/
 
 # Logs
 logs
@@ -192,7 +193,7 @@ coverage
 build/Release
 
 # Optional npm cache directory
-.npm
+.npm/
 
 # Optional REPL history
 .node_repl_history
@@ -215,3 +216,5 @@ generated
 
 # Turbo
 .turbo
+
+
