@@ -6,9 +6,9 @@ it('Should use counter', () => {
   const { result } = renderHook(useDisclosure);
 
   expect(result.current.opened).toBeFalsy();
-  expect(typeof result.current.open).toBe('function');
-  expect(typeof result.current.close).toBe('function');
-  expect(typeof result.current.toggle).toBe('function');
+  expect(result.current.open).toBeTypeOf('function');
+  expect(result.current.close).toBeTypeOf('function');
+  expect(result.current.toggle).toBeTypeOf('function');
 });
 
 it('Should set initial value', () => {

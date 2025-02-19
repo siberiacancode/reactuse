@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 export interface Connection extends EventTarget {
   readonly downlink: number;
   readonly downlinkMax: number;
@@ -67,7 +65,7 @@ export const getConnection = () =>
  */
 export const useNetwork = (): UseNetworkReturn => {
   const [value, setValue] = useState(() => {
-    if (!isClient) {
+    if (typeof navigator === 'undefined') {
       return {
         online: false,
         type: undefined,

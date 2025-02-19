@@ -8,10 +8,10 @@ it('Should use map', () => {
 
   expect(result.current.value).toEqual(new Map());
   expect(result.current.size).toBe(0);
-  expect(typeof result.current.set).toBe('function');
-  expect(typeof result.current.remove).toBe('function');
-  expect(typeof result.current.clear).toBe('function');
-  expect(typeof result.current.reset).toBe('function');
+  expect(result.current.set).toBeTypeOf('function');
+  expect(result.current.remove).toBeTypeOf('function');
+  expect(result.current.clear).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
 });
 
 it('Should set initial value', () => {

@@ -1,5 +1,7 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useShare } from './useShare';
 
 const mockNavigatorShare = vi.fn();
@@ -12,15 +14,16 @@ Object.assign(navigator, {
 it('Should use share', () => {
   const { result } = renderHook(useShare);
 
-  expect(typeof result.current.share).toBe('function');
+  expect(result.current.share).toBeTypeOf('function');
   expect(result.current.supported).toBeTruthy();
 });
 
-// it('Should use share on server side', () => {
-//   const { result } = renderHookServer(useShare);
+it('Should use share on server side', () => {
+  const { result } = renderHookServer(useShare);
 
-//   expect(result.current.supported).toBeFalsy();
-// });
+  expect(result.current.share).toBeTypeOf('function');
+  expect(result.current.supported).toBeFalsy();
+});
 
 it('Should share data', () => {
   const { result } = renderHook(useShare);

@@ -2,15 +2,39 @@ import type { CSSProperties } from 'react';
 
 import { useParallax } from './useParallax';
 
+const layerBase: CSSProperties = {
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  transition: '.3s ease-out all'
+};
+
+const containerStyle: CSSProperties = {
+  margin: '3em auto',
+  perspective: '200px'
+};
+
+const cardContentStyle: CSSProperties = {
+  overflow: 'hidden',
+  fontSize: '6rem',
+  position: 'absolute',
+  top: 'calc(50% - 1em)',
+  left: 'calc(50% - 1em)',
+  height: '2em',
+  width: '2em',
+  margin: 'auto'
+};
+
+const targetStyle: CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  minHeight: '500px',
+  transition: '.3s ease-out all'
+};
+
 const Demo = () => {
   const parallax = useParallax<HTMLDivElement>();
-
-  const layerBase: CSSProperties = {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    transition: '.3s ease-out all'
-  };
 
   const layer0 = {
     ...layerBase,
@@ -42,30 +66,6 @@ const Demo = () => {
     transition: '.3s ease-out all',
     boxShadow: '0 0 20px 0 rgba(255, 255, 255, 0.25)',
     transform: `rotateX(${parallax.value.roll * 20}deg) rotateY(${parallax.value.tilt * 20}deg)`
-  };
-
-  const containerStyle: CSSProperties = {
-    margin: '3em auto',
-    perspective: '200px'
-  };
-
-  const cardContentStyle: CSSProperties = {
-    overflow: 'hidden',
-    fontSize: '6rem',
-    position: 'absolute',
-    top: 'calc(50% - 1em)',
-    left: 'calc(50% - 1em)',
-    height: '2em',
-    width: '2em',
-    margin: 'auto'
-  };
-
-  const targetStyle: CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    minHeight: '500px',
-    transition: '.3s ease-out all'
   };
 
   return (

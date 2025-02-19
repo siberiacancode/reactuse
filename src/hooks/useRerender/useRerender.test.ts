@@ -5,13 +5,20 @@ import { useRerender } from './useRerender';
 it('Should use rerender', () => {
   const { result } = renderHook(useRerender);
 
-  expect(typeof result.current.id).toBe('string');
+  expect(result.current).toBeTypeOf('function');
 });
 
-it('Should update id on update call', () => {
-  const { result } = renderHook(useRerender);
-  const initialId = result.current.id;
+it('Should trigger rerender when call rerender function', () => {
+  let renderCount = 0;
 
-  act(result.current.update);
-  expect(result.current.id).not.toBe(initialId);
+  const { result } = renderHook(() => {
+    renderCount++;
+    return useRerender();
+  });
+
+  expect(renderCount).toBe(1);
+
+  act(result.current);
+
+  expect(renderCount).toBe(2);
 });

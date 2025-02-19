@@ -12,9 +12,8 @@ it('Should use online', () => {
   expect(result.current).toBeTruthy();
 });
 
-it('Should use network on server', () => {
+it('Should use network on server side', () => {
   const { result } = renderHookServer(useOnline);
-
   expect(result.current).toBeFalsy();
 });
 

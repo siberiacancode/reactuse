@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { useMutationObserver } from '../useMutationObserver/useMutationObserver';
-
 /**
  * @name useActiveElement
  * @description - Hook that returns the active element
@@ -21,29 +19,36 @@ export const useActiveElement = <ActiveElement extends HTMLElement>() => {
 
     window.addEventListener('focus', onActiveElementChange, true);
     window.addEventListener('blur', onActiveElementChange, true);
+
     return () => {
-      window.removeEventListener('focus', onActiveElementChange);
-      window.removeEventListener('blur', onActiveElementChange);
+      window.removeEventListener('focus', onActiveElementChange, true);
+      window.removeEventListener('blur', onActiveElementChange, true);
     };
   });
 
-  useMutationObserver(
-    document as any,
-    (mutations) => {
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
       mutations
         .filter((mutation) => mutation.removedNodes.length)
         .map((mutation) => Array.from(mutation.removedNodes))
         .flat()
         .forEach((node) => {
-          if (node === activeElement)
-            setActiveElement(document?.activeElement as ActiveElement | null);
+          setActiveElement((prevActiveElement) => {
+            if (node === prevActiveElement) return document.activeElement as ActiveElement | null;
+            return prevActiveElement;
+          });
         });
-    },
-    {
+    });
+
+    observer.observe(document, {
       childList: true,
       subtree: true
-    }
-  );
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return activeElement;
 };

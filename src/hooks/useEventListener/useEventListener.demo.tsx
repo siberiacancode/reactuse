@@ -1,30 +1,13 @@
+import { useState } from 'react';
+
 import { useEventListener } from './useEventListener';
 
 const Demo = () => {
-  const ref = useEventListener<HTMLDivElement>(
-    'click',
-    (event) => console.log('@click 1', event.target),
-    {
-      passive: true
-    }
-  );
+  const [count, setCount] = useState(0);
 
-  return (
-    <div
-      ref={ref}
-      style={{
-        width: 200,
-        height: 200,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        border: '1px solid red'
-      }}
-      id='content'
-    >
-      content
-    </div>
-  );
+  useEventListener('click', () => setCount(count + 1));
+
+  return <p>Click count: <code>{count}</code></p>;
 };
 
 export default Demo;

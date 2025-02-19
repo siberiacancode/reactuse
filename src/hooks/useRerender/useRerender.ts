@@ -1,25 +1,19 @@
-import { useId, useState } from 'react';
+import { useReducer } from 'react';
 
 /** The use rerender return type */
-interface UseRerenderReturns {
-  /** The id of the rerender */
-  id: string;
-  /** Function to rerender the component */
-  update: () => void;
-}
+type UseRerenderReturn = () => void;
 
 /**
  * @name useRerender
  * @description - Hook that defines the logic to force rerender a component
  * @category Lifecycle
  *
- * @returns {UseRerenderReturns} An object containing the id and update function
+ * @returns {UseRerenderReturn} The rerender function
  *
  * @example
- * const { id, update } = useRerender();
+ * const rerender = useRerender();
  */
-export const useRerender = (): UseRerenderReturns => {
-  const id = useId();
-  const [value, setValue] = useState(id);
-  return { id: value, update: () => setValue(Math.random().toString()) };
+export const useRerender = (): UseRerenderReturn => {
+  const rerender = useReducer(() => ({}), {})[1];
+  return rerender;
 };

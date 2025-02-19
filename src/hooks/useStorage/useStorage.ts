@@ -1,7 +1,5 @@
 import { useSyncExternalStore } from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 
 /* The use storage initial value type */
@@ -122,7 +120,7 @@ export const useStorage = <Value>(
     }
   }, [key]);
 
-  if (!isClient)
+  if (typeof window === 'undefined')
     return {
       value: initialValue instanceof Function ? initialValue() : initialValue,
       set,

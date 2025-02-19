@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import type { UseMouseTarget } from '../useMouse/useMouse';
+import type { StateRef } from '../useRefState/useRefState';
 
 import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
 import { useMouse } from '../useMouse/useMouse';
+import { useRefState } from '../useRefState/useRefState';
 import { useScreenOrientation } from '../useScreenOrientation/useScreenOrientation';
 
 /** The use parallax value type */
@@ -38,7 +40,7 @@ export interface UseParallax {
   <Target extends UseMouseTarget>(
     params?: UseParallaxOptions
   ): UseParallaxReturn & {
-    ref: (node: Target) => void;
+    ref: StateRef<Target>;
   };
 }
 
@@ -51,7 +53,7 @@ export interface UseParallax {
  * @template Target The target element for the parallax effect
  * @param {Target} target The target element for the parallax effect
  * @param {UseParallaxOptions} options The options for the parallax effect
- * @returns {UseParallaxReturn} An object with the current mouse position
+ * @returns {UseParallaxReturn} An object of parallax values
  *
  * @example
  * const { roll, tilt, source } = useParallax(ref);
@@ -59,6 +61,7 @@ export interface UseParallax {
  * @overload
  * @template Target The target element for the parallax effect
  * @param {UseParallaxOptions} options The options for the parallax effect
+ * @returns {UseParallaxReturn & { ref: StateRef<Target> }} An object of parallax values
  *
  * @example
  * const { ref, roll, tilt, source } = useParallax();
@@ -71,9 +74,9 @@ export const useParallax = ((...params: any[]) => {
       ? params[0]
       : undefined;
 
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
 
-  const mouse = useMouse(target ?? internalRef);
+  const mouse = useMouse(target ?? internalRef.current);
   const screenOrientation = useScreenOrientation();
   const deviceOrientation = useDeviceOrientation();
 
@@ -184,5 +187,5 @@ export const useParallax = ((...params: any[]) => {
   ]);
 
   if (target) return { value };
-  return { ref: setInternalRef, value };
+  return { ref: internalRef, value };
 }) as UseParallax;

@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
+import { useRefState } from '../useRefState/useRefState';
+
 /** The use mouse target element type */
 export type UseMouseTarget =
   | (() => Element)
@@ -66,12 +68,12 @@ export const useMouse = ((target) => {
     elementPositionY: 0
   });
 
-  const [internalRef, setInternalRef] = useState<Element>();
+  const internalRef = useRefState<Element>();
 
   useEffect(() => {
-    if (!target && !internalRef) return;
+    if (!target && !internalRef.current) return;
     const onMouseMove = (event: MouseEvent) => {
-      const element = (target ? getElement(target) : internalRef) as Element;
+      const element = (target ? getElement(target) : internalRef.current) as Element;
       if (!element) return;
 
       const updatedValue = {
@@ -101,11 +103,11 @@ export const useMouse = ((target) => {
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
     };
-  }, [internalRef, target]);
+  }, [internalRef.current, target]);
 
   if (target) return value;
   return {
-    ref: setInternalRef,
+    ref: internalRef,
     ...value
   };
 }) as UseMouse;

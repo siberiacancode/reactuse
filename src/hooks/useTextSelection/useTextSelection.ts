@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 import { useRerender } from '../useRerender/useRerender';
 
 export const getRangesSelection = (selection: Selection) => {
@@ -34,13 +32,13 @@ export interface UseTextSelectionReturn {
 export const useTextSelection = (): UseTextSelectionReturn => {
   const rerender = useRerender();
   const [selection, setSelection] = useState<Selection | null>(
-    isClient ? document.getSelection() : null
+    typeof document !== 'undefined' ? document.getSelection() : null
   );
 
   useEffect(() => {
     const onSelectionChange = () => {
       setSelection(document.getSelection());
-      rerender.update();
+      rerender();
     };
 
     document.addEventListener('selectionchange', onSelectionChange);

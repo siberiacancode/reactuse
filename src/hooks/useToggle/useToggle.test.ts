@@ -7,7 +7,7 @@ it('Should use toggle', () => {
   const [on, toggle] = result.current;
 
   expect(on).toBeFalsy();
-  expect(typeof toggle).toBe('function');
+  expect(toggle).toBeTypeOf('function');
 });
 
 it('Should initialize the toggle with initial value', () => {

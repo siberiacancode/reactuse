@@ -6,9 +6,15 @@ const Demo = () => {
 
   return (
     <>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px' }}>
+      <div className='grid grid-cols-2 gap-1'>
         {Array.from({ length: 6 }, (_, i) => i + 1).map((id) => (
-          <input key={id} data-id={String(id)} placeholder={String(id)} type='text' />
+          <input
+            key={id}
+            className='rounded border p-2'
+            data-id={String(id)}
+            type='text'
+            placeholder={String(id)}
+          />
         ))}
       </div>
 

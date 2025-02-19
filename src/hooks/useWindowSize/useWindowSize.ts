@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 /** The use window size return type */
 interface UseWindowSizeParams {
   /** Whether to include the scrollbar in the window size calculation */
@@ -31,7 +29,7 @@ export interface UseWindowSizeReturn {
 export const useWindowSize = (params?: UseWindowSizeParams) => {
   const includeScrollbar = params?.includeScrollbar ?? true;
   const [size, setSize] = useState(() => {
-    if (!isClient) {
+    if (typeof window === 'undefined') {
       return {
         width: Number.POSITIVE_INFINITY,
         height: Number.POSITIVE_INFINITY

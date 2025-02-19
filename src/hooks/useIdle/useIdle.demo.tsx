@@ -1,3 +1,5 @@
+import { cn } from '@/docs/src/utils';
+
 import { useIdle } from './useIdle';
 
 const Demo = () => {
@@ -6,7 +8,12 @@ const Demo = () => {
   return (
     <>
       <p>
-        Status: <code style={{ color: idle ? 'red' : 'green' }}>{idle ? 'idle' : 'active'}</code>
+        Status:{' '}
+        <code>
+          <span className={cn('text-red-300', { 'text-green-300': !idle })}>
+            {idle ? 'idle' : 'active'}
+          </span>
+        </code>
       </p>
       <p>Last active: {lastActive}</p>
     </>

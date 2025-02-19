@@ -10,11 +10,8 @@ const Demo = () => {
       <p>
         Render count: <code>{renderCount}</code>
       </p>
-      <p>
-        Key: <code>{rerender.id}</code>
-      </p>
 
-      <button type='button' onClick={rerender.update}>
+      <button type='button' onClick={rerender}>
         Rerender
       </button>
     </>

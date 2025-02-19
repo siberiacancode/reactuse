@@ -1,11 +1,10 @@
 import type { RefObject } from 'react';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
-import { useMount } from '../useMount/useMount';
-import { useMutationObserver } from '../useMutationObserver/useMutationObserver';
+import { useRefState } from '../useRefState/useRefState';
 
 /** The css variable target element type */
 export type UseCssVarTarget =
@@ -43,7 +42,7 @@ export interface UseCssVar {
  * @returns {UseCssVarReturn} The object containing the value of the CSS variable
  *
  * @example
- * const { value, set } = useCssVar('color', 'red');
+ * const { ref, value, set } = useCssVar('color', 'red');
  *
  * @overload
  * @template Target The target element
@@ -63,9 +62,11 @@ export const useCssVar = ((...params: any[]) => {
   const initialValue = (target ? params[2] : params[1]) as string | undefined;
 
   const [value, setValue] = useState(initialValue ?? '');
+  const internalRef = useRefState<Element>(window.document.documentElement);
 
   const set = (value: string) => {
-    const element = getElement(target ?? window?.document?.documentElement) as HTMLElement;
+    const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
+    if (!element) return;
 
     if (element.style) {
       if (!value) {
@@ -79,25 +80,33 @@ export const useCssVar = ((...params: any[]) => {
     }
   };
 
-  const updateCssVar = () => {
-    const element = getElement(target ?? window?.document?.documentElement) as HTMLElement;
+  useEffect(() => {
+    if (initialValue) set(initialValue);
+  }, []);
+
+  useEffect(() => {
+    if (!target && !internalRef) return;
+
+    const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
-    const value = window
-      .getComputedStyle(element as Element)
-      .getPropertyValue(key)
-      ?.trim();
+    const updateCssVar = () => {
+      const value = window
+        .getComputedStyle(element as Element)
+        .getPropertyValue(key)
+        ?.trim();
 
-    setValue(value ?? initialValue);
-  };
+      setValue(value ?? initialValue);
+    };
 
-  useMount(() => {
-    if (initialValue) set(initialValue);
-  });
+    const observer = new MutationObserver(updateCssVar);
 
-  useMutationObserver(window, updateCssVar, {
-    attributeFilter: ['style', 'class']
-  });
+    observer.observe(element, { attributeFilter: ['style', 'class'] });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [target, internalRef.current]);
 
   return {
     value,

@@ -102,8 +102,8 @@ export interface UseFieldReturn<Value> {
  * const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();
  */
 export const useField = <
-  Value extends boolean | string = string,
-  Type = Value extends string ? string : boolean
+  Value extends boolean | number | string = string,
+  Type = Value extends string ? string : Value extends boolean ? boolean : number
 >(
   params?: UseFieldParams<Value>
 ): UseFieldReturn<Type> => {
@@ -126,12 +126,12 @@ export const useField = <
   const setValue = (value: Type) => {
     if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox') {
       inputRef.current.checked = value as boolean;
-      if (watchingRef.current) return rerender.update();
+      if (watchingRef.current) return rerender();
       return;
     }
 
     inputRef.current!.value = value as string;
-    if (watchingRef.current) return rerender.update();
+    if (watchingRef.current) return rerender();
   };
 
   const reset = () => {
@@ -197,7 +197,7 @@ export const useField = <
       }
     },
     onChange: async () => {
-      if (watchingRef.current) return rerender.update();
+      if (watchingRef.current) return rerender();
       if (inputRef.current!.value !== initialValue) setDirty(true);
       if (dirty && inputRef.current!.value === initialValue) setDirty(false);
       if (registerParams && params?.validateOnChange) await validate(registerParams);

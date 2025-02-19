@@ -5,7 +5,7 @@ const Demo = () => {
 
   const getOtpCode = async () => {
     const credential = await otpCredential.get();
-    console.log('@', credential);
+    console.log('credential', credential);
   };
 
   return (

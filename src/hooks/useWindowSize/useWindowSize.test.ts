@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useWindowSize } from './useWindowSize';
 
 const mockWindowInnerHeight = vi.spyOn(window, 'innerHeight', 'get');
@@ -15,6 +17,15 @@ it('Should use window size', () => {
   const { result } = renderHook(useWindowSize);
 
   expect(result.current).toEqual({ width: 100, height: 100 });
+});
+
+it('Should use window size on server side', () => {
+  const { result } = renderHookServer(useWindowSize);
+
+  expect(result.current).toEqual({
+    width: Number.POSITIVE_INFINITY,
+    height: Number.POSITIVE_INFINITY
+  });
 });
 
 it('Should change state upon resize events', () => {

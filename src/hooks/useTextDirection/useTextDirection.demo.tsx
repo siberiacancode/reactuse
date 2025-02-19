@@ -1,16 +1,7 @@
-import type { CSSProperties } from 'react';
-
 import { useTextDirection } from './useTextDirection';
 
 const Demo = () => {
   const textDirection = useTextDirection<HTMLDivElement>();
-
-  const buttonContainerStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px',
-    color: 'gray'
-  };
 
   return (
     <div ref={textDirection.ref}>
@@ -19,7 +10,7 @@ const Demo = () => {
         {textDirection.value === 'rtl' && 'This paragraph is right-to-left text.'}
       </p>
       <hr />
-      <div style={buttonContainerStyle}>
+      <div className='flex items-center gap-5 text-zinc-500'>
         <button
           type='button'
           onClick={() => textDirection.set(textDirection.value === 'ltr' ? 'rtl' : 'ltr')}

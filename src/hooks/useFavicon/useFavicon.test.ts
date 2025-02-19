@@ -11,7 +11,7 @@ it('Should use favicon', () => {
   const { result } = renderHook(useFavicon);
 
   expect(result.current.href).toBe(undefined);
-  expect(typeof result.current.set).toBe('function');
+  expect(result.current.set).toBeTypeOf('function');
 });
 
 it('Should be set initial favicon', () => {

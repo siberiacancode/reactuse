@@ -8,14 +8,14 @@ it('Should use set', () => {
   const set = result.current;
 
   expect(set.size).toBe(3);
-  expect(typeof set.clear).toBe('function');
-  expect(typeof set.remove).toBe('function');
-  expect(typeof set.add).toBe('function');
-  expect(typeof set.toggle).toBe('function');
-  expect(typeof set.union).toBe('function');
-  expect(typeof set.difference).toBe('function');
-  expect(typeof set.symmetricDifference).toBe('function');
-  expect(typeof set.intersection).toBe('function');
+  expect(set.clear).toBeTypeOf('function');
+  expect(set.remove).toBeTypeOf('function');
+  expect(set.add).toBeTypeOf('function');
+  expect(set.toggle).toBeTypeOf('function');
+  expect(set.union).toBeTypeOf('function');
+  expect(set.difference).toBeTypeOf('function');
+  expect(set.symmetricDifference).toBeTypeOf('function');
+  expect(set.intersection).toBeTypeOf('function');
 });
 
 it('Should has value', () => {

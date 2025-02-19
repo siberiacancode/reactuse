@@ -50,7 +50,7 @@ const Demo = () => {
           {item}
         </div>
       ))}
-      {infiniteScroll.isLoading && <div>Loading...</div>}
+      {infiniteScroll.loading && <div>Loading...</div>}
     </div>
   );
 };

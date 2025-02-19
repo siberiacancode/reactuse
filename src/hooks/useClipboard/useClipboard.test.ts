@@ -24,7 +24,7 @@ it('Should use copy to clipboard', () => {
 
   expect(result.current.value).toBeNull();
   expect(result.current.supported).toBeTruthy();
-  expect(typeof result.current.copy).toBe('function');
+  expect(result.current.copy).toBeTypeOf('function');
 });
 
 it('Should copy value to clipboard', async () => {

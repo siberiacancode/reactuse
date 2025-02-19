@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { isClient } from '@/utils/helpers';
-
 export interface ScrollPosition {
   x: number;
   y: number;
@@ -30,8 +28,8 @@ export const scrollTo = ({
  */
 export const useWindowScroll = () => {
   const [value, setValue] = useState<ScrollPosition>({
-    x: isClient ? window.scrollX : Number.POSITIVE_INFINITY,
-    y: isClient ? window.scrollY : Number.POSITIVE_INFINITY
+    x: typeof window !== 'undefined' ? window.scrollX : Number.POSITIVE_INFINITY,
+    y: typeof window !== 'undefined' ? window.scrollY : Number.POSITIVE_INFINITY
   });
 
   useEffect(() => {

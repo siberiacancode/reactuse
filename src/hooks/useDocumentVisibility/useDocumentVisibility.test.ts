@@ -13,7 +13,6 @@ it('Should use document visibility', () => {
 
 it('Should use document visibility on server', () => {
   const { result } = renderHookServer(useDocumentVisibility);
-
   expect(result.current).toBe('hidden');
 });
 
