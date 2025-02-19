@@ -2,7 +2,7 @@ import fs from 'node:fs';
 
 import type { HookRegistry } from '@/utils/types';
 
-import { REGISTRY_PATH, REGISTRY_PUBLIC_PATH } from '@/scripts/generateRegistry';
+import { REGISTRY_PATH } from '@/scripts/generateRegistry';
 import {
   extractHookDependencies,
   extractLocalDependencies,
@@ -44,11 +44,8 @@ export const updateRegistry = async () => {
 
   try {
     fs.writeFileSync(REGISTRY_PATH, JSON.stringify(hooksRegistry, null, 2));
-    fs.copyFileSync(REGISTRY_PATH, REGISTRY_PUBLIC_PATH);
     logger.info('Hooks registry updated successfully');
   } catch (error) {
     logger.error(`Error saving updated registry file. Error - ${error}`);
   }
 };
-
-updateRegistry();

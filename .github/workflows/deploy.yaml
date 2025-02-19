@@ -32,17 +32,28 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Not needed if lastUpdated is not enabled
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
+          cache: pnpm
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
       - name: Install dependencies
-        run: yarn
+        run: pnpm install
+
+      - name: Build CLI and registry
+        run: pnpm cli:build
+
       - name: Build with VitePress
-        run: yarn docs:build
+        run: pnpm docs:build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

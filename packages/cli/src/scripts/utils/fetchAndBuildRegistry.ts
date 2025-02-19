@@ -45,7 +45,7 @@ export const fetchAndBuildRegistry = async () => {
 
     fs.writeFileSync(REGISTRY_PATH, JSON.stringify(hooksRegistry, null, 2));
 
-    logger.info('Hooks registry saved to registry/registry.json');
+    logger.info('Hooks registry saved.');
   } catch (error) {
     logger.error(`Error saving registry file. Error - ${error}`);
   }

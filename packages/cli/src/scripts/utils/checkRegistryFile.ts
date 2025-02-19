@@ -4,7 +4,7 @@ import { logger } from '@/utils/logger';
 
 export const isRegistryFileExist = (registryPath: string) => {
   if (!fs.existsSync(registryPath)) {
-    logger.info('Registry file does not exist, fetching new hooks...');
+    logger.info('Registry is empty, starting to build...');
     return false;
   }
 
@@ -13,7 +13,7 @@ export const isRegistryFileExist = (registryPath: string) => {
     logger.info('Registry file is empty, fetching new hooks...');
     return false;
   }
+  logger.info('Registry is detected, starting to update...');
 
-  logger.info('Registry file is not empty, skipping hook fetch...');
   return true;
 };

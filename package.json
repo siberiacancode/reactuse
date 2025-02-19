@@ -7,10 +7,11 @@
   ],
   "scripts": {
     "lint-staged": "lint-staged",
-    "unit-test": "pnpm --filter @siberiacancode/reactuse run unit-test",
     "prepublishOnly": "pnpm type && pnpm unit-test run && pnpm build",
-    "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "unit-test": "pnpm --filter @siberiacancode/reactuse run unit-test",
+    "cli:build": "pnpm --filter @siberiacancode/cli build && pnpm --filter @siberiacancode/cli generate-registry",
+    "docs:build": "pnpm --filter @siberiacancode/docs build"
   },
   "devDependencies": {
     "husky": "^9.1.7",
