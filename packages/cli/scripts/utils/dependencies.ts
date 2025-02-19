@@ -33,3 +33,16 @@ export const extractUtilsDependencies = (content: string): string[] => {
 
   return dependencies;
 };
+
+export const extractLocalDependencies = (content: string) => {
+  const localImportRegex = /(?:import|export).*?from\s+['"]\.\/helpers\/([^'"]+)['"]/g;
+  const dependencies = new Set<string>();
+
+  let match;
+  while ((match = localImportRegex.exec(content)) !== null) {
+    const fileName = match[1].split('/').pop()!;
+    dependencies.add(fileName);
+  }
+
+  return Array.from(dependencies);
+};

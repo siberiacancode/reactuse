@@ -1,11 +1,11 @@
 import prompts from 'prompts';
 
-import type { AddOptionsSchema, RegistryList } from '@/utils/types';
+import type { AddOptionsSchema, HookRegistry } from '@/utils/types';
 
 import { logger } from '@/utils/logger';
 
 export const selectHooksFromList = async (
-  registry: RegistryList[],
+  registry: HookRegistry[],
   options: AddOptionsSchema
 ): Promise<string[]> => {
   let selectedHooks = options.all ? registry.map((hook) => hook.name) : options.hooks;

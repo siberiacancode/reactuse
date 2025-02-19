@@ -1,4 +1,4 @@
-import type { RegistryList } from '@/utils/types';
+import type { HookRegistry } from '@/utils/types';
 
 const baseUrl =
   process.env.COMPONENTS_REGISTRY_URL ?? 'https://siberiacancode.github.io/reactuse/registry.json';
@@ -7,7 +7,7 @@ const fetchRegistry = async () => {
   try {
     const response = await fetch(baseUrl);
 
-    const result = (await response.json()) as RegistryList[];
+    const result = (await response.json()) as HookRegistry[];
 
     return result;
   } catch {

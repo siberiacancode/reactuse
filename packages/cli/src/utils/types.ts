@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-export interface RegistryList {
+export interface HookRegistry {
   hookDependency: string[];
+  localDependency: string[];
   name: string;
   utilsDependency: string[];
 }

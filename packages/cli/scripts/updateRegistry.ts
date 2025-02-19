@@ -1,9 +1,13 @@
-import type { HookRegistry } from 'scripts/utils/fetchAndBuildRegistry';
-
 import fs from 'node:fs';
 import { REGISTRY_PATH, REGISTRY_PUBLIC_PATH } from 'scripts/generateRegistry';
-import { extractHookDependencies, extractUtilsDependencies } from 'scripts/utils/dependencies';
+import {
+  extractHookDependencies,
+  extractLocalDependencies,
+  extractUtilsDependencies
+} from 'scripts/utils/dependencies';
 import { fetchAvailableHooks } from 'scripts/utils/fetchAvailableHooks';
+
+import type { HookRegistry } from '@/utils/types';
 
 import { FETCH_REPO_URL } from '@/utils/constants';
 import { logger } from '@/utils/logger';
@@ -30,7 +34,8 @@ export const updateRegistry = async () => {
       hooksRegistry.push({
         name: hook.name,
         hookDependency: extractHookDependencies(hookContent),
-        utilsDependency: extractUtilsDependencies(hookContent)
+        utilsDependency: extractUtilsDependencies(hookContent),
+        localDependency: extractLocalDependencies(hookContent)
       });
     } catch (error) {
       console.error(`Error processing hook: ${hook.name}`, error);

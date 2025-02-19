@@ -4,7 +4,7 @@ import { existsSync, writeFileSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-import type { RegistryList } from '@/utils/types';
+import type { HookRegistry } from '@/utils/types';
 
 import { FETCH_REPO_URL } from '@/utils/constants';
 import { logger } from '@/utils/logger';
@@ -41,6 +41,35 @@ const downloadHook = async (hookName: string, path: string, aliasesUtilsPathToRe
   } catch (error) {
     logger.error(`\n Error downloading ${hookName} hook. Try again. Error - ${error}`);
     process.exit(1);
+  }
+};
+
+const downloadLocalDependencies = async (
+  hookName: string,
+  path: string,
+  localDependencies: string[]
+) => {
+  const localDirName = `${path}/${hookName}/helpers`;
+
+  if (!existsSync(localDirName)) {
+    await fs.mkdir(localDirName, { recursive: true });
+  }
+
+  for (const localDependency of localDependencies) {
+    const localUrl = `${FETCH_REPO_URL}/hooks/${hookName}/helpers/${localDependency}.ts`;
+    const pathToLoadLocal = `${localDirName}/${localDependency}.ts`;
+
+    try {
+      const response = await fetch(localUrl);
+
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+
+      await fs.writeFile(pathToLoadLocal, buffer);
+    } catch (error) {
+      logger.error(`\n Error downloading ${localDependency} function. Try again. Error - ${error}`);
+      process.exit(1);
+    }
   }
 };
 
@@ -83,7 +112,7 @@ const downloadUtil = async (utilName: string, path: string) => {
 };
 
 const resolveHookDependencies = (
-  registryIndex: RegistryList[],
+  registryIndex: HookRegistry[],
   deps: string[],
   collectedDeps: Set<string> = new Set()
 ): Set<string> => {
@@ -107,7 +136,7 @@ const resolveHookDependencies = (
   return collectedDeps;
 };
 
-const resolveUtilDependencies = (registryIndex: RegistryList[], hooks: string[]): Set<string> => {
+const resolveUtilDependencies = (registryIndex: HookRegistry[], hooks: string[]): Set<string> => {
   const collectedUtils = new Set<string>();
 
   for (const hook of hooks) {
@@ -126,13 +155,13 @@ const resolveUtilDependencies = (registryIndex: RegistryList[], hooks: string[])
 
 export const downloadHooks = async (
   hook: string,
-  registryIndex: RegistryList[],
+  registryIndex: HookRegistry[],
   pathToLoadHooks: string,
   pathToLoadUtils: string,
   spinner: Ora,
   aliasesUtilsPath: string
 ) => {
-  spinner.text = `Installing ${hook}...`;
+  spinner.text = `Start installing ${hook}...`;
   const findedHook = registryIndex.find((registryHook) => registryHook.name === hook);
 
   if (!findedHook) {
@@ -160,4 +189,9 @@ export const downloadHooks = async (
 
   spinner.text = `Installing hook ${hook}`;
   await downloadHook(hook, pathToLoadHooks, aliasesUtilsPath);
+
+  if (findedHook.localDependency.length) {
+    spinner.text = `Installing helpers for hook ${hook}`;
+    await downloadLocalDependencies(hook, pathToLoadHooks, findedHook.localDependency);
+  }
 };
