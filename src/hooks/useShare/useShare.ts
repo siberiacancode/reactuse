@@ -1,20 +1,20 @@
 /** The use share options type */
 export interface UseShareParams {
-  /** The files of the share */
+  /** Array of files to be shared */
   files?: File[];
-  /** The text of the share */
+  /** Text content to be shared */
   text?: string;
-  /** The title of the share */
+  /** Title of the content being shared */
   title?: string;
-  /** The url of the share */
+  /** URL link to be shared */
   url?: string;
 }
 
 /** The use share return type */
 export interface UseShareReturn {
-  /** The share supported status */
+  /** Whether the Web Share API is supported in the current environment */
   supported: boolean;
-  /** The share function */
+  /** Function to trigger the native share dialog */
   share: (shareParams: ShareData) => Promise<void>;
 }
 

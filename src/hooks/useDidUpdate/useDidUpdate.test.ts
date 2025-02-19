@@ -20,7 +20,7 @@ it('Should call effect on subsequent updates when dependencies change', () => {
   expect(effect).not.toHaveBeenCalled();
 
   rerender({ deps: [true] });
-  expect(effect).toHaveBeenCalledTimes(1);
+  expect(effect).toHaveBeenCalledOnce();
 });
 
 it('Should call effect on rerender when dependencies empty', () => {
@@ -30,7 +30,7 @@ it('Should call effect on rerender when dependencies empty', () => {
   expect(effect).not.toHaveBeenCalled();
 
   rerender();
-  expect(effect).toHaveBeenCalledTimes(1);
+  expect(effect).toHaveBeenCalledOnce();
 
   rerender();
   expect(effect).toHaveBeenCalledTimes(2);

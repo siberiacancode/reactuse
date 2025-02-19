@@ -79,13 +79,13 @@ it('Should handle media query change', () => {
     configurable: true
   });
 
-  expect(mockMediaQueryListAddEventListener).toHaveBeenCalledTimes(1);
-  expect(mockMediaQueryListRemoveEventListener).toHaveBeenCalledTimes(0);
+  expect(mockMediaQueryListAddEventListener).toHaveBeenCalledOnce();
+  expect(mockMediaQueryListRemoveEventListener).not.toHaveBeenCalled();
 
   act(() => trigger.callback(`(resolution: 1dppx)`));
 
   expect(mockMediaQueryListAddEventListener).toHaveBeenCalledTimes(2);
-  expect(mockMediaQueryListRemoveEventListener).toHaveBeenCalledTimes(1);
+  expect(mockMediaQueryListRemoveEventListener).toHaveBeenCalledOnce();
   expect(result.current.ratio).toEqual(3);
 });
 
@@ -94,5 +94,5 @@ it('Should disconnect on onmount', () => {
 
   unmount();
 
-  expect(mockMediaQueryListRemoveEventListener).toHaveBeenCalledTimes(1);
+  expect(mockMediaQueryListRemoveEventListener).toHaveBeenCalledOnce();
 });

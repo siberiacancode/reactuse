@@ -95,7 +95,7 @@ export const useHover = ((...params: any[]) => {
   internalOptionsRef.current = options;
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
+    if (!target && !internalRef.state) return;
     const element = (target ? getElement(target) : internalRef.current) as Element;
 
     if (!element) return;
@@ -117,7 +117,7 @@ export const useHover = ((...params: any[]) => {
       element.removeEventListener('mouseenter', onMouseEnter);
       element.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, [target, internalRef.current]);
+  }, [target, internalRef.state]);
 
   if (target) return hovering;
   return [internalRef, hovering] as const;

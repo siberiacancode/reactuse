@@ -26,12 +26,12 @@ export interface UseResizeObserverReturn {
 }
 
 export interface UseResizeObserver {
-  <Target extends UseResizeObserverTarget | UseResizeObserverTarget[]>(
+  <Target extends UseResizeObserverTarget>(
     target: Target,
     options?: UseResizeObserverOptions
   ): UseResizeObserverReturn;
 
-  <Target extends UseResizeObserverTarget | UseResizeObserverTarget[]>(
+  <Target extends UseResizeObserverTarget>(
     options?: UseResizeObserverOptions,
     target?: never
   ): UseResizeObserverReturn & { ref: StateRef<Target> };
@@ -66,7 +66,7 @@ export interface UseResizeObserver {
 export const useResizeObserver = ((...params: any[]) => {
   const target = (
     typeof params[0] === 'object' && !('current' in params[0]) ? undefined : params[0]
-  ) as UseResizeObserverTarget | UseResizeObserverTarget[] | undefined;
+  ) as UseResizeObserverTarget | undefined;
   const options = (target ? params[1] : params[0]) as UseResizeObserverOptions | undefined;
   const enabled = options?.enabled ?? true;
 
@@ -77,25 +77,7 @@ export const useResizeObserver = ((...params: any[]) => {
   internalOnChangeRef.current = options?.onChange;
 
   useEffect(() => {
-    if (!enabled && !target && !internalRef.current) return;
-
-    if (Array.isArray(target)) {
-      if (!target.length) return;
-      const observer = new ResizeObserver((entries) => {
-        setEntries(entries);
-        internalOnChangeRef.current?.(entries, observer);
-      });
-
-      target.forEach((target) => {
-        const element = getElement(target);
-        if (!element) return;
-        observer.observe(element as Element, options);
-      });
-
-      return () => {
-        observer.disconnect();
-      };
-    }
+    if (!enabled && !target && !internalRef.state) return;
 
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
@@ -109,7 +91,7 @@ export const useResizeObserver = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.current, options?.box, enabled]);
+  }, [target, internalRef.state, options?.box, enabled]);
 
   if (target) return { entries };
   return {

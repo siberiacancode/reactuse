@@ -101,7 +101,7 @@ export const useInfiniteScroll = ((...params) => {
   });
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
+    if (!target && !internalRef.state) return;
     const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
@@ -110,7 +110,7 @@ export const useInfiniteScroll = ((...params) => {
     return () => {
       element.removeEventListener('scroll', onLoadMore);
     };
-  }, [target, internalRef.current, direction, distance]);
+  }, [target, internalRef.state, direction, distance]);
 
   if (target) return loading;
   return {

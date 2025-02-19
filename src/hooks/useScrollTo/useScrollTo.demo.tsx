@@ -1,16 +1,4 @@
-import type { CSSProperties } from 'react';
-
 import { useScrollTo } from './useScrollTo';
-
-const blockStyle: CSSProperties = {
-  border: '1px solid gray',
-  width: '100%',
-  padding: 20,
-  textAlign: 'center',
-  borderRadius: 5,
-  height: 250,
-  marginBottom: 10
-};
 
 const Demo = () => {
   const scrollTo = useScrollTo<HTMLDivElement>({ x: 0, y: 260 });
@@ -18,9 +6,15 @@ const Demo = () => {
   return (
     <div>
       <div ref={scrollTo.ref} className='overflow-auto p-5 h-[300px]'>
-        <div style={blockStyle}><code>First</code> amazing block</div>
-        <div style={blockStyle}><code>Second</code> amazing block</div>
-        <div style={blockStyle}><code>Third</code>  amazing block</div>
+        <div className='w-full p-5 text-center border border-gray-300 rounded-md h-[250px] mb-2.5'>
+          <code>First</code> amazing block
+        </div>
+        <div className='w-full p-5 text-center border border-gray-300 rounded-md h-[250px] mb-2.5'>
+          <code>Second</code> amazing block
+        </div>
+        <div className='w-full p-5 text-center border border-gray-300 rounded-md h-[250px] mb-2.5'>
+          <code>Third</code> amazing block
+        </div>
       </div>
       <p>
         Scroll to:

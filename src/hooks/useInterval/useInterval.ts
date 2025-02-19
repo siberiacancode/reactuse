@@ -32,7 +32,7 @@ interface UseInterval {
  * @overload
  * @param {() => void} callback Any callback function
  * @param {number} [interval=1000] Time in milliseconds
- * @param {boolean} [options.immediate=true] Start the interval immediately
+ * @param {boolean} [options.enabled=true] Start the interval immediately
  * @returns {UseIntervalReturn}
  *
  * @example
@@ -41,7 +41,7 @@ interface UseInterval {
  * @overload
  * @param {() => void} callback Any callback function
  * @param {number} [options.interval=1000] Time in milliseconds
- * @param {boolean} [options.immediate=true] Start the interval immediately
+ * @param {boolean} [options.enabled=true] Start the interval immediately
  *
  * @example
  * const { active, pause, resume } = useInterval(() => console.log('inside interval'), { interval: 2500 });

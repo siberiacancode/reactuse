@@ -22,5 +22,5 @@ it('Should call initializer function', () => {
   const { result } = renderHook(() => useConst(init));
 
   expect(result.current).toBe(99);
-  expect(init).toHaveBeenCalledTimes(1);
+  expect(init).toHaveBeenCalledOnce();
 });

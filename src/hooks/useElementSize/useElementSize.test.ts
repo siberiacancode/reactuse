@@ -114,7 +114,7 @@ targets.forEach((target) => {
         trigger.callback(element);
       });
 
-      expect(mockResizeObserverObserve).toHaveBeenCalledTimes(1);
+      expect(mockResizeObserverObserve).toHaveBeenCalledOnce();
       expect(result.current.value).toStrictEqual({ width: 200, height: 200 });
     });
 
@@ -133,7 +133,7 @@ targets.forEach((target) => {
 
       unmount();
 
-      expect(mockResizeObserverDisconnect).toHaveBeenCalledTimes(1);
+      expect(mockResizeObserverDisconnect).toHaveBeenCalledOnce();
     });
   });
 });

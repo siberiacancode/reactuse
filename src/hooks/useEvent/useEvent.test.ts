@@ -31,12 +31,12 @@ it('Should call the most recent callback', () => {
   });
   result.current();
 
-  expect(firstCallback).toHaveBeenCalledTimes(1);
+  expect(firstCallback).toHaveBeenCalledOnce();
 
   const secondCallback = vi.fn();
   rerender(secondCallback);
 
   result.current();
 
-  expect(secondCallback).toHaveBeenCalledTimes(1);
+  expect(secondCallback).toHaveBeenCalledOnce();
 });

@@ -145,7 +145,7 @@ export const useScroll = ((...params: any[]) => {
   const scrollPositionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
+    if (!target && !internalRef.state) return;
     const element = (target ? getElement(target) : internalRef.current) as Element;
 
     if (!element) return;
@@ -209,7 +209,7 @@ export const useScroll = ((...params: any[]) => {
       element.removeEventListener('scroll', onScroll);
       element.removeEventListener('scrollend', onScrollEnd);
     };
-  }, [target, internalRef.current]);
+  }, [target, internalRef.state]);
 
   if (target) return scrolling;
   return [internalRef, scrolling];

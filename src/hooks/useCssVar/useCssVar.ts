@@ -85,12 +85,12 @@ export const useCssVar = ((...params: any[]) => {
   }, []);
 
   useEffect(() => {
-    if (!target && !internalRef) return;
+    if (!target && !internalRef.state) return;
 
     const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
-    const updateCssVar = () => {
+    const onChange = () => {
       const value = window
         .getComputedStyle(element as Element)
         .getPropertyValue(key)
@@ -99,14 +99,14 @@ export const useCssVar = ((...params: any[]) => {
       setValue(value ?? initialValue);
     };
 
-    const observer = new MutationObserver(updateCssVar);
+    const observer = new MutationObserver(onChange);
 
     observer.observe(element, { attributeFilter: ['style', 'class'] });
 
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.current]);
+  }, [target, internalRef.state]);
 
   return {
     value,

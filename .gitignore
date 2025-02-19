@@ -215,3 +215,6 @@ generated
 
 # Turbo
 .turbo
+
+# Cursor
+.cursor

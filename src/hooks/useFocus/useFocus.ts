@@ -70,9 +70,10 @@ export const useFocus = ((...params: any[]) => {
   const blur = () => elementRef.current?.blur();
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
+    if (!target && !internalRef.state) return;
     const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
     if (!element) return;
+
     elementRef.current = element;
 
     const onFocus = (event: Event) => {
@@ -88,7 +89,7 @@ export const useFocus = ((...params: any[]) => {
       element.removeEventListener('focus', onFocus);
       element.removeEventListener('blur', onBlur);
     };
-  }, [target, internalRef.current]);
+  }, [target, internalRef.state]);
 
   if (target) return { focus, blur, focused };
   return {
