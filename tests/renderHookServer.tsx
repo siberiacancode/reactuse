@@ -23,10 +23,9 @@ export const renderHookServer = <Hook extends () => any>(
   // @ts-ignore
   delete globalThis.window;
   // @ts-ignore
-  delete globalThis.navigator
+  delete globalThis.navigator;
   // @ts-ignore
-  delete globalThis.document
-
+  delete globalThis.document;
 
   const results: Array<ReturnType<Hook>> = [];
   const result = {

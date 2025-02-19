@@ -7,7 +7,11 @@ const Demo = () => {
 
   useEventListener('click', () => setCount(count + 1));
 
-  return <p>Click count: <code>{count}</code></p>;
+  return (
+    <p>
+      Click count: <code>{count}</code>
+    </p>
+  );
 };
 
 export default Demo;

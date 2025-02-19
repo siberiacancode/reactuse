@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
-import type { StateRef, useRefState } from '../useRefState/useRefState';
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
 
 /** The scroll into view options type */
 export interface UseScrollIntoViewOptions extends ScrollIntoViewOptions {

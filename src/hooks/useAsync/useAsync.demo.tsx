@@ -23,11 +23,10 @@ const Demo = () => {
       </button>
 
       {getPokemonQuery.isLoading && (
-        <div className='animate-pulse flex flex-col gap-2'>
-          <div className='h-7 rounded-md bg-neutral-600 w-40' />
+        <div className='flex animate-pulse flex-col gap-2'>
+          <div className='h-7 w-40 rounded-md bg-neutral-600' />
           <div className='size-96 rounded-md bg-neutral-600' />
         </div>
-
       )}
 
       {getPokemonQuery.data && (
@@ -38,7 +37,6 @@ const Demo = () => {
           <div className='size-96'>
             <img
               alt={getPokemonQuery.data.name}
-
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonQuery.data.id}.png`}
             />
           </div>

@@ -7,7 +7,11 @@ const Demo = () => {
 
   useWindowEvent('click', () => setCount(count + 1));
 
-  return <p>Window click count: <code>{count}</code></p>;
+  return (
+    <p>
+      Window click count: <code>{count}</code>
+    </p>
+  );
 };
 
 export default Demo;

@@ -10,16 +10,22 @@ const Demo = () => {
   });
 
   return (
-    <div className="text-center">
-      <div className="text-center">
-        Element <code className="font-bold">{intersectionObserver.inView ? 'inside' : 'outside'}</code> the viewport
+    <div className='text-center'>
+      <div className='text-center'>
+        Element{' '}
+        <code className='font-bold'>{intersectionObserver.inView ? 'inside' : 'outside'}</code> the
+        viewport
       </div>
 
-      <div ref={rootRef} className="border-2 border-dashed border-gray-400 h-52 my-8 overflow-y-scroll rounded-xl">
-        <p className="text-center py-8 mb-72 italic text-xl opacity-80">
-          Scroll me down!
-        </p>
-        <div ref={intersectionObserver.ref} className="border-2 border-dashed border-blue-500 p-4 max-h-40 mx-8 mb-96 rounded-xl">
+      <div
+        ref={rootRef}
+        className='my-8 h-52 overflow-y-scroll rounded-xl border-2 border-dashed border-gray-400'
+      >
+        <p className='mb-72 py-8 text-center text-xl italic opacity-80'>Scroll me down!</p>
+        <div
+          ref={intersectionObserver.ref}
+          className='mx-8 mb-96 max-h-40 rounded-xl border-2 border-dashed border-blue-500 p-4'
+        >
           <p>Hello world!</p>
         </div>
       </div>

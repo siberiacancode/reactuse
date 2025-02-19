@@ -135,7 +135,7 @@ targets.forEach((target) => {
       act(() => result.current.ref(document.getElementById('target')! as HTMLVideoElement));
 
     await waitFor(() => expect(mockGetDisplayMedia).toHaveBeenCalled());
-    expect(result.current.sharing).toBe(true);
+    await waitFor(() => expect(result.current.sharing).toBe(true));
   });
 
   it('Should accept boolean audio and video constraints', async () => {
