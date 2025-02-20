@@ -82,7 +82,6 @@ export const useScrollIntoView = ((...params: any[]) => {
   } = options ?? {};
 
   useEffect(() => {
-    console.log('useEffect', target, internalRef.state, enabled);
     if (!enabled) return;
     if (!target && !internalRef.state) return;
 
