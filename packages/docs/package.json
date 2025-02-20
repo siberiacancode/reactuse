@@ -1,0 +1,58 @@
+{
+  "name": "@siberiacancode/docs",
+  "version": "1.0.0",
+  "description": "Ultimate tool",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "license": "MIT",
+  "homepage": "https://siberiacancode.github.io/reactuse/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siberiacancode/reactuse.git"
+  },
+  "bugs": "https://github.com/siberiacancode/reactuse/issues",
+  "keywords": [
+    "react",
+    "react hooks",
+    "react use",
+    "use",
+    "hooks"
+  ],
+  "scripts": {
+    "dev": "vitepress dev app",
+    "build": "vitepress build app",
+    "preview": "vitepress preview app",
+    "lint": "eslint . --fix",
+    "lint-inspector": "npx @eslint/config-inspector@latest",
+    "type": "tsc --noEmit",
+    "format": "prettier --write .",
+    "pretty": "yarn type && yarn lint && yarn format"
+  },
+  "dependencies": {
+    "@siberiacancode/reactuse": "workspace:*"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.7",
+    "clsx": "^2.1.1",
+    "comment-parser": "^1.4.1",
+    "postcss": "^8.5.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss": "^4.0.7",
+    "vitepress": "^1.6.3",
+    "shiki": "^1.29.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

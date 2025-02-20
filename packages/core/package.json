@@ -1,0 +1,90 @@
+{
+  "name": "@siberiacancode/reactuse",
+  "version": "0.0.92",
+  "description": "Ultimate tool",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "license": "MIT",
+  "homepage": "https://siberiacancode.github.io/reactuse/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siberiacancode/reactuse.git"
+  },
+  "bugs": "https://github.com/siberiacancode/reactuse/issues",
+  "keywords": [
+    "react",
+    "react hooks",
+    "react use",
+    "use",
+    "hooks"
+  ],
+  "sideEffects": false,
+  "exports": {
+    "types": "./dist/types/index.d.ts",
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.cjs"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepublishOnly": "yarn type && yarn unit-test run && yarn build",
+    "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
+    "lint": "eslint . --fix",
+    "lint-inspector": "npx @eslint/config-inspector@latest",
+    "type": "tsc --noEmit",
+    "format": "prettier --write .",
+    "pretty": "yarn type && yarn lint && yarn format",
+    "unit-test": "vitest"
+  },
+  "peerDependencies": {
+    "@types/react": "^18.0.0",
+    "react": "^17.0.2 || ^18.0.0",
+    "react-dom": "^17.0.2 || ^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "screenfull": "^6.0.2"
+  },
+  "devDependencies": {
+    "@siberiacancode/vitest": "^2.0.2",
+    "@siberiacancode/builder": "^1.3.17",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.2.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.2",
+    "@types/web-bluetooth": "^0.0.20",
+    "core-js": "^3.40.0",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "shx": "^0.3.4",
+    "vite": "^6.1.1",
+    "vitest": "^3.0.6"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

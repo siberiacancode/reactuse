@@ -1,6 +1,6 @@
 # vite press
-docs/.vitepress/cache
-docs/.vitepress/dist
+**/.vitepress/cache
+**/.vitepress/dist
 
 # Microsoft Azure Build Output
 csx/
