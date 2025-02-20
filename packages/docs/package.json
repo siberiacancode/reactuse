@@ -27,8 +27,8 @@
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",
     "type": "tsc --noEmit",
-    "format": "prettier --write .",
-    "pretty": "yarn type && yarn lint && yarn format"
+    "pretty": "yarn type && yarn lint && yarn format",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@siberiacancode/reactuse": "workspace:*"
