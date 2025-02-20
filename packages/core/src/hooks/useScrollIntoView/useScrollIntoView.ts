@@ -42,7 +42,7 @@ export interface UseScrollIntoViewOverload {
 /**
  * @name useScrollIntoView
  * @description - Hook that provides functionality to scroll an element into view
- * @category Browser
+ * @category Sensors
  *
  * @overload
  * @template Target The target element
