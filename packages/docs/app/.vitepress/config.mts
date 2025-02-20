@@ -78,9 +78,9 @@ export default async () => {
           editLink: {
             pattern: ({ filePath, params }) => {
               if (filePath.includes('hooks') && params?.name) {
-                return `https://github.com/siberiacancode/reactuse/blob/main/src/hooks/${params.name}/${params.name}.ts`;
+                return `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/${params.name}/${params.name}.ts`;
               } else {
-                return `https://github.com/siberiacancode/reactuse/blob/main/docs/${filePath}`;
+                return `https://github.com/siberiacancode/reactuse/blob/main/packages/docs/app/${filePath}`;
               }
             },
             text: 'Suggest changes to this page'
