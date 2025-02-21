@@ -1,6 +1,6 @@
 {
   "name": "@siberiacancode/reactuse",
-  "version": "0.0.92",
+  "version": "0.0.93",
   "description": "Ultimate tool",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -62,8 +62,8 @@
     "screenfull": "^6.0.2"
   },
   "devDependencies": {
-    "@siberiacancode/vitest": "^2.0.2",
     "@siberiacancode/builder": "^1.3.17",
+    "@siberiacancode/vitest": "^2.0.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^18.3.12",
