@@ -34,7 +34,7 @@ beforeEach(() => {
   vi.stubGlobal('devicePixelRatio', 1);
   vi.stubGlobal(
     'matchMedia',
-    vi.fn<[string], MediaQueryList>().mockImplementation((query) => {
+    vi.fn().mockImplementation((query) => {
       const mockMediaQueryList = new MockMediaQueryList(query);
       return { ...mockMediaQueryList, media: query };
     })
