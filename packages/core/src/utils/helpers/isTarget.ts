@@ -3,4 +3,4 @@ export const isTarget = (target: any) =>
   target instanceof Element ||
   target instanceof Window ||
   target instanceof Document ||
-  (target && 'current' in target);
+  (target && typeof target === 'object' && 'current' in target);

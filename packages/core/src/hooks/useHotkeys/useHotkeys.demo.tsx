@@ -4,7 +4,7 @@ import { useHotkeys } from './useHotkeys';
 
 const Demo = () => {
   const [count, setCount] = useState(0);
-  useHotkeys('control+a', () => setCount(count + 1), { preventDefault: true });
+  useHotkeys('control+a', () => setCount(count + 1));
 
   return (
     <div>
