@@ -26,7 +26,6 @@
   "scripts": {
     "cli:build": "pnpm --filter @siberiacancode/cli build && pnpm --filter @siberiacancode/cli generate-registry",
     "docs:build": "pnpm --filter @siberiacancode/docs build",
-    "docs:dev": "pnpm --filter @siberiacancode/docs dev",
     "lint": "pnpm --recursive lint",
     "format": "prettier --write .",
     "unit-test": "pnpm --recursive run unit-test",
