@@ -1,15 +1,26 @@
 import path from 'node:path';
 import prompts from 'prompts';
-import { promises as fs } from 'node:fs';
+import fs from 'node:fs';
 
 import { APP_PATH } from '@/utils/constants';
+import chalk from 'chalk';
 
 export const init = {
   command: 'init',
   describe: 'Initialize config file',
 
   handler: async () => {
-    const { hookPath, utilsPath } = await prompts([
+    const highlight = (text: string) => chalk.cyan(text);
+
+    const config = await prompts([
+      {
+        type: 'toggle',
+        name: 'typescript',
+        message: `Would you like to use ${highlight('TypeScript')} (recommended)?`,
+        initial: true,
+        active: 'yes',
+        inactive: 'no'
+      },
       {
         type: 'text',
         name: 'hookPath',
@@ -24,8 +35,8 @@ export const init = {
       }
     ]);
 
-    const targetPath = path.join(APP_PATH, 'reactuse.config.json');
+    const configPath = path.join(APP_PATH, 'reactuse.config.json');
 
-    await fs.writeFile(targetPath, JSON.stringify({ hookPath, utilsPath }, null, 2), 'utf8');
+    await fs.promises.writeFile(configPath, JSON.stringify({ ...config }, null, 2), 'utf8');
   }
 };

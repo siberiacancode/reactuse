@@ -1,4 +1,5 @@
-import { configSchema } from '@/utils/types';
+import { FETCH_REPO_URL_JS, FETCH_REPO_URL_TS } from '@/utils/constants';
+import { configSchema, PreferLanguage } from '@/utils/types';
 import { cosmiconfig } from 'cosmiconfig';
 
 export const getConfig = async (cwd: string) => {
@@ -17,4 +18,10 @@ export const getConfig = async (cwd: string) => {
   } catch (error) {
     throw new Error(`Invalid configuration found in ${cwd}/reactuse.config.json. Error - ${error}`);
   }
+};
+
+export const getUrl = (preferLanguage: PreferLanguage) => {
+  if (preferLanguage === 'js') return FETCH_REPO_URL_JS;
+
+  return FETCH_REPO_URL_TS;
 };

@@ -1,19 +1,17 @@
 import type { Argv } from 'yargs';
 
 import chalk from 'chalk';
-import { existsSync } from 'node:fs';
-import path from 'node:path';
 import ora from 'ora';
 import { loadConfig } from 'tsconfig-paths';
 
 import type { AddOptionsSchema } from '@/utils/types';
 
 import { getConfig } from '@/utils/config/getConfig';
-import { downloadHooks } from '@/utils/hooks';
+import { downloadHooks } from '@/utils/hooks/downloadHooks';
 import { selectHooksFromList } from '@/utils/hooks/selectHooksFromList';
 import { resolveImport } from '@/utils/imports/resolveImport';
 import { logger } from '@/utils/logger';
-import { getRegistryIndex } from '@/registry';
+import { getRegistryIndex } from '@/registry/getRegistry';
 import { addOptionsSchema } from '@/utils/types';
 import { APP_PATH } from '@/utils/constants';
 
@@ -46,7 +44,7 @@ export const add = {
       logger.warn(
         `Configuration is missing. Please run ${chalk.green(
           `init`
-        )} to create a components.json file.`
+        )} to create a reactuse.config.json file.`
       );
       process.exit(1);
     }
@@ -63,6 +61,8 @@ export const add = {
     const registryIndex = await getRegistryIndex();
     const selectedHooks = await selectHooksFromList(registryIndex, options);
 
+    const preferLanguage = config.typescript ? 'ts' : 'js';
+
     const spinner = ora(`Installing hooks...`).start();
     for (const hook of selectedHooks) {
       await downloadHooks(
@@ -71,7 +71,8 @@ export const add = {
         pathToLoadHooks,
         pathToLoadUtils,
         spinner,
-        config.utilsPath
+        config.utilsPath,
+        preferLanguage
       );
     }
     spinner.succeed(`Done.`);
