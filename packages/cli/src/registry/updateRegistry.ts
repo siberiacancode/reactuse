@@ -2,15 +2,15 @@ import fs from 'node:fs';
 
 import type { HookRegistry } from '@/utils/types';
 
-import { REGISTRY_PATH } from '@/scripts/generateRegistry';
+import { REGISTRY_PATH } from '@/registry/generateRegistry';
+import { FETCH_REPO_URL } from '@/utils/constants';
+import { logger } from '@/utils/logger';
 import {
   extractHookDependencies,
   extractLocalDependencies,
   extractUtilsDependencies
-} from '@/scripts/utils/dependencies';
-import { fetchAvailableHooks } from '@/scripts/utils/fetchAvailableHooks';
-import { FETCH_REPO_URL } from '@/utils/constants';
-import { logger } from '@/utils/logger';
+} from '@/registry/utils/dependencies';
+import { fetchAvailableHooks } from '@/registry/utils/fetchAvailableHooks';
 export const updateRegistry = async () => {
   let hooksRegistry: HookRegistry[] = [];
 

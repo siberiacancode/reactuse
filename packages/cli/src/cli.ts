@@ -8,11 +8,11 @@ export const cli = () => {
   const processArgv = hideBin(process.argv);
 
   yargs(processArgv)
-    .scriptName('@siberiacancode/reactuse-cli')
+    .scriptName('reactuse')
     .usage('$0 <cmd> [args]')
     .command(init)
     .command(add)
-    .epilogue('More info: https://github.com/siberiacancode/reactuse/tree/main')
+    .epilogue('More info: https://siberiacancode.github.io/reactuse/')
     .version()
     .alias('v', 'version')
     .help()

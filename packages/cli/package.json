@@ -1,6 +1,8 @@
 {
   "name": "@siberiacancode/cli",
   "type": "module",
+  "version": "0.0.0",
+  "homepage": "https://siberiacancode.github.io/reactuse/",
   "description": "Add hooks to your apps.",
   "license": "MIT",
   "repository": {
@@ -18,9 +20,9 @@
     "use",
     "hooks"
   ],
-  "exports": "./dist/index.js",
+  "exports": "./dist/bin.js",
   "bin": {
-    "reactuse": "dist/index.js"
+    "reactuse": "dist/bin.js"
   },
   "files": [
     "dist"
@@ -28,9 +30,9 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "generate-registry": "tsx --tsconfig ./tsconfig.scripts.json src/scripts/generateRegistry.ts",
-    "start:dev": "cross-env COMPONENTS_REGISTRY_URL=http://localhost:5173/reactuse/registry.json node dist/index.js",
-    "start": "node dist/index.js"
+    "generate-registry": "tsx --tsconfig ./tsconfig.scripts.json src/registry/generateRegistry.ts",
+    "start:dev": "cross-env COMPONENTS_REGISTRY_URL=http://localhost:5173/reactuse/registry.json node dist/bin.js",
+    "start": "node dist/bin.js"
   },
   "dependencies": {
     "@siberiacancode/reactuse": "workspace:*",

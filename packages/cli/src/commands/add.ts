@@ -13,8 +13,9 @@ import { downloadHooks } from '@/utils/hooks';
 import { selectHooksFromList } from '@/utils/hooks/selectHooksFromList';
 import { resolveImport } from '@/utils/imports/resolveImport';
 import { logger } from '@/utils/logger';
-import { getRegistryIndex } from '@/utils/registry';
+import { getRegistryIndex } from '@/registry';
 import { addOptionsSchema } from '@/utils/types';
+import { APP_PATH } from '@/utils/constants';
 
 export const add = {
   command: 'add [hooks...]',
@@ -32,28 +33,15 @@ export const add = {
         type: 'boolean',
         default: false,
         description: 'add all available hooks'
-      })
-      .option('cwd', {
-        alias: 'c',
-        type: 'string',
-        description: 'the working directory. defaults to the current directory.'
       }),
 
   handler: async (argv: AddOptionsSchema) => {
     const options = addOptionsSchema.parse({
       hooks: argv.hooks,
-      all: argv.all,
-      cwd: argv.cwd
+      all: argv.all
     });
 
-    const cwd = path.resolve(options.cwd ?? process.cwd());
-
-    if (!existsSync(cwd)) {
-      logger.error(`The path ${cwd} does not exist. Please try again.`);
-      process.exit(1);
-    }
-
-    const config = await getConfig(cwd);
+    const config = await getConfig(APP_PATH);
     if (!config) {
       logger.warn(
         `Configuration is missing. Please run ${chalk.green(
@@ -63,7 +51,7 @@ export const add = {
       process.exit(1);
     }
 
-    const tsConfig = loadConfig(cwd);
+    const tsConfig = loadConfig(APP_PATH);
 
     if (tsConfig.resultType === 'failed') {
       throw new Error(`Failed to load tsconfig.json. ${tsConfig.message ?? ''}`.trim());

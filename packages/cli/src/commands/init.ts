@@ -1,36 +1,31 @@
-import type { Argv } from 'yargs';
-
-import { existsSync } from 'node:fs';
 import path from 'node:path';
+import prompts from 'prompts';
+import { promises as fs } from 'node:fs';
 
-import type { InitOptionsSchema } from '@/utils/types';
-
-import { promptForConfig } from '@/utils/config/promptForConfig';
-import { logger } from '@/utils/logger';
-import { initOptionsSchema } from '@/utils/types';
+import { APP_PATH } from '@/utils/constants';
 
 export const init = {
   command: 'init',
-  describe: 'initialize config file',
-  builder: (yargs: Argv) =>
-    yargs.option('cwd', {
-      alias: 'c',
-      type: 'string',
-      description: 'the working directory. defaults to the current directory.'
-    }),
+  describe: 'Initialize config file',
 
-  handler: async (argv: InitOptionsSchema) => {
-    const options = initOptionsSchema.parse({
-      cwd: argv.cwd
-    });
+  handler: async () => {
+    const { hookPath, utilsPath } = await prompts([
+      {
+        type: 'text',
+        name: 'hookPath',
+        message: 'Configure the import alias for hooks',
+        initial: '@/shared/hooks'
+      },
+      {
+        type: 'text',
+        name: 'utilsPath',
+        message: 'Configure the import alias for utils',
+        initial: '@/utils/helpers'
+      }
+    ]);
 
-    const cwd = path.resolve(options.cwd ?? process.cwd());
+    const targetPath = path.join(APP_PATH, 'reactuse.config.json');
 
-    if (!existsSync(cwd)) {
-      logger.error(`The path ${cwd} does not exist. Please try again.`);
-      process.exit(1);
-    }
-
-    await promptForConfig(cwd);
+    await fs.writeFile(targetPath, JSON.stringify({ hookPath, utilsPath }, null, 2), 'utf8');
   }
 };

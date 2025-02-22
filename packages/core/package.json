@@ -10,7 +10,8 @@
   "homepage": "https://siberiacancode.github.io/reactuse/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/siberiacancode/reactuse.git"
+    "url": "https://github.com/siberiacancode/reactuse.git",
+    "directory": "packages/core"
   },
   "bugs": "https://github.com/siberiacancode/reactuse/issues",
   "keywords": [
@@ -62,8 +63,8 @@
     "screenfull": "^6.0.2"
   },
   "devDependencies": {
-    "@siberiacancode/vitest": "^2.0.2",
     "@siberiacancode/builder": "^1.3.17",
+    "@siberiacancode/vitest": "^2.0.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^18.3.12",
