@@ -1,7 +1,6 @@
 #!/bin/sh
 
-yarn lint-staged
-yarn unit-test run
+pnpm lint-staged
 
 if git diff --quiet HEAD -- packages/core; then
     echo "No changes in packages/core. Skipping build."
@@ -11,6 +10,9 @@ else
 
     git add packages/core/src/bundle
     echo "Built files added to git."
+
+    echo "Running tests for packages/core..."
+    pnpm run unit-test
 
     echo "Running build:registry..."
     pnpm run cli:build:registry
