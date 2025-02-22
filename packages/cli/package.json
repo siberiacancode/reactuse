@@ -20,13 +20,16 @@
     "use",
     "hooks"
   ],
-  "exports": "./dist/bin.js",
+  "exports": "./dist/bin.cjs",
   "bin": {
-    "reactuse": "dist/bin.js"
+    "reactuse": "dist/bin.cjs"
   },
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": "^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0"
+  },
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
@@ -38,11 +41,11 @@
     "@siberiacancode/reactuse": "workspace:*",
     "acorn": "^8.14.0",
     "acorn-typescript": "^1.4.13",
-    "chalk": "5.2.0",
+    "chalk": "4.1.2",
     "cosmiconfig": "^9.0.0",
     "cross-env": "^7.0.3",
     "fs-extra": "^11.2.0",
-    "ora": "^6.1.2",
+    "ora": "5.4.1",
     "please-upgrade-node": "^3.2.0",
     "prompts": "^2.4.2",
     "tsconfig-paths": "^4.2.0",

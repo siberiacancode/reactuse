@@ -1,5 +1,14 @@
 #!/usr/bin/env node
+/* eslint-disable ts/no-require-imports */
 
-import { cli } from './cli';
+const pleaseUpgradeNode = require('please-upgrade-node');
+
+const packageJson = require('../package.json');
+
+pleaseUpgradeNode(packageJson);
+
+const { cli } = require('./cli');
 
 cli();
+
+export {};

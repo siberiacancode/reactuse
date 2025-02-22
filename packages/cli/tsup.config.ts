@@ -4,7 +4,7 @@ export default defineConfig({
   clean: true,
   dts: true,
   entry: ['src/bin.ts'],
-  format: ['esm'],
+  format: ['cjs'],
   sourcemap: true,
   minify: true,
   target: 'esnext',
