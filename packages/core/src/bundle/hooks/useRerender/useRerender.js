@@ -10,6 +10,6 @@ import { useReducer } from 'react';
  * const rerender = useRerender();
  */
 export const useRerender = () => {
-  const rerender = useReducer(() => ({}), {})[1];
-  return rerender;
+    const rerender = useReducer(() => ({}), {})[1];
+    return rerender;
 };

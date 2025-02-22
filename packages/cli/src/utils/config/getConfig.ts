@@ -1,6 +1,9 @@
-import { FETCH_REPO_URL_JS, FETCH_REPO_URL_TS } from '@/utils/constants';
-import { configSchema, PreferLanguage } from '@/utils/types';
 import { cosmiconfig } from 'cosmiconfig';
+
+import type { PreferLanguage } from '@/utils/types';
+
+import { REPO_URLS } from '@/utils/constants';
+import { configSchema } from '@/utils/types';
 
 export const getConfig = async (cwd: string) => {
   const explorer = cosmiconfig('configHooks', {
@@ -9,10 +12,7 @@ export const getConfig = async (cwd: string) => {
 
   try {
     const configResult = await explorer.search(cwd);
-
-    if (!configResult) {
-      return null;
-    }
+    if (!configResult) return null;
 
     return configSchema.parse(configResult.config);
   } catch (error) {
@@ -21,7 +21,7 @@ export const getConfig = async (cwd: string) => {
 };
 
 export const getUrl = (preferLanguage: PreferLanguage) => {
-  if (preferLanguage === 'js') return FETCH_REPO_URL_JS;
+  if (preferLanguage === 'js') return REPO_URLS.JS;
 
-  return FETCH_REPO_URL_TS;
+  return REPO_URLS.TS;
 };

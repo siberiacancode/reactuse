@@ -13,5 +13,4 @@ import { useEventListener } from '../useEventListener/useEventListener';
  * @example
  * useWindowEvent('click', () => console.log('clicked'));
  */
-export const useWindowEvent = (event, listener, options) =>
-  useEventListener(window, event, listener, options);
+export const useWindowEvent = (event, listener, options) => useEventListener(window, event, listener, options);

@@ -10,6 +10,6 @@ import { useMediaQuery } from '../useMediaQuery/useMediaQuery';
  * const reduced = usePreferredReducedMotion();
  */
 export const usePreferredReducedMotion = () => {
-  const reduced = useMediaQuery('(prefers-reduced-motion: reduce)');
-  return reduced ? 'reduce' : 'no-preference';
+    const reduced = useMediaQuery('(prefers-reduced-motion: reduce)');
+    return reduced ? 'reduce' : 'no-preference';
 };

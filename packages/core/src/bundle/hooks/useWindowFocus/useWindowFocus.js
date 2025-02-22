@@ -10,16 +10,16 @@ import { useEffect, useState } from 'react';
  * const focused = useWindowFocus();
  */
 export const useWindowFocus = () => {
-  const [focused, setFocused] = useState(false);
-  useEffect(() => {
-    const onFocus = () => setFocused(true);
-    const onBlur = () => setFocused(false);
-    window.addEventListener('focus', onFocus);
-    window.addEventListener('blur', onBlur);
-    return () => {
-      window.removeEventListener('focus', onFocus);
-      window.removeEventListener('blur', onBlur);
-    };
-  });
-  return focused;
+    const [focused, setFocused] = useState(false);
+    useEffect(() => {
+        const onFocus = () => setFocused(true);
+        const onBlur = () => setFocused(false);
+        window.addEventListener('focus', onFocus);
+        window.addEventListener('blur', onBlur);
+        return () => {
+            window.removeEventListener('focus', onFocus);
+            window.removeEventListener('blur', onBlur);
+        };
+    });
+    return focused;
 };

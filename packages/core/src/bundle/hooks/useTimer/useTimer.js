@@ -1,18 +1,17 @@
 import { useState } from 'react';
-
 import { useInterval } from '../useInterval/useInterval';
 export const getTimeFromSeconds = (timestamp) => {
-  const roundedTimestamp = Math.ceil(timestamp);
-  const days = Math.floor(roundedTimestamp / (60 * 60 * 24));
-  const hours = Math.floor((roundedTimestamp % (60 * 60 * 24)) / (60 * 60));
-  const minutes = Math.floor((roundedTimestamp % (60 * 60)) / 60);
-  const seconds = Math.floor(roundedTimestamp % 60);
-  return {
-    seconds,
-    minutes,
-    hours,
-    days
-  };
+    const roundedTimestamp = Math.ceil(timestamp);
+    const days = Math.floor(roundedTimestamp / (60 * 60 * 24));
+    const hours = Math.floor((roundedTimestamp % (60 * 60 * 24)) / (60 * 60));
+    const minutes = Math.floor((roundedTimestamp % (60 * 60)) / 60);
+    const seconds = Math.floor(roundedTimestamp % 60);
+    return {
+        seconds,
+        minutes,
+        hours,
+        days
+    };
 };
 /**
  * @name useTimer
@@ -35,39 +34,35 @@ export const getTimeFromSeconds = (timestamp) => {
  * @example
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, running } = useTimer(1000);
  */
-export const useTimer = (...params) => {
-  const timestamp = params[0];
-  const options = typeof params[1] === 'object' ? params[1] : { onExpire: params[1] };
-  const autostart = options?.autostart ?? true;
-  const [seconds, setSeconds] = useState(Math.ceil(timestamp / 1000));
-  const [running, setRunning] = useState(autostart);
-  const restart = (timestamp, autostart = true) => {
-    setSeconds(Math.ceil(timestamp / 1000));
-    setRunning(autostart);
-  };
-  const start = () => {
-    setRunning(true);
-    setSeconds(Math.ceil(timestamp / 1000));
-  };
-  useInterval(
-    () => {
-      const updatedSeconds = seconds - 1;
-      options?.onTick?.(seconds);
-      setSeconds(updatedSeconds);
-      if (updatedSeconds === 0) {
-        setRunning(false);
-        options?.onExpire?.();
-      }
-    },
-    1000,
-    { enabled: running }
-  );
-  return {
-    ...getTimeFromSeconds(seconds),
-    pause: () => setRunning(false),
-    toggle: () => setRunning(!running),
-    start,
-    restart,
-    running
-  };
-};
+export const useTimer = ((...params) => {
+    const timestamp = params[0];
+    const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] });
+    const autostart = options?.autostart ?? true;
+    const [seconds, setSeconds] = useState(Math.ceil(timestamp / 1000));
+    const [running, setRunning] = useState(autostart);
+    const restart = (timestamp, autostart = true) => {
+        setSeconds(Math.ceil(timestamp / 1000));
+        setRunning(autostart);
+    };
+    const start = () => {
+        setRunning(true);
+        setSeconds(Math.ceil(timestamp / 1000));
+    };
+    useInterval(() => {
+        const updatedSeconds = seconds - 1;
+        options?.onTick?.(seconds);
+        setSeconds(updatedSeconds);
+        if (updatedSeconds === 0) {
+            setRunning(false);
+            options?.onExpire?.();
+        }
+    }, 1000, { enabled: running });
+    return {
+        ...getTimeFromSeconds(seconds),
+        pause: () => setRunning(false),
+        toggle: () => setRunning(!running),
+        start,
+        restart,
+        running
+    };
+});

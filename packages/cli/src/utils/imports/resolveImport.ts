@@ -1,11 +1,11 @@
-import { type ConfigLoaderSuccessResult, createMatchPath } from 'tsconfig-paths';
+import type { ConfigLoaderSuccessResult } from 'tsconfig-paths';
 
-export async function resolveImport(
+import { createMatchPath } from 'tsconfig-paths';
+
+export const resolveImport = async (
   importPath: string,
   config: Pick<ConfigLoaderSuccessResult, 'absoluteBaseUrl' | 'paths'>
-) {
-  return createMatchPath(config.absoluteBaseUrl, config.paths)(importPath, undefined, () => true, [
-    '.ts',
-    '.tsx'
-  ]);
-}
+) => createMatchPath(config.absoluteBaseUrl, config.paths)(importPath, undefined, () => true, [
+  '.ts',
+  '.tsx'
+]);

@@ -1,7 +1,5 @@
 import { useState } from 'react';
-
 import { getDate } from '@/utils/helpers';
-
 import { useInterval } from '../useInterval/useInterval';
 /**
  * @name useTime
@@ -14,7 +12,7 @@ import { useInterval } from '../useInterval/useInterval';
  * const { seconds, minutes, hours, meridiemHours, day, month, year, timestamp } = useTime();
  */
 export const useTime = () => {
-  const [time, setTime] = useState(getDate());
-  useInterval(() => setTime(getDate()), 1000);
-  return time;
+    const [time, setTime] = useState(getDate());
+    useInterval(() => setTime(getDate()), 1000);
+    return time;
 };

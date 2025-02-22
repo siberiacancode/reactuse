@@ -27,6 +27,7 @@
     "preview": "vitepress preview app",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",
+    "format": "prettier --write .",
     "type": "tsc --noEmit",
     "pretty": "yarn type && yarn lint && yarn format",
     "lint-staged": "lint-staged"
@@ -35,14 +36,14 @@
     "@siberiacancode/reactuse": "workspace:*"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.0.7",
+    "@tailwindcss/vite": "^4.0.8",
     "clsx": "^2.1.1",
     "comment-parser": "^1.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "shiki": "^1.29.0",
-    "tailwind-merge": "^3.0.1",
-    "tailwindcss": "^4.0.7",
+    "shiki": "^3.0.0",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss": "^4.0.8",
     "vitepress": "^1.6.3"
   },
   "lint-staged": {

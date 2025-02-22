@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-
 import { useUnmount } from '../useUnmount/useUnmount';
 /**
  * @name useRafValue
@@ -14,12 +13,12 @@ import { useUnmount } from '../useUnmount/useUnmount';
  * const [value, setValue] = useRafValue(initialValue);
  */
 export const useRafValue = (initialValue) => {
-  const rafIdRef = useRef(0);
-  const [value, setValue] = useState(initialValue);
-  const set = (value) => {
-    cancelAnimationFrame(rafIdRef.current);
-    rafIdRef.current = requestAnimationFrame(() => setValue(value));
-  };
-  useUnmount(() => cancelAnimationFrame(rafIdRef.current));
-  return [value, set];
+    const rafIdRef = useRef(0);
+    const [value, setValue] = useState(initialValue);
+    const set = (value) => {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = requestAnimationFrame(() => setValue(value));
+    };
+    useUnmount(() => cancelAnimationFrame(rafIdRef.current));
+    return [value, set];
 };

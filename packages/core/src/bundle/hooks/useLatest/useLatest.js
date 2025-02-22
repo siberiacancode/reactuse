@@ -12,7 +12,7 @@ import { useRef } from 'react';
  * const latestValue = useLatest(value);
  */
 export const useLatest = (value) => {
-  const valueRef = useRef(value);
-  valueRef.current = value;
-  return valueRef.current;
+    const valueRef = useRef(value);
+    valueRef.current = value;
+    return valueRef.current;
 };

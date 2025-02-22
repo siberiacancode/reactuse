@@ -2,9 +2,9 @@
   "name": "@siberiacancode/cli",
   "type": "module",
   "version": "0.0.0",
-  "homepage": "https://siberiacancode.github.io/reactuse/",
   "description": "Add hooks to your apps.",
   "license": "MIT",
+  "homepage": "https://siberiacancode.github.io/reactuse/",
   "repository": {
     "type": "git",
     "url": "https://github.com/siberiacancode/reactuse.git",
@@ -20,45 +20,40 @@
     "use",
     "hooks"
   ],
-  "exports": "./dist/bin.cjs",
+  "exports": "./dist/bin.js",
   "bin": {
-    "reactuse": "dist/bin.cjs"
+    "reactuse": "dist/bin.js"
   },
   "files": [
     "dist"
   ],
-  "engines": {
-    "node": "^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0"
-  },
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "generate-registry": "tsx --tsconfig ./tsconfig.scripts.json src/registry/init.ts",
+    "build:registry": "tsx --tsconfig ./tsconfig.json src/registry/index.ts",
+    "lint": "eslint . --fix",
+    "lint-inspector": "npx @eslint/config-inspector@latest",
+    "format": "prettier --write .",
+    "type": "tsc --noEmit",
+    "pretty": "yarn type && yarn lint && yarn format",
     "start:dev": "cross-env COMPONENTS_REGISTRY_URL=http://localhost:5173/reactuse/registry.json node dist/bin.js",
     "start": "node dist/bin.js"
   },
   "dependencies": {
-    "@siberiacancode/reactuse": "workspace:*",
     "acorn": "^8.14.0",
-    "fs-extra": "^11.2.0",
-    "ora": "5.4.1",
-    "please-upgrade-node": "^3.2.0",
+    "chalk": "5.4.1",
+    "cosmiconfig": "^9.0.0",
+    "ora": "8.2.0",
     "prompts": "^2.4.2",
     "tsconfig-paths": "^4.2.0",
     "yargs": "^17.7.2",
-    "chalk": "4.1.2",
-    "cosmiconfig": "^9.0.0",
-    "zod": "^3.23.8"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.0.2",
     "@types/prompts": "^2.4.9",
-    "@types/yargs": "^17.0.32",
-    "ts-node": "^10.9.2",
-    "tsup": "^6.6.3",
-    "tsx": "^4.19.2",
+    "@types/yargs": "^17.0.33",
     "cross-env": "^7.0.3",
-    "typescript": "^4.9.3"
+    "tsup": "^8.3.6",
+    "tsx": "^4.19.3"
   }
 }

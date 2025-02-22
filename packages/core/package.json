@@ -45,6 +45,7 @@
     "build:js": "tsc --project tsconfig.build.json",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",
+    "format": "prettier --write .",
     "type": "tsc --noEmit",
     "pretty": "yarn type && yarn lint && yarn format",
     "unit-test": "vitest",

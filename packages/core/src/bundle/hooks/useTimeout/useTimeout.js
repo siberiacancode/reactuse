@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-
 import { useEvent } from '../useEvent/useEvent';
 /**
  * @name useTimeout
@@ -14,21 +13,21 @@ import { useEvent } from '../useEvent/useEvent';
  * const { clear, ready } = useTimeout(() => {}, 5000);
  */
 export function useTimeout(callback, delay) {
-  const [ready, setReady] = useState(false);
-  const timeoutIdRef = useRef();
-  const internalCallback = useEvent(callback);
-  useEffect(() => {
-    timeoutIdRef.current = setTimeout(() => {
-      internalCallback();
-      setReady(true);
-    }, delay);
-    return () => {
-      clearTimeout(timeoutIdRef.current);
+    const [ready, setReady] = useState(false);
+    const timeoutIdRef = useRef();
+    const internalCallback = useEvent(callback);
+    useEffect(() => {
+        timeoutIdRef.current = setTimeout(() => {
+            internalCallback();
+            setReady(true);
+        }, delay);
+        return () => {
+            clearTimeout(timeoutIdRef.current);
+        };
+    }, [delay]);
+    const clear = () => {
+        clearTimeout(timeoutIdRef.current);
+        setReady(true);
     };
-  }, [delay]);
-  const clear = () => {
-    clearTimeout(timeoutIdRef.current);
-    setReady(true);
-  };
-  return { ready, clear };
+    return { ready, clear };
 }

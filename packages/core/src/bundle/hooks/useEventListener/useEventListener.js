@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
-
 import { getElement } from '@/utils/helpers';
-
 import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -54,23 +52,25 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const ref = useEventListener('click', () => console.log('click'));
  */
-export const useEventListener = (...params) => {
-  const target = params[1] instanceof Function ? undefined : params[0];
-  const event = target ? params[1] : params[0];
-  const events = Array.isArray(event) ? event : [event];
-  const listener = target ? params[2] : params[1];
-  const options = target ? params[3] : params[2];
-  const internalRef = useRefState(window);
-  const internalListener = useEvent(listener);
-  useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
-    const callback = (event) => internalListener(event);
-    events.forEach((event) => element.addEventListener(event, callback, options));
-    return () => {
-      events.forEach((event) => element.removeEventListener(event, callback, options));
-    };
-  }, [target, internalRef.state, event, options]);
-  if (target) return;
-  return internalRef;
-};
+export const useEventListener = ((...params) => {
+    const target = (params[1] instanceof Function ? undefined : params[0]);
+    const event = (target ? params[1] : params[0]);
+    const events = Array.isArray(event) ? event : [event];
+    const listener = (target ? params[2] : params[1]);
+    const options = (target ? params[3] : params[2]);
+    const internalRef = useRefState(window);
+    const internalListener = useEvent(listener);
+    useEffect(() => {
+        const element = target ? getElement(target) : internalRef.current;
+        if (!element)
+            return;
+        const callback = (event) => internalListener(event);
+        events.forEach((event) => element.addEventListener(event, callback, options));
+        return () => {
+            events.forEach((event) => element.removeEventListener(event, callback, options));
+        };
+    }, [target, internalRef.state, event, options]);
+    if (target)
+        return;
+    return internalRef;
+});

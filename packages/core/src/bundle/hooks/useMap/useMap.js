@@ -12,25 +12,25 @@ import { useState } from 'react';
  * const { value, set, remove, clear, reset, size, has } = useMap([1, 'one'], [2, 'two']);
  */
 export const useMap = (values) => {
-  const [map, setMap] = useState(new Map(values));
-  const set = (key, value) => setMap((prevMap) => new Map(prevMap).set(key, value));
-  const remove = (key) =>
-    setMap((prevMap) => {
-      if (!prevMap.has(key)) return prevMap;
-      const newMap = new Map(prevMap);
-      newMap.delete(key);
-      return newMap;
+    const [map, setMap] = useState(new Map(values));
+    const set = (key, value) => setMap((prevMap) => new Map(prevMap).set(key, value));
+    const remove = (key) => setMap((prevMap) => {
+        if (!prevMap.has(key))
+            return prevMap;
+        const newMap = new Map(prevMap);
+        newMap.delete(key);
+        return newMap;
     });
-  const clear = () => setMap(new Map());
-  const reset = () => setMap(new Map(values));
-  const has = (key) => map.has(key);
-  return {
-    value: map,
-    size: map.size,
-    set,
-    has,
-    remove,
-    clear,
-    reset
-  };
+    const clear = () => setMap(new Map());
+    const reset = () => setMap(new Map(values));
+    const has = (key) => map.has(key);
+    return {
+        value: map,
+        size: map.size,
+        set,
+        has,
+        remove,
+        clear,
+        reset
+    };
 };

@@ -45,13 +45,14 @@ import { useEventListener } from '../useEventListener/useEventListener';
  * @example
  * useKeyPressEvent('Enter', (event) => console.log('Enter key pressed'));
  */
-export const useKeyPressEvent = (...params) => {
-  const keys = Array.isArray(params[0]) ? params[0] : [params[0]];
-  const target = params[1] instanceof Function ? null : params[1];
-  const callback = target ? params[2] : params[1];
-  const options = target ? params[3] : params[2];
-  const onKeyDown = (event) => {
-    if (keys.includes(event.key)) callback(event);
-  };
-  useEventListener(target ?? window, 'keydown', onKeyDown, options);
-};
+export const useKeyPressEvent = ((...params) => {
+    const keys = (Array.isArray(params[0]) ? params[0] : [params[0]]);
+    const target = (params[1] instanceof Function ? null : params[1]);
+    const callback = (target ? params[2] : params[1]);
+    const options = target ? params[3] : params[2];
+    const onKeyDown = (event) => {
+        if (keys.includes(event.key))
+            callback(event);
+    };
+    useEventListener(target ?? window, 'keydown', onKeyDown, options);
+});

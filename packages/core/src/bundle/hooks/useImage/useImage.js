@@ -1,18 +1,23 @@
 import { useQuery } from '../useQuery/useQuery';
-const loadImage = async (src, options = {}) =>
-  new Promise((resolve, reject) => {
+const loadImage = async (src, options = {}) => new Promise((resolve, reject) => {
     const img = new Image();
     const { srcset, sizes, class: className, loading, crossorigin, referrerPolicy } = options;
     img.src = src;
-    if (srcset) img.srcset = srcset;
-    if (sizes) img.sizes = sizes;
-    if (className) img.className = className;
-    if (loading) img.loading = loading;
-    if (crossorigin) img.crossOrigin = crossorigin;
-    if (referrerPolicy) img.referrerPolicy = referrerPolicy;
+    if (srcset)
+        img.srcset = srcset;
+    if (sizes)
+        img.sizes = sizes;
+    if (className)
+        img.className = className;
+    if (loading)
+        img.loading = loading;
+    if (crossorigin)
+        img.crossOrigin = crossorigin;
+    if (referrerPolicy)
+        img.referrerPolicy = referrerPolicy;
     img.onload = () => resolve(img);
     img.onerror = reject;
-  });
+});
 /**
  * @name useImage
  * @description - Hook that load an image in the browser
@@ -36,8 +41,7 @@ const loadImage = async (src, options = {}) =>
  * @example
  * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useImage('https://example.com/image.png');
  */
-export const useImage = (src, options, useQueryOptions = {}) =>
-  useQuery(() => loadImage(src, options), {
+export const useImage = (src, options, useQueryOptions = {}) => useQuery(() => loadImage(src, options), {
     keys: [src, ...(useQueryOptions.keys ?? [])],
     ...useQueryOptions
-  });
+});

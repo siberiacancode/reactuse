@@ -27,6 +27,7 @@
     "cli:build": "pnpm --filter @siberiacancode/cli build && pnpm --filter @siberiacancode/cli generate-registry",
     "docs:build": "pnpm --filter @siberiacancode/docs build",
     "core:build:js": "pnpm --filter @siberiacancode/reactuse build:js",
+    "cli:build:registry": "pnpm --filter @siberiacancode/cli build:registry",
     "lint": "pnpm --recursive lint",
     "format": "prettier --write .",
     "unit-test": "pnpm --recursive run unit-test",
@@ -36,7 +37,7 @@
   "devDependencies": {
     "@siberiacancode/eslint": "^2.8.0",
     "@siberiacancode/prettier": "^1.2.0",
-    "@types/node": "^22.13.1",
+    "@types/node": "^22.13.5",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",

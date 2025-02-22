@@ -16,27 +16,28 @@ import { useState } from 'react';
  * ])
  */
 export const useWizard = (map, initialStepId) => {
-  const initialId = initialStepId ?? map[0].id;
-  const wizardMap = new Map(map.map((wizardItem) => [wizardItem.id, wizardItem]));
-  const [currentStepId, setCurrentStepId] = useState(initialId);
-  const [history, setHistory] = useState([initialId]);
-  const set = (id) => {
-    if (!wizardMap.get(currentStepId)?.nodes?.includes(id))
-      throw new Error(`Can't go to ${id} from ${currentStepId}`);
-    setHistory([...history, id]);
-    setCurrentStepId(id);
-  };
-  const back = () => {
-    if (history.length === 1) return;
-    const previousStepId = history[history.length - 2];
-    if (!wizardMap.get(currentStepId)?.nodes?.includes(previousStepId))
-      throw new Error(`Can't go to ${previousStepId} from ${currentStepId}`);
-    setHistory(history.slice(0, -1));
-    setCurrentStepId(history[history.length - 2]);
-  };
-  const reset = () => {
-    setCurrentStepId(initialId);
-    setHistory([initialId]);
-  };
-  return { currentStepId, set, reset, back, history };
+    const initialId = initialStepId ?? map[0].id;
+    const wizardMap = new Map(map.map((wizardItem) => [wizardItem.id, wizardItem]));
+    const [currentStepId, setCurrentStepId] = useState(initialId);
+    const [history, setHistory] = useState([initialId]);
+    const set = (id) => {
+        if (!wizardMap.get(currentStepId)?.nodes?.includes(id))
+            throw new Error(`Can't go to ${id} from ${currentStepId}`);
+        setHistory([...history, id]);
+        setCurrentStepId(id);
+    };
+    const back = () => {
+        if (history.length === 1)
+            return;
+        const previousStepId = history[history.length - 2];
+        if (!wizardMap.get(currentStepId)?.nodes?.includes(previousStepId))
+            throw new Error(`Can't go to ${previousStepId} from ${currentStepId}`);
+        setHistory(history.slice(0, -1));
+        setCurrentStepId(history[history.length - 2]);
+    };
+    const reset = () => {
+        setCurrentStepId(initialId);
+        setHistory([initialId]);
+    };
+    return { currentStepId, set, reset, back, history };
 };

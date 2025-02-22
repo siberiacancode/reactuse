@@ -1,26 +1,25 @@
 import { useSyncExternalStore } from 'react';
-
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
-export const dispatchStorageEvent = (params) =>
-  window.dispatchEvent(new StorageEvent('storage', params));
+export const dispatchStorageEvent = (params) => window.dispatchEvent(new StorageEvent('storage', params));
 const setStorageItem = (storage, key, value) => {
-  const oldValue = storage.getItem(key);
-  storage.setItem(key, value);
-  dispatchStorageEvent({ key, oldValue, newValue: value, storageArea: storage });
+    const oldValue = storage.getItem(key);
+    storage.setItem(key, value);
+    dispatchStorageEvent({ key, oldValue, newValue: value, storageArea: storage });
 };
 const removeStorageItem = (storage, key) => {
-  const oldValue = storage.getItem(key);
-  storage.removeItem(key);
-  dispatchStorageEvent({ key, oldValue, newValue: null, storageArea: storage });
+    const oldValue = storage.getItem(key);
+    storage.removeItem(key);
+    dispatchStorageEvent({ key, oldValue, newValue: null, storageArea: storage });
 };
 const getStorageItem = (storage, key) => {
-  const value = storage.getItem(key);
-  if (!value) return undefined;
-  return value;
+    const value = storage.getItem(key);
+    if (!value)
+        return undefined;
+    return value;
 };
 const storageSubscribe = (callback) => {
-  window.addEventListener('storage', callback);
-  return () => window.removeEventListener('storage', callback);
+    window.addEventListener('storage', callback);
+    return () => window.removeEventListener('storage', callback);
 };
 const getServerSnapshot = () => undefined;
 /**
@@ -39,50 +38,50 @@ const getServerSnapshot = () => undefined;
  * const { value, set, remove } = useStorage('key', 'value');
  */
 export const useStorage = (key, params) => {
-  const options = typeof params === 'object' ? params : undefined;
-  const initialValue = options ? options?.initialValue : params;
-  const serializer = (value) => {
-    if (options?.serializer) return options.serializer(value);
-    return JSON.stringify(value);
-  };
-  const storage = options?.storage ?? window?.localStorage;
-  const set = (value) => {
-    if (value === null) return removeStorageItem(storage, key);
-    setStorageItem(storage, key, serializer(value));
-  };
-  const remove = () => removeStorageItem(storage, key);
-  const deserializer = (value) => {
-    if (options?.deserializer) return options.deserializer(value);
-    if (value === 'undefined') {
-      return undefined;
-    }
-    try {
-      return JSON.parse(value);
-    } catch {
-      return value;
-    }
-  };
-  const getSnapshot = () => getStorageItem(storage, key);
-  const store = useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
-  useIsomorphicLayoutEffect(() => {
-    const value = getStorageItem(storage, key);
-    if (value === undefined && initialValue !== undefined) {
-      setStorageItem(
-        storage,
-        key,
-        serializer(initialValue instanceof Function ? initialValue() : initialValue)
-      );
-    }
-  }, [key]);
-  if (typeof window === 'undefined')
-    return {
-      value: initialValue instanceof Function ? initialValue() : initialValue,
-      set,
-      remove
+    const options = (typeof params === 'object' ? params : undefined);
+    const initialValue = (options ? options?.initialValue : params);
+    const serializer = (value) => {
+        if (options?.serializer)
+            return options.serializer(value);
+        return JSON.stringify(value);
     };
-  return {
-    value: store ? deserializer(store) : undefined,
-    set,
-    remove
-  };
+    const storage = options?.storage ?? window?.localStorage;
+    const set = (value) => {
+        if (value === null)
+            return removeStorageItem(storage, key);
+        setStorageItem(storage, key, serializer(value));
+    };
+    const remove = () => removeStorageItem(storage, key);
+    const deserializer = (value) => {
+        if (options?.deserializer)
+            return options.deserializer(value);
+        if (value === 'undefined') {
+            return undefined;
+        }
+        try {
+            return JSON.parse(value);
+        }
+        catch {
+            return value;
+        }
+    };
+    const getSnapshot = () => getStorageItem(storage, key);
+    const store = useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
+    useIsomorphicLayoutEffect(() => {
+        const value = getStorageItem(storage, key);
+        if (value === undefined && initialValue !== undefined) {
+            setStorageItem(storage, key, serializer(initialValue instanceof Function ? initialValue() : initialValue));
+        }
+    }, [key]);
+    if (typeof window === 'undefined')
+        return {
+            value: initialValue instanceof Function ? initialValue() : initialValue,
+            set,
+            remove
+        };
+    return {
+        value: store ? deserializer(store) : undefined,
+        set,
+        remove
+    };
 };

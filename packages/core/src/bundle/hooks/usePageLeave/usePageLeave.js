@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import { useEvent } from '../useEvent/useEvent';
 /**
  * @name usePageLeave
@@ -13,19 +12,20 @@ import { useEvent } from '../useEvent/useEvent';
  * const isLeft = usePageLeave(() => console.log('on leave'))
  */
 export const usePageLeave = (callback) => {
-  const [isLeft, setIsLeft] = useState(false);
-  const onMouse = useEvent(() => {
-    if (isLeft) return setIsLeft(false);
-    callback?.();
-    setIsLeft(true);
-  });
-  useEffect(() => {
-    document.addEventListener('mouseleave', onMouse, { passive: true });
-    document.addEventListener('mouseenter', onMouse, { passive: true });
-    return () => {
-      document.removeEventListener('mouseenter', onMouse);
-      document.removeEventListener('mouseleave', onMouse);
-    };
-  }, []);
-  return isLeft;
+    const [isLeft, setIsLeft] = useState(false);
+    const onMouse = useEvent(() => {
+        if (isLeft)
+            return setIsLeft(false);
+        callback?.();
+        setIsLeft(true);
+    });
+    useEffect(() => {
+        document.addEventListener('mouseleave', onMouse, { passive: true });
+        document.addEventListener('mouseenter', onMouse, { passive: true });
+        return () => {
+            document.removeEventListener('mouseenter', onMouse);
+            document.removeEventListener('mouseleave', onMouse);
+        };
+    }, []);
+    return isLeft;
 };

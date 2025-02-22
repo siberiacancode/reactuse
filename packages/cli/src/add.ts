@@ -6,14 +6,13 @@ import { loadConfig } from 'tsconfig-paths';
 
 import type { AddOptionsSchema } from '@/utils/types';
 
+import { getRegistry } from '@/registry/getRegistry';
 import { getConfig } from '@/utils/config/getConfig';
+import { APP_PATH } from '@/utils/constants';
 import { downloadHooks } from '@/utils/hooks/downloadHooks';
 import { selectHooksFromList } from '@/utils/hooks/selectHooksFromList';
 import { resolveImport } from '@/utils/imports/resolveImport';
-import { logger } from '@/utils/logger';
-import { getRegistryIndex } from '@/registry/getRegistry';
 import { addOptionsSchema } from '@/utils/types';
-import { APP_PATH } from '@/utils/constants';
 
 export const add = {
   command: 'add [hooks...]',
@@ -40,11 +39,10 @@ export const add = {
     });
 
     const config = await getConfig(APP_PATH);
+
     if (!config) {
-      logger.warn(
-        `Configuration is missing. Please run ${chalk.green(
-          `init`
-        )} to create a reactuse.config.json file.`
+      console.log(
+        `Configuration is missing. Please run ${chalk.green(`init`)} to create a reactuse.config.json file.`
       );
       process.exit(1);
     }
@@ -58,16 +56,16 @@ export const add = {
     const pathToLoadHooks = (await resolveImport(config.hookPath, tsConfig)) as string;
     const pathToLoadUtils = (await resolveImport(config.utilsPath, tsConfig)) as string;
 
-    const registryIndex = await getRegistryIndex();
-    const selectedHooks = await selectHooksFromList(registryIndex, options);
+    const registry = await getRegistry();
+    const selectedHooks = await selectHooksFromList(registry, options);
 
     const preferLanguage = config.typescript ? 'ts' : 'js';
 
-    const spinner = ora(`Installing hooks...`).start();
+    const spinner = ora('Installing hooks...').start();
     for (const hook of selectedHooks) {
       await downloadHooks(
         hook,
-        registryIndex,
+        registry,
         pathToLoadHooks,
         pathToLoadUtils,
         spinner,
@@ -75,6 +73,8 @@ export const add = {
         preferLanguage
       );
     }
-    spinner.succeed(`Done.`);
+    spinner.succeed(
+      `Done. ${selectedHooks.length === 1 ? `Hook ${selectedHooks[0]} installed` : 'Hooks installed'}`
+    );
   }
 };

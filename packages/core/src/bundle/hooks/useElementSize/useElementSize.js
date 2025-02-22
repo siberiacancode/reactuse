@@ -1,7 +1,5 @@
 import { useState } from 'react';
-
 import { getElement, isTarget } from '@/utils/helpers';
-
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -23,30 +21,32 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, value } = useElementSize();
  */
-export const useElementSize = (...params) => {
-  const target = isTarget(params[0]) ? params[0] : undefined;
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  const internalRef = useRefState();
-  useIsomorphicLayoutEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
-    const { width, height } = element.getBoundingClientRect();
-    setSize({
-      width,
-      height
-    });
-    const observer = new ResizeObserver(() => {
-      const { width, height } = element.getBoundingClientRect();
-      setSize({ width, height });
-    });
-    observer.observe(element);
-    return () => {
-      observer.disconnect();
+export const useElementSize = ((...params) => {
+    const target = (isTarget(params[0]) ? params[0] : undefined);
+    const [size, setSize] = useState({ width: 0, height: 0 });
+    const internalRef = useRefState();
+    useIsomorphicLayoutEffect(() => {
+        const element = (target ? getElement(target) : internalRef.current);
+        if (!element)
+            return;
+        const { width, height } = element.getBoundingClientRect();
+        setSize({
+            width,
+            height
+        });
+        const observer = new ResizeObserver(() => {
+            const { width, height } = element.getBoundingClientRect();
+            setSize({ width, height });
+        });
+        observer.observe(element);
+        return () => {
+            observer.disconnect();
+        };
+    }, [internalRef.current, target]);
+    if (target)
+        return { value: size };
+    return {
+        ref: internalRef,
+        value: size
     };
-  }, [internalRef.current, target]);
-  if (target) return { value: size };
-  return {
-    ref: internalRef,
-    value: size
-  };
-};
+});

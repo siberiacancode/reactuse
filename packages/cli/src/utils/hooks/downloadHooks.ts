@@ -1,13 +1,12 @@
 import type { Ora } from 'ora';
 
-import { existsSync, writeFileSync } from 'node:fs';
-import fs from 'node:fs';
+import fs, { existsSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
 import type { HookRegistry, PreferLanguage } from '@/utils/types';
 
-import { logger } from '@/utils/logger';
 import { getUrl } from '@/utils/config/getConfig';
+import { logger } from '@/utils/logger';
 
 const updateImports = async (filePath: string, aliasesUtilsPathToReplace: string) => {
   const fileContent = await fs.promises.readFile(filePath, 'utf-8');

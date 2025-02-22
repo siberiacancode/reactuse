@@ -1,16 +1,17 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { add } from './commands/add';
-import { init } from './commands/init';
+import { add } from './add';
+import { init } from './init';
 
 export const cli = () => {
   const processArgv = hideBin(process.argv);
 
+  if (processArgv.includes('init')) return init();
+
   yargs(processArgv)
     .scriptName('reactuse')
     .usage('$0 <cmd> [args]')
-    .command(init)
     .command(add)
     .epilogue('More info: https://siberiacancode.github.io/reactuse/')
     .version()
