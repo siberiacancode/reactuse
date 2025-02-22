@@ -1,2 +1,14 @@
+#!/bin/sh
+
 yarn lint-staged
 yarn unit-test run
+
+if git diff --quiet HEAD -- packages/core; then
+    echo "No changes in packages/core. Skipping build."
+else
+    echo "Changes detected in packages/core. Running build:js..."
+    pnpm run core:build:js
+
+    git add packages/core/src/bundle
+    echo "Built files added to git."
+fi

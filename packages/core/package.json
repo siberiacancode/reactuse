@@ -41,6 +41,7 @@
   "scripts": {
     "prepublishOnly": "yarn type && yarn unit-test run && yarn build",
     "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
+    "build:js": "tsc --project tsconfig.build.json",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",
     "type": "tsc --noEmit",

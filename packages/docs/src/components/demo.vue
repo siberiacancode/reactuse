@@ -1,12 +1,12 @@
 <script setup>
-import { createElement } from "react";
-import { createRoot } from "react-dom/client";
-import { computed, onMounted, onUnmounted, shallowRef } from "vue";
+import { createElement } from 'react';
+import { createRoot } from 'react-dom/client';
+import { computed, onMounted, onUnmounted, shallowRef } from 'vue';
 
 const props = defineProps({
   hook: {
-    type: String,
-  },
+    type: String
+  }
 });
 
 const sourceLink = computed(() => {
@@ -132,7 +132,7 @@ onUnmounted(() => {
   margin: 0.5rem 0;
 }
 
-:deep(input[type="text"], input[type="number"], input[type="tel"]) {
+:deep(input[type='text'], input[type='number'], input[type='tel']) {
   min-width: 20rem;
 }
 

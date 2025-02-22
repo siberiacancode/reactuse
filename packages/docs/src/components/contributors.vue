@@ -1,8 +1,8 @@
 <script setup>
 const props = defineProps({
   hook: {
-    type: String,
-  },
+    type: String
+  }
 });
 
 const repositoryLink = `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/${props.hook}`;

@@ -1,5 +1,6 @@
 import type { DefaultTheme } from 'vitepress';
-import tailwindcss from '@tailwindcss/vite'
+
+import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitepress';
 
@@ -32,9 +33,7 @@ export default async () => {
     title: 'reactuse',
     description: '🚀 the largest and most useful hook library',
     vite: {
-      plugins: [
-        tailwindcss(),
-      ],
+      plugins: [tailwindcss()],
       resolve: {
         alias: {
           '@siberiacancode/docs': fileURLToPath(new URL('../../src', import.meta.url)),

@@ -1,0 +1,27 @@
+import { useCallback, useSyncExternalStore } from 'react';
+const getServerSnapshot = () => false;
+/**
+ * @name useMediaQuery
+ * @description - Hook that manages a media query
+ * @category Browser
+ *
+ * @param {string} query The media query string
+ * @returns {boolean} A boolean indicating if the media query matches
+ *
+ * @example
+ * const matches = useMediaQuery('(max-width: 768px)');
+ */
+export const useMediaQuery = (query) => {
+  const subscribe = useCallback(
+    (callback) => {
+      const matchMedia = window.matchMedia(query);
+      matchMedia.addEventListener('change', callback);
+      return () => {
+        matchMedia.removeEventListener('change', callback);
+      };
+    },
+    [query]
+  );
+  const getSnapshot = () => window.matchMedia(query).matches;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+};

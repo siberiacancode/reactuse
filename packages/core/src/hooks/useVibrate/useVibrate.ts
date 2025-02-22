@@ -26,7 +26,7 @@ export interface UseVibrateReturn {
  *
  * @overload
  * @param {UseVibratePattern} options.pattern The pattern for vibration
- * @param {number} [options.interval = 0] Time in milliseconds between vibrations
+ * @param {number} [options.interval=0] Time in milliseconds between vibrations
  * @returns {UseVibrateReturn} An object containing support indicator, start vibration and stop vibration functions
  *
  * @example
