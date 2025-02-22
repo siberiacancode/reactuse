@@ -5,14 +5,14 @@ pnpm lint-staged
 if git diff --quiet HEAD -- packages/core; then
     echo "No changes in packages/core. Skipping build."
 else
+    echo "Running tests for packages/core..."
+    pnpm run unit-test
+    
     echo "Changes detected in packages/core. Running build:js..."
     pnpm run core:build:js
 
     git add packages/core/src/bundle
     echo "Built files added to git."
-
-    echo "Running tests for packages/core..."
-    pnpm run unit-test
 
     echo "Running build:registry..."
     pnpm run cli:build:registry
