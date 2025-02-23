@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useEvent } from '../useEvent/useEvent';
 /**
  * @name useInterval
  * @description - Hook that makes and interval and returns controlling functions
@@ -33,11 +32,12 @@ export const useInterval = ((...params) => {
     const enabled = options?.enabled ?? true;
     const [active, setActive] = useState(enabled ?? true);
     const intervalIdRef = useRef();
-    const internalCallback = useEvent(callback);
+    const internalCallbackRef = useRef(callback);
+    internalCallbackRef.current = callback;
     useEffect(() => {
         if (!enabled)
             return;
-        intervalIdRef.current = setInterval(internalCallback, interval);
+        intervalIdRef.current = setInterval(internalCallbackRef.current, interval);
         return () => {
             clearInterval(intervalIdRef.current);
         };
@@ -51,7 +51,7 @@ export const useInterval = ((...params) => {
             return;
         setActive(true);
         clearInterval(intervalIdRef.current);
-        intervalIdRef.current = setInterval(internalCallback, interval);
+        intervalIdRef.current = setInterval(internalCallbackRef.current, interval);
     };
     return {
         active,

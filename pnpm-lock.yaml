@@ -32,6 +32,9 @@ importers:
 
   packages/cli:
     dependencies:
+      '@siberiacancode/fetches':
+        specifier: ^1.9.2
+        version: 1.9.2
       acorn:
         specifier: ^8.14.0
         version: 8.14.0
@@ -1700,6 +1703,9 @@ packages:
 
   '@siberiacancode/eslint@2.8.0':
     resolution: {integrity: sha512-dS+o9//Bf/o2E8qkM9KRlAnlK49vOXX2DweriDU1OBxmyXd89bWUjJbrn+ePVdcMm7LncwZuSUxCFgAHA0kFXA==}
+
+  '@siberiacancode/fetches@1.9.2':
+    resolution: {integrity: sha512-Ru6sBtltrzu21UqdERmpwsTYSQM4RxTEgUYCJg1WMTdsGgvLM/gkWsPSPWDjIgUo6VCwq5vheDdLikE1ahm2BA==}
 
   '@siberiacancode/prettier@1.2.0':
     resolution: {integrity: sha512-n3j5+N5ZJPGPA0F66qLenDKHKFw4ZKivWbBQhZdM8ubE12Y/eQQII8s1mRs0ln5AnS5JOooTDdrgHPphojCJhA==}
@@ -6643,6 +6649,8 @@ snapshots:
       - ts-api-utils
       - typescript
       - vitest
+
+  '@siberiacancode/fetches@1.9.2': {}
 
   '@siberiacancode/prettier@1.2.0(prettier@3.5.1)':
     dependencies:

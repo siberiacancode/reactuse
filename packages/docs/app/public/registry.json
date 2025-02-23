@@ -1,0 +1,842 @@
+{
+  "useActiveElement": {
+    "name": "useActiveElement",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useAsync": {
+    "name": "useAsync",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useBattery": {
+    "name": "useBattery",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useBluetooth": {
+    "name": "useBluetooth",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useBoolean": {
+    "name": "useBoolean",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useBreakpoints": {
+    "name": "useBreakpoints",
+    "hooks": ["useRerender"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useBrowserLanguage": {
+    "name": "useBrowserLanguage",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useClickOutside": {
+    "name": "useClickOutside",
+    "hooks": ["useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useClipboard": {
+    "name": "useClipboard",
+    "hooks": ["usePermission"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useConst": {
+    "name": "useConst",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useCounter": {
+    "name": "useCounter",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useCssVar": {
+    "name": "useCssVar",
+    "hooks": ["useRefState"],
+    "utils": ["getElement"],
+    "local": [],
+    "packages": []
+  },
+  "useDebounceCallback": {
+    "name": "useDebounceCallback",
+    "hooks": ["useEvent"],
+    "utils": ["debounce"],
+    "local": [],
+    "packages": []
+  },
+  "useDebounceValue": {
+    "name": "useDebounceValue",
+    "hooks": ["useDebounceCallback"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useDefault": {
+    "name": "useDefault",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useDeviceMotion": {
+    "name": "useDeviceMotion",
+    "hooks": [],
+    "utils": ["throttle"],
+    "local": [],
+    "packages": []
+  },
+  "useDeviceOrientation": {
+    "name": "useDeviceOrientation",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useDevicePixelRatio": {
+    "name": "useDevicePixelRatio",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useDidUpdate": {
+    "name": "useDidUpdate",
+    "hooks": ["useIsomorphicLayoutEffect"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useDisclosure": {
+    "name": "useDisclosure",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useDisplayMedia": {
+    "name": "useDisplayMedia",
+    "hooks": ["useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useDocumentEvent": {
+    "name": "useDocumentEvent",
+    "hooks": ["useEventListener"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useDocumentTitle": {
+    "name": "useDocumentTitle",
+    "hooks": ["useIsomorphicLayoutEffect"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useDocumentVisibility": {
+    "name": "useDocumentVisibility",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useElementSize": {
+    "name": "useElementSize",
+    "hooks": ["useIsomorphicLayoutEffect", "useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useEvent": {
+    "name": "useEvent",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useEventListener": {
+    "name": "useEventListener",
+    "hooks": ["useEvent", "useRefState"],
+    "utils": ["getElement"],
+    "local": [],
+    "packages": []
+  },
+  "useEyeDropper": {
+    "name": "useEyeDropper",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useFavicon": {
+    "name": "useFavicon",
+    "hooks": ["useDidUpdate", "useMount"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useField": {
+    "name": "useField",
+    "hooks": ["useRerender"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useFileDialog": {
+    "name": "useFileDialog",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useFocus": {
+    "name": "useFocus",
+    "hooks": ["useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useFps": {
+    "name": "useFps",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useFullscreen": {
+    "name": "useFullscreen",
+    "hooks": ["useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": ["screenfull"]
+  },
+  "useGamepad": {
+    "name": "useGamepad",
+    "hooks": ["useEvent", "useRaf"],
+    "utils": [],
+    "local": ["mapGamepadToXbox360Controller"],
+    "packages": []
+  },
+  "useGeolocation": {
+    "name": "useGeolocation",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useHash": {
+    "name": "useHash",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useHotkeys": {
+    "name": "useHotkeys",
+    "hooks": ["useRefState"],
+    "utils": ["getElement"],
+    "local": [],
+    "packages": []
+  },
+  "useHover": {
+    "name": "useHover",
+    "hooks": ["useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useIdle": {
+    "name": "useIdle",
+    "hooks": [],
+    "utils": ["throttle"],
+    "local": [],
+    "packages": []
+  },
+  "useImage": {
+    "name": "useImage",
+    "hooks": ["useQuery"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useInfiniteScroll": {
+    "name": "useInfiniteScroll",
+    "hooks": ["useEvent", "useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useIntersectionObserver": {
+    "name": "useIntersectionObserver",
+    "hooks": ["useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useInterval": {
+    "name": "useInterval",
+    "hooks": ["useEvent"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useIsFirstRender": {
+    "name": "useIsFirstRender",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useIsomorphicLayoutEffect": {
+    "name": "useIsomorphicLayoutEffect",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useKeyPress": {
+    "name": "useKeyPress",
+    "hooks": ["useEventListener"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useKeyPressEvent": {
+    "name": "useKeyPressEvent",
+    "hooks": ["useEventListener"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useKeyboard": {
+    "name": "useKeyboard",
+    "hooks": ["useEventListener"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useKeysPressed": {
+    "name": "useKeysPressed",
+    "hooks": ["useDidUpdate", "useEventListener"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useLastChanged": {
+    "name": "useLastChanged",
+    "hooks": ["useDidUpdate"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useLatest": {
+    "name": "useLatest",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useList": {
+    "name": "useList",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useLocalStorage": {
+    "name": "useLocalStorage",
+    "hooks": ["useStorage"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useLogger": {
+    "name": "useLogger",
+    "hooks": ["useDidUpdate"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useLongPress": {
+    "name": "useLongPress",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useMap": {
+    "name": "useMap",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useMeasure": {
+    "name": "useMeasure",
+    "hooks": ["useRefState", "useResizeObserver"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useMediaQuery": {
+    "name": "useMediaQuery",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useMemory": {
+    "name": "useMemory",
+    "hooks": ["useInterval"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useMount": {
+    "name": "useMount",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useMouse": {
+    "name": "useMouse",
+    "hooks": ["useRefState"],
+    "utils": ["getElement"],
+    "local": [],
+    "packages": []
+  },
+  "useMutation": {
+    "name": "useMutation",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useMutationObserver": {
+    "name": "useMutationObserver",
+    "hooks": ["useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useNetwork": {
+    "name": "useNetwork",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useOffsetPagination": {
+    "name": "useOffsetPagination",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useOnline": {
+    "name": "useOnline",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useOperatingSystem": {
+    "name": "useOperatingSystem",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useOptimistic": {
+    "name": "useOptimistic",
+    "hooks": ["useDidUpdate"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useOrientation": {
+    "name": "useOrientation",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useOtpCredential": {
+    "name": "useOtpCredential",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePageLeave": {
+    "name": "usePageLeave",
+    "hooks": ["useEvent"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePaint": {
+    "name": "usePaint",
+    "hooks": ["useEvent"],
+    "utils": ["getElement"],
+    "local": ["Pointer", "Paint"],
+    "packages": []
+  },
+  "useParallax": {
+    "name": "useParallax",
+    "hooks": ["useDeviceOrientation", "useMouse", "useRefState", "useScreenOrientation"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePermission": {
+    "name": "usePermission",
+    "hooks": ["useEvent"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePointerLock": {
+    "name": "usePointerLock",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePostMessage": {
+    "name": "usePostMessage",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePreferredColorScheme": {
+    "name": "usePreferredColorScheme",
+    "hooks": ["useMediaQuery"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePreferredContrast": {
+    "name": "usePreferredContrast",
+    "hooks": ["useMediaQuery"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePreferredDark": {
+    "name": "usePreferredDark",
+    "hooks": ["useMediaQuery"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePreferredLanguages": {
+    "name": "usePreferredLanguages",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePreferredReducedMotion": {
+    "name": "usePreferredReducedMotion",
+    "hooks": ["useMediaQuery"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "usePrevious": {
+    "name": "usePrevious",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useQuery": {
+    "name": "useQuery",
+    "hooks": ["useDidUpdate", "useMount"],
+    "utils": ["getRetry"],
+    "local": [],
+    "packages": []
+  },
+  "useQueue": {
+    "name": "useQueue",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useRaf": {
+    "name": "useRaf",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useRafValue": {
+    "name": "useRafValue",
+    "hooks": ["useUnmount"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useRefState": {
+    "name": "useRefState",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useRenderCount": {
+    "name": "useRenderCount",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useRenderInfo": {
+    "name": "useRenderInfo",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useRerender": {
+    "name": "useRerender",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useResizeObserver": {
+    "name": "useResizeObserver",
+    "hooks": ["useRefState"],
+    "utils": ["getElement"],
+    "local": [],
+    "packages": []
+  },
+  "useScreenOrientation": {
+    "name": "useScreenOrientation",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useScript": {
+    "name": "useScript",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useScroll": {
+    "name": "useScroll",
+    "hooks": ["useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useScrollIntoView": {
+    "name": "useScrollIntoView",
+    "hooks": ["useRefState"],
+    "utils": ["getElement"],
+    "local": [],
+    "packages": []
+  },
+  "useScrollTo": {
+    "name": "useScrollTo",
+    "hooks": ["useRefState"],
+    "utils": ["getElement", "isTarget"],
+    "local": [],
+    "packages": []
+  },
+  "useSessionStorage": {
+    "name": "useSessionStorage",
+    "hooks": ["useStorage"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useSet": {
+    "name": "useSet",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useShare": {
+    "name": "useShare",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useStateHistory": {
+    "name": "useStateHistory",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useStep": {
+    "name": "useStep",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useStopwatch": {
+    "name": "useStopwatch",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useStorage": {
+    "name": "useStorage",
+    "hooks": ["useIsomorphicLayoutEffect"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useTextDirection": {
+    "name": "useTextDirection",
+    "hooks": ["useIsomorphicLayoutEffect", "useRefState"],
+    "utils": ["getElement"],
+    "local": [],
+    "packages": []
+  },
+  "useTextSelection": {
+    "name": "useTextSelection",
+    "hooks": ["useRerender"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useThrottleCallback": {
+    "name": "useThrottleCallback",
+    "hooks": ["useEvent"],
+    "utils": ["throttle"],
+    "local": [],
+    "packages": []
+  },
+  "useThrottleValue": {
+    "name": "useThrottleValue",
+    "hooks": ["useThrottleCallback"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useTime": {
+    "name": "useTime",
+    "hooks": ["useInterval"],
+    "utils": ["getDate"],
+    "local": [],
+    "packages": []
+  },
+  "useTimeout": {
+    "name": "useTimeout",
+    "hooks": ["useEvent"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useTimer": {
+    "name": "useTimer",
+    "hooks": ["useInterval"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useToggle": {
+    "name": "useToggle",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useUnmount": {
+    "name": "useUnmount",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useVibrate": {
+    "name": "useVibrate",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useWebSocket": {
+    "name": "useWebSocket",
+    "hooks": ["useEvent"],
+    "utils": ["getRetry"],
+    "local": [],
+    "packages": []
+  },
+  "useWindowEvent": {
+    "name": "useWindowEvent",
+    "hooks": ["useEventListener"],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useWindowFocus": {
+    "name": "useWindowFocus",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useWindowScroll": {
+    "name": "useWindowScroll",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useWindowSize": {
+    "name": "useWindowSize",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  },
+  "useWizard": {
+    "name": "useWizard",
+    "hooks": [],
+    "utils": [],
+    "local": [],
+    "packages": []
+  }
+}

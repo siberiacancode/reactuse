@@ -1,6 +1,6 @@
 import type { Ora } from 'ora';
 
-import fs, { existsSync, writeFileSync } from 'node:fs';
+import fs from 'node:fs';
 import path from 'node:path';
 
 import type { HookRegistry, PreferLanguage } from '@/utils/types';
@@ -8,8 +8,10 @@ import type { HookRegistry, PreferLanguage } from '@/utils/types';
 import { getUrl } from '@/utils/config/getConfig';
 import { logger } from '@/utils/logger';
 
+import { REPO_URLS } from '../constants';
+
 const updateImports = async (filePath: string, aliasesUtilsPathToReplace: string) => {
-  const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+  const fileContent = await fs.readFileSync(filePath, 'utf-8');
   const utilsImportRegex = /import\s+\{([^}]+)\}\s+from\s+['"](@\/utils[^'"]*)['"]/g;
 
   const updatedContent = fileContent.replace(utilsImportRegex, (match, imports, path) => {
@@ -17,7 +19,7 @@ const updateImports = async (filePath: string, aliasesUtilsPathToReplace: string
     return `import {${imports}} from '${aliasesUtilsPathToReplace}${newPath.slice(7)}'`;
   });
 
-  await fs.promises.writeFile(filePath, updatedContent);
+  fs.writeFileSync(filePath, updatedContent);
 };
 
 const downloadHook = async (
@@ -27,16 +29,14 @@ const downloadHook = async (
   registryIndex: HookRegistry[],
   preferLanguage: PreferLanguage
 ) => {
-  const hook = registryIndex.find((hook) => hook.name === hookName)!;
-
   const hookDirName = `${path}/${hookName}`;
   const pathToLoadHooks = `${hookDirName}/${hookName}.${preferLanguage}`;
 
-  if (!existsSync(hookDirName)) {
-    await fs.promises.mkdir(hookDirName, { recursive: true });
+  if (!fs.existsSync(hookDirName)) {
+    fs.mkdirSync(hookDirName, { recursive: true });
   }
   try {
-    const response = await fetch(hook.urls[preferLanguage]);
+    const response = await fetch(REPO_URLS[preferLanguage.toUpperCase() as keyof typeof REPO_URLS]);
 
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -57,8 +57,8 @@ const downloadLocalDependencies = async (
 ) => {
   const localDirName = `${path}/${hookName}/helpers`;
 
-  if (!existsSync(localDirName)) {
-    await fs.promises.mkdir(localDirName, { recursive: true });
+  if (!fs.existsSync(localDirName)) {
+    fs.mkdirSync(localDirName, { recursive: true });
   }
 
   for (const localDependency of localDependencies) {
@@ -85,16 +85,16 @@ const updateUtilIndexFile = async (
   preferLanguage: PreferLanguage
 ) => {
   const indexPath = path.join(utilsPath, `index.${preferLanguage}`);
-  const indexExist = existsSync(indexPath);
+  const indexExist = fs.existsSync(indexPath);
   const exportStatement = `export * from './${utilName}';\n`;
 
   if (!indexExist) {
-    writeFileSync(indexPath, '');
+    fs.writeFileSync(indexPath, '');
   }
-  const indexFileContent = await fs.promises.readFile(indexPath, 'utf-8');
+  const indexFileContent = fs.readFileSync(indexPath, 'utf-8');
 
   if (!indexFileContent.includes(exportStatement)) {
-    await fs.promises.appendFile(indexPath, exportStatement, 'utf-8');
+    fs.appendFileSync(indexPath, exportStatement, 'utf-8');
   }
 };
 
@@ -102,8 +102,8 @@ const downloadUtil = async (utilName: string, path: string, preferLanguage: Pref
   let utilUrl = `${getUrl(preferLanguage)}/utils/helpers/${utilName}.${preferLanguage}`;
   const utilPath = `${path}/${utilName}.${preferLanguage}`;
 
-  if (!existsSync(path)) {
-    await fs.promises.mkdir(path, { recursive: true });
+  if (!fs.existsSync(path)) {
+    fs.mkdirSync(path, { recursive: true });
   }
 
   try {
@@ -173,7 +173,6 @@ export const downloadHooks = async (
   aliasesUtilsPath: string,
   preferLanguage: PreferLanguage
 ) => {
-  spinner.text = `Start installing ${hook}...`;
   const findedHook = registryIndex.find((registryHook) => registryHook.name === hook);
 
   if (!findedHook) {

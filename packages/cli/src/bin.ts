@@ -4,4 +4,4 @@ import { cli } from './cli.js';
 
 cli();
 
-export { };
+export {};

@@ -1,21 +1,24 @@
 import * as z from 'zod';
 
 export interface HookRegistry {
-  hookDependency: string[];
-  localDependency: string[];
+  hooks: string[];
+  local: string[];
   name: string;
-  utilsDependency: string[];
+  packages: string[];
+  utils: string[];
 }
 
-export type PreferLanguage = 'js' | 'ts';
+export interface Registry {
+  [key: string]: HookRegistry;
+}
 
 export const addOptionsSchema = z.object({
-  hooks: z.array(z.string()).optional(),
-  all: z.boolean()
+  hooks: z.array(z.string()),
+  all: z.boolean(),
+  registry: z.string()
 });
 
 export type AddOptionsSchema = z.infer<typeof addOptionsSchema>;
-
 
 export const configSchema = z
   .object({
