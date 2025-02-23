@@ -14,9 +14,6 @@ else
     git add packages/core/src/bundle
     echo "Built files added to git."
 
-    echo "Running build:registry..."
-    pnpm run cli:build:registry
-
     git add packages/cli/src/registry
     echo "Registry built and added to git."
 fi
