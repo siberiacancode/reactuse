@@ -40,7 +40,6 @@
     "start": "node dist/bin.js"
   },
   "dependencies": {
-    "@siberiacancode/fetches": "^1.9.2",
     "acorn": "^8.14.0",
     "chalk": "5.4.1",
     "cosmiconfig": "^9.0.0",

@@ -11,6 +11,9 @@ importers:
       '@siberiacancode/eslint':
         specifier: ^2.8.0
         version: 2.8.0(@typescript-eslint/utils@8.24.1(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3))(jiti@2.4.2)(ts-api-utils@2.0.1(typescript@5.7.3))(typescript@5.7.3)(vitest@3.0.6(@types/debug@4.1.12)(@types/node@22.13.5)(jiti@2.4.2)(jsdom@24.1.3)(lightningcss@1.29.1)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+      '@siberiacancode/fetches':
+        specifier: ^1.9.2
+        version: 1.9.2
       '@siberiacancode/prettier':
         specifier: ^1.2.0
         version: 1.2.0(prettier@3.5.1)
@@ -32,9 +35,6 @@ importers:
 
   packages/cli:
     dependencies:
-      '@siberiacancode/fetches':
-        specifier: ^1.9.2
-        version: 1.9.2
       acorn:
         specifier: ^8.14.0
         version: 8.14.0
