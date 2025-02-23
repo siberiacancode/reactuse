@@ -35,7 +35,6 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@siberiacancode/fetches": "^1.9.2",
     "@siberiacancode/eslint": "^2.8.0",
     "@siberiacancode/prettier": "^1.2.0",
     "@types/node": "^22.13.5",
