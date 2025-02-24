@@ -15,16 +15,20 @@ export interface Registry {
 export const addOptionsSchema = z.object({
   hooks: z.array(z.string()),
   all: z.boolean(),
-  registry: z.string()
+  registry: z.string(),
+  overwrite: z.boolean(),
+  cwd: z.string()
 });
 
 export type AddOptionsSchema = z.infer<typeof addOptionsSchema>;
 
 export const configSchema = z
   .object({
-    typescript: z.boolean().optional(),
-    hookPath: z.string(),
-    utilsPath: z.string()
+    ts: z.boolean().optional(),
+    alias: z.object({
+      hooks: z.string(),
+      utils: z.string()
+    })
   })
   .strict();
 

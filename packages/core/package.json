@@ -40,14 +40,13 @@
     "access": "public"
   },
   "scripts": {
-    "prepublishOnly": "yarn type && yarn unit-test run && yarn build",
+    "prepublishOnly": "pnpm unit-test run && pnpm build",
     "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
     "build:js": "tsc --project tsconfig.build.json",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",
     "format": "prettier --write .",
-    "type": "tsc --noEmit",
-    "pretty": "yarn type && yarn lint && yarn format",
+    "pretty": "pnpm lint && pnpm format",
     "unit-test": "vitest",
     "lint-staged": "lint-staged"
   },

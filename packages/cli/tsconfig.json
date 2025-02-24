@@ -3,6 +3,7 @@
   "compilerOptions": {
     "composite": false,
     "baseUrl": ".",
+    "module": "ESNext",
     "moduleResolution": "node",
     "paths": {
       "@/*": ["./src/*"]
@@ -18,8 +19,7 @@
     "forceConsistentCasingInFileNames": true,
     "preserveWatchOutput": true,
     "isolatedModules": true,
-    "skipLibCheck": true,
-    "module": "ESNext"
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
