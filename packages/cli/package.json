@@ -1,6 +1,5 @@
 {
   "name": "@siberiacancode/cli",
-  "type": "module",
   "version": "0.0.0",
   "description": "Add hooks to your apps.",
   "license": "MIT",
