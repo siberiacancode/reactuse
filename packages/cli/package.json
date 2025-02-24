@@ -1,7 +1,7 @@
 {
   "name": "useverse",
   "version": "0.1.0",
-  "description": "Add hooks to your apps.",
+  "description": "Add react hooks to your apps",
   "license": "MIT",
   "homepage": "https://siberiacancode.github.io/reactuse/",
   "repository": {
@@ -40,7 +40,6 @@
   "dependencies": {
     "@antfu/ni": "^23.3.1",
     "@siberiacancode/fetches": "^1.9.2",
-    "acorn": "^8.14.0",
     "chalk": "5.4.1",
     "cosmiconfig": "^9.0.0",
     "execa": "9.3.0",

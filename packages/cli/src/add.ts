@@ -192,7 +192,8 @@ export const add = {
       spinner.text = `Installing ${name}...`;
       const directory = path.dirname(directoryPath);
 
-      if (directory && !options.overwrite) {
+      const isExists = fs.existsSync(directory);
+      if (isExists && !options.overwrite) {
         spinner.stop()
         const { overwrite } = await prompts({
           type: "confirm",
@@ -209,7 +210,7 @@ export const add = {
         spinner.start(`Installing ${name}...`)
       }
 
-      if (!fs.existsSync(directory)) fs.mkdirSync(directory, { recursive: true });
+      if (!isExists) fs.mkdirSync(directory, { recursive: true });
 
       const fileResponse = await fetches.get<Buffer>(registryPath);
       await fs.writeFileSync(directoryPath, fileResponse.data);

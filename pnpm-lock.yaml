@@ -38,9 +38,6 @@ importers:
       '@siberiacancode/fetches':
         specifier: ^1.9.2
         version: 1.9.2
-      acorn:
-        specifier: ^8.14.0
-        version: 8.14.0
       chalk:
         specifier: 5.4.1
         version: 5.4.1
