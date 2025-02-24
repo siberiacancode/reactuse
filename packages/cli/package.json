@@ -1,6 +1,6 @@
 {
-  "name": "@siberiacancode/cli",
-  "version": "0.0.0",
+  "name": "reactuse",
+  "version": "0.0.1",
   "description": "Add hooks to your apps.",
   "license": "MIT",
   "homepage": "https://siberiacancode.github.io/reactuse/",
@@ -19,14 +19,15 @@
     "use",
     "hooks"
   ],
-  "exports": "./dist/bin.js",
+  "exports": "./dist/bin.mjs",
   "bin": {
-    "reactuse": "dist/bin.js"
+    "reactuse": "dist/bin.mjs"
   },
   "files": [
     "dist"
   ],
   "scripts": {
+    "prepublishOnly": "pnpm build",
     "dev": "tsup --watch",
     "build": "tsup",
     "build:registry": "tsx --tsconfig ./tsconfig.json src/registry/index.ts",
@@ -34,15 +35,15 @@
     "lint-inspector": "npx @eslint/config-inspector@latest",
     "format": "prettier --write .",
     "type": "tsc --noEmit",
-    "pretty": "yarn type && yarn lint && yarn format",
-    "start:dev": "cross-env COMPONENTS_REGISTRY_URL=http://localhost:5173/reactuse/registry.json node dist/bin.js",
-    "start": "node dist/bin.js"
+    "pretty": "yarn type && yarn lint && yarn format"
   },
   "dependencies": {
+    "@antfu/ni": "^23.3.1",
     "@siberiacancode/fetches": "^1.9.2",
     "acorn": "^8.14.0",
     "chalk": "5.4.1",
     "cosmiconfig": "^9.0.0",
+    "execa": "9.3.0",
     "ora": "8.2.0",
     "prompts": "^2.4.2",
     "tsconfig-paths": "^4.2.0",
