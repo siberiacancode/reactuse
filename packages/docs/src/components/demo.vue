@@ -1,13 +1,11 @@
-<script setup>
-import { createElement } from 'react';
-import { createRoot } from 'react-dom/client';
-import { computed, onMounted, onUnmounted, shallowRef } from 'vue';
+<script setup lang="ts">
+import { createElement } from "react";
+import { createRoot } from "react-dom/client";
+import { computed, onMounted, onUnmounted, shallowRef } from "vue";
 
-const props = defineProps({
-  hook: {
-    type: String
-  }
-});
+const props = defineProps<{
+  hook: string;
+}>();
 
 const sourceLink = computed(() => {
   return `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/${props.hook}/${props.hook}.demo.tsx`;
@@ -31,34 +29,20 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="container">
-    <p class="demo-link">
-      <a :href="sourceLink" target="_blank">source</a>
+  <div class="relative bg-gray-100 p-6 mb-2 rounded-lg">
+    <p class="absolute top-0 right-2 text-xs font-medium transition-colors">
+      <a
+        :href="sourceLink"
+        target="_blank"
+        class="text-blue-500 hover:text-blue-700"
+        >source</a
+      >
     </p>
     <div ref="demoRef" />
   </div>
 </template>
 
 <style scoped>
-.container {
-  position: relative;
-  background-color: var(--vp-code-block-bg);
-  padding: 24px;
-  position: relative;
-  margin-bottom: 10px;
-  border-radius: 8px;
-}
-
-.demo-link {
-  position: absolute;
-  top: 0;
-  right: 10px;
-  font-size: 12px;
-  font-weight: 500;
-  transition: color 0.5s;
-  margin: 0.1rem 0;
-}
-
 :deep(p) {
   margin: 0.5rem 0;
 }
@@ -132,7 +116,7 @@ onUnmounted(() => {
   margin: 0.5rem 0;
 }
 
-:deep(input[type='text'], input[type='number'], input[type='tel']) {
+:deep(input[type="text"], input[type="number"], input[type="tel"]) {
   min-width: 20rem;
 }
 

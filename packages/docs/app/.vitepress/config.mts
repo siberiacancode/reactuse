@@ -90,6 +90,7 @@ export default async () => {
               text: 'Functions',
               items: [
                 { text: 'Get Started', link: '/getting-started' },
+                { text: 'Installation', link: '/installation' },
                 { text: 'Hooks', link: '/functions/hooks/useAsync.html' }
               ]
             }
@@ -98,6 +99,17 @@ export default async () => {
             {
               text: 'Getting started',
               link: '/getting-started'
+            },
+            {
+              text: 'Installation',
+              link: '/installation'
+            },
+            {
+              text: 'Installation',
+              items: [
+                { text: 'Vite', link: '/frameworks/vite' },
+                { text: 'Next.js', link: '/frameworks/nextjs' }
+              ]
             },
             ...sidebarHookItems
           ]
