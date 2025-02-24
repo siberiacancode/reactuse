@@ -1,4 +1,4 @@
-import { eslint } from '@siberiacancode/eslint';
+import { eslint } from "@siberiacancode/eslint";
 
 export default eslint(
   {
@@ -6,20 +6,21 @@ export default eslint(
     javascript: true,
     react: true,
     jsx: true,
-    vue: true
+    vue: true,
   },
   {
-    name: 'siberiacancode/core/hooks',
-    files: ['**/hooks/**/*.ts'],
+    name: "siberiacancode/core/hooks",
+    files: ["**/hooks/**/*.ts"],
     rules: {
-      'jsdoc/no-defaults': 'off'
-    }
+      "jsdoc/no-defaults": "off",
+      "react-hooks/rules-of-hooks": "warn",
+    },
   },
   {
-    name: 'siberiacancode/core/demo',
-    files: ['**/*.demo.tsx'],
+    name: "siberiacancode/core/demo",
+    files: ["**/*.demo.tsx"],
     rules: {
-      'no-alert': 'off'
-    }
+      "no-alert": "off",
+    },
   }
 );

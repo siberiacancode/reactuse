@@ -12,4 +12,8 @@ import { useStorage } from '../useStorage/useStorage';
  * @example
  * const { value, set, remove } = useLocalStorage('key', 'value');
  */
-export const useLocalStorage = (key, initialValue, options) => useStorage(key, { initialValue, storage: window.localStorage, ...options });
+export const useLocalStorage = (key, initialValue, options) => useStorage(key, {
+    ...options,
+    initialValue,
+    storage: typeof window !== 'undefined' ? window.localStorage : undefined
+});

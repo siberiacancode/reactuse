@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import ora from 'ora';
 import prompts from 'prompts';
 import { createMatchPath, loadConfig } from 'tsconfig-paths';
+import path from 'node:path';
 
 import type { AddOptionsSchema, Registry } from '@/utils/types';
 
@@ -14,23 +15,26 @@ import { APP_PATH, REPO_URLS } from '@/utils/constants';
 import { addOptionsSchema } from '@/utils/types';
 
 
-const resolveDependencies = (registry: Registry, hook: string) => {
-  const hooks = new Set<string>();
-  const utils = new Set<string>();
+const resolveDependencies = (registry: Registry, hooks: string[]) => {
+  const files = new Map<string, { type: 'hook' | 'util' | 'local' | 'package', name: string, parent: string }>();
 
   const resolveDependency = (hook: string) => {
     const item = registry[hook]!;
-    hooks.add(hook);
-    if (item.utils.length) Array.from(item.utils).forEach((util) => utils.add(util));
+    files.set(hook, { type: 'hook', name: hook, parent: item.name });
+    if (item.utils.length) Array.from(item.utils).forEach((util) => files.set(util, { type: 'util', name: util, parent: item.name }));
+    if (item.local.length) Array.from(item.local).forEach((local) => files.set(local, { type: 'local', name: local, parent: item.name }));
+    if (item.packages.length) Array.from(item.packages).forEach((packag) => files.set(packag, { type: 'package', name: packag, parent: item.name }));
 
     for (const hook of item.hooks) {
       resolveDependency(hook);
     }
   };
 
-  resolveDependency(hook);
+  for (const hook of hooks) {
+    resolveDependency(hook);
+  }
 
-  return { hooks: Array.from(hooks), utils: Array.from(utils) };
+  return files;
 };
 
 export const add = {
@@ -128,64 +132,77 @@ export const add = {
       process.exit(1);
     }
 
-    const spinner = ora('Installing hooks...').start();
-    const files = selectedHooks.reduce<{ utils: string[]; hooks: string[] }>(
-      (acc, hook) => {
-        const item = registry[hook];
+    const dependencies = resolveDependencies(registry, selectedHooks);
+    const packages: string[] = [];
+    const files = Array.from(dependencies.values()).map((dependency) => {
+      if (dependency.type === 'hook') {
+        const filePath = `${dependency.name}/${dependency.name}`;
+        const directoryPath = `${pathToLoadHooks}/${filePath}.${language}`;
+        const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/hooks/${filePath}.${language}`;
+        const indexPath = `${pathToLoadHooks}/index.${language}`;
+        return { name: dependency.name, directoryPath, registryPath, type: dependency.type, indexPath, filePath };
+      }
 
-        if (!item) {
-          spinner.fail(`Hook ${hook} not found in the registry`);
-          return acc;
+      if (dependency.type === 'util') {
+        const filePath = `${dependency.name}`;
+        const directoryPath = `${pathToLoadUtils}/${filePath}.${language}`;
+        const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/utils/helpers/${filePath}.${language}`;
+        const indexPath = `${pathToLoadUtils}/index.${language}`;
+        return { name: dependency.name, directoryPath, registryPath, type: dependency.type, indexPath, filePath };
+      }
+
+      if (dependency.type === 'local') {
+        const filePath = `${dependency.name}`;
+        const directoryPath = `${pathToLoadHooks}/${dependency.parent}/helpers/${filePath}.${language}`;
+        const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/hooks/${dependency.parent}/helpers/${filePath}.${language}`;
+        const indexPath = `${pathToLoadHooks}/${dependency.parent}/helpers/index.${language}`;
+        return { name: dependency.name, filePath, registryPath, type: dependency.type, indexPath, directoryPath };
+      }
+
+      if (dependency.type === 'package') {
+        packages.push(dependency.name);
+        return;
+      }
+
+      throw new Error(`Unknown dependency type: ${dependency.type}`);
+    }).filter(Boolean);
+
+
+    const spinner = ora('Installing files...').start();
+    for (const file of files) {
+      const { directoryPath, registryPath, indexPath, filePath, name } = file!;
+      spinner.text = `Installing ${name}...`;
+      const directory = path.dirname(directoryPath);
+
+      if (directory) {
+        spinner.stop()
+        const { overwrite } = await prompts({
+          type: "confirm",
+          name: "overwrite",
+          message: `File ${name} already exists. Would you like to overwrite?`,
+          initial: false,
+        });
+
+        if (!overwrite) {
+          console.log(`Skipped ${name}. To overwrite, run with the ${chalk.green("--overwrite")} flag.`);
+          continue;
         }
 
-        const dependencies = resolveDependencies(registry, hook);
-        acc.utils.push(...dependencies.utils);
-        acc.hooks.push(...dependencies.hooks);
-        return acc;
-      },
-      { utils: [], hooks: [] }
-    );
+        spinner.start(`Installing ${name}...`)
+      }
 
-    const utils = Array.from(new Set(files.utils));
-    const hooks = Array.from(new Set(files.hooks));
+      if (!fs.existsSync(directory)) fs.mkdirSync(directory, { recursive: true });
 
-    Promise.all([
-      ...hooks.map(async (hook) => {
-        const directory = `${pathToLoadHooks}/${hook}`;
-        const path = `${directory}/${hook}.${language}`;
+      const fileResponse = await fetches.get<Buffer>(registryPath);
+      await fs.writeFileSync(directoryPath, fileResponse.data);
 
-        if (!fs.existsSync(directory)) fs.mkdirSync(directory, { recursive: true });
+      const exportStatement = `export * from './${filePath}';\n`;
 
-        const hookFileResponse = await fetches.get<Buffer>(
-          `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/hooks/${hook}/${hook}.${language}`
-        );
-        const buffer = Buffer.from(hookFileResponse.data);
-
-        await fs.writeFileSync(path, buffer);
-      }),
-      ...utils.map(async (util) => {
-        const directory = pathToLoadUtils;
-        const path = `${directory}/${util}.${language}`;
-
-        if (!fs.existsSync(directory)) fs.mkdirSync(directory, { recursive: true });
-
-        const utilFileResponse = await fetches.get<Buffer>(
-          `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/utils/helpers/${util}.${language}`
-        );
-        const buffer = Buffer.from(utilFileResponse.data);
-
-        await fs.writeFileSync(path, buffer);
-
-        const indexPath = `${pathToLoadUtils}/index.${language}`;
-        const indexExist = fs.existsSync(indexPath);
-        const exportStatement = `export * from './${util}';\n`;
-
-        if (!indexExist) fs.writeFileSync(indexPath, '');
-        const indexFileContent = fs.readFileSync(indexPath, 'utf-8');
-        if (!indexFileContent.includes(exportStatement))
-          fs.appendFileSync(indexPath, exportStatement, 'utf-8');
-      })
-    ]);
+      if (!fs.existsSync(indexPath)) fs.writeFileSync(indexPath, '');
+      const indexFileContent = fs.readFileSync(indexPath, 'utf-8');
+      if (!indexFileContent.includes(exportStatement))
+        fs.appendFileSync(indexPath, exportStatement, 'utf-8');
+    }
 
     spinner.succeed('Done.');
   }

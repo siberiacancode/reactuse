@@ -79,6 +79,11 @@ export const useStorage = <Value>(
   const options = (typeof params === 'object' ? params : undefined) as UseStorageOptions<Value>;
   const initialValue = (options ? options?.initialValue : params) as UseStorageInitialValue<Value>;
 
+  if (typeof window === 'undefined')
+    return {
+      value: initialValue instanceof Function ? initialValue() : initialValue
+    } as UseStorageReturn<Value>;
+
   const serializer = (value: Value) => {
     if (options?.serializer) return options.serializer(value);
     return JSON.stringify(value);
@@ -119,13 +124,6 @@ export const useStorage = <Value>(
       );
     }
   }, [key]);
-
-  if (typeof window === 'undefined')
-    return {
-      value: initialValue instanceof Function ? initialValue() : initialValue,
-      set,
-      remove
-    };
 
   return {
     value: store ? deserializer(store) : undefined,

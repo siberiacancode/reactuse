@@ -40,6 +40,10 @@ const getServerSnapshot = () => undefined;
 export const useStorage = (key, params) => {
     const options = (typeof params === 'object' ? params : undefined);
     const initialValue = (options ? options?.initialValue : params);
+    if (typeof window === 'undefined')
+        return {
+            value: initialValue instanceof Function ? initialValue() : initialValue
+        };
     const serializer = (value) => {
         if (options?.serializer)
             return options.serializer(value);
@@ -73,12 +77,6 @@ export const useStorage = (key, params) => {
             setStorageItem(storage, key, serializer(initialValue instanceof Function ? initialValue() : initialValue));
         }
     }, [key]);
-    if (typeof window === 'undefined')
-        return {
-            value: initialValue instanceof Function ? initialValue() : initialValue,
-            set,
-            remove
-        };
     return {
         value: store ? deserializer(store) : undefined,
         set,

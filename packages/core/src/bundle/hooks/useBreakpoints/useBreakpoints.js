@@ -62,4 +62,4 @@ export const useBreakpoints = (breakpoints, strategy = 'mobile-first') => {
         ...breakpointsKeys
     };
 };
-export * from './constants/breakpoints';
+export * from './helpers';

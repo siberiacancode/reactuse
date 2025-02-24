@@ -12,4 +12,8 @@ import { useStorage } from '../useStorage/useStorage';
  * @example
  * const { value, set, remove } = useSessionStorage('key', 'value');
  */
-export const useSessionStorage = (key, initialValue, options) => useStorage(key, { initialValue, storage: window.sessionStorage, ...options });
+export const useSessionStorage = (key, initialValue, options) => useStorage(key, {
+    ...options,
+    initialValue,
+    storage: typeof window !== 'undefined' ? window.localStorage : undefined
+});

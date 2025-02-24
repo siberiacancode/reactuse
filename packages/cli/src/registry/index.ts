@@ -16,7 +16,6 @@ export const REGISTRY_PATH = path.join(DOCS_PUBLIC_PATH, 'registry.json');
 export const registry = async () => {
   console.log('📦 Building registry');
 
-  console.log('@', fetches);
   const hooksResponse = await fetches.get<{ name: string }[]>(
     'https://api.github.com/repos/siberiacancode/reactuse/contents/packages/core/src/hooks'
   );
