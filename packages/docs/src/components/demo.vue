@@ -29,14 +29,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative bg-gray-100 p-6 mb-2 rounded-lg">
+  <div class="relative bg-[var(--vp-code-block-bg)] p-6 mb-2 rounded-lg">
     <p class="absolute top-0 right-2 text-xs font-medium transition-colors">
-      <a
-        :href="sourceLink"
-        target="_blank"
-        class="text-blue-500 hover:text-blue-700"
-        >source</a
-      >
+      <a :href="sourceLink" target="_blank">source</a>
     </p>
     <div ref="demoRef" />
   </div>
