@@ -1,4 +1,4 @@
-import { useEffect, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { RemoveCookieParams, SetCookieParams } from './helpers';
 
@@ -31,7 +31,7 @@ export const COOKIE_EVENT = 'reactuse-cookie';
 
 export const dispatchCookieEvent = () => window.dispatchEvent(new Event(COOKIE_EVENT));
 
-const setCookieItem = (key: string, value: any, options?: SetCookieParams) => {
+const setCookieItem = (key: string, value: string, options?: SetCookieParams) => {
   setCookie(key, value, options);
   dispatchCookieEvent();
 };
@@ -41,17 +41,10 @@ const removeCookieItem = (key: string, options?: RemoveCookieParams) => {
   dispatchCookieEvent();
 };
 
-const getCookieItem = (key: string) => {
+const getCookieItem = (key: string): string | undefined => {
   const cookies = getCookies();
   return cookies[key];
 };
-
-const cookieSubscribe = (callback: () => void) => {
-  window.addEventListener(COOKIE_EVENT, callback);
-  return () => window.removeEventListener(COOKIE_EVENT, callback);
-};
-
-const getServerSnapshot = () => undefined;
 
 /**
  * @name useCookie
@@ -80,13 +73,10 @@ export const useCookie = <Value>(
   ) as UseCookieOptions<Value>;
   const initialValue = (options ? options?.initialValue : params) as UseCookieInitialValue<Value>;
 
-  if (typeof window === 'undefined')
-    return {
-      value: initialValue instanceof Function ? initialValue() : initialValue
-    } as UseCookieReturn<Value>;
-
-  const getSnapshot = () => getCookieItem(key);
-  const cookie = useSyncExternalStore(cookieSubscribe, getSnapshot, getServerSnapshot);
+  const serializer = (value: Value) => {
+    if (options?.serializer) return options.serializer(value);
+    return JSON.stringify(value);
+  };
 
   const deserializer = (value: string) => {
     if (options?.deserializer) return options.deserializer(value);
@@ -99,24 +89,30 @@ export const useCookie = <Value>(
     }
   };
 
-  const serializer = (value: Value) => {
-    if (options?.serializer) return options.serializer(value);
-    return JSON.stringify(value);
-  };
+  const [value, setValue] = useState<Value | undefined>(() => {
+    const cookieValue = getCookieItem(key);
+    if (cookieValue === undefined && initialValue !== undefined) {
+      const value = initialValue instanceof Function ? initialValue() : initialValue;
+      setCookieItem(key, serializer(value));
+      return value;
+    }
+    return cookieValue ? deserializer(cookieValue) : undefined;
+  });
+
+  useEffect(() => {
+    const onChange = () => {
+      const cookieValue = getCookieItem(key);
+      setValue(cookieValue ? deserializer(cookieValue) : undefined);
+    };
+    window.addEventListener(COOKIE_EVENT, onChange);
+    return () => window.removeEventListener(COOKIE_EVENT, onChange);
+  }, [key]);
 
   const set = (value: Value, options?: SetCookieParams) =>
     setCookieItem(key, serializer(value), options);
   const remove = (options?: RemoveCookieParams) => removeCookieItem(key, options);
 
-  useEffect(() => {
-    const value = getCookieItem(key);
-    if (value === undefined && initialValue !== undefined) {
-      setCookieItem(
-        key,
-        serializer(initialValue instanceof Function ? initialValue() : initialValue)
-      );
-    }
-  }, [key]);
-
-  return { value: cookie ? deserializer(cookie) : undefined, set, remove };
+  return { value, set, remove };
 };
+
+export * from './helpers';

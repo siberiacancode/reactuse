@@ -1,4 +1,4 @@
-import { useEffect, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 
 /* The use storage initial value type */
 export type UseStorageInitialValue<Value> = (() => Value) | Value;
@@ -49,13 +49,6 @@ const getStorageItem = (storage: Storage, key: string) => {
   if (!value) return undefined;
   return value;
 };
-
-const storageSubscribe = (callback: () => void) => {
-  window.addEventListener(STORAGE_EVENT, callback);
-  return () => window.removeEventListener(STORAGE_EVENT, callback);
-};
-
-const getServerSnapshot = () => undefined;
 
 /**
  * @name useStorage
@@ -120,22 +113,27 @@ export const useStorage = <Value>(
     }
   };
 
-  const getSnapshot = () => getStorageItem(storage, key);
-  const store = useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
+  const [value, setValue] = useState<Value | undefined>(() => {
+    const storageValue = getStorageItem(storage, key);
+    if (storageValue === undefined && initialValue !== undefined) {
+      const value = initialValue instanceof Function ? initialValue() : initialValue;
+      setStorageItem(storage, key, serializer(value));
+      return value;
+    }
+    return storageValue ? deserializer(storageValue) : undefined;
+  });
 
   useEffect(() => {
-    const value = getStorageItem(storage, key);
-    if (value === undefined && initialValue !== undefined) {
-      setStorageItem(
-        storage,
-        key,
-        serializer(initialValue instanceof Function ? initialValue() : initialValue)
-      );
-    }
+    const onChange = () => {
+      const storageValue = getStorageItem(storage, key);
+      setValue(storageValue ? deserializer(storageValue) : undefined);
+    };
+    window.addEventListener(STORAGE_EVENT, onChange);
+    return () => window.removeEventListener(STORAGE_EVENT, onChange);
   }, [key]);
 
   return {
-    value: store ? deserializer(store) : undefined,
+    value,
     set,
     remove
   };

@@ -1,4 +1,4 @@
-import { useEffect, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 export const STORAGE_EVENT = 'reactuse-storage';
 export const dispatchStorageEvent = (params) => window.dispatchEvent(new StorageEvent(STORAGE_EVENT, params));
 const setStorageItem = (storage, key, value) => {
@@ -17,11 +17,6 @@ const getStorageItem = (storage, key) => {
         return undefined;
     return value;
 };
-const storageSubscribe = (callback) => {
-    window.addEventListener(STORAGE_EVENT, callback);
-    return () => window.removeEventListener(STORAGE_EVENT, callback);
-};
-const getServerSnapshot = () => undefined;
 /**
  * @name useStorage
  * @description - Hook that manages storage value
@@ -77,16 +72,25 @@ export const useStorage = (key, params) => {
             return value;
         }
     };
-    const getSnapshot = () => getStorageItem(storage, key);
-    const store = useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
-    useEffect(() => {
-        const value = getStorageItem(storage, key);
-        if (value === undefined && initialValue !== undefined) {
-            setStorageItem(storage, key, serializer(initialValue instanceof Function ? initialValue() : initialValue));
+    const [value, setValue] = useState(() => {
+        const storageValue = getStorageItem(storage, key);
+        if (storageValue === undefined && initialValue !== undefined) {
+            const value = initialValue instanceof Function ? initialValue() : initialValue;
+            setStorageItem(storage, key, serializer(value));
+            return value;
         }
+        return storageValue ? deserializer(storageValue) : undefined;
+    });
+    useEffect(() => {
+        const onChange = () => {
+            const storageValue = getStorageItem(storage, key);
+            setValue(storageValue ? deserializer(storageValue) : undefined);
+        };
+        window.addEventListener(STORAGE_EVENT, onChange);
+        return () => window.removeEventListener(STORAGE_EVENT, onChange);
     }, [key]);
     return {
-        value: store ? deserializer(store) : undefined,
+        value,
         set,
         remove
     };
