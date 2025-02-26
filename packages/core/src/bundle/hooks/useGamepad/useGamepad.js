@@ -62,4 +62,4 @@ export const useGamepad = () => {
         gamepads: Object.values(gamepads)
     };
 };
-export * from './helpers';
+export { mapGamepadToXbox360Controller } from './helpers';

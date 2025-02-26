@@ -93,4 +93,4 @@ export const useGamepad = () => {
   };
 };
 
-export * from './helpers';
+export { mapGamepadToXbox360Controller } from './helpers';

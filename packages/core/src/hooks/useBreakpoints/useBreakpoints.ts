@@ -114,4 +114,14 @@ export const useBreakpoints = <Breakpoint extends string>(
   };
 };
 
-export * from './helpers';
+export {
+  BREAKPOINTS_ANT_DESIGN,
+  BREAKPOINTS_BOOTSTRAP_V5,
+  BREAKPOINTS_MANTINE,
+  BREAKPOINTS_MASTER_CSS,
+  BREAKPOINTS_MATERIAL_UI,
+  BREAKPOINTS_PRIME_FLEX,
+  BREAKPOINTS_QUASAR_V2,
+  BREAKPOINTS_SEMANTIC,
+  BREAKPOINTS_TAILWIND
+} from './helpers';
