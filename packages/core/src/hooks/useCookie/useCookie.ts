@@ -114,5 +114,3 @@ export const useCookie = <Value>(
 
   return { value, set, remove };
 };
-
-export * from './helpers';

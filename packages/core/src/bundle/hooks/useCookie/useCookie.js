@@ -73,4 +73,3 @@ export const useCookie = (key, params) => {
     const remove = (options) => removeCookieItem(key, options);
     return { value, set, remove };
 };
-export * from './helpers';

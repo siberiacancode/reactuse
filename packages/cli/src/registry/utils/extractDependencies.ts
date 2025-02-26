@@ -25,11 +25,14 @@ export const extractDependencies = (content: string) => {
   }
 
   const localMatches = Array.from(
-    content.matchAll(/(?:import|export).*?from\s+['"]\.\/helpers\/([^'"]+)['"]/g)
+    content.matchAll(/import\s*{\s*([^}]+)\s*}\s*from\s*['"]\.\/helpers['"]/g)
   );
+  console.log(localMatches);
   for (const match of localMatches) {
-    const fileName = match[1].split('/').pop()!;
-    locals.add(fileName);
+    const imports = match[1].split(',').map((item) => item.trim());
+    for (const item of imports) {
+      if (item) locals.add(item);
+    }
   }
 
   const packageMatches = Array.from(

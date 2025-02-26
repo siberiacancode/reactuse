@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import { getElement } from '@/utils/helpers';
 
-import type { Point } from './helpers/Pointer';
+import type { Point } from './helpers';
 
 import { useEvent } from '../useEvent/useEvent';
-import { Paint } from './helpers/Paint';
+import { Paint } from './helpers';
 
 const DEFAULT_BRUSH_RADIUS = 10;
 
@@ -74,7 +74,6 @@ export interface UsePaint {
  * @example
  * const { ref, drawing } = usePaint();
  */
-
 export const usePaint = ((...params: any[]) => {
   const target = (
     typeof params[0] === 'object' && !('current' in params[0]) ? undefined : params[0]

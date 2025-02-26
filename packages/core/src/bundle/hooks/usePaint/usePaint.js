@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { getElement } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
-import { Paint } from './helpers/Paint';
+import { Paint } from './helpers';
 const DEFAULT_BRUSH_RADIUS = 10;
 /**
  * @name usePaint

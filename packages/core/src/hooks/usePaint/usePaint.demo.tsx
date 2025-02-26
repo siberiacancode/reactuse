@@ -7,8 +7,6 @@ import { useInterval } from '../useInterval/useInterval';
 import { useKeyPressEvent } from '../useKeyPressEvent/useKeyPressEvent';
 import { usePaint } from './usePaint';
 
-// мобильное устройство
-
 const Demo = () => {
   const [color, setColor] = useState('#37d2e6');
   const radiusInput = useField({ initialValue: '10' });
