@@ -8,23 +8,23 @@ beforeEach(() => {
 
 it('Should use document title', () => {
   const { result } = renderHook(useDocumentTitle);
-  const [title, setTitle] = result.current;
+  const { value, set } = result.current;
 
-  expect(title).toBe('default title');
-  expect(setTitle).toBeTypeOf('function');
+  expect(value).toBe('default title');
+  expect(set).toBeTypeOf('function');
 });
 
 it('Should be set initial title', () => {
   const { result } = renderHook(() => useDocumentTitle('title'));
 
-  waitFor(() => expect(result.current[0]).toBe('title'));
+  waitFor(() => expect(result.current.value).toBe('title'));
 });
 
 it('Should be set new title', () => {
   const { result } = renderHook(useDocumentTitle);
 
-  act(() => result.current[1]('new title'));
-  waitFor(() => expect(result.current[0]).toBe('new title'));
+  act(() => result.current.set('new title'));
+  waitFor(() => expect(result.current.value).toBe('new title'));
 });
 
 it('Should be restore initial title when unmount', () => {
@@ -32,9 +32,9 @@ it('Should be restore initial title when unmount', () => {
     useDocumentTitle('title', { restoreOnUnmount: true })
   );
 
-  act(() => result.current[1]('new title'));
-  waitFor(() => expect(result.current[0]).toBe('new title'));
+  act(() => result.current.set('new title'));
+  waitFor(() => expect(result.current.value).toBe('new title'));
 
   unmount();
-  waitFor(() => expect(result.current[0]).toBe('title'));
+  waitFor(() => expect(result.current.value).toBe('title'));
 });

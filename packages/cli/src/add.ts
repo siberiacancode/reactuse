@@ -15,25 +15,29 @@ import { APP_PATH, REPO_URLS } from '@/utils/constants';
 import { addOptionsSchema } from '@/utils/types';
 import { execa } from 'execa';
 
+type FileType = 'hook' | 'local' | 'package' | 'util';
+interface FileItem { type: FileType; name: string; parent: string };
 
-const resolveDependencies = (registry: Registry, hooks: string[]) => {
-  const files = new Map<string, { type: 'hook' | 'local' | 'package' | 'util', name: string, parent: string }>();
+const resolveDependencies = (registry: Registry, hooks: string[]): Map<string, FileItem> => {
+  const files = new Map<string, FileItem>();
 
-  const resolveDependency = (hook: string) => {
+  const addFile = (name: string, type: FileType, parent: string) => !files.has(name) && files.set(name, { type, name, parent });
+
+  const resolveDependency = (hook: string): void => {
+    if (files.has(hook)) return;
+
     const item = registry[hook]!;
-    files.set(hook, { type: 'hook', name: hook, parent: item.name });
-    if (item.utils.length) Array.from(item.utils).forEach((util) => files.set(util, { type: 'util', name: util, parent: item.name }));
-    if (item.local.length) Array.from(item.local).forEach((local) => files.set(local, { type: 'local', name: local, parent: item.name }));
-    if (item.packages.length) Array.from(item.packages).forEach((packag) => files.set(packag, { type: 'package', name: packag, parent: item.name }));
 
-    for (const hook of item.hooks) {
-      resolveDependency(hook);
-    }
+    addFile(hook, 'hook', item.name);
+
+
+    item.utils.forEach(util => addFile(util, 'util', item.name));
+    item.local.forEach(local => addFile(local, 'local', item.name));
+    item.packages.forEach(pkg => addFile(pkg, 'package', item.name));
+    item.hooks.forEach(resolveDependency);
   };
 
-  for (const hook of hooks) {
-    resolveDependency(hook);
-  }
+  hooks.forEach(resolveDependency);
 
   return files;
 };
@@ -42,9 +46,7 @@ const updateImports = async (filePath: string, utilsPath: string) => {
   const fileContent = await fs.readFileSync(filePath, 'utf-8');
   const utilsImportRegex = /import\s+\{([^}]+)\}\s+from\s+['"](@\/utils[^'"]*)['"]/g;
 
-  const updatedContent = fileContent.replace(utilsImportRegex, (_, imports) => {
-    return `import {${imports}} from '${utilsPath}'`;
-  });
+  const updatedContent = fileContent.replace(utilsImportRegex, (_, imports) => `import {${imports}} from '${utilsPath}'`);
 
   fs.writeFileSync(filePath, updatedContent);
 };

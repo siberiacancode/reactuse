@@ -9,6 +9,10 @@ export default eslint(
     vue: true,
   },
   {
+    name: "siberiacancode/core/ignores",
+    ignores: ["**/bundle/**/*.js"],
+  },
+  {
     name: "siberiacancode/core/hooks",
     files: ["**/hooks/**/*.ts"],
     rules: {

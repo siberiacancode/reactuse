@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
-
 /** The use document title options type */
 export interface UseDocumentTitleOptions {
   /** Restore the previous title on unmount */
@@ -9,50 +7,49 @@ export interface UseDocumentTitleOptions {
 }
 
 /** The use document title return type */
-export type UseDocumentTitleReturn = [
+export interface UseDocumentTitleReturn {
   /** The current title */
-  title: string,
-
+  value: string;
   /** Function to update the title */
-  setTitle: (title: string) => void
-];
+  set: (title: string) => void;
+}
 
 /**
  * @name useDocumentTitle
  * @description - Hook that manages the document title and allows updating it
  * @category Browser
  *
- * @param {string} [value] The initial title. If not provided, the current document title will be used
+ * @param {string} [initialValue] The initial title. If not provided, the current document title will be used
  * @param {boolean} [options.restoreOnUnmount] Restore the previous title on unmount
  * @returns {UseDocumentTitleReturn} An array containing the current title and a function to update the title
  *
  * @example
- * const [title, setTitle] = useDocumentTitle();
+ * const { value, set } = useDocumentTitle();
  */
 export function useDocumentTitle(
-  value?: string,
+  initialValue?: string,
   options?: UseDocumentTitleOptions
 ): UseDocumentTitleReturn {
-  const prevTitleRef = useRef(document.title);
-  const [title, setTitle] = useState(value ?? document.title);
+  const prevValueRef = useRef(document.title);
+  const [value, setValue] = useState(initialValue ?? document.title);
 
   const set = (value: string) => {
     const updatedValue = value.trim();
     if (updatedValue.length > 0) document.title = updatedValue;
   };
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     if (typeof value !== 'string') return;
     set(value);
   }, [value]);
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     const observer = new MutationObserver(() => {
-      setTitle((prevTitle) => {
-        if (document && document.title !== prevTitle) {
+      setValue((prevValue) => {
+        if (document && document.title !== prevValue) {
           return document.title;
         }
-        return prevTitle;
+        return prevValue;
       });
     });
 
@@ -66,10 +63,10 @@ export function useDocumentTitle(
   useEffect(() => {
     if (options?.restoreOnUnmount) {
       return () => {
-        document.title = prevTitleRef.current;
+        document.title = prevValueRef.current;
       };
     }
   }, []);
 
-  return [title, set];
+  return { value, set };
 }

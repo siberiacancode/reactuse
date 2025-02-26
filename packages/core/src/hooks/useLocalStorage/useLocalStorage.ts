@@ -18,7 +18,7 @@ import { useStorage } from '../useStorage/useStorage';
 export const useLocalStorage = <Value>(
   key: string,
   initialValue?: UseStorageInitialValue<Value>,
-  options?: UseStorageOptions<Value>
+  options?: Omit<UseStorageOptions<Value>, 'initialValue' | 'storage'>
 ) =>
   useStorage(key, {
     ...options,

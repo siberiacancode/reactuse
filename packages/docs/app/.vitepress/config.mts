@@ -105,10 +105,14 @@ export default async () => {
               link: '/installation'
             },
             {
+              text: 'Cli',
+              link: '/cli'
+            },
+            {
               text: 'Installation',
               items: [
-                { text: 'Vite', link: '/frameworks/vite' },
-                { text: 'Next.js', link: '/frameworks/nextjs' }
+                { text: 'Vite', link: '/installation/vite' },
+                { text: 'Next.js', link: '/installation/nextjs' }
               ]
             },
             ...sidebarHookItems

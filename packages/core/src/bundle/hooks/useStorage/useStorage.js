@@ -1,6 +1,6 @@
-import { useSyncExternalStore } from 'react';
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
-export const dispatchStorageEvent = (params) => window.dispatchEvent(new StorageEvent('storage', params));
+import { useEffect, useSyncExternalStore } from 'react';
+export const STORAGE_EVENT = 'reactuse-storage';
+export const dispatchStorageEvent = (params) => window.dispatchEvent(new StorageEvent(STORAGE_EVENT, params));
 const setStorageItem = (storage, key, value) => {
     const oldValue = storage.getItem(key);
     storage.setItem(key, value);
@@ -18,15 +18,21 @@ const getStorageItem = (storage, key) => {
     return value;
 };
 const storageSubscribe = (callback) => {
-    window.addEventListener('storage', callback);
-    return () => window.removeEventListener('storage', callback);
+    window.addEventListener(STORAGE_EVENT, callback);
+    return () => window.removeEventListener(STORAGE_EVENT, callback);
 };
 const getServerSnapshot = () => undefined;
 /**
  * @name useStorage
  * @description - Hook that manages storage value
- * @category Utilities
+ * @category Browser
  *
+ * @overload
+ * @param {string} key The key of the storage
+ * @param {UseStorageInitialValue<Value>} [initialValue] The initial value of the storage
+ * @returns {UseStorageReturn<Value>} The value and the set function
+ *
+ * @overload
  * @param {string} key The key of the storage
  * @param {(value: Value) => string} [params.serializer] The serializer function
  * @param {(value: string) => Value} [params.deserializer] The deserializer function
@@ -38,7 +44,14 @@ const getServerSnapshot = () => undefined;
  * const { value, set, remove } = useStorage('key', 'value');
  */
 export const useStorage = (key, params) => {
-    const options = (typeof params === 'object' ? params : undefined);
+    const options = (typeof params === 'object' &&
+        params &&
+        ('serializer' in params ||
+            'deserializer' in params ||
+            'initialValue' in params ||
+            'storage' in params)
+        ? params
+        : undefined);
     const initialValue = (options ? options?.initialValue : params);
     if (typeof window === 'undefined')
         return {
@@ -50,18 +63,13 @@ export const useStorage = (key, params) => {
         return JSON.stringify(value);
     };
     const storage = options?.storage ?? window?.localStorage;
-    const set = (value) => {
-        if (value === null)
-            return removeStorageItem(storage, key);
-        setStorageItem(storage, key, serializer(value));
-    };
+    const set = (value) => setStorageItem(storage, key, serializer(value));
     const remove = () => removeStorageItem(storage, key);
     const deserializer = (value) => {
         if (options?.deserializer)
             return options.deserializer(value);
-        if (value === 'undefined') {
+        if (value === 'undefined')
             return undefined;
-        }
         try {
             return JSON.parse(value);
         }
@@ -71,7 +79,7 @@ export const useStorage = (key, params) => {
     };
     const getSnapshot = () => getStorageItem(storage, key);
     const store = useSyncExternalStore(storageSubscribe, getSnapshot, getServerSnapshot);
-    useIsomorphicLayoutEffect(() => {
+    useEffect(() => {
         const value = getStorageItem(storage, key);
         if (value === undefined && initialValue !== undefined) {
             setStorageItem(storage, key, serializer(initialValue instanceof Function ? initialValue() : initialValue));
