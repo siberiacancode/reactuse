@@ -3,8 +3,9 @@
 layout: home
 
 hero:
-  name: reactuse 🚀
-  tagline: the largest and most useful hook library
+  name: reactuse
+  text: the largest and most useful hook library
+  tagline: Improve your react applications with our library 📦 designed for comfort and speed
   actions:
     - theme: brand
       text: Get Started
