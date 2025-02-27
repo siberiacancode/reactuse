@@ -30,7 +30,7 @@ bun add @siberiacancode/reactuse
 
 ## Inject code to your framework
 
-How to install dependencies and structure your app with [useverse](https://www.npmjs.com/package/useverse).
+How to install dependencies and structure your app with [cli](./cli.md) and [useverse](https://www.npmjs.com/package/useverse).
 
 <div class="flex flex-col gap-4 md:flex-row">
   <a href="./frameworks/vite" target="_blank" class="w-full !no-underline">

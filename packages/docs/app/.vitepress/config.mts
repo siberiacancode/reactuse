@@ -89,7 +89,7 @@ export default async () => {
             {
               text: 'Functions',
               items: [
-                { text: 'Get Started', link: '/getting-started' },
+                { text: 'Get Started', link: '/introduction' },
                 { text: 'Installation', link: '/installation' },
                 { text: 'Hooks', link: '/functions/hooks/useAsync.html' }
               ]
@@ -98,15 +98,12 @@ export default async () => {
           sidebar: [
             {
               text: 'Getting started',
-              link: '/getting-started'
-            },
-            {
-              text: 'Installation',
-              link: '/installation'
-            },
-            {
-              text: 'Cli',
-              link: '/cli'
+              items: [
+                { text: 'Introduction', link: '/introduction' },
+                { text: 'Installation', link: '/installation' },
+                { text: 'Config', link: '/config' },
+                { text: 'CLI', link: '/cli' }
+              ]
             },
             {
               text: 'Installation',
