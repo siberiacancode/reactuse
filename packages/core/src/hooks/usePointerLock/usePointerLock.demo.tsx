@@ -36,9 +36,9 @@ const Demo = () => {
   );
 
   return (
-    <div className='perspective-normal flex h-32 items-center justify-center'>
+    <div className='flex h-32 items-center justify-center perspective-normal'>
       <div
-        className='transform-3d relative h-[100px] w-[100px] cursor-all-scroll'
+        className='relative h-[100px] w-[100px] cursor-all-scroll transform-3d'
         style={{ transform: `rotateY(calc(-45 * 1deg))` }}
         onMouseDownCapture={lock}
         onMouseUpCapture={unlock}

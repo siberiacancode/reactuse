@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getCookies, removeCookie, setCookie } from './helpers';
+import { getCookies, removeCookie, setCookie } from '@/utils/helpers';
 export const COOKIE_EVENT = 'reactuse-cookie';
 export const dispatchCookieEvent = () => window.dispatchEvent(new Event(COOKIE_EVENT));
 const setCookieItem = (key, value, options) => {
@@ -35,6 +35,10 @@ export const useCookie = (key, params) => {
         ? params
         : undefined);
     const initialValue = (options ? options?.initialValue : params);
+    if (typeof document === 'undefined')
+        return {
+            value: initialValue instanceof Function ? initialValue() : initialValue
+        };
     const serializer = (value) => {
         if (options?.serializer)
             return options.serializer(value);

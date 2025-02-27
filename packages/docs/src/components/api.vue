@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Spec } from "comment-parser";
+import type { Spec } from 'comment-parser';
 
-import { isDefaultType } from "../utils/isDefaultType";
+import { isDefaultType } from '../utils/isDefaultType';
 
 interface Group {
   id: number;
@@ -17,11 +17,9 @@ let groupIndex = 0;
 const groups: Group[] = [{ id: groupIndex, parameters: [], returns: null }];
 
 props.apiParameters.forEach((parameter, index) => {
-  if (parameter.tag === "overload") {
+  if (parameter.tag === 'overload') {
     const isFirstOverload =
-      props.apiParameters.findIndex(
-        (parameter) => parameter.tag === "overload"
-      ) === index;
+      props.apiParameters.findIndex((parameter) => parameter.tag === 'overload') === index;
     if (!isFirstOverload) {
       groupIndex++;
       groups.push({ id: groupIndex, parameters: [], returns: null });
@@ -29,7 +27,7 @@ props.apiParameters.forEach((parameter, index) => {
     return;
   }
 
-  if (parameter.tag === "returns") {
+  if (parameter.tag === 'returns') {
     groups[groupIndex].returns = parameter;
     return;
   }
@@ -52,7 +50,7 @@ props.apiParameters.forEach((parameter, index) => {
       </thead>
       <tbody>
         <tr v-for="parameter in group.parameters" :key="parameter.name">
-          <td>{{ parameter.name }}{{ parameter.optional ? "?" : "" }}</td>
+          <td>{{ parameter.name }}{{ parameter.optional ? '?' : '' }}</td>
 
           <td v-if="isDefaultType(parameter.type)">
             {{ parameter.type }}
@@ -62,7 +60,7 @@ props.apiParameters.forEach((parameter, index) => {
           </td>
 
           <td>
-            {{ parameter.default ?? "-" }}
+            {{ parameter.default ?? '-' }}
           </td>
           <td>{{ parameter.description }}</td>
         </tr>

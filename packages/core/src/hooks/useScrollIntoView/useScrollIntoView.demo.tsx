@@ -6,7 +6,7 @@ const Demo = () => {
   return (
     <div
       ref={scrollIntoView.ref}
-      className='p-15 m-2 w-full rounded-md border border-gray-300 text-center'
+      className='m-2 w-full rounded-md border border-gray-300 p-15 text-center'
     >
       <p>Scroll into view block</p>
       <p>

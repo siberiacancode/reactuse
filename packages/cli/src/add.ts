@@ -2,6 +2,7 @@ import type { Argv } from 'yargs';
 
 import fetches from '@siberiacancode/fetches';
 import chalk from 'chalk';
+import { execa } from 'execa';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
@@ -10,18 +11,22 @@ import { createMatchPath, loadConfig } from 'tsconfig-paths';
 
 import type { AddOptionsSchema, Registry } from '@/utils/types';
 
-import { getConfig, getPackageManager } from '@/utils/helpers';
 import { APP_PATH, REPO_URLS } from '@/utils/constants';
+import { getConfig, getPackageManager } from '@/utils/helpers';
 import { addOptionsSchema } from '@/utils/types';
-import { execa } from 'execa';
 
-type FileType = 'hook' | 'local' | 'package' | 'util';
-interface FileItem { type: FileType; name: string; parent: string };
+type FileType = 'hook' | 'package' | 'util';
+interface FileItem {
+  name: string;
+  parent: string;
+  type: FileType;
+}
 
 const resolveDependencies = (registry: Registry, hooks: string[]): Map<string, FileItem> => {
   const files = new Map<string, FileItem>();
 
-  const addFile = (name: string, type: FileType, parent: string) => !files.has(name) && files.set(name, { type, name, parent });
+  const addFile = (name: string, type: FileType, parent: string) =>
+    !files.has(name) && files.set(name, { type, name, parent });
 
   const resolveDependency = (hook: string): void => {
     if (files.has(hook)) return;
@@ -30,10 +35,8 @@ const resolveDependencies = (registry: Registry, hooks: string[]): Map<string, F
 
     addFile(hook, 'hook', item.name);
 
-
-    item.utils.forEach(util => addFile(util, 'util', item.name));
-    item.local.forEach(local => addFile(local, 'local', item.name));
-    item.packages.forEach(pkg => addFile(pkg, 'package', item.name));
+    item.utils.forEach((util) => addFile(util, 'util', item.name));
+    item.packages.forEach((pkg) => addFile(pkg, 'package', item.name));
     item.hooks.forEach(resolveDependency);
   };
 
@@ -46,7 +49,10 @@ const updateImports = async (filePath: string, utilsPath: string) => {
   const fileContent = await fs.readFileSync(filePath, 'utf-8');
   const utilsImportRegex = /import\s+\{([^}]+)\}\s+from\s+['"](@\/utils[^'"]*)['"]/g;
 
-  const updatedContent = fileContent.replace(utilsImportRegex, (_, imports) => `import {${imports}} from '${utilsPath}'`);
+  const updatedContent = fileContent.replace(
+    utilsImportRegex,
+    (_, imports) => `import {${imports}} from '${utilsPath}'`
+  );
 
   fs.writeFileSync(filePath, updatedContent);
 };
@@ -96,7 +102,6 @@ export const add = {
       cwd: argv.cwd
     });
 
-
     const registryResponse = await fetches.get<Registry>(options.registry);
     const registry = registryResponse.data;
 
@@ -141,7 +146,9 @@ export const add = {
 
     const projectConfig = loadConfig(options.cwd);
     if (projectConfig.resultType === 'failed') {
-      throw new Error(`Failed to load ${language}config.json. ${projectConfig.message ?? ''}`.trim());
+      throw new Error(
+        `Failed to load ${language}config.json. ${projectConfig.message ?? ''}`.trim()
+      );
     }
 
     const matchPath = createMatchPath(projectConfig.absoluteBaseUrl, projectConfig.paths);
@@ -155,38 +162,46 @@ export const add = {
 
     const dependencies = resolveDependencies(registry, selectedHooks);
     const packages: string[] = [];
-    const files = Array.from(dependencies.values()).map((dependency) => {
-      if (dependency.type === 'hook') {
-        const filePath = `${dependency.name}/${dependency.name}`;
-        const directoryPath = `${pathToLoadHooks}/${filePath}.${language}`;
-        const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/hooks/${filePath}.${language}`;
-        const indexPath = `${pathToLoadHooks}/index.${language}`;
-        return { name: dependency.name, directoryPath, registryPath, type: dependency.type, indexPath, filePath };
-      }
+    const files = Array.from(dependencies.values())
+      .map((dependency) => {
+        if (dependency.type === 'hook') {
+          const filePath = `${dependency.name}/${dependency.name}`;
+          const directoryPath = `${pathToLoadHooks}/${filePath}.${language}`;
+          const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/hooks/${filePath}.${language}`;
+          const indexPath = `${pathToLoadHooks}/index.${language}`;
+          return {
+            name: dependency.name,
+            directoryPath,
+            registryPath,
+            type: dependency.type,
+            indexPath,
+            filePath
+          };
+        }
 
-      if (dependency.type === 'util') {
-        const filePath = `${dependency.name}`;
-        const directoryPath = `${pathToLoadUtils}/${filePath}.${language}`;
-        const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/utils/helpers/${filePath}.${language}`;
-        const indexPath = `${pathToLoadUtils}/index.${language}`;
-        return { name: dependency.name, directoryPath, registryPath, type: dependency.type, indexPath, filePath };
-      }
+        if (dependency.type === 'util') {
+          const filePath = `${dependency.name}`;
+          const directoryPath = `${pathToLoadUtils}/${filePath}.${language}`;
+          const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/utils/helpers/${filePath}.${language}`;
+          const indexPath = `${pathToLoadUtils}/index.${language}`;
+          return {
+            name: dependency.name,
+            directoryPath,
+            registryPath,
+            type: dependency.type,
+            indexPath,
+            filePath
+          };
+        }
 
-      if (dependency.type === 'local') {
-        const filePath = `${dependency.name}`;
-        const directoryPath = `${pathToLoadHooks}/${dependency.parent}/helpers/${filePath}.${language}`;
-        const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/hooks/${dependency.parent}/helpers/${filePath}.${language}`;
-        const indexPath = `${pathToLoadHooks}/${dependency.parent}/helpers/index.${language}`;
-        return { name: dependency.name, filePath, registryPath, type: dependency.type, indexPath, directoryPath };
-      }
+        if (dependency.type === 'package') {
+          packages.push(dependency.name);
+          return undefined;
+        }
 
-      if (dependency.type === 'package') {
-        packages.push(dependency.name);
-        return undefined;
-      }
-
-      throw new Error(`Unknown dependency type: ${dependency.type}`);
-    }).filter(Boolean);
+        throw new Error(`Unknown dependency type: ${dependency.type}`);
+      })
+      .filter(Boolean);
 
     const spinner = ora('Installing files...').start();
     for (const file of files) {
@@ -196,20 +211,22 @@ export const add = {
 
       const isExists = fs.existsSync(directory);
       if (isExists && !options.overwrite) {
-        spinner.stop()
+        spinner.stop();
         const { overwrite } = await prompts({
-          type: "confirm",
-          name: "overwrite",
+          type: 'confirm',
+          name: 'overwrite',
           message: `File ${name} already exists. Would you like to overwrite?`,
-          initial: false,
+          initial: false
         });
 
         if (!overwrite) {
-          console.log(`Skipped ${name}. To overwrite, run with the ${chalk.green("--overwrite")} flag.`);
+          console.log(
+            `Skipped ${name}. To overwrite, run with the ${chalk.green('--overwrite')} flag.`
+          );
           continue;
         }
 
-        spinner.start(`Installing ${name}...`)
+        spinner.start(`Installing ${name}...`);
       }
 
       if (!isExists) fs.mkdirSync(directory, { recursive: true });
@@ -232,21 +249,17 @@ export const add = {
 
     spinner.text = `Installing packages ${chalk.bold(packages.join(', '))} with ${chalk.cyan(packageManager)}`;
     if (packages.length) {
-      await execa(
-        packageManager,
-        [
-          packageManager === "npm" ? "install" : "add",
-          ...packages,
-        ],
-        {
-          cwd: options.cwd,
-        }
-      )
+      await execa(packageManager, [packageManager === 'npm' ? 'install' : 'add', ...packages], {
+        cwd: options.cwd
+      });
     }
 
     spinner.stop();
 
-    const installedHooks = files.filter((file) => file!.type === 'hook').map((file) => chalk.green(file!.name)).join(', ');
+    const installedHooks = files
+      .filter((file) => file!.type === 'hook')
+      .map((file) => chalk.green(file!.name))
+      .join(', ');
     console.log(`\nInstalled hooks: ${installedHooks}`);
     console.log(chalk.bold('\n🎉 Hooks added successfully! 🎉'));
   }

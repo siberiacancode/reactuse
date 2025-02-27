@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { createElement } from "react";
-import { createRoot } from "react-dom/client";
-import { computed, onMounted, onUnmounted, shallowRef } from "vue";
+import { createElement } from 'react';
+import { createRoot } from 'react-dom/client';
+import { computed, onMounted, onUnmounted, shallowRef } from 'vue';
 
 const props = defineProps<{
   hook: string;
@@ -29,7 +29,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative bg-[var(--vp-code-block-bg)] p-6 mb-2 rounded-lg">
+  <div class="relative mb-2 rounded-lg bg-[var(--vp-code-block-bg)] p-6">
     <p class="absolute top-0 right-2 text-xs font-medium transition-colors">
       <a :href="sourceLink" target="_blank">source</a>
     </p>
@@ -111,7 +111,7 @@ onUnmounted(() => {
   margin: 0.5rem 0;
 }
 
-:deep(input[type="text"], input[type="number"], input[type="tel"]) {
+:deep(input[type='text'], input[type='number'], input[type='tel']) {
   min-width: 20rem;
 }
 

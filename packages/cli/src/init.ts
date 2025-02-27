@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import fs from 'node:fs';
 import path from 'node:path';
-import prompts from 'prompts';
 
 import { APP_PATH } from '@/utils/constants';
 
@@ -45,7 +44,7 @@ export const init = async () => {
         hooks: '@/shared/hooks',
         utils: '@/utils/lib'
       }
-    }
+    };
     await fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
     console.log(JSON.stringify(config, null, 2));
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import type { RemoveCookieParams, SetCookieParams } from './helpers';
+import type { RemoveCookieParams, SetCookieParams } from '@/utils/helpers';
 
-import { getCookies, removeCookie, setCookie } from './helpers';
+import { getCookies, removeCookie, setCookie } from '@/utils/helpers';
 
 /* The use storage initial value type */
 export type UseCookieInitialValue<Value> = (() => Value) | Value;
@@ -72,6 +72,11 @@ export const useCookie = <Value>(
       : undefined
   ) as UseCookieOptions<Value>;
   const initialValue = (options ? options?.initialValue : params) as UseCookieInitialValue<Value>;
+
+  if (typeof document === 'undefined')
+    return {
+      value: initialValue instanceof Function ? initialValue() : initialValue
+    } as UseCookieReturn<Value>;
 
   const serializer = (value: Value) => {
     if (options?.serializer) return options.serializer(value);

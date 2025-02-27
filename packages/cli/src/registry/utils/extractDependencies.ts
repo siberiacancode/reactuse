@@ -1,7 +1,6 @@
 export const extractDependencies = (content: string) => {
   const hooks = new Set<string>();
   const utils = new Set<string>();
-  const locals = new Set<string>();
   const packages = new Set<string>();
 
   const hookMatches = Array.from(
@@ -24,16 +23,6 @@ export const extractDependencies = (content: string) => {
     }
   }
 
-  const localMatches = Array.from(
-    content.matchAll(/(?:import|export)\s*\{([^}]+)\}\s*from\s*['"]\.\/helpers/g)
-  );
-  for (const match of localMatches) {
-    const imports = match[1].split(',').map((item) => item.trim());
-    for (const item of imports) {
-      if (item) locals.add(item);
-    }
-  }
-
   const packageMatches = Array.from(
     content.matchAll(/import\s+(?:\{([^}]+)\}|(\w+))\s+from\s+['"]([^'"]+)(?<!\.\/.*)['"]/g)
   );
@@ -51,7 +40,6 @@ export const extractDependencies = (content: string) => {
   return {
     hooks: Array.from(hooks),
     utils: Array.from(utils),
-    local: Array.from(locals),
     packages: Array.from(packages)
   };
 };

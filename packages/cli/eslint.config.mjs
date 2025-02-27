@@ -1,14 +1,14 @@
-import { eslint } from "@siberiacancode/eslint";
+import { eslint } from '@siberiacancode/eslint';
 
 export default eslint(
   {
-    typescript: true,
+    typescript: true
   },
   {
-    name: "siberiacancode/cli/rewrite",
+    name: 'siberiacancode/cli/rewrite',
     rules: {
-      "node/prefer-global/process": "off",
-      "node/prefer-global/buffer": "off",
-    },
+      'node/prefer-global/process': 'off',
+      'node/prefer-global/buffer': 'off'
+    }
   }
 );

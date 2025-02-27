@@ -2,7 +2,6 @@ import * as z from 'zod';
 
 export interface HookRegistry {
   hooks: string[];
-  local: string[];
   name: string;
   packages: string[];
   utils: string[];

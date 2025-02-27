@@ -1,3 +1,4 @@
+export * from './cookie';
 export * from './debounce';
 export * from './getDate';
 export * from './getElement';

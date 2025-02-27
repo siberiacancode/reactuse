@@ -25,7 +25,6 @@ export const registry = async () => {
     name: hook.name,
     hooks: [],
     utils: [],
-    local: [],
     packages: []
   }));
 

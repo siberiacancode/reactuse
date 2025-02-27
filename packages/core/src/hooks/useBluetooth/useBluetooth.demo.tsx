@@ -45,7 +45,7 @@ const Demo = () => {
       </button>
       {error && (
         <p>
-          Errors: <code className='block whitespace-pre p-5'>{error}</code>
+          Errors: <code className='block p-5 whitespace-pre'>{error}</code>
         </p>
       )}
     </>
