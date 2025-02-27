@@ -1,14 +1,13 @@
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
-
 :root {
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #61DAFB, #205DAE);
-  
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #61dafb, #205dae);
+
   --vp-c-bg: #ffffff;
 
-  --vp-c-brand-1: #61DAFB;
+  --vp-c-brand-1: #61dafb;
   --vp-c-brand-2: #4ca8c6;
   --vp-c-brand-3: #5fc6e9;
 }

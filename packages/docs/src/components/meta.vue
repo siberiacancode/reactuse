@@ -32,15 +32,19 @@ const timeAgo = (timestamp: number, locale = 'en') => {
 </script>
 
 <template>
-  <div class="meta mt-4 mb-8 grid grid-cols-[100px_auto] gap-2 text-sm leading-6">
+  <div class="meta mb-8 mt-4 grid grid-cols-[100px_auto] gap-2 text-sm leading-6">
     <template v-if="props.category">
-      <div class="font-semibold">Category</div>
+      <div class="font-semibold">
+        Category
+      </div>
       <div>
         <code class="text-blue-500">{{ props.category }}</code>
       </div>
     </template>
     <ClientOnly v-if="props.lastModified">
-      <div class="font-semibold">Last Changed</div>
+      <div class="font-semibold">
+        Last Changed
+      </div>
       <div>{{ timeAgo(props.lastModified) }}</div>
     </ClientOnly>
   </div>

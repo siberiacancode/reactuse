@@ -10,6 +10,7 @@ export * from './useClipboard/useClipboard';
 export * from './useConst/useConst';
 export * from './useConst/useConst';
 export * from './useCookie/useCookie';
+export * from './useCookies/useCookies';
 export * from './useCounter/useCounter';
 export * from './useCssVar/useCssVar';
 export * from './useDebounceCallback/useDebounceCallback';
