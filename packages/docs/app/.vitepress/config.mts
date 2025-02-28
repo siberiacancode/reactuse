@@ -74,6 +74,10 @@ export default async () => {
         label: 'English',
         lang: 'en',
         themeConfig: {
+          logo: {
+            src: '/logo.svg',
+            alt: 'reactuse'
+          },
           editLink: {
             pattern: ({ filePath, params }) => {
               if (filePath.includes('hooks') && params?.name) {

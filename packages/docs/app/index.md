@@ -6,6 +6,9 @@ hero:
   name: reactuse
   text: the largest and most useful hook library
   tagline: Improve your react applications with our library 📦 designed for comfort and speed
+  image:
+    src: /logo.svg
+    alt: reactuse
   actions:
     - theme: brand
       text: Get Started
