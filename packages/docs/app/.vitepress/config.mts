@@ -48,7 +48,7 @@ export default async () => {
         {
           name: 'og:image',
           content:
-            'https://repository-images.githubusercontent.com/799880708/be8887a4-0cf5-4929-a5f0-dba8d70a7d1f'
+            'https://repository-images.githubusercontent.com/799880708/0afee0cb-ca48-40a2-9c38-dc5b64ebdf65'
         }
       ]);
 
