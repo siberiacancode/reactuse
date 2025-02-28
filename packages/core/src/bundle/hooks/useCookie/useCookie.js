@@ -85,7 +85,7 @@ export const useCookie = (key, params) => {
         const cookieValue = getCookieItem(key);
         if (cookieValue === undefined && initialValue !== undefined) {
             const value = initialValue instanceof Function ? initialValue() : initialValue;
-            setCookieItem(key, serializer(value));
+            setCookieItem(key, serializer(value), options);
             return value;
         }
         return cookieValue ? deserializer(cookieValue) : undefined;
@@ -98,7 +98,7 @@ export const useCookie = (key, params) => {
         window.addEventListener(COOKIE_EVENT, onChange);
         return () => window.removeEventListener(COOKIE_EVENT, onChange);
     }, [key]);
-    const set = (value, options) => setCookieItem(key, serializer(value), options);
-    const remove = (options) => removeCookieItem(key, options);
+    const set = (value, params) => setCookieItem(key, serializer(value), { ...options, ...params });
+    const remove = (params) => removeCookieItem(key, { ...options, ...params });
     return { value, set, remove };
 };

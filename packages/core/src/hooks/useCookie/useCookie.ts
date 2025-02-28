@@ -55,8 +55,24 @@ export type UseCookieInitialValue<Value> = (() => Value) | Value;
 
 /* The use storage options type */
 export interface UseCookieOptions<Value> {
+  /* The domain of the cookie */
+  domain?: string;
+  /* The expiration date of the cookie */
+  expires?: Date;
+  /* Whether the cookie is httpOnly */
+  httpOnly?: boolean;
   /* The initial value of the storage */
   initialValue?: UseCookieInitialValue<Value>;
+  /* The maximum age of the cookie */
+  maxAge?: number;
+  /* The path of the cookie */
+  path?: string;
+  /* The sameSite of the cookie */
+  sameSite?: 'Lax' | 'None' | 'Strict';
+  /* Whether the cookie is secure */
+  secure?: boolean;
+  /* Whether to update the cookie on change */
+  updateOnChange?: boolean;
   /* The deserializer function to be invoked */
   deserializer?: (value: string) => Value;
   /* The serializer function to be invoked */
@@ -144,7 +160,7 @@ export const useCookie = <Value>(
     const cookieValue = getCookieItem(key);
     if (cookieValue === undefined && initialValue !== undefined) {
       const value = initialValue instanceof Function ? initialValue() : initialValue;
-      setCookieItem(key, serializer(value));
+      setCookieItem(key, serializer(value), options);
       return value;
     }
     return cookieValue ? deserializer(cookieValue) : undefined;
@@ -159,9 +175,9 @@ export const useCookie = <Value>(
     return () => window.removeEventListener(COOKIE_EVENT, onChange);
   }, [key]);
 
-  const set = (value: Value, options?: SetCookieParams) =>
-    setCookieItem(key, serializer(value), options);
-  const remove = (options?: RemoveCookieParams) => removeCookieItem(key, options);
+  const set = (value: Value, params?: SetCookieParams) =>
+    setCookieItem(key, serializer(value), { ...options, ...params });
+  const remove = (params?: RemoveCookieParams) => removeCookieItem(key, { ...options, ...params });
 
   return { value, set, remove };
 };
