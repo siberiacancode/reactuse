@@ -28,7 +28,7 @@ export interface UseWebSocketReturn {
 /**
  * @name useWebSocket
  * @description - Hook that connects to a WebSocket server and handles incoming and outgoing messages
- * @category Network
+ * @category Browser
  *
  * @param {UseWebSocketUrl} url The URL of the WebSocket server
  * @param {(webSocket: WebSocket) => void} [options.onConnected] The callback function that is called when the WebSocket connection is established

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 /**
  * @name usePerformanceObserver
  * @description - Hook that allows you to observe performance entries
- * @category Sensor
+ * @category Sensors
  *
  * @param {UsePerformanceObserverOptions} options The options for the performance observer
  * @param {PerformanceObserverCallback} callback The function to handle performance entries
