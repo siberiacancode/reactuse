@@ -68,7 +68,7 @@ export const useFileDialog = ((...params: any[]) => {
   const options = (callback ? params[0] : params[1]) as UseFileDialogOptions | undefined;
 
   const [value, setValue] = useState<FileList | null>(null);
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
 

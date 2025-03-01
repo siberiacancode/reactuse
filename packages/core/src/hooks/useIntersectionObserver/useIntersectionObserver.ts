@@ -75,7 +75,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
 
   const internalRef = useRefState<Element>();
-  const internalOnChangeRef = useRef<UseIntersectionObserverOptions['onChange']>();
+  const internalOnChangeRef = useRef<UseIntersectionObserverOptions['onChange']>(options?.onChange);
   internalOnChangeRef.current = options?.onChange;
 
   useEffect(() => {

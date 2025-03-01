@@ -28,7 +28,7 @@ export const useFocus = ((...params) => {
     const initialValue = options.initialValue ?? false;
     const [focused, setFocused] = useState(initialValue);
     const internalRef = useRefState();
-    const elementRef = useRef();
+    const elementRef = useRef(null);
     const focus = () => elementRef.current?.focus();
     const blur = () => elementRef.current?.blur();
     useEffect(() => {

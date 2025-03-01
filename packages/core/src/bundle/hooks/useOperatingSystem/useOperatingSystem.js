@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 export const getOperatingSystem = () => {
     if (typeof window === 'undefined')
         return 'undetermined';
@@ -26,6 +26,6 @@ export const getOperatingSystem = () => {
  * const operatingSystem = useOperatingSystem();
  */
 export const useOperatingSystem = () => {
-    const osOperatingSystemRef = useRef(getOperatingSystem());
-    return osOperatingSystemRef.current;
+    const [osOperatingSystem] = useState(getOperatingSystem());
+    return osOperatingSystem;
 };

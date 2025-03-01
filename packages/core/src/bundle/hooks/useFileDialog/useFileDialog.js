@@ -34,7 +34,7 @@ export const useFileDialog = ((...params) => {
     const callback = (typeof params[0] === 'function' ? params[0] : undefined);
     const options = (callback ? params[0] : params[1]);
     const [value, setValue] = useState(null);
-    const inputRef = useRef();
+    const inputRef = useRef(null);
     const internalCallbackRef = useRef(callback);
     internalCallbackRef.current = callback;
     const reset = () => {

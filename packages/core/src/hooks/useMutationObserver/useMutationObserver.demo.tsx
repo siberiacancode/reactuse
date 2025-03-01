@@ -4,7 +4,7 @@ import { useMutationObserver } from './useMutationObserver';
 
 export const Demo = () => {
   const [observed, setObserved] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   useMutationObserver(
     buttonRef,

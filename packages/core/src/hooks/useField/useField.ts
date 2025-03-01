@@ -109,7 +109,7 @@ export const useField = <
 ): UseFieldReturn<Type> => {
   const initialValue = (params?.initialValue ?? '') as Value;
 
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const watchingRef = useRef(false);
   const rerender = useRerender();
 

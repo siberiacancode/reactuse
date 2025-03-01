@@ -33,7 +33,7 @@ export const useIntersectionObserver = ((...params) => {
     const enabled = options?.enabled ?? true;
     const [entry, setEntry] = useState();
     const internalRef = useRefState();
-    const internalOnChangeRef = useRef();
+    const internalOnChangeRef = useRef(options?.onChange);
     internalOnChangeRef.current = options?.onChange;
     useEffect(() => {
         if (!enabled && !target && !internalRef.state)

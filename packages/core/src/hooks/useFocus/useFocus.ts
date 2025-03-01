@@ -64,7 +64,7 @@ export const useFocus = ((...params: any[]) => {
   const [focused, setFocused] = useState(initialValue);
   const internalRef = useRefState<Element>();
 
-  const elementRef = useRef<HTMLElement>();
+  const elementRef = useRef<HTMLElement | null>(null);
 
   const focus = () => elementRef.current?.focus();
   const blur = () => elementRef.current?.blur();

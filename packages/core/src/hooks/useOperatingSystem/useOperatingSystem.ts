@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 
 /** The operating system type */
 export type OperatingSystem = 'android' | 'ios' | 'linux' | 'macos' | 'undetermined' | 'windows';
@@ -28,6 +28,6 @@ export const getOperatingSystem = (): OperatingSystem => {
  * const operatingSystem = useOperatingSystem();
  */
 export const useOperatingSystem = () => {
-  const osOperatingSystemRef = useRef<OperatingSystem>(getOperatingSystem());
-  return osOperatingSystemRef.current;
+  const [osOperatingSystem] = useState<OperatingSystem>(getOperatingSystem());
+  return osOperatingSystem;
 };

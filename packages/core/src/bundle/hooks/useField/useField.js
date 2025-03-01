@@ -20,7 +20,7 @@ import { useRerender } from '../useRerender/useRerender';
  */
 export const useField = (params) => {
     const initialValue = (params?.initialValue ?? '');
-    const inputRef = useRef();
+    const inputRef = useRef(null);
     const watchingRef = useRef(false);
     const rerender = useRerender();
     const [dirty, setDirty] = useState(false);
