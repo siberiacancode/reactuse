@@ -97,7 +97,7 @@ export default async () => {
               items: [
                 { text: 'Introduction', link: '/introduction' },
                 { text: 'Installation', link: '/installation' },
-                { text: 'Config', link: '/config' },
+                { text: 'reactuse.json', link: '/reactuse-json' },
                 { text: 'CLI', link: '/cli' }
               ]
             },

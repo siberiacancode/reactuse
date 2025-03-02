@@ -40,7 +40,7 @@ export const init = async () => {
     const configPath = path.join(APP_PATH, 'reactuse.json');
     const config = {
       ts: fs.existsSync(path.join(APP_PATH, 'tsconfig.json')),
-      alias: {
+      aliases: {
         hooks: '@/shared/hooks',
         utils: '@/utils/lib'
       }

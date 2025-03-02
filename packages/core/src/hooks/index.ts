@@ -8,7 +8,6 @@ export * from './useBrowserLanguage/useBrowserLanguage';
 export * from './useClickOutside/useClickOutside';
 export * from './useClipboard/useClipboard';
 export * from './useConst/useConst';
-export * from './useConst/useConst';
 export * from './useCookie/useCookie';
 export * from './useCookies/useCookies';
 export * from './useCounter/useCounter';

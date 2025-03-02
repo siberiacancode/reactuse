@@ -6,7 +6,7 @@ Use the CLI to add hooks to your project with [useverse](https://www.npmjs.com/p
 
 Use the `init` command to initialize configuration and dependencies for a new project.
 
-The `init` command installs dependencies, adds configures [`reactuse.json`](./config.html).
+The `init` command installs dependencies, adds configures [`reactuse.json`](./reactuse-json.html).
 
 ```bash
 npx useverse@latest init
