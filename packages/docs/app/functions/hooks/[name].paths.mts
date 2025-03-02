@@ -1,4 +1,5 @@
 import { codeToHtml } from 'shiki';
+import fs from 'node:fs';
 
 import { getHookFile, getHooks, matchJsdoc, parseHookJsdoc } from '../../../src/utils';
 
@@ -50,9 +51,12 @@ export default {
           defaultColor: false
         });
 
+        const isTest = await fs.existsSync(`../core/src/hooks/${hook}/${hook}.test.ts`);
+
         return {
           params: {
             id: hook,
+            isTest,
             name: hook,
             ...(jsdoc.browserapi && {
               browserapi: {

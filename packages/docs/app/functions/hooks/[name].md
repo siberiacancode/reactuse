@@ -8,7 +8,7 @@ import Code from '../../../src/components/code.vue'
 
 # {{ $params.name }}
 
-<Meta :last-modified="$params.lastModified" :category="$params.category" />
+<Meta :last-modified="$params.lastModified" :category="$params.category" :is-test="$params.isTest" />
 
 <template v-if="$params.browserapi">
 

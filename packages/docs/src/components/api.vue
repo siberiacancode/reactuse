@@ -38,9 +38,7 @@ props.apiParameters.forEach((parameter, index) => {
 
 <template>
   <div v-for="group in groups" :key="group.id">
-    <h3 v-if="group.parameters.length">
-      Parameters
-    </h3>
+    <h3 v-if="group.parameters.length">Parameters</h3>
     <table v-if="group.parameters.length">
       <thead>
         <tr>

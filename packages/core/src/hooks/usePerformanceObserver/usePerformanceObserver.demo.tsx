@@ -1,9 +1,7 @@
 import { usePerformanceObserver } from './usePerformanceObserver';
 
 const Demo = () => {
-  const performance = usePerformanceObserver(
-    { entryTypes: ['paint'], immediate: true }
-  );
+  const performance = usePerformanceObserver({ entryTypes: ['paint'], immediate: true });
 
   const refresh = () => window.location.reload();
 

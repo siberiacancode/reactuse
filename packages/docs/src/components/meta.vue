@@ -2,6 +2,7 @@
 const props = defineProps<{
   lastModified: number;
   category: string;
+  isTest: boolean;
 }>();
 
 const timeAgo = (timestamp: number, locale = 'en') => {
@@ -29,23 +30,31 @@ const timeAgo = (timestamp: number, locale = 'en') => {
   }
   return value;
 };
+
+const testingClass = `px-2 py-1 rounded-md text-sm ${
+  props.isTest
+    ? 'bg-green-100 text-green-400 dark:bg-green-700 dark:text-green-300'
+    : 'bg-red-100 text-red-400 dark:bg-red-800 dark:text-red-300'
+}`;
 </script>
 
 <template>
   <div class="meta mb-8 mt-4 grid grid-cols-[100px_auto] gap-2 text-sm leading-6">
-    <template v-if="props.category">
-      <div class="font-semibold">
-        Category
-      </div>
-      <div>
-        <code class="text-blue-500">{{ props.category }}</code>
-      </div>
-    </template>
+    <div class="font-semibold">Category</div>
+    <div>
+      <code class="text-blue-500">{{ props.category }}</code>
+    </div>
+
     <ClientOnly v-if="props.lastModified">
-      <div class="font-semibold">
-        Last Changed
-      </div>
+      <div class="font-semibold">Last Changed</div>
       <div>{{ timeAgo(props.lastModified) }}</div>
     </ClientOnly>
+
+    <div class="font-semibold">Testing</div>
+    <div>
+      <span :class="testingClass">
+        {{ props.isTest ? 'Yes' : 'No' }}
+      </span>
+    </div>
   </div>
 </template>
