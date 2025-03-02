@@ -1,12 +1,15 @@
 import { useDocumentTitle } from './useDocumentTitle';
 
 const Demo = () => {
-  const [title, setTitle] = useDocumentTitle();
+  const documentTitle = useDocumentTitle();
 
   return (
     <div>
-      <p>Title: {title}</p>
-      <input defaultValue={title} onChange={(event) => setTitle(event.target.value)} />
+      <p>Title: {documentTitle.value}</p>
+      <input
+        defaultValue={documentTitle.value}
+        onChange={(event) => documentTitle.set(event.target.value)}
+      />
     </div>
   );
 };
