@@ -14,15 +14,11 @@ import { useEffect, useState } from 'react';
 export const useOrientation = () => {
     const [orientation, setOrientation] = useState({ angle: 0, type: 'landscape-primary' });
     useEffect(() => {
-        const onChange = () => {
-            const { angle, type } = window.screen.orientation;
-            setOrientation({
-                angle,
-                type
-            });
-        };
+        const onChange = () => setOrientation(window.screen.orientation);
         window.screen.orientation.addEventListener('change', onChange);
-        return () => window.screen.orientation.removeEventListener('change', onChange);
+        return () => {
+            window.screen.orientation.removeEventListener('change', onChange);
+        };
     }, []);
     return orientation;
 };
