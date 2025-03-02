@@ -24,7 +24,7 @@ export type AddOptionsSchema = z.infer<typeof addOptionsSchema>;
 export const configSchema = z
   .object({
     ts: z.boolean().optional(),
-    alias: z.object({
+    aliases: z.object({
       hooks: z.string(),
       utils: z.string()
     })

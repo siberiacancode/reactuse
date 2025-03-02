@@ -152,8 +152,8 @@ export const add = {
     }
 
     const matchPath = createMatchPath(projectConfig.absoluteBaseUrl, projectConfig.paths);
-    const pathToLoadHooks = matchPath(config.alias.hooks, undefined, () => true);
-    const pathToLoadUtils = matchPath(config.alias.utils, undefined, () => true);
+    const pathToLoadHooks = matchPath(config.aliases.hooks, undefined, () => true);
+    const pathToLoadUtils = matchPath(config.aliases.utils, undefined, () => true);
 
     if (!pathToLoadHooks || !pathToLoadUtils) {
       console.log('Failed to load paths.');
@@ -234,7 +234,7 @@ export const add = {
       const fileResponse = await fetches.get<Buffer>(registryPath);
       await fs.writeFileSync(directoryPath, fileResponse.data);
       if (type === 'hook') {
-        await updateImports(directoryPath, config.alias.utils);
+        await updateImports(directoryPath, config.aliases.utils);
       }
 
       const exportStatement = `export * from './${filePath}';\n`;
