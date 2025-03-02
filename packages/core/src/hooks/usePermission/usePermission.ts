@@ -42,6 +42,8 @@ export interface UsePermissionReturn {
  *  @description - Hook that gives you the state of permission
  *  @category Browser
  *
+ *  @browserapi navigator.permissions https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions
+ *
  *  @param {UsePermissionName} permissionDescriptorName - The permission name
  *  @param {boolean} [options.enabled=true] - Whether the permission is enabled
  *  @returns {UsePermissionReturn} An object containing the state and the supported status
@@ -53,8 +55,8 @@ export const usePermission = (
   permissionDescriptorName: UsePermissionName,
   options?: UsePermissionOptions
 ) => {
-  const [state, setState] = useState<PermissionState>('prompt');
   const supported = typeof navigator !== 'undefined' && 'permissions' in navigator;
+  const [state, setState] = useState<PermissionState>('prompt');
   const enabled = options?.enabled ?? true;
 
   const permissionDescriptor = { name: permissionDescriptorName };

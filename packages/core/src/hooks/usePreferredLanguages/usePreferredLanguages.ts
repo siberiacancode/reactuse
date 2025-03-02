@@ -14,6 +14,8 @@ const subscribe = (callback: () => void) => {
  * @description Hook that returns a browser preferred languages from navigator
  * @category Browser
  *
+ * @browserapi navigator.languages https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages
+ *
  * @returns {readonly string[]} An array of strings representing the user's preferred languages
  *
  * @example

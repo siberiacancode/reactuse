@@ -11,6 +11,8 @@ export type UsePerformanceObserverOptions = PerformanceObserverInit & {
  * @description - Hook that allows you to observe performance entries
  * @category Sensors
  *
+ * @browserapi PerformanceObserver https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver
+ *
  * @param {UsePerformanceObserverOptions} options The options for the performance observer
  * @param {PerformanceObserverCallback} callback The function to handle performance entries
  * @returns {object} An object containing the observer's support status and methods to start and stop the observer

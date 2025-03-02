@@ -42,6 +42,8 @@ export interface UseResizeObserver {
  *  @description - Hook that gives you resize observer state
  *  @category Browser
  *
+ *  @browserapi ResizeObserver https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
+ *
  *  @overload
  *  @template Target The target element
  *  @param {boolean} [options.enabled=true] The IntersectionObserver options

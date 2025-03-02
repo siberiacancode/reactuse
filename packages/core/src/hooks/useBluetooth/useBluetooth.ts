@@ -29,6 +29,8 @@ export interface UseBluetoothOptions {
  * @description - Hook for getting information about bluetooth
  * @category Browser
  *
+ * @browserapi navigator.bluetooth https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth
+ *
  * @param {boolean} [options.acceptAllDevices=false] The options to request all Bluetooth devices
  * @param {Array<BluetoothLEScanFilter>} [options.filters] Array of filters to apply when scanning Bluetooth devices
  * @param {Array<BluetoothServiceUUID>} [options.optionalServices] Array of optional services that the application can use

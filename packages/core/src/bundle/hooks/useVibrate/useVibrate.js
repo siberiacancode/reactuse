@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
  * @description - Hook that provides vibrate api
  * @category Browser
  *
+ * @browserapi navigator.vibrate https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate
+ *
  * @overload
  * @param {UseVibratePattern} options.pattern The pattern for vibration
  * @param {number} [options.interval=0] Time in milliseconds between vibrations

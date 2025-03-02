@@ -37,6 +37,8 @@ export interface UseCopyToClipboardParams {
  * @description - Hook that manages a copy to clipboard
  * @category Browser
  *
+ * @browserapi navigator.clipboard https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard
+ *
  * @param {boolean} [params.enabled=false] Whether the copy to clipboard is enabled
  * @returns {UseCopyToClipboardReturn} An object containing the boolean state value and utility functions to manipulate the state
  *

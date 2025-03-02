@@ -6,7 +6,7 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
 
 /**
  * @name useDidUpdate
- * @description – Hook that behaves like useEffect, but skips the effect on the initial render
+ * @description – Hook that triggers the effect callback on updates
  * @category Lifecycle
  *
  * @param {EffectCallback} effect The effect callback

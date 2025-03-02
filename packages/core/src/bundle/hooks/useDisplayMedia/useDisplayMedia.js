@@ -3,8 +3,10 @@ import { getElement, isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useDisplayMedia
- * @description - Hook that provides screen sharing functionality using the Display Media API
+ * @description - Hook that provides screen sharing functionality
  * @category Browser
+ *
+ * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia
  *
  * @overload
  * @template Target The target video element

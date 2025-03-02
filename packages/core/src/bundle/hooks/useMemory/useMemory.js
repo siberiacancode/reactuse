@@ -5,6 +5,8 @@ import { useInterval } from '../useInterval/useInterval';
  * @description - Hook that gives you current memory usage
  * @category Browser
  *
+ * @browserapi performance.memory https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory
+ *
  * @returns {UseMemoryReturn} An object containing the current memory usage
  *
  * @example

@@ -32,7 +32,7 @@ export interface UseCounter {
 
 /**
  * @name useCounter
- * @description - Hook that manages a counter with increment, decrement, reset, and set functionalities
+ * @description - Hook that manages a counter
  * @category Utilities
  *
  * @overload

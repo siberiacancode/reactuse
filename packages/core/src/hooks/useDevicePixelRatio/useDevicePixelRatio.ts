@@ -10,8 +10,10 @@ export interface UseDevicePixelRatioReturn {
 
 /**
  * @name useDevicePixelRatio
- * @description - Hook that returns the ratio of the resolution in physical pixels to the resolution in CSS pixels for the current display device
+ * @description - Hook that returns the device's pixel ratio
  * @category Utilities
+ *
+ * @browserapi window.devicePixelRatio https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio
  *
  * @returns {UseDevicePixelRatioReturn} The ratio and supported flag
  *

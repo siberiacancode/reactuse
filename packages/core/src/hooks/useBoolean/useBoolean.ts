@@ -10,7 +10,7 @@ export type UseBooleanReturn = [
 
 /**
  * @name useBoolean
- * @description - Hook provides a boolean state and a function to toggle the boolean value
+ * @description - Hook provides opportunity to manage boolean state
  * @category Utilities
  *
  * @param {boolean} [initialValue=false] The initial boolean value

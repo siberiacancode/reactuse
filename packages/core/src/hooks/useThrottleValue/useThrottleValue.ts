@@ -4,7 +4,7 @@ import { useThrottleCallback } from '../useThrottleCallback/useThrottleCallback'
 
 /**
  * @name useThrottleValue
- * @description - Hook that creates a throttled value and returns a stable reference of it
+ * @description - Hook that creates a throttled value
  * @category Utilities
  *
  * @template Value The type of the value

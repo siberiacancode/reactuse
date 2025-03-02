@@ -54,9 +54,15 @@ export default {
           params: {
             id: hook,
             name: hook,
+            ...(jsdoc.browserapi && {
+              browserapi: {
+                name: jsdoc.browserapi.name,
+                description: jsdoc.browserapi.description
+              }
+            }),
             example,
             description: jsdoc.description.description,
-            category: jsdoc.category?.name,
+            category: jsdoc.category!.name,
             lastModified: stats.mtime.getTime(),
             usage,
             apiParameters: jsdoc.apiParameters ?? []

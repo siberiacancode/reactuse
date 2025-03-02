@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
  * @description - Hook that measures frames per second
  * @category Sensors
  *
+ * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+ *
  * @returns {number} A number which determines frames per second
  *
  * @example

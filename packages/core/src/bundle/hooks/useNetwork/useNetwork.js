@@ -5,6 +5,8 @@ export const getConnection = () => navigator?.connection || navigator?.mozConnec
  * @description - Hook to track network status
  * @category Sensors
  *
+ * @browserapi navigator.connection https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection
+ *
  * @returns {UseNetworkReturn} An object containing the network status
  *
  * @example

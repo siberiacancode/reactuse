@@ -40,6 +40,8 @@ export interface UseBatteryStateReturn {
  * @description - Hook for getting information about battery status
  * @category Browser
  *
+ * @browserapi navigator.getBattery https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery
+ *
  * @returns {UseBatteryStateReturn} Object containing battery information & Battery API support
  *
  * @example

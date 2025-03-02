@@ -6,7 +6,7 @@ import { useEvent } from '../useEvent/useEvent';
 
 /**
  * @name useDebounceCallback
- * @description - Hook that creates a debounced callback and returns a stable reference of it
+ * @description - Hook that creates a debounced callback
  * @category Utilities
  *
  * @template Params The type of the params

@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
  * @description - Hook that returns the current geolocation
  * @category Browser
  *
+ * @browserapi navigator.geolocation https://developer.mozilla.org/en-US/docs/Web/API/Navigator/geolocation
+ *
  * @param {boolean} [params.enableHighAccuracy] Enable high accuracy
  * @param {number} [params.maximumAge] Maximum age
  * @param {number} [params.timeout] Timeout

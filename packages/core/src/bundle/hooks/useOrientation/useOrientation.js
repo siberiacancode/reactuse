@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
  * @description - Hook that returns the current screen orientation
  * @category Browser
  *
+ * @browserapi window.screen.orientation https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
+ *
  * @returns {UseOrientationReturn} An object containing the current screen orientation
  *
  * @example

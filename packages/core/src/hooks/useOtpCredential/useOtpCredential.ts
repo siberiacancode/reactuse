@@ -48,6 +48,8 @@ export interface UseOtpCredential {
  * @description - Hook that creates an otp credential
  * @category Browser
  *
+ * @browserapi navigator.credentials https://developer.mozilla.org/en-US/docs/Web/API/Navigator/credentials
+ *
  * @overload
  * @param {UseOtpCredentialCallback} callback The callback function to be invoked
  * @returns {UseOtpCredentialReturn}

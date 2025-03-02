@@ -5,6 +5,8 @@ import { throttle } from '@/utils/helpers';
  * @description - Hook that work with device motion
  * @category Utilities
  *
+ * @browserapi DeviceMotionEvent https://developer.mozilla.org/en-US/docs/Web/API/Window/DeviceMotionEvent
+ *
  * @param {number} [delay=1000] The delay in milliseconds
  * @param {(event: DeviceMotionEvent) => void} [callback] The callback function to be invoked
  * @param {boolean} [enabled=true] Whether to enable the hook

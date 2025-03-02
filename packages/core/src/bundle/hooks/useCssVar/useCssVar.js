@@ -3,7 +3,7 @@ import { getElement } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useCssVar
- * @description - Hook that returns the value of a CSS variable
+ * @description - Hook that returns the value of a css variable
  * @category Utilities
  *
  * @overload

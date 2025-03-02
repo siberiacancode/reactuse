@@ -3,7 +3,7 @@ import { throttle } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
 /**
  * @name useThrottleCallback
- * @description - Hook that creates a throttled callback and returns a stable reference of it
+ * @description - Hook that creates a throttled callback
  * @category Utilities
  *
  * @template Params The type of the params

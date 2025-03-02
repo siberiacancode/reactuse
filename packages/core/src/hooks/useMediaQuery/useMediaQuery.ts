@@ -7,6 +7,8 @@ const getServerSnapshot = () => false;
  * @description - Hook that manages a media query
  * @category Browser
  *
+ * @browserapi window.matchMedia https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
+ *
  * @param {string} query The media query string
  * @returns {boolean} A boolean indicating if the media query matches
  *

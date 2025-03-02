@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
  * @description - Hook that defines the logic for raf callback
  * @category Utilities
  *
+ * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+ *
  * @param {UseRafCallback} callback The callback to execute
  * @param {number} [options.delay] The delay between each frame in milliseconds
  * @param {boolean} [options.enabled=true] Whether the callback should be enabled

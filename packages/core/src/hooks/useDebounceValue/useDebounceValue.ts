@@ -4,7 +4,7 @@ import { useDebounceCallback } from '../useDebounceCallback/useDebounceCallback'
 
 /**
  * @name useDebounceValue
- * @description - Hook that creates a debounced value and returns a stable reference of it
+ * @description - Hook that creates a debounced value
  * @category Utilities
  *
  * @template Value The type of the value

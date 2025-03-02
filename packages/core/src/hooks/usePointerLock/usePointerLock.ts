@@ -4,9 +4,13 @@ import { useEffect, useState } from 'react';
 
 /** The use pointer lock return type */
 interface UsePointerLockReturn {
+  /** The pointer lock element */
   element?: Element;
+  /** Whether the pointer lock is supported */
   supported: boolean;
+  /** Lock the pointer lock */
   lock: (event: MouseEvent) => void;
+  /** Unlock the pointer lock */
   unlock: () => boolean;
 }
 
@@ -14,6 +18,8 @@ interface UsePointerLockReturn {
  * @name usePointerLock
  * @description - Hook that provides reactive pointer lock
  * @category Sensors
+ *
+ * @browserapi pointerLockElement https://developer.mozilla.org/en-US/docs/Web/API/Document/pointerLockElement
  *
  * @returns {UsePointerLockReturn} An object containing the pointer lock element and functions to interact with the pointer lock
  *

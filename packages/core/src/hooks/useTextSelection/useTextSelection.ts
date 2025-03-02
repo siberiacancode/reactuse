@@ -24,6 +24,8 @@ export interface UseTextSelectionReturn {
  * @description - Hook that manages the text selection
  * @category Sensors
  *
+ * @browserapi document.getSelection https://developer.mozilla.org/en-US/docs/Web/API/Document/getSelection
+ *
  * @returns {UseTextSelectionReturn} An object containing the current text selection
  *
  * @example
