@@ -28,7 +28,7 @@ Setting this option to `false` allows hooks to be added as JavaScript with the `
 
 ```json title="reactuse.json"
 {
-  "ts": `true` | `false`
+  "ts": "true | false"
 }
 ```
 

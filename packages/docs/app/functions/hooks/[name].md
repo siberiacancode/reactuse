@@ -1,14 +1,18 @@
 <script setup>
 import Meta from '../../../src/components/meta.vue'
+import Badges from '../../../src/components/badges.vue'
 import Api from '../../../src/components/api.vue'
 import Demo from '../../../src/components/demo.vue'
+import Source from '../../../src/components/source.vue'
 import Contributors from '../../../src/components/contributors.vue'
 import Code from '../../../src/components/code.vue'
 </script>
 
 # {{ $params.name }}
 
-<Meta :last-modified="$params.lastModified" :category="$params.category" :is-test="$params.isTest" />
+<Badges :category="$params.category" :is-test="$params.isTest" />
+
+<Meta :last-modified="$params.lastModified" />
 
 <template v-if="$params.browserapi">
 
@@ -34,6 +38,10 @@ This hook uses <a :href="$params.browserapi.description" target="_blank">**{{ $p
 
 <Api :apiParameters="$params.apiParameters" />
 
+## Source
+
+<Source :hook="$params.name" />
+
 ## Contributors
 
-<Contributors :hook="$params.name" />
+<Contributors :contributors="$params.contributors" />

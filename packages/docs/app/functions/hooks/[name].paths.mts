@@ -1,7 +1,38 @@
-import { codeToHtml } from 'shiki';
 import fs from 'node:fs';
+import { codeToHtml } from 'shiki';
+import simpleGit from 'simple-git';
+import md5 from 'md5'
 
 import { getHookFile, getHooks, matchJsdoc, parseHookJsdoc } from '../../../src/utils';
+
+interface HookPageParams {
+  params: {
+    example: string;
+    description: string;
+    category: string;
+    lastModified: number;
+    usage: string;
+    apiParameters: any[];
+    browserapi?: {
+      name: string;
+      description: string;
+    };
+    id: string;
+    isTest: boolean;
+    name: string;
+  }
+}
+
+const team = [
+  {
+    avatar: 'https://avatars.githubusercontent.com/debabin?v=4',
+    name: 'Babin Dmitry',
+    github: 'https://github.com/debabin',
+    hooks: 'all'
+  }
+]
+
+const git = simpleGit();
 
 export default {
   async paths() {
@@ -9,7 +40,7 @@ export default {
 
     const params = await Promise.all(
       hooks.map(async (hook) => {
-        const { content, stats } = await getHookFile(hook);
+        const content = await getHookFile(hook);
         const jsdocMatch = matchJsdoc(content);
 
         if (!jsdocMatch) {
@@ -53,6 +84,19 @@ export default {
 
         const isTest = await fs.existsSync(`../core/src/hooks/${hook}/${hook}.test.ts`);
 
+        const log = await git.log({ file: `../core/src/hooks/${hook}/${hook}.ts` });
+        const lastCommit = log.latest!;
+
+        const contributorsMap = new Map(log.all.map(commit => [
+          commit.author_email,
+          { name: commit.author_name, email: commit.author_email }
+        ]));
+
+        const contributors = Array.from(contributorsMap.values()).map(author => ({
+          name: author.name,
+          avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`
+        }));
+
         return {
           params: {
             id: hook,
@@ -67,20 +111,23 @@ export default {
             example,
             description: jsdoc.description.description,
             category: jsdoc.category!.name,
-            lastModified: stats.mtime.getTime(),
+            lastModified: new Date(lastCommit.date).getTime(),
             usage,
-            apiParameters: jsdoc.apiParameters ?? []
+            apiParameters: jsdoc.apiParameters ?? [],
+            contributors
           }
         };
       })
     );
 
-    const pages = params.filter(Boolean);
+    const pages = params.filter(Boolean) as unknown as HookPageParams[];
+    const testCoverage = pages.reduce((acc, page) => acc + Number(page.params.isTest), 0);
 
     console.log('\nHooks injection report\n');
     console.log(`\x1B[32mInjected: ${pages.length}\x1B[0m`);
+    console.log(`\x1B[35mTest coverage: ${Math.round(testCoverage / pages.length * 100)}% (${testCoverage})\x1B[0m`);
     console.log(`\x1B[33mSkipped: ${hooks.length - pages.length}\x1B[0m`);
-    console.log(`Total: ${hooks.length}`);
+    console.log(`\nTotal: ${hooks.length} hooks`);
 
     return pages;
   }

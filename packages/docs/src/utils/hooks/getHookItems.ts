@@ -14,7 +14,7 @@ export const getHookItems = async (): Promise<HookItem[]> => {
 
   const sidebar = await Promise.all(
     hooks.map(async (hook) => {
-      const { content } = await getHookFile(hook);
+      const content = await getHookFile(hook);
 
       const jsdocCommentRegex = /\/\*\*\s*\n([^\\*]|(\*(?!\/)))*\*\//;
       const match = content.match(jsdocCommentRegex);

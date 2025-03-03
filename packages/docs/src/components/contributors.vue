@@ -1,15 +1,18 @@
 <script setup lang="ts">
 const props = defineProps<{
-  hook: string;
+  contributors: { name: string; avatar: string; github: string }[];
 }>();
-
-const repositoryLink = `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/${props.hook}`;
-
-const sourceLink = `${repositoryLink}/${props.hook}.ts`;
-const demoLink = `${repositoryLink}/${props.hook}.demo.tsx`;
 </script>
 
 <template>
-  <a target="_blank" :href="sourceLink">Source</a> •
-  <a target="_blank" :href="demoLink">Demo</a>
+  <div class="flex items-center gap-2 flex-wrap">
+    <div
+      v-for="contributor in props.contributors"
+      :key="contributor.name"
+      class="flex items-center gap-2"
+    >
+      <img :src="contributor.avatar" alt="Avatar" class="size-6 rounded-full" />
+      <span class="text-sm">{{ contributor.name }}</span>
+    </div>
+  </div>
 </template>
