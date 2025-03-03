@@ -55,6 +55,8 @@ export const useStorage = (key, params) => {
     const serializer = (value) => {
         if (options?.serializer)
             return options.serializer(value);
+        if (typeof value === 'string')
+            return value;
         return JSON.stringify(value);
     };
     const storage = options?.storage ?? window?.localStorage;

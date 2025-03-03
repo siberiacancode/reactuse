@@ -25,7 +25,7 @@ const createRefState = (initialValue, setState) => {
 /**
  * @name useRefState
  * @description - Hook that returns the state reference of the value
- * @category Lifecycle
+ * @category Utilities
  *
  * @template Value The type of the value
  * @param {Value} [initialValue] The initial value

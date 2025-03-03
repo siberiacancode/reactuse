@@ -94,6 +94,7 @@ export const useStorage = <Value>(
 
   const serializer = (value: Value) => {
     if (options?.serializer) return options.serializer(value);
+    if (typeof value === 'string') return value;
     return JSON.stringify(value);
   };
 

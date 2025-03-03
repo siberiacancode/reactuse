@@ -42,7 +42,7 @@ const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
  * @returns {[StateRef<Target>, boolean]} The state of scrolling
  *
  * @example
- * const [ref, scrolling] = useScroll(options);
+ * const { ref, scrolling } = useScroll(options);
  *
  * @overload
  * @template Target The target element
@@ -51,7 +51,7 @@ const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
  * @returns {[StateRef<Target>, boolean]} The state of scrolling
  *
  * @example
- * const [ref, scrolling] = useScroll(() => console.log('callback'));
+ * const { ref, scrolling } = useScroll(() => console.log('callback'));
  */
 export const useScroll = ((...params) => {
     const target = (isTarget(params[0]) ? params[0] : undefined);
@@ -123,5 +123,8 @@ export const useScroll = ((...params) => {
     }, [target, internalRef.state]);
     if (target)
         return scrolling;
-    return [internalRef, scrolling];
+    return {
+        ref: internalRef,
+        scrolling
+    };
 });

@@ -9,7 +9,7 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  * @param {DependencyList} [deps] The dependencies list for the effect
  *
  * @example
- * useDidUpdate(() => console.log('Won't be called when mounted'), [deps]);
+ * useDidUpdate(() => console.log("Won't be called when mounted"), [deps]);
  */
 export const useDidUpdate = (effect, deps) => {
     const initialRender = useRef(true);
