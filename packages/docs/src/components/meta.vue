@@ -3,7 +3,7 @@ const props = defineProps<{
   lastModified: number;
 }>();
 
-const timeAgo = (timestamp: number, locale = "en") => {
+const timeAgo = (timestamp: number, locale = 'en') => {
   let value;
   const diff = Math.floor((new Date().getTime() - timestamp) / 1000);
   const minutes = Math.floor(diff / 60);
@@ -11,20 +11,20 @@ const timeAgo = (timestamp: number, locale = "en") => {
   const days = Math.floor(hours / 24);
   const months = Math.floor(days / 30);
   const years = Math.floor(months / 12);
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
 
   if (years > 0) {
-    value = rtf.format(0 - years, "year");
+    value = rtf.format(0 - years, 'year');
   } else if (months > 0) {
-    value = rtf.format(0 - months, "month");
+    value = rtf.format(0 - months, 'month');
   } else if (days > 0) {
-    value = rtf.format(0 - days, "day");
+    value = rtf.format(0 - days, 'day');
   } else if (hours > 0) {
-    value = rtf.format(0 - hours, "hour");
+    value = rtf.format(0 - hours, 'hour');
   } else if (minutes > 0) {
-    value = rtf.format(0 - minutes, "minute");
+    value = rtf.format(0 - minutes, 'minute');
   } else {
-    value = rtf.format(0 - diff, "second");
+    value = rtf.format(0 - diff, 'second');
   }
   return value;
 };

@@ -5,7 +5,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="flex items-center gap-2 flex-wrap">
+  <div class="flex flex-wrap items-center gap-2">
     <div
       v-for="contributor in props.contributors"
       :key="contributor.name"
