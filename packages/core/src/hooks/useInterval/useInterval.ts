@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { useEvent } from '../useEvent/useEvent';
+
 /** The use interval options */
 export interface UseIntervalOptions {
   /** Start the interval immediately */
@@ -59,28 +61,28 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
   const [active, setActive] = useState<boolean>(enabled ?? true);
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
-  const internalCallbackRef = useRef(callback);
-  internalCallbackRef.current = callback;
+  const internalCallback = useEvent(callback);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!active) return;
 
-    intervalIdRef.current = setInterval(internalCallbackRef.current, interval);
+    intervalIdRef.current = setInterval(internalCallback, interval);
     return () => {
       clearInterval(intervalIdRef.current);
     };
-  }, [enabled, interval]);
+  }, [active, interval]);
+
+  useEffect(() => {
+    setActive(enabled);
+  }, [enabled]);
 
   const pause = () => {
     setActive(false);
-    clearInterval(intervalIdRef.current);
   };
 
   const resume = () => {
     if (interval <= 0) return;
     setActive(true);
-    clearInterval(intervalIdRef.current);
-    intervalIdRef.current = setInterval(internalCallbackRef.current, interval);
   };
 
   return {

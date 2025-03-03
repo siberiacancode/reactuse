@@ -98,15 +98,14 @@ export const useTimer = ((...params: any[]) => {
 
   useInterval(
     () => {
+      const updatedSeconds = seconds - 1;
       options?.onTick?.(seconds);
-      setSeconds((prevSeconds) => {
-        const updatedSeconds = prevSeconds - 1;
-        if (updatedSeconds === 0) {
-          setRunning(false);
-          options?.onExpire?.();
-        }
-        return updatedSeconds;
-      });
+      setSeconds(updatedSeconds);
+
+      if (updatedSeconds === 0) {
+        setRunning(false);
+        options?.onExpire?.();
+      }
     },
     1000,
     { enabled: running }
