@@ -34,9 +34,13 @@ This hook uses <a :href="$params.browserapi.description" target="_blank">**{{ $p
 
 <Demo :hook="$params.name" />
 
+<template v-if="$params.apiParameters.length">
+
 ## Api
 
 <Api :apiParameters="$params.apiParameters" />
+
+</template>
 
 ## Source
 

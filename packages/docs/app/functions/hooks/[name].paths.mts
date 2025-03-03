@@ -23,15 +23,6 @@ interface HookPageParams {
   };
 }
 
-const team = [
-  {
-    avatar: 'https://avatars.githubusercontent.com/debabin?v=4',
-    name: 'Babin Dmitry',
-    github: 'https://github.com/debabin',
-    hooks: 'all'
-  }
-];
-
 const git = simpleGit();
 
 export default {

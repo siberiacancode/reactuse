@@ -2,10 +2,10 @@ import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 const Demo = () => {
   useIsomorphicLayoutEffect(() => {
-    console.log(`useIsomorphicEffect: ${useIsomorphicLayoutEffect.name}`);
+    console.log(`log: useLayoutEffect`);
   }, []);
 
-  return <div>I am {useIsomorphicLayoutEffect.name}</div>;
+  return <div>I am <code>useLayoutEffect</code></div>;
 };
 
 export default Demo;

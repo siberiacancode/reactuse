@@ -36,6 +36,7 @@
     "@siberiacancode/reactuse": "workspace:*"
   },
   "devDependencies": {
+    "@types/md5": "^2.3.5",
     "@tailwindcss/vite": "4.0.7",
     "clsx": "^2.1.1",
     "comment-parser": "^1.4.1",
