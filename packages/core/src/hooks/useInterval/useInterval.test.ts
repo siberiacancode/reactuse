@@ -30,6 +30,19 @@ it('Should not be active when disabled', () => {
   expect(result.current.active).toBeFalsy();
 });
 
+it('Should update active state on rerender', () => {
+  const { result, rerender } = renderHook(
+    (enabled: boolean) => useInterval(() => {}, 1000, { enabled }),
+    { initialProps: false }
+  );
+
+  expect(result.current.active).toBeFalsy();
+
+  rerender(true);
+
+  expect(result.current.active).toBeTruthy();
+});
+
 it('Should call callback on interval', () => {
   const callback = vi.fn();
   const { result } = renderHook(() => useInterval(callback, 1000));

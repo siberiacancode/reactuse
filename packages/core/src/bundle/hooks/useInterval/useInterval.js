@@ -35,23 +35,23 @@ export const useInterval = ((...params) => {
     const internalCallbackRef = useRef(callback);
     internalCallbackRef.current = callback;
     useEffect(() => {
-        if (!enabled)
+        if (!active)
             return;
-        intervalIdRef.current = setInterval(internalCallbackRef.current, interval);
+        intervalIdRef.current = setInterval(() => internalCallbackRef.current(), interval);
         return () => {
             clearInterval(intervalIdRef.current);
         };
-    }, [enabled, interval]);
+    }, [active, interval]);
+    useEffect(() => {
+        setActive(enabled);
+    }, [enabled]);
     const pause = () => {
         setActive(false);
-        clearInterval(intervalIdRef.current);
     };
     const resume = () => {
         if (interval <= 0)
             return;
         setActive(true);
-        clearInterval(intervalIdRef.current);
-        intervalIdRef.current = setInterval(internalCallbackRef.current, interval);
     };
     return {
         active,
