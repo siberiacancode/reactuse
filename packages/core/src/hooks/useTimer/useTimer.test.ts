@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { useTimer } from './useTimer';
+import { getTimeFromSeconds, useTimer } from './useTimer';
 
 const ONE_MINUTE_FIVE_SECONDS = 65000;
 
@@ -10,6 +10,60 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.clearAllTimers();
+});
+
+describe('getTimeFromSeconds', () => {
+  it('Should convert seconds to time units', () => {
+    const result = getTimeFromSeconds(90061);
+
+    expect(result.days).toBe(1);
+    expect(result.hours).toBe(1);
+    expect(result.minutes).toBe(1);
+    expect(result.seconds).toBe(1);
+  });
+
+  it('Should handle zero seconds', () => {
+    const result = getTimeFromSeconds(0);
+
+    expect(result.days).toBe(0);
+    expect(result.hours).toBe(0);
+    expect(result.minutes).toBe(0);
+    expect(result.seconds).toBe(0);
+  });
+
+  it('Should handle only seconds', () => {
+    const result = getTimeFromSeconds(45);
+
+    expect(result.days).toBe(0);
+    expect(result.hours).toBe(0);
+    expect(result.minutes).toBe(0);
+    expect(result.seconds).toBe(45);
+  });
+
+  it('Should handle only minutes and seconds', () => {
+    const result = getTimeFromSeconds(185);
+
+    expect(result.days).toBe(0);
+    expect(result.hours).toBe(0);
+    expect(result.minutes).toBe(3);
+    expect(result.seconds).toBe(5);
+  });
+
+  it('Should handle only hours, minutes and seconds', () => {
+    const result = getTimeFromSeconds(7384);
+
+    expect(result.days).toBe(0);
+    expect(result.hours).toBe(2);
+    expect(result.minutes).toBe(3);
+    expect(result.seconds).toBe(4);
+  });
+
+  it('Should round up decimal seconds', () => {
+    const result = getTimeFromSeconds(60.4);
+
+    expect(result.minutes).toBe(1);
+    expect(result.seconds).toBe(1);
+  });
 });
 
 it('Should initialize with correct values', () => {
