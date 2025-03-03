@@ -6,20 +6,20 @@ import { useDebounceCallback } from '../useDebounceCallback/useDebounceCallback'
 import { useScroll } from './useScroll';
 
 const Demo = () => {
-  const [scroll, setScroll] = useState({ x: 0, y: 0 });
+  const [values, setValues] = useState({ x: 0, y: 0 });
 
   const debouncedScrollCallback = useDebounceCallback(
     (params: UseScrollCallbackParams) =>
-      setScroll({ x: Math.floor(params.x), y: Math.floor(params.y) }),
+      setValues({ x: Math.floor(params.x), y: Math.floor(params.y) }),
     100
   );
 
-  const [scrollRef, scrolling] = useScroll<HTMLDivElement>(debouncedScrollCallback);
+  const scroll = useScroll<HTMLDivElement>(debouncedScrollCallback);
 
   return (
     <div>
       <div className='flex gap-10'>
-        <div ref={scrollRef} className='h-[300px] w-full overflow-scroll rounded-lg bg-zinc-800'>
+        <div ref={scroll.ref} className='h-[300px] w-full overflow-scroll rounded-lg bg-zinc-800'>
           <div className='relative h-[400px] w-[500px]'>
             <div className='absolute left-0 top-0 bg-zinc-600 p-1'>TopLeft</div>
             <div className='absolute bottom-0 left-0 bg-zinc-600 p-1'>BottomLeft</div>
@@ -33,13 +33,13 @@ const Demo = () => {
           <div>
             <b>Scroll position:</b>
             <div>
-              scrolling: <code>{String(scrolling)}</code>
+              scrolling: <code>{String(scroll.scrolling)}</code>
             </div>
             <div>
-              x: <code>{scroll.x}</code>
+              x: <code>{values.x}</code>
             </div>
             <div>
-              y: <code>{scroll.y}</code>
+              y: <code>{values.y}</code>
             </div>
           </div>
         </div>
