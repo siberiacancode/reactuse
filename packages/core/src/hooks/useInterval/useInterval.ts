@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 /** The use interval options */
 export interface UseIntervalOptions {
   /** Start the interval immediately */
-  enabled?: boolean;
+  immediately?: boolean;
 }
 
 /** The use interval return type */
@@ -14,6 +14,8 @@ export interface UseIntervalReturn {
   pause: () => void;
   /** Resume the interval */
   resume: () => void;
+  /** Toggle the interval */
+  toggle: () => void;
 }
 
 interface UseInterval {
@@ -30,19 +32,19 @@ interface UseInterval {
  * @overload
  * @param {() => void} callback Any callback function
  * @param {number} [interval=1000] Time in milliseconds
- * @param {boolean} [options.enabled=true] Start the interval immediately
+ * @param {boolean} [options.immediately=true] Start the interval immediately
  * @returns {UseIntervalReturn}
  *
  * @example
- * const { active, pause, resume } = useInterval(() => console.log('inside interval'), 2500);
+ * const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), 2500);
  *
  * @overload
  * @param {() => void} callback Any callback function
  * @param {number} [options.interval=1000] Time in milliseconds
- * @param {boolean} [options.enabled=true] Start the interval immediately
+ * @param {boolean} [options.immediately=true] Start the interval immediately
  *
  * @example
- * const { active, pause, resume } = useInterval(() => console.log('inside interval'), { interval: 2500 });
+ * const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), { interval: 2500 });
  */
 export const useInterval = ((...params: any[]): UseIntervalReturn => {
   const callback = params[0] as () => void;
@@ -54,9 +56,9 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
     typeof params[1] === 'object'
       ? (params[1] as (UseIntervalOptions & { interval?: number }) | undefined)
       : (params[2] as UseIntervalOptions | undefined);
-  const enabled = options?.enabled ?? true;
+  const immediately = options?.immediately ?? true;
 
-  const [active, setActive] = useState<boolean>(enabled ?? true);
+  const [active, setActive] = useState<boolean>(immediately ?? true);
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
   const internalCallbackRef = useRef(callback);
@@ -71,22 +73,19 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
     };
   }, [active, interval]);
 
-  useEffect(() => {
-    setActive(enabled);
-  }, [enabled]);
-
-  const pause = () => {
-    setActive(false);
-  };
+  const pause = () => setActive(false);
 
   const resume = () => {
     if (interval <= 0) return;
     setActive(true);
   };
 
+  const toggle = () => setActive(!active);
+
   return {
     active,
     pause,
-    resume
+    resume,
+    toggle
   };
 }) as UseInterval;

@@ -40,7 +40,7 @@ export const useMemory = (): UseMemoryReturn => {
     usedJSHeapSize: 0
   });
 
-  useInterval(() => setValue(performance.memory), 1000, { enabled: supported });
+  useInterval(() => setValue(performance.memory), 1000, { immediately: supported });
 
   return { supported, value };
 };

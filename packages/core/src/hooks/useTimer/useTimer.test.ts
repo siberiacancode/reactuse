@@ -2,8 +2,6 @@ import { act, renderHook } from '@testing-library/react';
 
 import { getTimeFromSeconds, useTimer } from './useTimer';
 
-const ONE_MINUTE_FIVE_SECONDS = 65000;
-
 beforeEach(() => {
   vi.useFakeTimers();
 });
@@ -11,6 +9,8 @@ beforeEach(() => {
 afterEach(() => {
   vi.clearAllTimers();
 });
+
+vi.useFakeTimers().setSystemTime(new Date('1999-03-12'));
 
 describe('getTimeFromSeconds', () => {
   it('Should convert seconds to time units', () => {
@@ -66,34 +66,25 @@ describe('getTimeFromSeconds', () => {
   });
 });
 
-it('Should initialize with correct values', () => {
-  const { result } = renderHook(() => useTimer(ONE_MINUTE_FIVE_SECONDS));
+it('Should use timer', () => {
+  const { result } = renderHook(() => useTimer(65_000));
 
   expect(result.current.seconds).toBe(5);
   expect(result.current.minutes).toBe(1);
   expect(result.current.hours).toBe(0);
   expect(result.current.days).toBe(0);
-  expect(result.current.running).toBeTruthy();
+  expect(result.current.active).toBeTruthy();
 });
 
-it('Should initialize with autostart false', () => {
-  const { result } = renderHook(() => useTimer(ONE_MINUTE_FIVE_SECONDS, { autostart: false }));
+it('Should not be active when disabled', () => {
+  const { result } = renderHook(() => useTimer(1000, { immediately: false }));
 
-  expect(result.current.running).toBeFalsy();
+  expect(result.current.active).toBeFalsy();
 });
 
-it('Should decrease time when running', () => {
-  const { result } = renderHook(() => useTimer(ONE_MINUTE_FIVE_SECONDS));
+it('Should decrease time when running', async () => {
+  const { result } = renderHook(() => useTimer(60_000));
 
-  act(() => vi.advanceTimersToNextTimer());
-
-  expect(result.current.seconds).toBe(4);
-  expect(result.current.minutes).toBe(1);
-
-  act(() => vi.advanceTimersToNextTimer());
-  act(() => vi.advanceTimersToNextTimer());
-  act(() => vi.advanceTimersToNextTimer());
-  act(() => vi.advanceTimersToNextTimer());
   act(() => vi.advanceTimersToNextTimer());
 
   expect(result.current.seconds).toBe(59);
@@ -102,100 +93,111 @@ it('Should decrease time when running', () => {
 
 it('Should call onExpire when timer ends', () => {
   const onExpire = vi.fn();
-  const { result } = renderHook(() => useTimer(2000, { onExpire }));
+  const { result } = renderHook(() => useTimer(1000, { onExpire }));
 
-  act(() => vi.advanceTimersToNextTimer());
   act(() => vi.advanceTimersToNextTimer());
 
   expect(result.current.seconds).toBe(0);
-  expect(result.current.running).toBeFalsy();
+  expect(result.current.active).toBeFalsy();
   expect(onExpire).toBeCalledTimes(1);
 });
 
 it('Should call onTick on each second', () => {
   const onTick = vi.fn();
-  renderHook(() => useTimer(3000, { onTick }));
+  renderHook(() => useTimer(2000, { onTick }));
 
   act(() => vi.advanceTimersToNextTimer());
-  act(() => vi.advanceTimersToNextTimer());
 
-  expect(onTick).toBeCalledTimes(2);
+  expect(onTick).toBeCalledTimes(1);
 });
 
 it('Should pause timer', () => {
-  const { result } = renderHook(() => useTimer(10000));
+  const { result } = renderHook(() => useTimer(11_000));
 
   act(() => vi.advanceTimersToNextTimer());
 
-  expect(result.current.seconds).toBe(9);
+  expect(result.current.active).toBeTruthy();
+  expect(result.current.seconds).toBe(10);
 
-  act(() => {
-    result.current.pause();
-  });
+  act(() => result.current.pause());
 
   act(() => vi.advanceTimersToNextTimer());
-  expect(result.current.seconds).toBe(9);
-  expect(result.current.running).toBeFalsy();
+
+  expect(result.current.seconds).toBe(10);
+  expect(result.current.active).toBeFalsy();
 });
 
 it('Should toggle timer state', () => {
-  const { result } = renderHook(() => useTimer(10000));
+  const { result } = renderHook(() => useTimer(10_000));
 
-  act(() => {
-    result.current.toggle();
-  });
-  expect(result.current.running).toBeFalsy();
+  act(() => result.current.toggle());
 
-  act(() => {
-    result.current.toggle();
-  });
-  expect(result.current.running).toBeTruthy();
+  expect(result.current.active).toBeFalsy();
+
+  act(() => result.current.toggle());
+
+  expect(result.current.active).toBeTruthy();
 });
 
 it('Should restart timer with new time', () => {
-  const { result } = renderHook(() => useTimer(10000));
+  const { result } = renderHook(() => useTimer(11_000));
 
   act(() => vi.advanceTimersToNextTimer());
-  act(() => vi.advanceTimersToNextTimer());
-  expect(result.current.seconds).toBe(8);
 
-  act(() => {
-    result.current.restart(5000);
-  });
+  expect(result.current.seconds).toBe(10);
 
-  expect(result.current.seconds).toBe(5);
-  expect(result.current.running).toBeTruthy();
-});
+  act(() => result.current.restart(6000));
 
-it('Should restart timer with autostart false', () => {
-  const { result } = renderHook(() => useTimer(10000));
-
-  act(() => {
-    result.current.restart(5000, false);
-  });
-
-  expect(result.current.seconds).toBe(5);
-  expect(result.current.running).toBeFalsy();
+  expect(result.current.seconds).toBe(6);
+  expect(result.current.active).toBeTruthy();
 });
 
 it('Should start timer', () => {
-  const { result } = renderHook(() => useTimer(10000, { autostart: false }));
+  const { result } = renderHook(() => useTimer(11_000));
 
-  expect(result.current.running).toBeFalsy();
-
-  act(() => {
-    result.current.start();
-  });
-
-  expect(result.current.running).toBeTruthy();
+  act(() => vi.advanceTimersToNextTimer());
   expect(result.current.seconds).toBe(10);
+
+  act(() => result.current.start());
+
+  act(() => vi.advanceTimersToNextTimer());
+  expect(result.current.seconds).toBe(10);
+});
+
+it('Should resume timer', () => {
+  const { result } = renderHook(() => useTimer(11_000, { immediately: false }));
+
+  expect(result.current.active).toBeFalsy();
+
+  act(() => result.current.resume());
+
+  expect(result.current.active).toBeTruthy();
+});
+
+it('Should restart timer by method', () => {
+  const { result } = renderHook(() => useTimer(11_000));
+
+  act(() => result.current.restart(6000));
+  act(() => vi.advanceTimersToNextTimer());
+
+  expect(result.current.active).toBeTruthy();
+  expect(result.current.seconds).toBe(5);
+});
+
+it('Should restart timer by method with immediately false', () => {
+  const { result } = renderHook(() => useTimer(11_000, { immediately: false }));
+
+  act(() => result.current.restart(6000, false));
+  act(() => vi.advanceTimersToNextTimer());
+
+  expect(result.current.active).toBeFalsy();
+  expect(result.current.seconds).toBe(6);
 });
 
 it('Should accept callback as second parameter', () => {
   const callback = vi.fn();
-  renderHook(() => useTimer(2000, callback));
+  renderHook(() => useTimer(1000, callback));
 
-  act(() => vi.advanceTimersToNextTimer());
   act(() => vi.advanceTimersToNextTimer());
 
   expect(callback).toBeCalledTimes(1);

@@ -6,6 +6,10 @@ beforeEach(() => {
   vi.useFakeTimers();
 });
 
+afterEach(() => {
+  vi.clearAllTimers();
+});
+
 it('Should use interval', () => {
   const { result } = renderHook(() => useInterval(vi.fn, 1000));
   expect(result.current.active).toBeTruthy();
@@ -14,7 +18,7 @@ it('Should use interval', () => {
 });
 
 it('Should pause and resume properly', () => {
-  const { result } = renderHook(() => useInterval(() => {}, 1000));
+  const { result } = renderHook(() => useInterval(vi.fn, 1000));
   const { pause, resume } = result.current;
 
   expect(result.current.active).toBeTruthy();
@@ -25,22 +29,9 @@ it('Should pause and resume properly', () => {
 });
 
 it('Should not be active when disabled', () => {
-  const { result } = renderHook(() => useInterval(() => {}, 1000, { enabled: false }));
+  const { result } = renderHook(() => useInterval(vi.fn, 1000, { immediately: false }));
 
   expect(result.current.active).toBeFalsy();
-});
-
-it('Should update active state on rerender', () => {
-  const { result, rerender } = renderHook(
-    (enabled: boolean) => useInterval(() => {}, 1000, { enabled }),
-    { initialProps: false }
-  );
-
-  expect(result.current.active).toBeFalsy();
-
-  rerender(true);
-
-  expect(result.current.active).toBeTruthy();
 });
 
 it('Should call callback on interval', () => {

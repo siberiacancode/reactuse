@@ -1,6 +1,4 @@
-import { useState } from 'react';
-
-import { useInterval } from '../useInterval/useInterval';
+import { useEffect, useRef, useState } from 'react';
 
 export const getTimeFromSeconds = (timestamp: number) => {
   const roundedTimestamp = Math.ceil(timestamp);
@@ -20,7 +18,7 @@ export const getTimeFromSeconds = (timestamp: number) => {
 /** The use timer options type */
 export interface UseTimerOptions {
   /** Whether the timer should start automatically */
-  autostart?: boolean;
+  immediately?: boolean;
   /** The function to be executed when the timer is expired */
   onExpire?: () => void;
   /** Callback function to be executed on each tick of the timer */
@@ -29,20 +27,22 @@ export interface UseTimerOptions {
 
 /** The use timer return type */
 export interface UseTimerReturn {
+  /** flag to indicate if timer is active or not */
+  active: boolean;
   /** The day count of the timer */
   days: number;
   /** The hour count of the timer */
   hours: number;
   /** The minute count of the timer */
   minutes: number;
-  /** flag to indicate if timer is running or not */
-  running: boolean;
   /** The second count of the timer */
   seconds: number;
   /** The function to pause the timer */
   pause: () => void;
   /** The function to restart the timer */
-  restart: (time: number, autostart?: boolean) => void;
+  restart: (time: number, immediately?: boolean) => void;
+  /** The function to resume the timer */
+  resume: () => void;
   /** The function to start the timer */
   start: () => void;
   /** The function to toggle the timer */
@@ -51,6 +51,7 @@ export interface UseTimerReturn {
 
 export interface UseTimer {
   (timestamp: number, callback: () => void): UseTimerReturn;
+
   (timestamp: number, options?: UseTimerOptions): UseTimerReturn;
 }
 
@@ -64,16 +65,16 @@ export interface UseTimer {
  * @param {() => void} callback The function to be executed once countdown timer is expired
  *
  * @example
- * const { days, hours, minutes, seconds, toggle, pause, start, restart, running } = useTimer(1000, () => console.log('ready'));
+ * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000, () => console.log('ready'));
  *
  * @overload
  * @param {number} timestamp The timestamp value that define for how long the timer will be running
- * @param {boolean} options.autostart The flag to decide if timer should start automatically
+ * @param {boolean} options.immediately The flag to decide if timer should start automatically
  * @param {() => void} options.onExpire The function to be executed when the timer is expired
  * @param {(timestamp: number) => void} options.onTick The function to be executed on each tick of the timer
  *
  * @example
- * const { days, hours, minutes, seconds, toggle, pause, start, restart, running } = useTimer(1000);
+ * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000);
  */
 export const useTimer = ((...params: any[]) => {
   const timestamp = params[0];
@@ -81,43 +82,61 @@ export const useTimer = ((...params: any[]) => {
     | UseTimerOptions
     | undefined;
 
-  const autostart = options?.autostart ?? true;
-
+  const immediately = options?.immediately ?? true;
+  const [active, setActive] = useState<boolean>(immediately ?? true);
   const [seconds, setSeconds] = useState(Math.ceil(timestamp / 1000));
-  const [running, setRunning] = useState(autostart);
 
-  const restart = (timestamp: number, autostart = true) => {
-    setSeconds(Math.ceil(timestamp / 1000));
-    setRunning(autostart);
-  };
+  const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
+  const optionsRef = useRef<UseTimerOptions>();
+  optionsRef.current = options ?? {};
 
-  const start = () => {
-    setRunning(true);
-    setSeconds(Math.ceil(timestamp / 1000));
-  };
+  useEffect(() => {
+    if (!active) return;
 
-  useInterval(
-    () => {
-      options?.onTick?.(seconds);
+    const onInterval = () => {
+      optionsRef.current?.onTick?.(seconds);
       setSeconds((prevSeconds) => {
         const updatedSeconds = prevSeconds - 1;
         if (updatedSeconds === 0) {
-          setRunning(false);
-          options?.onExpire?.();
+          setActive(false);
+          optionsRef.current?.onExpire?.();
         }
         return updatedSeconds;
       });
-    },
-    1000,
-    { enabled: running }
-  );
+    };
+
+    intervalIdRef.current = setInterval(onInterval, 1000);
+    return () => {
+      clearInterval(intervalIdRef.current);
+    };
+  }, [active]);
+
+  const pause = () => setActive(false);
+
+  const resume = () => {
+    if (seconds <= 0) return;
+    setActive(true);
+  };
+
+  const toggle = () => setActive(!active);
+
+  const restart = (timestamp: number, immediately = true) => {
+    setSeconds(Math.ceil(timestamp / 1000));
+    if (immediately) setActive(true);
+  };
+
+  const start = () => {
+    setActive(true);
+    setSeconds(Math.ceil(timestamp / 1000));
+  };
 
   return {
     ...getTimeFromSeconds(seconds),
-    pause: () => setRunning(false),
-    toggle: () => setRunning(!running),
+    pause,
+    active,
+    resume,
+    toggle,
     start,
-    restart,
-    running
+    restart
   };
 }) as UseTimer;

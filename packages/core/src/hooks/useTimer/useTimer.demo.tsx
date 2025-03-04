@@ -13,7 +13,7 @@ const Demo = () => {
         </code>
       </p>
       <p>
-        Timer running: <code>{String(timer.running)}</code>
+        Timer running: <code>{String(timer.active)}</code>
       </p>
 
       <button type='button' onClick={timer.start}>
