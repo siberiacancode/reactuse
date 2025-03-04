@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePermission } from '../usePermission/usePermission';
 export const isPermissionAllowed = (status) => status === 'granted' || status === 'prompt';
 export const legacyCopyToClipboard = (value) => {
@@ -53,7 +53,7 @@ export const useClipboard = (params) => {
             document.removeEventListener('cut', set);
         };
     }, [enabled]);
-    const copy = useCallback(async (value) => {
+    const copy = async (value) => {
         try {
             if (supported || isPermissionAllowed(clipboardWritePermissionWrite.state)) {
                 await navigator.clipboard.writeText(value);
@@ -66,6 +66,19 @@ export const useClipboard = (params) => {
             legacyCopyToClipboard(value);
         }
         setValue(value);
-    }, []);
+    };
     return { supported, value, copy };
+};
+export const copy = async (value) => {
+    try {
+        try {
+            await navigator.clipboard.writeText(value);
+        }
+        catch {
+            return legacyCopyToClipboard(value);
+        }
+    }
+    catch {
+        return legacyCopyToClipboard(value);
+    }
 };

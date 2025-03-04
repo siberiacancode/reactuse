@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { usePermission } from '../usePermission/usePermission';
 
@@ -76,7 +76,7 @@ export const useClipboard = (params?: UseCopyToClipboardParams): UseCopyToClipbo
     };
   }, [enabled]);
 
-  const copy = useCallback(async (value: string) => {
+  const copy = async (value: string) => {
     try {
       if (supported || isPermissionAllowed(clipboardWritePermissionWrite.state)) {
         await navigator.clipboard.writeText(value);
@@ -88,7 +88,19 @@ export const useClipboard = (params?: UseCopyToClipboardParams): UseCopyToClipbo
     }
 
     setValue(value);
-  }, []);
+  };
 
   return { supported, value, copy };
+};
+
+export const copy = async (value: string) => {
+  try {
+    try {
+      await navigator.clipboard.writeText(value);
+    } catch {
+      return legacyCopyToClipboard(value);
+    }
+  } catch {
+    return legacyCopyToClipboard(value);
+  }
 };

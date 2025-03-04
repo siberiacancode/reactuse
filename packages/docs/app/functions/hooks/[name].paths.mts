@@ -104,7 +104,7 @@ export default {
             example,
             description: jsdoc.description.description,
             category: jsdoc.category!.name,
-            lastModified: new Date(lastCommit.date).getTime(),
+            lastModified: new Date(lastCommit?.date ?? new Date()).getTime(),
             usage,
             apiParameters: jsdoc.apiParameters ?? [],
             contributors
