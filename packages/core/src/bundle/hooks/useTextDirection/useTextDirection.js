@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -8,26 +8,23 @@ import { useRefState } from '../useRefState/useRefState';
  * @category Browser
  *
  * @overload
- * @template Target The target element type.
- * @param {UseTextDirectionTarget} target The target element to observe.
- * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element.
- * @returns {UseTextDirectionReturn} An object containing the current text direction of the element.
+ * @param {HookTarget} target The target element to observe
+ * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element
+ * @returns {UseTextDirectionReturn} An object containing the current text direction of the element
  *
  * @example
  * const { value, set, remove } = useTextDirection(ref);
  *
  * @overload
- * @template Target The target element type.
- * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element.
- * @returns { { ref: StateRef<Target> } & UseTextDirectionReturn } An object containing the current text direction of the element.
+ * @template Target The target element type
+ * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element
+ * @returns { { ref: StateRef<Target> } & UseTextDirectionReturn } An object containing the current text direction of the element
  *
  * @example
  * const { ref, value, set, remove } = useTextDirection();
  */
 export const useTextDirection = ((...params) => {
-    const target = (typeof params[0] !== 'string' || !['auto', 'ltr', 'rtl'].includes(params[0])
-        ? params[0]
-        : undefined);
+    const target = (isTarget(params[0]) ? params[0] : undefined);
     const initialValue = (target ? params[1] : params[0]) ?? 'ltr';
     const internalRef = useRefState();
     const getDirection = () => {
@@ -49,7 +46,7 @@ export const useTextDirection = ((...params) => {
         element.setAttribute('dir', value);
     };
     useIsomorphicLayoutEffect(() => {
-        if (!target && !internalRef)
+        if (!target && !internalRef.state)
             return;
         const element = (target ? getElement(target) : internalRef.current);
         if (!element)
@@ -62,7 +59,7 @@ export const useTextDirection = ((...params) => {
         return () => {
             observer.disconnect();
         };
-    }, [internalRef.current, target]);
+    }, [internalRef.state, target]);
     if (target)
         return { value, set, remove };
     return {

@@ -1,18 +1,26 @@
+export const targetSymbol = Symbol('target');
+export const target = (target) => ({
+    value: target,
+    type: targetSymbol
+});
 export const getElement = (target) => {
-    if (typeof target === 'function') {
-        return target();
+    if ('current' in target) {
+        return target.current;
     }
-    if (typeof target === 'string') {
-        return document.querySelector(target);
+    if (typeof target.value === 'function') {
+        return target.value();
     }
-    if (target instanceof Document) {
-        return target;
+    if (typeof target.value === 'string') {
+        return document.querySelector(target.value);
     }
-    if (target instanceof Window) {
-        return target;
+    if (target.value instanceof Document) {
+        return target.value;
     }
-    if (target instanceof Element) {
-        return target;
+    if (target.value instanceof Window) {
+        return target.value;
     }
-    return target.current;
+    if (target.value instanceof Element) {
+        return target.value;
+    }
+    return target.value;
 };

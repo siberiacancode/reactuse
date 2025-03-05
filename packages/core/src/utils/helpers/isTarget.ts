@@ -1,6 +1,6 @@
-export const isTarget = (target: any) =>
-  typeof target === 'string' ||
-  target instanceof Element ||
-  target instanceof Window ||
-  target instanceof Document ||
-  (target && typeof target === 'object' && 'current' in target);
+import type { HookTarget } from './getElement';
+
+import { targetSymbol } from './getElement';
+
+export const isTarget = (target: HookTarget) =>
+  typeof target === 'object' && ('current' in target || target.type === targetSymbol);

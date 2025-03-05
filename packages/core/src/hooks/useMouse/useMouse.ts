@@ -1,17 +1,12 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
-
-/** The use mouse target element type */
-export type UseMouseTarget =
-  | (() => Element)
-  | string
-  | Element
-  | RefObject<Element | null | undefined>;
 
 /** The use mouse return type */
 export interface UseMouseReturn {
@@ -32,9 +27,9 @@ export interface UseMouseReturn {
 }
 
 export interface UseMouse {
-  <Target extends UseMouseTarget>(target: Target): UseMouseReturn;
+  (target: HookTarget): UseMouseReturn;
 
-  <Target extends UseMouseTarget>(target?: never): UseMouseReturn & { ref: (node: Target) => void };
+  <Target extends Element>(target?: never): UseMouseReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -43,8 +38,7 @@ export interface UseMouse {
  * @category Sensors
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to manage the mouse position for
+ * @param {HookTarget} target The target element to manage the mouse position for
  * @returns {UseMouseReturn} An object with the current mouse position
  *
  * @example
@@ -52,12 +46,14 @@ export interface UseMouse {
  *
  * @overload
  * @template Target The target element
- * @returns {UseMouseReturn & { ref: (node: Target) => void }} An object with the current mouse position and a ref
+ * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with the current mouse position and a ref
  *
  * @example
  * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
-export const useMouse = ((target) => {
+export const useMouse = ((...params: any[]) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+
   const [value, setValue] = useState<UseMouseReturn>({
     x: 0,
     y: 0,
@@ -71,7 +67,7 @@ export const useMouse = ((target) => {
   const internalRef = useRefState<Element>();
 
   useEffect(() => {
-    if (!target && !internalRef.current) return;
+    if (!target && !internalRef.state) return;
     const onMouseMove = (event: MouseEvent) => {
       const element = (target ? getElement(target) : internalRef.current) as Element;
       if (!element) return;
@@ -103,7 +99,7 @@ export const useMouse = ((target) => {
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
     };
-  }, [internalRef.current, target]);
+  }, [internalRef.state, target]);
 
   if (target) return value;
   return {

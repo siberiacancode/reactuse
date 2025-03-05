@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import type { UseMouseTarget } from '../useMouse/useMouse';
+import type { HookTarget } from '@/utils/helpers';
+
+import { isTarget } from '@/utils/helpers';
+
 import type { StateRef } from '../useRefState/useRefState';
 
 import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
@@ -35,10 +38,11 @@ interface UseParallaxReturn {
 }
 
 export interface UseParallax {
-  <Target extends UseMouseTarget>(target: Target, options?: UseParallaxOptions): UseParallaxReturn;
+  (target: HookTarget, options?: UseParallaxOptions): UseParallaxReturn;
 
-  <Target extends UseMouseTarget>(
-    params?: UseParallaxOptions
+  <Target extends Element>(
+    options?: UseParallaxOptions,
+    target?: never
   ): UseParallaxReturn & {
     ref: StateRef<Target>;
   };
@@ -50,13 +54,12 @@ export interface UseParallax {
  * @category Sensors
  *
  * @overload
- * @template Target The target element for the parallax effect
- * @param {Target} target The target element for the parallax effect
+ * @param {HookTarget} target The target element for the parallax effect
  * @param {UseParallaxOptions} options The options for the parallax effect
  * @returns {UseParallaxReturn} An object of parallax values
  *
  * @example
- * const { roll, tilt, source } = useParallax(ref);
+ * const { value } = useParallax(ref);
  *
  * @overload
  * @template Target The target element for the parallax effect
@@ -64,19 +67,15 @@ export interface UseParallax {
  * @returns {UseParallaxReturn & { ref: StateRef<Target> }} An object of parallax values
  *
  * @example
- * const { ref, roll, tilt, source } = useParallax();
+ * const { ref, value } = useParallax();
  */
 export const useParallax = ((...params: any[]) => {
-  const target =
-    params[0] instanceof Function ||
-    (params[0] && 'current' in params[0]) ||
-    params[0] instanceof Element
-      ? params[0]
-      : undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
+  const options = (params[1] ? params[1] : params[0]) as UseParallaxOptions | undefined;
 
   const internalRef = useRefState<Element>();
 
-  const mouse = useMouse(target ?? internalRef.current);
+  const mouse = useMouse(target ?? internalRef);
   const screenOrientation = useScreenOrientation();
   const deviceOrientation = useDeviceOrientation();
 
@@ -85,7 +84,7 @@ export const useParallax = ((...params: any[]) => {
     deviceOrientationTiltAdjust = (value) => value,
     mouseRollAdjust = (value) => value,
     mouseTiltAdjust = (value) => value
-  } = ((target ? params[1] : params[0]) ?? {}) as UseParallaxOptions;
+  } = (options ?? {}) as UseParallaxOptions;
 
   const [value, setValue] = useState({
     roll: 0,
@@ -187,5 +186,9 @@ export const useParallax = ((...params: any[]) => {
   ]);
 
   if (target) return { value };
-  return { ref: internalRef, value };
+
+  return {
+    ref: internalRef,
+    value
+  };
 }) as UseParallax;

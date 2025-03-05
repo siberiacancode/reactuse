@@ -1,15 +1,12 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useRef, useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement, isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
-
-/** The resize observer target element type */
-export type UseResizeObserverTarget = string | Element | RefObject<Element | null | undefined>;
 
 /** The resize observer options type */
 export interface UseResizeObserverOptions extends ResizeObserverOptions {
@@ -26,12 +23,9 @@ export interface UseResizeObserverReturn {
 }
 
 export interface UseResizeObserver {
-  <Target extends UseResizeObserverTarget>(
-    target: Target,
-    options?: UseResizeObserverOptions
-  ): UseResizeObserverReturn;
+  (target: HookTarget, options?: UseResizeObserverOptions): UseResizeObserverReturn;
 
-  <Target extends UseResizeObserverTarget>(
+  <Target extends Element>(
     options?: UseResizeObserverOptions,
     target?: never
   ): UseResizeObserverReturn & { ref: StateRef<Target> };
@@ -49,14 +43,14 @@ export interface UseResizeObserver {
  *  @param {boolean} [options.enabled=true] The IntersectionObserver options
  *  @param {boolean} [options.box] The IntersectionObserver options
  *  @param {(entries: ResizeObserverEntry[], observer: ResizeObserver) => void} [options.onChange] The callback to execute when resize is detected
- *  @returns {UseResizeObserverReturn & { ref: (node: Target) => void }} An object containing the resize observer state
+ *  @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} An object containing the resize observer state
  *
  *  @example
  *  const { ref, entries } = useResizeObserver();
  *
  *  @overload
  *  @template Target The target element
- *  @param {Target} target The target element to observe
+ *  @param {HookTarget} target The target element to observe
  *  @param {boolean} [options.enabled=true] The IntersectionObserver options
  *  @param {boolean} [options.box] The IntersectionObserver options
  *  @param {(entries: ResizeObserverEntry[], observer: ResizeObserver) => void} [options.onChange] The callback to execute when resize is detected
@@ -66,9 +60,7 @@ export interface UseResizeObserver {
  *  const { entries } = useResizeObserver(ref);
  */
 export const useResizeObserver = ((...params: any[]) => {
-  const target = (
-    typeof params[0] === 'object' && !('current' in params[0]) ? undefined : params[0]
-  ) as UseResizeObserverTarget | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = (target ? params[1] : params[0]) as UseResizeObserverOptions | undefined;
   const enabled = options?.enabled ?? true;
 

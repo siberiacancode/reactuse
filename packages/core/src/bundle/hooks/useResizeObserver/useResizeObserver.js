@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  *  @name useResizeObserver
@@ -13,14 +13,14 @@ import { useRefState } from '../useRefState/useRefState';
  *  @param {boolean} [options.enabled=true] The IntersectionObserver options
  *  @param {boolean} [options.box] The IntersectionObserver options
  *  @param {(entries: ResizeObserverEntry[], observer: ResizeObserver) => void} [options.onChange] The callback to execute when resize is detected
- *  @returns {UseResizeObserverReturn & { ref: (node: Target) => void }} An object containing the resize observer state
+ *  @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} An object containing the resize observer state
  *
  *  @example
  *  const { ref, entries } = useResizeObserver();
  *
  *  @overload
  *  @template Target The target element
- *  @param {Target} target The target element to observe
+ *  @param {HookTarget} target The target element to observe
  *  @param {boolean} [options.enabled=true] The IntersectionObserver options
  *  @param {boolean} [options.box] The IntersectionObserver options
  *  @param {(entries: ResizeObserverEntry[], observer: ResizeObserver) => void} [options.onChange] The callback to execute when resize is detected
@@ -30,7 +30,7 @@ import { useRefState } from '../useRefState/useRefState';
  *  const { entries } = useResizeObserver(ref);
  */
 export const useResizeObserver = ((...params) => {
-    const target = (typeof params[0] === 'object' && !('current' in params[0]) ? undefined : params[0]);
+    const target = (isTarget(params[0]) ? params[0] : undefined);
     const options = (target ? params[1] : params[0]);
     const enabled = options?.enabled ?? true;
     const [entries, setEntries] = useState([]);

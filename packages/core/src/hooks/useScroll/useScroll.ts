@@ -1,6 +1,6 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useRef, useState } from 'react';
+
+import type { HookTarget } from '@/utils/helpers';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
@@ -9,14 +9,6 @@ import type { StateRef } from '../useRefState/useRefState';
 import { useRefState } from '../useRefState/useRefState';
 
 const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
-
-/** The use scroll target element type */
-export type UseScrollTarget =
-  | string
-  | Document
-  | Element
-  | RefObject<Element | null | undefined>
-  | Window;
 
 export interface UseScrollOptions {
   /** The on scroll callback */
@@ -56,14 +48,11 @@ export interface UseScrollCallbackParams {
 }
 
 export interface UseScroll {
-  <Target extends UseScrollTarget>(
-    target: Target,
-    callback?: (params: UseScrollCallbackParams, event: Event) => void
-  ): boolean;
+  (target: HookTarget, callback?: (params: UseScrollCallbackParams, event: Event) => void): boolean;
 
-  <Target extends UseScrollTarget>(target: Target, options?: UseScrollOptions): boolean;
+  (target: HookTarget, options?: UseScrollOptions): boolean;
 
-  <Target extends UseScrollTarget>(
+  <Target extends Element>(
     callback?: (params: UseScrollCallbackParams, event: Event) => void,
     target?: never
   ): {
@@ -71,7 +60,7 @@ export interface UseScroll {
     scrolling: boolean;
   };
 
-  <Target extends UseScrollTarget>(
+  <Target extends Element>(
     options?: UseScrollOptions,
     target?: never
   ): {
@@ -132,7 +121,7 @@ export interface UseScroll {
  * const { ref, scrolling } = useScroll(() => console.log('callback'));
  */
 export const useScroll = ((...params: any[]) => {
-  const target = (isTarget(params[0]) ? params[0] : undefined) as UseScrollTarget | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = (
     target
       ? typeof params[1] === 'object'

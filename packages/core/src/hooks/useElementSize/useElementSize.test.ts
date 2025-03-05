@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
 import { createTrigger, renderHookServer } from '@/tests';
-import { getElement } from '@/utils/helpers';
+import { getElement, target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 import type { UseElementSizeReturn } from './useElementSize';
@@ -36,8 +36,9 @@ afterEach(() => void vi.unstubAllGlobals());
 
 const targets = [
   undefined,
-  '#target',
-  document.getElementById('target'),
+  target('#target'),
+  target(document.getElementById('target')!),
+  target(() => document.getElementById('target')!),
   { current: document.getElementById('target') }
 ];
 
@@ -118,7 +119,7 @@ targets.forEach((target) => {
       expect(result.current.value).toStrictEqual({ width: 200, height: 200 });
     });
 
-    it('Should disconnect on onmount', () => {
+    it('Should disconnect on unmount', () => {
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result, unmount } = renderHook(() => {
         if (target)

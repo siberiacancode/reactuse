@@ -1,6 +1,6 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useRef, useState } from 'react';
+
+import type { HookTarget } from '@/utils/helpers';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
@@ -8,16 +8,10 @@ import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
-/** The intersection observer target element type */
-export type UseIntersectionObserverTarget =
-  | string
-  | Element
-  | RefObject<Element | null | undefined>;
-
 /** The intersection observer options type */
 export interface UseIntersectionObserverOptions extends Omit<IntersectionObserverInit, 'root'> {
   enabled?: boolean;
-  root?: string | IntersectionObserverInit['root'] | RefObject<Element | null | undefined>;
+  root?: HookTarget;
   onChange?: (entry: IntersectionObserverEntry) => void;
 }
 
@@ -28,15 +22,12 @@ export interface UseIntersectionObserverReturn {
 }
 
 export interface UseIntersectionObserver {
-  <Target extends UseIntersectionObserverTarget>(
+  <Target extends Element>(
     options?: UseIntersectionObserverOptions,
     target?: never
   ): UseIntersectionObserverReturn & { ref: StateRef<Target> };
 
-  <Target extends UseIntersectionObserverTarget>(
-    target: Target,
-    options?: UseIntersectionObserverOptions
-  ): UseIntersectionObserverReturn;
+  (target: HookTarget, options?: UseIntersectionObserverOptions): UseIntersectionObserverReturn;
 }
 
 /**
@@ -45,11 +36,10 @@ export interface UseIntersectionObserver {
  * @category Browser
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to detect intersection
+ * @param {HookTarget} target The target element to detect intersection
  * @param {boolean} [options.enabled=true] The IntersectionObserver options
  * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected
- * @param {IntersectionObserverInit['root'] | RefObject<Element | null | undefined>} [options.root] The root element to observe
+ * @param {HookTarget} [options.root] The root element to observe
  * @returns {UseIntersectionObserverReturn} An object containing the state and the supported status
  *
  * @example
@@ -59,16 +49,14 @@ export interface UseIntersectionObserver {
  * @template Target The target element
  * @param {boolean} [options.enabled=true] The IntersectionObserver options
  * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected
- * @param {IntersectionObserverInit['root'] | RefObject<Element | null | undefined>} [options.root] The root element to observe
+ * @param {HookTarget} [options.root] The root element to observe
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
  * const { entry, inView } = useIntersectionObserver(ref);
  */
 export const useIntersectionObserver = ((...params: any[]) => {
-  const target = (isTarget(params[0]) ? params[0] : undefined) as
-    | UseIntersectionObserverTarget
-    | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = (target ? params[1] : params[0]) as UseIntersectionObserverOptions | undefined;
   const enabled = options?.enabled ?? true;
 
@@ -91,7 +79,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
       },
       {
         ...options,
-        root: options?.root ? (getElement(options?.root) as Document | Element) : document
+        root: options?.root ? (getElement(options.root) as Document | Element) : document
       }
     );
 

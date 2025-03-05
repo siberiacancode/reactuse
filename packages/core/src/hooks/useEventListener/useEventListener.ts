@@ -1,25 +1,19 @@
-import type { RefObject } from 'react';
-
 import { useEffect } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
 
 import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
-
-/** The use event listener target type */
-export type UseEventListenerTarget =
-  | string
-  | Document
-  | Element
-  | RefObject<Element | null | undefined>
-  | Window;
 
 /** The use event listener options */
 export type UseEventListenerOptions = boolean | AddEventListenerOptions;
 
 /** The use event listener return type */
-export type UseEventListenerReturn<Target extends UseEventListenerTarget> = RefObject<Target>;
+export type UseEventListenerReturn<Target extends Element> = StateRef<Target>;
 
 export interface UseEventListener {
   <Event extends keyof WindowEventMap = keyof WindowEventMap>(
@@ -36,13 +30,10 @@ export interface UseEventListener {
     options?: UseEventListenerOptions
   ): void;
 
-  <
-    Target extends UseEventListenerTarget,
-    Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap
-  >(
-    target: Target,
+  <Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(
+    target: HookTarget,
     event: Event | Event[],
-    listener: (this: Target, event: HTMLElementEventMap[Event]) => void,
+    listener: (this: Element, event: HTMLElementEventMap[Event]) => void,
     options?: UseEventListenerOptions
   ): void;
 
@@ -94,7 +85,7 @@ export interface UseEventListener {
  * @overload
  * @template Event Key of window event map
  * @template Target The target element
- * @param {Target} target The target element to attach the event listener to
+ * @param {HookTarget} target The target element to attach the event listener to
  * @param {Event | Event[]} event An array of event types to listen for
  * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} handler The event handler function
  * @param {UseEventListenerOptions} [options] Options for the event listener
@@ -115,9 +106,7 @@ export interface UseEventListener {
  * const ref = useEventListener('click', () => console.log('click'));
  */
 export const useEventListener = ((...params: any[]) => {
-  const target = (params[1] instanceof Function ? undefined : params[0]) as
-    | UseEventListenerTarget
-    | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const event = (target ? params[1] : params[0]) as string | string[];
   const events = Array.isArray(event) ? event : [event];
   const listener = (target ? params[2] : params[1]) as (...arg: any[]) => undefined | void;

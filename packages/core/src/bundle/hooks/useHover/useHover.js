@@ -7,8 +7,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @category Sensors
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to be hovered
+ * @param {HookTarget} target The target element to be hovered
  * @param {(event: Event) => void} [callback] The callback function to be invoked on mouse enter
  * @returns {boolean} The state of the hover
  *
@@ -16,8 +15,7 @@ import { useRefState } from '../useRefState/useRefState';
  * const hovering = useHover(ref, () => console.log('callback'));
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to be hovered
+ * @param {HookTarget} target The target element to be hovered
  * @param {(event: Event) => void} [options.onEntry] The callback function to be invoked on mouse enter
  * @param {(event: Event) => void} [options.onLeave] The callback function to be invoked on mouse leave
  * @returns {boolean} The state of the hover

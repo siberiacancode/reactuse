@@ -19,13 +19,22 @@ const Demo = () => {
   return (
     <div>
       <div className='flex gap-10'>
-        <div ref={scroll.ref} className='h-[300px] w-full overflow-scroll rounded-lg bg-zinc-800'>
+        <div
+          ref={scroll.ref}
+          className='h-[300px] w-full overflow-scroll rounded-lg bg-zinc-200 dark:bg-zinc-800'
+        >
           <div className='relative h-[400px] w-[500px]'>
-            <div className='absolute left-0 top-0 bg-zinc-600 p-1'>TopLeft</div>
-            <div className='absolute bottom-0 left-0 bg-zinc-600 p-1'>BottomLeft</div>
-            <div className='absolute right-0 top-0 bg-zinc-600 p-1'>TopRight</div>
-            <div className='absolute bottom-0 right-0 bg-zinc-600 p-1'>BottomRight</div>
-            <div className='absolute left-1/3 top-1/3 bg-zinc-600 p-1'>Scroll Me</div>
+            <div className='absolute left-0 top-0 bg-zinc-400 p-1 dark:bg-zinc-600'>TopLeft</div>
+            <div className='absolute bottom-0 left-0 bg-zinc-400 p-1 dark:bg-zinc-600'>
+              BottomLeft
+            </div>
+            <div className='absolute right-0 top-0 bg-zinc-400 p-1 dark:bg-zinc-600'>TopRight</div>
+            <div className='absolute bottom-0 right-0 bg-zinc-400 p-1 dark:bg-zinc-600'>
+              BottomRight
+            </div>
+            <div className='absolute left-1/3 top-1/3 bg-zinc-400 p-1 dark:bg-zinc-600'>
+              Scroll Me
+            </div>
           </div>
         </div>
 

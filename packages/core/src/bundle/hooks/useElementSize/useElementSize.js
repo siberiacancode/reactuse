@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { getElement } from '@/utils/helpers';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -8,8 +8,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @category Elements
  *
  * @overload
- * @template Target The target element type
- * @param {UseElementSizeTarget} target The target element to observe
+ * @param {HookTarget} target The target element to observe
  * @returns {UseElementSizeReturn} An object containing the current width and height of the element
  *
  * @example
@@ -22,7 +21,7 @@ import { useRefState } from '../useRefState/useRefState';
  * const { ref, value } = useElementSize();
  */
 export const useElementSize = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
+    const target = params[0];
     const [size, setSize] = useState({ width: 0, height: 0 });
     const internalRef = useRefState();
     useIsomorphicLayoutEffect(() => {

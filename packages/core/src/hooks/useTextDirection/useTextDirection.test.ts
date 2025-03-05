@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { target } from '@/utils/helpers';
+
 import type { StateRef } from '../useRefState/useRefState';
 import type { UseTextDirectionReturn } from './useTextDirection';
 
@@ -7,8 +9,9 @@ import { useTextDirection } from './useTextDirection';
 
 const targets = [
   undefined,
-  '#target',
-  document.getElementById('target'),
+  target('#target'),
+  target(document.getElementById('target')!),
+  target(() => document.getElementById('target')!),
   { current: document.getElementById('target') }
 ];
 const element = document.getElementById('target')! as HTMLDivElement;

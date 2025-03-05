@@ -1,53 +1,93 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import type { UseEventListenerTarget } from '../useEventListener/useEventListener';
+import type { HookTarget } from '@/utils/helpers';
 
-import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
-import { useEventListener } from '../useEventListener/useEventListener';
+import { getElement, isTarget } from '@/utils/helpers';
 
-/** The use keys pressed params type */
-export interface UseKeysPressedParams {
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
+
+/** The use keys pressed options type */
+export interface UseKeysPressedOptions {
   /** Enable or disable the event listeners */
   enabled?: boolean;
-  /** The target to attach the event listeners to */
-  target?: UseEventListenerTarget;
+}
+
+export interface UseKeysPressed {
+  (
+    target: HookTarget | Window,
+    options?: UseKeysPressedOptions
+  ): Array<{ key: string; code: string }>;
+
+  <Target extends Element>(
+    options?: UseKeysPressedOptions
+  ): {
+    value: Array<{ key: string; code: string }>;
+    ref: StateRef<Target>;
+  };
 }
 
 /**
+ * Hook that tracks which keyboard keys are currently pressed
+ *
  * @name useKeysPressed
- * @description - Hook for get keys that were pressed
+ * @description Tracks all currently pressed keyboard keys and their codes
  * @category Sensors
  *
- * @param {UseEventListenerTarget} [params.target=window] The target to attach the event listeners to
- * @param {boolean} [params.enabled=bollean] Enable or disable the event listeners
- * @returns {useKeysPressedReturns} Array of strings with keys that were press
+ * @overload
+ * @param {HookTarget | Window} target DOM element or ref to attach keyboard listeners to
+ * @param {UseKeysPressedOptions} [options.enabled=true] Enable or disable the event listeners
+ * @returns {Array<{ key: string; code: string }>} Array of currently pressed keys with their key and code values
  *
  * @example
- * const pressedKeys = useKeysPressed();
+ * const pressedKeys = useKeysPressed(ref);
+ *
+ * @overload
+ * @template Target - Type of the target DOM element
+ * @param {UseKeysPressedOptions} [options] - Optional configuration options
+ * @returns {{ keys: Array<{ key: string; code: string }>; ref: StateRef<Target> }} Object containing pressed keys array and ref to attach to a DOM element
+ *
+ * @example
+ * const { value, ref } = useKeysPressed();
  */
-export const useKeysPressed = (params?: UseKeysPressedParams) => {
-  const enabled = params?.enabled ?? true;
-  const [keys, setKeys] = useState<{ key: string; code: string }[]>([]);
+export const useKeysPressed = ((...params: any[]) => {
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
+  const options = (target ? params[1] : params[0]) as UseKeysPressedOptions | undefined;
 
-  const onKeyDown = (event: KeyboardEvent) => {
+  const enabled = options?.enabled ?? true;
+  const [value, setValue] = useState<{ key: string; code: string }[]>([]);
+  const internalRef = useRefState(window);
+
+  useEffect(() => {
     if (!enabled) return;
-    setKeys((prevKeys) => {
-      if (prevKeys.some(({ code }) => code === event.code)) return prevKeys;
-      return [...prevKeys, { key: event.key, code: event.code }];
-    });
-  };
+    setValue([]);
 
-  const onKeyUp = (event: KeyboardEvent) => {
-    if (!enabled) return;
-    setKeys((prevKeys) => prevKeys.filter(({ code }) => code !== event.code));
-  };
+    const element = (target ? getElement(target) : internalRef.current) as Element;
+    if (!element) return;
 
-  useDidUpdate(() => {
-    setKeys([]);
-  }, [enabled]);
+    const onKeyDown = (event: Event) => {
+      const keyboardEvent = event as KeyboardEvent;
+      setValue((prevValue) => {
+        if (prevValue.some(({ code }) => code === keyboardEvent.code)) return prevValue;
+        return [...prevValue, { key: keyboardEvent.key, code: keyboardEvent.code }];
+      });
+    };
 
-  useEventListener(params?.target ?? window, 'keydown', onKeyDown);
-  useEventListener(params?.target ?? window, 'keyup', onKeyUp);
+    const onKeyUp = (event: Event) => {
+      const keyboardEvent = event as KeyboardEvent;
+      setValue((prevValue) => prevValue.filter(({ code }) => code !== keyboardEvent.code));
+    };
 
-  return keys;
-};
+    element.addEventListener('keydown', onKeyDown);
+    element.addEventListener('keyup', onKeyUp);
+
+    return () => {
+      element.removeEventListener('keydown', onKeyDown);
+      element.removeEventListener('keyup', onKeyUp);
+    };
+  }, [enabled, internalRef.state, target]);
+
+  if (target) return value;
+  return { value, ref: internalRef };
+}) as UseKeysPressed;

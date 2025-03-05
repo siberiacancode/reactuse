@@ -23,8 +23,7 @@ import { useRefState } from '../useRefState/useRefState';
  * const { ref, observer, stop } = useMutationObserver(() => console.log('callback'))
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to observe
+ * @param {HookTarget} target The target element to observe
  * @param {MutationCallback} callback The callback to execute when mutation is detected
  * @param {boolean} [options.enabled=true] The enabled state of the mutation observer
  * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed

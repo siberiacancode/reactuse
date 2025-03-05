@@ -1,8 +1,8 @@
-import type { RefObject } from 'react';
-
 import { useEffect } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement, isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -14,9 +14,6 @@ export interface UseScrollIntoViewOptions extends ScrollIntoViewOptions {
   enabled?: boolean;
 }
 
-/** The scroll into view target type */
-export type UseScrollIntoViewTarget = string | Element | RefObject<Element | null | undefined>;
-
 /** The scroll into view return type */
 export interface UseScrollIntoViewReturn {
   /** Function to scroll element into view */
@@ -27,16 +24,13 @@ export interface UseScrollIntoViewReturn {
   }) => void;
 }
 
-export interface UseScrollIntoViewOverload {
-  <Target extends UseScrollIntoViewTarget>(
-    target: Target,
-    options?: UseScrollIntoViewOptions
-  ): UseScrollIntoViewReturn;
-
-  <Target extends UseScrollIntoViewTarget>(
+export interface UseScrollIntoView {
+  <Target extends Element>(
     options?: UseScrollIntoViewOptions,
     target?: never
-  ): { ref: StateRef<Target> } & UseScrollIntoViewReturn;
+  ): UseScrollIntoViewReturn & { ref: StateRef<Target> };
+
+  (target: HookTarget, options?: UseScrollIntoViewOptions): UseScrollIntoViewReturn;
 }
 
 /**
@@ -45,8 +39,7 @@ export interface UseScrollIntoViewOverload {
  * @category Sensors
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to scroll into view
+ * @param {HookTarget} target The target element to scroll into view
  * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior
  * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment
  * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment
@@ -66,11 +59,7 @@ export interface UseScrollIntoViewOverload {
  * const { ref, trigger } = useScrollIntoView<HTMLDivElement>();
  */
 export const useScrollIntoView = ((...params: any[]) => {
-  const target = (
-    typeof params[0] !== 'object' || 'current' in params[0] || params[0] instanceof Element
-      ? params[0]
-      : undefined
-  ) as UseScrollIntoViewTarget | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = (target ? params[1] : params[0]) as UseScrollIntoViewOptions | undefined;
 
   const internalRef = useRefState<Element>();
@@ -114,4 +103,4 @@ export const useScrollIntoView = ((...params: any[]) => {
 
   if (target) return { trigger };
   return { ref: internalRef, trigger };
-}) as UseScrollIntoViewOverload;
+}) as UseScrollIntoView;

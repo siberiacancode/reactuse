@@ -1,10 +1,13 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useRef, useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
 
 import { useEvent } from '../useEvent/useEvent';
+import { useRefState } from '../useRefState/useRefState';
 
 const DEFAULT_BRUSH_RADIUS = 10;
 
@@ -153,19 +156,13 @@ export interface UsePaintReturn {
   undo: () => void;
 }
 
-/** The use paint return type */
-export type UsePaintTarget =
-  | (() => HTMLCanvasElement)
-  | HTMLCanvasElement
-  | RefObject<HTMLCanvasElement>;
-
 export interface UsePaint {
-  <Target extends UsePaintTarget>(target: Target, options?: UsePaintOptions): UsePaintReturn;
+  (target: HookTarget, options?: UsePaintOptions): UsePaintReturn;
 
-  (
+  <Target extends HTMLCanvasElement>(
     options?: UsePaintOptions,
     target?: never
-  ): { ref: RefObject<HTMLCanvasElement> } & UsePaintReturn;
+  ): UsePaintReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -174,8 +171,7 @@ export interface UsePaint {
  * @category Browser
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to be painted
+ * @param {HookTarget} target The target element to be painted
  * @param {UsePaintOptions} [options] The options to be used
  * @returns {UsePaintReturn} An object containing the current pencil options and functions to interact with the paint
  *
@@ -184,16 +180,14 @@ export interface UsePaint {
  *
  * @overload
  * @param {UsePaintOptions} [options] The options to be used
- * @returns {UsePaintReturn & { ref: RefObject<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint
+ * @returns {UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint
  *
  * @example
  * const { ref, drawing } = usePaint();
  */
 export const usePaint = ((...params: any[]) => {
-  const target = (
-    typeof params[0] === 'object' && !('current' in params[0]) ? undefined : params[0]
-  ) as UsePaintTarget | undefined;
-  const options = (target ? params[1] : params[0]) as UsePaintOptions | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
+  const options = ((target ? params[1] : params[0]) as UsePaintOptions) ?? {};
 
   const color = options?.color ?? 'black';
   const opacity = options?.opacity ?? 1;
@@ -208,7 +202,7 @@ export const usePaint = ((...params: any[]) => {
     })
   );
   const [drawing, setIsDrawing] = useState(false);
-  const internalRef = useRef<HTMLCanvasElement>(null);
+  const internalRef = useRefState<HTMLCanvasElement>();
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
 
   const draw = (points: Point[], color: string, opacity: number, radius: number) => {
@@ -327,6 +321,8 @@ export const usePaint = ((...params: any[]) => {
   };
 
   useEffect(() => {
+    if (!target && !internalRef.state) return;
+
     const element = (target ? getElement(target) : internalRef.current) as HTMLCanvasElement;
     if (!element) return;
     contextRef.current = element.getContext('2d');
@@ -348,7 +344,7 @@ export const usePaint = ((...params: any[]) => {
       element.removeEventListener('mousemove', onMouseMove);
       element.removeEventListener('mouseup', onMouseUp);
     };
-  }, []);
+  }, [target, internalRef.state]);
 
   if (target) return { drawing, clear, undo, draw, lines: paintRef.current.lines };
   return { ref: internalRef, drawing, clear, undo, draw, lines: paintRef.current.lines };

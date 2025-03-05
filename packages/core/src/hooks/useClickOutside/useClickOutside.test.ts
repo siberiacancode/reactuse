@@ -1,74 +1,82 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { target } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
+
 import { useClickOutside } from './useClickOutside';
 
-it('Should use click outside', () => {
-  const { result } = renderHook(() => useClickOutside(vi.fn()));
+const targets = [
+  undefined,
+  target('#target'),
+  target(document.getElementById('target')!),
+  target(() => document.getElementById('target')!),
+  { current: document.getElementById('target') }
+];
 
-  expect(result.current).toBeTypeOf('function');
-});
+targets.forEach((target) => {
+  describe(`${target}`, () => {
+    it('Should use click outside', () => {
+      const { result } = renderHook(() => {
+        if (target) return useClickOutside(target, vi.fn()) as unknown as StateRef<HTMLDivElement>;
+        return useClickOutside(vi.fn());
+      });
 
-it('Should call callback when ref connected to the document', () => {
-  const callback = vi.fn();
-  const element = document.createElement('div');
+      if (!target) expect(result.current).toBeTypeOf('function');
+    });
 
-  const { result } = renderHook(() => useClickOutside(callback));
-  act(() => result.current(element));
+    it('Should call callback when clicked outside', () => {
+      const callback = vi.fn();
+      const element = document.createElement('div');
+      document.body.appendChild(element);
 
-  expect(callback).not.toBeCalled();
+      const { result } = renderHook(() => {
+        if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
+        return useClickOutside(callback);
+      });
 
-  act(() => document.dispatchEvent(new Event('click')));
+      if (!target) act(() => result.current(element));
 
-  expect(callback).toBeCalledTimes(1);
-});
+      expect(callback).not.toBeCalled();
 
-it('Should call callback when clicked outside the element', () => {
-  const callback = vi.fn();
-  const element = document.createElement('div');
+      act(() => document.dispatchEvent(new Event('click')));
 
-  renderHook(() => useClickOutside(element, callback));
+      expect(callback).toBeCalledTimes(1);
+    });
 
-  expect(callback).not.toBeCalled();
+    it('Should not call callback when clicked inside', () => {
+      const callback = vi.fn();
+      const element = document.createElement('div');
+      document.body.appendChild(element);
 
-  act(() => document.dispatchEvent(new Event('click')));
+      const { result } = renderHook(() => {
+        if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
+        return useClickOutside(callback);
+      });
 
-  expect(callback).toBeCalledTimes(1);
-});
+      if (!target) act(() => result.current(element));
 
-it('Should call callback when clicked outside the ref', () => {
-  const callback = vi.fn();
-  const ref = { current: document.createElement('div') };
+      act(() => element.dispatchEvent(new Event('click')));
 
-  renderHook(() => useClickOutside(ref, callback));
+      expect(callback).not.toBeCalled();
+    });
 
-  expect(callback).not.toBeCalled();
+    it('Should disconnect on unmount', () => {
+      const mockRemoveEventListener = vi.spyOn(document, 'removeEventListener');
+      const callback = vi.fn();
+      const element = document.createElement('div');
+      document.body.appendChild(element);
 
-  act(() => document.dispatchEvent(new Event('click')));
+      const { result, unmount } = renderHook(() => {
+        if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
+        return useClickOutside(callback);
+      });
 
-  expect(callback).toBeCalledTimes(1);
-});
+      if (!target) act(() => result.current(element));
 
-it('Should not call callback when clicked inside the ref', () => {
-  const callback = vi.fn();
-  const ref = { current: document.createElement('div') };
-  document.body.appendChild(ref.current);
+      unmount();
 
-  renderHook(() => useClickOutside(ref, callback));
-
-  act(() => ref.current.dispatchEvent(new Event('click')));
-
-  expect(callback).not.toBeCalled();
-});
-
-it('Should not call callback when clicked inside the element', () => {
-  const element = document.createElement('div');
-  document.body.appendChild(element);
-
-  const callback = vi.fn();
-
-  renderHook(() => useClickOutside(element, callback));
-
-  act(() => element.dispatchEvent(new Event('click')));
-
-  expect(callback).not.toBeCalled();
+      expect(mockRemoveEventListener).toHaveBeenCalledTimes(1);
+    });
+  });
 });

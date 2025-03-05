@@ -7,8 +7,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @category Sensors
  *
  * @overload
- * @template Target The target element(s)
- * @param {Target} target The target element(s) to detect outside clicks for
+ * @param {HookTarget} target The target element(s) to detect outside clicks for
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
  * @returns {void}
  *

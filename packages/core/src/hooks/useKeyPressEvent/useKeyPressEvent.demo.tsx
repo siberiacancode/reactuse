@@ -4,7 +4,7 @@ import { useKeyPressEvent } from './useKeyPressEvent';
 const Demo = () => {
   const counter = useCounter(0);
 
-  useKeyPressEvent('Enter', document, () => counter.inc());
+  useKeyPressEvent('Enter', () => counter.inc());
 
   return (
     <div>

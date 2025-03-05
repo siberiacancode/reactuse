@@ -7,11 +7,10 @@ import { useRefState } from '../useRefState/useRefState';
  * @category Browser
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to detect intersection
+ * @param {HookTarget} target The target element to detect intersection
  * @param {boolean} [options.enabled=true] The IntersectionObserver options
  * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected
- * @param {IntersectionObserverInit['root'] | RefObject<Element | null | undefined>} [options.root] The root element to observe
+ * @param {HookTarget} [options.root] The root element to observe
  * @returns {UseIntersectionObserverReturn} An object containing the state and the supported status
  *
  * @example
@@ -21,7 +20,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @template Target The target element
  * @param {boolean} [options.enabled=true] The IntersectionObserver options
  * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected
- * @param {IntersectionObserverInit['root'] | RefObject<Element | null | undefined>} [options.root] The root element to observe
+ * @param {HookTarget} [options.root] The root element to observe
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
@@ -46,7 +45,7 @@ export const useIntersectionObserver = ((...params) => {
             internalOnChangeRef.current?.(entry);
         }, {
             ...options,
-            root: options?.root ? getElement(options?.root) : document
+            root: options?.root ? getElement(options.root) : document
         });
         observer.observe(element);
         return () => {

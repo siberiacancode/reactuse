@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
+import { useRefState } from '../useRefState/useRefState';
 const DEFAULT_BRUSH_RADIUS = 10;
 export class Pointer {
     x;
@@ -96,8 +97,7 @@ export class Paint {
  * @category Browser
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to be painted
+ * @param {HookTarget} target The target element to be painted
  * @param {UsePaintOptions} [options] The options to be used
  * @returns {UsePaintReturn} An object containing the current pencil options and functions to interact with the paint
  *
@@ -106,14 +106,14 @@ export class Paint {
  *
  * @overload
  * @param {UsePaintOptions} [options] The options to be used
- * @returns {UsePaintReturn & { ref: RefObject<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint
+ * @returns {UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint
  *
  * @example
  * const { ref, drawing } = usePaint();
  */
 export const usePaint = ((...params) => {
-    const target = (typeof params[0] === 'object' && !('current' in params[0]) ? undefined : params[0]);
-    const options = (target ? params[1] : params[0]);
+    const target = (isTarget(params[0]) ? params[0] : undefined);
+    const options = (target ? params[1] : params[0]) ?? {};
     const color = options?.color ?? 'black';
     const opacity = options?.opacity ?? 1;
     const radius = options?.radius ?? DEFAULT_BRUSH_RADIUS;
@@ -124,7 +124,7 @@ export const usePaint = ((...params) => {
         smooth: options?.smooth ?? false
     }));
     const [drawing, setIsDrawing] = useState(false);
-    const internalRef = useRef(null);
+    const internalRef = useRefState();
     const contextRef = useRef(null);
     const draw = (points, color, opacity, radius) => {
         if (!contextRef.current)
@@ -215,6 +215,8 @@ export const usePaint = ((...params) => {
         paintRef.current.lines.forEach(({ points, color, opacity, radius }) => draw(points, color, opacity, radius));
     };
     useEffect(() => {
+        if (!target && !internalRef.state)
+            return;
         const element = (target ? getElement(target) : internalRef.current);
         if (!element)
             return;
@@ -233,7 +235,7 @@ export const usePaint = ((...params) => {
             element.removeEventListener('mousemove', onMouseMove);
             element.removeEventListener('mouseup', onMouseUp);
         };
-    }, []);
+    }, [target, internalRef.state]);
     if (target)
         return { drawing, clear, undo, draw, lines: paintRef.current.lines };
     return { ref: internalRef, drawing, clear, undo, draw, lines: paintRef.current.lines };

@@ -1,6 +1,6 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useRef, useState } from 'react';
+
+import type { HookTarget } from '@/utils/helpers';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
@@ -8,31 +8,33 @@ import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
-/** The use focus target type */
-export type UseFocusTarget = string | Element | RefObject<Element | null | undefined>;
-
 /** The use focus options type */
 export interface UseFocusOptions {
   /** The initial focus state of the target */
   initialValue?: boolean;
+  /** The on blur callback */
+  onBlur?: (event: FocusEvent) => void;
+  /** The on focus callback */
+  onFocus?: (event: FocusEvent) => void;
 }
 
 /** The use focus return type */
 export interface UseFocusReturn {
   /** The boolean state value of the target */
   focused: boolean;
-  /** Is the target focused */
+  /** Blur the target */
   blur: () => void;
-  /** Is the target focused */
+  /** Focus the target */
   focus: () => void;
 }
 
 export interface UseFocus {
-  <Target extends UseFocusTarget>(
-    options?: UseFocusOptions
-  ): UseFocusReturn & { ref: StateRef<Target> };
+  (target: HookTarget, options?: UseFocusOptions): UseFocusReturn;
 
-  <Target extends UseFocusTarget>(target: Target, options?: UseFocusOptions): UseFocusReturn;
+  <Target extends Element>(
+    options?: UseFocusOptions,
+    target?: never
+  ): UseFocusReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -41,28 +43,34 @@ export interface UseFocus {
  * @category Browser
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to focus
+ * @param {HookTarget} target The target element to focus
  * @param {boolean} [options.initialValue=false] The initial focus state of the target
- * @returns {UseFocusReturn} An object with a `focus` boolean state value
+ * @param {(event: FocusEvent) => void} [options.onFocus] The callback function to be invoked on focus
+ * @param {(event: FocusEvent) => void} [options.onBlur] The callback function to be invoked on blur
+ * @returns {UseFocusReturn} An object with focus state and methods
  *
  * @example
  * const { focus, blur, focused } = useFocus(ref);
  *
  * @overload
+ * @template Target The target element
  * @param {boolean} [options.initialValue=false] The initial focus state of the target
- * @returns {UseFocusReturn} An object with a `focus` boolean state value
+ * @param {(event: FocusEvent) => void} [options.onFocus] The callback function to be invoked on focus
+ * @param {(event: FocusEvent) => void} [options.onBlur] The callback function to be invoked on blur
+ * @returns {UseFocusReturn & { ref: StateRef<Target> }} An object with focus state, methods and ref
  *
  * @example
  * const { ref, focus, blur, focused } = useFocus();
  */
 export const useFocus = ((...params: any[]) => {
-  const target = isTarget(params[0]) ? params[0] : undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = ((target ? params[1] : params[0]) as UseFocusOptions) ?? {};
   const initialValue = options.initialValue ?? false;
 
   const [focused, setFocused] = useState(initialValue);
   const internalRef = useRefState<Element>();
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
 
   const elementRef = useRef<HTMLElement | null>(null);
 
@@ -76,10 +84,16 @@ export const useFocus = ((...params: any[]) => {
 
     elementRef.current = element;
 
-    const onFocus = (event: Event) => {
+    const onFocus = (event: FocusEvent) => {
+      internalOptionsRef.current?.onFocus?.(event);
       if (!focus || (event.target as HTMLElement).matches?.(':focus-visible')) setFocused(true);
     };
-    const onBlur = () => setFocused(false);
+
+    const onBlur = (event: FocusEvent) => {
+      internalOptionsRef.current?.onBlur?.(event);
+      setFocused(false);
+    };
+
     if (initialValue) element.focus();
 
     element.addEventListener('focus', onFocus);

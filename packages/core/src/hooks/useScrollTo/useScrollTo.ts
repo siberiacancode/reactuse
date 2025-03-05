@@ -1,20 +1,12 @@
-import type { RefObject } from 'react';
-
 import { useLayoutEffect } from 'react';
+
+import type { HookTarget } from '@/utils/helpers';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
-
-/** The use scroll target element type */
-export type UseScrollToTarget =
-  | string
-  | Document
-  | Element
-  | RefObject<Element | null | undefined>
-  | Window;
 
 /** The use scroll to options type */
 export interface UseScrollToOptions {
@@ -35,11 +27,12 @@ export interface UseScrollToReturn {
 }
 
 export interface UseScrollTo {
-  <Target extends UseScrollToTarget>(target: Target): UseScrollToReturn;
-
-  <Target extends UseScrollToTarget>(
-    options?: UseScrollToOptions
+  <Target extends Element>(
+    options?: UseScrollToOptions,
+    target?: never
   ): UseScrollToReturn & { ref: StateRef<Target> };
+
+  (target: HookTarget, options?: UseScrollToOptions): UseScrollToReturn;
 }
 
 /**
@@ -48,30 +41,25 @@ export interface UseScrollTo {
  * @category Sensors
  *
  * @overload
- * @template Target The target element(s)
- * @param {Target} target The target element for scrolling to
- * @param {number} options.x The horizontal position to scroll to
- * @param {number} options.y The vertical position to scroll to
- * @param {ScrollBehavior} [options.behavior = 'auto'] The scrolling behavior
- * @returns {boolean} The state of scrolling
+ * @param {HookTarget} target The target element for scrolling to
+ * @param {UseScrollToOptions} [options] The scroll options
+ * @returns {UseScrollToReturn} The scroll trigger function
  *
  * @example
  * const trigger = useScrollTo(ref, options);
  *
  * @overload
- * @template Target The target element(s)
- * @param {number} options.x The horizontal position to scroll to
- * @param {number} options.y The vertical position to scroll to
- * @param {ScrollBehavior} [options.behavior = 'auto'] The scrolling behavior
- * @returns {StateRef<Target>} The state of scrolling
+ * @template Target The target element
+ * @param {UseScrollToOptions} [options] The scroll options
+ * @returns {UseScrollToReturn & { ref: StateRef<Target> }} The scroll trigger function and ref
  *
  * @example
  * const { ref, trigger } = useScrollTo(options);
  */
 export const useScrollTo = ((...params: any[]) => {
-  const target = (isTarget(params[0]) ? params[0] : undefined) as UseScrollToTarget | undefined;
-  const options = ((target ? params[1] : params[0]) as UseScrollToOptions) ?? {};
-  const { x, y, behavior = 'auto', enabled = true } = options;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
+  const options = (target ? params[1] : params[0]) as UseScrollToOptions | undefined;
+  const { x, y, behavior = 'auto', enabled = true } = options ?? {};
   const internalRef = useRefState<Element>();
 
   useLayoutEffect(() => {
@@ -92,6 +80,6 @@ export const useScrollTo = ((...params: any[]) => {
     element.scrollTo({ left: x, top: y, behavior });
   };
 
-  if (target) return trigger;
+  if (target) return { trigger };
   return { ref: internalRef, trigger };
 }) as UseScrollTo;

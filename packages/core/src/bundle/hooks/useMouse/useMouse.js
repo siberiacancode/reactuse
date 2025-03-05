@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useMouse
@@ -7,8 +7,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @category Sensors
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to manage the mouse position for
+ * @param {HookTarget} target The target element to manage the mouse position for
  * @returns {UseMouseReturn} An object with the current mouse position
  *
  * @example
@@ -16,12 +15,13 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @template Target The target element
- * @returns {UseMouseReturn & { ref: (node: Target) => void }} An object with the current mouse position and a ref
+ * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with the current mouse position and a ref
  *
  * @example
  * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
-export const useMouse = ((target) => {
+export const useMouse = ((...params) => {
+    const target = isTarget(params[0]) ? params[0] : undefined;
     const [value, setValue] = useState({
         x: 0,
         y: 0,
@@ -33,7 +33,7 @@ export const useMouse = ((target) => {
     });
     const internalRef = useRefState();
     useEffect(() => {
-        if (!target && !internalRef.current)
+        if (!target && !internalRef.state)
             return;
         const onMouseMove = (event) => {
             const element = (target ? getElement(target) : internalRef.current);
@@ -62,7 +62,7 @@ export const useMouse = ((target) => {
         return () => {
             document.removeEventListener('mousemove', onMouseMove);
         };
-    }, [internalRef.current, target]);
+    }, [internalRef.state, target]);
     if (target)
         return value;
     return {

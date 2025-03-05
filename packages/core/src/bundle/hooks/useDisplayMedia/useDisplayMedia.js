@@ -9,10 +9,9 @@ import { useRefState } from '../useRefState/useRefState';
  * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia
  *
  * @overload
- * @template Target The target video element
- * @param {Target} target The target video element to display the media stream
+ * @param {HookTarget} target The target video element to display the media stream
  * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing
- * @param {boolean} [options.enabled=false] Whether to start immediately
+ * @param {boolean} [options.immediately=false] Whether to start immediately
  * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing
  * @returns {UseDisplayMediaReturn} Object containing stream, sharing status and control methods
  *
@@ -22,7 +21,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @template Target The target video element
  * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing
- * @param {boolean} [options.enabled=false] Whether to start immediately
+ * @param {boolean} [options.immediately=false] Whether to start immediately
  * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing
  * @returns {UseDisplayMediaReturn & { ref: StateRef<HTMLVideoElement> }} Object containing stream, sharing status, control methods and ref
  *
@@ -36,7 +35,7 @@ export const useDisplayMedia = ((...params) => {
         'getDisplayMedia' in navigator.mediaDevices;
     const target = (isTarget(params[0]) ? params[0] : undefined);
     const options = (params[1] ? params[1] : params[0]);
-    const enabled = options?.enabled ?? false;
+    const immediately = options?.immediately ?? false;
     const [sharing, setSharing] = useState(false);
     const streamRef = useRef(null);
     const internalRef = useRefState();
@@ -68,7 +67,7 @@ export const useDisplayMedia = ((...params) => {
         return displayMedia;
     };
     useEffect(() => {
-        if (!supported || !enabled)
+        if (!supported || !immediately)
             return;
         if (!target && !internalRef.state)
             return;

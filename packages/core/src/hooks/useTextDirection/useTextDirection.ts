@@ -1,16 +1,13 @@
-import type { RefObject } from 'react';
-
 import { useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement, isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
-
-/** The use text direction target element type */
-export type UseTextDirectionTarget = string | Element | RefObject<Element | null | undefined>;
 
 /** The use text direction value type */
 export type UseTextDirectionValue = 'auto' | 'ltr' | 'rtl';
@@ -26,12 +23,9 @@ export interface UseTextDirectionReturn {
 }
 
 export interface UseTextDirection {
-  <Target extends UseTextDirectionTarget>(
-    target: Target,
-    initialValue?: UseTextDirectionValue
-  ): UseTextDirectionReturn;
+  (target: HookTarget, initialValue?: UseTextDirectionValue): UseTextDirectionReturn;
 
-  <Target extends UseTextDirectionTarget>(
+  <Target extends Element>(
     initialValue?: UseTextDirectionValue,
     target?: never
   ): UseTextDirectionReturn & { ref: StateRef<Target> };
@@ -43,28 +37,23 @@ export interface UseTextDirection {
  * @category Browser
  *
  * @overload
- * @template Target The target element type.
- * @param {UseTextDirectionTarget} target The target element to observe.
- * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element.
- * @returns {UseTextDirectionReturn} An object containing the current text direction of the element.
+ * @param {HookTarget} target The target element to observe
+ * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element
+ * @returns {UseTextDirectionReturn} An object containing the current text direction of the element
  *
  * @example
  * const { value, set, remove } = useTextDirection(ref);
  *
  * @overload
- * @template Target The target element type.
- * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element.
- * @returns { { ref: StateRef<Target> } & UseTextDirectionReturn } An object containing the current text direction of the element.
+ * @template Target The target element type
+ * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element
+ * @returns { { ref: StateRef<Target> } & UseTextDirectionReturn } An object containing the current text direction of the element
  *
  * @example
  * const { ref, value, set, remove } = useTextDirection();
  */
 export const useTextDirection = ((...params: any[]) => {
-  const target = (
-    typeof params[0] !== 'string' || !['auto', 'ltr', 'rtl'].includes(params[0])
-      ? params[0]
-      : undefined
-  ) as UseTextDirectionTarget | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const initialValue = ((target ? params[1] : params[0]) as UseTextDirectionValue) ?? 'ltr';
 
   const internalRef = useRefState<Element>();
@@ -92,7 +81,7 @@ export const useTextDirection = ((...params: any[]) => {
   };
 
   useIsomorphicLayoutEffect(() => {
-    if (!target && !internalRef) return;
+    if (!target && !internalRef.state) return;
 
     const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
@@ -108,7 +97,7 @@ export const useTextDirection = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [internalRef.current, target]);
+  }, [internalRef.state, target]);
 
   if (target) return { value, set, remove };
   return {

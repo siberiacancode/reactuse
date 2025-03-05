@@ -1,16 +1,13 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useState } from 'react';
 import screenfull from 'screenfull';
+
+import type { HookTarget } from '@/utils/helpers';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
-
-/** The use fullscreen target element type */
-export type UseFullScreenTarget = string | Element | RefObject<Element | null | undefined>;
 
 /** The use fullscreen options type */
 export interface UseFullScreenOptions {
@@ -35,12 +32,9 @@ export interface UseFullScreenReturn {
 }
 
 export interface UseFullScreen {
-  <Target extends UseFullScreenTarget>(
-    target: Target,
-    options?: UseFullScreenOptions
-  ): UseFullScreenReturn;
+  (target: HookTarget, options?: UseFullScreenOptions): UseFullScreenReturn;
 
-  <Target extends UseFullScreenTarget>(
+  <Target extends Element>(
     options?: UseFullScreenOptions,
     target?: never
   ): UseFullScreenReturn & { ref: StateRef<Target> };
@@ -52,8 +46,7 @@ export interface UseFullScreen {
  * @category Browser
  *
  * @overload
- * @template Target The target element for fullscreen
- * @param {Target} target The target element for fullscreen
+ * @param {HookTarget} target The target element for fullscreen
  * @param {boolean} [options.initialValue=false] initial value of fullscreen
  * @param {() => void} [options.onEnter] on enter fullscreen
  * @param {() => void} [options.onExit] on exit fullscreen
@@ -73,7 +66,7 @@ export interface UseFullScreen {
  * const { ref, enter, exit, toggle, value } = useFullscreen();
  */
 export const useFullscreen = ((...params: any[]) => {
-  const target = (isTarget(params[0]) ? params[0] : undefined) as UseFullScreenTarget | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = (target ? params[1] : params[0]) as UseFullScreenOptions | undefined;
 
   const [value, setValue] = useState(options?.initialValue ?? false);

@@ -1,17 +1,12 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useState } from 'react';
 
-import { getElement } from '@/utils/helpers';
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
-
-/** The css variable target element type */
-export type UseCssVarTarget =
-  | (() => Element)
-  | Element
-  | RefObject<Element | null | undefined>
-  | undefined;
 
 /** The css variable return type */
 export interface UseCssVarReturn {
@@ -22,13 +17,9 @@ export interface UseCssVarReturn {
 }
 
 export interface UseCssVar {
-  (key: string, initialValue?: string): UseCssVarReturn;
+  (key: string, initialValue?: string): UseCssVarReturn & { ref: StateRef<Element> };
 
-  <Target extends UseCssVarTarget>(
-    target: Target,
-    key: string,
-    initialValue?: string
-  ): UseCssVarReturn;
+  (target: HookTarget, key: string, initialValue?: string): UseCssVarReturn;
 }
 
 /**
@@ -39,25 +30,22 @@ export interface UseCssVar {
  * @overload
  * @param {string} key The CSS variable key
  * @param {string} initialValue The initial value of the CSS variable
- * @returns {UseCssVarReturn} The object containing the value of the CSS variable
+ * @returns {UseCssVarReturn & { ref: StateRef<Element> }} The object containing the value of the CSS variable and ref
  *
  * @example
- * const { ref, value, set } = useCssVar('color', 'red');
+ * const { ref, value, set } = useCssVar('--color', 'red');
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element
+ * @param {HookTarget} target The target element
  * @param {string} key The CSS variable key
  * @param {string} initialValue The initial value of the CSS variable
  * @returns {UseCssVarReturn} The object containing the value of the CSS variable
  *
  * @example
- * const { value, set } = useCssVar(ref, 'color', 'red');
+ * const { value, set } = useCssVar(ref, '--color', 'red');
  */
 export const useCssVar = ((...params: any[]) => {
-  const target = (typeof params[0] === 'object' ? params[0] : undefined) as
-    | UseCssVarTarget
-    | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const key = (target ? params[1] : params[0]) as string;
   const initialValue = (target ? params[2] : params[1]) as string | undefined;
 
@@ -108,8 +96,6 @@ export const useCssVar = ((...params: any[]) => {
     };
   }, [target, internalRef.state]);
 
-  return {
-    value,
-    set
-  };
+  if (target) return { value, set };
+  return { ref: internalRef, value, set };
 }) as UseCssVar;

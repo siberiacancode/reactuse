@@ -1,12 +1,12 @@
-import type { RefObject } from 'react';
+import { useEffect, useState } from 'react';
 
-import { useState } from 'react';
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
-import { useResizeObserver } from '../useResizeObserver/useResizeObserver';
-
-/** The use measure target element type */
-export type UseMeasureTarget = (() => Element) | Element | RefObject<Element | null | undefined>;
 
 /** The use measure return type */
 export type UseMeasureReturn = Pick<
@@ -14,10 +14,14 @@ export type UseMeasureReturn = Pick<
   'bottom' | 'height' | 'left' | 'right' | 'top' | 'width' | 'x' | 'y'
 >;
 
-export interface UseMeasureScreen {
-  <Target extends UseMeasureTarget>(target: Target): UseMeasureReturn;
+export interface UseMeasure {
+  (target: HookTarget): UseMeasureReturn;
 
-  <Target extends UseMeasureTarget>(target?: never): UseMeasureReturn & { ref: RefObject<Target> };
+  <Target extends Element>(
+    target?: never
+  ): UseMeasureReturn & {
+    ref: StateRef<Target>;
+  };
 }
 
 /**
@@ -26,8 +30,7 @@ export interface UseMeasureScreen {
  * @category Browser
  *
  * @overload
- * @template Target The element to measure
- * @param {Target} [target] The element to measure
+ * @param {HookTarget} target The element to measure
  * @returns {UseMeasureReturn} The element's size and position
  *
  * @example
@@ -35,12 +38,14 @@ export interface UseMeasureScreen {
  *
  * @overload
  * @template Target The element to measure
- * @returns {UseMeasureReturn & { ref: RefObject<Target> }} The element's size and position
+ * @returns {UseMeasureReturn & { ref: StateRef<Target> }} The element's size and position
  *
  * @example
  * const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();
  */
-export const useMeasure = (<Target extends UseMeasureTarget>(target?: Target) => {
+export const useMeasure = ((...params: any[]) => {
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
+
   const internalRef = useRefState<Element>();
   const [rect, setRect] = useState({
     x: 0,
@@ -53,15 +58,27 @@ export const useMeasure = (<Target extends UseMeasureTarget>(target?: Target) =>
     right: 0
   });
 
-  useResizeObserver((target ?? internalRef.current) as Element, {
-    onChange: ([entry]) => {
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+
+    const element = (target ? getElement(target) : internalRef.current) as Element;
+    if (!element) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
       if (!entry) return;
 
       const { x, y, width, height, top, left, bottom, right } = entry.contentRect;
       setRect({ x, y, width, height, top, left, bottom, right });
-    }
-  });
+    });
+
+    resizeObserver.observe(element);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [target, internalRef.state]);
 
   if (target) return rect;
   return { ref: internalRef, ...rect };
-}) as UseMeasureScreen;
+}) as UseMeasure;

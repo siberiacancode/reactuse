@@ -1,8 +1,8 @@
-import type { RefObject } from 'react';
-
 import { useState } from 'react';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -17,20 +17,15 @@ export interface UseElementSizeValue {
   width: number;
 }
 
-/** The use element size target element type */
-export type UseElementSizeTarget = string | Element | RefObject<Element | null | undefined>;
-
 /** The use element size return type */
 export interface UseElementSizeReturn {
   value: UseElementSizeValue;
 }
 
 export interface UseElementSize {
-  <Target extends UseElementSizeTarget>(target: Target): UseElementSizeReturn;
+  (target: HookTarget): UseElementSizeReturn;
 
-  <Target extends UseElementSizeTarget>(
-    target?: never
-  ): { ref: StateRef<Target> } & UseElementSizeReturn;
+  <Target extends Element>(target?: never): { ref: StateRef<Target> } & UseElementSizeReturn;
 }
 
 /**
@@ -39,8 +34,7 @@ export interface UseElementSize {
  * @category Elements
  *
  * @overload
- * @template Target The target element type
- * @param {UseElementSizeTarget} target The target element to observe
+ * @param {HookTarget} target The target element to observe
  * @returns {UseElementSizeReturn} An object containing the current width and height of the element
  *
  * @example
@@ -53,7 +47,7 @@ export interface UseElementSize {
  * const { ref, value } = useElementSize();
  */
 export const useElementSize = ((...params: any[]) => {
-  const target = (isTarget(params[0]) ? params[0] : undefined) as UseElementSizeTarget | undefined;
+  const target = params[0] as HookTarget | undefined;
   const [size, setSize] = useState({ width: 0, height: 0 });
   const internalRef = useRefState<Element>();
 

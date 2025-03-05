@@ -12,6 +12,7 @@ const Demo = () => {
       <p>
         <button
           className='mt-2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
+          type='button'
           onClick={() => scrollIntoView.trigger({ behavior: 'smooth', block: 'center' })}
         >
           Click to scroll into view

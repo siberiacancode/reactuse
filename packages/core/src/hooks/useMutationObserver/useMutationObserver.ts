@@ -1,6 +1,6 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useRef, useState } from 'react';
+
+import type { HookTarget } from '@/utils/helpers';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
@@ -9,11 +9,7 @@ import type { StateRef } from '../useRefState/useRefState';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The mutation observer target element type */
-export type UseMutationObserverTarget =
-  | string
-  | Document
-  | Element
-  | RefObject<Element | null | undefined>;
+export type UseMutationObserverTarget = HookTarget;
 
 /** The mutation observer return type */
 export interface UseMutationObserverReturn {
@@ -30,13 +26,13 @@ export interface UseMutationObserverOptions extends MutationObserverInit {
 }
 
 export interface UseMutationObserver {
-  <Target extends UseMutationObserverTarget>(
-    target: Target,
+  (
+    target: HookTarget,
     callback: MutationCallback,
     options?: UseMutationObserverOptions
   ): UseMutationObserverReturn;
 
-  <Target extends UseMutationObserverTarget>(
+  <Target extends Element>(
     callback: MutationCallback,
     options?: UseMutationObserverOptions,
     target?: never
@@ -65,8 +61,7 @@ export interface UseMutationObserver {
  * const { ref, observer, stop } = useMutationObserver(() => console.log('callback'))
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to observe
+ * @param {HookTarget} target The target element to observe
  * @param {MutationCallback} callback The callback to execute when mutation is detected
  * @param {boolean} [options.enabled=true] The enabled state of the mutation observer
  * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed
@@ -82,9 +77,7 @@ export interface UseMutationObserver {
  * const { observer, stop } = useMutationObserver(ref, () => console.log('callback'))
  */
 export const useMutationObserver = ((...params: any[]) => {
-  const target = (isTarget(params[0]) ? params[0] : undefined) as
-    | UseMutationObserverTarget
-    | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const callback = (target ? params[1] : params[0]) as MutationCallback;
   const options = (target ? params[2] : params[1]) as UseMutationObserverOptions | undefined;
 

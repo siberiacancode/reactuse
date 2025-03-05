@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getElement } from '@/utils/helpers';
+import { getElement, isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useScrollIntoView
@@ -7,8 +7,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @category Sensors
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to scroll into view
+ * @param {HookTarget} target The target element to scroll into view
  * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior
  * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment
  * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment
@@ -28,9 +27,7 @@ import { useRefState } from '../useRefState/useRefState';
  * const { ref, trigger } = useScrollIntoView<HTMLDivElement>();
  */
 export const useScrollIntoView = ((...params) => {
-    const target = (typeof params[0] !== 'object' || 'current' in params[0] || params[0] instanceof Element
-        ? params[0]
-        : undefined);
+    const target = (isTarget(params[0]) ? params[0] : undefined);
     const options = (target ? params[1] : params[0]);
     const internalRef = useRefState();
     const { behavior = 'smooth', block = 'start', inline = 'nearest', enabled = true } = options ?? {};

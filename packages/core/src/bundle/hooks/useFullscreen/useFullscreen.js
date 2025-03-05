@@ -8,8 +8,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @category Browser
  *
  * @overload
- * @template Target The target element for fullscreen
- * @param {Target} target The target element for fullscreen
+ * @param {HookTarget} target The target element for fullscreen
  * @param {boolean} [options.initialValue=false] initial value of fullscreen
  * @param {() => void} [options.onEnter] on enter fullscreen
  * @param {() => void} [options.onExit] on exit fullscreen

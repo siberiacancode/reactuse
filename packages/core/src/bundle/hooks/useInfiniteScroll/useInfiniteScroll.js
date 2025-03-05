@@ -18,8 +18,7 @@ import { useRefState } from '../useRefState/useRefState';
  * const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));
  *
  * @overload
- * @template Target The target element
- * @param {Target} target The target element to detect infinite scroll for
+ * @param {HookTarget} target The target element to detect infinite scroll for
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
  * @param {number} [options.distance=10] The distance in pixels to trigger the callback
  * @param {string} [options.direction='bottom'] The direction to trigger the callback

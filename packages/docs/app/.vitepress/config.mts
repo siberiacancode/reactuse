@@ -98,7 +98,8 @@ export default async () => {
                 { text: 'Introduction', link: '/introduction' },
                 { text: 'Installation', link: '/installation' },
                 { text: 'reactuse.json', link: '/reactuse-json' },
-                { text: 'CLI', link: '/cli' }
+                { text: 'CLI', link: '/cli' },
+                { text: 'target', link: '/target' }
               ]
             },
             {

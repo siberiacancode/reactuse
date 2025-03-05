@@ -1,6 +1,6 @@
-import type { RefObject } from 'react';
-
 import { useEffect, useRef, useState } from 'react';
+
+import type { HookTarget } from '@/utils/helpers';
 
 import { getElement, isTarget } from '@/utils/helpers';
 
@@ -27,26 +27,17 @@ export interface UseDisplayMediaOptions {
   /** Whether to enable audio sharing */
   audio?: boolean | MediaTrackConstraints;
   /** Whether to start immediately */
-  enabled?: boolean;
+  immediately?: boolean;
   /** Whether to enable video sharing */
   video?: boolean | MediaTrackConstraints;
 }
 
-/** The use display media target type */
-export type UseDisplayMediaTarget =
-  | string
-  | HTMLVideoElement
-  | RefObject<HTMLVideoElement | null | undefined>;
+export interface UseDisplayMedia {
+  (target: HookTarget, options?: UseDisplayMediaOptions): UseDisplayMediaReturn;
 
-export interface UseDisplayMediaOverload {
-  <Target extends UseDisplayMediaTarget>(
-    target: Target,
-    options?: UseDisplayMediaOptions
-  ): UseDisplayMediaReturn;
-
-  <Target extends UseDisplayMediaTarget = HTMLVideoElement>(
+  <Target extends HTMLVideoElement>(
     options?: UseDisplayMediaOptions,
-    target?: Target
+    target?: never
   ): { ref: StateRef<Target> } & UseDisplayMediaReturn;
 }
 
@@ -58,10 +49,9 @@ export interface UseDisplayMediaOverload {
  * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia
  *
  * @overload
- * @template Target The target video element
- * @param {Target} target The target video element to display the media stream
+ * @param {HookTarget} target The target video element to display the media stream
  * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing
- * @param {boolean} [options.enabled=false] Whether to start immediately
+ * @param {boolean} [options.immediately=false] Whether to start immediately
  * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing
  * @returns {UseDisplayMediaReturn} Object containing stream, sharing status and control methods
  *
@@ -71,7 +61,7 @@ export interface UseDisplayMediaOverload {
  * @overload
  * @template Target The target video element
  * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing
- * @param {boolean} [options.enabled=false] Whether to start immediately
+ * @param {boolean} [options.immediately=false] Whether to start immediately
  * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing
  * @returns {UseDisplayMediaReturn & { ref: StateRef<HTMLVideoElement> }} Object containing stream, sharing status, control methods and ref
  *
@@ -84,9 +74,9 @@ export const useDisplayMedia = ((...params: any[]) => {
     'mediaDevices' in navigator &&
     !!navigator.mediaDevices &&
     'getDisplayMedia' in navigator.mediaDevices;
-  const target = (isTarget(params[0]) ? params[0] : undefined) as UseDisplayMediaTarget | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = (params[1] ? params[1] : params[0]) as UseDisplayMediaOptions | undefined;
-  const enabled = options?.enabled ?? false;
+  const immediately = options?.immediately ?? false;
 
   const [sharing, setSharing] = useState(false);
 
@@ -125,7 +115,7 @@ export const useDisplayMedia = ((...params: any[]) => {
   };
 
   useEffect(() => {
-    if (!supported || !enabled) return;
+    if (!supported || !immediately) return;
     if (!target && !internalRef.state) return;
 
     const element = (target ? getElement(target) : internalRef.current) as HTMLVideoElement;
@@ -155,4 +145,4 @@ export const useDisplayMedia = ((...params: any[]) => {
     stop,
     ref: internalRef
   };
-}) as UseDisplayMediaOverload;
+}) as UseDisplayMedia;

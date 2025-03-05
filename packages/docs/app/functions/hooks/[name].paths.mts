@@ -1,7 +1,7 @@
+import md5 from 'md5';
 import fs from 'node:fs';
 import { codeToHtml } from 'shiki';
 import simpleGit from 'simple-git';
-import md5 from 'md5';
 
 import { getHookFile, getHooks, matchJsdoc, parseHookJsdoc } from '../../../src/utils';
 
