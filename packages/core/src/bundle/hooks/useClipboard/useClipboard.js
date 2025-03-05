@@ -1,16 +1,5 @@
 import { useEffect, useState } from 'react';
-import { usePermission } from '../usePermission/usePermission';
-export const isPermissionAllowed = (status) => status === 'granted' || status === 'prompt';
-export const legacyCopyToClipboard = (value) => {
-    const tempTextArea = document.createElement('textarea');
-    tempTextArea.value = value;
-    tempTextArea.readOnly = true;
-    tempTextArea.style.fontSize = '16px';
-    document.body.appendChild(tempTextArea);
-    tempTextArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempTextArea);
-};
+import { copy } from '@/utils/helpers';
 /**
  * @name useClipboard
  * @description - Hook that manages a copy to clipboard
@@ -25,22 +14,15 @@ export const legacyCopyToClipboard = (value) => {
  * const { supported, value, copy } = useClipboard();
  */
 export const useClipboard = (params) => {
-    const supported = typeof navigator !== 'undefined' && 'clipboard' in navigator;
     const [value, setValue] = useState(null);
-    const clipboardReadPermission = usePermission('clipboard-read');
-    const clipboardWritePermissionWrite = usePermission('clipboard-write');
     const enabled = params?.enabled ?? false;
     const set = async () => {
         try {
-            if (supported && isPermissionAllowed(clipboardReadPermission.state)) {
-                const value = await navigator.clipboard.readText();
-                setValue(value);
-            }
-            else
-                setValue(document?.getSelection?.()?.toString() ?? '');
+            const value = await navigator.clipboard.readText();
+            setValue(value);
         }
         catch {
-            setValue(document?.getSelection?.()?.toString() ?? '');
+            setValue(document.getSelection?.()?.toString() ?? '');
         }
     };
     useEffect(() => {
@@ -53,32 +35,9 @@ export const useClipboard = (params) => {
             document.removeEventListener('cut', set);
         };
     }, [enabled]);
-    const copy = async (value) => {
-        try {
-            if (supported || isPermissionAllowed(clipboardWritePermissionWrite.state)) {
-                await navigator.clipboard.writeText(value);
-            }
-            else {
-                legacyCopyToClipboard(value);
-            }
-        }
-        catch {
-            legacyCopyToClipboard(value);
-        }
+    const copyToClipboard = async (value) => {
+        copy(value);
         setValue(value);
     };
-    return { supported, value, copy };
-};
-export const copy = async (value) => {
-    try {
-        try {
-            await navigator.clipboard.writeText(value);
-        }
-        catch {
-            return legacyCopyToClipboard(value);
-        }
-    }
-    catch {
-        return legacyCopyToClipboard(value);
-    }
+    return { value, copy: copyToClipboard };
 };

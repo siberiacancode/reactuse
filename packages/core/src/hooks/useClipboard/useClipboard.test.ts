@@ -23,7 +23,6 @@ it('Should use copy to clipboard', () => {
   const { result } = renderHook(useClipboard);
 
   expect(result.current.value).toBeNull();
-  expect(result.current.supported).toBeTruthy();
   expect(result.current.copy).toBeTypeOf('function');
 });
 

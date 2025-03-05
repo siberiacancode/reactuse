@@ -5,7 +5,11 @@ const Demo = () => {
     console.log(`log: useLayoutEffect`);
   }, []);
 
-  return <div>I am <code>useLayoutEffect</code></div>;
+  return (
+    <div>
+      I am <code>useLayoutEffect</code>
+    </div>
+  );
 };
 
 export default Demo;

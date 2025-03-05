@@ -1,25 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { usePermission } from '../usePermission/usePermission';
-
-export const isPermissionAllowed = (status: PermissionState) =>
-  status === 'granted' || status === 'prompt';
-
-export const legacyCopyToClipboard = (value: string) => {
-  const tempTextArea = document.createElement('textarea');
-  tempTextArea.value = value;
-  tempTextArea.readOnly = true;
-  tempTextArea.style.fontSize = '16px';
-  document.body.appendChild(tempTextArea);
-  tempTextArea.select();
-  document.execCommand('copy');
-  document.body.removeChild(tempTextArea);
-};
+import { copy } from '@/utils/helpers';
 
 /** The use copy to clipboard return type */
 export interface UseCopyToClipboardReturn {
-  /** Whether the copy to clipboard is supported */
-  supported: boolean;
   /** The copied value */
   value: string | null;
   /** Function to copy to clipboard  */
@@ -46,22 +30,15 @@ export interface UseCopyToClipboardParams {
  * const { supported, value, copy } = useClipboard();
  */
 export const useClipboard = (params?: UseCopyToClipboardParams): UseCopyToClipboardReturn => {
-  const supported = typeof navigator !== 'undefined' && 'clipboard' in navigator;
-
   const [value, setValue] = useState<string | null>(null);
-  const clipboardReadPermission = usePermission('clipboard-read');
-  const clipboardWritePermissionWrite = usePermission('clipboard-write');
-
   const enabled = params?.enabled ?? false;
 
   const set = async () => {
     try {
-      if (supported && isPermissionAllowed(clipboardReadPermission.state)) {
-        const value = await navigator.clipboard.readText();
-        setValue(value);
-      } else setValue(document?.getSelection?.()?.toString() ?? '');
+      const value = await navigator.clipboard.readText();
+      setValue(value);
     } catch {
-      setValue(document?.getSelection?.()?.toString() ?? '');
+      setValue(document.getSelection?.()?.toString() ?? '');
     }
   };
 
@@ -76,31 +53,10 @@ export const useClipboard = (params?: UseCopyToClipboardParams): UseCopyToClipbo
     };
   }, [enabled]);
 
-  const copy = async (value: string) => {
-    try {
-      if (supported || isPermissionAllowed(clipboardWritePermissionWrite.state)) {
-        await navigator.clipboard.writeText(value);
-      } else {
-        legacyCopyToClipboard(value);
-      }
-    } catch {
-      legacyCopyToClipboard(value);
-    }
-
+  const copyToClipboard = async (value: string) => {
+    copy(value);
     setValue(value);
   };
 
-  return { supported, value, copy };
-};
-
-export const copy = async (value: string) => {
-  try {
-    try {
-      await navigator.clipboard.writeText(value);
-    } catch {
-      return legacyCopyToClipboard(value);
-    }
-  } catch {
-    return legacyCopyToClipboard(value);
-  }
+  return { value, copy: copyToClipboard };
 };
