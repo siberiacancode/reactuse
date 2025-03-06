@@ -6,7 +6,7 @@ Many `React` libraries that work with DOM elements typically support only one wa
 
 ```typescript
 const ref = useRef<HTMLDivElement>(null);
-useClickOutside(ref, () => console.log("Clicked outside"));
+useClickOutside(ref, () => console.log('Clicked outside'));
 ```
 
 This limitation forces developers to always create refs by themselves, even in cases where they might have not want to create additional refs or want to use different selection methods, like `querySelector`.
@@ -19,23 +19,21 @@ Our library implements a flexible approach using `typescript` function overloads
 
 ```typescript
 const ref = useRef<HTMLDivElement>(null);
-useClickOutside(ref, () => console.log("Clicked outside"));
+useClickOutside(ref, () => console.log('Clicked outside'));
 ```
 
 or you can use [target](#the-target-function) function
 
 ```typescript
-import { target } from "@siberiacancode/reactuse";
+import { target } from '@siberiacancode/reactuse';
 
-useClickOutside(target("#container"), () => console.log("Clicked outside"));
+useClickOutside(target('#container'), () => console.log('Clicked outside'));
 ```
 
 2. By receiving a ref callback that can be attached to an element
 
 ```typescript
-const ref = useClickOutside<HTMLDivElement>(() =>
-  console.log("Clicked outside")
-);
+const ref = useClickOutside<HTMLDivElement>(() => console.log('Clicked outside'));
 ```
 
 This dual approach provides better developer experience and more flexibility in different use cases.
@@ -52,15 +50,11 @@ The `target` is a utility function that helps you work with DOM elements in a fl
 The flexibility of `target` means you can use our hooks like you want.
 
 ```typescript
-import { target } from "@siberiacancode/reactuse";
+import { target } from '@siberiacancode/reactuse';
 
-useClickOutside(target("#container"), () => console.log("Clicked outside"));
+useClickOutside(target('#container'), () => console.log('Clicked outside'));
 
 // or
 
-useClickOutside(target(document.getElementById("container")), () =>
-  console.log("Clicked outside")
-);
-
-// ...
+useClickOutside(target(document.getElementById('container')), () => console.log('Clicked outside'));
 ```
