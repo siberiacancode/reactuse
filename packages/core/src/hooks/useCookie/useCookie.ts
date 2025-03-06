@@ -93,17 +93,17 @@ export const COOKIE_EVENT = 'reactuse-cookie';
 
 export const dispatchCookieEvent = () => window.dispatchEvent(new Event(COOKIE_EVENT));
 
-const setCookieItem = (key: string, value: string, options?: SetCookieParams) => {
+export const setCookieItem = (key: string, value: string, options?: SetCookieParams) => {
   setCookie(key, value, options);
   dispatchCookieEvent();
 };
 
-const removeCookieItem = (key: string, options?: RemoveCookieParams) => {
+export const removeCookieItem = (key: string, options?: RemoveCookieParams) => {
   removeCookie(key, options);
   dispatchCookieEvent();
 };
 
-const getCookieItem = (key: string): string | undefined => {
+export const getCookie = (key: string): string | undefined => {
   const cookies = getCookies();
   return cookies[key];
 };
@@ -158,7 +158,7 @@ export const useCookie = <Value>(
   };
 
   const [value, setValue] = useState<Value | undefined>(() => {
-    const cookieValue = getCookieItem(key);
+    const cookieValue = getCookie(key);
     if (cookieValue === undefined && initialValue !== undefined) {
       const value = initialValue instanceof Function ? initialValue() : initialValue;
       setCookieItem(key, serializer(value), options);
@@ -169,7 +169,7 @@ export const useCookie = <Value>(
 
   useEffect(() => {
     const onChange = () => {
-      const cookieValue = getCookieItem(key);
+      const cookieValue = getCookie(key);
       setValue(cookieValue ? deserializer(cookieValue) : undefined);
     };
     window.addEventListener(COOKIE_EVENT, onChange);

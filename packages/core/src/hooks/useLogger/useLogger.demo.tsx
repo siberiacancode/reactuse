@@ -8,9 +8,14 @@ const Demo = () => {
   useLogger('Demo', [count, { foo: 'bar' }]);
 
   return (
-    <button type='button' onClick={() => setCount(count + 1)}>
-      Update state {count}
-    </button>
+    <div>
+      <p>
+        Open the <code>console</code> to see the logger output
+      </p>
+      <button type='button' onClick={() => setCount(count + 1)}>
+        Update state
+      </button>
+    </div>
   );
 };
 
