@@ -1,14 +1,14 @@
 import { useCounter } from '../useCounter/useCounter';
-import { useLess } from './useLess';
+import { useFul } from './useFul';
 
 const Demo = () => {
   const counter = useCounter();
-  const value = useLess(counter.value);
+  const value = useFul(counter.value);
 
   return (
     <div>
       <p>
-        Useless value is <code>{value}</code>
+        Useful value is <code>{value}</code>
       </p>
 
       <button className='button' type='button' onClick={() => counter.inc()}>

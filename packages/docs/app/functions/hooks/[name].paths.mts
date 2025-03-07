@@ -102,6 +102,9 @@ export default {
               }
             }),
             example,
+            ...(jsdoc.warning && {
+              warning: jsdoc.warning.description
+            }),
             description: jsdoc.description.description,
             category: jsdoc.category!.name,
             lastModified: new Date(lastCommit?.date ?? new Date()).getTime(),

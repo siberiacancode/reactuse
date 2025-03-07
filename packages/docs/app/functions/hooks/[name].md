@@ -22,6 +22,14 @@ This hook uses <a :href="$params.browserapi.description" target="_blank">**{{ $p
 
 </template>
 
+<template v-if="$params.warning">
+
+::: warning
+{{ $params.warning }}
+:::
+
+</template>
+
 {{ $params.description }}
 
 <Code :code="$params.example" lang="typescript" />

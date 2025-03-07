@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
+
 /**
- * @name useLess
- * @description - Hook that can be so useless
+ * @name useFul
+ * @description - Hook that can be so useful
  * @category Humor
  *
  * @warning This hook is a joke. Please do not use it in production code!
@@ -11,11 +12,12 @@ import { useEffect } from 'react';
  * @returns {Value} The value passed to the hook
  *
  * @example
- * const value = useLess(state);
+ * const value = useFul(state);
  */
-export const useLess = (value) => {
-    useEffect(() => {
-        console.warn("Warning: You forgot to delete the 'useLess' hook.");
-    }, []);
-    return value;
+export const useFul = <Value>(value?: Value) => {
+  useEffect(() => {
+    console.warn("Warning: You forgot to delete the 'useFul' hook.");
+  }, []);
+
+  return value;
 };
