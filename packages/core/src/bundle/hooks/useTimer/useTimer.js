@@ -26,9 +26,9 @@ export const getTimeFromSeconds = (timestamp) => {
  *
  * @overload
  * @param {number} timestamp The timestamp value that define for how long the timer will be running
- * @param {boolean} options.immediately The flag to decide if timer should start automatically
- * @param {() => void} options.onExpire The function to be executed when the timer is expired
- * @param {(timestamp: number) => void} options.onTick The function to be executed on each tick of the timer
+ * @param {boolean} [options.immediately=true] The flag to decide if timer should start automatically
+ * @param {() => void} [options.onExpire] The function to be executed when the timer is expired
+ * @param {(timestamp: number) => void} [options.onTick] The function to be executed on each tick of the timer
  *
  * @example
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000);
@@ -77,6 +77,11 @@ export const useTimer = ((...params) => {
         setActive(true);
         setSeconds(Math.ceil(timestamp / 1000));
     };
+    const clear = () => {
+        setActive(false);
+        setSeconds(0);
+    };
+    const update = (timestamp) => setSeconds(Math.ceil(timestamp / 1000));
     return {
         ...getTimeFromSeconds(seconds),
         pause,
@@ -84,6 +89,8 @@ export const useTimer = ((...params) => {
         resume,
         toggle,
         start,
-        restart
+        restart,
+        clear,
+        update
     };
 });

@@ -37,6 +37,8 @@ export interface UseTimerReturn {
   minutes: number;
   /** The second count of the timer */
   seconds: number;
+  /** The function to clear the timer */
+  clear: () => void;
   /** The function to pause the timer */
   pause: () => void;
   /** The function to restart the timer */
@@ -47,6 +49,8 @@ export interface UseTimerReturn {
   start: () => void;
   /** The function to toggle the timer */
   toggle: () => void;
+  /** The function to update the timer */
+  update: (seconds: number) => void;
 }
 
 export interface UseTimer {
@@ -69,9 +73,9 @@ export interface UseTimer {
  *
  * @overload
  * @param {number} timestamp The timestamp value that define for how long the timer will be running
- * @param {boolean} options.immediately The flag to decide if timer should start automatically
- * @param {() => void} options.onExpire The function to be executed when the timer is expired
- * @param {(timestamp: number) => void} options.onTick The function to be executed on each tick of the timer
+ * @param {boolean} [options.immediately=true] The flag to decide if timer should start automatically
+ * @param {() => void} [options.onExpire] The function to be executed when the timer is expired
+ * @param {(timestamp: number) => void} [options.onTick] The function to be executed on each tick of the timer
  *
  * @example
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000);
@@ -130,6 +134,13 @@ export const useTimer = ((...params: any[]) => {
     setSeconds(Math.ceil(timestamp / 1000));
   };
 
+  const clear = () => {
+    setActive(false);
+    setSeconds(0);
+  };
+
+  const update = (timestamp: number) => setSeconds(Math.ceil(timestamp / 1000));
+
   return {
     ...getTimeFromSeconds(seconds),
     pause,
@@ -137,6 +148,8 @@ export const useTimer = ((...params: any[]) => {
     resume,
     toggle,
     start,
-    restart
+    restart,
+    clear,
+    update
   };
 }) as UseTimer;

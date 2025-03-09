@@ -5,7 +5,7 @@ import { useEffect } from 'react';
  * @description - Hook that can be so useful
  * @category Humor
  *
- * @warning This hook is a joke. Please do not use it in production code!
+ * @warning - This hook is a joke. Please do not use it in production code!
  *
  * @template Value The type of the value
  * @param {Value} [value] The value to be returned

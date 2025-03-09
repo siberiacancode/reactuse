@@ -184,6 +184,24 @@ it('Should restart timer by method', () => {
   expect(result.current.seconds).toBe(5);
 });
 
+it('Should clear timer', () => {
+  const { result } = renderHook(() => useTimer(11_000));
+
+  act(result.current.clear);
+
+  expect(result.current.active).toBeFalsy();
+  expect(result.current.seconds).toBe(0);
+});
+
+it('Should update timer', () => {
+  const { result } = renderHook(() => useTimer(11_000));
+
+  act(() => result.current.update(6000));
+
+  expect(result.current.seconds).toBe(6);
+  expect(result.current.active).toBeTruthy();
+});
+
 it('Should restart timer by method with immediately false', () => {
   const { result } = renderHook(() => useTimer(11_000, { immediately: false }));
 
