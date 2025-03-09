@@ -67,7 +67,7 @@ describe('getTimeFromSeconds', () => {
 });
 
 it('Should use timer', () => {
-  const { result } = renderHook(() => useTimer(65_000));
+  const { result } = renderHook(() => useTimer(65));
 
   expect(result.current.seconds).toBe(5);
   expect(result.current.minutes).toBe(1);
@@ -77,13 +77,13 @@ it('Should use timer', () => {
 });
 
 it('Should not be active when disabled', () => {
-  const { result } = renderHook(() => useTimer(1000, { immediately: false }));
+  const { result } = renderHook(() => useTimer(1, { immediately: false }));
 
   expect(result.current.active).toBeFalsy();
 });
 
 it('Should decrease time when running', async () => {
-  const { result } = renderHook(() => useTimer(60_000));
+  const { result } = renderHook(() => useTimer(60));
 
   act(() => vi.advanceTimersToNextTimer());
 
@@ -93,7 +93,7 @@ it('Should decrease time when running', async () => {
 
 it('Should call onExpire when timer ends', () => {
   const onExpire = vi.fn();
-  const { result } = renderHook(() => useTimer(1000, { onExpire }));
+  const { result } = renderHook(() => useTimer(1, { onExpire }));
 
   act(() => vi.advanceTimersToNextTimer());
 
@@ -104,7 +104,7 @@ it('Should call onExpire when timer ends', () => {
 
 it('Should call onTick on each second', () => {
   const onTick = vi.fn();
-  renderHook(() => useTimer(2000, { onTick }));
+  renderHook(() => useTimer(2, { onTick }));
 
   act(() => vi.advanceTimersToNextTimer());
 
@@ -112,7 +112,7 @@ it('Should call onTick on each second', () => {
 });
 
 it('Should pause timer', () => {
-  const { result } = renderHook(() => useTimer(11_000));
+  const { result } = renderHook(() => useTimer(11));
 
   act(() => vi.advanceTimersToNextTimer());
 
@@ -128,7 +128,7 @@ it('Should pause timer', () => {
 });
 
 it('Should toggle timer state', () => {
-  const { result } = renderHook(() => useTimer(10_000));
+  const { result } = renderHook(() => useTimer(10));
 
   act(() => result.current.toggle());
 
@@ -140,20 +140,20 @@ it('Should toggle timer state', () => {
 });
 
 it('Should restart timer with new time', () => {
-  const { result } = renderHook(() => useTimer(11_000));
+  const { result } = renderHook(() => useTimer(11));
 
   act(() => vi.advanceTimersToNextTimer());
 
   expect(result.current.seconds).toBe(10);
 
-  act(() => result.current.restart(6000));
+  act(() => result.current.restart(6));
 
   expect(result.current.seconds).toBe(6);
   expect(result.current.active).toBeTruthy();
 });
 
 it('Should start timer', () => {
-  const { result } = renderHook(() => useTimer(11_000));
+  const { result } = renderHook(() => useTimer(11));
 
   act(() => vi.advanceTimersToNextTimer());
   expect(result.current.seconds).toBe(10);
@@ -165,7 +165,7 @@ it('Should start timer', () => {
 });
 
 it('Should resume timer', () => {
-  const { result } = renderHook(() => useTimer(11_000, { immediately: false }));
+  const { result } = renderHook(() => useTimer(11, { immediately: false }));
 
   expect(result.current.active).toBeFalsy();
 
@@ -175,9 +175,9 @@ it('Should resume timer', () => {
 });
 
 it('Should restart timer by method', () => {
-  const { result } = renderHook(() => useTimer(11_000));
+  const { result } = renderHook(() => useTimer(11));
 
-  act(() => result.current.restart(6000));
+  act(() => result.current.restart(6));
   act(() => vi.advanceTimersToNextTimer());
 
   expect(result.current.active).toBeTruthy();
@@ -185,7 +185,7 @@ it('Should restart timer by method', () => {
 });
 
 it('Should clear timer', () => {
-  const { result } = renderHook(() => useTimer(11_000));
+  const { result } = renderHook(() => useTimer(11));
 
   act(result.current.clear);
 
@@ -193,19 +193,39 @@ it('Should clear timer', () => {
   expect(result.current.seconds).toBe(0);
 });
 
-it('Should update timer', () => {
-  const { result } = renderHook(() => useTimer(11_000));
+it('Should increase timer', () => {
+  const { result } = renderHook(() => useTimer(10));
 
-  act(() => result.current.update(6000));
+  act(() => result.current.increase(5));
 
-  expect(result.current.seconds).toBe(6);
-  expect(result.current.active).toBeTruthy();
+  expect(result.current.seconds).toBe(15);
+});
+
+it('Should decrease timer', () => {
+  const { result } = renderHook(() => useTimer(10));
+
+  act(() => result.current.decrease(5));
+
+  expect(result.current.seconds).toBe(5);
+
+  act(() => result.current.decrease(10));
+
+  expect(result.current.seconds).toBe(0);
+  expect(result.current.active).toBeFalsy();
+});
+
+it('Should set timer', () => {
+  const { result } = renderHook(() => useTimer(10));
+
+  act(() => result.current.update(5));
+
+  expect(result.current.seconds).toBe(5);
 });
 
 it('Should restart timer by method with immediately false', () => {
-  const { result } = renderHook(() => useTimer(11_000, { immediately: false }));
+  const { result } = renderHook(() => useTimer(11, { immediately: false }));
 
-  act(() => result.current.restart(6000, false));
+  act(() => result.current.restart(6, false));
   act(() => vi.advanceTimersToNextTimer());
 
   expect(result.current.active).toBeFalsy();
@@ -214,7 +234,7 @@ it('Should restart timer by method with immediately false', () => {
 
 it('Should accept callback as second parameter', () => {
   const callback = vi.fn();
-  renderHook(() => useTimer(1000, callback));
+  renderHook(() => useTimer(1, callback));
 
   act(() => vi.advanceTimersToNextTimer());
 

@@ -39,6 +39,10 @@ export interface UseTimerReturn {
   seconds: number;
   /** The function to clear the timer */
   clear: () => void;
+  /** The function to decrease the timer */
+  decrease: (seconds: number) => void;
+  /** The function to increase the timer */
+  increase: (seconds: number) => void;
   /** The function to pause the timer */
   pause: () => void;
   /** The function to restart the timer */
@@ -54,9 +58,9 @@ export interface UseTimerReturn {
 }
 
 export interface UseTimer {
-  (timestamp: number, callback: () => void): UseTimerReturn;
+  (seconds: number, callback: () => void): UseTimerReturn;
 
-  (timestamp: number, options?: UseTimerOptions): UseTimerReturn;
+  (seconds: number, options?: UseTimerOptions): UseTimerReturn;
 }
 
 /**
@@ -65,30 +69,32 @@ export interface UseTimer {
  * @category Time
  *
  * @overload
- * @param {number} timestamp The timestamp value that define for how long the timer will be running
+ * @param {number} seconds The seconds value that define for how long the timer will be running
  * @param {() => void} callback The function to be executed once countdown timer is expired
+ * @returns {UseTimerReturn} An object containing the timer properties and functions
  *
  * @example
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000, () => console.log('ready'));
  *
  * @overload
- * @param {number} timestamp The timestamp value that define for how long the timer will be running
+ * @param {number} seconds The seconds value that define for how long the timer will be running
  * @param {boolean} [options.immediately=true] The flag to decide if timer should start automatically
  * @param {() => void} [options.onExpire] The function to be executed when the timer is expired
  * @param {(timestamp: number) => void} [options.onTick] The function to be executed on each tick of the timer
+ * @returns {UseTimerReturn} An object containing the timer properties and functions
  *
  * @example
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000);
  */
 export const useTimer = ((...params: any[]) => {
-  const timestamp = params[0];
+  const initialSeconds = params[0] as number;
   const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] }) as
     | UseTimerOptions
     | undefined;
 
   const immediately = options?.immediately ?? true;
   const [active, setActive] = useState<boolean>(immediately ?? true);
-  const [seconds, setSeconds] = useState(Math.ceil(timestamp / 1000));
+  const [seconds, setSeconds] = useState(initialSeconds);
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
   const optionsRef = useRef<UseTimerOptions>();
@@ -124,14 +130,14 @@ export const useTimer = ((...params: any[]) => {
 
   const toggle = () => setActive(!active);
 
-  const restart = (timestamp: number, immediately = true) => {
-    setSeconds(Math.ceil(timestamp / 1000));
+  const restart = (seconds: number, immediately = true) => {
+    setSeconds(seconds);
     if (immediately) setActive(true);
   };
 
   const start = () => {
     setActive(true);
-    setSeconds(Math.ceil(timestamp / 1000));
+    setSeconds(initialSeconds);
   };
 
   const clear = () => {
@@ -139,7 +145,19 @@ export const useTimer = ((...params: any[]) => {
     setSeconds(0);
   };
 
-  const update = (timestamp: number) => setSeconds(Math.ceil(timestamp / 1000));
+  const update = (seconds: number) => setSeconds(seconds);
+  const increase = (seconds: number) => setSeconds((prevSeconds) => prevSeconds + seconds);
+  const decrease = (seconds: number) => {
+    setSeconds((prevSeconds) => {
+      const updatedSeconds = prevSeconds - seconds;
+      if (updatedSeconds <= 0) {
+        setActive(false);
+        return 0;
+      } else {
+        return updatedSeconds;
+      }
+    });
+  };
 
   return {
     ...getTimeFromSeconds(seconds),
@@ -150,6 +168,8 @@ export const useTimer = ((...params: any[]) => {
     start,
     restart,
     clear,
-    update
+    update,
+    increase,
+    decrease
   };
 }) as UseTimer;

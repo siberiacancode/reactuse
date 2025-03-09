@@ -1,7 +1,7 @@
 import { useTimer } from './useTimer';
 
 const Demo = () => {
-  const timer = useTimer(3_600_000);
+  const timer = useTimer(3_600);
 
   return (
     <>
@@ -27,6 +27,9 @@ const Demo = () => {
       </button>
       <button type='button' onClick={timer.pause}>
         Pause
+      </button>
+      <button type='button' onClick={timer.clear}>
+        Clear
       </button>
     </>
   );

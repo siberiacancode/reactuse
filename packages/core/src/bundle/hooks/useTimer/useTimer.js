@@ -18,27 +18,29 @@ export const getTimeFromSeconds = (timestamp) => {
  * @category Time
  *
  * @overload
- * @param {number} timestamp The timestamp value that define for how long the timer will be running
+ * @param {number} seconds The seconds value that define for how long the timer will be running
  * @param {() => void} callback The function to be executed once countdown timer is expired
+ * @returns {UseTimerReturn} An object containing the timer properties and functions
  *
  * @example
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000, () => console.log('ready'));
  *
  * @overload
- * @param {number} timestamp The timestamp value that define for how long the timer will be running
+ * @param {number} seconds The seconds value that define for how long the timer will be running
  * @param {boolean} [options.immediately=true] The flag to decide if timer should start automatically
  * @param {() => void} [options.onExpire] The function to be executed when the timer is expired
  * @param {(timestamp: number) => void} [options.onTick] The function to be executed on each tick of the timer
+ * @returns {UseTimerReturn} An object containing the timer properties and functions
  *
  * @example
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000);
  */
 export const useTimer = ((...params) => {
-    const timestamp = params[0];
+    const initialSeconds = params[0];
     const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] });
     const immediately = options?.immediately ?? true;
     const [active, setActive] = useState(immediately ?? true);
-    const [seconds, setSeconds] = useState(Math.ceil(timestamp / 1000));
+    const [seconds, setSeconds] = useState(initialSeconds);
     const intervalIdRef = useRef();
     const optionsRef = useRef();
     optionsRef.current = options ?? {};
@@ -68,20 +70,33 @@ export const useTimer = ((...params) => {
         setActive(true);
     };
     const toggle = () => setActive(!active);
-    const restart = (timestamp, immediately = true) => {
-        setSeconds(Math.ceil(timestamp / 1000));
+    const restart = (seconds, immediately = true) => {
+        setSeconds(seconds);
         if (immediately)
             setActive(true);
     };
     const start = () => {
         setActive(true);
-        setSeconds(Math.ceil(timestamp / 1000));
+        setSeconds(initialSeconds);
     };
     const clear = () => {
         setActive(false);
         setSeconds(0);
     };
-    const update = (timestamp) => setSeconds(Math.ceil(timestamp / 1000));
+    const update = (seconds) => setSeconds(seconds);
+    const increase = (seconds) => setSeconds((prevSeconds) => prevSeconds + seconds);
+    const decrease = (seconds) => {
+        setSeconds((prevSeconds) => {
+            const updatedSeconds = prevSeconds - seconds;
+            if (updatedSeconds <= 0) {
+                setActive(false);
+                return 0;
+            }
+            else {
+                return updatedSeconds;
+            }
+        });
+    };
     return {
         ...getTimeFromSeconds(seconds),
         pause,
@@ -91,6 +106,8 @@ export const useTimer = ((...params) => {
         start,
         restart,
         clear,
-        update
+        update,
+        increase,
+        decrease
     };
 });
