@@ -18,12 +18,18 @@ export const getTimeFromSeconds = (timestamp) => {
  * @category Time
  *
  * @overload
+ * @returns {UseTimerReturn} An object containing the timer properties and functions
+ *
+ * @example
+ * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer();
+ *
+ * @overload
  * @param {number} seconds The seconds value that define for how long the timer will be running
  * @param {() => void} callback The function to be executed once countdown timer is expired
  * @returns {UseTimerReturn} An object containing the timer properties and functions
  *
  * @example
- * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000, () => console.log('ready'));
+ * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000, () => console.log('ready'));
  *
  * @overload
  * @param {number} seconds The seconds value that define for how long the timer will be running
@@ -33,13 +39,13 @@ export const getTimeFromSeconds = (timestamp) => {
  * @returns {UseTimerReturn} An object containing the timer properties and functions
  *
  * @example
- * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000);
+ * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000);
  */
 export const useTimer = ((...params) => {
-    const initialSeconds = params[0];
+    const initialSeconds = (params[0] ?? 0);
     const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] });
     const immediately = options?.immediately ?? true;
-    const [active, setActive] = useState(immediately ?? true);
+    const [active, setActive] = useState(initialSeconds > 0 && immediately);
     const [seconds, setSeconds] = useState(initialSeconds);
     const intervalIdRef = useRef();
     const optionsRef = useRef();
@@ -47,6 +53,7 @@ export const useTimer = ((...params) => {
     useEffect(() => {
         if (!active)
             return;
+        optionsRef.current?.onStart?.();
         const onInterval = () => {
             optionsRef.current?.onTick?.(seconds);
             setSeconds((prevSeconds) => {
@@ -76,6 +83,8 @@ export const useTimer = ((...params) => {
             setActive(true);
     };
     const start = () => {
+        if (initialSeconds <= 0)
+            return;
         setActive(true);
         setSeconds(initialSeconds);
     };
@@ -83,7 +92,6 @@ export const useTimer = ((...params) => {
         setActive(false);
         setSeconds(0);
     };
-    const update = (seconds) => setSeconds(seconds);
     const increase = (seconds) => setSeconds((prevSeconds) => prevSeconds + seconds);
     const decrease = (seconds) => {
         setSeconds((prevSeconds) => {
@@ -99,6 +107,7 @@ export const useTimer = ((...params) => {
     };
     return {
         ...getTimeFromSeconds(seconds),
+        count: seconds,
         pause,
         active,
         resume,
@@ -106,7 +115,6 @@ export const useTimer = ((...params) => {
         start,
         restart,
         clear,
-        update,
         increase,
         decrease
     };

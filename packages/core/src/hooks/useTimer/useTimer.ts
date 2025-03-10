@@ -21,6 +21,8 @@ export interface UseTimerOptions {
   immediately?: boolean;
   /** The function to be executed when the timer is expired */
   onExpire?: () => void;
+  /** The function to be executed when the timer is started */
+  onStart?: () => void;
   /** Callback function to be executed on each tick of the timer */
   onTick?: (seconds: number) => void;
 }
@@ -53,11 +55,11 @@ export interface UseTimerReturn {
   start: () => void;
   /** The function to toggle the timer */
   toggle: () => void;
-  /** The function to update the timer */
-  update: (seconds: number) => void;
 }
 
 export interface UseTimer {
+  (): UseTimerReturn;
+
   (seconds: number, callback: () => void): UseTimerReturn;
 
   (seconds: number, options?: UseTimerOptions): UseTimerReturn;
@@ -69,12 +71,18 @@ export interface UseTimer {
  * @category Time
  *
  * @overload
+ * @returns {UseTimerReturn} An object containing the timer properties and functions
+ *
+ * @example
+ * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer();
+ *
+ * @overload
  * @param {number} seconds The seconds value that define for how long the timer will be running
  * @param {() => void} callback The function to be executed once countdown timer is expired
  * @returns {UseTimerReturn} An object containing the timer properties and functions
  *
  * @example
- * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000, () => console.log('ready'));
+ * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000, () => console.log('ready'));
  *
  * @overload
  * @param {number} seconds The seconds value that define for how long the timer will be running
@@ -84,16 +92,16 @@ export interface UseTimer {
  * @returns {UseTimerReturn} An object containing the timer properties and functions
  *
  * @example
- * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active } = useTimer(1000);
+ * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000);
  */
 export const useTimer = ((...params: any[]) => {
-  const initialSeconds = params[0] as number;
+  const initialSeconds = (params[0] ?? 0) as number;
   const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] }) as
     | UseTimerOptions
     | undefined;
 
   const immediately = options?.immediately ?? true;
-  const [active, setActive] = useState<boolean>(immediately ?? true);
+  const [active, setActive] = useState<boolean>(initialSeconds > 0 && immediately);
   const [seconds, setSeconds] = useState(initialSeconds);
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
@@ -103,6 +111,7 @@ export const useTimer = ((...params: any[]) => {
   useEffect(() => {
     if (!active) return;
 
+    optionsRef.current?.onStart?.();
     const onInterval = () => {
       optionsRef.current?.onTick?.(seconds);
       setSeconds((prevSeconds) => {
@@ -136,6 +145,8 @@ export const useTimer = ((...params: any[]) => {
   };
 
   const start = () => {
+    if (initialSeconds <= 0) return;
+
     setActive(true);
     setSeconds(initialSeconds);
   };
@@ -145,7 +156,6 @@ export const useTimer = ((...params: any[]) => {
     setSeconds(0);
   };
 
-  const update = (seconds: number) => setSeconds(seconds);
   const increase = (seconds: number) => setSeconds((prevSeconds) => prevSeconds + seconds);
   const decrease = (seconds: number) => {
     setSeconds((prevSeconds) => {
@@ -161,6 +171,7 @@ export const useTimer = ((...params: any[]) => {
 
   return {
     ...getTimeFromSeconds(seconds),
+    count: seconds,
     pause,
     active,
     resume,
@@ -168,7 +179,6 @@ export const useTimer = ((...params: any[]) => {
     start,
     restart,
     clear,
-    update,
     increase,
     decrease
   };
