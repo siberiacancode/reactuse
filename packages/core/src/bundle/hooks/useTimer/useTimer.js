@@ -43,10 +43,9 @@ export const getTimeFromSeconds = (timestamp) => {
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000);
  */
 export const useTimer = ((...params) => {
-    const initialSeconds = (params[0] ?? 0);
+    const initialSeconds = Math.max((params[0] ?? 0), 0);
     const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] });
-    const immediately = initialSeconds > 0 && (options?.immediately ?? true);
-    const [active, setActive] = useState(immediately);
+    const [active, setActive] = useState(initialSeconds > 0 && (options?.immediately ?? true));
     const [seconds, setSeconds] = useState(initialSeconds);
     const intervalIdRef = useRef();
     const optionsRef = useRef();
@@ -86,7 +85,11 @@ export const useTimer = ((...params) => {
             return;
         setActive(true);
     };
-    const toggle = () => setActive(!active);
+    const toggle = () => {
+        if (seconds <= 0)
+            return;
+        setActive(!active);
+    };
     const restart = (seconds, immediately = true) => {
         setSeconds(seconds);
         if (immediately)

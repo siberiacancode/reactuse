@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 
+export type PositiveInteger<Value extends number> = `${Value}` extends `-${any}` | `${any}.${any}`
+  ? never
+  : Value;
+
 export const getTimeFromSeconds = (timestamp: number) => {
   const roundedTimestamp = Math.ceil(timestamp);
   const days = Math.floor(roundedTimestamp / (60 * 60 * 24));
@@ -46,13 +50,13 @@ export interface UseTimerReturn {
   /** The function to clear the timer */
   clear: () => void;
   /** The function to decrease the timer */
-  decrease: (seconds: number) => void;
+  decrease: (seconds: PositiveInteger<number>) => void;
   /** The function to increase the timer */
-  increase: (seconds: number) => void;
+  increase: (seconds: PositiveInteger<number>) => void;
   /** The function to pause the timer */
   pause: () => void;
   /** The function to restart the timer */
-  restart: (time: number, immediately?: boolean) => void;
+  restart: (time: PositiveInteger<number>, immediately?: boolean) => void;
   /** The function to resume the timer */
   resume: () => void;
   /** The function to start the timer */
@@ -64,9 +68,9 @@ export interface UseTimerReturn {
 export interface UseTimer {
   (): UseTimerReturn;
 
-  (seconds: number, callback: () => void): UseTimerReturn;
+  (seconds: PositiveInteger<number>, callback: () => void): UseTimerReturn;
 
-  (seconds: number, options?: UseTimerOptions): UseTimerReturn;
+  (seconds: PositiveInteger<number>, options?: UseTimerOptions): UseTimerReturn;
 }
 
 /**
@@ -99,13 +103,12 @@ export interface UseTimer {
  * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000);
  */
 export const useTimer = ((...params: any[]) => {
-  const initialSeconds = (params[0] ?? 0) as number;
+  const initialSeconds = Math.max((params[0] ?? 0) as PositiveInteger<number>, 0);
   const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] }) as
     | UseTimerOptions
     | undefined;
 
-  const immediately = initialSeconds > 0 && (options?.immediately ?? true);
-  const [active, setActive] = useState(immediately);
+  const [active, setActive] = useState(initialSeconds > 0 && (options?.immediately ?? true));
   const [seconds, setSeconds] = useState(initialSeconds);
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
@@ -146,15 +149,17 @@ export const useTimer = ((...params: any[]) => {
   }, [active]);
 
   const pause = () => setActive(false);
-
   const resume = () => {
     if (seconds <= 0) return;
     setActive(true);
   };
 
-  const toggle = () => setActive(!active);
+  const toggle = () => {
+    if (seconds <= 0) return;
+    setActive(!active);
+  };
 
-  const restart = (seconds: number, immediately = true) => {
+  const restart = (seconds: PositiveInteger<number>, immediately = true) => {
     setSeconds(seconds);
     if (immediately) setActive(true);
   };
@@ -171,8 +176,9 @@ export const useTimer = ((...params: any[]) => {
     setSeconds(0);
   };
 
-  const increase = (seconds: number) => setSeconds((prevSeconds) => prevSeconds + seconds);
-  const decrease = (seconds: number) => {
+  const increase = (seconds: PositiveInteger<number>) =>
+    setSeconds((prevSeconds) => prevSeconds + seconds);
+  const decrease = (seconds: PositiveInteger<number>) => {
     setSeconds((prevSeconds) => {
       const updatedSeconds = prevSeconds - seconds;
       if (updatedSeconds <= 0) {

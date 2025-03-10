@@ -92,6 +92,7 @@ it('Should use timer without params', () => {
   expect(result.current.minutes).toBe(0);
   expect(result.current.hours).toBe(0);
   expect(result.current.days).toBe(0);
+  expect(result.current.count).toBe(0);
   expect(result.current.active).toBeFalsy();
 });
 
@@ -112,8 +113,18 @@ it('Should not be active when disabled', () => {
   expect(result.current.active).toBeFalsy();
 });
 
+it('Should correct handle negative seconds', () => {
+  const { result } = renderHook(() => useTimer(-1));
+
+  expect(result.current.active).toBeFalsy();
+  expect(result.current.count).toBe(0);
+});
+
 it('Should decrease time when running', async () => {
   const { result } = renderHook(() => useTimer(60));
+
+  expect(result.current.seconds).toBe(0);
+  expect(result.current.minutes).toBe(1);
 
   act(() => vi.advanceTimersToNextTimer());
 
@@ -163,7 +174,7 @@ it('Should call onStart when timer starts', () => {
 
 it('Should call onTick on each second', () => {
   const onTick = vi.fn();
-  renderHook(() => useTimer(2, { onTick }));
+  renderHook(() => useTimer(1, { onTick }));
 
   act(() => vi.advanceTimersToNextTimer());
 
@@ -187,15 +198,23 @@ it('Should pause timer', () => {
 });
 
 it('Should toggle timer state', () => {
-  const { result } = renderHook(() => useTimer(10));
+  const { result } = renderHook(() => useTimer(1));
 
-  act(() => result.current.toggle());
+  act(result.current.toggle);
 
   expect(result.current.active).toBeFalsy();
 
   act(result.current.toggle);
 
   expect(result.current.active).toBeTruthy();
+
+  act(() => vi.advanceTimersToNextTimer());
+
+  expect(result.current.active).toBeFalsy();
+
+  act(result.current.toggle);
+
+  expect(result.current.active).toBeFalsy();
 });
 
 it('Should restart timer with new time', () => {
