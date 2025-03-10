@@ -75,14 +75,14 @@ it('Should use timer', () => {
   expect(result.current.days).toBe(0);
   expect(result.current.count).toBe(65);
   expect(result.current.active).toBeTruthy();
-  expect(result.current.restart).toBeInstanceOf(Function);
-  expect(result.current.start).toBeInstanceOf(Function);
-  expect(result.current.pause).toBeInstanceOf(Function);
-  expect(result.current.resume).toBeInstanceOf(Function);
-  expect(result.current.toggle).toBeInstanceOf(Function);
-  expect(result.current.clear).toBeInstanceOf(Function);
-  expect(result.current.increase).toBeInstanceOf(Function);
-  expect(result.current.decrease).toBeInstanceOf(Function);
+  expect(result.current.restart).toBeTypeOf('function');
+  expect(result.current.start).toBeTypeOf('function');
+  expect(result.current.pause).toBeTypeOf('function');
+  expect(result.current.resume).toBeTypeOf('function');
+  expect(result.current.toggle).toBeTypeOf('function');
+  expect(result.current.clear).toBeTypeOf('function');
+  expect(result.current.increase).toBeTypeOf('function');
+  expect(result.current.decrease).toBeTypeOf('function');
 });
 
 it('Should use timer without params', () => {
