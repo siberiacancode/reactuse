@@ -33,6 +33,8 @@ export interface UseTimerOptions {
 export interface UseTimerReturn {
   /** flag to indicate if timer is active or not */
   active: boolean;
+  /** The total count of the timer */
+  count: number;
   /** The day count of the timer */
   days: number;
   /** The hour count of the timer */
