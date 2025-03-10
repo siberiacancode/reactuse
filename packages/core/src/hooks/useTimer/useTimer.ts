@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
+
 export const getTimeFromSeconds = (timestamp: number) => {
   const roundedTimestamp = Math.ceil(timestamp);
   const days = Math.floor(roundedTimestamp / (60 * 60 * 24));
@@ -100,13 +102,24 @@ export const useTimer = ((...params: any[]) => {
     | UseTimerOptions
     | undefined;
 
-  const immediately = options?.immediately ?? true;
-  const [active, setActive] = useState<boolean>(initialSeconds > 0 && immediately);
+  const immediately = initialSeconds > 0 && (options?.immediately ?? true);
+  const [active, setActive] = useState(immediately);
   const [seconds, setSeconds] = useState(initialSeconds);
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
   const optionsRef = useRef<UseTimerOptions>();
   optionsRef.current = options ?? {};
+
+  useDidUpdate(() => {
+    if (initialSeconds <= 0) {
+      setActive(false);
+      setSeconds(0);
+      return;
+    }
+
+    setActive(true);
+    setSeconds(initialSeconds);
+  }, [initialSeconds]);
 
   useEffect(() => {
     if (!active) return;

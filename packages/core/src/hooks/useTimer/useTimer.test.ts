@@ -112,6 +112,23 @@ it('Should decrease time when running', async () => {
   expect(result.current.minutes).toBe(0);
 });
 
+it('Should update timer if value is changed', () => {
+  const { result, rerender } = renderHook((props: number) => useTimer(props));
+
+  expect(result.current.seconds).toBe(0);
+  expect(result.current.active).toBeFalsy();
+
+  rerender(10);
+
+  expect(result.current.seconds).toBe(10);
+  expect(result.current.active).toBeTruthy();
+
+  rerender(0);
+
+  expect(result.current.seconds).toBe(0);
+  expect(result.current.active).toBeFalsy();
+});
+
 it('Should call onExpire when timer ends', () => {
   const onExpire = vi.fn();
   const { result } = renderHook(() => useTimer(1, { onExpire }));
@@ -257,13 +274,14 @@ it('Should decrease timer', () => {
 });
 
 it('Should restart timer by method with immediately false', () => {
-  const { result } = renderHook(() => useTimer(11, { immediately: false }));
+  const { result } = renderHook(() => useTimer(10, { immediately: false }));
 
-  act(() => result.current.restart(6, false));
+  act(() => result.current.restart(5, false));
+
   act(() => vi.advanceTimersToNextTimer());
 
   expect(result.current.active).toBeFalsy();
-  expect(result.current.seconds).toBe(6);
+  expect(result.current.seconds).toBe(5);
 });
 
 it('Should accept callback as second parameter', () => {

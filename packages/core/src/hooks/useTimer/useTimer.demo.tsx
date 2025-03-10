@@ -1,7 +1,7 @@
 import { useTimer } from './useTimer';
 
 const Demo = () => {
-  const timer = useTimer(3_600);
+  const timer = useTimer(3_600, { immediately: false });
 
   return (
     <>
