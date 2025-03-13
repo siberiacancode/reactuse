@@ -60,7 +60,10 @@ export default async () => {
         pageData.title = pageData.params?.name;
       }
     },
-    head: [['link', { rel: 'icon', href: '/reactuse/favicon.ico' }]],
+    head: [
+      ['link', { rel: 'icon', href: '/reactuse/favicon.ico' }],
+      ['link', { rel: 'manifest', href: '/reactuse/manifest.json' }]
+    ],
     locales: {
       root: {
         label: 'English',
