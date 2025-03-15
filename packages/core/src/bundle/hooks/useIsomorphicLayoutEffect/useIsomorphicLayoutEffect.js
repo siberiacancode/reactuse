@@ -7,4 +7,5 @@ import { useEffect, useLayoutEffect } from 'react';
  * @example
  * useIsomorphicLayoutEffect(() => console.log('effect'), [])
  */
-export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+export const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;

@@ -15,45 +15,42 @@ import { useEffect, useRef, useState } from 'react';
  * useRaf(() => console.log('callback'));
  */
 export const useRaf = (callback, options) => {
-    const rafIdRef = useRef(null);
-    const previousFrameTimestampRef = useRef(0);
-    const [active, setActive] = useState(false);
-    const enabled = options?.enabled ?? true;
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    const loop = (timestamp) => {
-        const delta = timestamp - previousFrameTimestampRef.current;
-        if (options?.delay && delta < options?.delay) {
-            rafIdRef.current = window.requestAnimationFrame(loop);
-            return;
-        }
-        previousFrameTimestampRef.current = timestamp;
-        internalCallbackRef.current({ delta, timestamp });
-        rafIdRef.current = window.requestAnimationFrame(loop);
-    };
-    const resume = () => {
-        if (active)
-            return;
-        setActive(true);
-        previousFrameTimestampRef.current = 0;
-        rafIdRef.current = window.requestAnimationFrame(loop);
-    };
-    function pause() {
-        if (!rafIdRef.current)
-            return;
-        setActive(false);
-        window.cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
+  const rafIdRef = useRef(null);
+  const previousFrameTimestampRef = useRef(0);
+  const [active, setActive] = useState(false);
+  const enabled = options?.enabled ?? true;
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  const loop = (timestamp) => {
+    const delta = timestamp - previousFrameTimestampRef.current;
+    if (options?.delay && delta < options?.delay) {
+      rafIdRef.current = window.requestAnimationFrame(loop);
+      return;
     }
-    useEffect(() => {
-        if (!enabled)
-            return;
-        resume();
-        return pause;
-    }, [enabled, options?.delay]);
-    return {
-        active,
-        pause,
-        resume
-    };
+    previousFrameTimestampRef.current = timestamp;
+    internalCallbackRef.current({ delta, timestamp });
+    rafIdRef.current = window.requestAnimationFrame(loop);
+  };
+  const resume = () => {
+    if (active) return;
+    setActive(true);
+    previousFrameTimestampRef.current = 0;
+    rafIdRef.current = window.requestAnimationFrame(loop);
+  };
+  function pause() {
+    if (!rafIdRef.current) return;
+    setActive(false);
+    window.cancelAnimationFrame(rafIdRef.current);
+    rafIdRef.current = null;
+  }
+  useEffect(() => {
+    if (!enabled) return;
+    resume();
+    return pause;
+  }, [enabled, options?.delay]);
+  return {
+    active,
+    pause,
+    resume
+  };
 };

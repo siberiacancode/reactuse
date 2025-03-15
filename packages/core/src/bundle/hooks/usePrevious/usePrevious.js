@@ -13,12 +13,12 @@ import { useRef } from 'react';
  * const prevValue = usePrevious(value);
  */
 export const usePrevious = (value, options) => {
-    const currentRef = useRef(value);
-    const previousRef = useRef();
-    const equality = options?.equality ?? Object.is;
-    if (!equality(value, currentRef.current)) {
-        previousRef.current = currentRef.current;
-        currentRef.current = value;
-    }
-    return previousRef.current;
+  const currentRef = useRef(value);
+  const previousRef = useRef();
+  const equality = options?.equality ?? Object.is;
+  if (!equality(value, currentRef.current)) {
+    previousRef.current = currentRef.current;
+    currentRef.current = value;
+  }
+  return previousRef.current;
 };

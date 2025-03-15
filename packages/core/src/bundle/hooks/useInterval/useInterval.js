@@ -21,38 +21,32 @@ import { useEffect, useRef, useState } from 'react';
  * @example
  * const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), { interval: 2500 });
  */
-export const useInterval = ((...params) => {
-    const callback = params[0];
-    const interval = (typeof params[1] === 'number'
-        ? params[1]
-        : params[1].interval) ?? 1000;
-    const options = typeof params[1] === 'object'
-        ? params[1]
-        : params[2];
-    const immediately = options?.immediately ?? true;
-    const [active, setActive] = useState(immediately ?? true);
-    const intervalIdRef = useRef();
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    useEffect(() => {
-        if (!active)
-            return;
-        intervalIdRef.current = setInterval(() => internalCallbackRef.current(), interval);
-        return () => {
-            clearInterval(intervalIdRef.current);
-        };
-    }, [active, interval]);
-    const pause = () => setActive(false);
-    const resume = () => {
-        if (interval <= 0)
-            return;
-        setActive(true);
+export const useInterval = (...params) => {
+  const callback = params[0];
+  const interval = (typeof params[1] === 'number' ? params[1] : params[1].interval) ?? 1000;
+  const options = typeof params[1] === 'object' ? params[1] : params[2];
+  const immediately = options?.immediately ?? true;
+  const [active, setActive] = useState(immediately ?? true);
+  const intervalIdRef = useRef();
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  useEffect(() => {
+    if (!active) return;
+    intervalIdRef.current = setInterval(() => internalCallbackRef.current(), interval);
+    return () => {
+      clearInterval(intervalIdRef.current);
     };
-    const toggle = () => setActive(!active);
-    return {
-        active,
-        pause,
-        resume,
-        toggle
-    };
-});
+  }, [active, interval]);
+  const pause = () => setActive(false);
+  const resume = () => {
+    if (interval <= 0) return;
+    setActive(true);
+  };
+  const toggle = () => setActive(!active);
+  return {
+    active,
+    pause,
+    resume,
+    toggle
+  };
+};

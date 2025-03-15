@@ -12,15 +12,15 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  * useDidUpdate(() => console.log("Won't be called when mounted"), [deps]);
  */
 export const useDidUpdate = (effect, deps) => {
-    const initialRender = useRef(true);
-    useIsomorphicLayoutEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-            return;
-        }
-        const effectReturns = effect();
-        if (effectReturns && typeof effectReturns === 'function') {
-            return effectReturns;
-        }
-    }, deps);
+  const initialRender = useRef(true);
+  useIsomorphicLayoutEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    const effectReturns = effect();
+    if (effectReturns && typeof effectReturns === 'function') {
+      return effectReturns;
+    }
+  }, deps);
 };

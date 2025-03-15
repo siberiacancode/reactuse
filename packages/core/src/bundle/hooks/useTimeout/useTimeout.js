@@ -13,21 +13,21 @@ import { useEvent } from '../useEvent/useEvent';
  * const { clear, ready } = useTimeout(() => {}, 5000);
  */
 export function useTimeout(callback, delay) {
-    const [ready, setReady] = useState(false);
-    const timeoutIdRef = useRef();
-    const internalCallback = useEvent(callback);
-    useEffect(() => {
-        timeoutIdRef.current = setTimeout(() => {
-            internalCallback();
-            setReady(true);
-        }, delay);
-        return () => {
-            clearTimeout(timeoutIdRef.current);
-        };
-    }, [delay]);
-    const clear = () => {
-        clearTimeout(timeoutIdRef.current);
-        setReady(true);
+  const [ready, setReady] = useState(false);
+  const timeoutIdRef = useRef();
+  const internalCallback = useEvent(callback);
+  useEffect(() => {
+    timeoutIdRef.current = setTimeout(() => {
+      internalCallback();
+      setReady(true);
+    }, delay);
+    return () => {
+      clearTimeout(timeoutIdRef.current);
     };
-    return { ready, clear };
+  }, [delay]);
+  const clear = () => {
+    clearTimeout(timeoutIdRef.current);
+    setReady(true);
+  };
+  return { ready, clear };
 }

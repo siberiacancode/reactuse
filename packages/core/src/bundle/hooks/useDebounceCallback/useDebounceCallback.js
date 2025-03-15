@@ -16,7 +16,7 @@ import { useEvent } from '../useEvent/useEvent';
  * const debouncedCallback = useDebounceCallback(() => console.log('callback'), 500);
  */
 export const useDebounceCallback = (callback, delay) => {
-    const internalCallback = useEvent(callback);
-    const debounced = useMemo(() => debounce(internalCallback, delay), [delay]);
-    return debounced;
+  const internalCallback = useEvent(callback);
+  const debounced = useMemo(() => debounce(internalCallback, delay), [delay]);
+  return debounced;
 };

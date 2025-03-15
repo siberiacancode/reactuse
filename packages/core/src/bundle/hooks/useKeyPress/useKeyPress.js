@@ -24,48 +24,49 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { pressed, ref } = useKeyPress('a');
  */
-export const useKeyPress = ((...params) => {
-    const target = isTarget(params[0]) ? params[0] : undefined;
-    const key = (target ? params[1] : params[0]);
-    const callback = (target ? params[2] : params[1]);
-    const [pressed, setPressed] = useState(false);
-    const internalRef = useRefState(window);
-    const keyRef = useRef(key);
-    keyRef.current = key;
-    const callbackRef = useRef(callback);
-    callbackRef.current = callback;
-    useEffect(() => {
-        if (!target && !internalRef.state)
-            return;
-        const element = (target ? getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        const onKeyDown = (event) => {
-            const keyboardEvent = event;
-            if (Array.isArray(keyRef.current)
-                ? keyRef.current.includes(keyboardEvent.key)
-                : keyboardEvent.key === keyRef.current) {
-                setPressed(true);
-                callbackRef.current?.(true, keyboardEvent);
-            }
-        };
-        const onKeyUp = (event) => {
-            const keyboardEvent = event;
-            if (Array.isArray(keyRef.current)
-                ? keyRef.current.includes(keyboardEvent.key)
-                : keyboardEvent.key === keyRef.current) {
-                setPressed(false);
-                callbackRef.current?.(false, keyboardEvent);
-            }
-        };
-        element.addEventListener('keydown', onKeyDown);
-        element.addEventListener('keyup', onKeyUp);
-        return () => {
-            element.removeEventListener('keydown', onKeyDown);
-            element.removeEventListener('keyup', onKeyUp);
-        };
-    }, [target, internalRef.state]);
-    if (target)
-        return pressed;
-    return { pressed, ref: internalRef };
-});
+export const useKeyPress = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const key = target ? params[1] : params[0];
+  const callback = target ? params[2] : params[1];
+  const [pressed, setPressed] = useState(false);
+  const internalRef = useRefState(window);
+  const keyRef = useRef(key);
+  keyRef.current = key;
+  const callbackRef = useRef(callback);
+  callbackRef.current = callback;
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    const onKeyDown = (event) => {
+      const keyboardEvent = event;
+      if (
+        Array.isArray(keyRef.current)
+          ? keyRef.current.includes(keyboardEvent.key)
+          : keyboardEvent.key === keyRef.current
+      ) {
+        setPressed(true);
+        callbackRef.current?.(true, keyboardEvent);
+      }
+    };
+    const onKeyUp = (event) => {
+      const keyboardEvent = event;
+      if (
+        Array.isArray(keyRef.current)
+          ? keyRef.current.includes(keyboardEvent.key)
+          : keyboardEvent.key === keyRef.current
+      ) {
+        setPressed(false);
+        callbackRef.current?.(false, keyboardEvent);
+      }
+    };
+    element.addEventListener('keydown', onKeyDown);
+    element.addEventListener('keyup', onKeyUp);
+    return () => {
+      element.removeEventListener('keydown', onKeyDown);
+      element.removeEventListener('keyup', onKeyUp);
+    };
+  }, [target, internalRef.state]);
+  if (target) return pressed;
+  return { pressed, ref: internalRef };
+};

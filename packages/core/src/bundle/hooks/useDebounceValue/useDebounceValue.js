@@ -14,14 +14,13 @@ import { useDebounceCallback } from '../useDebounceCallback/useDebounceCallback'
  * const debouncedValue = useDebounceValue(value, 500);
  */
 export const useDebounceValue = (value, delay) => {
-    const previousValueRef = useRef(value);
-    const [debouncedValue, setDebounceValue] = useState(value);
-    const debouncedSetState = useDebounceCallback(setDebounceValue, delay);
-    useEffect(() => {
-        if (previousValueRef.current === value)
-            return;
-        debouncedSetState(value);
-        previousValueRef.current = value;
-    }, [value]);
-    return debouncedValue;
+  const previousValueRef = useRef(value);
+  const [debouncedValue, setDebounceValue] = useState(value);
+  const debouncedSetState = useDebounceCallback(setDebounceValue, delay);
+  useEffect(() => {
+    if (previousValueRef.current === value) return;
+    debouncedSetState(value);
+    previousValueRef.current = value;
+  }, [value]);
+  return debouncedValue;
 };

@@ -23,49 +23,44 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, value, set, remove } = useTextDirection();
  */
-export const useTextDirection = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const initialValue = (target ? params[1] : params[0]) ?? 'ltr';
-    const internalRef = useRefState();
-    const getDirection = () => {
-        const element = (target ? getElement(target) : internalRef.current);
-        return element?.getAttribute('dir') ?? initialValue;
+export const useTextDirection = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const initialValue = (target ? params[1] : params[0]) ?? 'ltr';
+  const internalRef = useRefState();
+  const getDirection = () => {
+    const element = target ? getElement(target) : internalRef.current;
+    return element?.getAttribute('dir') ?? initialValue;
+  };
+  const [value, setValue] = useState(getDirection());
+  const remove = () => {
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    element?.removeAttribute('dir');
+  };
+  const set = (value) => {
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    setValue(value);
+    element.setAttribute('dir', value);
+  };
+  useIsomorphicLayoutEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    const direction = getDirection();
+    element.setAttribute('dir', direction);
+    setValue(direction);
+    const observer = new MutationObserver(getDirection);
+    observer.observe(element, { attributes: true });
+    return () => {
+      observer.disconnect();
     };
-    const [value, setValue] = useState(getDirection());
-    const remove = () => {
-        const element = (target ? getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        element?.removeAttribute('dir');
-    };
-    const set = (value) => {
-        const element = (target ? getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        setValue(value);
-        element.setAttribute('dir', value);
-    };
-    useIsomorphicLayoutEffect(() => {
-        if (!target && !internalRef.state)
-            return;
-        const element = (target ? getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        const direction = getDirection();
-        element.setAttribute('dir', direction);
-        setValue(direction);
-        const observer = new MutationObserver(getDirection);
-        observer.observe(element, { attributes: true });
-        return () => {
-            observer.disconnect();
-        };
-    }, [internalRef.state, target]);
-    if (target)
-        return { value, set, remove };
-    return {
-        ref: internalRef,
-        value,
-        set,
-        remove
-    };
-});
+  }, [internalRef.state, target]);
+  if (target) return { value, set, remove };
+  return {
+    ref: internalRef,
+    value,
+    set,
+    remove
+  };
+};

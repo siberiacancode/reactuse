@@ -38,36 +38,33 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { observer, stop } = useMutationObserver(ref, () => console.log('callback'))
  */
-export const useMutationObserver = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const callback = (target ? params[1] : params[0]);
-    const options = (target ? params[2] : params[1]);
-    const [observer, setObserver] = useState();
-    const enabled = options?.enabled ?? true;
-    const internalRef = useRefState(window.document.documentElement);
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    const internalOptionsRef = useRef(options);
-    internalOptionsRef.current = options;
-    useEffect(() => {
-        if (!enabled && !target && !internalRef.state)
-            return;
-        const element = (target ? getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        const observer = new MutationObserver(internalCallbackRef.current);
-        setObserver(observer);
-        observer.observe(element, internalOptionsRef.current);
-        return () => {
-            observer.disconnect();
-        };
-    }, [target, internalRef.state]);
-    const stop = () => observer?.disconnect();
-    if (target)
-        return { stop, observer };
-    return {
-        ref: internalRef,
-        stop,
-        observer
+export const useMutationObserver = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const callback = target ? params[1] : params[0];
+  const options = target ? params[2] : params[1];
+  const [observer, setObserver] = useState();
+  const enabled = options?.enabled ?? true;
+  const internalRef = useRefState(window.document.documentElement);
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  useEffect(() => {
+    if (!enabled && !target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    const observer = new MutationObserver(internalCallbackRef.current);
+    setObserver(observer);
+    observer.observe(element, internalOptionsRef.current);
+    return () => {
+      observer.disconnect();
     };
-});
+  }, [target, internalRef.state]);
+  const stop = () => observer?.disconnect();
+  if (target) return { stop, observer };
+  return {
+    ref: internalRef,
+    stop,
+    observer
+  };
+};

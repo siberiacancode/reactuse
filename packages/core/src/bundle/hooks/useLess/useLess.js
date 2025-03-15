@@ -14,8 +14,8 @@ import { useEffect } from 'react';
  * const value = useLess(state);
  */
 export const useLess = (value) => {
-    useEffect(() => {
-        console.warn("Warning: You forgot to delete the 'useLess' hook.");
-    }, []);
-    return value;
+  useEffect(() => {
+    console.warn("Warning: You forgot to delete the 'useLess' hook.");
+  }, []);
+  return value;
 };

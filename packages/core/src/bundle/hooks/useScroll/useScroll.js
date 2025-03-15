@@ -53,78 +53,76 @@ const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
  * @example
  * const { ref, scrolling } = useScroll(() => console.log('callback'));
  */
-export const useScroll = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target
-        ? typeof params[1] === 'object'
-            ? params[1]
-            : { onScroll: params[1] }
-        : typeof params[0] === 'object'
-            ? params[0]
-            : { onScroll: params[0] });
-    const internalRef = useRefState();
-    const internalOptionsRef = useRef(options);
-    internalOptionsRef.current = options;
-    const [scrolling, setScrolling] = useState(false);
-    const scrollPositionRef = useRef({ x: 0, y: 0 });
-    useEffect(() => {
-        if (!target && !internalRef.state)
-            return;
-        const element = (target ? getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        const onScrollEnd = (event) => {
-            setScrolling(false);
-            options?.onStop?.(event);
-        };
-        const onScroll = (event) => {
-            setScrolling(true);
-            const target = (event.target === document ? event.target.documentElement : event.target);
-            const { display, flexDirection, direction } = target.style;
-            const directionMultiplier = direction === 'rtl' ? -1 : 1;
-            const scrollLeft = target.scrollLeft;
-            let scrollTop = target.scrollTop;
-            if (target instanceof Document && !scrollTop)
-                scrollTop = window.document.body.scrollTop;
-            const offset = internalOptionsRef.current?.offset;
-            const left = scrollLeft * directionMultiplier <= (offset?.left ?? 0);
-            const right = scrollLeft * directionMultiplier + target.clientWidth >=
-                target.scrollWidth - (offset?.right ?? 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
-            const top = scrollTop <= (offset?.top ?? 0);
-            const bottom = scrollTop + target.clientHeight >=
-                target.scrollHeight - (offset?.bottom ?? 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
-            const isColumnReverse = display === 'flex' && flexDirection === 'column-reverse';
-            const isRowReverse = display === 'flex' && flexDirection === 'column-reverse';
-            const params = {
-                x: scrollLeft,
-                y: scrollTop,
-                directions: {
-                    left: scrollLeft < scrollPositionRef.current.x,
-                    right: scrollLeft > scrollPositionRef.current.x,
-                    top: scrollTop < scrollPositionRef.current.y,
-                    bottom: scrollTop > scrollPositionRef.current.y
-                },
-                arrived: {
-                    left: isRowReverse ? right : left,
-                    right: isRowReverse ? left : right,
-                    top: isColumnReverse ? bottom : top,
-                    bottom: isColumnReverse ? top : bottom
-                }
-            };
-            scrollPositionRef.current = { x: scrollLeft, y: scrollTop };
-            internalOptionsRef.current?.onScroll?.(params, event);
-        };
-        element.addEventListener('scroll', onScroll);
-        element.addEventListener('scrollend', onScrollEnd);
-        return () => {
-            element.removeEventListener('scroll', onScroll);
-            element.removeEventListener('scrollend', onScrollEnd);
-        };
-    }, [target, internalRef.state]);
-    if (target)
-        return scrolling;
-    return {
-        ref: internalRef,
-        scrolling
+export const useScroll = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target
+    ? typeof params[1] === 'object'
+      ? params[1]
+      : { onScroll: params[1] }
+    : typeof params[0] === 'object'
+      ? params[0]
+      : { onScroll: params[0] };
+  const internalRef = useRefState();
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  const [scrolling, setScrolling] = useState(false);
+  const scrollPositionRef = useRef({ x: 0, y: 0 });
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    const onScrollEnd = (event) => {
+      setScrolling(false);
+      options?.onStop?.(event);
     };
-});
+    const onScroll = (event) => {
+      setScrolling(true);
+      const target = event.target === document ? event.target.documentElement : event.target;
+      const { display, flexDirection, direction } = target.style;
+      const directionMultiplier = direction === 'rtl' ? -1 : 1;
+      const scrollLeft = target.scrollLeft;
+      let scrollTop = target.scrollTop;
+      if (target instanceof Document && !scrollTop) scrollTop = window.document.body.scrollTop;
+      const offset = internalOptionsRef.current?.offset;
+      const left = scrollLeft * directionMultiplier <= (offset?.left ?? 0);
+      const right =
+        scrollLeft * directionMultiplier + target.clientWidth >=
+        target.scrollWidth - (offset?.right ?? 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
+      const top = scrollTop <= (offset?.top ?? 0);
+      const bottom =
+        scrollTop + target.clientHeight >=
+        target.scrollHeight - (offset?.bottom ?? 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
+      const isColumnReverse = display === 'flex' && flexDirection === 'column-reverse';
+      const isRowReverse = display === 'flex' && flexDirection === 'column-reverse';
+      const params = {
+        x: scrollLeft,
+        y: scrollTop,
+        directions: {
+          left: scrollLeft < scrollPositionRef.current.x,
+          right: scrollLeft > scrollPositionRef.current.x,
+          top: scrollTop < scrollPositionRef.current.y,
+          bottom: scrollTop > scrollPositionRef.current.y
+        },
+        arrived: {
+          left: isRowReverse ? right : left,
+          right: isRowReverse ? left : right,
+          top: isColumnReverse ? bottom : top,
+          bottom: isColumnReverse ? top : bottom
+        }
+      };
+      scrollPositionRef.current = { x: scrollLeft, y: scrollTop };
+      internalOptionsRef.current?.onScroll?.(params, event);
+    };
+    element.addEventListener('scroll', onScroll);
+    element.addEventListener('scrollend', onScrollEnd);
+    return () => {
+      element.removeEventListener('scroll', onScroll);
+      element.removeEventListener('scrollend', onScrollEnd);
+    };
+  }, [target, internalRef.state]);
+  if (target) return scrolling;
+  return {
+    ref: internalRef,
+    scrolling
+  };
+};

@@ -105,6 +105,7 @@ export * from './useSet/useSet';
 export * from './useShare/useShare';
 export * from './useStateHistory/useStateHistory';
 export * from './useStep/useStep';
+export * from './useSticky/useSticky';
 export * from './useStopwatch/useStopwatch';
 export * from './useStorage/useStorage';
 export * from './useTextDirection/useTextDirection';

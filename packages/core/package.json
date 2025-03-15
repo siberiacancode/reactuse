@@ -42,7 +42,7 @@
   "scripts": {
     "prepublishOnly": "pnpm unit-test run && pnpm build",
     "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
-    "build:js": "tsc --project tsconfig.build.json",
+    "build:js": "tsc --project tsconfig.build.json && prettier --write src/bundle",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",
     "format": "prettier --write .",

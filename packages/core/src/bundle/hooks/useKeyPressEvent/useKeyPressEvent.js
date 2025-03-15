@@ -26,39 +26,37 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const ref = useKeyPressEvent('Enter', (event) => console.log('pressed'));
  */
-export const useKeyPressEvent = ((...params) => {
-    const target = isTarget(params[0]) ? params[0] : undefined;
-    const key = (target ? params[1] : params[0]);
-    const listener = (target ? params[2] : params[1]);
-    const options = (target ? params[3] : params[2]);
-    const internalRef = useRefState(window);
-    const keyRef = useRef(key);
-    keyRef.current = key;
-    const listenerRef = useRef(listener);
-    listenerRef.current = listener;
-    useEffect(() => {
-        const element = (target ? getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        const onKeyDown = (event) => {
-            const keyboardEvent = event;
-            const keys = Array.isArray(keyRef.current) ? keyRef.current : [keyRef.current];
-            if (keys.includes(keyboardEvent.key)) {
-                listenerRef.current(keyboardEvent);
-            }
-        };
-        element.addEventListener('keydown', onKeyDown, {
-            capture: options?.capture,
-            passive: options?.passive,
-            once: options?.once
-        });
-        return () => {
-            element.removeEventListener('keydown', onKeyDown, {
-                capture: options?.capture
-            });
-        };
-    }, [target, internalRef.state, options?.capture, options?.passive, options?.once]);
-    if (target)
-        return;
-    return internalRef;
-});
+export const useKeyPressEvent = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const key = target ? params[1] : params[0];
+  const listener = target ? params[2] : params[1];
+  const options = target ? params[3] : params[2];
+  const internalRef = useRefState(window);
+  const keyRef = useRef(key);
+  keyRef.current = key;
+  const listenerRef = useRef(listener);
+  listenerRef.current = listener;
+  useEffect(() => {
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    const onKeyDown = (event) => {
+      const keyboardEvent = event;
+      const keys = Array.isArray(keyRef.current) ? keyRef.current : [keyRef.current];
+      if (keys.includes(keyboardEvent.key)) {
+        listenerRef.current(keyboardEvent);
+      }
+    };
+    element.addEventListener('keydown', onKeyDown, {
+      capture: options?.capture,
+      passive: options?.passive,
+      once: options?.once
+    });
+    return () => {
+      element.removeEventListener('keydown', onKeyDown, {
+        capture: options?.capture
+      });
+    };
+  }, [target, internalRef.state, options?.capture, options?.passive, options?.once]);
+  if (target) return;
+  return internalRef;
+};

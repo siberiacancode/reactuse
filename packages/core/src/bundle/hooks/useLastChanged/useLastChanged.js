@@ -13,7 +13,7 @@ import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
  * const lastChanged = useLastChanged(source);
  */
 export const useLastChanged = (source, options) => {
-    const [lastChanged, setLastChanged] = useState(options?.initialValue ?? null);
-    useDidUpdate(() => setLastChanged(Date.now()), [source]);
-    return lastChanged;
+  const [lastChanged, setLastChanged] = useState(options?.initialValue ?? null);
+  useDidUpdate(() => setLastChanged(Date.now()), [source]);
+  return lastChanged;
 };

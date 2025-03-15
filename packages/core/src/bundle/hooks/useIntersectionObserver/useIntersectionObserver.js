@@ -26,37 +26,37 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { entry, inView } = useIntersectionObserver(ref);
  */
-export const useIntersectionObserver = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target ? params[1] : params[0]);
-    const enabled = options?.enabled ?? true;
-    const [entry, setEntry] = useState();
-    const internalRef = useRefState();
-    const internalOnChangeRef = useRef(options?.onChange);
-    internalOnChangeRef.current = options?.onChange;
-    useEffect(() => {
-        if (!enabled && !target && !internalRef.state)
-            return;
-        const element = target ? getElement(target) : internalRef.current;
-        if (!element)
-            return;
-        const observer = new IntersectionObserver(([entry]) => {
-            setEntry(entry);
-            internalOnChangeRef.current?.(entry);
-        }, {
-            ...options,
-            root: options?.root ? getElement(options.root) : document
-        });
-        observer.observe(element);
-        return () => {
-            observer.disconnect();
-        };
-    }, [target, internalRef.state, options?.rootMargin, options?.threshold, options?.root, enabled]);
-    if (target)
-        return { entry, inView: !!entry?.isIntersecting };
-    return {
-        ref: internalRef,
-        entry,
-        inView: !!entry?.isIntersecting
+export const useIntersectionObserver = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target ? params[1] : params[0];
+  const enabled = options?.enabled ?? true;
+  const [entry, setEntry] = useState();
+  const internalRef = useRefState();
+  const internalOnChangeRef = useRef(options?.onChange);
+  internalOnChangeRef.current = options?.onChange;
+  useEffect(() => {
+    if (!enabled && !target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setEntry(entry);
+        internalOnChangeRef.current?.(entry);
+      },
+      {
+        ...options,
+        root: options?.root ? getElement(options.root) : document
+      }
+    );
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
     };
-});
+  }, [target, internalRef.state, options?.rootMargin, options?.threshold, options?.root, enabled]);
+  if (target) return { entry, inView: !!entry?.isIntersecting };
+  return {
+    ref: internalRef,
+    entry,
+    inView: !!entry?.isIntersecting
+  };
+};

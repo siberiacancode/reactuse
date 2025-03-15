@@ -10,9 +10,9 @@ import { useEffect, useRef } from 'react';
  * const renderCount = useRenderCount();
  */
 export const useRenderCount = () => {
-    const renderCountRef = useRef(0);
-    useEffect(() => {
-        renderCountRef.current += 1;
-    });
-    return renderCountRef.current;
+  const renderCountRef = useRef(0);
+  useEffect(() => {
+    renderCountRef.current += 1;
+  });
+  return renderCountRef.current;
 };

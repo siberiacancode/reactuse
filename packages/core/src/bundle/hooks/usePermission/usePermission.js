@@ -15,33 +15,31 @@ import { useEvent } from '../useEvent/useEvent';
  *  const { state, supported, query } = usePermission('microphone');
  */
 export const usePermission = (permissionDescriptorName, options) => {
-    const supported = typeof navigator !== 'undefined' && 'permissions' in navigator;
-    const [state, setState] = useState('prompt');
-    const enabled = options?.enabled ?? true;
-    const permissionDescriptor = { name: permissionDescriptorName };
-    const query = useEvent(async () => {
-        try {
-            const permissionStatus = await navigator.permissions.query(permissionDescriptor);
-            setState(permissionStatus.state);
-            return permissionStatus.state;
-        }
-        catch {
-            setState('prompt');
-            return 'prompt';
-        }
-    });
-    useEffect(() => {
-        if (!supported || !enabled)
-            return;
-        query();
-        window.addEventListener('change', query);
-        return () => {
-            window.removeEventListener('change', query);
-        };
-    }, [permissionDescriptorName, enabled]);
-    return {
-        state,
-        supported,
-        query
+  const supported = typeof navigator !== 'undefined' && 'permissions' in navigator;
+  const [state, setState] = useState('prompt');
+  const enabled = options?.enabled ?? true;
+  const permissionDescriptor = { name: permissionDescriptorName };
+  const query = useEvent(async () => {
+    try {
+      const permissionStatus = await navigator.permissions.query(permissionDescriptor);
+      setState(permissionStatus.state);
+      return permissionStatus.state;
+    } catch {
+      setState('prompt');
+      return 'prompt';
+    }
+  });
+  useEffect(() => {
+    if (!supported || !enabled) return;
+    query();
+    window.addEventListener('change', query);
+    return () => {
+      window.removeEventListener('change', query);
     };
+  }, [permissionDescriptorName, enabled]);
+  return {
+    state,
+    supported,
+    query
+  };
 };

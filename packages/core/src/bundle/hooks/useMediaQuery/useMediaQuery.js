@@ -14,13 +14,16 @@ const getServerSnapshot = () => false;
  * const matches = useMediaQuery('(max-width: 768px)');
  */
 export const useMediaQuery = (query) => {
-    const subscribe = useCallback((callback) => {
-        const matchMedia = window.matchMedia(query);
-        matchMedia.addEventListener('change', callback);
-        return () => {
-            matchMedia.removeEventListener('change', callback);
-        };
-    }, [query]);
-    const getSnapshot = () => window.matchMedia(query).matches;
-    return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const subscribe = useCallback(
+    (callback) => {
+      const matchMedia = window.matchMedia(query);
+      matchMedia.addEventListener('change', callback);
+      return () => {
+        matchMedia.removeEventListener('change', callback);
+      };
+    },
+    [query]
+  );
+  const getSnapshot = () => window.matchMedia(query).matches;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 };

@@ -13,12 +13,12 @@ import { useInterval } from '../useInterval/useInterval';
  * const { supported, value } = useMemory();
  */
 export const useMemory = () => {
-    const supported = performance && 'memory' in performance;
-    const [value, setValue] = useState({
-        jsHeapSizeLimit: 0,
-        totalJSHeapSize: 0,
-        usedJSHeapSize: 0
-    });
-    useInterval(() => setValue(performance.memory), 1000, { immediately: supported });
-    return { supported, value };
+  const supported = performance && 'memory' in performance;
+  const [value, setValue] = useState({
+    jsHeapSizeLimit: 0,
+    totalJSHeapSize: 0,
+    usedJSHeapSize: 0
+  });
+  useInterval(() => setValue(performance.memory), 1000, { immediately: supported });
+  return { supported, value };
 };

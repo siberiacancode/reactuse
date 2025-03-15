@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 const DEFAULT_OPTIONS = {
-    multiple: true,
-    accept: '*',
-    reset: false
+  multiple: true,
+  accept: '*',
+  reset: false
 };
 /**
  * @name useFileDialog
@@ -30,47 +30,43 @@ const DEFAULT_OPTIONS = {
  * @example
  * const { values, open, reset } = useFileDialog({ accept: 'image/*' });
  */
-export const useFileDialog = ((...params) => {
-    const callback = (typeof params[0] === 'function' ? params[0] : undefined);
-    const options = (callback ? params[0] : params[1]);
-    const [value, setValue] = useState(null);
-    const inputRef = useRef(null);
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    const reset = () => {
-        setValue(null);
-        internalCallbackRef.current?.(null);
-        if (inputRef.current)
-            inputRef.current.value = '';
+export const useFileDialog = (...params) => {
+  const callback = typeof params[0] === 'function' ? params[0] : undefined;
+  const options = callback ? params[0] : params[1];
+  const [value, setValue] = useState(null);
+  const inputRef = useRef(null);
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  const reset = () => {
+    setValue(null);
+    internalCallbackRef.current?.(null);
+    if (inputRef.current) inputRef.current.value = '';
+  };
+  const open = (openParams) => {
+    if (!inputRef.current) return;
+    inputRef.current.multiple =
+      openParams?.multiple ?? options?.multiple ?? DEFAULT_OPTIONS.multiple;
+    inputRef.current.accept = openParams?.accept ?? options?.accept ?? DEFAULT_OPTIONS.accept;
+    const capture = openParams?.capture ?? options?.capture;
+    if (capture) inputRef.current.capture = capture;
+    if (openParams?.reset ?? options?.reset ?? DEFAULT_OPTIONS.reset) reset();
+    inputRef.current.click();
+  };
+  useEffect(() => {
+    const init = () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.onchange = (event) => {
+        const { files } = event.target;
+        setValue(files);
+        internalCallbackRef.current?.(files);
+      };
+      return input;
     };
-    const open = (openParams) => {
-        if (!inputRef.current)
-            return;
-        inputRef.current.multiple =
-            openParams?.multiple ?? options?.multiple ?? DEFAULT_OPTIONS.multiple;
-        inputRef.current.accept = openParams?.accept ?? options?.accept ?? DEFAULT_OPTIONS.accept;
-        const capture = openParams?.capture ?? options?.capture;
-        if (capture)
-            inputRef.current.capture = capture;
-        if (openParams?.reset ?? options?.reset ?? DEFAULT_OPTIONS.reset)
-            reset();
-        inputRef.current.click();
+    inputRef.current = init();
+    return () => {
+      inputRef.current?.remove();
     };
-    useEffect(() => {
-        const init = () => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.onchange = (event) => {
-                const { files } = event.target;
-                setValue(files);
-                internalCallbackRef.current?.(files);
-            };
-            return input;
-        };
-        inputRef.current = init();
-        return () => {
-            inputRef.current?.remove();
-        };
-    }, [options?.multiple, options?.accept, options?.capture, options?.reset]);
-    return { value, open, reset };
-});
+  }, [options?.multiple, options?.accept, options?.capture, options?.reset]);
+  return { value, open, reset };
+};

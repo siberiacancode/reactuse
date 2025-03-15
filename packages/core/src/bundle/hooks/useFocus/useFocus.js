@@ -26,48 +26,43 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, focus, blur, focused } = useFocus();
  */
-export const useFocus = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target ? params[1] : params[0]) ?? {};
-    const initialValue = options.initialValue ?? false;
-    const [focused, setFocused] = useState(initialValue);
-    const internalRef = useRefState();
-    const internalOptionsRef = useRef(options);
-    internalOptionsRef.current = options;
-    const elementRef = useRef(null);
-    const focus = () => elementRef.current?.focus();
-    const blur = () => elementRef.current?.blur();
-    useEffect(() => {
-        if (!target && !internalRef.state)
-            return;
-        const element = (target ? getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        elementRef.current = element;
-        const onFocus = (event) => {
-            internalOptionsRef.current?.onFocus?.(event);
-            if (!focus || event.target.matches?.(':focus-visible'))
-                setFocused(true);
-        };
-        const onBlur = (event) => {
-            internalOptionsRef.current?.onBlur?.(event);
-            setFocused(false);
-        };
-        if (initialValue)
-            element.focus();
-        element.addEventListener('focus', onFocus);
-        element.addEventListener('blur', onBlur);
-        return () => {
-            element.removeEventListener('focus', onFocus);
-            element.removeEventListener('blur', onBlur);
-        };
-    }, [target, internalRef.state]);
-    if (target)
-        return { focus, blur, focused };
-    return {
-        ref: internalRef,
-        focus,
-        blur,
-        focused
+export const useFocus = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = (target ? params[1] : params[0]) ?? {};
+  const initialValue = options.initialValue ?? false;
+  const [focused, setFocused] = useState(initialValue);
+  const internalRef = useRefState();
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  const elementRef = useRef(null);
+  const focus = () => elementRef.current?.focus();
+  const blur = () => elementRef.current?.blur();
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    elementRef.current = element;
+    const onFocus = (event) => {
+      internalOptionsRef.current?.onFocus?.(event);
+      if (!focus || event.target.matches?.(':focus-visible')) setFocused(true);
     };
-});
+    const onBlur = (event) => {
+      internalOptionsRef.current?.onBlur?.(event);
+      setFocused(false);
+    };
+    if (initialValue) element.focus();
+    element.addEventListener('focus', onFocus);
+    element.addEventListener('blur', onBlur);
+    return () => {
+      element.removeEventListener('focus', onFocus);
+      element.removeEventListener('blur', onBlur);
+    };
+  }, [target, internalRef.state]);
+  if (target) return { focus, blur, focused };
+  return {
+    ref: internalRef,
+    focus,
+    blur,
+    focused
+  };
+};

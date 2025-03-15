@@ -12,38 +12,36 @@ import { useEffect, useRef, useState } from 'react';
  * const { value, set } = useDocumentTitle();
  */
 export function useDocumentTitle(initialValue, options) {
-    const prevValueRef = useRef(document.title);
-    const [value, setValue] = useState(initialValue ?? document.title);
-    const set = (value) => {
-        const updatedValue = value.trim();
-        if (updatedValue.length > 0)
-            document.title = updatedValue;
-    };
-    useEffect(() => {
-        if (typeof value !== 'string')
-            return;
-        set(value);
-    }, [value]);
-    useEffect(() => {
-        const observer = new MutationObserver(() => {
-            setValue((prevValue) => {
-                if (document && document.title !== prevValue) {
-                    return document.title;
-                }
-                return prevValue;
-            });
-        });
-        observer.observe(document.head.querySelector('title'), { childList: true });
-        return () => {
-            observer.disconnect();
-        };
-    }, []);
-    useEffect(() => {
-        if (options?.restoreOnUnmount) {
-            return () => {
-                document.title = prevValueRef.current;
-            };
+  const prevValueRef = useRef(document.title);
+  const [value, setValue] = useState(initialValue ?? document.title);
+  const set = (value) => {
+    const updatedValue = value.trim();
+    if (updatedValue.length > 0) document.title = updatedValue;
+  };
+  useEffect(() => {
+    if (typeof value !== 'string') return;
+    set(value);
+  }, [value]);
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setValue((prevValue) => {
+        if (document && document.title !== prevValue) {
+          return document.title;
         }
-    }, []);
-    return { value, set };
+        return prevValue;
+      });
+    });
+    observer.observe(document.head.querySelector('title'), { childList: true });
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+  useEffect(() => {
+    if (options?.restoreOnUnmount) {
+      return () => {
+        document.title = prevValueRef.current;
+      };
+    }
+  }, []);
+  return { value, set };
 }

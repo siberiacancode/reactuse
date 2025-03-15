@@ -2,12 +2,12 @@ import { useSyncExternalStore } from 'react';
 const getSnapshot = () => navigator.onLine;
 const getServerSnapshot = () => false;
 const subscribe = (callback) => {
-    window.addEventListener('online', callback);
-    window.addEventListener('offline', callback);
-    return () => {
-        window.removeEventListener('online', callback);
-        window.removeEventListener('offline', callback);
-    };
+  window.addEventListener('online', callback);
+  window.addEventListener('offline', callback);
+  return () => {
+    window.removeEventListener('online', callback);
+    window.removeEventListener('offline', callback);
+  };
 };
 /**
  * @name useOnline

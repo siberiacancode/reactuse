@@ -21,42 +21,38 @@ const FIRST_STEP_VALUE = 1;
  * const stepper = useStep({ initial: 2, max: 5 });
  */
 export const useStep = (params) => {
-    const max = typeof params === 'object' ? params.max : params;
-    const initial = typeof params === 'object' ? params.initial : FIRST_STEP_VALUE;
-    const initialStep = useRef(initial > max || initial < FIRST_STEP_VALUE ? FIRST_STEP_VALUE : initial);
-    const [currentStep, setCurrentStep] = useState(initial);
-    const isFirst = currentStep === FIRST_STEP_VALUE;
-    const isLast = currentStep === max;
-    const next = () => {
-        if (isLast)
-            return;
-        setCurrentStep((prevStep) => prevStep + 1);
-    };
-    const back = () => {
-        if (isFirst)
-            return;
-        setCurrentStep((prevStep) => prevStep - 1);
-    };
-    const reset = () => setCurrentStep(initialStep.current);
-    const set = (value) => {
-        if (value === 'first')
-            return setCurrentStep(initialStep.current);
-        if (value === 'last')
-            return setCurrentStep(max);
-        if (value >= max)
-            return setCurrentStep(max);
-        if (value <= FIRST_STEP_VALUE)
-            return setCurrentStep(FIRST_STEP_VALUE);
-        setCurrentStep(value);
-    };
-    return {
-        counts: max,
-        currentStep,
-        isFirst,
-        isLast,
-        next,
-        back,
-        reset,
-        set
-    };
+  const max = typeof params === 'object' ? params.max : params;
+  const initial = typeof params === 'object' ? params.initial : FIRST_STEP_VALUE;
+  const initialStep = useRef(
+    initial > max || initial < FIRST_STEP_VALUE ? FIRST_STEP_VALUE : initial
+  );
+  const [currentStep, setCurrentStep] = useState(initial);
+  const isFirst = currentStep === FIRST_STEP_VALUE;
+  const isLast = currentStep === max;
+  const next = () => {
+    if (isLast) return;
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
+  const back = () => {
+    if (isFirst) return;
+    setCurrentStep((prevStep) => prevStep - 1);
+  };
+  const reset = () => setCurrentStep(initialStep.current);
+  const set = (value) => {
+    if (value === 'first') return setCurrentStep(initialStep.current);
+    if (value === 'last') return setCurrentStep(max);
+    if (value >= max) return setCurrentStep(max);
+    if (value <= FIRST_STEP_VALUE) return setCurrentStep(FIRST_STEP_VALUE);
+    setCurrentStep(value);
+  };
+  return {
+    counts: max,
+    currentStep,
+    isFirst,
+    isLast,
+    next,
+    back,
+    reset,
+    set
+  };
 };

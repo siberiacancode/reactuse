@@ -20,38 +20,34 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();
  */
-export const useMeasure = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const internalRef = useRefState();
-    const [rect, setRect] = useState({
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0,
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0
+export const useMeasure = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const internalRef = useRefState();
+  const [rect, setRect] = useState({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  });
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      const { x, y, width, height, top, left, bottom, right } = entry.contentRect;
+      setRect({ x, y, width, height, top, left, bottom, right });
     });
-    useEffect(() => {
-        if (!target && !internalRef.state)
-            return;
-        const element = (target ? getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        const resizeObserver = new ResizeObserver((entries) => {
-            const entry = entries[0];
-            if (!entry)
-                return;
-            const { x, y, width, height, top, left, bottom, right } = entry.contentRect;
-            setRect({ x, y, width, height, top, left, bottom, right });
-        });
-        resizeObserver.observe(element);
-        return () => {
-            resizeObserver.disconnect();
-        };
-    }, [target, internalRef.state]);
-    if (target)
-        return rect;
-    return { ref: internalRef, ...rect };
-});
+    resizeObserver.observe(element);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [target, internalRef.state]);
+  if (target) return rect;
+  return { ref: internalRef, ...rect };
+};

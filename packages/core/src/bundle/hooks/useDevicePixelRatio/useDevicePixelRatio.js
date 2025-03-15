@@ -12,19 +12,19 @@ import { useEffect, useState } from 'react';
  * const { supported, ratio } = useDevicePixelRatio();
  */
 export const useDevicePixelRatio = () => {
-    const supported = typeof window !== 'undefined' &&
-        typeof window.matchMedia === 'function' &&
-        typeof window.devicePixelRatio === 'number';
-    const [ratio, setRatio] = useState(window.devicePixelRatio ?? 1);
-    useEffect(() => {
-        if (!supported)
-            return;
-        const onChange = () => setRatio(window.devicePixelRatio);
-        const media = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
-        media.addEventListener('change', onChange);
-        return () => {
-            media.removeEventListener('change', onChange);
-        };
-    }, [ratio]);
-    return { supported, ratio };
+  const supported =
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    typeof window.devicePixelRatio === 'number';
+  const [ratio, setRatio] = useState(window.devicePixelRatio ?? 1);
+  useEffect(() => {
+    if (!supported) return;
+    const onChange = () => setRatio(window.devicePixelRatio);
+    const media = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+    media.addEventListener('change', onChange);
+    return () => {
+      media.removeEventListener('change', onChange);
+    };
+  }, [ratio]);
+  return { supported, ratio };
 };

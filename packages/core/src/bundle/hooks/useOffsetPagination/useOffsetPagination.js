@@ -23,53 +23,58 @@ import { useEffect, useRef, useState } from 'react';
  *  onPageSizeChange: (pageSize) => {}
  * });
  */
-export const useOffsetPagination = ({ total = Number.POSITIVE_INFINITY, pageSize = 10, initialPage = 1, onPageChange = () => { }, onPageCountChange = () => { }, onPageSizeChange = () => { } } = {}) => {
-    const [page, setPage] = useState(initialPage);
-    const onPageChangeRef = useRef(onPageChange);
-    const onPageCountChangeRef = useRef(onPageCountChange);
-    const onPageSizeChangeRef = useRef(onPageSizeChange);
-    onPageChangeRef.current = onPageChange;
-    onPageCountChangeRef.current = onPageCountChange;
-    onPageSizeChangeRef.current = onPageSizeChange;
-    const pageCount = Math.max(1, Math.ceil(total / pageSize));
-    const isFirstPage = page === 1;
-    const isLastPage = page === pageCount;
-    const next = () => {
-        if (isLastPage)
-            return onPageChange({ page: pageCount, pageSize });
-        setPage((prevPage) => {
-            const page = prevPage + 1;
-            onPageChange({ page, pageSize });
-            return page;
-        });
-    };
-    const prev = () => {
-        if (isFirstPage)
-            return onPageChange({ page: 1, pageSize });
-        setPage((prevPage) => {
-            const page = prevPage - 1;
-            onPageChange({ page, pageSize });
-            return page;
-        });
-    };
-    const set = (page) => {
-        setPage(page);
-        onPageChange({ page, pageSize });
-    };
-    useEffect(() => {
-        onPageCountChangeRef.current({ page, pageSize });
-    }, [pageCount]);
-    useEffect(() => {
-        onPageSizeChangeRef.current({ page, pageSize });
-    }, [pageSize]);
-    return {
-        page,
-        set,
-        currentPageSize: pageSize,
-        isFirstPage,
-        isLastPage,
-        pageCount,
-        next,
-        prev
-    };
+export const useOffsetPagination = ({
+  total = Number.POSITIVE_INFINITY,
+  pageSize = 10,
+  initialPage = 1,
+  onPageChange = () => {},
+  onPageCountChange = () => {},
+  onPageSizeChange = () => {}
+} = {}) => {
+  const [page, setPage] = useState(initialPage);
+  const onPageChangeRef = useRef(onPageChange);
+  const onPageCountChangeRef = useRef(onPageCountChange);
+  const onPageSizeChangeRef = useRef(onPageSizeChange);
+  onPageChangeRef.current = onPageChange;
+  onPageCountChangeRef.current = onPageCountChange;
+  onPageSizeChangeRef.current = onPageSizeChange;
+  const pageCount = Math.max(1, Math.ceil(total / pageSize));
+  const isFirstPage = page === 1;
+  const isLastPage = page === pageCount;
+  const next = () => {
+    if (isLastPage) return onPageChange({ page: pageCount, pageSize });
+    setPage((prevPage) => {
+      const page = prevPage + 1;
+      onPageChange({ page, pageSize });
+      return page;
+    });
+  };
+  const prev = () => {
+    if (isFirstPage) return onPageChange({ page: 1, pageSize });
+    setPage((prevPage) => {
+      const page = prevPage - 1;
+      onPageChange({ page, pageSize });
+      return page;
+    });
+  };
+  const set = (page) => {
+    setPage(page);
+    onPageChange({ page, pageSize });
+  };
+  useEffect(() => {
+    onPageCountChangeRef.current({ page, pageSize });
+  }, [pageCount]);
+  useEffect(() => {
+    onPageSizeChangeRef.current({ page, pageSize });
+  }, [pageSize]);
+  return {
+    page,
+    set,
+    currentPageSize: pageSize,
+    isFirstPage,
+    isLastPage,
+    pageCount,
+    next,
+    prev
+  };
 };

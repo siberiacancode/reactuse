@@ -29,33 +29,30 @@ import { useRefState } from '../useRefState/useRefState';
  *  @example
  *  const { entries } = useResizeObserver(ref);
  */
-export const useResizeObserver = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target ? params[1] : params[0]);
-    const enabled = options?.enabled ?? true;
-    const [entries, setEntries] = useState([]);
-    const internalRef = useRefState();
-    const internalOnChangeRef = useRef();
-    internalOnChangeRef.current = options?.onChange;
-    useEffect(() => {
-        if (!enabled && !target && !internalRef.state)
-            return;
-        const element = target ? getElement(target) : internalRef.current;
-        if (!element)
-            return;
-        const observer = new ResizeObserver((entries) => {
-            setEntries(entries);
-            internalOnChangeRef.current?.(entries, observer);
-        });
-        observer.observe(element, options);
-        return () => {
-            observer.disconnect();
-        };
-    }, [target, internalRef.state, options?.box, enabled]);
-    if (target)
-        return { entries };
-    return {
-        ref: internalRef,
-        entries
+export const useResizeObserver = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target ? params[1] : params[0];
+  const enabled = options?.enabled ?? true;
+  const [entries, setEntries] = useState([]);
+  const internalRef = useRefState();
+  const internalOnChangeRef = useRef();
+  internalOnChangeRef.current = options?.onChange;
+  useEffect(() => {
+    if (!enabled && !target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    const observer = new ResizeObserver((entries) => {
+      setEntries(entries);
+      internalOnChangeRef.current?.(entries, observer);
+    });
+    observer.observe(element, options);
+    return () => {
+      observer.disconnect();
     };
-});
+  }, [target, internalRef.state, options?.box, enabled]);
+  if (target) return { entries };
+  return {
+    ref: internalRef,
+    entries
+  };
+};

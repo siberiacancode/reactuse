@@ -14,13 +14,13 @@ import { copy } from '@/utils/helpers';
  * const { copied, value, copy } = useCopy();
  */
 export const useCopy = (delay = 1000) => {
-    const [value, setValue] = useState(null);
-    const [copied, setCopied] = useState(false);
-    const copyToClipboard = async (text) => {
-        await copy(text);
-        setValue(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), delay);
-    };
-    return { value, copied, copy: copyToClipboard };
+  const [value, setValue] = useState(null);
+  const [copied, setCopied] = useState(false);
+  const copyToClipboard = async (text) => {
+    await copy(text);
+    setValue(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), delay);
+  };
+  return { value, copied, copy: copyToClipboard };
 };

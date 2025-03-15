@@ -12,57 +12,50 @@ import { useEffect, useState } from 'react';
  * const { supported, lock, unlock, element } = usePointerLock();
  */
 export const usePointerLock = () => {
-    const supported = typeof document !== 'undefined' && 'pointerLockElement' in document;
-    const [element, setElement] = useState();
-    useEffect(() => {
-        if (!supported)
-            return;
-        const handlePointerLockChange = () => {
-            if (!supported)
-                return;
-            const currentElement = document.pointerLockElement ?? element;
-            if (currentElement && currentElement === element) {
-                setElement(document.pointerLockElement);
-            }
-        };
-        const handlePointerLockError = () => {
-            if (!supported)
-                return;
-            const currentElement = document.pointerLockElement ?? element;
-            if (currentElement && currentElement === element) {
-                const action = document.pointerLockElement ? 'release' : 'acquire';
-                throw new Error(`Failed to ${action} pointer lock.`);
-            }
-        };
-        document.addEventListener('pointerlockchange', handlePointerLockChange);
-        document.addEventListener('pointerlockerror', handlePointerLockError);
-        return () => {
-            document.removeEventListener('pointerlockchange', handlePointerLockChange);
-            document.removeEventListener('pointerlockerror', handlePointerLockError);
-        };
-    }, []);
-    const lock = (event) => {
-        if (!supported)
-            return false;
-        if (event instanceof Event)
-            return false;
-        event.currentTarget.requestPointerLock();
-        setElement(event.currentTarget);
-        return true;
+  const supported = typeof document !== 'undefined' && 'pointerLockElement' in document;
+  const [element, setElement] = useState();
+  useEffect(() => {
+    if (!supported) return;
+    const handlePointerLockChange = () => {
+      if (!supported) return;
+      const currentElement = document.pointerLockElement ?? element;
+      if (currentElement && currentElement === element) {
+        setElement(document.pointerLockElement);
+      }
     };
-    const unlock = () => {
-        if (!supported)
-            return false;
-        if (!element)
-            return false;
-        document.exitPointerLock();
-        setElement(undefined);
-        return true;
+    const handlePointerLockError = () => {
+      if (!supported) return;
+      const currentElement = document.pointerLockElement ?? element;
+      if (currentElement && currentElement === element) {
+        const action = document.pointerLockElement ? 'release' : 'acquire';
+        throw new Error(`Failed to ${action} pointer lock.`);
+      }
     };
-    return {
-        supported,
-        element,
-        lock,
-        unlock
+    document.addEventListener('pointerlockchange', handlePointerLockChange);
+    document.addEventListener('pointerlockerror', handlePointerLockError);
+    return () => {
+      document.removeEventListener('pointerlockchange', handlePointerLockChange);
+      document.removeEventListener('pointerlockerror', handlePointerLockError);
     };
+  }, []);
+  const lock = (event) => {
+    if (!supported) return false;
+    if (event instanceof Event) return false;
+    event.currentTarget.requestPointerLock();
+    setElement(event.currentTarget);
+    return true;
+  };
+  const unlock = () => {
+    if (!supported) return false;
+    if (!element) return false;
+    document.exitPointerLock();
+    setElement(undefined);
+    return true;
+  };
+  return {
+    supported,
+    element,
+    lock,
+    unlock
+  };
 };
