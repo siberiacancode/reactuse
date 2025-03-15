@@ -10,7 +10,7 @@ const Demo = () => {
     });
 
     return (
-        <div ref={rootRef} className='scroll-container h-96 overflow-y-auto'>
+        <div ref={rootRef} className='scroll-container h-96 overflow-y-auto p-2'>
             <div className='flex h-24 items-center justify-center'>
                 Scroll down to see the element stick to the top
             </div>
