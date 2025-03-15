@@ -38,7 +38,6 @@ export interface UseSticky {
  *
  * @overload
  * @param {HookTarget} target The target sticky element
- * @param {UseStickyOptions} options Configuration options
  * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component
  * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component
  * @returns {UseStickyReturn} The state of the sticky
@@ -47,7 +46,6 @@ export interface UseSticky {
  * const stuck  = useSticky(ref);
  *
  * @overload
- * @param {UseStickyOptions} options Configuration options
  * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component
  * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component
  * @returns {{ stickyRef: StateRef<Target> } & UseStickyReturn} The state of the sticky

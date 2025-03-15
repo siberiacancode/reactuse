@@ -124,3 +124,4 @@ export * from './useWindowFocus/useWindowFocus';
 export * from './useWindowScroll/useWindowScroll';
 export * from './useWindowSize/useWindowSize';
 export * from './useWizard/useWizard';
+export * from './useLockCallback/useLockCallback';
