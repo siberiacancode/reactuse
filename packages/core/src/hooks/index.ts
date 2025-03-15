@@ -56,6 +56,7 @@ export * from './useLatest/useLatest';
 export * from './useLess/useLess';
 export * from './useList/useList';
 export * from './useLocalStorage/useLocalStorage';
+export * from './useLockCallback/useLockCallback';
 export * from './useLogger/useLogger';
 export * from './useLongPress/useLongPress';
 export * from './useMap/useMap';
