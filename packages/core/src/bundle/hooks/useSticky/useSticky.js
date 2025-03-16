@@ -89,10 +89,10 @@ export const useSticky = (...params) => {
   const [stuck, setStuck] = useState(false);
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : getElement(internalRef);
+    const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
     const root = options?.root ? getElement(options.root) : document;
-    const checkSticky = () => {
+    const onSticky = () => {
       const { pageOffsetTop, pageOffsetBottom, pageOffsetLeft, pageOffsetRight } =
         root instanceof Document ? getPageOffset(element) : getRelativeOffset(element, root);
       const { stickyOffsetTop, stickyOffsetBottom, stickyOffsetLeft, stickyOffsetRight } =
@@ -109,16 +109,16 @@ export const useSticky = (...params) => {
       }[axis];
       setStuck(stuck);
     };
-    root.addEventListener('scroll', checkSticky);
-    window.addEventListener('resize', checkSticky);
-    window.addEventListener('orientationchange', checkSticky);
-    checkSticky();
+    root.addEventListener('scroll', onSticky);
+    window.addEventListener('resize', onSticky);
+    window.addEventListener('orientationchange', onSticky);
+    onSticky();
     return () => {
-      root.removeEventListener('scroll', checkSticky);
-      window.removeEventListener('resize', checkSticky);
-      window.removeEventListener('orientationchange', checkSticky);
+      root.removeEventListener('scroll', onSticky);
+      window.removeEventListener('resize', onSticky);
+      window.removeEventListener('orientationchange', onSticky);
     };
-  }, [axis, options?.root, target, internalRef.state]);
+  }, [target, internalRef.state, axis, options?.root]);
   return {
     stuck,
     ref: internalRef
