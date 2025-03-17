@@ -59,7 +59,7 @@ export const useCookie = (key, params) => {
   const initialValue = options ? options?.initialValue : params;
   if (typeof document === 'undefined')
     return {
-      value: initialValue instanceof Function ? initialValue() : initialValue
+      value: typeof initialValue === 'function' ? initialValue() : initialValue
     };
   const serializer = (value) => {
     if (options?.serializer) return options.serializer(value);
@@ -78,7 +78,7 @@ export const useCookie = (key, params) => {
   const [value, setValue] = useState(() => {
     const cookieValue = getCookie(key);
     if (cookieValue === undefined && initialValue !== undefined) {
-      const value = initialValue instanceof Function ? initialValue() : initialValue;
+      const value = typeof initialValue === 'function' ? initialValue() : initialValue;
       setCookieItem(key, serializer(value), options);
       return value;
     }

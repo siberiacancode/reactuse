@@ -67,12 +67,12 @@ export interface UseOtpCredential {
  */
 export const useOtpCredential = ((...params: any[]) => {
   const onSuccess =
-    params[0] instanceof Function
+    typeof params[0] === 'function'
       ? (params[0] as UseOtpCredentialCallback | undefined)
       : (params[0] as UseOtpCredentialParams | undefined)?.onSuccess;
 
   const onError =
-    params[0] instanceof Function
+    typeof params[0] === 'function'
       ? (params[0] as UseOtpCredentialParams | undefined)?.onError
       : undefined;
 

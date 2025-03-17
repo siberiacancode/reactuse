@@ -137,7 +137,7 @@ export const useCookie = <Value>(
 
   if (typeof document === 'undefined')
     return {
-      value: initialValue instanceof Function ? initialValue() : initialValue
+      value: typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue
     } as UseCookieReturn<Value>;
 
   const serializer = (value: Value) => {
@@ -160,7 +160,8 @@ export const useCookie = <Value>(
   const [value, setValue] = useState<Value | undefined>(() => {
     const cookieValue = getCookie(key);
     if (cookieValue === undefined && initialValue !== undefined) {
-      const value = initialValue instanceof Function ? initialValue() : initialValue;
+      const value =
+        typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue;
       setCookieItem(key, serializer(value), options);
       return value;
     }

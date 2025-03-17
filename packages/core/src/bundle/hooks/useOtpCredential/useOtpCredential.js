@@ -22,8 +22,8 @@ import { useRef, useState } from 'react';
  * useOtpCredential({ onSuccess: (credential) => console.log(credential), onError: (error) => console.log(error) });
  */
 export const useOtpCredential = (...params) => {
-  const onSuccess = params[0] instanceof Function ? params[0] : params[0]?.onSuccess;
-  const onError = params[0] instanceof Function ? params[0]?.onError : undefined;
+  const onSuccess = typeof params[0] === 'function' ? params[0] : params[0]?.onSuccess;
+  const onError = typeof params[0] === 'function' ? params[0]?.onError : undefined;
   const supported = typeof navigator !== 'undefined' && 'OTPCredential' in window;
   const [aborted, setAborted] = useState(false);
   const abortControllerRef = useRef(new AbortController());

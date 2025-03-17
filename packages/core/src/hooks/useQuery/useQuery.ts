@@ -183,8 +183,8 @@ export const useQuery = <QueryData, Data = QueryData>(
   const refetch = () => request('refetch');
 
   const placeholderData =
-    options?.placeholderData instanceof Function
-      ? options?.placeholderData()
+    typeof options?.placeholderData === 'function'
+      ? (options?.placeholderData as () => Data)()
       : options?.placeholderData;
 
   return {

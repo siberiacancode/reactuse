@@ -108,8 +108,8 @@ export const useQuery = (callback, options) => {
   }, [enabled, options?.refetchInterval, options?.retry, ...keys]);
   const refetch = () => request('refetch');
   const placeholderData =
-    options?.placeholderData instanceof Function
-      ? options?.placeholderData()
+    typeof options?.placeholderData === 'function'
+      ? (options?.placeholderData)()
       : options?.placeholderData;
   return {
     abort,

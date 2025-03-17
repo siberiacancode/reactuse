@@ -89,7 +89,7 @@ export const useStorage = <Value>(
 
   if (typeof window === 'undefined')
     return {
-      value: initialValue instanceof Function ? initialValue() : initialValue
+      value: typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue
     } as UseStorageReturn<Value>;
 
   const serializer = (value: Value) => {
@@ -117,7 +117,8 @@ export const useStorage = <Value>(
   const [value, setValue] = useState<Value | undefined>(() => {
     const storageValue = getStorageItem(storage, key);
     if (storageValue === undefined && initialValue !== undefined) {
-      const value = initialValue instanceof Function ? initialValue() : initialValue;
+      const value =
+        typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue;
       setStorageItem(storage, key, serializer(value));
       return value;
     }

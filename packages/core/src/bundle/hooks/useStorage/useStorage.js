@@ -51,7 +51,7 @@ export const useStorage = (key, params) => {
   const initialValue = options ? options?.initialValue : params;
   if (typeof window === 'undefined')
     return {
-      value: initialValue instanceof Function ? initialValue() : initialValue
+      value: typeof initialValue === 'function' ? initialValue() : initialValue
     };
   const serializer = (value) => {
     if (options?.serializer) return options.serializer(value);
@@ -73,7 +73,7 @@ export const useStorage = (key, params) => {
   const [value, setValue] = useState(() => {
     const storageValue = getStorageItem(storage, key);
     if (storageValue === undefined && initialValue !== undefined) {
-      const value = initialValue instanceof Function ? initialValue() : initialValue;
+      const value = typeof initialValue === 'function' ? initialValue() : initialValue;
       setStorageItem(storage, key, serializer(value));
       return value;
     }

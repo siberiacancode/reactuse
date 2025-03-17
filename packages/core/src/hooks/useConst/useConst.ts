@@ -13,4 +13,5 @@ import { useRef } from 'react';
  * const value = useConst('value');
  */
 export const useConst = <Value>(initialValue: (() => Value) | Value) =>
-  useRef<Value>(initialValue instanceof Function ? initialValue() : initialValue).current;
+  useRef<Value>(typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue)
+    .current;

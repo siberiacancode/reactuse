@@ -64,19 +64,19 @@
     "screenfull": "^6.0.2"
   },
   "devDependencies": {
-    "@siberiacancode/builder": "^1.3.17",
-    "@siberiacancode/vitest": "^2.0.2",
+    "@siberiacancode/builder": "^1.4.0",
+    "@siberiacancode/vitest": "^2.1.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "@types/web-bluetooth": "^0.0.20",
-    "core-js": "^3.40.0",
+    "@types/web-bluetooth": "^0.0.21",
+    "core-js": "^3.41.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "shx": "^0.3.4",
-    "vite": "^6.1.1",
-    "vitest": "^3.0.6"
+    "shx": "^0.4.0",
+    "vite": "^6.2.2",
+    "vitest": "^3.0.8"
   },
   "lint-staged": {
     "*.js": [
