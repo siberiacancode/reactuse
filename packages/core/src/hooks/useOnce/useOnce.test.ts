@@ -1,17 +1,17 @@
 import { renderHook } from '@testing-library/react';
 
-import { useMount } from './useMount';
+import { useOnce } from './useOnce';
 
-it('Should use mount', () => {
+it('Should use once', () => {
   const callback = vi.fn();
-  renderHook(() => useMount(callback));
+  renderHook(() => useOnce(callback));
 
   expect(callback).toHaveBeenCalled();
 });
 
 it('Should not call callback after rerender', () => {
   const callback = vi.fn();
-  const { rerender } = renderHook(() => useMount(callback));
+  const { rerender } = renderHook(() => useOnce(callback));
 
   expect(callback).toHaveBeenCalledOnce();
 
@@ -22,10 +22,11 @@ it('Should not call callback after rerender', () => {
 
 it('Should call callback on unmount', () => {
   const callback = vi.fn();
-  const { unmount } = renderHook(() => useMount(() => callback));
+  const { unmount, rerender } = renderHook(() => useOnce(() => callback));
 
   expect(callback).not.toHaveBeenCalled();
 
+  rerender();
   unmount();
 
   expect(callback).toHaveBeenCalledOnce();

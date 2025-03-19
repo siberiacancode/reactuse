@@ -20,14 +20,13 @@ const Demo = () => {
         Count: <code>{counter.value}</code>
       </p>
       <p>
-        Use effect triggered: <code>{String(useEffectTriggered)}</code>
+        <small>
+          Use effect triggered: <code>{String(useEffectTriggered)}</code>, use non initial effect
+          triggered: <code>{String(useDidUpdateTriggered)}</code>
+        </small>
       </p>
-      <p>
-        Use non initial effect triggered: <code>{String(useDidUpdateTriggered)}</code>
-      </p>
-
       <button type='button' onClick={() => counter.inc()}>
-        Force update
+        Update
       </button>
     </div>
   );

@@ -25,5 +25,5 @@ export const useSessionStorage = <Value>(
   useStorage(key, {
     ...options,
     initialValue,
-    storage: typeof window !== 'undefined' ? window.localStorage : undefined
+    storage: typeof window !== 'undefined' ? window.sessionStorage : undefined
   });
