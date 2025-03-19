@@ -69,6 +69,7 @@ export * from './useMutation/useMutation';
 export * from './useMutationObserver/useMutationObserver';
 export * from './useNetwork/useNetwork';
 export * from './useOffsetPagination/useOffsetPagination';
+export * from './useOnce/useOnce';
 export * from './useOnline/useOnline';
 export * from './useOperatingSystem/useOperatingSystem';
 export * from './useOptimistic/useOptimistic';
