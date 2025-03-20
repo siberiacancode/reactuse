@@ -119,7 +119,7 @@ Run the `useverse` init command to setup your project:
 npx useverse@latest init
 ```
 
-This will create a configuration file [`reactuse.json`](./reactuse-json.md) in your project.
+This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project.
 
 ### Add hooks
 
