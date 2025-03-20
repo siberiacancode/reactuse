@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
  * @description - Hook that runs an effect only once. Please do not use it in production code!
  * @category Humor
  *
- * @warning - This hook run only once, but it will not run twice in strict mode. Please do not use it in production code!
+ * @warning - This hook will run effect only once even in strict mode. Please do not use it in production code!
  *
  * @param {EffectCallback} effect The effect to run
  *

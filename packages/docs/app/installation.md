@@ -33,10 +33,10 @@ bun add @siberiacancode/reactuse
 How to install dependencies and structure your app with [cli](./cli.md) and [useverse](https://www.npmjs.com/package/useverse).
 
 <div class="flex flex-col gap-4 md:flex-row">
-  <a href="./frameworks/vite" target="_blank" class="w-full !no-underline">
+  <a href="./installation/vite" class="w-full !no-underline">
     <Framework framework="vite" />
   </a>
-  <a href="./frameworks/nextjs" target="_blank" class="w-full !no-underline">
+  <a href="./installation/nextjs" class="w-full !no-underline">
     <Framework framework="next" />
   </a>
 </div>

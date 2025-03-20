@@ -23,7 +23,7 @@ npx useverse@latest add [hook]
 You will be presented with a list of hooks to choose from:
 
 ```bash
-Which components would you like to add? › Space to select. A to toggle all.
+Which hooks would you like to add? › Space to select. A to toggle all.
 Enter to submit.
 
 ◯  useActiveElement
