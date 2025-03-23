@@ -68,6 +68,7 @@
     "@siberiacancode/vitest": "^2.1.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
+    "@types/dom-speech-recognition": "^0.0.4",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@types/web-bluetooth": "^0.0.21",
