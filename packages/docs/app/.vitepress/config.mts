@@ -73,6 +73,10 @@ export default async () => {
             src: '/logo.svg',
             alt: 'reactuse'
           },
+          footer: {
+            message: 'Released under the MIT License.',
+            copyright: 'Copyright © 2024 siberiacancode'
+          },
           editLink: {
             pattern: ({ filePath, params }) => {
               if (filePath.includes('hooks') && params?.name) {

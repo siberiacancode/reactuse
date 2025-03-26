@@ -11,7 +11,7 @@ Install and configure reactuse for Next.js.
 npx create-next-app@latest
 ```
 
-### Edit tsconfig.json
+### Edit tsconfig.json file
 
 Make sure your `tsconfig.json` includes the following paths configuration:
 
