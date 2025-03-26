@@ -10,7 +10,7 @@
   "homepage": "https://siberiacancode.github.io/reactuse/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/siberiacancode/reactuse.git"
+    "url": "git+https://github.com/siberiacancode/reactuse.git"
   },
   "bugs": "https://github.com/siberiacancode/reactuse/issues",
   "keywords": [
