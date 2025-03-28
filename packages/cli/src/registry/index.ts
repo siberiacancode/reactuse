@@ -1,4 +1,3 @@
-import fetches from '@siberiacancode/fetches';
 import chalk from 'chalk';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -7,22 +6,20 @@ import ora from 'ora';
 import type { HookRegistry } from '@/utils/types';
 
 import { extractDependencies } from '@/registry/utils';
-import { REPO_URLS } from '@/utils/constants';
 
 export const ROOT_PATH = path.resolve(path.resolve(), '../');
 export const DOCS_PUBLIC_PATH = path.join(ROOT_PATH, 'docs', 'app', 'public');
 export const REGISTRY_PATH = path.join(DOCS_PUBLIC_PATH, 'registry.json');
+export const CORE_HOOKS_PATH = path.join(ROOT_PATH, 'core', 'src', 'hooks');
 
 export const registry = async () => {
   console.log('📦 Building registry');
 
-  const hooksResponse = await fetches.get<{ name: string }[]>(
-    'https://api.github.com/repos/siberiacancode/reactuse/contents/packages/core/src/hooks'
-  );
-  const hooks = hooksResponse.data.filter((hook) => hook.name.startsWith('use'));
+  const hooks = fs.readdirSync(CORE_HOOKS_PATH)
+    .filter(dir => dir.startsWith('use') && fs.statSync(path.join(CORE_HOOKS_PATH, dir)).isDirectory());
 
-  const registry = hooks.map((hook) => ({
-    name: hook.name,
+  const registry = hooks.map((hookName) => ({
+    name: hookName,
     hooks: [],
     utils: [],
     packages: []
@@ -31,14 +28,13 @@ export const registry = async () => {
   console.log(chalk.cyan(`\nAdd to registry ${hooks.length} hooks`));
   const spinner = ora('Processing hooks...').start();
 
-  await Promise.all(
-    registry.map(async (hook) => {
-      const hookContentResponse = await fetches.get<string>(
-        `${REPO_URLS.TS}/hooks/${hook.name}/${hook.name}.ts`
-      );
-      Object.assign(hook, extractDependencies(hookContentResponse.data));
-    })
-  );
+  for (const hook of registry) {
+    const hookFilePath = path.join(CORE_HOOKS_PATH, hook.name, `${hook.name}.ts`);
+    if (fs.existsSync(hookFilePath)) {
+      const hookContent = fs.readFileSync(hookFilePath, 'utf-8');
+      Object.assign(hook, extractDependencies(hookContent));
+    }
+  }
 
   const result = registry.reduce(
     (acc, hook) => {
