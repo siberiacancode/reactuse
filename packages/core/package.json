@@ -41,7 +41,7 @@
   },
   "scripts": {
     "prepublishOnly": "pnpm unit-test run && pnpm build",
-    "build": "shx rm -rf dist && rollup -c --bundleConfigAsCjs",
+    "build": "shx rm -rf dist && vite build",
     "build:js": "tsc --project tsconfig.build.json && prettier --write src/bundle",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",
@@ -64,19 +64,20 @@
     "screenfull": "^6.0.2"
   },
   "devDependencies": {
-    "@siberiacancode/builder": "^1.4.0",
     "@siberiacancode/vitest": "^2.1.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@types/web-bluetooth": "^0.0.21",
+    "@vitejs/plugin-react": "^4.3.4",
     "core-js": "^3.41.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "shx": "^0.4.0",
-    "vite": "^6.2.2",
-    "vitest": "^3.0.8"
+    "vite": "^6.2.3",
+    "vite-plugin-dts": "^4.5.3",
+    "vitest": "^3.0.9"
   },
   "lint-staged": {
     "*.js": [
