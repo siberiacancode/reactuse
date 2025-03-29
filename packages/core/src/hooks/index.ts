@@ -105,6 +105,7 @@ export * from './useScrollTo/useScrollTo';
 export * from './useSessionStorage/useSessionStorage';
 export * from './useSet/useSet';
 export * from './useShare/useShare';
+export * from './useSpeechRecognition/useSpeechRecognition';
 export * from './useStateHistory/useStateHistory';
 export * from './useStep/useStep';
 export * from './useSticky/useSticky';
