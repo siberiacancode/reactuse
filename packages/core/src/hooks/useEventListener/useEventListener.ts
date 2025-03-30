@@ -17,28 +17,28 @@ export type UseEventListenerReturn<Target extends Element> = StateRef<Target>;
 
 export interface UseEventListener {
   <Event extends keyof WindowEventMap = keyof WindowEventMap>(
-    target: Window,
-    event: Event | Event[],
+    target: HookTarget,
+    event: Event,
     listener: (this: Window, event: WindowEventMap[Event]) => void,
     options?: UseEventListenerOptions
   ): void;
 
   <Event extends keyof DocumentEventMap = keyof DocumentEventMap>(
-    target: Document,
-    event: Event | Event[],
+    target: HookTarget,
+    event: Event,
     listener: (this: Document, event: DocumentEventMap[Event]) => void,
     options?: UseEventListenerOptions
   ): void;
 
   <Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(
     target: HookTarget,
-    event: Event | Event[],
+    event: Event,
     listener: (this: Element, event: HTMLElementEventMap[Event]) => void,
     options?: UseEventListenerOptions
   ): void;
 
   <Target extends Element, Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(
-    event: Event | Event[],
+    event: Event,
     listener: (this: Target, event: HTMLElementEventMap[Event]) => void,
     options?: UseEventListenerOptions,
     target?: never
@@ -48,7 +48,7 @@ export interface UseEventListener {
     Target extends Element,
     Event extends keyof MediaQueryListEventMap = keyof MediaQueryListEventMap
   >(
-    event: Event | Event[],
+    event: Event,
     listener: (this: Target, event: MediaQueryListEventMap[Event]) => void,
     options?: UseEventListenerOptions,
     target?: never
@@ -107,8 +107,7 @@ export interface UseEventListener {
  */
 export const useEventListener = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
-  const event = (target ? params[1] : params[0]) as string | string[];
-  const events = Array.isArray(event) ? event : [event];
+  const event = (target ? params[1] : params[0]) as string;
   const listener = (target ? params[2] : params[1]) as (...arg: any[]) => undefined | void;
   const options = (target ? params[3] : params[2]) as UseEventListenerOptions | undefined;
 
@@ -121,9 +120,9 @@ export const useEventListener = ((...params: any[]) => {
 
     const callback = (event: Event) => internalListener(event);
 
-    events.forEach((event) => element.addEventListener(event, callback, options));
+    element.addEventListener(event, callback, options);
     return () => {
-      events.forEach((event) => element.removeEventListener(event, callback, options));
+      element.removeEventListener(event, callback, options);
     };
   }, [target, internalRef.state, event, options]);
 

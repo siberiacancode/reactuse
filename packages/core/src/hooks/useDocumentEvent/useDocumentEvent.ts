@@ -1,3 +1,5 @@
+import { target } from '@/utils/helpers';
+
 import type { UseEventListenerOptions } from '../useEventListener/useEventListener';
 
 import { useEventListener } from '../useEventListener/useEventListener';
@@ -20,4 +22,4 @@ export const useDocumentEvent = <Event extends keyof DocumentEventMap>(
   event: Event,
   listener: (this: Document, event: DocumentEventMap[Event]) => any,
   options?: UseEventListenerOptions
-) => useEventListener(document, event, listener, options);
+) => useEventListener(target(document), event, listener, options);
