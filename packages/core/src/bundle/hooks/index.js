@@ -121,6 +121,7 @@ export * from './useTimer/useTimer';
 export * from './useToggle/useToggle';
 export * from './useUnmount/useUnmount';
 export * from './useVibrate/useVibrate';
+export * from './useWakeLock/useWakeLock';
 export * from './useWebSocket/useWebSocket';
 export * from './useWindowEvent/useWindowEvent';
 export * from './useWindowFocus/useWindowFocus';
