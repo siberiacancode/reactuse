@@ -1,6 +1,7 @@
-import type { DefaultTheme } from 'vitepress';
+import type { DefaultTheme, MarkdownOptions } from 'vitepress';
 
 import tailwindcss from '@tailwindcss/vite';
+import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitepress';
 
@@ -32,6 +33,10 @@ export default async () => {
     base: '/reactuse/',
     title: 'reactuse',
     description: '🚀 the largest and most useful hook library',
+    markdown: {
+      codeTransformers: [transformerTwoslash()],
+      languages: ['js', 'jsx', 'ts', 'tsx']
+    } as unknown as MarkdownOptions,
     vite: {
       plugins: [tailwindcss()],
       resolve: {

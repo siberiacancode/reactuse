@@ -36,11 +36,13 @@
     "@siberiacancode/reactuse": "workspace:*"
   },
   "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@shikijs/vitepress-twoslash": "3.2.1",
     "@tailwindcss/vite": "4.0.7",
     "@types/md5": "^2.3.5",
     "clsx": "^2.1.1",
     "comment-parser": "^1.4.1",
-    "lucide-vue-next": "^0.482.0",
+    "lucide-vue-next": "^0.485.0",
     "md5": "^2.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

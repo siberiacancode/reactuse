@@ -1,155 +1,117 @@
+import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import { useSpeechRecognition } from './useSpeechRecognition';
+import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 
-const SHARED_STYLES = {
-  marginRight: '1rem',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem'
-};
+const COLORS = ['aqua', 'azure', 'beige', 'bisque', 'black', 'blue', 'brown', 'chocolate', 'coral', 'crimson', 'cyan', 'fuchsia', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'indigo', 'ivory', 'khaki', 'lavender', 'lime', 'linen', 'magenta', 'maroon', 'moccasin', 'navy', 'olive', 'orange', 'orchid', 'peru', 'pink', 'plum', 'purple', 'red', 'salmon', 'sienna', 'silver', 'snow', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'white', 'yellow', 'transparent']
+const GRAMMAR = `#JSGF V1.0; grammar colors; public <color> = ${COLORS.join(' | ')} ;`
+const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList
+const speechGrammarList = new SpeechGrammarList()
+speechGrammarList.addFromString(GRAMMAR, 1)
 
 const Demo = () => {
-  const [language, setLanguage] = useState<string>('en-US');
-  const [continuous, setContinuous] = useState<boolean>(false);
-  const [interimResults, setInterimResults] = useState<boolean>(false);
-  const [maxAlternatives, setMaxAlternatives] = useState<number>(1);
+  const [color, setColor] = useState<string | undefined>(undefined);
+  const [language, setLanguage] = useState('en-US');
 
-  const { transcript, interimTranscript, error, listening, supported, start, stop, abort, reset } =
+  const speechRecognition =
     useSpeechRecognition({
       language,
-      continuous,
-      interimResults,
-      maxAlternatives
+      continuous: true,
+      grammars: speechGrammarList
     });
 
-  const handleLanguageChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+  useDidUpdate(() => {
+    for (const word of speechRecognition.transcript.toLowerCase().split(' ').reverse()) {
+      if (COLORS.includes(word)) {
+        setColor(word);
+        break;
+      }
+    }
+  }, [speechRecognition.transcript]);
+
+  const onLanguageChange = (event: ChangeEvent<HTMLInputElement>) =>
     setLanguage(event.target.value);
 
-  if (!supported) {
-    return <p>Your browser does not support the Speech Recognition API.</p>;
+  if (!speechRecognition.supported) {
+    return <p>Your browser does not support the Speech Recognition API</p>;
   }
 
   return (
     <>
-      <section style={{ marginBottom: '1rem', ...SHARED_STYLES, marginRight: 'unset' }}>
-        <label style={SHARED_STYLES}>
+      <div className="mb-4 flex flex-wrap items-center gap-4">
+        <label className="flex items-center gap-2">
           <input
             checked={language === 'en-US'}
             name='language'
             type='radio'
             value='en-US'
-            onChange={handleLanguageChange}
+            onChange={onLanguageChange}
           />
           English (US)
         </label>
-        <label style={SHARED_STYLES}>
+        <label className="flex items-center gap-2">
           <input
-            checked={language === 'ru-RU'}
+            checked={language === 'fr'}
             name='language'
             type='radio'
-            value='ru-RU'
-            onChange={handleLanguageChange}
+            value='fr'
+            onChange={onLanguageChange}
           />
-          Russian
+          French
         </label>
-        <label style={SHARED_STYLES}>
+        <label className="flex items-center gap-2">
           <input
-            checked={language === 'es-ES'}
+            checked={language === 'es'}
             name='language'
             type='radio'
-            value='es-ES'
-            onChange={handleLanguageChange}
+            value='es'
+            onChange={onLanguageChange}
           />
           Spanish
         </label>
-      </section>
-      <section style={{ marginBottom: '1rem' }}>
-        <label style={SHARED_STYLES}>
-          <input
-            checked={continuous}
-            type='checkbox'
-            onChange={() => setContinuous((prev) => !prev)}
-          />
-          Continuous
-        </label>
-        <label style={SHARED_STYLES}>
-          <input
-            checked={interimResults}
-            type='checkbox'
-            onChange={() => setInterimResults((prev) => !prev)}
-          />
-          Interim Results
-        </label>
-      </section>
-      <section style={{ marginBottom: '1rem' }}>
-        <label>
-          Max Alternatives:&nbsp;
-          <select
-            value={maxAlternatives}
-            onChange={(e) => setMaxAlternatives(Number(e.target.value))}
-          >
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-          </select>
-        </label>
-      </section>
+      </div>
 
-      <section style={{ marginBottom: '1rem' }}>
+      <div className="flex flex-wrap gap-2">
         <button
-          disabled={listening}
-          style={{ marginRight: '0.5rem' }}
           type='button'
-          onClick={start}
+          onClick={() => speechRecognition.toggle()}
         >
-          Start
+          {!speechRecognition.listening ? 'Press and speak' : 'Stop'}
         </button>
-        <button
-          disabled={!listening}
-          style={{ marginRight: '0.5rem' }}
-          type='button'
-          onClick={stop}
-        >
-          Stop
-        </button>
-        <button
-          disabled={!listening}
-          style={{ marginRight: '0.5rem' }}
-          type='button'
-          onClick={abort}
-        >
-          Abort
-        </button>
-        <button disabled={continuous && listening} type='button' onClick={reset}>
-          Reset
-        </button>
-      </section>
+      </div>
 
-      <section>
-        <h3>Status</h3>
-        <p>
-          <strong>Listening:</strong> {listening ? 'Yes' : 'No'}
-        </p>
-        {error && (
-          <p style={{ color: 'red' }}>
-            <strong>Error:</strong> {error.error ?? 'Unknown error'}
+      {speechRecognition.listening && (
+        <section>
+          {language === 'en-US' && (
+            <>
+              <p>
+                Please say a color
+              </p>
+              <p className="text-sm text-gray-500">
+                try: <code>aqua</code>, <code>azure</code>, <code>beige</code>, <code>bisque</code>
+              </p>
+            </>
+          )}
+          {language === 'fr' && (
+            <>
+              <p>
+                Parlez français
+              </p>
+            </>
+          )}
+          {language === 'es' && (
+            <>
+              <p>
+                Habla en español
+              </p>
+            </>
+          )}
+          <p className="text-sm text-gray-500" style={{ color }}>
+            {speechRecognition.transcript}
           </p>
-        )}
-      </section>
-
-      <section>
-        <h3>Transcript</h3>
-        <p>
-          <strong>Final:</strong> {transcript}
-        </p>
-        {interimResults && (
-          <p>
-            <strong>Interim:</strong> {interimTranscript}
-          </p>
-        )}
-      </section>
+        </section>
+      )}
     </>
   );
 };
