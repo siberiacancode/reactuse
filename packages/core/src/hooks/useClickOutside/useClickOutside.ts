@@ -33,7 +33,7 @@ export interface UseClickOutside {
  * @returns {(node: Target) => void} A React ref to attach to the target element
  *
  * @example
- * const ref = `useClickOutside`<HTMLDivElement>(() => console.log('click outside'));
+ * const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
  *
  * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useClickOutside.html}
  */

@@ -3,17 +3,17 @@ import { useLongPress } from './useLongPress';
 
 const Demo = () => {
   const counter = useCounter();
-  const [bind, longPressing] = useLongPress(() => counter.inc());
+  const longPress = useLongPress<HTMLButtonElement>(() => counter.inc());
 
   return (
     <>
       <p>
-        Long pressed: <code>{longPressing.toString()}</code>
+        Long pressed: <code>{longPress.pressed.toString()}</code>
       </p>
       <p>
         Clicked: <code>{counter.value}</code>
       </p>
-      <button type='button' {...bind}>
+      <button ref={longPress.ref} type='button'>
         Long press
       </button>
     </>

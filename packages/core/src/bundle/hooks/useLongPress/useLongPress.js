@@ -1,49 +1,85 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { getElement, isTarget } from '@/utils/helpers';
+import { useRefState } from '../useRefState/useRefState';
 const DEFAULT_THRESHOLD_TIME = 400;
 /**
  * @name useLongPress
  * @description - Hook that defines the logic when long pressing an element
  * @category Sensors
  *
- * @template Target The target element
- * @param {Target} target The target element to be long pressed
- * @param {(event: Event) => void} callback The callback function to be invoked on long press
- * @param {number} [options.threshold=400] The threshold time in milliseconds
- * @param {(event: Event) => void} [options.onStart] The callback function to be invoked on long press start
- * @param {(event: Event) => void} [options.onFinish] The callback function to be invoked on long press finish
- * @param {(event: Event) => void} [options.onCancel] The callback function to be invoked on long press cancel
- * @returns {UseLongPressReturn<Target>} The ref of the target element
+ * @overload
+ * @param {HookTarget} target The target element to be long pressed
+ * @param {(event: LongPressEvents) => void} callback The callback function to be invoked on long press
+ * @param {UseLongPressOptions} [options] The options for the long press
+ * @returns {boolean} The long pressing state
  *
  * @example
- * const [bind, longPressing] = useLongPress(() => console.log('callback'));
+ * const pressed = useLongPress(ref, () => console.log('callback'));
+ *
+ * @overload
+ * @template Target The target element
+ * @param {(event: LongPressEvents) => void} callback The callback function to be invoked on long press
+ * @param {UseLongPressOptions} [options] The options for the long press
+ * @returns {boolean} The long pressing state
+ *
+ * @example
+ * const { ref, pressed } = useLongPress(() => console.log('callback'));
  */
-export const useLongPress = (callback, options) => {
-  const [isLongPressActive, setIsLongPressActive] = useState(false);
+export const useLongPress = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const callback = target ? params[1] : params[0];
+  const options = target ? params[2] : params[1];
+  const [pressed, setPressed] = useState(false);
   const timeoutIdRef = useRef();
-  const isPressed = useRef(false);
-  const start = (event) => {
-    options?.onStart?.(event);
-    isPressed.current = true;
-    timeoutIdRef.current = setTimeout(() => {
-      callback(event);
-      setIsLongPressActive(true);
-    }, options?.threshold ?? DEFAULT_THRESHOLD_TIME);
+  const isPressedRef = useRef(false);
+  const internalRef = useRefState();
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    const onStart = (event) => {
+      internalOptionsRef.current?.onStart?.(event);
+      isPressedRef.current = true;
+      timeoutIdRef.current = setTimeout(() => {
+        internalCallbackRef.current(event);
+        setPressed(true);
+      }, internalOptionsRef.current?.threshold ?? DEFAULT_THRESHOLD_TIME);
+    };
+    const onCancel = (event) => {
+      setPressed((prevPressed) => {
+        if (prevPressed) {
+          internalOptionsRef.current?.onFinish?.(event);
+        } else if (isPressedRef.current) {
+          internalOptionsRef.current?.onCancel?.(event);
+        }
+        return false;
+      });
+      isPressedRef.current = false;
+      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+    };
+    element.addEventListener('mousedown', onStart);
+    element.addEventListener('touchstart', onStart);
+    element.addEventListener('mouseup', onCancel);
+    element.addEventListener('touchend', onCancel);
+    window.addEventListener('mouseup', onCancel);
+    window.addEventListener('touchend', onCancel);
+    return () => {
+      element.removeEventListener('mousedown', onStart);
+      element.removeEventListener('touchstart', onStart);
+      element.removeEventListener('mouseup', onCancel);
+      element.removeEventListener('touchend', onCancel);
+      window.removeEventListener('mouseup', onCancel);
+      window.removeEventListener('touchend', onCancel);
+      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+    };
+  }, [target, internalRef.state]);
+  if (target) return pressed;
+  return {
+    ref: internalRef,
+    pressed
   };
-  const cancel = (event) => {
-    if (isLongPressActive) {
-      options?.onFinish?.(event);
-    } else if (isPressed.current) {
-      options?.onCancel?.(event);
-    }
-    setIsLongPressActive(false);
-    isPressed.current = false;
-    if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
-  };
-  const bind = {
-    onMouseDown: start,
-    onTouchStart: start,
-    onMouseUp: cancel,
-    onTouchEnd: cancel
-  };
-  return [bind, isLongPressActive];
 };
