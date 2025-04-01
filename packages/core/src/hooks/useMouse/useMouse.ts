@@ -68,6 +68,7 @@ export const useMouse = ((...params: any[]) => {
 
   useEffect(() => {
     if (!target && !internalRef.state) return;
+
     const onMouseMove = (event: MouseEvent) => {
       const element = (target ? getElement(target) : internalRef.current) as Element;
       if (!element) return;

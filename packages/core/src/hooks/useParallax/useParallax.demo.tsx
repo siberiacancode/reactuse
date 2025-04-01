@@ -1,108 +1,56 @@
-import type { CSSProperties } from 'react';
-
 import { useParallax } from './useParallax';
-
-const layerBase: CSSProperties = {
-  position: 'absolute',
-  height: '100%',
-  width: '100%',
-  transition: '.3s ease-out all'
-};
-
-const containerStyle: CSSProperties = {
-  margin: '3em auto',
-  perspective: '200px'
-};
-
-const cardContentStyle: CSSProperties = {
-  overflow: 'hidden',
-  fontSize: '6rem',
-  position: 'absolute',
-  top: 'calc(50% - 1em)',
-  left: 'calc(50% - 1em)',
-  height: '2em',
-  width: '2em',
-  margin: 'auto'
-};
-
-const targetStyle: CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  minHeight: '500px',
-  transition: '.3s ease-out all'
-};
 
 const Demo = () => {
   const parallax = useParallax<HTMLDivElement>();
 
-  const layer0 = {
-    ...layerBase,
-    transform: `translateX(${parallax.value.tilt * 10}px) translateY(${parallax.value.roll * 10}px)`
-  };
-
-  const layer1 = {
-    ...layerBase,
-    transform: `translateX(${parallax.value.tilt * 20}px) translateY(${parallax.value.roll * 20}px)`
-  };
-
-  const layer2 = {
-    ...layerBase,
-    transform: `translateX(${parallax.value.tilt * 30}px) translateY(${parallax.value.roll * 30}px)`
-  };
-
-  const layer3 = {
-    ...layerBase,
-    transform: `translateX(${parallax.value.tilt * 40}px) translateY(${parallax.value.roll * 40}px)`
-  };
-
-  const cardStyle = {
-    background: '#fff',
-    height: '18rem',
-    width: '14rem',
-    borderRadius: '5px',
-    border: '1px solid #cdcdcd',
-    overflow: 'hidden',
-    transition: '.3s ease-out all',
-    boxShadow: '0 0 20px 0 rgba(255, 255, 255, 0.25)',
-    transform: `rotateX(${parallax.value.roll * 20}deg) rotateY(${parallax.value.tilt * 20}deg)`
-  };
+  const getLayerStyle = (multiplier: number) => ({
+    transform: `translateX(${parallax.value.tilt * multiplier * 10}px) translateY(${parallax.value.roll * multiplier * 10}px)`
+  });
 
   return (
-    <div ref={parallax.ref} style={targetStyle}>
-      <pre lang='json'>
+    <div ref={parallax.ref} className="flex flex-col justify-center min-h-[500px] transition-all duration-300 ease-out">
+      <pre className="lang-json">
         <b>Parallax data:</b>
         <p>{JSON.stringify(parallax.value, null, 2)}</p>
       </pre>
-      <div style={containerStyle}>
-        <div style={cardStyle}>
-          <div style={cardContentStyle}>
+      <div className="mx-auto my-12 perspective-[300px]">
+        <div
+          className="bg-white h-72 w-56 flex justify-center items-center rounded border border-[#cdcdcd] overflow-hidden transition-all duration-300 ease-out shadow-[0_0_20px_0_rgba(255,255,255,0.25)]"
+          style={{
+            transform: `rotateX(${parallax.value.roll * 20}deg) rotateY(${parallax.value.tilt * 20}deg)`
+          }}
+        >
+          <div className="overflow-hidden text-6xl size-[4em] relative">
             <img
-              alt='layer0'
-              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_3.png'
-              style={layer0}
+              alt="layer0"
+              src="https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_3.png"
+              className="absolute h-full w-full transition-all duration-300 ease-out"
+              style={getLayerStyle(1)}
             />
             <img
-              alt='layer1'
-              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_2.png'
-              style={layer1}
+              alt="layer1"
+              src="https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_2.png"
+              className="absolute h-full w-full transition-all duration-300 ease-out"
+              style={getLayerStyle(2)}
             />
             <img
-              alt='layer2'
-              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_1.png'
-              style={layer2}
+              alt="layer2"
+              src="https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_1.png"
+              className="absolute h-full w-full transition-all duration-300 ease-out"
+              style={getLayerStyle(3)}
             />
             <img
-              alt='layer3'
-              src='https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_0.png'
-              style={layer3}
+              alt="layer3"
+              src="https://jaromvogel.com/images/design/tiger_hunt_parallax/Tiger_hunt_0.png"
+              className="absolute h-full w-full transition-all duration-300 ease-out"
+              style={getLayerStyle(4)}
             />
           </div>
         </div>
       </div>
       <div>
         Credit of images to{' '}
-        <a href='https://codepen.io/jaromvogel' target='__blank'>
+        <a href="https://codepen.io/jaromvogel" target="__blank" className="text-blue-500 hover:underline">
           Jarom Vogel
         </a>
       </div>

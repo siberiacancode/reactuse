@@ -25,6 +25,7 @@ export * from './useDisplayMedia/useDisplayMedia';
 export * from './useDocumentEvent/useDocumentEvent';
 export * from './useDocumentTitle/useDocumentTitle';
 export * from './useDocumentVisibility/useDocumentVisibility';
+export * from './useDoubleClick/useDoubleClick';
 export * from './useElementSize/useElementSize';
 export * from './useEvent/useEvent';
 export * from './useEventListener/useEventListener';
