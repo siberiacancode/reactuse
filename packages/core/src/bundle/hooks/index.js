@@ -29,6 +29,7 @@ export * from './useDoubleClick/useDoubleClick';
 export * from './useElementSize/useElementSize';
 export * from './useEvent/useEvent';
 export * from './useEventListener/useEventListener';
+export * from './useEventSource/useEventSource';
 export * from './useEyeDropper/useEyeDropper';
 export * from './useFavicon/useFavicon';
 export * from './useField/useField';
