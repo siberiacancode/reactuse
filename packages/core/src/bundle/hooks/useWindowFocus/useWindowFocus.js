@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
  *
  * @example
  * const focused = useWindowFocus();
+ *
+ * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useWindowFocus.html}
  */
 export const useWindowFocus = () => {
   const [focused, setFocused] = useState(false);

@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
  *
  * @example
  * const activeElement = useActiveElement();
+ *
+ * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useActiveElement.html}
  */
 export const useActiveElement = () => {
   const [activeElement, setActiveElement] = useState(null);

@@ -29,10 +29,7 @@ export interface UseDoubleClick {
     callback: (event: DoubleClickEvents) => void,
     options?: UseDoubleClickOptions,
     target?: never
-  ): {
-    ref: StateRef<Target>;
-    clicked: boolean;
-  };
+  ): StateRef<Target>;
 }
 
 const DEFAULT_THRESHOLD_TIME = 300;
@@ -59,6 +56,8 @@ const DEFAULT_THRESHOLD_TIME = 300;
  *
  * @example
  * const ref = useDoubleClick(() => console.log('double clicked'));
+ *
+ * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useDoubleClick.html}
  */
 export const useDoubleClick = ((...params: any[]): any => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;

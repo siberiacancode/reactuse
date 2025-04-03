@@ -24,6 +24,8 @@ const DEFAULT_THRESHOLD_TIME = 300;
  *
  * @example
  * const ref = useDoubleClick(() => console.log('double clicked'));
+ *
+ * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useDoubleClick.html}
  */
 export const useDoubleClick = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;

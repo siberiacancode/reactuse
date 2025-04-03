@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
  *
  * @example
  * const activeElement = useActiveElement();
+ *
+ * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useActiveElement.html}
  */
 export const useActiveElement = <ActiveElement extends HTMLElement>() => {
   const [activeElement, setActiveElement] = useState<ActiveElement | null>(null);
