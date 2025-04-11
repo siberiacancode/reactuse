@@ -9,13 +9,19 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  * @param {DependencyList} [deps] The dependencies list for the effect
  *
  * @example
- * useDidUpdate(() => console.log("effect runs on updates"), [deps]);
+ * useDidUpdate(() => console.log("effect runs on updates"), deps);
  */
 export const useDidUpdate = (effect, deps) => {
-  const initialRender = useRef(true);
+  const hasRunRef = useRef(false);
+  const hasRenderedAfterRun = useRef(false);
+  if (hasRunRef.current) {
+    hasRenderedAfterRun.current = true;
+  }
   useIsomorphicLayoutEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
+    hasRunRef.current = true;
+  }, []);
+  useIsomorphicLayoutEffect(() => {
+    if (!hasRenderedAfterRun.current) {
       return;
     }
     const effectReturns = effect();
