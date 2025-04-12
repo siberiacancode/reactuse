@@ -1,4 +1,4 @@
-import { useWindowSize } from './useWindowSize';
+import { useWindowSize } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const size = useWindowSize();

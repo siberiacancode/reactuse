@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useWindowEvent } from './useWindowEvent';
+import { useWindowEvent } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [count, setCount] = useState(0);

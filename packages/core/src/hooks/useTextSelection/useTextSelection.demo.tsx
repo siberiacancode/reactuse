@@ -1,4 +1,4 @@
-import { useTextSelection } from './useTextSelection';
+import { useTextSelection } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const textSelection = useTextSelection();

@@ -1,4 +1,4 @@
-import { useOnline } from './useOnline';
+import { useOnline } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const online = useOnline();

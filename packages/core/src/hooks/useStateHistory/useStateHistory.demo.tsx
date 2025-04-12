@@ -1,4 +1,4 @@
-import { useStateHistory } from './useStateHistory';
+import { useStateHistory } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const stateHistory = useStateHistory<string>('reactuse');

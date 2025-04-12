@@ -21,16 +21,18 @@ const Demo = () => {
     });
 
     useMount(() => {
-        if (!speechSynthesis.supported) return
+        if (!speechSynthesis.supported) return;
 
-        const timeout = setTimeout(() => {
-            const voices = window.speechSynthesis.getVoices();
-            setVoice(voices[0]);
-            setVoices(voices);
-        }, 100);
+        window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => {
+            const availableVoices = window.speechSynthesis.getVoices();
+            setVoices(availableVoices);
+            if (availableVoices.length > 0) setVoice(availableVoices[0]);
+        };
 
-        return () => clearTimeout(timeout);
-
+        return () => {
+            window.speechSynthesis.onvoiceschanged = null;
+        };
     });
 
     const play = () => {
@@ -49,6 +51,7 @@ const Demo = () => {
                 <label className="font-bold mr-2">Spoken Text</label>
                 <input
                     {...textField.register()}
+                    disabled={speechSynthesis.playing}
                     type="text"
                 />
             </div>

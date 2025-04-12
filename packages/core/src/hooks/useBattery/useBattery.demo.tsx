@@ -1,4 +1,4 @@
-import { useBattery } from './useBattery';
+import { useBattery } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const battery = useBattery();

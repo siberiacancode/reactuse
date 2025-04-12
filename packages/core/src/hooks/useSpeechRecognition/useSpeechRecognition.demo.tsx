@@ -2,8 +2,7 @@ import type { ChangeEvent } from 'react';
 
 import { useState } from 'react';
 
-import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
-import { useSpeechRecognition } from './useSpeechRecognition';
+import { useDidUpdate, useSpeechRecognition } from '@siberiacancode/reactuse';
 
 const COLORS = [
   'aqua',

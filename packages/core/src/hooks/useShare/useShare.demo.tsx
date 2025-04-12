@@ -1,4 +1,4 @@
-import { useShare } from './useShare';
+import { useShare } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { share, supported } = useShare();

@@ -1,4 +1,4 @@
-import { useMouse } from './useMouse';
+import { useMouse } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { ref, x, y, elementX, elementY } = useMouse<HTMLDivElement>();

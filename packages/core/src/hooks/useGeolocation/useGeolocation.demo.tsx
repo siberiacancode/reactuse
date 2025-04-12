@@ -1,4 +1,4 @@
-import { useGeolocation } from './useGeolocation';
+import { useGeolocation } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const geolocation = useGeolocation();

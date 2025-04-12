@@ -1,4 +1,4 @@
-import { useTimer } from './useTimer';
+import { useTimer } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const timer = useTimer(3600);

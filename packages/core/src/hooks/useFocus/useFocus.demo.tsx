@@ -1,4 +1,4 @@
-import { useFocus } from './useFocus';
+import { useFocus } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const textFocus = useFocus<HTMLParagraphElement>();

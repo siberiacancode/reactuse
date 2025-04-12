@@ -1,4 +1,4 @@
-import { useTimeout } from './useTimeout';
+import { useTimeout } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const timeout = useTimeout(() => console.log('ready'), 5000);

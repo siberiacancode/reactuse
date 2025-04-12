@@ -1,5 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { useThrottleCallback } from './useThrottleCallback';
+import { useCounter, useThrottleCallback } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const clickCounter = useCounter();

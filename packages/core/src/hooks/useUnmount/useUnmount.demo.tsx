@@ -1,5 +1,4 @@
-import { useBoolean } from '../useBoolean/useBoolean';
-import { useUnmount } from './useUnmount';
+import { useBoolean, useUnmount } from '@siberiacancode/reactuse';
 
 const Component = () => {
   useUnmount(() => alert('unmount'));

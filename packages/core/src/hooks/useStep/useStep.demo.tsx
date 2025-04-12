@@ -1,4 +1,4 @@
-import { useStep } from './useStep';
+import { useStep } from '@siberiacancode/reactuse';
 
 const Step1 = () => <p>First step</p>;
 const Step2 = () => <p>Second step</p>;

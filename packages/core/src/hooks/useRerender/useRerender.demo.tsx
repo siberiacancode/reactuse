@@ -1,5 +1,4 @@
-import { useRenderCount } from '../useRenderCount/useRenderCount';
-import { useRerender } from './useRerender';
+import { useRenderCount, useRerender } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const rerender = useRerender();

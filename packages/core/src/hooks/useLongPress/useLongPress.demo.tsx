@@ -1,5 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { useLongPress } from './useLongPress';
+import { useCounter, useLongPress } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const counter = useCounter();

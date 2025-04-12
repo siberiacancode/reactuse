@@ -1,5 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { useDoubleClick } from './useDoubleClick';
+import { useCounter, useDoubleClick } from '@siberiacancode/reactuse';
 
 const Demo = () => {
     const counter = useCounter();

@@ -1,4 +1,4 @@
-import { useHover } from './useHover';
+import { useHover } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [hoverRef, isHover] = useHover<HTMLDivElement>(() => console.log('callback'));

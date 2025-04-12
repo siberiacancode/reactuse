@@ -1,5 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { useFul } from './useFul';
+import { useCounter, useFul } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const counter = useCounter();

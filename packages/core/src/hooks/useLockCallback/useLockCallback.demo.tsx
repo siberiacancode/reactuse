@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useLockCallback } from './useLockCallback';
+import { useLockCallback } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [count, setCount] = useState(0);

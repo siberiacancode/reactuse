@@ -1,5 +1,4 @@
-import { useField } from '../useField/useField';
-import { useMap } from './useMap';
+import { useField, useMap } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const nameInput = useField();

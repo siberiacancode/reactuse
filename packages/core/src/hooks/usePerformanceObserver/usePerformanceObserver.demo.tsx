@@ -1,4 +1,4 @@
-import { usePerformanceObserver } from './usePerformanceObserver';
+import { usePerformanceObserver } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const performance = usePerformanceObserver({ entryTypes: ['paint'], immediate: true });

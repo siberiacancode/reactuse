@@ -1,4 +1,4 @@
-import { useBrowserLanguage } from './useBrowserLanguage';
+import { useBrowserLanguage } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const browserLanguage = useBrowserLanguage();

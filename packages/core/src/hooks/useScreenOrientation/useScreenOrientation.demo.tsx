@@ -1,4 +1,4 @@
-import { useScreenOrientation } from './useScreenOrientation';
+import { useScreenOrientation } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const screenOrientation = useScreenOrientation();

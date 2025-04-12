@@ -1,6 +1,5 @@
 import { useState } from 'react';
-
-import { useBluetooth } from './useBluetooth';
+import { useBluetooth } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [error, setError] = useState<string>();

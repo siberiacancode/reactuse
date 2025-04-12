@@ -1,4 +1,4 @@
-import { useBoolean } from './useBoolean';
+import { useBoolean } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [on, toggle] = useBoolean();

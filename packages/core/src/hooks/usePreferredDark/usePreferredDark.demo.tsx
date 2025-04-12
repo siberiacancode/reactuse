@@ -1,4 +1,4 @@
-import { usePreferredDark } from './usePreferredDark';
+import { usePreferredDark } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const isDark = usePreferredDark();

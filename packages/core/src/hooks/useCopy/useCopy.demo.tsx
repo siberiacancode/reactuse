@@ -1,4 +1,4 @@
-import { useCopy } from './useCopy';
+import { useCopy } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { copy, copied } = useCopy();

@@ -1,4 +1,4 @@
-import { useConst } from './useConst';
+import { useConst } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const mountTime = useConst(() => new Date().toTimeString());

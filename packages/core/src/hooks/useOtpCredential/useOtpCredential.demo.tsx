@@ -1,4 +1,4 @@
-import { useOtpCredential } from './useOtpCredential';
+import { useOtpCredential } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const otpCredential = useOtpCredential();

@@ -1,4 +1,4 @@
-import { useKeyPress } from './useKeyPress';
+import { useKeyPress } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const pressedKey = useKeyPress('a');

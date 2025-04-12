@@ -1,4 +1,4 @@
-import { useFileDialog } from './useFileDialog';
+import { useFileDialog } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const fileDialog = useFileDialog();

@@ -1,5 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { useDebounceValue } from './useDebounceValue';
+import { useDebounceValue, useCounter } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const counter = useCounter();

@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import { useWizard } from './useWizard';
+import { useWizard } from '@siberiacancode/reactuse';
 
 interface Step1Props {
   onNext: () => void;

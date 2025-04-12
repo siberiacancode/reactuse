@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { useMutationObserver } from './useMutationObserver';
+import { useMutationObserver } from '@siberiacancode/reactuse';
 
 export const Demo = () => {
   const [observed, setObserved] = useState(false);

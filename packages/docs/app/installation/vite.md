@@ -24,6 +24,7 @@ pnpm create vite@latest
 bun create vite@latest
 
 ```
+
 :::
 
 ### Edit tsconfig.json file
@@ -93,22 +94,23 @@ pnpm add -D @types/node
 bun add -D @types/node
 
 ```
+
 :::
 
 ```typescript title="vite.config.ts" showLineNumbers {1,2,8-13}
-import path from "path"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
+import path from 'path';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-})
+      '@': path.resolve(__dirname, './src')
+    }
+  }
+});
 ```
 
 ### Run the CLI
@@ -132,18 +134,18 @@ npx useverse@latest add useBoolean
 The command above will add the `useBoolean` hook to your project. You can then import it like this:
 
 ```tsx showLineNumbers title="src/App.tsx"
-import { useBoolean } from "@/shared/hooks"
+import { useBoolean } from '@/shared/hooks';
 
 function App() {
-  const [on, toggle] = useBoolean()
+  const [on, toggle] = useBoolean();
 
   return (
     <div>
       <button onClick={() => toggle()}>Click me</button>
       <p>{on.toString()}</p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
 ```

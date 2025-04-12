@@ -1,4 +1,4 @@
-import { useQueue } from './useQueue';
+import { useQueue } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { queue, add, remove, first, last, size } = useQueue<number>();

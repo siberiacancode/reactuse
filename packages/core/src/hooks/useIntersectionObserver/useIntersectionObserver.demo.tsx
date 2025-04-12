@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { useIntersectionObserver } from './useIntersectionObserver';
+import { useIntersectionObserver } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const rootRef = useRef<HTMLDivElement>(null);

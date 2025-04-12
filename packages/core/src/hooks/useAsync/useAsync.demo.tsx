@@ -1,5 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { useAsync } from './useAsync';
+import { useAsync, useCounter } from '@siberiacancode/reactuse';
 
 interface Pokemon {
   id: number;

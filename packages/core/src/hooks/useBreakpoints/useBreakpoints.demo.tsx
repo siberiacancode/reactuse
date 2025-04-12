@@ -1,4 +1,4 @@
-import { BREAKPOINTS_TAILWIND, useBreakpoints } from './useBreakpoints';
+import { BREAKPOINTS_TAILWIND, useBreakpoints } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const breakpoints = useBreakpoints(BREAKPOINTS_TAILWIND);

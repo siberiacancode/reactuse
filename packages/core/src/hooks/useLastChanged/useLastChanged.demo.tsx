@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useLastChanged } from './useLastChanged';
+import { useLastChanged } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [inputValue, setInputValue] = useState('');

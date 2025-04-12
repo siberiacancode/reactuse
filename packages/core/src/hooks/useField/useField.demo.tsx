@@ -1,5 +1,4 @@
-import { useRenderCount } from '../useRenderCount/useRenderCount';
-import { useField } from './useField';
+import { useField, useRenderCount } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const renderCount = useRenderCount();

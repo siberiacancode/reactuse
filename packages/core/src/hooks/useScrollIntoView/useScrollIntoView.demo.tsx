@@ -1,4 +1,4 @@
-import { useScrollIntoView } from './useScrollIntoView';
+import { useScrollIntoView } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const scrollIntoView = useScrollIntoView<HTMLDivElement>({ behavior: 'smooth', block: 'center' });

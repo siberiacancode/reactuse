@@ -1,5 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { usePageLeave } from './usePageLeave';
+import { useCounter, usePageLeave } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const counter = useCounter(0);

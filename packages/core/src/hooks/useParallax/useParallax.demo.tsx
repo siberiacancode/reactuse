@@ -1,4 +1,4 @@
-import { useParallax } from './useParallax';
+import { useParallax } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const parallax = useParallax<HTMLDivElement>();

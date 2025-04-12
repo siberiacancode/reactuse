@@ -1,4 +1,4 @@
-import { useDeviceOrientation } from './useDeviceOrientation';
+import { useDeviceOrientation } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const deviceOrientation = useDeviceOrientation();

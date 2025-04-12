@@ -1,7 +1,5 @@
 import { cn } from '@siberiacancode/docs/utils';
-
-import { useCounter } from '../useCounter/useCounter';
-import { useClickOutside } from './useClickOutside';
+import { useClickOutside, useCounter } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const counter = useCounter();

@@ -1,6 +1,6 @@
 import { cn } from '@siberiacancode/docs/utils';
 
-import { useIdle } from './useIdle';
+import { useIdle } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { idle, lastActive } = useIdle(1000);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useDocumentEvent } from './useDocumentEvent';
+import { useDocumentEvent } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [count, setCount] = useState(0);

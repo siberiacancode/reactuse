@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
-import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
-import { useTimer } from '../useTimer/useTimer';
-import { useDocumentVisibility } from './useDocumentVisibility';
+import { useDidUpdate, useDocumentVisibility, useTimer } from '@siberiacancode/reactuse';
 
 const START_MESSAGE = '💡 Minimize the page or switch tab then return';
 

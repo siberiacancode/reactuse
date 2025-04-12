@@ -1,4 +1,4 @@
-import { useScrollTo } from './useScrollTo';
+import { useScrollTo } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const scrollTo = useScrollTo<HTMLDivElement>({ x: 0, y: 260 });

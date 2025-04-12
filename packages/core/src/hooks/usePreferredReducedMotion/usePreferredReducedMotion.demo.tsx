@@ -1,4 +1,4 @@
-import { usePreferredReducedMotion } from './usePreferredReducedMotion';
+import { usePreferredReducedMotion } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const motion = usePreferredReducedMotion();

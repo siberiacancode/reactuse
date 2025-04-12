@@ -1,4 +1,4 @@
-import { useFullscreen } from './useFullscreen';
+import { useFullscreen } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const fullscreen = useFullscreen<HTMLVideoElement>();

@@ -1,4 +1,4 @@
-import { useEyeDropper } from './useEyeDropper';
+import { useEyeDropper } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const eyeDropper = useEyeDropper();

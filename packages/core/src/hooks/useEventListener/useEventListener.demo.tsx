@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useEventListener } from './useEventListener';
+import { useEventListener } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [count, setCount] = useState(0);

@@ -1,5 +1,4 @@
-import { useField } from '../useField/useField';
-import { useSet } from './useSet';
+import { useField, useSet } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const scopeInput = useField({ initialValue: '' });

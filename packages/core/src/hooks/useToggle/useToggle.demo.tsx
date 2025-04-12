@@ -1,4 +1,4 @@
-import { useToggle } from './useToggle';
+import { useToggle } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [value, toggle] = useToggle(['blue', 'orange', 'black', 'teal', 'purple'] as const);

@@ -1,4 +1,4 @@
-import { useVibrate } from './useVibrate';
+import { useVibrate } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const vibrate = useVibrate([300, 100, 200, 100, 1000, 300]);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { usePrevious } from './usePrevious';
+import { usePrevious } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [count, setCount] = useState(0);

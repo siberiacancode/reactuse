@@ -1,4 +1,4 @@
-import { useDisplayMedia } from './useDisplayMedia';
+import { useDisplayMedia } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { sharing, supported, start, stop, ref } = useDisplayMedia();

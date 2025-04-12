@@ -1,4 +1,4 @@
-import { usePreferredContrast } from './usePreferredContrast';
+import { usePreferredContrast } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const contrast = usePreferredContrast();

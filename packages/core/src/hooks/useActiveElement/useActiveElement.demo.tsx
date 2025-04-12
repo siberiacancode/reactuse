@@ -1,4 +1,4 @@
-import { useActiveElement } from './useActiveElement';
+import { useActiveElement } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const activeElement = useActiveElement();

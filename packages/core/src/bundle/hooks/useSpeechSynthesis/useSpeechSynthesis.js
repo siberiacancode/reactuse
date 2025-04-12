@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from 'react';
  * @returns {UseSpeechSynthesisReturn} An object containing the speech synthesis state and control methods
  *
  * @example
- * const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } = useSpeechSynthesis({ text: 'Hello world' });
+ * const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } = useSpeechSynthesis();
  */
 export const useSpeechSynthesis = (options = {}) => {
   const supported = typeof window !== 'undefined' && 'speechSynthesis' in window;
@@ -30,14 +30,6 @@ export const useSpeechSynthesis = (options = {}) => {
     speechSynthesisUtterance.rate = rate;
     speechSynthesisUtterance.volume = volume;
     speechSynthesisUtterance.voice = voice;
-  };
-  if (speechSynthesisUtteranceRef.current) {
-    bindSpeechSynthesisUtterance(speechSynthesisUtteranceRef.current);
-  }
-  useEffect(() => {
-    if (!supported) return;
-    const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
-    bindSpeechSynthesisUtterance(speechSynthesisUtterance);
     speechSynthesisUtterance.onstart = () => {
       setPlaying(true);
       setStatus('play');
@@ -58,11 +50,16 @@ export const useSpeechSynthesis = (options = {}) => {
       setPlaying(false);
       setError(event);
     };
+  };
+  useEffect(() => {
+    if (!supported) return;
+    const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
+    bindSpeechSynthesisUtterance(speechSynthesisUtterance);
     speechSynthesisUtteranceRef.current = speechSynthesisUtterance;
     return () => {
       window.speechSynthesis?.cancel();
     };
-  }, []);
+  }, [text, lang, pitch, rate, voice, volume]);
   const speak = (text) => {
     if (!supported) return;
     if (text) {

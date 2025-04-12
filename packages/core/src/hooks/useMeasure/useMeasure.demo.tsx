@@ -1,4 +1,4 @@
-import { useMeasure } from './useMeasure';
+import { useMeasure } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const measure = useMeasure<HTMLDivElement>();

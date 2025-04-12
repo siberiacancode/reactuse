@@ -1,6 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { useMutation } from '../useMutation/useMutation';
-import { useOptimistic } from './useOptimistic';
+import { useCounter, useMutation, useOptimistic } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const likes = useCounter();

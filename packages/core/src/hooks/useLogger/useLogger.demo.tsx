@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useLogger } from './useLogger';
+import { useLogger } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [count, setCount] = useState(0);

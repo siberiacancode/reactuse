@@ -1,5 +1,4 @@
-import { useCookie } from '../useCookie/useCookie';
-import { useCookies } from './useCookies';
+import { useCookie, useCookies } from '@siberiacancode/reactuse';
 
 const POKEMONS = [
   { name: 'Pikachu', index: 25 },

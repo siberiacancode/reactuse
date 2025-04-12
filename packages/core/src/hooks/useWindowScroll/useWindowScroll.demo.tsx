@@ -1,4 +1,4 @@
-import { useWindowScroll } from './useWindowScroll';
+import { useWindowScroll } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const windowScroll = useWindowScroll();

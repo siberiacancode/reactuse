@@ -1,4 +1,4 @@
-import { useFps } from './useFps';
+import { useFps } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const fps = useFps();

@@ -1,4 +1,4 @@
-import { useGamepad } from './useGamepad';
+import { useGamepad } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { supported, gamepads } = useGamepad();

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useHotkeys } from './useHotkeys';
+import { useHotkeys } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [count, setCount] = useState(0);

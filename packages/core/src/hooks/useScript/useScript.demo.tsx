@@ -1,4 +1,4 @@
-import { useScript } from './useScript';
+import { useScript } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const status = useScript('https://unpkg.com/react@18/umd/react.development.js', {

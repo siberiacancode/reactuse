@@ -1,4 +1,4 @@
-import { useTextDirection } from './useTextDirection';
+import { useTextDirection } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const textDirection = useTextDirection<HTMLDivElement>();

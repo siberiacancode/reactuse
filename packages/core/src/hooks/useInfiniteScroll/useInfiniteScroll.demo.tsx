@@ -1,5 +1,4 @@
-import { useList } from '../useList/useList';
-import { useInfiniteScroll } from './useInfiniteScroll';
+import { useInfiniteScroll, useList } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const list = useList([1, 2, 3, 4, 5, 6]);

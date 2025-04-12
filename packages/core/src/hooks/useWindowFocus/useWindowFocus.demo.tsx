@@ -1,4 +1,4 @@
-import { useWindowFocus } from './useWindowFocus';
+import { useWindowFocus } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const windowFocused = useWindowFocus();

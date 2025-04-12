@@ -1,4 +1,4 @@
-import { useDisclosure } from './useDisclosure';
+import { useDisclosure } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const modal = useDisclosure();

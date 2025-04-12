@@ -1,4 +1,4 @@
-import { useLocalStorage } from './useLocalStorage';
+import { useLocalStorage } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { value, set, remove } = useLocalStorage('siberiacancode-use-local-storage', 0);

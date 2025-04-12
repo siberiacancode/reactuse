@@ -1,4 +1,4 @@
-import { useTime } from './useTime';
+import { useTime } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { seconds, minutes, hours, meridiemHours, day, month, year } = useTime();

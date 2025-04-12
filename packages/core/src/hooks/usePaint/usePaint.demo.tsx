@@ -1,11 +1,8 @@
 import { useState } from 'react';
 
-import type { Paint } from './helpers/Paint';
+import type { Paint } from '@siberiacancode/reactuse';
 
-import { useField } from '../useField/useField';
-import { useInterval } from '../useInterval/useInterval';
-import { useKeyPressEvent } from '../useKeyPressEvent/useKeyPressEvent';
-import { usePaint } from './usePaint';
+import { useField, useInterval, useKeyPressEvent, usePaint } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [color, setColor] = useState('#37d2e6');
@@ -25,7 +22,7 @@ const Demo = () => {
   });
 
   useInterval(() => setColor(`#${Math.floor(Math.random() * 16777215).toString(16)}`), 1000, {
-    enabled: paint.drawing
+    immediately: paint.drawing
   });
 
   useKeyPressEvent('c', paint.clear);

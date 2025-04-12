@@ -1,8 +1,6 @@
 import { memo } from 'react';
 
-import { useCounter } from '../useCounter/useCounter';
-import { useRenderCount } from '../useRenderCount/useRenderCount';
-import { useEvent } from './useEvent';
+import { useCounter, useRenderCount, useEvent } from '@siberiacancode/reactuse';
 
 interface MemoComponentProps {
   onClick: () => void;

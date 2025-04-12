@@ -1,5 +1,4 @@
-import { useField } from '../useField/useField';
-import { useClipboard } from './useClipboard';
+import { useClipboard, useField } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const clipboard = useClipboard();

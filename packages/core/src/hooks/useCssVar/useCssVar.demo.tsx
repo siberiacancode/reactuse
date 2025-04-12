@@ -1,4 +1,4 @@
-import { useCssVar } from './useCssVar';
+import { useCssVar } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const colorVar = useCssVar('--color', '#7fa998');

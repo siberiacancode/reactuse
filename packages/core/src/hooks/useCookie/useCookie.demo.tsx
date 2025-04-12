@@ -1,4 +1,4 @@
-import { useCookie } from './useCookie';
+import { useCookie } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { value, set, remove } = useCookie<number>('siberiacancode-use-cookie', 0);

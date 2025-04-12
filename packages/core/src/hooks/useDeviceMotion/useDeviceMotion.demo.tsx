@@ -1,4 +1,4 @@
-import { useDeviceMotion } from './useDeviceMotion';
+import { useDeviceMotion } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const deviceMotion = useDeviceMotion();

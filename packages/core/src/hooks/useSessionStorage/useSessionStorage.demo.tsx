@@ -1,4 +1,4 @@
-import { useSessionStorage } from './useSessionStorage';
+import { useSessionStorage } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { value, set, remove } = useSessionStorage('siberiacancode-use-local-storage', 0);

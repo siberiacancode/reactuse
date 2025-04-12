@@ -1,5 +1,4 @@
-import { useToggle } from '../useToggle/useToggle';
-import { useImage } from './useImage';
+import { useImage, useToggle } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [color, toggle] = useToggle(['ffffff', '000000', '5f0caa']);

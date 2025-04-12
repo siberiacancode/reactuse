@@ -1,4 +1,4 @@
-import { useRefState } from './useRefState';
+import { useRefState } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const internalRefState = useRefState<number>(0);

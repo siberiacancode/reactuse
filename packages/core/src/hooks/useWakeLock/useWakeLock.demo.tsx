@@ -1,4 +1,4 @@
-import { useWakeLock } from './useWakeLock';
+import { useWakeLock } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const wakeLock = useWakeLock();

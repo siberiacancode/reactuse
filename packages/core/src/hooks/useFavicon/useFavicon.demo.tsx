@@ -1,4 +1,4 @@
-import { useFavicon } from './useFavicon';
+import { useFavicon } from '@siberiacancode/reactuse';
 
 const REACT_FAVICON_URL = 'https://react.dev/favicon-32x32.png';
 const GOOGLE_FAVICON_URL = 'https://www.google.com/favicon.ico';

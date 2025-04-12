@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useResizeObserver } from './useResizeObserver';
+import { useResizeObserver } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [text, setText] = useState('');

@@ -1,4 +1,4 @@
-import { usePreferredColorScheme } from './usePreferredColorScheme';
+import { usePreferredColorScheme } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const preferredColorScheme = usePreferredColorScheme();

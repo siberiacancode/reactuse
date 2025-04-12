@@ -1,5 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { useKeyPressEvent } from './useKeyPressEvent';
+import { useCounter, useKeyPressEvent } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const counter = useCounter(0);

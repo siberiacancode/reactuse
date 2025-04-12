@@ -1,4 +1,4 @@
-import { useOperatingSystem } from './useOperatingSystem';
+import { useOperatingSystem } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const operatingSystem = useOperatingSystem();

@@ -1,4 +1,4 @@
-import { useDefault } from './useDefault';
+import { useDefault } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const initialUser = { name: 'Dima' };

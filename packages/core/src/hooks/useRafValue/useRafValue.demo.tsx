@@ -1,4 +1,4 @@
-import { useRafValue } from './useRafValue';
+import { useRafValue } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [count, setCount] = useRafValue(0);

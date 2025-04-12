@@ -1,6 +1,4 @@
-import { useField } from '../useField/useField';
-import { useList } from '../useList/useList';
-import { useMutation } from './useMutation';
+import { useField, useList, useMutation } from '@siberiacancode/reactuse';
 
 const createUser = (name: string) => Promise.resolve({ name });
 

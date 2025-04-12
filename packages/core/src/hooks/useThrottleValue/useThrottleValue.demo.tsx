@@ -1,5 +1,4 @@
-import { useCounter } from '../useCounter/useCounter';
-import { useThrottleValue } from './useThrottleValue';
+import { useCounter, useThrottleValue } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const counter = useCounter();

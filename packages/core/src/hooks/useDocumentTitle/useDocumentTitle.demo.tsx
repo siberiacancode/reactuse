@@ -1,4 +1,4 @@
-import { useDocumentTitle } from './useDocumentTitle';
+import { useDocumentTitle } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const documentTitle = useDocumentTitle();

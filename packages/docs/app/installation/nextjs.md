@@ -49,18 +49,18 @@ npx useverse@latest add useBoolean
 The command above will add the `useBoolean` hook to your project. You can then import it like this:
 
 ```tsx
-'use client'
+'use client';
 
-import { useBoolean } from "@/shared/hooks"
+import { useBoolean } from '@/shared/hooks';
 
 export default function Home() {
-  const [on, toggle] = useBoolean()
-  
+  const [on, toggle] = useBoolean();
+
   return (
     <div>
       <button onClick={() => toggle()}>Click me</button>
       <p>{on.toString()}</p>
     </div>
-  )
+  );
 }
 ```

@@ -1,4 +1,4 @@
-import { useStopwatch } from './useStopwatch';
+import { useStopwatch } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const stopwatch = useStopwatch();

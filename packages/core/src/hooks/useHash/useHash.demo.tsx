@@ -1,5 +1,4 @@
-import { useMount } from '../useMount/useMount';
-import { useHash } from './useHash';
+import { useHash, useMount } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const [hash, setHash] = useHash();

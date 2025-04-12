@@ -1,4 +1,4 @@
-import { useMediaQuery } from './useMediaQuery';
+import { useMediaQuery } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const matches = useMediaQuery('(max-width: 768px)');

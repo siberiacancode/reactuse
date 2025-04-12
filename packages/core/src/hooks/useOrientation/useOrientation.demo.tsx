@@ -1,4 +1,4 @@
-import { useOrientation } from './useOrientation';
+import { useOrientation } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { angle, type } = useOrientation();

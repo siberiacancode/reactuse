@@ -1,4 +1,4 @@
-import { usePermission } from './usePermission';
+import { usePermission } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const accelerometer = usePermission('accelerometer');

@@ -1,4 +1,4 @@
-import { usePreferredLanguages } from './usePreferredLanguages';
+import { usePreferredLanguages } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const languages = usePreferredLanguages();

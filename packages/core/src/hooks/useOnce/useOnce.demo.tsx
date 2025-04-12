@@ -1,5 +1,4 @@
-import { useBoolean } from '../useBoolean/useBoolean';
-import { useOnce } from './useOnce';
+import { useBoolean, useOnce } from '@siberiacancode/reactuse';
 
 const Component = () => {
   useOnce(() => alert('mount'));

@@ -1,4 +1,4 @@
-import { useDevicePixelRatio } from './useDevicePixelRatio';
+import { useDevicePixelRatio } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const { supported, ratio } = useDevicePixelRatio();

@@ -1,4 +1,4 @@
-import { useMemory } from './useMemory';
+import { useMemory } from '@siberiacancode/reactuse';
 
 const getMB = (bits: number) => (bits / 1024 / 1024).toFixed(2);
 

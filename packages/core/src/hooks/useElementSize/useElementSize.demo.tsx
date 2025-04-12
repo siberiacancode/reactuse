@@ -1,4 +1,4 @@
-import { useElementSize } from './useElementSize';
+import { useElementSize } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const elementSize = useElementSize<HTMLTextAreaElement>();
