@@ -16,25 +16,21 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  * useDidUpdate(() => console.log("effect runs on updates"), deps);
  */
 export const useDidUpdate = (effect: EffectCallback, deps?: DependencyList) => {
-  const hasRunRef = useRef(false);
-  const hasRenderedAfterRun = useRef(false);
+  const mounted = useRef(false);
 
-  if (hasRunRef.current) {
-    hasRenderedAfterRun.current = true;
-  }
-
-  useIsomorphicLayoutEffect(() => {
-    hasRunRef.current = true;
-  }, []);
+  useIsomorphicLayoutEffect(
+    () => () => {
+      mounted.current = false;
+    },
+    []
+  );
 
   useIsomorphicLayoutEffect(() => {
-    if (!hasRenderedAfterRun.current) {
-      return;
+    if (mounted.current) {
+      return effect();
     }
 
-    const effectReturns = effect();
-    if (effectReturns && typeof effectReturns === 'function') {
-      return effectReturns;
-    }
+    mounted.current = true;
+    return undefined;
   }, deps);
 };
