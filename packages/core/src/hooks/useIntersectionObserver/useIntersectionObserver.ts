@@ -35,6 +35,8 @@ export interface UseIntersectionObserver {
  * @description - Hook that gives you intersection observer state
  * @category Browser
  *
+ * @browserapi IntersectionObserver https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver
+ *
  * @overload
  * @param {HookTarget} target The target element to detect intersection
  * @param {boolean} [options.enabled=true] The IntersectionObserver options

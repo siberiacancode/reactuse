@@ -3,33 +3,18 @@ import { useBattery } from './useBattery';
 const Demo = () => {
   const battery = useBattery();
 
-  if (!battery.supported) {
-    return (
-      <p>
-        Battery sensor:
-        <code>not supported</code>
-      </p>
-    );
-  }
+  if (!battery.supported) return <p>Api not supported, make sure to check for compatibility with different browsers when using this <a target="_blank" rel="noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery">api</a></p>;
 
   if (battery.value.loading) {
     return (
-      <>
-        <p>
-          Battery sensor: <code>supported</code>
-        </p>
-        <p>
-          Battery state: <code>fetching</code>
-        </p>
-      </>
+      <p>
+        Battery state: <code>fetching</code>
+      </p>
     );
   }
 
   return (
     <>
-      <p>
-        Battery sensor: <code>{battery.supported && 'supported'}</code>
-      </p>
       <p>
         Charge level: <code>{battery.value.level && (battery.value.level * 100).toFixed(0)}%</code>
       </p>

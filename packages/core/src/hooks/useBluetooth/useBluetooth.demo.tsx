@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useBluetooth } from './useBluetooth';
 
 const Demo = () => {
-  const [error, setError] = useState<string | undefined>(undefined);
+  const [error, setError] = useState<string>();
   const bluetooth = useBluetooth({
     acceptAllDevices: true
   });
@@ -17,14 +17,7 @@ const Demo = () => {
     }
   };
 
-  if (!bluetooth.supported) {
-    return (
-      <p>
-        Bluetooth Web API:
-        <code>not supported</code>
-      </p>
-    );
-  }
+  if (!bluetooth.supported) return <p>Api not supported, make sure to check for compatibility with different browsers when using this <a target="_blank" rel="noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth">api</a></p>;
 
   return (
     <>

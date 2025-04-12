@@ -41,6 +41,7 @@ export default async () => {
       plugins: [tailwindcss()],
       resolve: {
         alias: {
+          '@siberiacancode/reactuse': fileURLToPath(new URL('../../../core/src', import.meta.url)),
           '@siberiacancode/docs': fileURLToPath(new URL('../../src', import.meta.url)),
           '@': fileURLToPath(new URL('../../../core/src', import.meta.url))
         }

@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 /**
  * @name useWakeLock
- * @description - Hook that provides an interface to the Screen Wake Lock API, allowing prevention of device screen dimming or locking
+ * @description - Hook that provides a wake lock functionality
  * @category Browser
  *
  * @browserapi navigator.wakeLock https://developer.mozilla.org/en-US/docs/Web/API/WakeLock
  *
- * @param {UseWakeLockOptions} [options] Configuration options for the hook.
+ * @param {immediately} [options] Configuration options for the hook.
  * @returns {UseWakeLockReturn} An object containing the wake lock state and control methods.
  *
  * @example
@@ -15,49 +15,35 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 export const useWakeLock = (options) => {
   const supported = typeof navigator !== 'undefined' && 'wakeLock' in navigator;
   const [active, setActive] = useState(false);
-  const wakeLockSentinel = useRef(null);
-  const { type, autoReacquire = false, onError, onRelease, onRequest } = options ?? {};
-  const handleRelease = useCallback(() => {
+  const sentinel = useRef();
+  const immediately = options?.immediately ?? false;
+  const type = options?.type ?? 'screen';
+  const request = async (type) => {
+    if (!supported) return;
+    sentinel.current = await navigator.wakeLock.request(type ?? options?.type);
+    sentinel.current.addEventListener('release', () => {
+      setActive(false);
+      sentinel.current = undefined;
+    });
+    setActive(true);
+  };
+  const release = async () => {
+    if (!supported || !sentinel.current) return;
+    await sentinel.current.release();
+    sentinel.current = undefined;
     setActive(false);
-    wakeLockSentinel.current = null;
-    onRelease?.();
-  }, []);
-  const request = useCallback(async () => {
-    if (!supported) {
-      onError?.(new Error('Wake Lock API is not supported in this browser.'));
-      return;
-    }
-    try {
-      wakeLockSentinel.current = await navigator.wakeLock.request(type);
-      wakeLockSentinel.current.addEventListener('release', handleRelease);
-      setActive(true);
-      onRequest?.();
-    } catch (error) {
-      onError?.(error);
-    }
-  }, [supported, type, handleRelease]);
-  const release = useCallback(async () => {
-    if (!wakeLockSentinel.current) return;
-    try {
-      await wakeLockSentinel.current.release();
-    } catch (error) {
-      onError?.(error);
-    }
-  }, [handleRelease]);
+  };
   useEffect(() => {
-    if (!supported || !autoReacquire) return;
-    const listener = () => {
-      if (document.visibilityState !== 'visible' || wakeLockSentinel.current) return;
-      request();
+    if (!supported || !immediately || document.visibilityState !== 'visible' || type !== 'screen')
+      return;
+    const onVisibilityChange = async () => {
+      await release();
+      await request(type);
     };
-    document.addEventListener('visibilitychange', listener);
-    return () => document.removeEventListener('visibilitychange', listener);
-  }, [supported, autoReacquire]);
-  useEffect(
-    () => () => {
-      release();
-    },
-    []
-  );
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
+  }, [type]);
   return { supported, active, request, release };
 };
