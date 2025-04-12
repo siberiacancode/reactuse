@@ -1,10 +1,18 @@
 import { renderHook } from '@testing-library/react';
+import React from 'react';
 
 import { useOnce } from './useOnce';
 
 it('Should use once', () => {
   const callback = vi.fn();
   renderHook(() => useOnce(callback));
+
+  expect(callback).toHaveBeenCalled();
+});
+
+it('Should use once even in strict mode', () => {
+  const callback = vi.fn();
+  renderHook(() => useOnce(callback), { wrapper: React.StrictMode });
 
   expect(callback).toHaveBeenCalled();
 });

@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import React from 'react';
 
 import { useDidUpdate } from './useDidUpdate';
 
@@ -34,4 +35,16 @@ it('Should call effect on rerender when dependencies empty', () => {
 
   rerender();
   expect(effect).toHaveBeenCalledTimes(2);
+});
+
+it('Should not call effect on initial render even in strict mode', () => {
+  const effect = vi.fn();
+  const { rerender } = renderHook(() => useDidUpdate(effect, []), {
+    wrapper: React.StrictMode
+  });
+
+  expect(effect).not.toHaveBeenCalled();
+
+  rerender();
+  expect(effect).not.toHaveBeenCalled();
 });
