@@ -25,7 +25,7 @@ interface UseTimeoutReturn {
 export function useTimeout(callback: () => void, delay: number): UseTimeoutReturn {
   const [ready, setReady] = useState(false);
 
-  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const internalCallback = useEvent(callback);
 
   useEffect(() => {

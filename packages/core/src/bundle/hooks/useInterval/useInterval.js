@@ -27,7 +27,7 @@ export const useInterval = (...params) => {
   const options = typeof params[1] === 'object' ? params[1] : params[2];
   const immediately = options?.immediately ?? true;
   const [active, setActive] = useState(immediately ?? true);
-  const intervalIdRef = useRef();
+  const intervalIdRef = useRef(undefined);
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
   useEffect(() => {

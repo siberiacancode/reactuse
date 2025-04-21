@@ -31,7 +31,7 @@ export const useDoubleClick = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const callback = target ? params[1] : params[0];
   const options = target ? params[2] : params[1];
-  const timeoutIdRef = useRef();
+  const timeoutIdRef = useRef(undefined);
   const clickCountRef = useRef(0);
   const internalRef = useRefState();
   const internalCallbackRef = useRef(callback);

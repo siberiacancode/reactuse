@@ -35,7 +35,7 @@ export const useResizeObserver = (...params) => {
   const enabled = options?.enabled ?? true;
   const [entries, setEntries] = useState([]);
   const internalRef = useRefState();
-  const internalOnChangeRef = useRef();
+  const internalOnChangeRef = useRef(options?.onChange);
   internalOnChangeRef.current = options?.onChange;
   useEffect(() => {
     if (!enabled && !target && !internalRef.state) return;

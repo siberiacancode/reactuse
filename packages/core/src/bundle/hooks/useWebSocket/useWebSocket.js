@@ -19,7 +19,7 @@ import { useEvent } from '../useEvent/useEvent';
  * const { status, close, send, open, client } = useWebSocket('url');
  */
 export const useWebSocket = (url, options) => {
-  const webSocketRef = useRef();
+  const webSocketRef = useRef(undefined);
   const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
   const explicityCloseRef = useRef(false);
   const [status, setStatus] = useState('connecting');

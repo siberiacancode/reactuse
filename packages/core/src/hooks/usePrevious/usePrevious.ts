@@ -12,14 +12,14 @@ export interface UsePreviousOptions<Value> {
  * @template Value The type of the value
  * @param {Value} value The value to get the previous value
  * @param {(a: Value, b: Value) => boolean} [options.equality] The custom equality function to determine if the value has changed
- * @returns {Value} The previous value
+ * @returns {Value | undefined} The previous value
  *
  * @example
  * const prevValue = usePrevious(value);
  */
 export const usePrevious = <Value>(value: Value, options?: UsePreviousOptions<Value>) => {
   const currentRef = useRef<Value>(value);
-  const previousRef = useRef<Value>();
+  const previousRef = useRef<Value>(undefined);
 
   const equality = options?.equality ?? Object.is;
 

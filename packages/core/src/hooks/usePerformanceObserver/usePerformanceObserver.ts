@@ -28,7 +28,7 @@ export const usePerformanceObserver = (
   const [entries, setEntries] = useState<PerformanceEntry[]>([]);
 
   const observerRef = useRef<PerformanceObserver | null>(null);
-  const internalCallback = useRef<PerformanceObserverCallback | null>();
+  const internalCallback = useRef<PerformanceObserverCallback | null>(callback);
   internalCallback.current = callback;
 
   const start = () => {

@@ -37,7 +37,7 @@ export interface UseVibrateReturn {
 export const useVibrate = (pattern: UseVibratePattern, interval: number = 0) => {
   const supported = typeof navigator !== 'undefined' && 'vibrate' in navigator;
 
-  const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
+  const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const [active, setActive] = useState(false);
 
   const trigger = (internalPattern: UseVibratePattern = pattern) => {

@@ -111,8 +111,8 @@ export const useTimer = ((...params: any[]) => {
   const [active, setActive] = useState(initialSeconds > 0 && (options?.immediately ?? true));
   const [seconds, setSeconds] = useState(initialSeconds);
 
-  const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
-  const optionsRef = useRef<UseTimerOptions>();
+  const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);
+  const optionsRef = useRef<UseTimerOptions>(options);
   optionsRef.current = options ?? {};
 
   useDidUpdate(() => {

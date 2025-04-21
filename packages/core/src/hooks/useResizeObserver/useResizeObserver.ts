@@ -67,7 +67,7 @@ export const useResizeObserver = ((...params: any[]) => {
   const [entries, setEntries] = useState<ResizeObserverEntry[]>([]);
 
   const internalRef = useRefState<Element>();
-  const internalOnChangeRef = useRef<UseResizeObserverOptions['onChange']>();
+  const internalOnChangeRef = useRef<UseResizeObserverOptions['onChange']>(options?.onChange);
   internalOnChangeRef.current = options?.onChange;
 
   useEffect(() => {

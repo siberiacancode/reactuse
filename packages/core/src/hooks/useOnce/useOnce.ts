@@ -15,7 +15,7 @@ import { useEffect, useRef } from 'react';
  * useOnce(() => console.log('effect once'));
  */
 export function useOnce(effect: EffectCallback) {
-  const cleanupRef = useRef<ReturnType<EffectCallback>>();
+  const cleanupRef = useRef<ReturnType<EffectCallback>>(undefined);
   const hasRunRef = useRef(false);
   const hasRenderedAfterRun = useRef(false);
 

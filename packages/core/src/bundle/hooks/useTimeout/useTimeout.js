@@ -14,7 +14,7 @@ import { useEvent } from '../useEvent/useEvent';
  */
 export function useTimeout(callback, delay) {
   const [ready, setReady] = useState(false);
-  const timeoutIdRef = useRef();
+  const timeoutIdRef = useRef(undefined);
   const internalCallback = useEvent(callback);
   useEffect(() => {
     timeoutIdRef.current = setTimeout(() => {

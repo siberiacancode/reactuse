@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from 'react';
 export const useWakeLock = (options) => {
   const supported = typeof navigator !== 'undefined' && 'wakeLock' in navigator;
   const [active, setActive] = useState(false);
-  const sentinel = useRef();
+  const sentinel = useRef(undefined);
   const immediately = options?.immediately ?? false;
   const type = options?.type ?? 'screen';
   const request = async (type) => {

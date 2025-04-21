@@ -12,7 +12,7 @@ import { useEffect, useRef } from 'react';
  * useOnce(() => console.log('effect once'));
  */
 export function useOnce(effect) {
-  const cleanupRef = useRef();
+  const cleanupRef = useRef(undefined);
   const hasRunRef = useRef(false);
   const hasRenderedAfterRun = useRef(false);
   if (hasRunRef.current) {

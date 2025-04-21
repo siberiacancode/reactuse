@@ -17,7 +17,7 @@ export const usePerformanceObserver = (options, callback) => {
   const supported = typeof window !== 'undefined' && typeof PerformanceObserver !== 'undefined';
   const [entries, setEntries] = useState([]);
   const observerRef = useRef(null);
-  const internalCallback = useRef();
+  const internalCallback = useRef(callback);
   internalCallback.current = callback;
   const start = () => {
     if (!supported) return;

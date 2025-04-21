@@ -98,7 +98,7 @@ export const useQuery = <QueryData, Data = QueryData>(
   const [data, setData] = useState<Data | undefined>(options?.initialData);
 
   const abortControllerRef = useRef<AbortController>(new AbortController());
-  const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
+  const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);
 
   const keys = options?.keys ?? [];
 

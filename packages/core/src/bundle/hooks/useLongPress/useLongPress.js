@@ -30,7 +30,7 @@ export const useLongPress = (...params) => {
   const callback = target ? params[1] : params[0];
   const options = target ? params[2] : params[1];
   const [pressed, setPressed] = useState(false);
-  const timeoutIdRef = useRef();
+  const timeoutIdRef = useRef(undefined);
   const isPressedRef = useRef(false);
   const internalRef = useRefState();
   const internalCallbackRef = useRef(callback);

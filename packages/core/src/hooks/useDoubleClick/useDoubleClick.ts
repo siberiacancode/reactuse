@@ -64,7 +64,7 @@ export const useDoubleClick = ((...params: any[]): any => {
   const callback = (target ? params[1] : params[0]) as (event: DoubleClickEvents) => void;
   const options = (target ? params[2] : params[1]) as UseDoubleClickOptions | undefined;
 
-  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const clickCountRef = useRef(0);
   const internalRef = useRefState<Element>();
 

@@ -46,7 +46,7 @@ export const useWebSocket = (
   url: UseWebSocketUrl,
   options?: UseWebSocketOptions
 ): UseWebSocketReturn => {
-  const webSocketRef = useRef<WebSocket>();
+  const webSocketRef = useRef<WebSocket>(undefined);
   const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
   const explicityCloseRef = useRef(false);
 

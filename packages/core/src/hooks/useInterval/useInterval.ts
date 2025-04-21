@@ -60,7 +60,7 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
 
   const [active, setActive] = useState<boolean>(immediately ?? true);
 
-  const intervalIdRef = useRef<ReturnType<typeof setInterval>>();
+  const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
 

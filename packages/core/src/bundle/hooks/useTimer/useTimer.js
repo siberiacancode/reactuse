@@ -47,8 +47,8 @@ export const useTimer = (...params) => {
   const options = typeof params[1] === 'object' ? params[1] : { onExpire: params[1] };
   const [active, setActive] = useState(initialSeconds > 0 && (options?.immediately ?? true));
   const [seconds, setSeconds] = useState(initialSeconds);
-  const intervalIdRef = useRef();
-  const optionsRef = useRef();
+  const intervalIdRef = useRef(undefined);
+  const optionsRef = useRef(options);
   optionsRef.current = options ?? {};
   useDidUpdate(() => {
     if (initialSeconds <= 0) {

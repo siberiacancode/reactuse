@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from 'react';
  */
 export const useVibrate = (pattern, interval = 0) => {
   const supported = typeof navigator !== 'undefined' && 'vibrate' in navigator;
-  const intervalIdRef = useRef();
+  const intervalIdRef = useRef(undefined);
   const [active, setActive] = useState(false);
   const trigger = (internalPattern = pattern) => {
     if (!supported) return;

@@ -70,7 +70,7 @@ export const useLongPress = ((...params: any[]): any => {
   const options = (target ? params[2] : params[1]) as UseLongPressOptions | undefined;
 
   const [pressed, setPressed] = useState(false);
-  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const isPressedRef = useRef(false);
   const internalRef = useRefState<Element>();
 

@@ -37,7 +37,7 @@ export const useWakeLock = (options?: UseWakeLockOptions): UseWakeLockReturn => 
   const supported = typeof navigator !== 'undefined' && 'wakeLock' in navigator;
 
   const [active, setActive] = useState(false);
-  const sentinel = useRef<WakeLockSentinel>();
+  const sentinel = useRef<WakeLockSentinel>(undefined);
 
   const immediately = options?.immediately ?? false;
   const type = options?.type ?? 'screen';

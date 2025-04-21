@@ -34,7 +34,7 @@ export const useQuery = (callback, options) => {
   const [error, setError] = useState(undefined);
   const [data, setData] = useState(options?.initialData);
   const abortControllerRef = useRef(new AbortController());
-  const intervalIdRef = useRef();
+  const intervalIdRef = useRef(undefined);
   const keys = options?.keys ?? [];
   const abort = () => {
     abortControllerRef.current.abort();
