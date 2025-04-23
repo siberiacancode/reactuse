@@ -18,6 +18,7 @@ onMounted(async () => {
   const demoComponent = await import(
     `../../../../packages/core/src/hooks/${props.hook}/${props.hook}.demo.tsx`
   );
+  console.log(demoComponent);
   demoRoot.value = createRoot(demoRef.value);
   demoRoot.value.render(createElement(demoComponent.default, {}, null));
 });
