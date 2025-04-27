@@ -46,12 +46,12 @@ export const useDropZone = (options) => {
     const currentFiles = getFiles(event);
     if (eventType === 'drop') {
       setIsOver(false);
+      setFiles(currentFiles);
       options.onDrop?.(currentFiles, event);
       return;
     }
     if (eventType === 'enter') {
       setIsOver(true);
-      setFiles(currentFiles);
       options.onEnter?.(null, event);
       return;
     }
