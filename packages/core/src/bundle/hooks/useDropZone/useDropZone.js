@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getElement, isTarget } from '@/utils/helpers';
+import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useDropZone
  * @description - Hook that provides drop zone functionality
@@ -11,10 +13,16 @@ import { useEffect, useRef, useState } from 'react';
  * @example
  * const { isOver } = useDropZone(ref, {onDrop});
  */
-// TODO: сделать два вида получения рефа из хука и принимать из вне
-// TODO: сделать доп валидации и мультиплай файлов
-export const useDropZone = (options) => {
-  const target = useRef(null);
+export const useDropZone = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target
+    ? typeof params[1] === 'object'
+      ? params[1]
+      : { onDrop: params[1] }
+    : typeof params[0] === 'object'
+      ? params[0]
+      : { onDrop: params[0] };
+  const internalRef = useRefState();
   const [files, setFiles] = useState(null);
   const [isOver, setIsOver] = useState(false);
   const getFiles = (event) => {
@@ -63,21 +71,24 @@ export const useDropZone = (options) => {
     if (eventType === 'over') options.onOver?.(null, event);
   };
   useEffect(() => {
-    if (!target.current) return;
+    if (!target && !internalRef.state) return;
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
     const handleDrop = (event) => handleDragEvent(event, 'drop');
     const handleDragOver = (event) => handleDragEvent(event, 'over');
     const handleDragEnter = (event) => handleDragEvent(event, 'enter');
     const handleDragLeave = (event) => handleDragEvent(event, 'leave');
-    target.current.addEventListener('dragenter', handleDragEnter);
-    target.current.addEventListener('dragover', handleDragOver);
-    target.current.addEventListener('dragleave', handleDragLeave);
-    target.current.addEventListener('drop', handleDrop);
+    element.addEventListener('dragenter', handleDragEnter);
+    element.addEventListener('dragover', handleDragOver);
+    element.addEventListener('dragleave', handleDragLeave);
+    element.addEventListener('drop', handleDrop);
     return () => {
-      target.current.removeEventListener('dragenter', handleDragEnter);
-      target.current.removeEventListener('dragover', handleDragOver);
-      target.current.removeEventListener('dragleave', handleDragLeave);
-      target.current.removeEventListener('drop', handleDrop);
+      element.removeEventListener('dragenter', handleDragEnter);
+      element.removeEventListener('dragover', handleDragOver);
+      element.removeEventListener('dragleave', handleDragLeave);
+      element.removeEventListener('drop', handleDrop);
     };
-  }, [target]);
-  return { ref: target, isOver, files };
+  }, [target, internalRef.current]);
+  if (target) return { isOver, files };
+  return { ref: internalRef, isOver, files };
 };

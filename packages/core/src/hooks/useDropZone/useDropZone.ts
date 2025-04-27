@@ -1,8 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import type { HookTarget } from '@/utils/helpers';
+
+import { getElement, isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
 
 type DragEventType = 'drop' | 'enter' | 'leave' | 'over';
 
-interface UseDropZoneOptions {
+export interface UseDropZoneOptions {
   dataTypes?: ((types: string[]) => boolean) | string[];
   multiple?: boolean;
   onDrop?: (files: File[] | null, event: DragEvent) => void;
@@ -11,9 +19,32 @@ interface UseDropZoneOptions {
   onOver?: (files: File[] | null, event: DragEvent) => void;
 }
 
-export interface UseDropZoneReturn {
+interface UseDropZoneReturn {
   files: File[] | null;
   isOver: boolean;
+}
+
+export interface UseDropZone {
+  (
+    target: HookTarget,
+    callback?: (files: File[] | null, event: DragEvent) => void
+  ): UseDropZoneReturn;
+
+  <Target extends Element>(
+    callback?: (files: File[] | null, event: DragEvent) => void,
+    target?: never
+  ): UseDropZoneReturn & {
+    ref: StateRef<Target>;
+  };
+
+  (target: HookTarget, options?: UseDropZoneOptions): UseDropZoneReturn;
+
+  <Target extends Element>(
+    options?: UseDropZoneOptions,
+    target?: never
+  ): UseDropZoneReturn & {
+    ref: StateRef<Target>;
+  };
 }
 
 /**
@@ -29,11 +60,20 @@ export interface UseDropZoneReturn {
  * const { isOver } = useDropZone(ref, {onDrop});
  */
 
-// TODO: сделать два вида получения рефа из хука и принимать из вне
-// TODO: сделать доп валидации и мультиплай файлов
+export const useDropZone = ((...params: any[]) => {
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
 
-export const useDropZone = (options: UseDropZoneOptions) => {
-  const target = useRef<any>(null);
+  const options = (
+    target
+      ? typeof params[1] === 'object'
+        ? params[1]
+        : { onDrop: params[1] }
+      : typeof params[0] === 'object'
+        ? params[0]
+        : { onDrop: params[0] }
+  ) as UseDropZoneOptions;
+
+  const internalRef = useRefState<Element>();
 
   const [files, setFiles] = useState<File[] | null>(null);
   const [isOver, setIsOver] = useState<boolean>(false);
@@ -106,28 +146,35 @@ export const useDropZone = (options: UseDropZoneOptions) => {
   };
 
   useEffect(() => {
-    if (!target.current) return;
+    if (!target && !internalRef.state) return;
 
-    const handleDrop = (event: DragEvent) => handleDragEvent(event, 'drop');
+    const element = target ? getElement(target) : internalRef.current;
 
-    const handleDragOver = (event: DragEvent) => handleDragEvent(event, 'over');
+    if (!element) return;
 
-    const handleDragEnter = (event: DragEvent) => handleDragEvent(event, 'enter');
+    const handleDrop = ((event: DragEvent) => handleDragEvent(event, 'drop')) as EventListener;
 
-    const handleDragLeave = (event: DragEvent) => handleDragEvent(event, 'leave');
+    const handleDragOver = ((event: DragEvent) => handleDragEvent(event, 'over')) as EventListener;
 
-    target.current.addEventListener('dragenter', handleDragEnter);
-    target.current.addEventListener('dragover', handleDragOver);
-    target.current.addEventListener('dragleave', handleDragLeave);
-    target.current.addEventListener('drop', handleDrop);
+    const handleDragEnter = ((event: DragEvent) =>
+      handleDragEvent(event, 'enter')) as EventListener;
+
+    const handleDragLeave = ((event: DragEvent) =>
+      handleDragEvent(event, 'leave')) as EventListener;
+
+    element.addEventListener('dragenter', handleDragEnter);
+    element.addEventListener('dragover', handleDragOver);
+    element.addEventListener('dragleave', handleDragLeave);
+    element.addEventListener('drop', handleDrop);
 
     return () => {
-      target.current.removeEventListener('dragenter', handleDragEnter);
-      target.current.removeEventListener('dragover', handleDragOver);
-      target.current.removeEventListener('dragleave', handleDragLeave);
-      target.current.removeEventListener('drop', handleDrop);
+      element.removeEventListener('dragenter', handleDragEnter);
+      element.removeEventListener('dragover', handleDragOver);
+      element.removeEventListener('dragleave', handleDragLeave);
+      element.removeEventListener('drop', handleDrop);
     };
-  }, [target]);
+  }, [target, internalRef.current]);
 
-  return { ref: target, isOver, files };
-};
+  if (target) return { isOver, files };
+  return { ref: internalRef, isOver, files };
+}) as UseDropZone;
