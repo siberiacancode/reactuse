@@ -1,13 +1,10 @@
-import type { Ref } from 'react';
-
 import { useEffect, useRef, useState } from 'react';
 
-type EventType = 'drop' | 'enter' | 'leave' | 'over';
+type DragEventType = 'drop' | 'enter' | 'leave' | 'over';
 
 interface UseDropZoneOptions {
-  dataTypes?: ((types: readonly string[]) => boolean) | Ref<readonly string[]>;
+  dataTypes?: ((types: string[]) => boolean) | string[];
   multiple?: boolean;
-  preventDefaultForUnhandled?: boolean;
   onDrop?: (files: File[] | null, event: DragEvent) => void;
   onEnter?: (files: File[] | null, event: DragEvent) => void;
   onLeave?: (files: File[] | null, event: DragEvent) => void;
@@ -16,7 +13,7 @@ interface UseDropZoneOptions {
 
 export interface UseDropZoneReturn {
   files: File[] | null;
-  isOverDropZone: boolean;
+  isOver: boolean;
 }
 
 /**
@@ -26,39 +23,72 @@ export interface UseDropZoneReturn {
  *
  *
  * @example
- * const {ref, isOverDropZone} = useDropZone({onDrop})
+ * const {ref, isOver} = useDropZone({onDrop})
  *
  * @example
- * const { isOverDropZone } = useDropZone(ref, {onDrop});
+ * const { isOver } = useDropZone(ref, {onDrop});
  */
+
+// TODO: сделать два вида получения рефа из хука и принимать из вне
+// TODO: сделать доп валидации и мультиплай файлов
 
 export const useDropZone = (options: UseDropZoneOptions) => {
   const target = useRef<any>(null);
 
   const [files, setFiles] = useState<File[] | null>(null);
-  const [isOverDropZone, setIsOverDropZone] = useState<boolean>(false);
+  const [isOver, setIsOver] = useState<boolean>(false);
 
   const getFiles = (event: DragEvent) => {
     const list = Array.from(event.dataTransfer?.files ?? []);
     return list.length === 0 ? null : options.multiple ? list : [list[0]];
   };
 
-  const handleDragEvent = (event: DragEvent, eventType: EventType) => {
-    event.preventDefault();
+  const checkDataTypes = (types: string[]) => {
+    const dataTypes = options.dataTypes;
 
+    if (typeof dataTypes === 'function') return dataTypes(types);
+
+    if (!dataTypes?.length) return true;
+
+    if (types.length === 0) return false;
+
+    return types.every((type) => dataTypes?.some((dataType) => type.includes(dataType)));
+  };
+
+  const checkValidity = (items: DataTransferItemList) => {
+    const types = Array.from(items ?? []).map((item) => item.type);
+
+    const dataTypesValid = checkDataTypes(types);
+    const multipleFilesValid = options.multiple || items.length <= 1;
+
+    return dataTypesValid && multipleFilesValid;
+  };
+
+  const handleDragEvent = (event: DragEvent, eventType: DragEventType) => {
+    const dataTransferItemList = event.dataTransfer?.items;
+
+    const isValid = (dataTransferItemList && checkValidity(dataTransferItemList)) ?? false;
+
+    if (!isValid) {
+      if (event.dataTransfer) event.dataTransfer.dropEffect = 'none';
+
+      return;
+    }
+
+    event.preventDefault();
     if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
 
     const currentFiles = getFiles(event);
 
     if (eventType === 'drop') {
-      setIsOverDropZone(false);
+      setIsOver(false);
       options.onDrop?.(currentFiles, event);
 
       return;
     }
 
     if (eventType === 'enter') {
-      setIsOverDropZone(true);
+      setIsOver(true);
       setFiles(currentFiles);
       options.onEnter?.(null, event);
 
@@ -66,7 +96,7 @@ export const useDropZone = (options: UseDropZoneOptions) => {
     }
 
     if (eventType === 'leave') {
-      setIsOverDropZone(false);
+      setIsOver(false);
       options.onLeave?.(null, event);
 
       return;
@@ -99,5 +129,5 @@ export const useDropZone = (options: UseDropZoneOptions) => {
     };
   }, [target]);
 
-  return { ref: target, isOverDropZone, files };
+  return { ref: target, isOver, files };
 };
