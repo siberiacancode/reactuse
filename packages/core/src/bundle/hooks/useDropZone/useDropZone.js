@@ -6,12 +6,46 @@ import { useRefState } from '../useRefState/useRefState';
  * @description - Hook that provides drop zone functionality
  * @category Elements
  *
+ * @overload
+ * @template Target The target element
+ * @param {Target} target The target element drop zone's
+ * @param {DataTypes} [options.dataTypes] The data types
+ * @param {boolean} [options.multiple] The multiple mode
+ * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function
+ * @param {(files: File[] | null, event: DragEvent) => void} [options.onEnter] The on enter callback function
+ * @param {(files: File[] | null, event: DragEvent) => void} [options.onLeave] The on leave callback function
+ * @param {(files: File[] | null, event: DragEvent) => void} [options.onOver] The on over callback function
+ * @returns {[boolean, File[] | null]} The object with drop zone states
  *
  * @example
- * const {ref, isOver} = useDropZone({onDrop})
+ * const {isOver, files} = useDropZone(ref, options);
+ *
+ * @overload
+ * @param {Target} target The target element drop zone's
+ * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop
+ * @returns {[boolean, File[] | null]} The object with drop zone states
  *
  * @example
- * const { isOver } = useDropZone(ref, {onDrop});
+ * const {isOver, files} = useDropZone(ref, () => console.log('callback'));
+ *
+ * @overload
+ * @param {DataTypes} [options.dataTypes] The data types
+ * @param {boolean} [options.multiple] The multiple mode
+ * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function
+ * @param {(files: File[] | null, event: DragEvent) => void} [options.onEnter] The on enter callback function
+ * @param {(files: File[] | null, event: DragEvent) => void} [options.onLeave] The on leave callback function
+ * @param {(files: File[] | null, event: DragEvent) => void} [options.onOver] The on over callback function
+ * @returns {[StateRef<Target>, boolean, File[] | null]} The object with drop zone states and ref
+ *
+ * @example
+ * const { ref, isOver, files } = useDropZone(options);
+ *
+ * @overload
+ * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop
+ * @returns {[StateRef<Target>, boolean, File[] | null]} The object with drop zone states and ref
+ *
+ * @example
+ * const { ref, isOver, files } = useDropZone(() => console.log('callback'));
  */
 export const useDropZone = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
