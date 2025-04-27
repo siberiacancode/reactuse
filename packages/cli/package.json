@@ -1,6 +1,6 @@
 {
   "name": "useverse",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "description": "Add reactuse hooks to your apps",
   "license": "MIT",
@@ -13,7 +13,7 @@
   "keywords": [
     "hooks",
     "reactuse",
-    "reactuse-cli",
+    "cli",
     "react",
     "react hooks",
     "react use",
@@ -22,7 +22,7 @@
   ],
   "exports": "./dist/bin.js",
   "bin": {
-    "reactuse": "dist/bin.js"
+    "useverse": "dist/bin.js"
   },
   "files": [
     "dist"
