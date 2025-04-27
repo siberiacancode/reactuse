@@ -20,9 +20,9 @@
     "use",
     "hooks"
   ],
-  "exports": "./dist/bin.mjs",
+  "exports": "./dist/bin.js",
   "bin": {
-    "reactuse": "dist/bin.mjs"
+    "reactuse": "dist/bin.js"
   },
   "files": [
     "dist"
