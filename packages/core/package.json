@@ -81,11 +81,7 @@
     "vitest": "^3.1.2"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.ts": [
+    "*.{js,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
     ]

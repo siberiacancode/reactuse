@@ -1,7 +1,8 @@
 {
   "name": "useverse",
   "version": "0.1.4",
-  "description": "Add react hooks to your apps",
+  "type": "module",
+  "description": "Add reactuse hooks to your apps",
   "license": "MIT",
   "homepage": "https://siberiacancode.github.io/reactuse/",
   "repository": {
@@ -55,5 +56,11 @@
     "cross-env": "^7.0.3",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

@@ -51,11 +51,7 @@
     "vitepress": "^1.6.3"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.ts": [
+    "*.{vue,md,*ts,*js,jsx,tsx}": [
       "eslint --fix",
       "prettier --write"
     ]
