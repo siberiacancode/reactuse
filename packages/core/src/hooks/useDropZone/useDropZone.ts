@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -8,29 +8,28 @@ import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
-type DragEventType = 'drop' | 'enter' | 'leave' | 'over';
-type DataTypes = ((types: string[]) => boolean) | string[];
+export type DropZoneDataTypes = ((types: string[]) => boolean) | string[];
 
 export interface UseDropZoneOptions {
   /** The data types for drop zone */
-  dataTypes?: DataTypes;
+  dataTypes?: DropZoneDataTypes;
   /** The multiple mode for drop zone */
   multiple?: boolean;
   /** The on drop callback */
   onDrop?: (files: File[] | null, event: DragEvent) => void;
   /** The on enter callback */
-  onEnter?: (files: File[] | null, event: DragEvent) => void;
+  onEnter?: (event: DragEvent) => void;
   /** The on leave callback */
-  onLeave?: (files: File[] | null, event: DragEvent) => void;
+  onLeave?: (event: DragEvent) => void;
   /** The on over callback */
-  onOver?: (files: File[] | null, event: DragEvent) => void;
+  onOver?: (event: DragEvent) => void;
 }
 
 export interface UseDropZoneReturn {
   /** The files that was dropped in drop zone */
   files: File[] | null;
-  /** The boolean flag that indicate when drop zone is over */
-  isOver: boolean;
+  /** The over drop zone status */
+  overed: boolean;
 }
 
 export interface UseDropZone {
@@ -67,13 +66,13 @@ export interface UseDropZone {
  * @param {DataTypes} [options.dataTypes] The data types
  * @param {boolean} [options.multiple] The multiple mode
  * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function
- * @param {(files: File[] | null, event: DragEvent) => void} [options.onEnter] The on enter callback function
- * @param {(files: File[] | null, event: DragEvent) => void} [options.onLeave] The on leave callback function
- * @param {(files: File[] | null, event: DragEvent) => void} [options.onOver] The on over callback function
+ * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function
+ * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function
+ * @param {(event: DragEvent) => void} [options.onOver] The on over callback function
  * @returns {[boolean, File[] | null]} The object with drop zone states
  *
  * @example
- * const {isOver, files} = useDropZone(ref, options);
+ * const { overed, files } = useDropZone(ref, options);
  *
  * @overload
  * @param {Target} target The target element drop zone's
@@ -81,26 +80,26 @@ export interface UseDropZone {
  * @returns {[boolean, File[] | null]} The object with drop zone states
  *
  * @example
- * const {isOver, files} = useDropZone(ref, () => console.log('callback'));
+ * const { overed, files } = useDropZone(ref, () => console.log('callback'));
  *
  * @overload
  * @param {DataTypes} [options.dataTypes] The data types
  * @param {boolean} [options.multiple] The multiple mode
  * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function
- * @param {(files: File[] | null, event: DragEvent) => void} [options.onEnter] The on enter callback function
- * @param {(files: File[] | null, event: DragEvent) => void} [options.onLeave] The on leave callback function
- * @param {(files: File[] | null, event: DragEvent) => void} [options.onOver] The on over callback function
+ * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function
+ * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function
+ * @param {(event: DragEvent) => void} [options.onOver] The on over callback function
  * @returns {[StateRef<Target>, boolean, File[] | null]} The object with drop zone states and ref
  *
  * @example
- * const { ref, isOver, files } = useDropZone(options);
+ * const { ref, overed, files } = useDropZone(options);
  *
  * @overload
  * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop
  * @returns {[StateRef<Target>, boolean, File[] | null]} The object with drop zone states and ref
  *
  * @example
- * const { ref, isOver, files } = useDropZone(() => console.log('callback'));
+ * const { ref, overed, files } = useDropZone(() => console.log('callback'));
  */
 
 export const useDropZone = ((...params: any[]) => {
@@ -118,74 +117,39 @@ export const useDropZone = ((...params: any[]) => {
 
   const internalRef = useRefState<Element>();
 
+  const counterRef = useRef(0);
   const [files, setFiles] = useState<File[] | null>(null);
-  const [isOver, setIsOver] = useState<boolean>(false);
+  const [overed, setOvered] = useState(false);
+
+  const dataTypes = options.dataTypes;
 
   const getFiles = (event: DragEvent) => {
-    const list = Array.from(event.dataTransfer?.files ?? []);
-    return list.length === 0 ? null : options.multiple ? list : [list[0]];
+    if (!event.dataTransfer) return null;
+    const list = Array.from(event.dataTransfer.files);
+    if (options.multiple) return list;
+    if (!list.length) return null;
+    return [list[0]];
   };
 
   const checkDataTypes = (types: string[]) => {
-    const dataTypes = options.dataTypes;
-
+    if (!dataTypes) return true;
     if (typeof dataTypes === 'function') return dataTypes(types);
+    if (!dataTypes.length) return true;
+    if (!types.length) return false;
 
-    if (!dataTypes?.length) return true;
-
-    if (types.length === 0) return false;
-
-    return types.every((type) => dataTypes?.some((dataType) => type.includes(dataType)));
+    return types.every((type) => {
+      console.log('type', type);
+      console.log('dataTypes', dataTypes);
+      return dataTypes.some((dataType) => type.includes(dataType));
+    });
   };
 
   const checkValidity = (items: DataTransferItemList) => {
-    const types = Array.from(items ?? []).map((item) => item.type);
-
+    const types = Array.from(items).map((item) => item.type);
     const dataTypesValid = checkDataTypes(types);
     const multipleFilesValid = options.multiple || items.length <= 1;
 
     return dataTypesValid && multipleFilesValid;
-  };
-
-  const handleDragEvent = (event: DragEvent, eventType: DragEventType) => {
-    const dataTransferItemList = event.dataTransfer?.items;
-
-    const isValid = (dataTransferItemList && checkValidity(dataTransferItemList)) ?? false;
-
-    if (!isValid) {
-      if (event.dataTransfer) event.dataTransfer.dropEffect = 'none';
-
-      return;
-    }
-
-    event.preventDefault();
-    if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
-
-    const currentFiles = getFiles(event);
-
-    if (eventType === 'drop') {
-      setIsOver(false);
-      setFiles(currentFiles);
-      options.onDrop?.(currentFiles, event);
-
-      return;
-    }
-
-    if (eventType === 'enter') {
-      setIsOver(true);
-      options.onEnter?.(null, event);
-
-      return;
-    }
-
-    if (eventType === 'leave') {
-      setIsOver(false);
-      options.onLeave?.(null, event);
-
-      return;
-    }
-
-    if (eventType === 'over') options.onOver?.(null, event);
   };
 
   useEffect(() => {
@@ -195,29 +159,64 @@ export const useDropZone = ((...params: any[]) => {
 
     if (!element) return;
 
-    const handleDrop = ((event: DragEvent) => handleDragEvent(event, 'drop')) as EventListener;
+    const onEvent = (event: DragEvent, type: 'drop' | 'enter' | 'leave' | 'over') => {
+      if (!event.dataTransfer) return;
 
-    const handleDragOver = ((event: DragEvent) => handleDragEvent(event, 'over')) as EventListener;
+      const isValid = checkValidity(event.dataTransfer.items);
+      if (!isValid) {
+        event.dataTransfer.dropEffect = 'none';
+        return;
+      }
 
-    const handleDragEnter = ((event: DragEvent) =>
-      handleDragEvent(event, 'enter')) as EventListener;
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'copy';
 
-    const handleDragLeave = ((event: DragEvent) =>
-      handleDragEvent(event, 'leave')) as EventListener;
+      const currentFiles = getFiles(event);
 
-    element.addEventListener('dragenter', handleDragEnter);
-    element.addEventListener('dragover', handleDragOver);
-    element.addEventListener('dragleave', handleDragLeave);
-    element.addEventListener('drop', handleDrop);
+      if (type === 'drop') {
+        counterRef.current = 0;
+        setOvered(false);
+        setFiles(currentFiles);
+        options.onDrop?.(currentFiles, event);
+        return;
+      }
+
+      if (type === 'enter') {
+        counterRef.current += 1;
+        setOvered(true);
+        options.onEnter?.(event);
+        return;
+      }
+
+      if (type === 'leave') {
+        counterRef.current -= 1;
+        if (counterRef.current !== 0) return;
+        setOvered(false);
+        options.onLeave?.(event);
+        return;
+      }
+
+      if (type === 'over') options.onOver?.(event);
+    };
+
+    const onDrop = ((event: DragEvent) => onEvent(event, 'drop')) as EventListener;
+    const onDragOver = ((event: DragEvent) => onEvent(event, 'over')) as EventListener;
+    const onDragEnter = ((event: DragEvent) => onEvent(event, 'enter')) as EventListener;
+    const onDragLeave = ((event: DragEvent) => onEvent(event, 'leave')) as EventListener;
+
+    element.addEventListener('dragenter', onDragEnter);
+    element.addEventListener('dragover', onDragOver);
+    element.addEventListener('dragleave', onDragLeave);
+    element.addEventListener('drop', onDrop);
 
     return () => {
-      element.removeEventListener('dragenter', handleDragEnter);
-      element.removeEventListener('dragover', handleDragOver);
-      element.removeEventListener('dragleave', handleDragLeave);
-      element.removeEventListener('drop', handleDrop);
+      element.removeEventListener('dragenter', onDragEnter);
+      element.removeEventListener('dragover', onDragOver);
+      element.removeEventListener('dragleave', onDragLeave);
+      element.removeEventListener('drop', onDrop);
     };
   }, [target, internalRef.current]);
 
-  if (target) return { isOver, files };
-  return { ref: internalRef, isOver, files };
+  if (target) return { overed, files };
+  return { ref: internalRef, overed, files };
 }) as UseDropZone;
