@@ -26,7 +26,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @template Target The target element
  * @param {(event: Event) => void} [callback] The callback function to be invoked on mouse enter
- * @returns {UseHoverReturn<Target>} The state of the hover
+ * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The state of the hover
  *
  * @example
  * const [ref, hovering] = useHover(() => console.log('callback'));
@@ -35,7 +35,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @template Target The target element
  * @param {(event: Event) => void} [options.onEntry] The callback function to be invoked on mouse enter
  * @param {(event: Event) => void} [options.onLeave] The callback function to be invoked on mouse leave
- * @returns {UseHoverReturn<Target>} The state of the hover
+ * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The state of the hover
  *
  * @example
  * const [ref, hovering] = useHover(options);
@@ -73,5 +73,8 @@ export const useHover = (...params) => {
     };
   }, [target, internalRef.state]);
   if (target) return hovering;
-  return [internalRef, hovering];
+  return {
+    ref: internalRef,
+    value: hovering
+  };
 };

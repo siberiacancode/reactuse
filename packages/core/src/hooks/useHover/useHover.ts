@@ -16,6 +16,10 @@ export interface UseHoverOptions {
   onLeave?: (event: Event) => void;
 }
 
+export interface UseHoverReturn {
+  value: boolean;
+}
+
 export interface UseHover {
   (target: HookTarget, callback?: (event: Event) => void): boolean;
 
@@ -24,9 +28,12 @@ export interface UseHover {
   <Target extends Element>(
     callback?: (event: Event) => void,
     target?: never
-  ): [StateRef<Target>, boolean];
+  ): { ref: StateRef<Target> } & UseHoverReturn;
 
-  <Target extends Element>(options?: UseHoverOptions, target?: never): [StateRef<Target>, boolean];
+  <Target extends Element>(
+    options?: UseHoverOptions,
+    target?: never
+  ): { ref: StateRef<Target> } & UseHoverReturn;
 }
 
 /**
@@ -54,7 +61,7 @@ export interface UseHover {
  * @overload
  * @template Target The target element
  * @param {(event: Event) => void} [callback] The callback function to be invoked on mouse enter
- * @returns {UseHoverReturn<Target>} The state of the hover
+ * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The state of the hover
  *
  * @example
  * const [ref, hovering] = useHover(() => console.log('callback'));
@@ -63,7 +70,7 @@ export interface UseHover {
  * @template Target The target element
  * @param {(event: Event) => void} [options.onEntry] The callback function to be invoked on mouse enter
  * @param {(event: Event) => void} [options.onLeave] The callback function to be invoked on mouse leave
- * @returns {UseHoverReturn<Target>} The state of the hover
+ * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The state of the hover
  *
  * @example
  * const [ref, hovering] = useHover(options);
@@ -112,5 +119,8 @@ export const useHover = ((...params: any[]) => {
   }, [target, internalRef.state]);
 
   if (target) return hovering;
-  return [internalRef, hovering] as const;
+  return {
+    ref: internalRef,
+    value: hovering
+  } as const;
 }) as UseHover;
