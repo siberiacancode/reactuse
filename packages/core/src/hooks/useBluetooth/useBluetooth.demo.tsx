@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useBluetooth } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const Demo = () => {
   const [error, setError] = useState<string>();
@@ -16,7 +16,20 @@ const Demo = () => {
     }
   };
 
-  if (!bluetooth.supported) return <p>Api not supported, make sure to check for compatibility with different browsers when using this <a target="_blank" rel="noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth">api</a></p>;
+  if (!bluetooth.supported)
+    return (
+      <p>
+        Api not supported, make sure to check for compatibility with different browsers when using
+        this{' '}
+        <a
+          href='https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth'
+          rel='noreferrer'
+          target='_blank'
+        >
+          api
+        </a>
+      </p>
+    );
 
   return (
     <>

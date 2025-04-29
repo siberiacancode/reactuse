@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import { useInterval } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const GREETINGS = [
   'Hello',

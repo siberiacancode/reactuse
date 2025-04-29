@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import { useKeyboard } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const Demo = () => {
   const [pressedKeys, setPressedKeys] = useState<string[]>([]);

@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import { useField, useWebSocket } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 interface Message {
   date: Date;

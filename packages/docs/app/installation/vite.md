@@ -98,8 +98,8 @@ bun add -D @types/node
 :::
 
 ```typescript title="vite.config.ts" showLineNumbers {1,2,8-13}
-import path from 'path';
 import react from '@vitejs/plugin-react';
+import path from 'node:path';
 import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
@@ -136,7 +136,7 @@ The command above will add the `useBoolean` hook to your project. You can then i
 ```tsx showLineNumbers title="src/App.tsx"
 import { useBoolean } from '@/shared/hooks';
 
-function App() {
+const App = () => {
   const [on, toggle] = useBoolean();
 
   return (

@@ -1,9 +1,8 @@
 import type { CSSProperties } from 'react';
 
 import { cn } from '@siberiacancode/docs/utils';
-import { useRef } from 'react';
-
 import { useEventListener, usePointerLock } from '@siberiacancode/reactuse';
+import { useRef } from 'react';
 
 const getSideStyles = (index: number) =>
   ({

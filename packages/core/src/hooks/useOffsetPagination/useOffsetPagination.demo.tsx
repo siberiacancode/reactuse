@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import { useOffsetPagination } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const TOTAL = 80;
 const PAGE_SIZE = 10;

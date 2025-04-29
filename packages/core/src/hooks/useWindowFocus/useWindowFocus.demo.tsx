@@ -5,8 +5,16 @@ const Demo = () => {
 
   return (
     <p>
-      {windowFocused && <>💡 Click somewhere outside of the document to <code>unfocus</code></>}
-      {!windowFocused && <>ℹ Tab is <code>unfocused</code></>}
+      {windowFocused && (
+        <>
+          💡 Click somewhere outside of the document to <code>unfocus</code>
+        </>
+      )}
+      {!windowFocused && (
+        <>
+          ℹ Tab is <code>unfocused</code>
+        </>
+      )}
     </p>
   );
 };

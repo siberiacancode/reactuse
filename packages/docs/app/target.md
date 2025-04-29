@@ -5,8 +5,8 @@
 Many `React` libraries that work with DOM elements typically support only one way of providing target elements - usually through refs.
 
 ```typescript twoslash
-import { useRef } from 'react';
 import { useClickOutside } from '@siberiacancode/reactuse';
+import { useRef } from 'react';
 
 const ref = useRef<HTMLDivElement>(null);
 useClickOutside(ref, () => console.log('Clicked outside'));
@@ -21,8 +21,8 @@ Our library implements a flexible approach using `typescript` function overloads
 1. By passing an **existing** target _(ref, DOM element, function that returns a DOM element, or selector)_
 
 ```typescript twoslash
-import { useRef } from 'react';
 import { useClickOutside } from '@siberiacancode/reactuse';
+import { useRef } from 'react';
 
 const ref = useRef<HTMLDivElement>(null);
 useClickOutside(ref, () => console.log('Clicked outside'));
@@ -31,7 +31,7 @@ useClickOutside(ref, () => console.log('Clicked outside'));
 or you can use [target](#the-target-function) function
 
 ```typescript twoslash
-import { useClickOutside, target } from '@siberiacancode/reactuse';
+import { target, useClickOutside } from '@siberiacancode/reactuse';
 
 useClickOutside(target('#container'), () => console.log('Clicked outside'));
 ```
@@ -58,7 +58,7 @@ The `target` is a utility function that helps you work with DOM elements in a fl
 The flexibility of `target` means you can use our hooks like you want.
 
 ```typescript twoslash
-import { useClickOutside, target } from '@siberiacancode/reactuse';
+import { target, useClickOutside } from '@siberiacancode/reactuse';
 
 useClickOutside(target('#container'), () => console.log('Clicked outside'));
 

@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import { usePostMessage } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const Demo = () => {
   const [messages, setMessages] = useState<string[]>([]);

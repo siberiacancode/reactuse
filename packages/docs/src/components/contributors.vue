@@ -11,7 +11,7 @@ const props = defineProps<{
       :key="contributor.name"
       class="flex items-center gap-2"
     >
-      <img :src="contributor.avatar" alt="Avatar" class="size-6 rounded-full" />
+      <img :src="contributor.avatar" alt="Avatar" class="size-6 rounded-full">
       <span class="text-sm">{{ contributor.name }}</span>
     </div>
   </div>

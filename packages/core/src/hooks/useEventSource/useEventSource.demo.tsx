@@ -1,26 +1,23 @@
 import { useEventSource } from './useEventSource';
 
 const Demo = () => {
-	const { data, status, close, open } = useEventSource(
-		'https://example.com/sse',
-		['update', 'message'],
-		{
-			autoReconnect: {
-				retries: 3,
-				delay: 2000,
-				onFailed: () => console.error('Reconnect failed'),
-			},
-		}
-	);
+  const eventSource = useEventSource('https://sse.dev/test', ['update', 'message']);
 
-	return (
-		<div>
-			<p>Status: {status}</p>
-			<p>Data: {data}</p>
-			<button onClick={close}>Close Connection</button>
-			<button onClick={open}>Reconnect</button>
-		</div>
-	);
-}
+  return (
+    <div>
+      <p>
+        Status:{' '}
+        <code>
+          {eventSource.isConnecting ? 'CONNECTING' : eventSource.isOpen ? 'OPEN' : 'CLOSED'}
+        </code>
+      </p>
+      {eventSource.isConnecting && <p>Connecting...</p>}
+      {eventSource.isOpen && <p>Data: {eventSource.data}</p>}
+
+      {eventSource.isOpen && <button onClick={eventSource.close}>Close</button>}
+      {!eventSource.isOpen && <button onClick={eventSource.open}>Reconnect</button>}
+    </div>
+  );
+};
 
 export default Demo;

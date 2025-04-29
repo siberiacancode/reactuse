@@ -1,11 +1,11 @@
 import { useHover } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const [hoverRef, isHover] = useHover<HTMLDivElement>(() => console.log('callback'));
+  const hover = useHover<HTMLDivElement>(() => console.log('callback'));
 
   return (
-    <div ref={hoverRef}>
-      The current div is <code>{isHover ? 'hovered' : 'unhovered'}</code>
+    <div ref={hover.ref}>
+      The current div is <code>{hover.value ? 'hovered' : 'unhovered'}</code>
     </div>
   );
 };

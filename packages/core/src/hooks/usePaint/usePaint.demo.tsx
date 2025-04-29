@@ -1,8 +1,7 @@
-import { useState } from 'react';
-
 import type { Paint } from '@siberiacancode/reactuse';
 
 import { useField, useInterval, useKeyPressEvent, usePaint } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const Demo = () => {
   const [color, setColor] = useState('#37d2e6');

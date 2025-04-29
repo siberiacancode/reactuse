@@ -1,7 +1,7 @@
 import type { DefaultTheme, MarkdownOptions } from 'vitepress';
 
-import tailwindcss from '@tailwindcss/vite';
 import { transformerTwoslash } from '@shikijs/vitepress-twoslash';
+import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitepress';
 

@@ -1,4 +1,4 @@
-import { useDebounceCallback, useCounter } from '@siberiacancode/reactuse';
+import { useCounter, useDebounceCallback } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const counter = useCounter();

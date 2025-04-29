@@ -1,195 +1,158 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-type EventSourceStatus = 'CLOSED' | 'CONNECTING' | 'OPEN';
+import { getRetry } from '@/utils/helpers';
 
-interface UseEventSourceOptions extends EventSourceInit {
-  /**
-   * Automatically connect to the EventSource when URL changes
-   *
-   * @default true
-   */
-  autoConnect?: boolean;
-
-  /**
-   * Immediately open the connection when calling this hook
-   *
-   * @default true
-   */
-  immediate?: boolean;
-
-  /**
-   * Enabled auto reconnect
-   *
-   * @default false
-   */
-  autoReconnect?:
-    | boolean
-    | {
-        /**
-         * Maximum retry times.
-         *
-         * Or you can pass a predicate function (which returns true if you want to retry).
-         *
-         * @default -1
-         */
-        retries?: (() => boolean) | number;
-
-        /**
-         * Delay for reconnect, in milliseconds
-         *
-         * @default 1000
-         */
-        delay?: number;
-
-        /**
-         * On maximum retry times reached.
-         */
-        onFailed?: () => void;
-      };
+/** The use event source options type */
+export interface UseEventSourceOptions<QueryData, Data> extends EventSourceInit {
+  /** Immediately open the connection when calling this hook */
+  immediately?: boolean;
+  /* The placeholder data for the hook */
+  placeholderData?: (() => Data) | Data;
+  /* The retry count of requests */
+  retry?: boolean | number;
+  /* The retry delay of requests */
+  retryDelay?: ((retry: number, event: Event) => number) | number;
+  /* The onError function to be invoked */
+  onError?: (error: Event) => void;
+  /* The onMessage function to be invoked */
+  onMessage?: (event: Event & { data?: Data }) => void;
+  /* The onOpen function to be invoked */
+  onOpen?: () => void;
+  /* The select function to be invoked */
+  select?: (data: QueryData) => Data;
 }
 
+/** The use event source return type */
 interface UseEventSourceReturn<Data = any> {
-  /**
-   * The latest data received via the EventSource
-   */
-  data: Data | null;
-
-  /**
-   * The current error
-   */
-  error: Event | null;
-
-  /**
-   * The latest named event
-   */
-  event: string | null;
-
-  /**
-   * The last event ID string, for server-sent events
-   */
-  lastEventId: string | null;
-
-  /**
-   * The current state of the connection
-   */
-  status: EventSourceStatus;
-
-  /**
-   * Closes the EventSource connection gracefully
-   */
+  /** The latest data received via the EventSource */
+  data?: Data;
+  /** The current error */
+  error?: Event;
+  /** The instance of the EventSource */
+  instance?: EventSource;
+  /* The connecting state of the query */
+  isConnecting: boolean;
+  /* The error state of the query */
+  isError: boolean;
+  /* The open state of the query */
+  isOpen: boolean;
+  /** Closes the EventSource connection gracefully */
   close: () => void;
-
-  /**
-   * Reopen the EventSource connection
-   */
+  /** Reopen the EventSource connection */
   open: () => void;
 }
 
-function resolveNestedOptions<T>(options: true | T): T {
-  if (options === true) return {} as T;
-  return options;
-}
-
 /**
- * Reactive wrapper for EventSource in React
+ * @name useEventSource
+ * @description - Hook that provides a reactive wrapper for event source
+ * @category Browser
  *
- * @param url The URL of the EventSource
- * @param events List of events to listen to
- * @param options Configuration options
+ * @browserapi EventSource https://developer.mozilla.org/en-US/docs/Web/API/EventSource
+ *
+ * @param {string | URL} url The URL of the EventSource
+ * @param {string[]} [events=[]] List of events to listen to
+ * @param {UseEventSourceOptions} [options={}] Configuration options
+ * @returns {UseEventSourceReturn<Data>} The EventSource state and controls
+ *
+ * @example
+ * const { instance, data, isConnecting, isOpen, isError, close, open } = useEventSource('url', ['message']);
  */
-export function useEventSource<Data = any>(
-  url: string | URL | undefined,
+export const useEventSource = <QueryData = any, Data = QueryData>(
+  url: string | URL,
   events: string[] = [],
-  options: UseEventSourceOptions = {}
-): UseEventSourceReturn<Data> {
-  const [data, setData] = useState<Data | null>(null);
-  const [status, setStatus] = useState<EventSourceStatus>('CONNECTING');
-  const [event, setEvent] = useState<string | null>(null);
-  const [error, setError] = useState<Event | null>(null);
-  const [lastEventId, setLastEventId] = useState<string | null>(null);
+  options: UseEventSourceOptions<QueryData, Data> = {}
+): UseEventSourceReturn<Data> => {
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  const eventSourceRef = useRef<EventSource | null>(null);
-  const explicitlyClosedRef = useRef(false);
-  const retriedRef = useRef(0);
+  const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
+  const [error, setError] = useState<Event | undefined>(undefined);
+  const [data, setData] = useState<Data | undefined>(options?.placeholderData);
 
-  const { withCredentials = false, immediate = true, autoConnect = true, autoReconnect } = options;
+  const eventSourceRef = useRef<EventSource>(undefined);
 
-  const close = useCallback(() => {
-    if (eventSourceRef.current) {
-      eventSourceRef.current.close();
-      eventSourceRef.current = null;
-      setStatus('CLOSED');
-      explicitlyClosedRef.current = true;
-    }
-  }, []);
+  const immediately = options.immediately ?? true;
 
-  const open = useCallback(() => {
-    if (!url) return;
+  const close = () => {
+    if (!eventSourceRef.current) return;
 
+    eventSourceRef.current.close();
+    eventSourceRef.current = undefined;
+    setIsOpen(false);
+    setIsConnecting(false);
+    setIsError(false);
+  };
+
+  const open = () => {
     close();
-    explicitlyClosedRef.current = false;
-    retriedRef.current = 0;
 
-    const es = new EventSource(url, { withCredentials });
-    eventSourceRef.current = es;
+    const eventSource = new EventSource(url, { withCredentials: options.withCredentials ?? false });
+    eventSourceRef.current = eventSource;
 
-    setStatus('CONNECTING');
+    setIsConnecting(true);
 
-    es.onopen = () => {
-      setStatus('OPEN');
-      setError(null);
+    eventSource.onopen = () => {
+      setIsOpen(true);
+      setIsConnecting(false);
+      setError(undefined);
+      options?.onOpen?.();
     };
 
-    es.onerror = (e) => {
-      setStatus('CLOSED');
-      setError(e);
+    eventSource.onerror = (event) => {
+      setIsOpen(false);
+      setIsConnecting(false);
+      setIsError(true);
+      setError(event);
+      options?.onError?.(event);
 
-      // Reconnect logic
-      if (es.readyState === 2 && !explicitlyClosedRef.current && autoReconnect) {
-        es.close();
-        const { retries = -1, delay = 1000, onFailed } = resolveNestedOptions(autoReconnect);
-        retriedRef.current += 1;
+      if (retryCountRef.current > 0) {
+        retryCountRef.current -= 1;
 
-        if (typeof retries === 'number' && (retries < 0 || retriedRef.current < retries)) {
-          setTimeout(open, delay);
-        } else if (typeof retries === 'function' && retries()) {
-          setTimeout(open, delay);
-        } else {
-          onFailed?.();
+        const retryDelay =
+          typeof options?.retryDelay === 'function'
+            ? options?.retryDelay(retryCountRef.current, event)
+            : options?.retryDelay;
+
+        if (retryDelay) {
+          setTimeout(open, retryDelay);
+          return;
         }
       }
+
+      retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
     };
 
-    es.onmessage = (e: MessageEvent) => {
-      setEvent(null);
-      setData(e.data);
-      setLastEventId(e.lastEventId);
+    eventSource.onmessage = (event) => {
+      const data = options?.select ? options?.select(event.data) : event.data;
+      setData(data);
+      options?.onMessage?.(event);
     };
 
     events.forEach((eventName) => {
-      es.addEventListener(eventName, (e: Event & { data?: Data }) => {
-        setEvent(eventName);
-        setData(e.data || null);
+      eventSource.addEventListener(eventName, (event: Event & { data?: Data }) => {
+        setData(event.data);
       });
     });
-  }, [url, withCredentials, autoReconnect, events, close]);
+  };
 
   useEffect(() => {
-    if (immediate) open();
-    return () => close();
-  }, [immediate, open, close]);
+    if (!immediately) return;
 
-  useEffect(() => {
-    if (autoConnect) open();
-  }, [url, autoConnect, open]);
+    open();
+    return () => {
+      close();
+    };
+  }, [immediately]);
 
   return {
+    instance: eventSourceRef.current,
     data,
-    status,
-    event,
     error,
+    isConnecting,
+    isOpen,
+    isError,
     close,
-    open,
-    lastEventId
+    open
   };
-}
+};

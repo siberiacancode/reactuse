@@ -3,7 +3,20 @@ import { useBattery } from '@siberiacancode/reactuse';
 const Demo = () => {
   const battery = useBattery();
 
-  if (!battery.supported) return <p>Api not supported, make sure to check for compatibility with different browsers when using this <a target="_blank" rel="noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery">api</a></p>;
+  if (!battery.supported)
+    return (
+      <p>
+        Api not supported, make sure to check for compatibility with different browsers when using
+        this{' '}
+        <a
+          href='https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery'
+          rel='noreferrer'
+          target='_blank'
+        >
+          api
+        </a>
+      </p>
+    );
 
   if (battery.value.loading) {
     return (

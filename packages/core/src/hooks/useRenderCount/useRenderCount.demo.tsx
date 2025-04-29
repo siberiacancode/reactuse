@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import { useRenderCount } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const Demo = () => {
   const renderCount = useRenderCount();

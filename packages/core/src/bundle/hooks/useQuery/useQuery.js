@@ -30,9 +30,9 @@ export const useQuery = (callback, options) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(!!options?.initialData);
+  const [isSuccess, setIsSuccess] = useState(!!options?.placeholderData);
   const [error, setError] = useState(undefined);
-  const [data, setData] = useState(options?.initialData);
+  const [data, setData] = useState(options?.placeholderData);
   const abortControllerRef = useRef(new AbortController());
   const intervalIdRef = useRef(undefined);
   const keys = options?.keys ?? [];
@@ -107,13 +107,9 @@ export const useQuery = (callback, options) => {
     };
   }, [enabled, options?.refetchInterval, options?.retry, ...keys]);
   const refetch = () => request('refetch');
-  const placeholderData =
-    typeof options?.placeholderData === 'function'
-      ? (options?.placeholderData)()
-      : options?.placeholderData;
   return {
     abort,
-    data: data ?? placeholderData,
+    data,
     error,
     refetch,
     isFetching,

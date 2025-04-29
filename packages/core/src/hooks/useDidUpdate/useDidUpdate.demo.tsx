@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useCounter, useDidUpdate } from '@siberiacancode/reactuse';
+import { useEffect, useState } from 'react';
 
 const Demo = () => {
   const counter = useCounter();

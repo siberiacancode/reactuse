@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import { useIsFirstRender } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const Demo = () => {
   const isFirstRender = useIsFirstRender();

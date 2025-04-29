@@ -11,8 +11,6 @@ import { useMount } from '../useMount/useMount';
 export interface UseQueryOptions<QueryData, Data> {
   /* The enabled state of the query */
   enabled?: boolean;
-  /* The initial data for the hook */
-  initialData?: (() => Data) | Data;
   /* The depends for the hook */
   keys?: DependencyList;
   /* The placeholder data for the hook */
@@ -92,10 +90,10 @@ export const useQuery = <QueryData, Data = QueryData>(
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(!!options?.initialData);
+  const [isSuccess, setIsSuccess] = useState(!!options?.placeholderData);
 
   const [error, setError] = useState<Error | undefined>(undefined);
-  const [data, setData] = useState<Data | undefined>(options?.initialData);
+  const [data, setData] = useState<Data | undefined>(options?.placeholderData);
 
   const abortControllerRef = useRef<AbortController>(new AbortController());
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);
@@ -182,14 +180,9 @@ export const useQuery = <QueryData, Data = QueryData>(
 
   const refetch = () => request('refetch');
 
-  const placeholderData =
-    typeof options?.placeholderData === 'function'
-      ? (options?.placeholderData as () => Data)()
-      : options?.placeholderData;
-
   return {
     abort,
-    data: data ?? placeholderData,
+    data,
     error,
     refetch,
     isFetching,

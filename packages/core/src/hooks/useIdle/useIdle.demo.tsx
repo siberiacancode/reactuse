@@ -1,5 +1,4 @@
 import { cn } from '@siberiacancode/docs/utils';
-
 import { useIdle } from '@siberiacancode/reactuse';
 
 const Demo = () => {

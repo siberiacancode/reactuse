@@ -1,7 +1,6 @@
 import { cn } from '@siberiacancode/docs/utils';
-import { useRef } from 'react';
-
 import { useSticky } from '@siberiacancode/reactuse';
+import { useRef } from 'react';
 
 const Demo = () => {
   const rootRef = useRef<HTMLDivElement>(null);
