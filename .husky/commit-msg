@@ -1,10 +1,10 @@
-if [ -f .emoji ]
+emoji=$(git config user.emoji || echo "🧊")
+branch=$(git symbolic-ref --short HEAD)
+message=$(cat "$1")
+
+if echo "$message" | (! grep -q "^${branch} ${emoji}*") &&\
+   echo "$message" | (! grep -q "^Merge branch*") &&\
+   echo "$message" | (! grep -q "^Merge remote-tracking branch*");\
 then
-    branch=$(git symbolic-ref --short HEAD)
-    emoji=$(cat .emoji)
-    message=$(cat "$1")
-    if echo "$message" | (! grep -q "^${branch} ${emoji}*") && echo "$message" | (! grep -q "^Merge pull request*") && echo "$message" | (! grep -q "^Merge branch*")
-    then
-        echo "$branch $emoji $(cat $1)" > "$1"
-    fi
+   echo "$branch $emoji $(cat $1)" > "$1"
 fi
