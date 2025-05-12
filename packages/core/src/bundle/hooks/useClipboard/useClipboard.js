@@ -11,7 +11,7 @@ import { copy } from '@/utils/helpers';
  * @returns {UseCopyToClipboardReturn} An object containing the boolean state value and utility functions to manipulate the state
  *
  * @example
- * const { supported, value, copy } = useClipboard();
+ * const { value, copy } = useClipboard();
  */
 export const useClipboard = (params) => {
   const [value, setValue] = useState(null);

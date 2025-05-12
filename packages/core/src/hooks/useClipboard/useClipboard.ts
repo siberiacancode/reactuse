@@ -27,7 +27,7 @@ export interface UseCopyToClipboardParams {
  * @returns {UseCopyToClipboardReturn} An object containing the boolean state value and utility functions to manipulate the state
  *
  * @example
- * const { supported, value, copy } = useClipboard();
+ * const { value, copy } = useClipboard();
  */
 export const useClipboard = (params?: UseCopyToClipboardParams): UseCopyToClipboardReturn => {
   const [value, setValue] = useState<string | null>(null);
