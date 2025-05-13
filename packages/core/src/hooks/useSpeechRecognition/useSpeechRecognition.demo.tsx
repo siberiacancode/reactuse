@@ -80,9 +80,20 @@ const Demo = () => {
   const onLanguageChange = (event: ChangeEvent<HTMLInputElement>) =>
     setLanguage(event.target.value);
 
-  if (!speechRecognition.supported) {
-    return <p>Your browser does not support the Speech Recognition API</p>;
-  }
+  if (!speechRecognition.supported)
+    return (
+      <p>
+        Api not supported, make sure to check for compatibility with different browsers when using
+        this{' '}
+        <a
+          href='https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition'
+          rel='noreferrer'
+          target='_blank'
+        >
+          api
+        </a>
+      </p>
+    );
 
   return (
     <>

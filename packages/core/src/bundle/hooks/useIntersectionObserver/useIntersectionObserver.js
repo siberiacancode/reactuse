@@ -13,7 +13,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @param {boolean} [options.enabled=true] The IntersectionObserver options
  * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected
  * @param {HookTarget} [options.root] The root element to observe
- * @returns {UseIntersectionObserverReturn} An object containing the state and the supported status
+ * @returns {UseIntersectionObserverReturn} An object containing the state
  *
  * @example
  * const { ref, entry, inView } = useIntersectionObserver();

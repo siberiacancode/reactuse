@@ -30,13 +30,18 @@ export const useGamepad = () => {
       if (gamepad && gamepads[gamepad.index]) gamepads[gamepad.index] = createGamepad(gamepad);
     }
   };
-  const { active } = useRaf(updateGamepadState, { enabled: !!Object.keys(gamepads).length });
+  const { active } = useRaf(updateGamepadState, {
+    enabled: !!Object.keys(gamepads).length
+  });
   useEffect(() => {
     if (!supported) return;
     const gamepads = navigator.getGamepads();
     setGamepads(
       gamepads.reduce(
-        (acc, gamepad) => ({ ...acc, ...(gamepad && { [gamepad.index]: createGamepad(gamepad) }) }),
+        (acc, gamepad) => ({
+          ...acc,
+          ...(gamepad && { [gamepad.index]: createGamepad(gamepad) })
+        }),
         {}
       )
     );

@@ -33,14 +33,18 @@ export interface UseMemoryReturn {
  * const { supported, value } = useMemory();
  */
 export const useMemory = (): UseMemoryReturn => {
-  const supported = performance && 'memory' in performance;
-  const [value, setValue] = useState<Performance['memory']>({
-    jsHeapSizeLimit: 0,
-    totalJSHeapSize: 0,
-    usedJSHeapSize: 0
-  });
+  const supported = performance && 'memory' in performance && !!performance.memory;
+  const [value, setValue] = useState<Performance['memory']>(
+    performance?.memory ?? {
+      jsHeapSizeLimit: 0,
+      totalJSHeapSize: 0,
+      usedJSHeapSize: 0
+    }
+  );
 
-  useInterval(() => setValue(performance.memory), 1000, { immediately: supported });
+  useInterval(() => setValue(performance.memory), 1000, {
+    immediately: supported
+  });
 
   return { supported, value };
 };

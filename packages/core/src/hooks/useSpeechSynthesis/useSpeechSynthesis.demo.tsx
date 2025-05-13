@@ -2,7 +2,9 @@ import { useField, useMount, useSpeechSynthesis } from '@siberiacancode/reactuse
 import { useState } from 'react';
 
 const Demo = () => {
-  const textField = useField({ initialValue: 'Hello, everyone! Good morning!' });
+  const textField = useField({
+    initialValue: 'Hello, everyone! Good morning!'
+  });
   const pitchField = useField({ initialValue: 1 });
   const rateField = useField({ initialValue: 1 });
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);

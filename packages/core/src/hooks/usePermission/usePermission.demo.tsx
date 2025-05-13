@@ -17,6 +17,21 @@ const Demo = () => {
   const push = usePermission('push');
   const speaker = usePermission('speaker');
 
+  if (!accelerometer.supported)
+    return (
+      <p>
+        Api not supported, make sure to check for compatibility with different browsers when using
+        this{' '}
+        <a
+          href='https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions'
+          rel='noreferrer'
+          target='_blank'
+        >
+          api
+        </a>
+      </p>
+    );
+
   return (
     <>
       <p>
