@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": ".",
+    "module": "esnext",
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "strict": true,
+    "declaration": false,
+    "emitDeclarationOnly": false,
+    "noEmit": false,
+    "outDir": "src/bundle",
+    "removeComments": false,
+    "sourceMap": false,
+    "esModuleInterop": true
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.*", "**/*.demo.*"]
+}
