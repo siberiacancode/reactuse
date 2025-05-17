@@ -46,9 +46,7 @@ export const useField = (params) => {
     setTouched(false);
     setError(undefined);
   };
-  const focus = () => {
-    inputRef.current.focus();
-  };
+  const focus = () => inputRef.current.focus();
   const validate = (params) => {
     if (params.required && !inputRef.current.value) {
       return setError(params.required);
