@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const props = defineProps<{
-  hook: string;
+  type: string;
+  name: string;
 }>();
 
-const repositoryLink = `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/${props.hook}`;
+const repositoryLink = `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/${props.type}s/${props.name}`;
 
-const sourceLink = `${repositoryLink}/${props.hook}.ts`;
-const demoLink = `${repositoryLink}/${props.hook}.demo.tsx`;
+const sourceLink = `${repositoryLink}/${props.name}.ts`;
+const demoLink = `${repositoryLink}/${props.name}.demo.tsx`;
 </script>
 
 <template>

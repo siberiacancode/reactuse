@@ -52,7 +52,7 @@ This hook uses <a :href="$params.browserapi.description" target="_blank">**{{ $p
 
 ## Source
 
-<Source :hook="$params.name" />
+<Source :type="$params.type" :name="$params.name" />
 
 ## Contributors
 
