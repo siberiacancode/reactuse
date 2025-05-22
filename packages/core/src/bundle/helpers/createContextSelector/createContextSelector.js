@@ -1,17 +1,6 @@
 import React from 'react';
-const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
-const useEventCallback = (fn) => {
-  const ref = React.useRef(fn);
-  return React.useCallback((...args) => ref.current(...args), []);
-};
-/**
- * Creates a Provider for context with optimized updates
- * @template T - Type of the context value
- * @param {React.Provider<ContextValue<T>>} originalProvider - Original context Provider
- * @returns {React.Provider<T>} - Optimized Provider
- */
-const createProvider = (originalProvider) => {
+import { useEvent, useIsomorphicLayoutEffect } from '@/hooks';
+const createProvider = (originalProvider, displayName) => {
   const Provider = (props) => {
     const valueRef = React.useRef(props.value);
     const contextValue = React.useRef({
@@ -31,25 +20,19 @@ const createProvider = (originalProvider) => {
     }, [props.value]);
     return React.createElement(originalProvider, { value: contextValue.current }, props.children);
   };
+  if (displayName) Provider.displayName = displayName;
   return Provider;
 };
-/**
- * Hook for selecting part of a context state with re-render optimization
- * @template Value - Type of the full context value
- * @template SelectedValue - Type of the selected value
- * @param {Context<Value>} context - Context object
- * @param {Function} selector - State selection function
- * @returns {SelectedValue} - Selected part of the state
- */
 const useContextSelector = (context, selector) => {
-  const contextValue = React.use(context);
+  // eslint-disable-next-line react/no-use-context
+  const contextValue = React.useContext(context);
   const {
     value: { current: value },
     listeners
   } = contextValue;
   const selected = selector(value);
   const [state, setState] = React.useState({ value, selected });
-  const dispatch = useEventCallback((newValue) => {
+  const dispatch = useEvent((newValue) => {
     setState((prev) => {
       if (Object.is(prev.value, newValue)) return prev;
       const newSelected = selector(newValue);
@@ -66,49 +49,42 @@ const useContextSelector = (context, selector) => {
   return state.selected;
 };
 /**
- * Creates a set of tools for working with a context optimized for state selection
- * @template T - Type of the context value
- * @param {T} defaultValue - Default context value
- * @param {ContextOptions} options - Options for configuring the context
- * @returns {object} - Object with Provider, useSelector and useHasContext
+ * @name createContextSelector
+ * @description - Creates a typed context selector with optimized updates for state selection
+ * @category Helpers
+ *
+ * @template Value - The type of value that will be stored in the context
+ * @param {Value | undefined} [defaultValue] - Default value for the context
+ * @param {CreateContextSelectorOptions<Value>} [options] - Additional options for context creation
+ * @returns {CreateContextSelectorReturn<Value>} Object containing context utilities and components
+ *
+ * @example
+ * const { Provider, useSelector, useStrictSelector, useHasContext } = createContextSelector<number>(0);
  */
 export const createContextSelector = (
-  defaultValue,
-  options = { displayName: 'Context', strict: false }
+  defaultValue = undefined,
+  options = { displayName: 'ContextSelector' }
 ) => {
   const context = React.createContext({
     value: { current: defaultValue },
     listeners: new Set(),
     marker: false
   });
-  const Provider = createProvider(context.Provider);
-  /**
-   * Hook for checking if Provider exists in the component tree
-   * @returns {boolean} - true if Provider is found
-   */
-  const useHasContext = () => {
-    const contextValue = React.use(context);
+  const Provider = createProvider(context.Provider, options.displayName);
+  function useHasContext() {
+    // eslint-disable-next-line react/no-use-context
+    const contextValue = React.useContext(context);
     return contextValue.marker;
-  };
-  /**
-   * Hook for selecting part of context state
-   * @template SelectedValue - Type of the selected value
-   * @param {Function} selector - State selection function
-   * @returns {SelectedValue} - Selected part of the state
-   * @throws {Error} - Error if Provider is not found in strict mode
-   */
-  const useSelector = (selector) => {
-    if (options?.strict) {
-      const contextValue = React.use(context);
-      if (!contextValue.marker) {
-        throw new Error(`Context ${options?.displayName} not found`);
-      }
+  }
+  function useSelector(selector) {
+    return useContextSelector(context, selector ?? ((state) => state));
+  }
+  function useStrictSelector(selector) {
+    const hasContext = useHasContext();
+    if (!hasContext) {
+      throw new Error(`Context ${options?.displayName} not found`);
     }
-    return useContextSelector(context, selector);
-  };
-  return {
-    Provider,
-    useSelector,
-    useHasContext
-  };
+    return useContextSelector(context, selector ?? ((state) => state));
+  }
+  return { Provider, useSelector, useStrictSelector, useHasContext };
 };

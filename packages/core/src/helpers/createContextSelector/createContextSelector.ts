@@ -1,61 +1,39 @@
 import React from 'react';
 
-/**
- * Options for the context
- * @typedef {object} ContextOptions
- * @property {string} displayName - Display name for the context
- * @property {boolean} strict - Enable strict mode for context existence checking
- */
-interface ContextOptions {
+import { useEvent, useIsomorphicLayoutEffect } from '@/hooks';
+
+/** The options for the context */
+export interface CreateContextSelectorOptions {
+  /** The display name for the context */
   displayName: string;
-  strict: boolean;
 }
 
-/**
- * Listener function for context value changes
- * @template T - Type of the context value
- * @typedef {Function} ContextListener
- * @param {T} value - New context value
- */
+/** The return type for the createContextSelector function */
+export interface CreateContextSelectorReturn<Value> {
+  /** The Provider component for the context */
+  Provider: React.Provider<Value>;
+  /** A hook to check if the context is available in the component tree */
+  useHasContext: () => boolean;
+  /** A hook to select a part of the context state */
+  useSelector: <SelectedValue>(selector?: (state: Value) => SelectedValue) => SelectedValue;
+  /** A hook to select a part of the context state with strict mode */
+  useStrictSelector: <SelectedValue>(selector?: (state: Value) => SelectedValue) => SelectedValue;
+}
+
 type ContextListener<T> = (value: T) => void;
 
-/**
- * Internal representation of the context value
- * @template T - Type of the context value
- * @typedef {object} ContextValue
- * @property {React.RefObject<T>} value - Reference to the current value
- * @property {Set<ContextListener<T>>} listeners - Set of change listeners
- * @property {boolean} marker - Flag indicating if the context is being used
- */
-interface ContextValue<T> {
-  listeners: Set<ContextListener<T>>;
+interface ContextValue<Value> {
+  listeners: Set<ContextListener<Value>>;
   marker: boolean;
-  value: React.RefObject<T>;
+  value: React.RefObject<Value>;
 }
 
-/**
- * React Context type
- * @template T - Type of the context value
- */
 type Context<T> = React.Context<T>;
 
-const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
-
-const useEventCallback = <Args extends unknown[], Return>(
-  fn: (...args: Args) => Return
-): ((...args: Args) => Return) => {
-  const ref = React.useRef(fn);
-  return React.useCallback((...args: Args) => ref.current(...args), []);
-};
-
-/**
- * Creates a Provider for context with optimized updates
- * @template T - Type of the context value
- * @param {React.Provider<ContextValue<T>>} originalProvider - Original context Provider
- * @returns {React.Provider<T>} - Optimized Provider
- */
-const createProvider = <T>(originalProvider: React.Provider<ContextValue<T>>) => {
+const createProvider = <T>(
+  originalProvider: React.Provider<ContextValue<T>>,
+  displayName?: string
+) => {
   const Provider: React.FC<React.ProviderProps<T>> = (props) => {
     const valueRef = React.useRef(props.value);
     const contextValue = React.useRef<ContextValue<T>>({
@@ -79,22 +57,17 @@ const createProvider = <T>(originalProvider: React.Provider<ContextValue<T>>) =>
     return React.createElement(originalProvider, { value: contextValue.current }, props.children);
   };
 
+  if (displayName) Provider.displayName = displayName;
+
   return Provider as unknown as React.Provider<ContextValue<T>>;
 };
 
-/**
- * Hook for selecting part of a context state with re-render optimization
- * @template Value - Type of the full context value
- * @template SelectedValue - Type of the selected value
- * @param {Context<Value>} context - Context object
- * @param {Function} selector - State selection function
- * @returns {SelectedValue} - Selected part of the state
- */
 const useContextSelector = <Value, SelectedValue>(
   context: Context<Value>,
   selector: (state: Value) => SelectedValue
 ) => {
-  const contextValue = React.use(context as unknown as Context<ContextValue<Value>>);
+  // eslint-disable-next-line react/no-use-context
+  const contextValue = React.useContext(context as unknown as Context<ContextValue<Value>>);
 
   const {
     value: { current: value },
@@ -103,7 +76,7 @@ const useContextSelector = <Value, SelectedValue>(
   const selected = selector(value);
 
   const [state, setState] = React.useState({ value, selected });
-  const dispatch = useEventCallback((newValue: Value) => {
+  const dispatch = useEvent((newValue: Value) => {
     setState((prev) => {
       if (Object.is(prev.value, newValue)) return prev;
 
@@ -125,54 +98,61 @@ const useContextSelector = <Value, SelectedValue>(
 };
 
 /**
- * Creates a set of tools for working with a context optimized for state selection
- * @template T - Type of the context value
- * @param {T} defaultValue - Default context value
- * @param {ContextOptions} options - Options for configuring the context
- * @returns {object} - Object with Provider, useSelector and useHasContext
+ * @name createContextSelector
+ * @description - Creates a typed context selector with optimized updates for state selection
+ * @category Helpers
+ *
+ * @template Value - The type of value that will be stored in the context
+ * @param {Value | undefined} [defaultValue] - Default value for the context
+ * @param {CreateContextSelectorOptions<Value>} [options] - Additional options for context creation
+ * @returns {CreateContextSelectorReturn<Value>} Object containing context utilities and components
+ *
+ * @example
+ * const { Provider, useSelector, useStrictSelector, useHasContext } = createContextSelector<number>(0);
  */
-export const createContextSelector = <T>(
-  defaultValue: T,
-  options: ContextOptions = { displayName: 'Context', strict: false }
+export const createContextSelector = <Value>(
+  defaultValue: Value | undefined = undefined,
+  options: CreateContextSelectorOptions = { displayName: 'ContextSelector' }
 ) => {
-  const context = React.createContext<ContextValue<T>>({
-    value: { current: defaultValue },
+  const context = React.createContext<ContextValue<Value>>({
+    value: { current: defaultValue as Value },
     listeners: new Set(),
     marker: false
   });
 
-  const Provider = createProvider(context.Provider) as React.Provider<T>;
+  const Provider = createProvider(context.Provider, options.displayName) as React.Provider<Value>;
 
-  /**
-   * Hook for checking if Provider exists in the component tree
-   * @returns {boolean} - true if Provider is found
-   */
-  const useHasContext = () => {
-    const contextValue = React.use(context);
+  function useHasContext(): boolean;
+  function useHasContext() {
+    // eslint-disable-next-line react/no-use-context
+    const contextValue = React.useContext(context);
     return contextValue.marker;
-  };
+  }
 
-  /**
-   * Hook for selecting part of context state
-   * @template SelectedValue - Type of the selected value
-   * @param {Function} selector - State selection function
-   * @returns {SelectedValue} - Selected part of the state
-   * @throws {Error} - Error if Provider is not found in strict mode
-   */
-  const useSelector = <SelectedValue>(selector: (state: T) => SelectedValue) => {
-    if (options?.strict) {
-      const contextValue = React.use(context);
-      if (!contextValue.marker) {
-        throw new Error(`Context ${options?.displayName} not found`);
-      }
+  function useSelector(): Value;
+  function useSelector<SelectedValue>(selector: (state: Value) => SelectedValue): SelectedValue;
+  function useSelector<SelectedValue>(selector?: (state: Value) => SelectedValue) {
+    return useContextSelector(
+      context as unknown as Context<Value>,
+      selector ?? ((state) => state as unknown as SelectedValue)
+    );
+  }
+
+  function useStrictSelector(): Value;
+  function useStrictSelector<SelectedValue>(
+    selector: (state: Value) => SelectedValue
+  ): SelectedValue;
+  function useStrictSelector<SelectedValue>(selector?: (state: Value) => SelectedValue) {
+    const hasContext = useHasContext();
+    if (!hasContext) {
+      throw new Error(`Context ${options?.displayName} not found`);
     }
 
-    return useContextSelector(context as unknown as Context<T>, selector);
-  };
+    return useContextSelector(
+      context as unknown as Context<Value>,
+      selector ?? ((state) => state as unknown as SelectedValue)
+    );
+  }
 
-  return {
-    Provider,
-    useSelector,
-    useHasContext
-  };
+  return { Provider, useSelector, useStrictSelector, useHasContext };
 };
