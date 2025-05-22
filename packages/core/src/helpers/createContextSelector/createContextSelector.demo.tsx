@@ -16,7 +16,7 @@ interface ProfileData {
 
 const defaultProfile: ProfileData = {
   profile: {
-    name: 'Иван Иванов',
+    name: 'Ivan Ivanov',
     email: 'user@example.com',
     avatar: 'https://i.pravatar.cc/150?img=3',
     isActive: true
@@ -37,7 +37,7 @@ const NameForm = memo(() => {
   return (
     <div className='mb-4'>
       <label className='mb-1 block text-sm font-medium text-gray-700' htmlFor='name'>
-        Имя:
+        Name:
       </label>
       <input
         className='w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500'
@@ -47,7 +47,7 @@ const NameForm = memo(() => {
         onChange={(e) => onChange(e.target.value)}
       />
       <div className='mt-1 inline-block rounded bg-gray-100 px-2 py-1 text-xs text-gray-600'>
-        Ререндеры: {renderCount}
+        Rerenders: {renderCount}
       </div>
     </div>
   );
@@ -72,7 +72,7 @@ const EmailForm = memo(() => {
         onChange={(e) => onChange(e.target.value)}
       />
       <div className='mt-1 inline-block rounded bg-gray-100 px-2 py-1 text-xs text-gray-600'>
-        Ререндеры: {renderCount}
+        Rerenders: {renderCount}
       </div>
     </div>
   );
@@ -96,7 +96,7 @@ const AvatarForm = memo(() => {
 
   return (
     <div className='mb-4'>
-      <label className='mb-2 block text-sm font-medium text-gray-700'>Выберите аватар:</label>
+      <label className='mb-2 block text-sm font-medium text-gray-700'>Choose avatar:</label>
       <div className='flex space-x-2'>
         {avatars.map((avatar) => (
           <img
@@ -106,14 +106,14 @@ const AvatarForm = memo(() => {
                 ? 'ring-2 ring-indigo-500 ring-offset-2'
                 : 'opacity-70 hover:opacity-100'
             }`}
-            alt='Вариант аватара'
+            alt='Avatar variant'
             src={avatar}
             onClick={() => onChange(avatar)}
           />
         ))}
       </div>
       <div className='mt-1 inline-block rounded bg-gray-100 px-2 py-1 text-xs text-gray-600'>
-        Ререндеры: {renderCount}
+        Rerenders: {renderCount}
       </div>
     </div>
   );
@@ -141,10 +141,10 @@ const StatusForm = memo(() => {
             }`}
           />
         </button>
-        <span className='ml-3 text-sm text-gray-700'>{value ? 'Активен' : 'Неактивен'}</span>
+        <span className='ml-3 text-sm text-gray-700'>{value ? 'Active' : 'Inactive'}</span>
       </div>
       <div className='mt-1 inline-block rounded bg-gray-100 px-2 py-1 text-xs text-gray-600'>
-        Ререндеры: {renderCount}
+        Rerenders: {renderCount}
       </div>
     </div>
   );
@@ -186,7 +186,7 @@ const App = () => {
         <div className='mx-auto max-w-4xl'>
           <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
             <div className='overflow-hidden rounded-lg bg-white p-6 shadow'>
-              <h2 className='mb-6 text-xl font-semibold text-gray-900'>Редактирование профиля</h2>
+              <h2 className='mb-6 text-xl font-semibold text-gray-900'>Edit profile</h2>
               <AvatarForm />
               <NameForm />
               <EmailForm />
