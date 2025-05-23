@@ -10,7 +10,10 @@ interface ContextValue {
   setCounter2: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const { Provider, useSelector, useHasContext } = createContextSelector({} as ContextValue);
+const { Provider, useSelector, useHasContext } = createContextSelector({} as ContextValue, {
+  displayName: 'ContextValue',
+  strict: true
+});
 
 it('Should return initial value from Provider', () => {
   const { result } = renderHook(() => useSelector((state) => state), {
@@ -75,4 +78,8 @@ it('Should detect context existence', () => {
     )
   });
   expect(withProviderResult.current).toBe(true);
+});
+
+it('Should throw an error if the context is not found', () => {
+  expect(() => renderHook(() => useSelector())).toThrow('Context ContextValue not found');
 });

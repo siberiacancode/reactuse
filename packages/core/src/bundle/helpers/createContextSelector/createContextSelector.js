@@ -23,14 +23,18 @@ const createProvider = (originalProvider, displayName) => {
   if (displayName) Provider.displayName = displayName;
   return Provider;
 };
-const useContextSelector = (context, selector) => {
+const useContextSelector = (context, selector, options) => {
   // eslint-disable-next-line react/no-use-context
   const contextValue = React.useContext(context);
   const {
     value: { current: value },
-    listeners
+    listeners,
+    marker
   } = contextValue;
   const selected = selector(value);
+  if (options.strict && !marker) {
+    throw new Error(`Context ${options.displayName} not found`);
+  }
   const [state, setState] = React.useState({ value, selected });
   const dispatch = useEvent((newValue) => {
     setState((prev) => {
@@ -63,7 +67,7 @@ const useContextSelector = (context, selector) => {
  */
 export const createContextSelector = (
   defaultValue = undefined,
-  options = { displayName: 'ContextSelector' }
+  options = { displayName: 'ContextSelector', strict: false }
 ) => {
   const context = React.createContext({
     value: { current: defaultValue },
@@ -77,14 +81,7 @@ export const createContextSelector = (
     return contextValue.marker;
   }
   function useSelector(selector) {
-    return useContextSelector(context, selector ?? ((state) => state));
+    return useContextSelector(context, selector ?? ((state) => state), options);
   }
-  function useStrictSelector(selector) {
-    const hasContext = useHasContext();
-    if (!hasContext) {
-      throw new Error(`Context ${options?.displayName} not found`);
-    }
-    return useContextSelector(context, selector ?? ((state) => state));
-  }
-  return { Provider, useSelector, useStrictSelector, useHasContext };
+  return { Provider, useSelector, useHasContext };
 };

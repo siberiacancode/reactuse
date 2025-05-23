@@ -6,6 +6,8 @@ import { useEvent, useIsomorphicLayoutEffect } from '@/hooks';
 export interface CreateContextSelectorOptions {
   /** The display name for the context */
   displayName: string;
+  /** Whether to throw an error if the context is not found */
+  strict?: boolean;
 }
 
 /** The return type for the createContextSelector function */
@@ -64,16 +66,21 @@ const createProvider = <T>(
 
 const useContextSelector = <Value, SelectedValue>(
   context: Context<Value>,
-  selector: (state: Value) => SelectedValue
+  selector: (state: Value) => SelectedValue,
+  options: CreateContextSelectorOptions
 ) => {
   // eslint-disable-next-line react/no-use-context
   const contextValue = React.useContext(context as unknown as Context<ContextValue<Value>>);
 
   const {
     value: { current: value },
-    listeners
+    listeners,
+    marker
   } = contextValue;
   const selected = selector(value);
+  if (options.strict && !marker) {
+    throw new Error(`Context ${options.displayName} not found`);
+  }
 
   const [state, setState] = React.useState({ value, selected });
   const dispatch = useEvent((newValue: Value) => {
@@ -112,7 +119,7 @@ const useContextSelector = <Value, SelectedValue>(
  */
 export const createContextSelector = <Value>(
   defaultValue: Value | undefined = undefined,
-  options: CreateContextSelectorOptions = { displayName: 'ContextSelector' }
+  options: CreateContextSelectorOptions = { displayName: 'ContextSelector', strict: false }
 ) => {
   const context = React.createContext<ContextValue<Value>>({
     value: { current: defaultValue as Value },
@@ -134,25 +141,10 @@ export const createContextSelector = <Value>(
   function useSelector<SelectedValue>(selector?: (state: Value) => SelectedValue) {
     return useContextSelector(
       context as unknown as Context<Value>,
-      selector ?? ((state) => state as unknown as SelectedValue)
+      selector ?? ((state) => state as unknown as SelectedValue),
+      options
     );
   }
 
-  function useStrictSelector(): Value;
-  function useStrictSelector<SelectedValue>(
-    selector: (state: Value) => SelectedValue
-  ): SelectedValue;
-  function useStrictSelector<SelectedValue>(selector?: (state: Value) => SelectedValue) {
-    const hasContext = useHasContext();
-    if (!hasContext) {
-      throw new Error(`Context ${options?.displayName} not found`);
-    }
-
-    return useContextSelector(
-      context as unknown as Context<Value>,
-      selector ?? ((state) => state as unknown as SelectedValue)
-    );
-  }
-
-  return { Provider, useSelector, useStrictSelector, useHasContext };
+  return { Provider, useSelector, useHasContext };
 };
