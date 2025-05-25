@@ -125,6 +125,7 @@ export * from './useTimeout/useTimeout';
 export * from './useTimer/useTimer';
 export * from './useToggle/useToggle';
 export * from './useUnmount/useUnmount';
+export * from './useUrlSearchParams/useUrlSearchParams';
 export * from './useVibrate/useVibrate';
 export * from './useWakeLock/useWakeLock';
 export * from './useWebSocket/useWebSocket';
