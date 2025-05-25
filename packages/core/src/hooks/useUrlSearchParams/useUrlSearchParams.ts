@@ -1,29 +1,86 @@
 import { useEffect, useState } from 'react';
 
-export type UrlParams = Record<string, string | string[]>;
+export const getUrlSearchParams = (mode: UrlSearchParamsMode = 'history') => {
+  const { search, hash } = window.location;
+
+  let path = '';
+
+  if (mode === 'history') path = search;
+  if (mode === 'hash-params') path = hash.replace(/^#/, '');
+  if (mode === 'hash') {
+    const index = hash.indexOf('?');
+    path = ~index ? hash.slice(index) : '';
+  }
+
+  const searchParams = new URLSearchParams(path);
+
+  return searchParams;
+};
+
+export const createQueryString = (searchParams: URLSearchParams, mode: UrlSearchParamsMode) => {
+  const searchParamsString = searchParams.toString();
+  const { search, hash } = window.location;
+
+  if (mode === 'history') return `${searchParamsString ? `?${searchParamsString}` : ''}${hash}`;
+  if (mode === 'hash-params')
+    return `${search}${searchParamsString ? `#${searchParamsString}` : ''}`;
+
+  if (mode === 'hash') {
+    const index = hash.indexOf('?');
+    const base = index > -1 ? hash.slice(0, index) : hash;
+
+    return `${search}${base}${searchParamsString ? `?${searchParamsString}` : ''}`;
+  }
+
+  throw new Error('Invalid mode');
+};
+
+export const setUrlSearchParams = <Params extends UrlParams>(
+  mode: UrlSearchParamsMode,
+  params: Partial<Params>,
+  write: 'push' | 'replace' = 'replace'
+) => {
+  const searchParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, param]) => {
+    if (Array.isArray(param)) {
+      param.forEach((value) => searchParams.set(key, String(value)));
+    } else {
+      searchParams.set(key, String(param));
+    }
+  });
+
+  const query = createQueryString(searchParams, mode);
+  if (write === 'replace') window.history.replaceState({}, '', query);
+  if (write === 'push') window.history.pushState({}, '', query);
+
+  return searchParams;
+};
+
+/** The url params type */
+export type UrlParams = Record<string, any>;
+
+/** The url search params mod */
 export type UrlSearchParamsMode = 'hash-params' | 'hash' | 'history';
 
-export interface UseUrlSearchParamsOptions<VALUE> {
-  /** The initial value for hook that use in URL params */
-  initialValue?: VALUE;
-  /** The boolean flag, for remove values that has falsy values (e.g. `''`, `0`, `false`, `NaN`) */
-  removeFalsyValues?: boolean;
-  /** The boolean flag, for remove values that 'null' and 'undefined' */
-  removeNullishValues?: boolean;
-  /** The custom window object */
-  window?: Window;
-  /**  Whether to write changes back to the URL */
-  write?: boolean;
-  /**
-   * Use `'push'` to push a new history entry on each update,
-   * or `'replace'` to replace the current entry.
-   */
-  writeMode?: 'push' | 'replace';
+/** The use url search params set options type */
+export interface UseUrlSearchParamsSetOptions {
+  /** The mode to use for writing to the URL */
+  write?: 'push' | 'replace';
 }
 
-export interface UseUrlSearchParamsReturn<VALUE> {
-  value: VALUE;
-  set: (newParams: Partial<VALUE>) => void;
+/** The use url search params options type */
+export interface UseUrlSearchParamsOptions {
+  /** The mode to use for writing to the URL */
+  mode?: UrlSearchParamsMode;
+  /** The mode to use for writing to the URL  */
+  write?: 'push' | 'replace';
+}
+
+/** The use url search params return type */
+export interface UseUrlSearchParamsReturn<Params extends UrlParams> {
+  value: Params;
+  set: (params: Partial<Params>) => void;
 }
 
 /**
@@ -40,107 +97,64 @@ export interface UseUrlSearchParamsReturn<VALUE> {
  * @example
  * const { value, set } = useUrlSearchParams('history');
  */
+export const useUrlSearchParams = <
+  Params extends UrlParams,
+  SearchParams extends string | UrlParams | URLSearchParams = UrlParams
+>(
+  initialValue?: SearchParams,
+  options: UseUrlSearchParamsOptions = {}
+): UseUrlSearchParamsReturn<Params> => {
+  const { mode = 'history', write: writeMode = 'replace' } = options;
 
-export const useUrlSearchParams = <VALUE extends Record<string, any> = UrlParams>(
-  mode: UrlSearchParamsMode = 'history',
-  options: UseUrlSearchParamsOptions<VALUE> = {}
-): UseUrlSearchParamsReturn<VALUE> => {
-  const {
-    initialValue = {},
-    removeNullishValues = true,
-    removeFalsyValues = false,
-    write = true,
-    window: defaultWindow = window,
-    writeMode = 'replace'
-  } = options;
-
-  const getRawParams = () => {
-    const { search, hash } = defaultWindow.location;
-
-    if (mode === 'history') return search;
-    if (mode === 'hash-params') return hash.replace(/^#/, '');
-
-    const index = hash.indexOf('?');
-    return index > -1 ? hash.slice(index) : '';
-  };
-
-  const urlParamsToObject = (params: URLSearchParams) => {
-    const result: UrlParams = {};
-
-    for (const key of params.keys()) {
-      const values = params.getAll(key);
-      result[key] = values.length > 1 ? values : values[0];
+  const deserializer = (searchParams: string | UrlParams | URLSearchParams) => {
+    if (typeof searchParams === 'string') {
+      return deserializer(new URLSearchParams(searchParams));
     }
 
-    return result;
+    if (searchParams instanceof URLSearchParams) {
+      return Array.from(searchParams.entries()).reduce(
+        (acc, [key, value]) => {
+          if (value === 'undefined') return acc;
+          try {
+            acc[key] = JSON.parse(value);
+          } catch {
+            acc[key] = value;
+          }
+          return acc;
+        },
+        {} as Record<string, any>
+      );
+    }
+
+    return searchParams;
   };
 
-  const [params, setParams] = useState<VALUE>(() => {
-    if (!defaultWindow) return initialValue as VALUE;
-    return urlParamsToObject(new URLSearchParams(getRawParams())) as VALUE;
-  });
+  const [value, setValue] = useState(deserializer(initialValue ?? {}) as Params);
 
-  const buildQueryString = (params: URLSearchParams): string => {
-    const paramsString = params.toString();
-    const { search, hash } = defaultWindow.location;
-
-    if (mode === 'history') return `${paramsString ? `?${paramsString}` : ''}${hash}`;
-    if (mode === 'hash-params') return `${search}${paramsString ? `#${paramsString}` : ''}`;
-
-    const index = hash.indexOf('?');
-    const base = index > -1 ? hash.slice(0, index) : hash;
-
-    return `${search}${base}${paramsString ? `?${paramsString}` : ''}`;
-  };
-
-  const updateUrl = (newParams: Partial<VALUE>) => {
-    if (!defaultWindow || !write) return;
-
-    const searchParams = new URLSearchParams();
-
-    Object.entries({ ...params, ...newParams }).forEach(([key, value]) => {
-      if (value == null && removeNullishValues) return;
-      if (!value && removeFalsyValues) return;
-
-      Array.isArray(value)
-        ? value.forEach((value) => searchParams.append(key, value))
-        : searchParams.set(key, String(value));
-    });
-
-    const query = buildQueryString(searchParams);
-
-    writeMode === 'replace'
-      ? defaultWindow.history.replaceState({}, '', query)
-      : defaultWindow.history.pushState({}, '', query);
-
-    setParams(urlParamsToObject(searchParams) as VALUE);
+  const set = (params: Partial<Params>, write: 'push' | 'replace' = 'replace') => {
+    const searchParams = setUrlSearchParams(mode, { ...value, ...params }, write ?? writeMode);
+    setValue(deserializer(searchParams) as Params);
   };
 
   useEffect(() => {
-    if (!defaultWindow) return;
+    set(value);
 
-    const currentParams = new URLSearchParams(getRawParams());
-
-    if (!Array.from(currentParams.keys()).length && Object.keys(initialValue).length) {
-      updateUrl(initialValue);
-    }
-
-    const handleSetParams = () => {
-      const newParams = new URLSearchParams(getRawParams());
-      setParams(urlParamsToObject(newParams) as VALUE);
+    const onParamsChange = () => {
+      const searchParams = getUrlSearchParams(mode);
+      set(deserializer(searchParams) as Params);
     };
 
-    defaultWindow.addEventListener('popstate', handleSetParams);
-    if (mode !== 'history') defaultWindow.addEventListener('hashchange', handleSetParams);
+    window.addEventListener('popstate', onParamsChange);
+    if (mode !== 'history') window.addEventListener('hashchange', onParamsChange);
 
     return () => {
-      defaultWindow.removeEventListener('popstate', handleSetParams);
-      if (mode !== 'history') defaultWindow.removeEventListener('hashchange', handleSetParams);
+      window.removeEventListener('popstate', onParamsChange);
+      if (mode !== 'history') window.removeEventListener('hashchange', onParamsChange);
     };
-  }, [defaultWindow, mode]);
+  }, [mode]);
 
   return {
-    value: params,
-    set: updateUrl
+    value,
+    set
   };
 };

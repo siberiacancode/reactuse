@@ -1,32 +1,43 @@
-import { useUrlSearchParams } from './useUrlSearchParams';
+import { getUrlSearchParams, useUrlSearchParams } from './useUrlSearchParams';
+
+interface DemoUrlParams {
+  enabled: boolean;
+  text: string;
+}
 
 const Demo = () => {
-  const urlSearchParams = useUrlSearchParams('history', {
-    initialValue: { param1: 'value1', param2: 'value2' },
-    writeMode: 'push'
+  const urlSearchParams = useUrlSearchParams<DemoUrlParams>({
+    text: 'hello',
+    enabled: false
   });
 
-  const onUrlSearchParamAdd = () => {
-    const paramCount = Object.keys(urlSearchParams.value).length + 1;
-    urlSearchParams.set({ [`param${paramCount}`]: `value${paramCount}` });
-  };
-
   return (
-    <div className='flex flex-col gap-3'>
-      {Object.entries(urlSearchParams.value).map(([key, value]) => (
-        <div key={key} className='flex items-center gap-3'>
-          <p>{key}:</p>
-          <input
-            className='w-fit'
-            value={value}
-            onChange={(event) => urlSearchParams.set({ [key]: event.target.value })}
-            placeholder='Type value for url param'
-          />
-        </div>
-      ))}
-      <button className='w-30' type='button' onClick={onUrlSearchParamAdd}>
-        Add
-      </button>
+    <div className='flex flex-col'>
+      <div className='flex items-center gap-2'>
+        <p>Text input:</p>
+        <input
+          className='w-fit'
+          value={urlSearchParams.value.text}
+          onChange={(event) => urlSearchParams.set({ text: event.target.value })}
+          placeholder='Text param'
+        />
+      </div>
+
+      <div className='flex items-center gap-2'>
+        <input
+          checked={urlSearchParams.value.enabled}
+          type='checkbox'
+          onChange={(event) => urlSearchParams.set({ enabled: event.target.checked })}
+        />
+        <label htmlFor='enabled'>enabled toggle</label>
+      </div>
+
+      <div className='mt-4 flex flex-col gap-2'>
+        <strong>Url params: </strong>
+        <pre lang='json'>
+          {JSON.stringify(Object.fromEntries(new URLSearchParams(getUrlSearchParams())), null, 2)}
+        </pre>
+      </div>
     </div>
   );
 };
