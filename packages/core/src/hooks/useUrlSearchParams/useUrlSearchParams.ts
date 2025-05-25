@@ -4,17 +4,20 @@ export type UrlParams = Record<string, string | string[]>;
 export type UrlSearchParamsMode = 'hash-params' | 'hash' | 'history';
 
 export interface UseUrlSearchParamsOptions<VALUE> {
-  /** The data types for drop zone */
+  /** The initial value for hook that use in URL params */
   initialValue?: VALUE;
-  /** The data types for drop zone */
+  /** The boolean flag, for remove values that has falsy values (e.g. `''`, `0`, `false`, `NaN`) */
   removeFalsyValues?: boolean;
-  /** The data types for drop zone */
+  /** The boolean flag, for remove values that 'null' and 'undefined' */
   removeNullishValues?: boolean;
-  /** The data types for drop zone */
+  /** The custom window object */
   window?: Window;
-  /** The data types for drop zone */
+  /**  Whether to write changes back to the URL */
   write?: boolean;
-  /** The data types for drop zone */
+  /**
+   * Use `'push'` to push a new history entry on each update,
+   * or `'replace'` to replace the current entry.
+   */
   writeMode?: 'push' | 'replace';
 }
 
