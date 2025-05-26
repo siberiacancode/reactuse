@@ -1,11 +1,6 @@
-import type { JSX, ReactNode } from "react";
+import type { JSX, ReactNode } from 'react';
 
-import {
-  createContext as createReactContext,
-  use,
-  useMemo,
-  useState,
-} from "react";
+import { createContext as createReactContext, use, useMemo, useState } from 'react';
 
 /** The create context options type */
 export interface CreateContextOptions {
@@ -66,7 +61,7 @@ export const createContext = <Value,>(
     set: (value: Value) => void;
   }>({
     value: defaultValue,
-    set: () => {},
+    set: () => {}
   });
 
   Context.displayName = options.name;
@@ -77,9 +72,7 @@ export const createContext = <Value,>(
     const context = use(Context);
 
     if (!context && options.strict) {
-      throw new Error(
-        `Context hook ${options.name} must be used inside a Provider`
-      );
+      throw new Error(`Context hook ${options.name} must be used inside a Provider`);
     }
 
     if (!selector) {
@@ -90,14 +83,12 @@ export const createContext = <Value,>(
   }
 
   const Provider = ({ children, initialValue }: ProviderProps<Value>) => {
-    const [profile, setProfile] = useState<Value | undefined>(
-      initialValue ?? defaultValue
-    );
+    const [profile, setProfile] = useState<Value | undefined>(initialValue ?? defaultValue);
 
     const value = useMemo(
       () => ({
         value: profile,
-        set: setProfile,
+        set: setProfile
       }),
       [profile]
     );
@@ -108,6 +99,6 @@ export const createContext = <Value,>(
   return {
     useSelect,
     instance: Context,
-    Provider,
+    Provider
   } as const;
 };

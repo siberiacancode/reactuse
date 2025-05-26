@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import React, { useState } from 'react';
 
-import { createContextSelector } from './createContextSelector';
+import { createReactiveContext } from './createReactiveContext';
 
 interface ContextValue {
   counter1: number;
@@ -10,8 +10,8 @@ interface ContextValue {
   setCounter2: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const { Provider, useSelector, useHasContext } = createContextSelector({} as ContextValue, {
-  displayName: 'ContextValue',
+const { Provider, useSelector } = createReactiveContext({} as ContextValue, {
+  name: 'ContextValue',
   strict: true
 });
 
@@ -38,9 +38,7 @@ it('Should return initial value from Provider', () => {
 it('Should update value', () => {
   const { result } = renderHook(() => useSelector((state) => state), {
     wrapper: ({ children }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [counter1, setCounter1] = useState(0);
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [counter2, setCounter2] = useState(0);
 
       return (
@@ -57,29 +55,4 @@ it('Should update value', () => {
 
   expect(result.current.counter1).toBe(1);
   expect(result.current.counter2).toBe(2);
-});
-
-it('Should detect context existence', () => {
-  const { result } = renderHook(() => useHasContext());
-  expect(result.current).toBe(false);
-
-  const { result: withProviderResult } = renderHook(() => useHasContext(), {
-    wrapper: ({ children }) => (
-      <Provider
-        value={{
-          counter1: 1,
-          counter2: 2,
-          setCounter1: () => {},
-          setCounter2: () => {}
-        }}
-      >
-        {children}
-      </Provider>
-    )
-  });
-  expect(withProviderResult.current).toBe(true);
-});
-
-it('Should throw an error if the context is not found', () => {
-  expect(() => renderHook(() => useSelector())).toThrow('Context ContextValue not found');
 });

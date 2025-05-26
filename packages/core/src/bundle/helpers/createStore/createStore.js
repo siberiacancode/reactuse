@@ -15,7 +15,7 @@ import { useSyncExternalStore } from 'react';
  *   increment: () => set(state => ({ count: state.count + 1 }))
  * }));
  */
-export function createStore(createState) {
+export const createStore = (createState) => {
   let state;
   const listeners = new Set();
   const setState = (action) => {
@@ -49,11 +49,4 @@ export function createStore(createState) {
     use: useStore,
     subscribe
   };
-}
-const counterStore = createStore((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 }))
-}));
-console.log(counterStore.get());
-counterStore.set((state) => ({ count: state.count + 1 }));
-console.log(counterStore.get());
+};

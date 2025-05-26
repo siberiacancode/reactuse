@@ -15,11 +15,12 @@ export default eslint(
   },
   {
     name: 'siberiacancode/core/hooks',
-    files: ['**/hooks/**/*.ts'],
+    files: ['**/{hooks,helpers}/**/*.{ts,tsx}'],
     rules: {
       'react-dom/no-flush-sync': 'warn',
       'jsdoc/no-defaults': 'off',
-      'react-hooks/rules-of-hooks': 'warn'
+      'react-hooks/rules-of-hooks': 'warn',
+      'react/no-context-provider': 'warn'
     }
   },
   {

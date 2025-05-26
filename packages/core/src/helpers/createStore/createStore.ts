@@ -29,7 +29,7 @@ export interface StoreApi<Value> {
  *   increment: () => set(state => ({ count: state.count + 1 }))
  * }));
  */
-export function createStore<Value>(createState: StateCreator<Value> | Value) {
+export const createStore = <Value>(createState: StateCreator<Value> | Value) => {
   type Listener = (state: Value, prevState: Value) => void;
   let state: Value;
   const listeners: Set<Listener> = new Set();
@@ -71,13 +71,4 @@ export function createStore<Value>(createState: StateCreator<Value> | Value) {
     use: useStore,
     subscribe
   };
-}
-
-const counterStore = createStore<{ count: number }>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 }))
-}));
-
-console.log(counterStore.get());
-counterStore.set((state) => ({ count: state.count + 1 }));
-console.log(counterStore.get());
+};

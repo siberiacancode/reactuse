@@ -1,3 +1,3 @@
 export * from './createContext/createContext';
-export * from './createContextSelector/createContextSelector';
+export * from './createContextSelector/createReactiveContext';
 export * from './createStore/createStore';
