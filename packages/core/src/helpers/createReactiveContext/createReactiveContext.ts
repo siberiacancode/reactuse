@@ -113,7 +113,7 @@ const createReactiveContextSelector = <Value, Selected>(
  * @template Value - The type of value that will be stored in the context
  * @param {Value | undefined} [defaultValue] - Default value for the context
  * @param {CreateReactiveContextOptions<Value>} [options] - Additional options for context creation
- * @returns {CreateContextSelectorReturn<Value>} Object containing context utilities and components
+ * @returns {CreateReactiveContextReturn<Value>} Object containing context utilities and components
  *
  * @example
  * const { Provider, useSelector, instance } = createReactiveContext<number>(0);
