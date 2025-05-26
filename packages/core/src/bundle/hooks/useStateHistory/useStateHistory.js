@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useReducer } from 'react';
-// Reducer функция
 function stateHistoryReducer(state, action) {
   switch (action.type) {
     case 'SET': {

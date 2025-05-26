@@ -37,7 +37,6 @@ type StateHistoryAction<Value> =
     }
   | { type: 'UNDO' };
 
-// Состояние для reducer
 interface StateHistoryState<Value> {
   currentIndex: number;
   history: Value[];
@@ -45,7 +44,6 @@ interface StateHistoryState<Value> {
   undoStack: Value[][];
 }
 
-// Reducer функция
 function stateHistoryReducer<Value>(
   state: StateHistoryState<Value>,
   action: StateHistoryAction<Value>
