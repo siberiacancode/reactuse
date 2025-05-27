@@ -4,7 +4,7 @@ import {
   createContext,
   createElement,
   startTransition,
-  use,
+  useContext,
   useMemo,
   useRef,
   useState
@@ -73,7 +73,7 @@ const createReactiveContextSelector = <Value, Selected>(
   selector: (state: Value) => Selected,
   options: CreateReactiveContextOptions = {}
 ) => {
-  const context = use(Context);
+  const context = useContext(Context);
 
   if (!context && options.strict) {
     throw new Error(`Context hook ${options.name} must be used inside a Provider`);

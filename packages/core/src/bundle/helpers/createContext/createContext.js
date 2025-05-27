@@ -1,5 +1,5 @@
 import { jsx as _jsx } from 'react/jsx-runtime';
-import { createContext as createReactContext, use, useMemo, useState } from 'react';
+import { createContext as createReactContext, useContext, useMemo, useState } from 'react';
 /**
  * @name createContext
  * @description - Creates a typed context with additional utilities
@@ -20,7 +20,7 @@ export const createContext = (defaultValue = undefined, options = {}) => {
   });
   Context.displayName = options.name;
   function useSelect(selector) {
-    const context = use(Context);
+    const context = useContext(Context);
     if (!context && options.strict) {
       throw new Error(`Context hook ${options.name} must be used inside a Provider`);
     }

@@ -1,6 +1,6 @@
 import type { JSX, ReactNode } from 'react';
 
-import { createContext as createReactContext, use, useMemo, useState } from 'react';
+import { createContext as createReactContext, useContext, useMemo, useState } from 'react';
 
 /** The create context options type */
 export interface CreateContextOptions {
@@ -69,7 +69,7 @@ export const createContext = <Value,>(
   function useSelect(): ContextValue<Value>;
   function useSelect<Selected>(selector: (value: Value) => Selected): Selected;
   function useSelect<Selected>(selector?: (value: Value) => Selected) {
-    const context = use(Context);
+    const context = useContext(Context);
 
     if (!context && options.strict) {
       throw new Error(`Context hook ${options.name} must be used inside a Provider`);
