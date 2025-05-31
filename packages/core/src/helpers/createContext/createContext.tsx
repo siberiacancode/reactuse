@@ -21,7 +21,7 @@ export interface ContextValue<Value> {
 /** The provider props type */
 export interface ProviderProps<Value> {
   /** The children */
-  children: ReactNode;
+  children?: ReactNode;
   /** The initial value */
   initialValue?: Value;
 }
