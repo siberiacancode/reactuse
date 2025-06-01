@@ -2,15 +2,18 @@ import { act, renderHook } from '@testing-library/react';
 
 import { useStateHistory } from './useStateHistory';
 
-it('Should use use state history', () => {
+it('Should use useStateHistory', () => {
   const { result } = renderHook(() => useStateHistory(0));
   expect(result.current.value).toBe(0);
   expect(result.current.history).toEqual([0]);
   expect(result.current.index).toBe(0);
+  expect(result.current.canUndo).toBe(false);
+  expect(result.current.canRedo).toBe(false);
   expect(result.current.back).toBeTypeOf('function');
   expect(result.current.forward).toBeTypeOf('function');
   expect(result.current.reset).toBeTypeOf('function');
   expect(result.current.undo).toBeTypeOf('function');
+  expect(result.current.redo).toBeTypeOf('function');
 });
 
 it('Should update value and history when pushing new value', () => {
@@ -23,7 +26,15 @@ it('Should update value and history when pushing new value', () => {
   expect(result.current.index).toBe(1);
 });
 
-it('Should respect max size parameter', () => {
+it('Should change canUndo flag when pushing new value', () => {
+  const { result } = renderHook(() => useStateHistory(0));
+
+  act(() => result.current.set(1));
+
+  expect(result.current.canUndo).toBe(true);
+});
+
+it('Should respect history max size parameter', () => {
   const { result } = renderHook(() => useStateHistory(0, 3));
 
   act(() => {
@@ -74,4 +85,18 @@ it('Should undo last change', () => {
   expect(result.current.value).toBe(0);
   expect(result.current.history).toEqual([0]);
   expect(result.current.index).toBe(0);
+});
+
+it('Should redo last change', () => {
+  const { result } = renderHook(() => useStateHistory(0));
+
+  act(() => {
+    result.current.set(1);
+    result.current.undo();
+    result.current.redo();
+  });
+
+  expect(result.current.value).toBe(1);
+  expect(result.current.history).toEqual([0, 1]);
+  expect(result.current.index).toBe(1);
 });
