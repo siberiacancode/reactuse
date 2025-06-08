@@ -7,57 +7,79 @@ import { useRefState } from '../useRefState/useRefState';
  * @category Sensors
  *
  * @overload
- * @param {HookTarget} target The target element to manage the mouse position for
+ * @param {HookTarget} [target=window] The target element to manage the mouse position for
  * @returns {UseMouseReturn} An object with the current mouse position
  *
  * @example
- * const { x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse(ref);
+ * const { x, y, clientX, clientY, elementX, elementY, elementPositionX, elementPositionY } = useMouse(ref);
  *
  * @overload
  * @template Target The target element
  * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with the current mouse position and a ref
  *
  * @example
- * const { ref, x, y, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
+ * const { ref, x, y, clientX, clientY, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
  */
 export const useMouse = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const [value, setValue] = useState({
     x: 0,
     y: 0,
-    element: undefined,
     elementX: 0,
     elementY: 0,
     elementPositionX: 0,
-    elementPositionY: 0
+    elementPositionY: 0,
+    clientX: 0,
+    clientY: 0
   });
   const internalRef = useRefState();
   useEffect(() => {
-    if (!target && !internalRef.state) return;
     const onMouseMove = (event) => {
       const element = target ? getElement(target) : internalRef.current;
-      if (!element) return;
       const updatedValue = {
         x: event.pageX,
-        y: event.pageY
+        y: event.pageY,
+        clientX: event.clientX,
+        clientY: event.clientY
       };
-      const { left, top } = element.getBoundingClientRect();
-      const elementPositionX = left + window.scrollX;
-      const elementPositionY = top + window.scrollY;
-      const elementX = event.pageX - elementPositionX;
-      const elementY = event.pageY - elementPositionY;
-      updatedValue.element = element;
-      updatedValue.elementX = elementX;
-      updatedValue.elementY = elementY;
-      updatedValue.elementPositionX = elementPositionX;
-      updatedValue.elementPositionY = elementPositionY;
+      if (element) {
+        const { left, top } = element.getBoundingClientRect();
+        const elementPositionX = left + window.scrollX;
+        const elementPositionY = top + window.scrollY;
+        const elementX = event.pageX - elementPositionX;
+        const elementY = event.pageY - elementPositionY;
+        updatedValue.elementX = elementX;
+        updatedValue.elementY = elementY;
+        updatedValue.elementPositionX = elementPositionX;
+        updatedValue.elementPositionY = elementPositionY;
+        setValue((prevValue) => ({
+          ...prevValue,
+          ...updatedValue
+        }));
+      } else {
+        updatedValue.elementX = event.pageX;
+        updatedValue.elementY = event.pageY;
+        updatedValue.elementPositionX = 0;
+        updatedValue.elementPositionY = 0;
+        setValue((prevValue) => ({
+          ...prevValue,
+          ...updatedValue
+        }));
+      }
+    };
+    const onScroll = () => {
       setValue((prevValue) => ({
         ...prevValue,
-        ...updatedValue
+        x: prevValue.x + window.scrollX - prevValue.elementPositionX,
+        y: prevValue.y + window.scrollY - prevValue.elementPositionY,
+        elementPositionX: window.scrollX,
+        elementPositionY: window.scrollY
       }));
     };
+    document.addEventListener('scroll', onScroll, { passive: true });
     document.addEventListener('mousemove', onMouseMove);
     return () => {
+      document.removeEventListener('scroll', onScroll);
       document.removeEventListener('mousemove', onMouseMove);
     };
   }, [internalRef.state, target]);

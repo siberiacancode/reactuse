@@ -45,7 +45,6 @@ export const useParallax = (...params) => {
     if (!target && !internalRef.state) return;
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
-    console.log('element', element);
     const onMouseMove = (event) => {
       const { left, top } = element.getBoundingClientRect();
       const elementPositionX = left + window.scrollX;
