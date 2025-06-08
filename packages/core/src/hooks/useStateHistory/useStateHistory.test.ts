@@ -2,13 +2,14 @@ import { act, renderHook } from '@testing-library/react';
 
 import { useStateHistory } from './useStateHistory';
 
-it('Should use useStateHistory', () => {
+it('Should use state history', () => {
   const { result } = renderHook(() => useStateHistory(0));
   expect(result.current.value).toBe(0);
   expect(result.current.history).toEqual([0]);
   expect(result.current.index).toBe(0);
   expect(result.current.canUndo).toBe(false);
   expect(result.current.canRedo).toBe(false);
+
   expect(result.current.back).toBeTypeOf('function');
   expect(result.current.forward).toBeTypeOf('function');
   expect(result.current.reset).toBeTypeOf('function');

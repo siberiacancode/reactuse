@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useReducer } from 'react';
+import { useReducer } from 'react';
 
 /** The use state history hook return type */
 interface UseStateHistoryReturn<Value> {
@@ -26,39 +26,36 @@ interface UseStateHistoryReturn<Value> {
   undo: () => void;
 }
 
-type StateHistoryAction<Value> =
+export type StateHistoryAction<Value> =
   | { type: 'BACK'; payload: { steps: number } }
   | { type: 'FORWARD'; payload: { steps: number } }
   | { type: 'REDO' }
-  | { type: 'RESET'; payload: { initialValue: Value; undoCapacity?: number } }
-  | {
-      type: 'SET';
-      payload: { value: Value; historyCapacity?: number; undoCapacity?: number };
-    }
+  | { type: 'RESET'; payload: { initialValue: Value; capacity: number } }
+  | { type: 'SET'; payload: { value: Value; capacity: number } }
   | { type: 'UNDO' };
 
-interface StateHistoryState<Value> {
+export interface StateHistory<Value> {
   currentIndex: number;
   history: Value[];
   redoStack: Value[][];
   undoStack: Value[][];
 }
 
-function stateHistoryReducer<Value>(
-  state: StateHistoryState<Value>,
+export const stateHistoryReducer = <Value>(
+  state: StateHistory<Value>,
   action: StateHistoryAction<Value>
-): StateHistoryState<Value> {
+): StateHistory<Value> => {
   switch (action.type) {
     case 'SET': {
-      const { value, historyCapacity, undoCapacity } = action.payload;
+      const { value, capacity } = action.payload;
 
       const newHistory = [...state.history.slice(0, state.currentIndex + 1), value];
-      if (historyCapacity && newHistory.length > historyCapacity) {
+      if (newHistory.length > capacity) {
         newHistory.shift();
       }
 
       const newUndoStack = [state.history, ...state.undoStack];
-      if (undoCapacity && newUndoStack.length > undoCapacity) {
+      if (newUndoStack.length > capacity) {
         newUndoStack.pop();
       }
 
@@ -109,11 +106,11 @@ function stateHistoryReducer<Value>(
     }
 
     case 'RESET': {
-      const { initialValue, undoCapacity } = action.payload;
+      const { initialValue, capacity } = action.payload;
       if (state.history.length === 1) return state;
 
       const newUndoStack = [state.history, ...state.undoStack];
-      if (undoCapacity && newUndoStack.length > undoCapacity) {
+      if (newUndoStack.length > capacity) {
         newUndoStack.pop();
       }
 
@@ -128,7 +125,7 @@ function stateHistoryReducer<Value>(
     default:
       throw new Error('Unsupported action type');
   }
-}
+};
 
 /**
  * @name useStateHistory
@@ -136,17 +133,15 @@ function stateHistoryReducer<Value>(
  * @category Utilities
  *
  * @param {Value} initialValue - The initial value to start the history with
- * @param {number} [historyCapacity=10] - Maximum number of history entries to keep
- * @param {number} [undoCapacity=10] - Maximum number of undo actions to keep
+ * @param {number} [capacity=10] - Maximum number of history entries and undo actions to keep
  * @returns {UseStateHistoryReturn<Value>} Object containing current value, history array and control methods
  *
  * @example
- * const { value, history, index, set, back, forward, reset, undo, redo, canUndo, canRedo, } = useStateHistory(0);
+ * const { value, history, index, set, back, forward, reset, undo, redo, canUndo, canRedo } = useStateHistory(0);
  */
 export const useStateHistory = <Value>(
   initialValue: Value,
-  historyCapacity?: number,
-  undoCapacity?: number
+  capacity = 10
 ): UseStateHistoryReturn<Value> => {
   const [state, dispatch] = useReducer(stateHistoryReducer<Value>, {
     history: [initialValue],
@@ -155,49 +150,29 @@ export const useStateHistory = <Value>(
     redoStack: []
   });
 
-  const currentValue = useMemo(
-    () => state.history[state.currentIndex],
-    [state.history, state.currentIndex]
-  );
-  const canUndo = useMemo(() => state.undoStack.length > 0, [state.undoStack]);
-  const canRedo = useMemo(() => state.redoStack.length > 0, [state.redoStack]);
+  const value = state.history[state.currentIndex];
+  const canUndo = state.undoStack.length > 0;
+  const canRedo = state.redoStack.length > 0;
 
-  const set = useCallback(
-    (value: Value) => {
-      dispatch({
-        type: 'SET',
-        payload: { value, historyCapacity, undoCapacity }
-      });
-    },
-    [historyCapacity, undoCapacity]
-  );
-
-  const undo = useCallback(() => {
-    dispatch({ type: 'UNDO' });
-  }, [canUndo]);
-
-  const redo = useCallback(() => {
-    dispatch({ type: 'REDO' });
-  }, [canRedo]);
-
-  const back = useCallback((steps = 1) => {
-    dispatch({ type: 'BACK', payload: { steps } });
-  }, []);
-
-  const forward = useCallback((steps: number = 1) => {
-    dispatch({ type: 'FORWARD', payload: { steps } });
-  }, []);
-
-  const reset = useCallback(() => {
+  const set = (value: Value) =>
     dispatch({
-      type: 'RESET',
-      payload: { initialValue, undoCapacity }
+      type: 'SET',
+      payload: { value, capacity }
     });
-  }, [initialValue, undoCapacity]);
+
+  const undo = () => dispatch({ type: 'UNDO' });
+
+  const redo = () => dispatch({ type: 'REDO' });
+
+  const back = (steps = 1) => dispatch({ type: 'BACK', payload: { steps } });
+
+  const forward = (steps = 1) => dispatch({ type: 'FORWARD', payload: { steps } });
+
+  const reset = () => dispatch({ type: 'RESET', payload: { initialValue, capacity } });
 
   return {
     history: state.history,
-    value: currentValue,
+    value,
     set,
     index: state.currentIndex,
     back,
