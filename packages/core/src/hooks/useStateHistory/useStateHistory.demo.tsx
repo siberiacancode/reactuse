@@ -20,8 +20,11 @@ const Demo = () => {
         <button type='button' onClick={stateHistory.reset}>
           Reset
         </button>
-        <button type='button' onClick={stateHistory.undo}>
+        <button disabled={!stateHistory.canUndo} type='button' onClick={stateHistory.undo}>
           Undo
+        </button>
+        <button disabled={!stateHistory.canRedo} type='button' onClick={stateHistory.redo}>
+          Redo
         </button>
         <button type='button' onClick={onPush}>
           Push
