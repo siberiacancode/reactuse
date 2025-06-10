@@ -1,5 +1,6 @@
 <script setup>
 import Meta from '../../../src/components/meta.vue'
+import Installation from '../../../src/components/installation.vue'
 import Badges from '../../../src/components/badges.vue'
 import Api from '../../../src/components/api.vue'
 import Demo from '../../../src/components/demo.vue'
@@ -34,6 +35,10 @@ This hook uses <a :href="$params.browserapi.description" target="_blank">**{{ $p
 
 <Code :code="$params.example" lang="typescript" />
 
+## Installation
+
+<Installation :name="$params.name" />
+
 ## Usage
 
 <Code :code="$params.usage" lang="typescript" />
@@ -49,6 +54,10 @@ This hook uses <a :href="$params.browserapi.description" target="_blank">**{{ $p
 <Api :apiParameters="$params.apiParameters" />
 
 </template>
+
+## Type declaration
+
+<Code :code="$params.typeDeclarations" lang="typescript" />
 
 ## Source
 

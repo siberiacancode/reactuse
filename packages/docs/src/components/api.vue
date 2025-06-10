@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Spec } from 'comment-parser';
+import type { Spec } from "comment-parser";
 
-import { isDefaultType } from '../utils/isDefaultType';
+import { isDefaultType } from "../utils/isDefaultType";
 
 interface Group {
   id: number;
@@ -17,9 +17,11 @@ let groupIndex = 0;
 const groups: Group[] = [{ id: groupIndex, parameters: [], returns: null }];
 
 props.apiParameters.forEach((parameter, index) => {
-  if (parameter.tag === 'overload') {
+  if (parameter.tag === "overload") {
     const isFirstOverload =
-      props.apiParameters.findIndex((parameter) => parameter.tag === 'overload') === index;
+      props.apiParameters.findIndex(
+        (parameter) => parameter.tag === "overload"
+      ) === index;
     if (!isFirstOverload) {
       groupIndex++;
       groups.push({ id: groupIndex, parameters: [], returns: null });
@@ -27,7 +29,7 @@ props.apiParameters.forEach((parameter, index) => {
     return;
   }
 
-  if (parameter.tag === 'returns') {
+  if (parameter.tag === "returns") {
     groups[groupIndex].returns = parameter;
     return;
   }
@@ -38,9 +40,7 @@ props.apiParameters.forEach((parameter, index) => {
 
 <template>
   <div v-for="group in groups" :key="group.id">
-    <h3 v-if="group.parameters.length">
-      Parameters
-    </h3>
+    <h3 v-if="group.parameters.length">Parameters</h3>
     <table v-if="group.parameters.length">
       <thead>
         <tr>
@@ -52,7 +52,7 @@ props.apiParameters.forEach((parameter, index) => {
       </thead>
       <tbody>
         <tr v-for="parameter in group.parameters" :key="parameter.name">
-          <td>{{ parameter.name }}{{ parameter.optional ? '?' : '' }}</td>
+          <td>{{ parameter.name }}{{ parameter.optional ? "?" : "" }}</td>
 
           <td v-if="isDefaultType(parameter.type)">
             {{ parameter.type }}
@@ -62,7 +62,7 @@ props.apiParameters.forEach((parameter, index) => {
           </td>
 
           <td>
-            {{ parameter.default ?? '-' }}
+            {{ parameter.default ?? "-" }}
           </td>
           <td>{{ parameter.description }}</td>
         </tr>
@@ -75,9 +75,7 @@ props.apiParameters.forEach((parameter, index) => {
         <code>{{ group.returns.type }}</code>
       </p>
       <p v-else>
-        <a href="#">
-          <code>{{ group.returns.type }}</code>
-        </a>
+        <code>{{ group.returns.type }}</code>
       </p>
     </div>
   </div>

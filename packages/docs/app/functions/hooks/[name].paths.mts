@@ -1,6 +1,7 @@
 import md5 from "md5";
 import { codeToHtml } from "shiki";
 import simpleGit from "simple-git";
+import ts from "typescript";
 
 import {
   getContentFile,
@@ -25,10 +26,25 @@ interface HookPageParams {
     id: string;
     isTest: boolean;
     name: string;
+    jsImplementation?: string;
+    typeDeclarations: string[];
   };
 }
 
 const git = simpleGit();
+
+const extractTypeInfo = (sourceFile: ts.SourceFile) => {
+  const typeDeclarations: string[] = [];
+  const visit = (node: ts.Node) => {
+    if (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) {
+      typeDeclarations.push(node.getText(sourceFile));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+
+  return typeDeclarations.join("\n\n");
+};
 
 export default {
   async paths() {
@@ -53,6 +69,22 @@ export default {
           console.error(`No content found for ${element.name}`);
           return null;
         }
+
+        const sourceFile = ts.createSourceFile(
+          "temp.ts",
+          content,
+          ts.ScriptTarget.Latest,
+          true
+        );
+
+        const typeDeclarations = await codeToHtml(extractTypeInfo(sourceFile), {
+          lang: "typescript",
+          themes: {
+            light: "github-light",
+            dark: "github-dark",
+          },
+          defaultColor: false,
+        });
 
         const usages = jsdoc.usages.reduce((acc, usage, index) => {
           if (index !== jsdoc.usages.length - 1) {
@@ -111,6 +143,7 @@ export default {
             isTest,
             type: element.type,
             name: element.name,
+            typeDeclarations,
             ...(jsdoc.browserapi && {
               browserapi: {
                 name: jsdoc.browserapi.name,
