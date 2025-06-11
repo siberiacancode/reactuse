@@ -19,9 +19,9 @@ export interface UseAsyncReturn<Data> {
  * @description - Hook that provides the state of an async callback
  * @category Utilities
  *
- * @param {() => Promise<Data>} callback - The async callback
- * @param {DependencyList} deps - The dependencies of the callback
- * @returns {UseAsyncReturn<Data>} - The state of the async callback
+ * @param {() => Promise<Data>} callback The async callback
+ * @param {DependencyList} deps The dependencies of the callback
+ * @returns {UseAsyncReturn<Data>} The state of the async callback
  *
  * @example
  * const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);

@@ -145,7 +145,7 @@ const App = () => {
       <p>{on.toString()}</p>
     </div>
   );
-}
+};
 
 export default App;
 ```

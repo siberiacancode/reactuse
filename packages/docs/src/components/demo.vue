@@ -3,10 +3,12 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { computed, onMounted, onUnmounted, shallowRef } from 'vue';
 
-const props = defineProps<{
+interface DemoProps {
   name: string;
-  type: 'hook' | 'helper';
-}>();
+  type: 'helper' | 'hook';
+}
+
+const props = defineProps<DemoProps>();
 
 const sourceLink = computed(() => {
   return `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/${props.type}s/${props.name}/${props.name}.demo.tsx`;

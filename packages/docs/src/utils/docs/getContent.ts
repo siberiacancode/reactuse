@@ -1,8 +1,8 @@
-import fs from "node:fs";
+import fs from 'node:fs';
 
-export const getContent = async (type: "hook" | "helper") => {
+export const getContent = async (type: 'helper' | 'hook') => {
   const files = await fs.promises.readdir(`../../packages/core/src/${type}s`, {
-    withFileTypes: true,
+    withFileTypes: true
   });
 
   return files
@@ -10,7 +10,7 @@ export const getContent = async (type: "hook" | "helper") => {
     .map((file) => {
       return {
         type,
-        name: file.name,
+        name: file.name
       };
     });
 };

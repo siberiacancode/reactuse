@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const props = defineProps<{
+interface MetaProps {
   lastModified: number;
-}>();
+}
+
+const props = defineProps<MetaProps>();
 
 const timeAgo = (timestamp: number, locale = 'en') => {
   let value;

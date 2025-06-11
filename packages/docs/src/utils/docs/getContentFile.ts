@@ -1,7 +1,7 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from 'node:fs';
+import path from 'node:path';
 
-export const getContentFile = async (type: "hook" | "helper", name: string) => {
+export const getContentFile = async (type: 'helper' | 'hook', name: string) => {
   try {
     const basePath = `../../packages/core/src/${type}s/${name}/${name}`;
     const dirPath = path.dirname(basePath);
@@ -9,10 +9,7 @@ export const getContentFile = async (type: "hook" | "helper", name: string) => {
     const files = await fs.promises.readdir(dirPath);
 
     const fileName = files.find(
-      (file) =>
-        file.includes(name) &&
-        !file.includes(".test") &&
-        !file.includes(".demo")
+      (file) => file.includes(name) && !file.includes('.test') && !file.includes('.demo')
     );
 
     if (!fileName) {
@@ -20,7 +17,7 @@ export const getContentFile = async (type: "hook" | "helper", name: string) => {
     }
 
     const filePath = path.join(dirPath, fileName);
-    const content = await fs.promises.readFile(filePath, "utf-8");
+    const content = await fs.promises.readFile(filePath, 'utf-8');
 
     return content;
   } catch (error) {

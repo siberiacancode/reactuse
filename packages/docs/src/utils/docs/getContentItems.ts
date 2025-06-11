@@ -1,6 +1,6 @@
-import { parseHookJsdoc } from "../parseHookJsdoc";
-import { getContentFile } from "./getContentFile";
-import { getContent } from "./getContent";
+import { parseHookJsdoc } from '../parseHookJsdoc';
+import { getContent } from './getContent';
+import { getContentFile } from './getContentFile';
 
 interface ContentItem {
   category: string;
@@ -10,8 +10,8 @@ interface ContentItem {
 }
 
 export const getContentItems = async () => {
-  const hooks = await getContent("hook");
-  const helpers = await getContent("helper");
+  const hooks = await getContent('hook');
+  const helpers = await getContent('helper');
 
   const content = [...hooks, ...helpers];
 
@@ -38,7 +38,7 @@ export const getContentItems = async () => {
         text: item.name,
         description: jsdoc.description.description,
         category: jsdoc.category?.name,
-        link: `/functions/hooks/${item.name}`,
+        link: `/functions/hooks/${item.name}`
       };
     })
   );

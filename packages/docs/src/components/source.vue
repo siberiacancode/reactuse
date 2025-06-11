@@ -1,8 +1,10 @@
 <script setup lang="ts">
-const props = defineProps<{
-  type: string;
+interface SourceProps {
   name: string;
-}>();
+  type: string;
+}
+
+const props = defineProps<SourceProps>();
 
 const repositoryLink = `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/${props.type}s/${props.name}`;
 
