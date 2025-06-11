@@ -6,8 +6,8 @@
   </a>
   <h1>React Use</h1>
 
-<a href="https://www.npmjs.com/package/@siberiacancode/reactuse"><img alt="NPM version" src="https://img.shields.io/npm/v/@reactuses/core.svg?style=for-the-badge&labelColor=000000"></a>
-<a href="https://github.com/siberiacancode/reactuse/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/@reactuses/core.svg?style=for-the-badge&labelColor=000000"></a>
+<a href="https://www.npmjs.com/package/@siberiacancode/reactuse"><img alt="NPM version" src="https://img.shields.io/npm/v/@siberiacancode/reactuse.svg?style=for-the-badge&labelColor=000000"></a>
+<a href="https://github.com/siberiacancode/reactuse/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/@siberiacancode/reactuse.svg?style=for-the-badge&labelColor=000000"></a>
 <a href="https://github.com/siberiacancode/reactuse/discussions"><img alt="Join the community on GitHub" src="https://img.shields.io/badge/Join%20the%20community-blueviolet.svg?style=for-the-badge&logo=React&labelColor=000000&logoWidth=20"></a>
 
 </div>
