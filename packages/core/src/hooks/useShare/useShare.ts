@@ -23,6 +23,8 @@ export interface UseShareReturn {
  * @description - Hook that utilizes the share api
  * @category Browser
  *
+ * @browserapi share https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
+ *
  * @param {UseShareParams} [params] The use share options
  * @returns {UseShareReturn}
  *

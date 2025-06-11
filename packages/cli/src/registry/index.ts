@@ -15,8 +15,11 @@ export const CORE_HOOKS_PATH = path.join(ROOT_PATH, 'core', 'src', 'hooks');
 export const registry = async () => {
   console.log('📦 Building registry');
 
-  const hooks = fs.readdirSync(CORE_HOOKS_PATH)
-    .filter(dir => dir.startsWith('use') && fs.statSync(path.join(CORE_HOOKS_PATH, dir)).isDirectory());
+  const hooks = fs
+    .readdirSync(CORE_HOOKS_PATH)
+    .filter(
+      (dir) => dir.startsWith('use') && fs.statSync(path.join(CORE_HOOKS_PATH, dir)).isDirectory()
+    );
 
   const registry = hooks.map((hookName) => ({
     name: hookName,

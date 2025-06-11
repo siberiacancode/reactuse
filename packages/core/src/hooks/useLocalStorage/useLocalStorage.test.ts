@@ -16,6 +16,6 @@ it('should use session storage on server side', () => {
   const { result } = renderHookServer(() => useLocalStorage('key', 'initialValue'));
 
   expect(result.current.value).toBe('initialValue');
-  expect(result.current.set).toBeTypeOf('undefined');
-  expect(result.current.remove).toBeTypeOf('undefined');
+  expect(result.current.set).toBeTypeOf('function');
+  expect(result.current.remove).toBeTypeOf('function');
 });

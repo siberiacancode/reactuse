@@ -33,7 +33,7 @@ The current version of Vite splits TypeScript configuration into three files, tw
 Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the `tsconfig.json` and
 `tsconfig.app.json` files:
 
-```ts {11-16} showLineNumbers
+```json {11-16} showLineNumbers
 {
   "files": [],
   "references": [
@@ -57,15 +57,13 @@ Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the
 
 Add the following code to the `tsconfig.app.json` file to resolve paths, for your IDE:
 
-```ts {4-9} showLineNumbers
+```json {4-9} showLineNumbers
 {
   "compilerOptions": {
     // ...
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
     // ...
   }

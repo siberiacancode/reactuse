@@ -25,6 +25,19 @@ export interface UseStorageReturn<Value> {
   set: (value: Value) => void;
 }
 
+export interface UseStorage {
+  <Value>(
+    key: string,
+    options: UseStorageOptions<Value> & { initialValue: UseStorageInitialValue<Value> }
+  ): UseStorageReturn<Value>;
+
+  <Value>(key: string, options?: UseStorageOptions<Value>): UseStorageReturn<Value | undefined>;
+
+  <Value>(key: string, initialValue: UseStorageInitialValue<Value>): UseStorageReturn<Value>;
+
+  <Value>(key: string): UseStorageReturn<Value | undefined>;
+}
+
 export const STORAGE_EVENT = 'reactuse-storage';
 
 export const dispatchStorageEvent = (params: Partial<StorageEvent>) =>
@@ -71,26 +84,33 @@ const getStorageItem = (storage: Storage, key: string) => {
  * @example
  * const { value, set, remove } = useStorage('key', 'value');
  */
-export const useStorage = <Value>(
-  key: string,
-  params?: UseStorageInitialValue<Value> | UseStorageOptions<Value>
-) => {
+export const useStorage = (<Value>(...params: any[]): UseStorageReturn<Value> => {
+  const key = params[0] as string;
+  const secondParam = params[1];
+
   const options = (
-    typeof params === 'object' &&
-    params &&
-    ('serializer' in params ||
-      'deserializer' in params ||
-      'initialValue' in params ||
-      'storage' in params)
-      ? params
+    typeof secondParam === 'object' &&
+    secondParam &&
+    ('serializer' in secondParam ||
+      'deserializer' in secondParam ||
+      'initialValue' in secondParam ||
+      'storage' in secondParam)
+      ? secondParam
       : undefined
   ) as UseStorageOptions<Value>;
-  const initialValue = (options ? options?.initialValue : params) as UseStorageInitialValue<Value>;
 
-  if (typeof window === 'undefined')
+  const initialValue = (
+    options ? options?.initialValue : secondParam
+  ) as UseStorageInitialValue<Value>;
+
+  if (typeof window === 'undefined') {
+    const value = typeof initialValue === 'function' ? (initialValue as () => any)() : initialValue;
     return {
-      value: typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue
-    } as UseStorageReturn<Value>;
+      value,
+      set: () => {},
+      remove: () => {}
+    };
+  }
 
   const serializer = (value: Value) => {
     if (options?.serializer) return options.serializer(value);
@@ -135,8 +155,8 @@ export const useStorage = <Value>(
   }, [key]);
 
   return {
-    value,
+    value: value as Value,
     set,
     remove
   };
-};
+}) as UseStorage;
