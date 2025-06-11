@@ -1,14 +1,15 @@
-import md5 from "md5";
-import { codeToHtml } from "shiki";
-import simpleGit from "simple-git";
+import md5 from 'md5';
+import { codeToHtml } from 'shiki';
+import simpleGit from 'simple-git';
+import ts from 'typescript';
 
 import {
-  getContentFile,
-  getContent,
-  matchJsdoc,
-  parseHookJsdoc,
   checkTest,
-} from "../../../src/utils";
+  getContent,
+  getContentFile,
+  matchJsdoc,
+  parseHookJsdoc
+} from '../../../src/utils';
 
 interface HookPageParams {
   params: {
@@ -25,15 +26,55 @@ interface HookPageParams {
     id: string;
     isTest: boolean;
     name: string;
+    jsImplementation?: string;
+    typeDeclarations: string[];
   };
 }
 
 const git = simpleGit();
 
+const extractTypeInfo = (sourceFile: ts.SourceFile) => {
+  const typeDeclarations: string[] = [];
+  const typeImports: string[] = [];
+
+  const visit = (node: ts.Node) => {
+    if (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) {
+      typeDeclarations.push(node.getText(sourceFile));
+    }
+
+    if (ts.isImportDeclaration(node)) {
+      const isTypeOnly = node.importClause?.isTypeOnly;
+      const hasTypeImports =
+        node.importClause?.namedBindings &&
+        ts.isNamedImports(node.importClause.namedBindings) &&
+        node.importClause.namedBindings.elements.some((element) => element.isTypeOnly);
+
+      if (isTypeOnly || hasTypeImports) {
+        typeImports.push(node.getText(sourceFile));
+      }
+    }
+
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+
+  return [...typeImports, ...typeDeclarations].join('\n\n');
+};
+
+const createHtmlCode = async (code: string) =>
+  await codeToHtml(code, {
+    lang: 'ts',
+    themes: {
+      light: 'github-light',
+      dark: 'github-dark'
+    },
+    defaultColor: false
+  });
+
 export default {
   async paths() {
-    const hooks = await getContent("hook");
-    const helpers = await getContent("helper");
+    const hooks = await getContent('hook');
+    const helpers = await getContent('helper');
 
     const content = [...hooks, ...helpers];
 
@@ -54,91 +95,72 @@ export default {
           return null;
         }
 
-        const usages = jsdoc.usages.reduce((acc, usage, index) => {
+        const sourceFile = ts.createSourceFile('temp.ts', content, ts.ScriptTarget.Latest, true);
+
+        const typeDeclarations = extractTypeInfo(sourceFile);
+
+        const usage = jsdoc.usages.reduce((acc, usage, index) => {
           if (index !== jsdoc.usages.length - 1) {
             acc += `${usage.description}\n// or\n`;
           } else {
             acc += usage.description;
           }
           return acc;
-        }, "");
-
-        const usage = await codeToHtml(usages, {
-          lang: "typescript",
-          themes: {
-            light: "github-light",
-            dark: "github-dark",
-          },
-          defaultColor: false,
-        });
-
-        const example = await codeToHtml(
-          `import { ${element.name} } from '@siberiacancode/reactuse';`,
-          {
-            lang: "typescript",
-            themes: {
-              light: "github-light",
-              dark: "github-dark",
-            },
-            defaultColor: false,
-          }
-        );
+        }, '');
 
         const isTest = await checkTest(element);
 
         const log = await git.log({
-          file: `../core/src/${element.type}s/${element.name}/${element.name}.ts`,
+          file: `../core/src/${element.type}s/${element.name}/${element.name}.ts`
         });
         const lastCommit = log.latest!;
 
         const contributorsMap = new Map(
           log.all.map((commit) => [
             commit.author_email,
-            { name: commit.author_name, email: commit.author_email },
+            { name: commit.author_name, email: commit.author_email }
           ])
         );
 
-        const contributors = Array.from(contributorsMap.values()).map(
-          (author) => ({
-            name: author.name,
-            avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`,
-          })
-        );
+        const contributors = Array.from(contributorsMap.values()).map((author) => ({
+          name: author.name,
+          avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`
+        }));
 
         return {
           params: {
+            code: await createHtmlCode(content),
             id: element.name,
             isTest,
             type: element.type,
             name: element.name,
+            ...(typeDeclarations && {
+              typeDeclarations: await createHtmlCode(typeDeclarations)
+            }),
             ...(jsdoc.browserapi && {
               browserapi: {
                 name: jsdoc.browserapi.name,
-                description: jsdoc.browserapi.description,
-              },
+                description: jsdoc.browserapi.description
+              }
             }),
-            example,
             ...(jsdoc.warning && {
-              warning: jsdoc.warning.description,
+              warning: jsdoc.warning.description
             }),
             description: jsdoc.description.description,
             category: jsdoc.category!.name,
             lastModified: new Date(lastCommit?.date ?? new Date()).getTime(),
-            usage,
+            usage: await createHtmlCode(usage),
             apiParameters: jsdoc.apiParameters ?? [],
-            contributors,
-          },
+            contributors
+          }
         };
       })
     );
 
     const pages = params.filter(Boolean) as unknown as HookPageParams[];
-    const testCoverage = pages.reduce(
-      (acc, page) => acc + Number(page.params.isTest),
-      0
-    );
+    const testCoverage = pages.reduce((acc, page) => acc + Number(page.params.isTest), 0);
 
-    console.log("\nElements injection report\n");
+    console.log('\nElements injection report\n');
     console.log(`\x1B[32mInjected: ${pages.length}\x1B[0m`);
     console.log(
       `\x1B[35mTest coverage: ${Math.round(
@@ -149,5 +171,5 @@ export default {
     console.log(`\nTotal: ${content.length} elements`);
 
     return pages;
-  },
+  }
 };

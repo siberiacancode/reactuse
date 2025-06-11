@@ -75,9 +75,7 @@ props.apiParameters.forEach((parameter, index) => {
         <code>{{ group.returns.type }}</code>
       </p>
       <p v-else>
-        <a href="#">
-          <code>{{ group.returns.type }}</code>
-        </a>
+        <code>{{ group.returns.type }}</code>
       </p>
     </div>
   </div>

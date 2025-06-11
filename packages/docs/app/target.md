@@ -64,5 +64,7 @@ useClickOutside(target('#container'), () => console.log('Clicked outside'));
 
 // or
 
-useClickOutside(target(document.getElementById('container')!), () => console.log('Clicked outside'));
+useClickOutside(target(document.getElementById('container')!), () =>
+  console.log('Clicked outside')
+);
 ```

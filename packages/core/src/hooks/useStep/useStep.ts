@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 
 /** The use step params type */
-interface UseStepParams {
+export interface UseStepParams {
   /** Initial value for step */
   initial: number;
   /** Maximum value for step */
@@ -9,7 +9,7 @@ interface UseStepParams {
 }
 
 /** The use step return type */
-interface UseStepReturn {
+export interface UseStepReturn {
   /** Counts of steps */
   counts: number;
   /** Current value of step */

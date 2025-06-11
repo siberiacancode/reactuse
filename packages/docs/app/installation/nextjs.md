@@ -53,7 +53,7 @@ The command above will add the `useBoolean` hook to your project. You can then i
 
 import { useBoolean } from '@/shared/hooks';
 
-export default function Home() {
+const Home = () => {
   const [on, toggle] = useBoolean();
 
   return (
@@ -62,5 +62,7 @@ export default function Home() {
       <p>{on.toString()}</p>
     </div>
   );
-}
+};
+
+export default Home;
 ```

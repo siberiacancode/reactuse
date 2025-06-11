@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const props = defineProps<{
+interface FrameworkProps {
   framework: 'next' | 'vite';
-}>();
+}
+
+const props = defineProps<FrameworkProps>();
 </script>
 
 <template>
