@@ -38,21 +38,27 @@ const getStorageItem = (storage, key) => {
  * @example
  * const { value, set, remove } = useStorage('key', 'value');
  */
-export const useStorage = (key, params) => {
+export const useStorage = (...params) => {
+  const key = params[0];
+  const secondParam = params[1];
   const options =
-    typeof params === 'object' &&
-    params &&
-    ('serializer' in params ||
-      'deserializer' in params ||
-      'initialValue' in params ||
-      'storage' in params)
-      ? params
+    typeof secondParam === 'object' &&
+    secondParam &&
+    ('serializer' in secondParam ||
+      'deserializer' in secondParam ||
+      'initialValue' in secondParam ||
+      'storage' in secondParam)
+      ? secondParam
       : undefined;
-  const initialValue = options ? options?.initialValue : params;
-  if (typeof window === 'undefined')
+  const initialValue = options ? options?.initialValue : secondParam;
+  if (typeof window === 'undefined') {
+    const value = typeof initialValue === 'function' ? initialValue() : initialValue;
     return {
-      value: typeof initialValue === 'function' ? initialValue() : initialValue
+      value,
+      set: () => {},
+      remove: () => {}
     };
+  }
   const serializer = (value) => {
     if (options?.serializer) return options.serializer(value);
     if (typeof value === 'string') return value;
@@ -88,7 +94,7 @@ export const useStorage = (key, params) => {
     return () => window.removeEventListener(STORAGE_EVENT, onChange);
   }, [key]);
   return {
-    value,
+    value: value,
     set,
     remove
   };

@@ -15,7 +15,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function
  * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function
  * @param {(event: DragEvent) => void} [options.onOver] The on over callback function
- * @returns {[boolean, File[] | null]} The object with drop zone states
+ * @returns {UseDropZoneReturn} The object with drop zone states
  *
  * @example
  * const { overed, files } = useDropZone(ref, options);
@@ -23,7 +23,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @param {Target} target The target element drop zone's
  * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop
- * @returns {[boolean, File[] | null]} The object with drop zone states
+ * @returns {UseDropZoneReturn} The object with drop zone states
  *
  * @example
  * const { overed, files } = useDropZone(ref, () => console.log('callback'));
@@ -35,14 +35,14 @@ import { useRefState } from '../useRefState/useRefState';
  * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function
  * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function
  * @param {(event: DragEvent) => void} [options.onOver] The on over callback function
- * @returns {[StateRef<Target>, boolean, File[] | null]} The object with drop zone states and ref
+ * @returns {UseDropZoneReturn & { ref: StateRef<Target> }} The object with drop zone states and ref
  *
  * @example
  * const { ref, overed, files } = useDropZone(options);
  *
  * @overload
  * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop
- * @returns {[StateRef<Target>, boolean, File[] | null]} The object with drop zone states and ref
+ * @returns {UseDropZoneReturn & { ref: StateRef<Target> }} The object with drop zone states and ref
  *
  * @example
  * const { ref, overed, files } = useDropZone(() => console.log('callback'));
