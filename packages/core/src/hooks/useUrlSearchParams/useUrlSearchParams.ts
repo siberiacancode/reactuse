@@ -35,6 +35,11 @@ export const createQueryString = (searchParams: URLSearchParams, mode: UrlSearch
   throw new Error('Invalid mode');
 };
 
+export const URL_SEARCH_PARAMS_EVENT = 'reactuse-url-search-params-event';
+
+export const dispatchUrlSearchParamsEvent = () =>
+  window.dispatchEvent(new Event(URL_SEARCH_PARAMS_EVENT));
+
 export const setUrlSearchParams = <Params extends UrlParams>(
   mode: UrlSearchParamsMode,
   params: Partial<Params>,
@@ -129,25 +134,38 @@ export const useUrlSearchParams = <
     return searchParams;
   };
 
-  const [value, setValue] = useState(deserializer(initialValue ?? {}) as Params);
+  const [value, setValue] = useState<Params>(() => {
+    if (typeof window === 'undefined') return (initialValue ?? {}) as Params;
+
+    const searchParams = getUrlSearchParams(mode);
+    const value = {
+      ...(initialValue && deserializer(initialValue)),
+      ...deserializer(searchParams)
+    } as Params;
+
+    setUrlSearchParams(mode, value, writeMode);
+
+    return value;
+  });
 
   const set = (params: Partial<Params>, write: 'push' | 'replace' = 'replace') => {
     const searchParams = setUrlSearchParams(mode, { ...value, ...params }, write ?? writeMode);
     setValue(deserializer(searchParams) as Params);
+    dispatchUrlSearchParamsEvent();
   };
 
   useEffect(() => {
-    set(value);
-
     const onParamsChange = () => {
       const searchParams = getUrlSearchParams(mode);
-      set(deserializer(searchParams) as Params);
+      setValue(deserializer(searchParams) as Params);
     };
 
+    window.addEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
     window.addEventListener('popstate', onParamsChange);
     if (mode !== 'history') window.addEventListener('hashchange', onParamsChange);
 
     return () => {
+      window.removeEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
       window.removeEventListener('popstate', onParamsChange);
       if (mode !== 'history') window.removeEventListener('hashchange', onParamsChange);
     };

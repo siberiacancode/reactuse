@@ -24,6 +24,9 @@ export const createQueryString = (searchParams, mode) => {
   }
   throw new Error('Invalid mode');
 };
+export const URL_SEARCH_PARAMS_EVENT = 'reactuse-url-search-params-event';
+export const dispatchUrlSearchParamsEvent = () =>
+  window.dispatchEvent(new Event(URL_SEARCH_PARAMS_EVENT));
 export const setUrlSearchParams = (mode, params, write = 'replace') => {
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, param]) => {
@@ -71,20 +74,31 @@ export const useUrlSearchParams = (initialValue, options = {}) => {
     }
     return searchParams;
   };
-  const [value, setValue] = useState(deserializer(initialValue ?? {}));
+  const [value, setValue] = useState(() => {
+    if (typeof window === 'undefined') return initialValue ?? {};
+    const searchParams = getUrlSearchParams(mode);
+    const value = {
+      ...(initialValue && deserializer(initialValue)),
+      ...deserializer(searchParams)
+    };
+    setUrlSearchParams(mode, value, writeMode);
+    return value;
+  });
   const set = (params, write = 'replace') => {
     const searchParams = setUrlSearchParams(mode, { ...value, ...params }, write ?? writeMode);
     setValue(deserializer(searchParams));
+    dispatchUrlSearchParamsEvent();
   };
   useEffect(() => {
-    set(value);
     const onParamsChange = () => {
       const searchParams = getUrlSearchParams(mode);
-      set(deserializer(searchParams));
+      setValue(deserializer(searchParams));
     };
+    window.addEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
     window.addEventListener('popstate', onParamsChange);
     if (mode !== 'history') window.addEventListener('hashchange', onParamsChange);
     return () => {
+      window.removeEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
       window.removeEventListener('popstate', onParamsChange);
       if (mode !== 'history') window.removeEventListener('hashchange', onParamsChange);
     };
