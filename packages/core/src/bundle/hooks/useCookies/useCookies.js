@@ -43,14 +43,20 @@ export const useCookies = (options) => {
       return value;
     }
   };
-  const getParsedCookies = () =>
-    Object.fromEntries(
-      document.cookie.split('; ').map((cookie) => {
-        const [key, ...value] = cookie.split('=');
-        const decodedValue = decodeURIComponent(value.join('='));
-        return [key, deserializer(decodedValue)];
-      })
+  const getParsedCookies = () => {
+    if (!document.cookie) return {};
+    return Object.fromEntries(
+      document.cookie
+        .split('; ')
+        .map((cookie) => {
+          const [key, ...value] = cookie.split('=');
+          if (!key || !value.length) return [];
+          const decodedValue = decodeURIComponent(value.join('='));
+          return [key, deserializer(decodedValue)];
+        })
+        .filter((entry) => entry.length)
     );
+  };
   const [value, setValue] = useState(() => {
     if (typeof window === 'undefined') return {};
     return getParsedCookies();
@@ -62,10 +68,7 @@ export const useCookies = (options) => {
       window.removeEventListener(COOKIE_EVENT, onChange);
     };
   }, []);
-  const set = (key, value, options) => {
-    if (value === null) return removeCookieItem(key);
-    setCookieItem(key, serializer(value), options);
-  };
+  const set = (key, value, options) => setCookieItem(key, serializer(value), options);
   const remove = (key, options) => removeCookieItem(key, options);
   const getAll = () => getParsedCookies();
   const clear = () => clearCookieItems();

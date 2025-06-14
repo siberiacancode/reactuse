@@ -119,7 +119,10 @@ it('Should use custom deserializer', () => {
 });
 
 it('Should update value when cookie changes externally', () => {
+  document.cookie = 'cookie=value';
   const { result } = renderHook(() => useCookie('cookie'));
+
+  expect(result.current.value).toBe('value');
 
   act(() => {
     document.cookie = 'cookie=external-value';

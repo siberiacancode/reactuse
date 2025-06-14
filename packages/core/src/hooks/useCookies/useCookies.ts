@@ -63,15 +63,21 @@ export const useCookies = <Value extends CookieParams>(options?: UseCookiesOptio
     }
   };
 
-  const getParsedCookies = () =>
-    Object.fromEntries(
-      document.cookie.split('; ').map((cookie) => {
-        const [key, ...value] = cookie.split('=');
-        const decodedValue = decodeURIComponent(value.join('='));
+  const getParsedCookies = () => {
+    if (!document.cookie) return {};
 
-        return [key, deserializer(decodedValue)];
-      })
+    return Object.fromEntries(
+      document.cookie
+        .split('; ')
+        .map((cookie) => {
+          const [key, ...value] = cookie.split('=');
+          if (!key || !value.length) return [];
+          const decodedValue = decodeURIComponent(value.join('='));
+          return [key, deserializer(decodedValue)];
+        })
+        .filter((entry) => entry.length)
     );
+  };
 
   const [value, setValue] = useState(() => {
     if (typeof window === 'undefined') return {} as Value;
@@ -87,10 +93,8 @@ export const useCookies = <Value extends CookieParams>(options?: UseCookiesOptio
     };
   }, []);
 
-  const set = <Key extends keyof Value>(key: Key, value: Value[Key], options?: SetCookieParams) => {
-    if (value === null) return removeCookieItem(key as string);
+  const set = <Key extends keyof Value>(key: Key, value: Value[Key], options?: SetCookieParams) =>
     setCookieItem(key as string, serializer(value), options);
-  };
 
   const remove = <Key extends keyof Value>(key: Key, options?: RemoveCookieParams) =>
     removeCookieItem(key as string, options);
