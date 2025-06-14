@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
 /** The url search params mode type */
-export type UrlSearchParamsMode = 'hash-params' | 'hash' | 'history';
+export type UrlSearchParamMode = 'hash-params' | 'hash' | 'history';
 
 /** The use url search param options type */
 export interface UseUrlSearchParamOptions<Value> {
   /** The initial value of the search param */
   initialValue?: Value;
   /** The mode to use for writing to the URL */
-  mode?: UrlSearchParamsMode;
+  mode?: UrlSearchParamMode;
   /** The mode to use for writing to the URL */
   write?: 'push' | 'replace';
   /** The deserializer function to be invoked */
@@ -35,7 +35,7 @@ export interface UseUrlSearchParamReturn<Value> {
 
 export const URL_SEARCH_PARAMS_EVENT = 'reactuse-url-search-params-event';
 
-export const getUrlSearchParams = (mode: UrlSearchParamsMode = 'history') => {
+export const getUrlSearchParams = (mode: UrlSearchParamMode = 'history') => {
   const { search, hash } = window.location;
 
   let path = '';
@@ -50,7 +50,7 @@ export const getUrlSearchParams = (mode: UrlSearchParamsMode = 'history') => {
   return new URLSearchParams(path);
 };
 
-export const createQueryString = (searchParams: URLSearchParams, mode: UrlSearchParamsMode) => {
+export const createQueryString = (searchParams: URLSearchParams, mode: UrlSearchParamMode) => {
   const searchParamsString = searchParams.toString();
   const { search, hash } = window.location;
 
@@ -158,7 +158,7 @@ export const useUrlSearchParam = (<Value>(key: string, params?: any) => {
   const setUrlSearchParam = (
     key: string,
     value: Value | undefined,
-    mode: UrlSearchParamsMode,
+    mode: UrlSearchParamMode,
     write: 'push' | 'replace' = 'replace'
   ) => {
     const searchParams = getUrlSearchParams(mode);

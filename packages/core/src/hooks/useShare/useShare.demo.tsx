@@ -1,9 +1,9 @@
 import { useShare } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const { share, supported } = useShare();
+  const share = useShare();
 
-  if (!supported)
+  if (!share.supported)
     return (
       <p>
         Api not supported, make sure to check for compatibility with different browsers when using
@@ -24,7 +24,7 @@ const Demo = () => {
       <button
         type='button'
         onClick={() =>
-          share({
+          share.trigger({
             title: '@siberiacancode/reactuse',
             text: '@siberiacancode/reactuse is awesome',
             url: 'https://siberiacancode.github.io/reactuse'
