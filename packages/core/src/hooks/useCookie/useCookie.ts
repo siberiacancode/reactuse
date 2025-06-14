@@ -21,9 +21,11 @@ export interface RemoveCookieParams {
 export const removeCookie = (key: string, options: RemoveCookieParams = {}) => {
   document.cookie = `${encodeURIComponent(key)}=; expires=Thu, 01 Jan 1970 00:00:00 GMT${
     options.path ? `; path=${options.path}` : ''
-  }${options.domain ? `; domain=${options.domain}` : ''}${options.maxAge ? `; max-age=0` : ''}${
-    options.expires ? `; expires=Thu, 01 Jan 1970 00:00:00 GMT` : ''
-  }${options.secure ? `; secure` : ''}${options.sameSite ? `; samesite=${options.sameSite}` : ''}`;
+  }${options.domain ? `; domain=${options.domain}` : ''}${
+    options.maxAge ? `; max-age=0` : ''
+  }${options.expires ? `; expires=Thu, 01 Jan 1970 00:00:00 GMT` : ''}${
+    options.secure ? `; secure` : ''
+  }${options.sameSite ? `; samesite=${options.sameSite}` : ''}`;
 };
 
 export interface SetCookieParams {
@@ -71,8 +73,6 @@ export interface UseCookieOptions<Value> {
   sameSite?: 'Lax' | 'None' | 'Strict';
   /* Whether the cookie is secure */
   secure?: boolean;
-  /* Whether to update the cookie on change */
-  updateOnChange?: boolean;
   /* The deserializer function to be invoked */
   deserializer?: (value: string) => Value;
   /* The serializer function to be invoked */
@@ -111,7 +111,9 @@ export const getCookie = (key: string): string | undefined => {
 export interface UseCookie {
   <Value>(
     key: string,
-    options: UseCookieOptions<Value> & { initialValue: UseCookieInitialValue<Value> }
+    options: UseCookieOptions<Value> & {
+      initialValue: UseCookieInitialValue<Value>;
+    }
   ): UseCookieReturn<Value>;
 
   <Value>(key: string, options?: UseCookieOptions<Value>): UseCookieReturn<Value | undefined>;
@@ -137,7 +139,6 @@ export interface UseCookie {
  * @param {string} key The key of the cookie
  * @param {UseCookieOptions<Value>} options The options object
  * @param {UseCookieInitialValue<Value>} [options.initialValue] The initial value of the cookie
- * @param {boolean} [options.updateOnChange=true] Whether to update the cookie on change
  * @param {(value: string) => Value} [options.deserializer] The deserializer function to be invoked
  * @param {(value: Value) => string} [options.serializer] The serializer function to be invoked
  * @returns {UseCookieReturn<Value | undefined>} The value and the set function

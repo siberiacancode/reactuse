@@ -51,7 +51,6 @@ export const getCookie = (key) => {
  * @param {string} key The key of the cookie
  * @param {UseCookieOptions<Value>} options The options object
  * @param {UseCookieInitialValue<Value>} [options.initialValue] The initial value of the cookie
- * @param {boolean} [options.updateOnChange=true] Whether to update the cookie on change
  * @param {(value: string) => Value} [options.deserializer] The deserializer function to be invoked
  * @param {(value: Value) => string} [options.serializer] The serializer function to be invoked
  * @returns {UseCookieReturn<Value | undefined>} The value and the set function
