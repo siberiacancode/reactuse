@@ -1,7 +1,7 @@
 import { useCookie } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const { value, set, remove } = useCookie<number>('siberiacancode-use-cookie', 0);
+  const { value, set, remove } = useCookie('siberiacancode-use-cookie', 0);
 
   return (
     <div>

@@ -18,17 +18,22 @@ const Demo = () => {
   const pokemonsCookie = useCookie('pokemon', POKEMONS[0]);
   const cookies = useCookies<{ name: string; id: number }>();
 
+  cookies.set('name', 'asd');
+
   return (
     <div>
       <div>Cookies</div>
       <pre>{JSON.stringify(cookies.value, null, 2)}</pre>
 
       <button
+        type='button'
         onClick={() => pokemonsCookie.set(POKEMONS[Math.floor(Math.random() * POKEMONS.length)])}
       >
         Change user
       </button>
-      <button onClick={cookies.clear}>Clear</button>
+      <button type='button' onClick={cookies.clear}>
+        Clear
+      </button>
     </div>
   );
 };

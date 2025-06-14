@@ -38,19 +38,17 @@ const getStorageItem = (storage, key) => {
  * @example
  * const { value, set, remove } = useStorage('key', 'value');
  */
-export const useStorage = (...params) => {
-  const key = params[0];
-  const secondParam = params[1];
+export const useStorage = (key, params) => {
   const options =
-    typeof secondParam === 'object' &&
-    secondParam &&
-    ('serializer' in secondParam ||
-      'deserializer' in secondParam ||
-      'initialValue' in secondParam ||
-      'storage' in secondParam)
-      ? secondParam
+    typeof params === 'object' &&
+    params &&
+    ('serializer' in params ||
+      'deserializer' in params ||
+      'initialValue' in params ||
+      'storage' in params)
+      ? params
       : undefined;
-  const initialValue = options ? options?.initialValue : secondParam;
+  const initialValue = options ? options?.initialValue : params;
   if (typeof window === 'undefined') {
     const value = typeof initialValue === 'function' ? initialValue() : initialValue;
     return {

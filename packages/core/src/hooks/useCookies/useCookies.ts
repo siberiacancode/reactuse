@@ -2,36 +2,30 @@ import { useEffect, useState } from 'react';
 
 import type { RemoveCookieParams, SetCookieParams } from '../useCookie/useCookie';
 
-import { COOKIE_EVENT, dispatchCookieEvent, removeCookie, setCookie } from '../useCookie/useCookie';
+import {
+  COOKIE_EVENT,
+  dispatchCookieEvent,
+  removeCookie,
+  removeCookieItem,
+  setCookieItem
+} from '../useCookie/useCookie';
 
-export const getParsedCookies = () =>
-  Object.fromEntries(
-    document.cookie.split('; ').map((cookie) => {
-      const [key, ...value] = cookie.split('=');
-      const decodedValue = decodeURIComponent(value.join('='));
-      try {
-        return [key, JSON.parse(decodedValue)];
-      } catch {
-        return [key, decodedValue];
-      }
-    })
-  );
+/** The cookies params type */
+export type CookieParams = Record<string, any>;
+
+/* The use cookies options type */
+export interface UseCookiesOptions<Value> {
+  /* The deserializer function to be invoked */
+  deserializer?: (value: string) => Value[keyof Value];
+  /* The serializer function to be invoked */
+  serializer?: (value: Value[keyof Value]) => string;
+}
 
 export const clearCookies = () => {
   document.cookie.split('; ').forEach((cookie) => {
     const [name] = cookie.split('=');
     removeCookie(name);
   });
-};
-
-const setCookieItem = (key: string, value: any, options?: SetCookieParams) => {
-  setCookie(key, value, options);
-  dispatchCookieEvent();
-};
-
-const removeCookieItem = (key: string, options?: RemoveCookieParams) => {
-  removeCookie(key, options);
-  dispatchCookieEvent();
 };
 
 const clearCookieItems = () => {
@@ -46,16 +40,43 @@ const clearCookieItems = () => {
  *
  * @overload
  * @template {object} Value The type of the cookie values
- * @param {string} key The key of the cookie
  * @returns {UseCookieReturn<Value>} The value and the set function
  *
  * @example
  * const { value, set, remove, getAll, clear } = useCookies();
  */
-export const useCookies = <Value>() => {
-  const [value, setValue] = useState<Value>(
-    typeof window !== 'undefined' ? (getParsedCookies() as Value) : ({} as Value)
-  );
+export const useCookies = <Value extends CookieParams>(options?: UseCookiesOptions<Value>) => {
+  const serializer = (value: Value[keyof Value]) => {
+    if (options?.serializer) return options.serializer(value);
+    if (typeof value === 'string') return value;
+    return JSON.stringify(value);
+  };
+
+  const deserializer = (value: string) => {
+    if (options?.deserializer) return options.deserializer(value);
+    if (value === 'undefined') return undefined as unknown as Value[keyof Value];
+
+    try {
+      return JSON.parse(value) as Value;
+    } catch {
+      return value as Value[keyof Value];
+    }
+  };
+
+  const getParsedCookies = () =>
+    Object.fromEntries(
+      document.cookie.split('; ').map((cookie) => {
+        const [key, ...value] = cookie.split('=');
+        const decodedValue = decodeURIComponent(value.join('='));
+
+        return [key, deserializer(decodedValue)];
+      })
+    );
+
+  const [value, setValue] = useState(() => {
+    if (typeof window === 'undefined') return {} as Value;
+    return getParsedCookies() as Value;
+  });
 
   useEffect(() => {
     const onChange = () => setValue(getParsedCookies() as Value);
@@ -66,12 +87,13 @@ export const useCookies = <Value>() => {
     };
   }, []);
 
-  const set = (key: string, value: Value, options?: SetCookieParams) => {
-    if (value === null) return removeCookieItem(key);
-    setCookieItem(key, value, options);
+  const set = <Key extends keyof Value>(key: Key, value: Value[Key], options?: SetCookieParams) => {
+    if (value === null) return removeCookieItem(key as string);
+    setCookieItem(key as string, serializer(value), options);
   };
 
-  const remove = (key: string, options?: RemoveCookieParams) => removeCookieItem(key, options);
+  const remove = <Key extends keyof Value>(key: Key, options?: RemoveCookieParams) =>
+    removeCookieItem(key as string, options);
   const getAll = () => getParsedCookies();
   const clear = () => clearCookieItems();
 

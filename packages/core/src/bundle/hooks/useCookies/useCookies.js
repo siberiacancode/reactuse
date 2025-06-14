@@ -1,30 +1,16 @@
 import { useEffect, useState } from 'react';
-import { COOKIE_EVENT, dispatchCookieEvent, removeCookie, setCookie } from '../useCookie/useCookie';
-export const getParsedCookies = () =>
-  Object.fromEntries(
-    document.cookie.split('; ').map((cookie) => {
-      const [key, ...value] = cookie.split('=');
-      const decodedValue = decodeURIComponent(value.join('='));
-      try {
-        return [key, JSON.parse(decodedValue)];
-      } catch {
-        return [key, decodedValue];
-      }
-    })
-  );
+import {
+  COOKIE_EVENT,
+  dispatchCookieEvent,
+  removeCookie,
+  removeCookieItem,
+  setCookieItem
+} from '../useCookie/useCookie';
 export const clearCookies = () => {
   document.cookie.split('; ').forEach((cookie) => {
     const [name] = cookie.split('=');
     removeCookie(name);
   });
-};
-const setCookieItem = (key, value, options) => {
-  setCookie(key, value, options);
-  dispatchCookieEvent();
-};
-const removeCookieItem = (key, options) => {
-  removeCookie(key, options);
-  dispatchCookieEvent();
 };
 const clearCookieItems = () => {
   clearCookies();
@@ -37,14 +23,38 @@ const clearCookieItems = () => {
  *
  * @overload
  * @template {object} Value The type of the cookie values
- * @param {string} key The key of the cookie
  * @returns {UseCookieReturn<Value>} The value and the set function
  *
  * @example
  * const { value, set, remove, getAll, clear } = useCookies();
  */
-export const useCookies = () => {
-  const [value, setValue] = useState(typeof window !== 'undefined' ? getParsedCookies() : {});
+export const useCookies = (options) => {
+  const serializer = (value) => {
+    if (options?.serializer) return options.serializer(value);
+    if (typeof value === 'string') return value;
+    return JSON.stringify(value);
+  };
+  const deserializer = (value) => {
+    if (options?.deserializer) return options.deserializer(value);
+    if (value === 'undefined') return undefined;
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
+  };
+  const getParsedCookies = () =>
+    Object.fromEntries(
+      document.cookie.split('; ').map((cookie) => {
+        const [key, ...value] = cookie.split('=');
+        const decodedValue = decodeURIComponent(value.join('='));
+        return [key, deserializer(decodedValue)];
+      })
+    );
+  const [value, setValue] = useState(() => {
+    if (typeof window === 'undefined') return {};
+    return getParsedCookies();
+  });
   useEffect(() => {
     const onChange = () => setValue(getParsedCookies());
     window.addEventListener(COOKIE_EVENT, onChange);
@@ -54,7 +64,7 @@ export const useCookies = () => {
   }, []);
   const set = (key, value, options) => {
     if (value === null) return removeCookieItem(key);
-    setCookieItem(key, value, options);
+    setCookieItem(key, serializer(value), options);
   };
   const remove = (key, options) => removeCookieItem(key, options);
   const getAll = () => getParsedCookies();

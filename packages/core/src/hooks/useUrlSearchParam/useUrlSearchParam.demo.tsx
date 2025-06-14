@@ -1,10 +1,8 @@
-import { getUrlSearchParams, useUrlSearchParams } from './useUrlSearchParams';
+import { getUrlSearchParams, useUrlSearchParam } from './useUrlSearchParam';
 
 const Demo = () => {
-  const urlSearchParams = useUrlSearchParams({
-    text: 'hello',
-    enabled: false
-  });
+  const textSearchParam = useUrlSearchParam('text', 'hello');
+  const enabledSearchParam = useUrlSearchParam('enabled', false);
 
   return (
     <div className='flex flex-col'>
@@ -12,17 +10,17 @@ const Demo = () => {
         <p>Text input:</p>
         <input
           className='w-fit'
-          value={urlSearchParams.value.text}
-          onChange={(event) => urlSearchParams.set({ text: event.target.value })}
+          value={textSearchParam.value}
+          onChange={(event) => textSearchParam.set(event.target.value)}
           placeholder='Text param'
         />
       </div>
 
       <div className='flex items-center gap-2'>
         <input
-          checked={urlSearchParams.value.enabled}
+          checked={enabledSearchParam.value}
           type='checkbox'
-          onChange={(event) => urlSearchParams.set({ enabled: event.target.checked })}
+          onChange={(event) => enabledSearchParam.set(event.target.checked)}
         />
         <label htmlFor='enabled'>enabled toggle</label>
       </div>
