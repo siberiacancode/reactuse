@@ -1,11 +1,57 @@
-# Getting started
+# Introduction
 
-## 🦉 Philosophy
+React Use delivers **production-ready hooks** that solve real-world problems. Built with **TypeScript-first** approach, **SSR compatibility**, and **tree-shaking optimization** - everything you need to build modern React applications. Improve your react applications with our library 📦 designed for comfort and speed.
 
-🚀 React Use this is a library that will allow you to easy and simple to use React hooks. Unlike its competitors, this package takes into account the features of React and also contains a huge number of useful hooks.
+## Getting Started
 
-## Usage
+```bash
+npm install @siberiacancode/reactuse
+```
 
-You can use this library either as an npm package or by injecting the code directly into your project, giving you the flexibility to integrate it in a way that best suits your workflow.
+After installation, you can use any of our hooks in your components:
 
-Designed with ease of use in mind, it allows you to quickly access its features without unnecessary setup, making development smoother and more efficient. Whether you prefer managing dependencies through npm or simply copying the necessary code, this approach ensures that you can start using it with minimal effort while maintaining full control over how it fits into your project.
+```tsx
+import { useCounter } from '@siberiacancode/reactuse';
+
+const App = () => {
+  const counter = useCounter(0);
+
+  return (
+    <div>
+      <h1>Count: {counter.value}</h1>
+      <button onClick={() => counter.inc()}>+1</button>
+      <button onClick={() => counter.dec()}>-1</button>
+    </div>
+  );
+};
+```
+
+## CLI Installation
+
+Use the CLI to add hooks to your project with [useverse](https://www.npmjs.com/package/useverse).
+
+```bash
+npx useverse@latest init
+```
+
+```bash
+npx useverse@latest add [hook]
+```
+
+You will be presented with a list of hooks to choose from:
+
+```bash
+Which hooks would you like to add? › Space to select. A to toggle all.
+Enter to submit.
+
+◯  useActiveElement
+◯  useAsync
+◯  useBattery
+◯  useBluetooth
+◯  useBoolean
+◯  useBreakpoints
+◯  useBrowserLanguage
+◯  useClickOutside
+◯  useClipboard
+◯  useConst
+```

@@ -27,16 +27,11 @@ export default async () => {
     []
   );
 
-  const homePageFeatures = contentItems.map((item) => ({
-    title: item.text,
-    details: item.description,
-    link: item.link
-  }));
-
   return defineConfig({
     base: '/reactuse/',
     title: 'reactuse',
-    description: '🚀 the largest and most useful hook library',
+    description:
+      'Improve your react applications with our library 📦 designed for comfort and speed',
     markdown: {
       codeTransformers: [transformerTwoslash()],
       languages: ['js', 'jsx', 'ts', 'tsx']
@@ -61,10 +56,6 @@ export default async () => {
             'https://repository-images.githubusercontent.com/799880708/0afee0cb-ca48-40a2-9c38-dc5b64ebdf65'
         }
       ]);
-
-      if (pageData.relativePath === 'index.md') {
-        pageData.frontmatter.features = homePageFeatures;
-      }
 
       if (pageData.relativePath.includes('hooks')) {
         pageData.title = pageData.params?.name;
@@ -158,8 +149,7 @@ export default async () => {
         {
           icon: 'npm',
           link: 'https://www.npmjs.com/package/@siberiacancode/reactuse'
-        },
-        { icon: 'youtube', link: 'https://www.youtube.com/@siberiacancode' }
+        }
       ]
     }
   });
