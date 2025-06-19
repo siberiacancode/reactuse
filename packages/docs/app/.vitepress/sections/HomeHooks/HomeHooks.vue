@@ -24,11 +24,12 @@ const filteredHooks = computed(() =>
 </script>
 
 <template>
-  <div
-    class="py-4! px-2! relative mt-10 h-[325px] overflow-hidden rounded-lg bg-[var(--vp-c-bg-soft)]"
-  >
+  <div class="mb-5 mt-12 text-center text-4xl font-bold">The hooks you need</div>
+  <div class="py-4! px-2! relative h-[325px] overflow-hidden rounded-lg bg-[var(--vp-c-bg-soft)]">
     <div>
-      <div class="flex w-fit items-center gap-3 rounded-lg bg-[var(--vp-c-bg)] p-2 px-4 text-2xl">
+      <div
+        class="flex w-fit items-center gap-3 rounded-lg bg-[var(--vp-c-default-soft)] p-2 px-4 text-2xl"
+      >
         <svg
           class="stroke-[var(--vp-c-brand-1)]"
           xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +56,7 @@ const filteredHooks = computed(() =>
           class="no-underline! text-[var(--vp-c-text-1)]! text-2xl"
         >
           <div
-            class="items-center rounded-lg border-[1px] border-[var(--vp-c-bg)] bg-[var(--vp-c-bg)] px-6 py-2 hover:border-[var(--vp-c-brand-1)] hover:bg-[var(--vp-c-bg-alt)]"
+            class="hover:border-[var(--vp-c-brand-1)]/80 items-center rounded-lg border-[1px] border-transparent bg-[var(--vp-c-default-soft)] px-6 py-2 transition-all duration-300 hover:shadow-md"
             :class="{
               'opacity-50': hook.disabled
             }"
