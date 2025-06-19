@@ -25,13 +25,13 @@ const filteredHooks = computed(() =>
 
 <template>
   <div
-    class="py-8! px-6! relative mt-10 h-[340px] overflow-hidden rounded-lg bg-[var(--vp-c-bg-soft)] lg:h-[365px]"
+    class="py-8! px-3! mt-10 h-[315px] overflow-hidden rounded-lg bg-[var(--vp-c-bg-soft)] md:px-6"
   >
-    <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
-      <div class="text-center text-3xl font-bold md:text-4xl xl:text-6xl">The hooks you need</div>
+    <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+      <div class="text-center text-4xl font-bold xl:text-6xl">The hooks you need</div>
 
       <div
-        class="flex w-fit items-center gap-3 rounded-lg bg-[var(--vp-c-default-soft)] p-2 px-4 text-2xl"
+        class="flex w-full items-center gap-3 rounded-lg bg-[var(--vp-c-default-soft)] p-2 px-4 text-2xl md:w-fit"
       >
         <svg
           class="stroke-[var(--vp-c-brand-1)]"
@@ -52,7 +52,7 @@ const filteredHooks = computed(() =>
       </div>
     </div>
 
-    <div class="md:top-30 absolute left-2 top-40 flex w-[130%] flex-wrap justify-start gap-3">
+    <div class="mt-10 flex w-[130%] flex-wrap justify-start gap-3">
       <div v-for="hook in filteredHooks.slice(0, 40)" :key="hook.name">
         <a
           :href="`/reactuse/functions/hooks/${hook.name}`"
