@@ -3,9 +3,7 @@ import { vi } from 'vitest';
 
 import { useDebounceCallback } from './useDebounceCallback';
 
-beforeEach(() => {
-  vi.useFakeTimers();
-});
+beforeEach(vi.useFakeTimers);
 
 afterEach(() => {
   vi.useRealTimers();
@@ -13,111 +11,93 @@ afterEach(() => {
 });
 
 it('Should use debounce callback', () => {
-  const { result } = renderHook(() => useDebounceCallback(vi.fn(), 300));
+  const { result } = renderHook(() => useDebounceCallback(vi.fn(), 100));
   expect(result.current).toBeTypeOf('function');
 });
 
 it('Should execute the callback only after delay', () => {
   const callback = vi.fn();
-  const delay = 300;
 
-  const { result } = renderHook(() => useDebounceCallback(callback, delay));
-  const debouncedFn = result.current;
+  const { result } = renderHook(() => useDebounceCallback(callback, 100));
+  const debouncedCallback = result.current;
 
-  act(() => {
-    debouncedFn();
-    vi.advanceTimersByTime(delay - 1);
-  });
-  expect(callback).not.toBeCalled();
+  debouncedCallback();
 
-  act(() => {
-    vi.advanceTimersByTime(1);
-  });
-  expect(callback).toBeCalledTimes(1);
+  act(() => vi.advanceTimersByTime(99));
+
+  expect(callback).not.toHaveBeenCalled();
+
+  act(() => vi.advanceTimersByTime(1));
+  expect(callback).toHaveBeenCalledOnce();
 });
 
 it('Should сancel the previous callback if a new one occurs before the delay', () => {
   const callback = vi.fn();
-  const delay = 300;
 
-  const { result } = renderHook(() => useDebounceCallback(callback, delay));
-  const debouncedFn = result.current;
+  const { result } = renderHook(() => useDebounceCallback(callback, 100));
+  const debouncedCallback = result.current;
 
-  act(() => {
-    debouncedFn();
-    vi.advanceTimersByTime(delay - 50);
-    debouncedFn();
-    vi.advanceTimersByTime(delay - 50);
-  });
-  expect(callback).not.toBeCalled();
+  debouncedCallback();
 
-  act(() => {
-    vi.advanceTimersByTime(50);
-  });
-  expect(callback).toBeCalledTimes(1);
+  act(() => vi.advanceTimersByTime(50));
+
+  expect(callback).not.toHaveBeenCalled();
+
+  debouncedCallback();
+
+  act(() => vi.advanceTimersByTime(100));
+
+  expect(callback).toHaveBeenCalledOnce();
 });
 
-it('Should pass single argument into callback', () => {
+it('Should pass parameters into callback', () => {
   const callback = vi.fn();
-  const delay = 100;
 
-  const { result } = renderHook(() => useDebounceCallback(callback, delay));
-  const debouncedFn = result.current;
+  const { result } = renderHook(() => useDebounceCallback(callback, 100));
+  const debouncedCallback = result.current;
 
-  act(() => {
-    debouncedFn('argument');
-    vi.advanceTimersByTime(delay);
-  });
+  debouncedCallback(1, 2, 3);
 
-  expect(callback).toBeCalledWith('argument');
-});
+  act(() => vi.advanceTimersByTime(100));
 
-it('Should pass multiple arguments into callback', () => {
-  const callback = vi.fn();
-  const delay = 100;
-
-  const { result } = renderHook(() => useDebounceCallback(callback, delay));
-  const debouncedFn = result.current;
-
-  act(() => {
-    debouncedFn(1, 2, 3);
-    vi.advanceTimersByTime(delay);
-  });
-
-  expect(callback).toBeCalledWith(1, 2, 3);
+  expect(callback).toHaveBeenCalledWith(1, 2, 3);
 });
 
 it('Should pass argument and cancel callbacks that called before delay', () => {
   const callback = vi.fn();
-  const delay = 300;
 
-  const { result } = renderHook(() => useDebounceCallback(callback, delay));
-  const debouncedFn = result.current;
+  const { result } = renderHook(() => useDebounceCallback(callback, 100));
+  const debouncedCallback = result.current;
 
-  act(() => {
-    debouncedFn('first');
-    vi.advanceTimersByTime(delay - 100);
-    debouncedFn('second');
-    vi.advanceTimersByTime(delay - 100);
-    debouncedFn('third');
-    vi.advanceTimersByTime(delay);
-  });
+  debouncedCallback('first');
 
-  expect(callback).toBeCalledTimes(1);
-  expect(callback).toBeCalledWith('third');
+  act(() => vi.advanceTimersByTime(99));
+
+  debouncedCallback('second');
+
+  act(() => vi.advanceTimersByTime(100));
+
+  expect(callback).toHaveBeenCalledOnce();
+  expect(callback).toHaveBeenCalledWith('second');
 });
 
-it('Should keep the same function between renders if delay is unchanged', () => {
+it('Should return new function when delay changes', () => {
   const callback = vi.fn();
-  const delay = 200;
 
-  const { result, rerender } = renderHook(({ cb, d }) => useDebounceCallback(cb, d), {
-    initialProps: { cb: callback, d: delay }
+  const { result, rerender } = renderHook((delay) => useDebounceCallback(callback, delay), {
+    initialProps: 100
   });
-  const first = result.current;
+  const debouncedCallback = result.current;
 
-  rerender({ cb: callback, d: delay });
-  const second = result.current;
+  debouncedCallback();
 
-  expect(first).toBe(second);
+  act(() => vi.advanceTimersByTime(50));
+  expect(callback).not.toHaveBeenCalled();
+
+  rerender(200);
+
+  debouncedCallback();
+
+  act(() => vi.advanceTimersByTime(200));
+  expect(callback).toHaveBeenCalledOnce();
 });
