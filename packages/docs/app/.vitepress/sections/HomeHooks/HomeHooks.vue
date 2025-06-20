@@ -27,7 +27,9 @@ const filteredHooks = computed(() =>
   <div
     class="py-8! px-3! mt-10 h-[315px] overflow-hidden rounded-lg bg-[var(--vp-c-bg-soft)] md:px-6"
   >
-    <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+    <div
+      class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center md:px-6"
+    >
       <div class="text-center text-4xl font-bold xl:text-6xl">The hooks you need</div>
 
       <div
