@@ -1,21 +1,9 @@
-// + Немедленный возврат начального значения
-// + Обновление значения после задержки
-// + Только последнее значение при быстрых обновлениях
-// + Отсутствие обновления, если значение не изменилось
-
-// ЕЩЕ ДОП СЦЕНАРИИ ДЛЯ ТЕСТОВ
-// + Несколько последовательных «полных» обновлений
-// Отмена по unmount
-// Переинициализация при смене delay
-
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
 import { useDebounceValue } from './useDebounceValue';
 
-beforeEach(() => {
-  vi.useFakeTimers();
-});
+beforeEach(() => vi.useFakeTimers());
 
 afterEach(() => {
   vi.useRealTimers();
@@ -23,187 +11,102 @@ afterEach(() => {
 });
 
 it('Should return initial value immediately', () => {
-  const { result } = renderHook(() => useDebounceValue('initial value', 300));
+  const { result } = renderHook(() => useDebounceValue('initial value', 100));
 
   expect(result.current).toBe('initial value');
 });
 
 it('Should update value only after delay', () => {
-  const delay = 300;
-
-  const { result, rerender } = renderHook(({ value, d }) => useDebounceValue(value, d), {
-    initialProps: { value: 1, d: delay }
+  const { result, rerender } = renderHook(({ value, delay }) => useDebounceValue(value, delay), {
+    initialProps: { value: 1, delay: 100 }
   });
 
-  rerender({ value: 2, d: delay });
+  rerender({ value: 2, delay: 100 });
 
-  act(() => {
-    vi.advanceTimersByTime(delay - 1);
-  });
+  act(() => vi.advanceTimersByTime(99));
   expect(result.current).toBe(1);
 
-  act(() => {
-    vi.advanceTimersByTime(1);
-  });
+  act(() => vi.advanceTimersByTime(1));
   expect(result.current).toBe(2);
 });
 
 it('Should debounce rapid consecutive updates and use only the last value', () => {
-  const delay = 300;
-  const { result, rerender } = renderHook(({ value, d }) => useDebounceValue(value, d), {
-    initialProps: { value: 1, d: delay }
+  const { result, rerender } = renderHook(({ value, delay }) => useDebounceValue(value, delay), {
+    initialProps: { value: 1, delay: 100 }
   });
+  expect(result.current).toBe(1);
 
-  rerender({ value: 2, d: delay });
-  act(() => {
-    vi.advanceTimersByTime(delay - 100);
-  });
+  rerender({ value: 2, delay: 100 });
 
-  rerender({ value: 3, d: delay });
-  act(() => {
-    vi.advanceTimersByTime(delay);
-  });
+  act(() => vi.advanceTimersByTime(50));
+  expect(result.current).toBe(1);
 
+  rerender({ value: 3, delay: 100 });
+
+  act(() => vi.advanceTimersByTime(100));
   expect(result.current).toBe(3);
 });
 
-it('Should not trigger a state update if the value remains the same', () => {
-  const delay = 300;
-  const { result, rerender } = renderHook(({ value, d }) => useDebounceValue(value, d), {
-    initialProps: { value: 'same', d: delay }
+it('Should not trigger state update if the value remains the same', () => {
+  const { result, rerender } = renderHook(({ value, delay }) => useDebounceValue(value, delay), {
+    initialProps: { value: 'same', delay: 100 }
   });
+  expect(result.current).toBe('same');
 
-  rerender({ value: 'same', d: delay });
+  rerender({ value: 'same', delay: 100 });
 
-  act(() => {
-    vi.advanceTimersByTime(delay);
-  });
+  act(() => vi.advanceTimersByTime(100));
   expect(result.current).toBe('same');
 });
 
 it('Should apply multiple updates separately when spaced by delay', () => {
-  const delay = 300;
-  const { result, rerender } = renderHook(({ value, d }) => useDebounceValue(value, d), {
-    initialProps: { value: 1, d: delay }
+  const { result, rerender } = renderHook(({ value, delay }) => useDebounceValue(value, delay), {
+    initialProps: { value: 1, delay: 100 }
   });
+  expect(result.current).toBe(1);
 
-  rerender({ value: 2, d: delay });
-  act(() => vi.advanceTimersByTime(delay));
+  rerender({ value: 2, delay: 100 });
+
+  act(() => vi.advanceTimersByTime(100));
   expect(result.current).toBe(2);
 
-  rerender({ value: 3, d: delay });
-  act(() => vi.advanceTimersByTime(delay));
+  rerender({ value: 3, delay: 100 });
+
+  act(() => vi.advanceTimersByTime(100));
   expect(result.current).toBe(3);
 });
 
-// ------------------- callback tests --------------------
+it('Should use new delay when delay changes', () => {
+  const { result, rerender } = renderHook(({ value, d }) => useDebounceValue(value, d), {
+    initialProps: { value: 'initial', d: 100 }
+  });
+  expect(result.current).toBe('initial');
 
-// it('Should use debounce callback', () => {
-//   const { result } = renderHook(() => useDebounceCallback(vi.fn(), 300));
-//   expect(result.current).toBeTypeOf('function');
-// });
+  rerender({ value: 'first', d: 100 });
 
-// it('Should execute the callback only after delay', () => {
-//   const callback = vi.fn();
-//   const delay = 300;
+  act(() => vi.advanceTimersByTime(100));
+  expect(result.current).toBe('first');
 
-//   const { result } = renderHook(() => useDebounceCallback(callback, delay));
-//   const debouncedFn = result.current;
+  rerender({ value: 'second', d: 200 });
 
-//   act(() => {
-//     debouncedFn();
-//     vi.advanceTimersByTime(delay - 1);
-//   });
-//   expect(callback).not.toBeCalled();
+  act(() => vi.advanceTimersByTime(199));
+  expect(result.current).toBe('first');
 
-//   act(() => {
-//     vi.advanceTimersByTime(1);
-//   });
-//   expect(callback).toBeCalledTimes(1);
-// });
+  act(() => vi.advanceTimersByTime(1));
+  expect(result.current).toBe('second');
+});
 
-// it('Should сancel the previous callback if a new one occurs before the delay', () => {
-//   const callback = vi.fn();
-//   const delay = 300;
+it('Should not update value after unmount', () => {
+  const { result, rerender, unmount } = renderHook(
+    ({ value, delay }) => useDebounceValue(value, delay),
+    {
+      initialProps: { value: 'start', delay: 100 }
+    }
+  );
 
-//   const { result } = renderHook(() => useDebounceCallback(callback, delay));
-//   const debouncedFn = result.current;
+  rerender({ value: 'end', delay: 100 });
+  unmount();
 
-//   act(() => {
-//     debouncedFn();
-//     vi.advanceTimersByTime(delay - 50);
-//     debouncedFn();
-//     vi.advanceTimersByTime(delay - 50);
-//   });
-//   expect(callback).not.toBeCalled();
-
-//   act(() => {
-//     vi.advanceTimersByTime(50);
-//   });
-//   expect(callback).toBeCalledTimes(1);
-// });
-
-// it('Should pass single argument into callback', () => {
-//   const callback = vi.fn();
-//   const delay = 100;
-
-//   const { result } = renderHook(() => useDebounceCallback(callback, delay));
-//   const debouncedFn = result.current;
-
-//   act(() => {
-//     debouncedFn('argument');
-//     vi.advanceTimersByTime(delay);
-//   });
-
-//   expect(callback).toBeCalledWith('argument');
-// });
-
-// it('Should pass multiple arguments into callback', () => {
-//   const callback = vi.fn();
-//   const delay = 100;
-
-//   const { result } = renderHook(() => useDebounceCallback(callback, delay));
-//   const debouncedFn = result.current;
-
-//   act(() => {
-//     debouncedFn(1, 2, 3);
-//     vi.advanceTimersByTime(delay);
-//   });
-
-//   expect(callback).toBeCalledWith(1, 2, 3);
-// });
-
-// it('Should pass argument and cancel callbacks that called before delay', () => {
-//   const callback = vi.fn();
-//   const delay = 300;
-
-//   const { result } = renderHook(() => useDebounceCallback(callback, delay));
-//   const debouncedFn = result.current;
-
-//   act(() => {
-//     debouncedFn('first');
-//     vi.advanceTimersByTime(delay - 100);
-//     debouncedFn('second');
-//     vi.advanceTimersByTime(delay - 100);
-//     debouncedFn('third');
-//     vi.advanceTimersByTime(delay);
-//   });
-
-//   expect(callback).toBeCalledTimes(1);
-//   expect(callback).toBeCalledWith('third');
-// });
-
-// it('Should keep the same function between renders if delay is unchanged', () => {
-//   const callback = vi.fn();
-//   const delay = 200;
-
-//   const { result, rerender } = renderHook(({ cb, d }) => useDebounceCallback(cb, d), {
-//     initialProps: { cb: callback, d: delay },
-//   });
-//   const first = result.current;
-
-//   rerender({ cb: callback, d: delay });
-//   const second = result.current;
-
-//   expect(first).toBe(second);
-// });
+  act(() => vi.advanceTimersByTime(100));
+  expect(result.current).toBe('start');
+});
