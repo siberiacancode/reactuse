@@ -43,7 +43,8 @@ features:
 ---
 
 <script setup> 
-import { HomeHooks } from './.vitepress/sections' 
+import { HomeHooks, HomeContributors } from './.vitepress/sections' 
 </script>
 
 <HomeHooks />
+<HomeContributors />

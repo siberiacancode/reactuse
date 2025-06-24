@@ -50,7 +50,7 @@ export const useMutationObserver = (...params) => {
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
   useEffect(() => {
-    if (!enabled && !target && !internalRef.state) return;
+    if (!enabled || (!target && !internalRef.state)) return;
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
     const observer = new MutationObserver(internalCallbackRef.current);
