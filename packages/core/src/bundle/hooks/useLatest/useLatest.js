@@ -9,7 +9,7 @@ import { useMemo, useRef } from 'react';
  * @returns {UseLatestReturn<Value>} The previous value
  *
  * @example
- * const latestValue = useLatest(value);
+ * const { value, ref } = useLatest(value);
  */
 export const useLatest = (value) => {
   const valueRef = useRef(value);

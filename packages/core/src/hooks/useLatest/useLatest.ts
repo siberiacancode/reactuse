@@ -17,7 +17,7 @@ export interface UseLatestReturn<Value> {
  * @returns {UseLatestReturn<Value>} The previous value
  *
  * @example
- * const latestValue = useLatest(value);
+ * const { value, ref } = useLatest(value);
  */
 export const useLatest = <Value>(value: Value): UseLatestReturn<Value> => {
   const valueRef = useRef<Value>(value);
