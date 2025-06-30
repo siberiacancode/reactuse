@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 /**
  * @name useLatest
  * @description - Hook that returns the stable reference of the value
@@ -6,7 +6,7 @@ import { useRef } from 'react';
  *
  * @template Value The type of the value
  * @param {Value} value The value to get the previous value
- * @returns {Value} The previous value
+ * @returns {UseLatestReturn<Value>} The previous value
  *
  * @example
  * const latestValue = useLatest(value);
@@ -14,5 +14,13 @@ import { useRef } from 'react';
 export const useLatest = (value) => {
   const valueRef = useRef(value);
   valueRef.current = value;
-  return valueRef.current;
+  return useMemo(
+    () => ({
+      get value() {
+        return valueRef.current;
+      },
+      ref: valueRef
+    }),
+    []
+  );
 };

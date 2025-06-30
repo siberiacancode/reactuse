@@ -1,4 +1,11 @@
-import { useRef } from 'react';
+import type { RefObject } from 'react';
+
+import { useMemo, useRef } from 'react';
+
+export interface UseLatestReturn<Value> {
+  ref: RefObject<Value>;
+  value: Value;
+}
 
 /**
  * @name useLatest
@@ -7,13 +14,21 @@ import { useRef } from 'react';
  *
  * @template Value The type of the value
  * @param {Value} value The value to get the previous value
- * @returns {Value} The previous value
+ * @returns {UseLatestReturn<Value>} The previous value
  *
  * @example
  * const latestValue = useLatest(value);
  */
-export const useLatest = <Value>(value: Value) => {
+export const useLatest = <Value>(value: Value): UseLatestReturn<Value> => {
   const valueRef = useRef<Value>(value);
   valueRef.current = value;
-  return valueRef.current;
+  return useMemo(
+    () => ({
+      get value() {
+        return valueRef.current;
+      },
+      ref: valueRef
+    }),
+    []
+  );
 };
