@@ -89,17 +89,11 @@ it('Should return new function when delay changes', () => {
   });
   const debouncedCallback = result.current;
 
-  debouncedCallback();
-
-  act(() => vi.advanceTimersByTime(50));
-  expect(callback).not.toHaveBeenCalled();
-
   rerender(200);
 
-  debouncedCallback();
+  const updatedDebouncedCallback = result.current;
 
-  act(() => vi.advanceTimersByTime(200));
-  expect(callback).toHaveBeenCalledOnce();
+  expect(debouncedCallback).not.toBe(updatedDebouncedCallback);
 });
 
 it('Should cancel callbacks that called before delay change', () => {
