@@ -1,4 +1,6 @@
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+
+import type { DebouncedCallback } from '@/utils/helpers';
 
 import { debounce } from '@/utils/helpers';
 
@@ -22,8 +24,35 @@ export const useDebounceCallback = <Params extends unknown[], Return>(
   callback: (...args: Params) => Return,
   delay: number
 ) => {
-  const internalCallback = useEvent(callback);
-  const debounced = useMemo(() => debounce(internalCallback, delay), [delay]);
+  const mounted = useRef<boolean>(false);
+  const lastDebounced = useRef<DebouncedCallback<Params> | null>(null);
 
-  return debounced;
+  const internalCallback = useEvent(callback);
+  const debounced = useMemo(() => debounce(internalCallback, delay), [internalCallback, delay]);
+  const safeDebounced = useCallback(
+    (...args: Params) => {
+      lastDebounced.current?.cancel();
+      debounced(...args);
+    },
+    [debounced]
+  );
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (mounted.current) {
+        lastDebounced.current = debounced;
+      }
+    },
+    [debounced]
+  );
+
+  return safeDebounced;
 };

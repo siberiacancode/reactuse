@@ -101,3 +101,25 @@ it('Should return new function when delay changes', () => {
   act(() => vi.advanceTimersByTime(200));
   expect(callback).toHaveBeenCalledOnce();
 });
+
+it('Should cancel callbacks that called before delay change', () => {
+  const callback = vi.fn();
+  const { result, rerender } = renderHook((delay) => useDebounceCallback(callback, delay), {
+    initialProps: 200
+  });
+
+  const debouncedCallback = result.current;
+
+  debouncedCallback();
+
+  act(() => vi.advanceTimersByTime(100));
+  expect(callback).not.toBeCalled();
+
+  rerender(400);
+
+  const updatedDebouncedCallback = result.current;
+  updatedDebouncedCallback();
+
+  act(() => vi.advanceTimersByTime(400));
+  expect(callback).toHaveBeenCalledOnce();
+});

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { debounce } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
 /**
@@ -16,7 +16,30 @@ import { useEvent } from '../useEvent/useEvent';
  * const debouncedCallback = useDebounceCallback(() => console.log('callback'), 500);
  */
 export const useDebounceCallback = (callback, delay) => {
+  const mounted = useRef(false);
+  const lastDebounced = useRef(null);
   const internalCallback = useEvent(callback);
-  const debounced = useMemo(() => debounce(internalCallback, delay), [delay]);
-  return debounced;
+  const debounced = useMemo(() => debounce(internalCallback, delay), [internalCallback, delay]);
+  const safeDebounced = useCallback(
+    (...args) => {
+      lastDebounced.current?.cancel();
+      debounced(...args);
+    },
+    [debounced]
+  );
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+  useEffect(
+    () => () => {
+      if (mounted.current) {
+        lastDebounced.current = debounced;
+      }
+    },
+    [debounced]
+  );
+  return safeDebounced;
 };
