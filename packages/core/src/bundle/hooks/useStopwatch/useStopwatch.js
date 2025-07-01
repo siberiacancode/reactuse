@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useInterval } from '../useInterval/useInterval';
-import { useRaf } from '../useRaf/useRaf';
 const getStopwatchTime = (count) => {
   if (!count)
     return {
@@ -29,7 +28,6 @@ const getMillsDiffOrZero = (millis) => (Date.now() - millis > 0 ? Date.now() - m
  * @param {number} [initialTime=0] The initial time of the timer
  * @param {boolean} [options.enabled=true] The enabled state of the timer
  * @param {number} [options.updateInterval=1000] The update interval of the timer
- * @param {boolean} [options.useRaf=false] Use RAF instead of setInterval (updateInterval will be ignored)
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
@@ -39,7 +37,6 @@ const getMillsDiffOrZero = (millis) => (Date.now() - millis > 0 ? Date.now() - m
  * @param {number} [options.initialTime=0] -The initial time of the timer
  * @param {boolean} [options.enabled=true] The enabled state of the timer
  * @param {number} [options.updateInterval=1000] The update interval of the timer
- * @param {boolean} [options.useRaf=false] Use RAF instead of setInterval (updateInterval will be ignored)
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
@@ -48,7 +45,6 @@ const getMillsDiffOrZero = (millis) => (Date.now() - millis > 0 ? Date.now() - m
 export const useStopwatch = (...params) => {
   const initialTime = (typeof params[0] === 'number' ? params[0] : params[0]?.initialTime) ?? 0;
   const options = typeof params[0] === 'number' ? params[1] : params[0];
-  const smooth = options?.useRaf ?? false;
   const enabled = options?.enabled ?? true;
   const updateInterval = options?.updateInterval ?? 1000;
   const [milliseconds, setMilliseconds] = useState(initialTime);
@@ -57,46 +53,30 @@ export const useStopwatch = (...params) => {
     () => setMilliseconds(getMillsDiffOrZero(timestamp)),
     updateInterval,
     {
-      immediately: enabled && !smooth
+      immediately: enabled
     }
   );
-  const raf = useRaf(() => setMilliseconds(getMillsDiffOrZero(timestamp)), {
-    enabled: enabled && smooth
-  });
-  const isRunning = smooth ? raf.active : interval.active;
   const start = () => {
-    if (isRunning) return;
+    if (interval.active) return;
     setTimestamp(new Date().getTime() - milliseconds);
-    if (smooth) {
-      raf.resume();
-    } else {
-      interval.resume();
-    }
+    interval.resume();
   };
   const pause = () => {
-    if (!isRunning) return;
+    if (!interval.active) return;
     setMilliseconds(getMillsDiffOrZero(timestamp));
-    if (smooth) {
-      raf.pause();
-    } else {
-      interval.pause();
-    }
+    interval.pause();
   };
   const reset = () => {
     setMilliseconds(initialTime);
     setTimestamp(Date.now() - initialTime);
-    if (smooth) {
-      raf.resume();
-    } else {
-      interval.resume();
-    }
+    interval.resume();
   };
   return {
     ...getStopwatchTime(milliseconds),
-    paused: !isRunning,
+    paused: !interval.active,
     pause,
     start,
     reset,
-    toggle: () => (isRunning ? pause() : start())
+    toggle: () => (interval.active ? pause() : start())
   };
 };
