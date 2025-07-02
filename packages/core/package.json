@@ -51,7 +51,7 @@
     "lint-staged": "lint-staged"
   },
   "peerDependencies": {
-    "@types/react": "^18",
+    "@types/react": "^17 || ^18 || ^19",
     "react": "^17 || ^18 || ^19",
     "react-dom": "^17 || ^18 || ^19"
   },
