@@ -60,8 +60,8 @@ importers:
         specifier: ^18.0.0
         version: 18.0.0
       zod:
-        specifier: ^3.25.67
-        version: 3.25.67
+        specifier: ^3.25.74
+        version: 3.25.74
     devDependencies:
       '@types/prompts':
         specifier: ^2.4.9
@@ -4971,8 +4971,8 @@ packages:
     resolution: {integrity: sha512-GQHQqAopRhwU8Kt1DDM8NjibDXHC8eoh1erhGAJPEyveY9qqVeXvVikNKrDz69sHowPMorbPUrH/mx8c50eiBQ==}
     engines: {node: '>=18'}
 
-  zod@3.25.67:
-    resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
+  zod@3.25.74:
+    resolution: {integrity: sha512-J8poo92VuhKjNknViHRAIuuN6li/EwFbAC8OedzI8uxpEPGiXHGQu9wemIAioIpqgfB4SySaJhdk0mH5Y4ICBg==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -10434,6 +10434,6 @@ snapshots:
 
   yoctocolors@2.1.1: {}
 
-  zod@3.25.67: {}
+  zod@3.25.74: {}
 
   zwitch@2.0.4: {}
