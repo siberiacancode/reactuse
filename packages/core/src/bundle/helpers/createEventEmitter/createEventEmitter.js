@@ -5,22 +5,32 @@ import { useEffect, useRef, useState } from 'react';
  * @category Helpers
  *
  * @template Events - The type of events and their data
- * @returns {Events} - Object containing event emitter methods and hook
+ * @returns {EventEmitterApi<Events>} - Object containing event emitter methods and hook
  *
  * @example
- * const { instance, push, subscribe, unsubscribe, useSubscribe } = createEventEmitter<{ foo: number }>();
+ * const { push, subscribe, unsubscribe, useSubscribe } = createEventEmitter<{ foo: number }>();
  */
 export const createEventEmitter = () => {
-  const eventTarget = new EventTarget();
-  const push = (event, data) => eventTarget.dispatchEvent(new CustomEvent(event, { detail: data }));
-  const subscribe = (event, listener) => {
-    const callback = (event) => listener(event.detail);
-    eventTarget.addEventListener(event, callback);
-    return () => eventTarget.removeEventListener(event, callback);
+  const listeners = new Map();
+  const push = (event, data) => {
+    const eventListeners = listeners.get(event);
+    eventListeners?.forEach((listener) => listener(data));
   };
   const unsubscribe = (event, listener) => {
-    const callback = (event) => listener(event.detail);
-    eventTarget.removeEventListener(event, callback);
+    const eventKey = event;
+    const eventListeners = listeners.get(eventKey);
+    if (!eventListeners) return;
+    eventListeners.delete(listener);
+    if (!eventListeners.size) listeners.delete(eventKey);
+  };
+  const subscribe = (event, listener) => {
+    const eventKey = event;
+    if (!listeners.has(eventKey)) listeners.set(eventKey, new Set());
+    const eventListeners = listeners.get(event);
+    eventListeners.add(listener);
+    return () => {
+      unsubscribe(event, listener);
+    };
   };
   const useSubscribe = (event, listener) => {
     const [data, setData] = useState(undefined);
@@ -31,15 +41,14 @@ export const createEventEmitter = () => {
         setData(data);
         listenerRef.current?.(data);
       };
-      subscribe(event, onSubscribe);
+      const unsubscribe = subscribe(event, onSubscribe);
       return () => {
-        unsubscribe(event, onSubscribe);
+        unsubscribe();
       };
     }, [event]);
     return data;
   };
   return {
-    instance: eventTarget,
     push,
     subscribe,
     unsubscribe,
