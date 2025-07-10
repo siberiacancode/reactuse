@@ -30,11 +30,11 @@ it('Should update value after delay', () => {
 });
 
 it('Should apply new delay when delay changes', () => {
-  const { result, rerender } = renderHook(({ value, d }) => useDebounceValue(value, d), {
-    initialProps: { value: 'value', d: 100 }
+  const { result, rerender } = renderHook(({ value, delay }) => useDebounceValue(value, delay), {
+    initialProps: { value: 'value', delay: 100 }
   });
 
-  rerender({ value: 'new value', d: 200 });
+  rerender({ value: 'new value', delay: 200 });
 
   expect(result.current).toBe('value');
 

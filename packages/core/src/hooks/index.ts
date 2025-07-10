@@ -108,6 +108,7 @@ export * from './useScrollIntoView/useScrollIntoView';
 export * from './useScrollTo/useScrollTo';
 export * from './useSessionStorage/useSessionStorage';
 export * from './useSet/useSet';
+export * from './useShallowEffect/useShallowEffect';
 export * from './useShare/useShare';
 export * from './useSpeechRecognition/useSpeechRecognition';
 export * from './useSpeechSynthesis/useSpeechSynthesis';

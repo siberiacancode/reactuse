@@ -15,7 +15,7 @@ export interface WizardItem<WizardStepId> {
  * @returns {UseWizardReturn<WizardStepId>} An object containing the current step id and functions to interact with the wizard
  *
  * @example
- * const { currentStepId, set, reset, back, history } = useWizard([
+ * const { currentStepId, set, reset, back, next, history } = useWizard([
  *  { id: 'step1', nodes: ['step2', 'step3'] },
  *  { id: 'step2', nodes: ['step3'] },
  *  { id: 'step3', nodes: [] },

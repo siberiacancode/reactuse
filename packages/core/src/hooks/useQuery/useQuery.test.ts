@@ -192,7 +192,7 @@ it('Should retry on error multiple times', async () => {
   await waitFor(() => expect(result.current.data).toBe('data'));
 });
 
-it('Should be listen enabled prop', async () => {
+it('Should be listen enabled param', async () => {
   const { result, rerender } = renderHook(
     ({ enabled }) => useQuery(() => Promise.resolve('data'), { enabled }),
     {

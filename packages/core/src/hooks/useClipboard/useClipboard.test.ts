@@ -40,11 +40,11 @@ it('Should copy value to clipboard if writeText not supported', async () => {
   mockNavigatorClipboardWriteText.mockRejectedValueOnce(new Error('writeText not supported'));
   const { result } = renderHook(useClipboard);
 
-  await act(() => result.current.copy('string'));
+  await act(() => result.current.copy('value'));
 
   const { execCommand } = document;
 
-  expect(result.current.value).toBe('string');
+  expect(result.current.value).toBe('value');
   expect(execCommand).toHaveBeenCalledOnce();
   expect(execCommand).toHaveBeenLastCalledWith('copy');
 });

@@ -5,7 +5,12 @@ export const dispatchStorageEvent = (params) =>
 const setStorageItem = (storage, key, value) => {
   const oldValue = storage.getItem(key);
   storage.setItem(key, value);
-  dispatchStorageEvent({ key, oldValue, newValue: value, storageArea: storage });
+  dispatchStorageEvent({
+    key,
+    oldValue,
+    newValue: value,
+    storageArea: storage
+  });
 };
 const removeStorageItem = (storage, key) => {
   const oldValue = storage.getItem(key);

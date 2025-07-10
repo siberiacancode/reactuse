@@ -14,6 +14,8 @@ const targets = [
   { current: document.getElementById('target') }
 ];
 
+const element = document.getElementById('target') as HTMLDivElement;
+
 targets.forEach((target) => {
   describe(`${target}`, () => {
     it('Should use click outside', () => {
@@ -27,8 +29,6 @@ targets.forEach((target) => {
 
     it('Should call callback when clicked outside', () => {
       const callback = vi.fn();
-      const element = document.createElement('div');
-      document.body.appendChild(element);
 
       const { result } = renderHook(() => {
         if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
@@ -46,8 +46,6 @@ targets.forEach((target) => {
 
     it('Should not call callback when clicked inside', () => {
       const callback = vi.fn();
-      const element = document.createElement('div');
-      document.body.appendChild(element);
 
       const { result } = renderHook(() => {
         if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
@@ -64,7 +62,6 @@ targets.forEach((target) => {
     it('Should disconnect on unmount', () => {
       const mockRemoveEventListener = vi.spyOn(document, 'removeEventListener');
       const callback = vi.fn();
-      const element = document.createElement('div');
       document.body.appendChild(element);
 
       const { result, unmount } = renderHook(() => {

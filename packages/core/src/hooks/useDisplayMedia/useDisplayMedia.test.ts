@@ -39,6 +39,8 @@ const targets = [
   { current: document.getElementById('target') }
 ];
 
+const element = document.getElementById('target') as HTMLVideoElement;
+
 targets.forEach((target) => {
   it('Should use display media', () => {
     const { result } = renderHook(() => {
@@ -166,8 +168,7 @@ targets.forEach((target) => {
       return useDisplayMedia<HTMLVideoElement>({ immediately: true });
     });
 
-    if (!target)
-      act(() => result.current.ref(document.getElementById('target')! as HTMLVideoElement));
+    if (!target) act(() => result.current.ref(element));
 
     await act(result.current.start);
 

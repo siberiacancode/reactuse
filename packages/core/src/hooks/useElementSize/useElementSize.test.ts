@@ -42,6 +42,8 @@ const targets = [
   { current: document.getElementById('target') }
 ];
 
+const element = document.getElementById('target') as HTMLDivElement;
+
 targets.forEach((target) => {
   beforeEach(() => {
     mockResizeObserverObserve.mockClear();
@@ -129,8 +131,7 @@ targets.forEach((target) => {
         return useElementSize<HTMLDivElement>();
       });
 
-      if (!target)
-        act(() => result.current.ref(document.getElementById('target')! as HTMLDivElement));
+      if (!target) act(() => result.current.ref(element));
 
       unmount();
 

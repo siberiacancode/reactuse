@@ -14,7 +14,7 @@ const targets = [
   target(() => document.getElementById('target')!),
   { current: document.getElementById('target') }
 ];
-const element = document.getElementById('target')! as HTMLDivElement;
+const element = document.getElementById('target') as HTMLDivElement;
 
 targets.forEach((target) => {
   describe(`${target}`, () => {

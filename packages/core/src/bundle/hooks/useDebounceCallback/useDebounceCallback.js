@@ -21,10 +21,9 @@ export const useDebounceCallback = (callback, delay) => {
   delayRef.current = delay;
   const debounced = useMemo(() => {
     const cancel = () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-        timerRef.current = undefined;
-      }
+      if (!timerRef.current) return;
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
     };
     const debouncedCallback = function (...args) {
       cancel();

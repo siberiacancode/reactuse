@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
-const DEFAULT_THRESHOLD_TIME = 300;
+export const DEFAULT_THRESHOLD_TIME = 300;
 /**
  * @name useDoubleClick
  * @description - Hook that defines the logic when double clicking an element

@@ -10,11 +10,11 @@ import { useRefState } from '../useRefState/useRefState';
 
 export type DoubleClickEvents = MouseEvent | TouchEvent;
 
-// * The use double click options type */
+/** The use double click options type */
 export interface UseDoubleClickOptions {
-  // * The threshold time in milliseconds between clicks
+  /** The threshold time in milliseconds between clicks */
   threshold?: number;
-  // * The callback function to be invoked on single click
+  /** The callback function to be invoked on single click */
   onSingleClick?: (event: DoubleClickEvents) => void;
 }
 
@@ -32,7 +32,7 @@ export interface UseDoubleClick {
   ): StateRef<Target>;
 }
 
-const DEFAULT_THRESHOLD_TIME = 300;
+export const DEFAULT_THRESHOLD_TIME = 300;
 
 /**
  * @name useDoubleClick

@@ -50,6 +50,7 @@ export const useDeviceMotion = (params?: UseDeviceMotionParams) => {
 
     const onDeviceMotion = throttle<[DeviceMotionEvent]>((event) => {
       internalCallbackRef.current?.(event);
+
       setValue({
         interval: event.interval,
         rotationRate: {
