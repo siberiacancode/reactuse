@@ -167,6 +167,15 @@ export default {
         (testCoverage / pages.length) * 100
       )}% (${testCoverage})\x1B[0m`
     );
+    const untested = pages.filter((page) => !page.params.isTest);
+    if (untested.length)
+      console.log(
+        `\x1B[35mUntested: ${untested
+          .map((page) => page.params.name)
+          .sort()
+          .join(', ')}\x1B[0m`
+      );
+
     console.log(`\x1B[33mSkipped: ${content.length - pages.length}\x1B[0m`);
     console.log(`\nTotal: ${content.length} elements`);
 

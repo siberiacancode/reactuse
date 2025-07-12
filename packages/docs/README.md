@@ -1,3 +1,1 @@
-# 🚀 reactuse docs
-
-the largest and most useful hook library
+packages/core/README.md
