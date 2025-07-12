@@ -88,15 +88,19 @@ const Demo = () => {
         </div>
 
         <div>
-          <button onClick={() => videoMediaControls.setMuted(!videoMediaControls.muted)}>
+          <button
+            onClick={() =>
+              videoMediaControls.muted ? videoMediaControls.unmute() : videoMediaControls.mute()
+            }
+          >
             {videoMediaControls.muted ? 'Unmute' : 'Mute'}
           </button>
 
           <button
             onClick={() => {
-              if (videoMediaControls.playbackRate === 1) videoMediaControls.setPlaybackRate(1.5);
-              if (videoMediaControls.playbackRate === 1.5) videoMediaControls.setPlaybackRate(2);
-              if (videoMediaControls.playbackRate === 2) videoMediaControls.setPlaybackRate(1);
+              if (videoMediaControls.playbackRate === 1) videoMediaControls.changePlaybackRate(1.5);
+              if (videoMediaControls.playbackRate === 1.5) videoMediaControls.changePlaybackRate(2);
+              if (videoMediaControls.playbackRate === 2) videoMediaControls.changePlaybackRate(1);
             }}
           >
             {videoMediaControls.playbackRate}x
