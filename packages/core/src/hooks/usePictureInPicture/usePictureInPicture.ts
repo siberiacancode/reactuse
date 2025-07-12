@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -69,17 +69,18 @@ export const usePictureInPicture = ((...params: any[]) => {
   const [open, setOpen] = useState(false);
 
   const internalRef = useRefState<HTMLVideoElement>();
+  const elementRef = useRef<HTMLVideoElement>(null);
+  const onOptionsRef = useRef<UsePictureInPictureOptions>(options);
+  onOptionsRef.current = options;
 
   const supported = typeof document !== 'undefined' && 'pictureInPictureEnabled' in document;
 
   const enter = async () => {
     if (!supported) return;
 
-    const element = target ? (getElement(target) as HTMLVideoElement) : internalRef.current;
+    if (!elementRef.current) return;
 
-    if (!element) return;
-
-    await element.requestPictureInPicture();
+    await elementRef.current.requestPictureInPicture();
     setOpen(true);
 
     options.onEnter?.();
@@ -92,6 +93,31 @@ export const usePictureInPicture = ((...params: any[]) => {
     setOpen(false);
     options.onExit?.();
   };
+
+  useEffect(() => {
+    const element = target ? (getElement(target) as HTMLVideoElement) : internalRef.current;
+    if (!element) return;
+
+    elementRef.current = element;
+
+    const onEnterPictureInPicture = () => {
+      setOpen(true);
+      onOptionsRef.current.onEnter?.();
+    };
+
+    const onLeavePictureInPicture = () => {
+      setOpen(false);
+      onOptionsRef.current.onExit?.();
+    };
+
+    element.addEventListener('enterpictureinpicture', onEnterPictureInPicture);
+    element.addEventListener('leavepictureinpicture', onLeavePictureInPicture);
+
+    return () => {
+      element.removeEventListener('enterpictureinpicture', onEnterPictureInPicture);
+      element.removeEventListener('leavepictureinpicture', onLeavePictureInPicture);
+    };
+  }, [target]);
 
   const toggle = async () => {
     if (open) await exit();

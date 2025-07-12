@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -30,12 +30,14 @@ export const usePictureInPicture = (...params) => {
   const options = (target ? params[1] : params[0]) ?? {};
   const [open, setOpen] = useState(false);
   const internalRef = useRefState();
+  const elementRef = useRef(null);
+  const onOptionsRef = useRef(options);
+  onOptionsRef.current = options;
   const supported = typeof document !== 'undefined' && 'pictureInPictureEnabled' in document;
   const enter = async () => {
     if (!supported) return;
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
-    await element.requestPictureInPicture();
+    if (!elementRef.current) return;
+    await elementRef.current.requestPictureInPicture();
     setOpen(true);
     options.onEnter?.();
   };
@@ -45,6 +47,25 @@ export const usePictureInPicture = (...params) => {
     setOpen(false);
     options.onExit?.();
   };
+  useEffect(() => {
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element) return;
+    elementRef.current = element;
+    const onEnterPictureInPicture = () => {
+      setOpen(true);
+      onOptionsRef.current.onEnter?.();
+    };
+    const onLeavePictureInPicture = () => {
+      setOpen(false);
+      onOptionsRef.current.onExit?.();
+    };
+    element.addEventListener('enterpictureinpicture', onEnterPictureInPicture);
+    element.addEventListener('leavepictureinpicture', onLeavePictureInPicture);
+    return () => {
+      element.removeEventListener('enterpictureinpicture', onEnterPictureInPicture);
+      element.removeEventListener('leavepictureinpicture', onLeavePictureInPicture);
+    };
+  }, [target]);
   const toggle = async () => {
     if (open) await exit();
     else await enter();
