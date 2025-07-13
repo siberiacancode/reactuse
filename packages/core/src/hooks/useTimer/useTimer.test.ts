@@ -174,11 +174,17 @@ it('Should call onStart when timer starts', () => {
 
 it('Should call onTick on each second', () => {
   const onTick = vi.fn();
-  renderHook(() => useTimer(1, { onTick }));
+  renderHook(() => useTimer(2, { onTick }));
 
   act(() => vi.advanceTimersToNextTimer());
 
   expect(onTick).toBeCalledTimes(1);
+  expect(onTick).toBeCalledWith(2);
+
+  act(() => vi.advanceTimersToNextTimer());
+
+  expect(onTick).toBeCalledTimes(2);
+  expect(onTick).toBeCalledWith(1);
 });
 
 it('Should pause timer', () => {

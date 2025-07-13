@@ -131,8 +131,8 @@ export const useTimer = ((...params: any[]) => {
 
     optionsRef.current?.onStart?.();
     const onInterval = () => {
-      optionsRef.current?.onTick?.(seconds);
       setSeconds((prevSeconds) => {
+        optionsRef.current?.onTick?.(prevSeconds);
         const updatedSeconds = prevSeconds - 1;
         if (updatedSeconds === 0) {
           setActive(false);
