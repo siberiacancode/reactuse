@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 /** Type sprite map */
 export interface SpriteMap {
@@ -60,10 +60,7 @@ export interface UseAudioReturn {
  * @example
  * const audio = useAudio("/path/to/sound.mp3");
  */
-export const useAudio = (
-  src: string,
-  options: UseAudioOptions = {}
-): UseAudioReturn => {
+export const useAudio = (src: string, options: UseAudioOptions = {}): UseAudioReturn => {
   const [playing, setPlaying] = useState(false);
   const [volume, setCurrentVolume] = useState(options.volume ?? 1);
   const [playbackRate, setPlaybackRate] = useState(options.playbackRate ?? 1);
@@ -86,20 +83,20 @@ export const useAudio = (
     const onVolumeChange = () => setCurrentVolume(audio.volume);
     const onRateChange = () => setPlaybackRate(audio.playbackRate);
 
-    audio.addEventListener("play", onPlay);
-    audio.addEventListener("pause", onPause);
-    audio.addEventListener("ended", onEnded);
-    audio.addEventListener("timeupdate", onTimeUpdate);
-    audio.addEventListener("volumechange", onVolumeChange);
-    audio.addEventListener("ratechange", onRateChange);
+    audio.addEventListener('play', onPlay);
+    audio.addEventListener('pause', onPause);
+    audio.addEventListener('ended', onEnded);
+    audio.addEventListener('timeupdate', onTimeUpdate);
+    audio.addEventListener('volumechange', onVolumeChange);
+    audio.addEventListener('ratechange', onRateChange);
 
     return () => {
-      audio.removeEventListener("play", onPlay);
-      audio.removeEventListener("pause", onPause);
-      audio.removeEventListener("ended", onEnded);
-      audio.removeEventListener("timeupdate", onTimeUpdate);
-      audio.removeEventListener("volumechange", onVolumeChange);
-      audio.removeEventListener("ratechange", onRateChange);
+      audio.removeEventListener('play', onPlay);
+      audio.removeEventListener('pause', onPause);
+      audio.removeEventListener('ended', onEnded);
+      audio.removeEventListener('timeupdate', onTimeUpdate);
+      audio.removeEventListener('volumechange', onVolumeChange);
+      audio.removeEventListener('ratechange', onRateChange);
 
       audio.pause();
       audio.remove();
@@ -163,6 +160,6 @@ export const useAudio = (
     setVolume,
     volume,
     changePlaybackRate,
-    playbackRate,
+    playbackRate
   };
 };

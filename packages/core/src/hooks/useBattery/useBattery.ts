@@ -62,6 +62,7 @@ export const useBattery = (): UseBatteryStateReturn => {
 
   useEffect(() => {
     if (!supported) return;
+
     let battery: BatteryManager | null;
 
     const onChange = () =>
