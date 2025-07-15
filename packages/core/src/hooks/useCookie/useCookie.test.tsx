@@ -131,3 +131,29 @@ it('Should update value when cookie changes externally', () => {
 
   expect(result.current.value).toBe('external-value');
 });
+
+it('Should handle key changes', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+
+  const { rerender } = renderHook((key) => useCookie(key), {
+    initialProps: 'value'
+  });
+
+  expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
+  expect(removeEventListenerSpy).not.toHaveBeenCalled();
+
+  rerender('new-value');
+
+  expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+  expect(removeEventListenerSpy).toHaveBeenCalledTimes(1);
+});
+
+it('Should cleanup on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(() => useCookie('cookie'));
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith(COOKIE_EVENT, expect.any(Function));
+});

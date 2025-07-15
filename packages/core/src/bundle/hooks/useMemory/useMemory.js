@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useInterval } from '../useInterval/useInterval';
+import { useEffect, useState } from 'react';
 /**
  * @name useMemory
  * @description - Hook that gives you current memory usage
@@ -21,8 +20,10 @@ export const useMemory = () => {
       usedJSHeapSize: 0
     }
   );
-  useInterval(() => setValue(performance.memory), 1000, {
-    immediately: supported
-  });
+  useEffect(() => {
+    if (!supported) return;
+    const intervalId = setInterval(() => setValue(performance.memory), 1000);
+    return () => clearInterval(intervalId);
+  }, []);
   return { supported, value };
 };

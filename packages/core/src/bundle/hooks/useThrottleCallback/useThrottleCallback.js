@@ -43,7 +43,6 @@ export const useThrottleCallback = (callback, delay) => {
       timeoutRef.current = setTimeout(timer, delayRef.current);
     };
     throttledCallback.cancel = cancel;
-    console.log('cancel', timeoutRef.current);
     cancel();
     return throttledCallback;
   }, [delay]);

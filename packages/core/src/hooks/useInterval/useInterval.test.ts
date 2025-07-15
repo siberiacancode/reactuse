@@ -28,10 +28,30 @@ it('Should pause and resume properly', () => {
   expect(result.current.active).toBeTruthy();
 });
 
-it('Should not be active when disabled', () => {
+it('Should not be active when not immediately', () => {
   const { result } = renderHook(() => useInterval(vi.fn, 1000, { immediately: false }));
 
   expect(result.current.active).toBeFalsy();
+});
+
+it('Should handle interval changes', () => {
+  const callback = vi.fn();
+  const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
+
+  const { result, rerender } = renderHook((interval) => useInterval(callback, interval), {
+    initialProps: 1000
+  });
+
+  expect(result.current.active).toBeTruthy();
+  act(() => vi.advanceTimersByTime(1000));
+  expect(callback).toHaveBeenCalledTimes(1);
+
+  rerender(500);
+
+  expect(clearIntervalSpy).toHaveBeenCalledOnce();
+
+  act(() => vi.advanceTimersByTime(500));
+  expect(callback).toHaveBeenCalledTimes(2);
 });
 
 it('Should call callback on interval', () => {
@@ -41,8 +61,19 @@ it('Should call callback on interval', () => {
   expect(result.current.active).toBeTruthy();
   act(() => vi.advanceTimersByTime(1000));
 
-  expect(callback).toBeCalledTimes(1);
+  expect(callback).toHaveBeenCalledOnce();
 
   act(() => vi.advanceTimersByTime(1000));
   expect(callback).toBeCalledTimes(2);
+});
+
+it('Should clean up on unmount', () => {
+  const callback = vi.fn();
+  const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
+
+  const { unmount } = renderHook(() => useInterval(callback, 1000));
+
+  unmount();
+
+  expect(clearIntervalSpy).toHaveBeenCalledOnce();
 });

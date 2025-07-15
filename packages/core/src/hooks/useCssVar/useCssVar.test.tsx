@@ -27,7 +27,7 @@ beforeEach(() => {
 const trigger = createTrigger<Node, MutationCallback>();
 const mockMutationObserverObserve = vi.fn();
 const mockMutationObserverDisconnect = vi.fn();
-const mockMutationObserver = class MockMutationObserver {
+class MockMutationObserver {
   constructor(callback: MutationCallback) {
     this.callback = callback;
   }
@@ -38,12 +38,10 @@ const mockMutationObserver = class MockMutationObserver {
     trigger.add(target, this.callback);
     mockMutationObserverObserve();
   };
-  disconnect = () => {
-    mockMutationObserverDisconnect();
-  };
-};
+  disconnect = () => mockMutationObserverDisconnect();
+}
 
-globalThis.MutationObserver = mockMutationObserver as any;
+globalThis.MutationObserver = MockMutationObserver as any;
 
 it('Should use css var with default target', () => {
   renderHook(() => useCssVar('--test-color', 'green'));
@@ -183,6 +181,30 @@ targets.forEach((target) => {
       });
 
       await waitFor(() => expect(result.current.value).toBe('pink'));
+    });
+
+    it('Should handle target changes', () => {
+      const { rerender } = renderHook(
+        (target) => {
+          if (target) {
+            return useCssVar(target, '--test-color') as unknown as {
+              ref: StateRef<HTMLDivElement>;
+            } & UseCssVarReturn;
+          }
+          return useCssVar('--test-color');
+        },
+        {
+          initialProps: target
+        }
+      );
+
+      expect(mockMutationObserverObserve).toHaveBeenCalledTimes(1);
+      expect(mockMutationObserverDisconnect).not.toHaveBeenCalled();
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(mockMutationObserverObserve).toHaveBeenCalledTimes(2);
+      expect(mockMutationObserverDisconnect).toHaveBeenCalledTimes(1);
     });
 
     it('Should disconnect on unmount', () => {

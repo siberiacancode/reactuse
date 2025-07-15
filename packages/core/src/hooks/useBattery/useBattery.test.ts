@@ -5,18 +5,17 @@ import { createTrigger, renderHookServer } from '@/tests';
 import { useBattery } from './useBattery';
 
 const trigger = createTrigger<string, () => void>();
+const mockRemoveEventListener = vi.fn();
 const mockBatteryManager = {
   charging: true,
   chargingTime: 0,
   dischargingTime: 5,
   level: 1,
-  addEventListener: (type: string, callback: () => void) => {
-    trigger.add(type, callback);
-  },
+  addEventListener: (type: string, callback: () => void) => trigger.add(type, callback),
   removeEventListener: (type: string, callback: () => void) => {
-    if (trigger.get(type) === callback) {
-      trigger.delete(type);
-    }
+    console.log('removeEventListener', type, callback);
+    mockRemoveEventListener(type, callback);
+    if (trigger.get(type) === callback) trigger.delete(type);
   },
   dispatchEvent: (event: Event) => {
     trigger.callback(event.type);
@@ -45,7 +44,7 @@ it('Should use battery', async () => {
     }
   });
 
-  expect(navigator.getBattery).toBeCalledTimes(1);
+  expect(navigator.getBattery).toHaveBeenCalledOnce();
 
   await waitFor(() =>
     expect(result.current).toEqual({
@@ -71,7 +70,7 @@ it('Should use battery on server side', async () => {
       chargingTime: 0,
       dischargingTime: 0,
       level: 0,
-      loading: true
+      loading: false
     }
   });
 });
@@ -179,5 +178,21 @@ it('Should handle dischargingtimechange event', async () => {
         loading: false
       }
     })
+  );
+});
+
+it('Should cleanup on unmount', async () => {
+  const { unmount, result } = renderHook(useBattery);
+
+  await waitFor(() => expect(result.current.value.loading).toBe(false));
+
+  unmount();
+
+  expect(mockRemoveEventListener).toHaveBeenCalledWith('chargingchange', expect.any(Function));
+  expect(mockRemoveEventListener).toHaveBeenCalledWith('levelchange', expect.any(Function));
+  expect(mockRemoveEventListener).toHaveBeenCalledWith('chargingtimechange', expect.any(Function));
+  expect(mockRemoveEventListener).toHaveBeenCalledWith(
+    'dischargingtimechange',
+    expect.any(Function)
   );
 });

@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useTextDirection
@@ -43,7 +42,7 @@ export const useTextDirection = (...params) => {
     setValue(value);
     element.setAttribute('dir', value);
   };
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     if (!target && !internalRef.state) return;
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;

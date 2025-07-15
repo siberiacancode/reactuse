@@ -57,3 +57,12 @@ it('Should not include scrollbar', () => {
   });
   expect(result.current).toEqual({ width: 50, height: 50 });
 });
+
+it('Should cleanup up on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(() => useWindowSize());
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+});

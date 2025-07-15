@@ -46,6 +46,7 @@ export const useClickOutside = ((...params: any[]) => {
   internalCallbackRef.current = callback;
 
   useEffect(() => {
+    console.log('target', target);
     if (!target && !internalRef.state) return;
     const onClick = (event: Event) => {
       const element = (target ? getElement(target) : internalRef.current) as Element;

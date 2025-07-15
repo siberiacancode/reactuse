@@ -7,7 +7,7 @@ it('Should use shallow effect', () => {
 
   renderHook(() => useShallowEffect(effect, []));
 
-  expect(effect).toBeCalledTimes(1);
+  expect(effect).toHaveBeenCalledOnce();
 });
 
 it('Should not run effect when deps are shallow equal', () => {
@@ -16,14 +16,14 @@ it('Should not run effect when deps are shallow equal', () => {
 
   const { rerender } = renderHook(() => useShallowEffect(effect, [object]));
 
-  expect(effect).toBeCalledTimes(1);
+  expect(effect).toHaveBeenCalledOnce();
 
   act(() => {
     object = { b: 'b', a: 'a' };
     rerender();
   });
 
-  expect(effect).toBeCalledTimes(1);
+  expect(effect).toHaveBeenCalledOnce();
 });
 
 it('Should run effect when deps change', () => {
@@ -32,7 +32,7 @@ it('Should run effect when deps change', () => {
 
   const { rerender } = renderHook(() => useShallowEffect(effect, [object]));
 
-  expect(effect).toBeCalledTimes(1);
+  expect(effect).toHaveBeenCalledOnce();
 
   act(() => {
     object = { a: 'b' };

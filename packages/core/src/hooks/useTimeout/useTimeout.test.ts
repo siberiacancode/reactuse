@@ -24,7 +24,7 @@ it('Should call callback after the timer expires', () => {
   act(() => vi.advanceTimersByTime(5000));
 
   expect(result.current.ready).toBeTruthy();
-  expect(callback).toBeCalledTimes(1);
+  expect(callback).toHaveBeenCalledOnce();
 });
 
 it('Should clear the timeout', () => {
@@ -38,4 +38,13 @@ it('Should clear the timeout', () => {
 
   expect(result.current.ready).toBeTruthy();
   expect(callback).not.toBeCalled();
+});
+
+it('Should clear up on unmount', () => {
+  const clearTimeoutSpy = vi.spyOn(window, 'clearTimeout');
+  const { unmount } = renderHook(() => useTimeout(vi.fn(), 5000));
+
+  unmount();
+
+  expect(clearTimeoutSpy).toHaveBeenCalled();
 });

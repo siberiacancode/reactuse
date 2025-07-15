@@ -107,7 +107,7 @@ it('Should throttle events by delay', () => {
 
   act(() => window.dispatchEvent(new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT)));
 
-  expect(callback).toBeCalledTimes(1);
+  expect(callback).toHaveBeenCalledOnce();
 
   act(() => window.dispatchEvent(new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT)));
 
@@ -126,10 +126,40 @@ it('Should update with new delay', () => {
     initialProps: 1000
   });
 
-  expect(addEventListenerSpy).toBeCalledTimes(1);
+  expect(addEventListenerSpy).toHaveBeenCalledOnce();
 
   rerender(500);
 
-  expect(removeEventListenerSpy).toBeCalledTimes(1);
+  expect(removeEventListenerSpy).toHaveBeenCalledOnce();
   expect(addEventListenerSpy).toBeCalledTimes(2);
+});
+
+it('Should handle enabled changes', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+
+  const { rerender } = renderHook((enabled) => useDeviceMotion({ enabled }), {
+    initialProps: true
+  });
+
+  expect(addEventListenerSpy).toHaveBeenCalledOnce();
+
+  rerender(false);
+
+  expect(addEventListenerSpy).toHaveBeenCalledOnce();
+  expect(removeEventListenerSpy).toHaveBeenCalledOnce();
+
+  rerender(true);
+
+  expect(addEventListenerSpy).toBeCalledTimes(2);
+  expect(removeEventListenerSpy).toHaveBeenCalledOnce();
+});
+
+it('Should cleanup throttle on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(useDeviceMotion);
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
 });

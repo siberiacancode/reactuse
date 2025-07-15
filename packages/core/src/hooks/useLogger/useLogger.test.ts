@@ -32,3 +32,11 @@ it('Should log on update', () => {
   expect(mockConsoleLog).toBeCalledTimes(2);
   expect(mockConsoleLog).toHaveBeenCalledWith('Component updated', 4, 5, 6);
 });
+
+it('Should log on un mount', () => {
+  const { unmount } = renderHook(() => useLogger('Component', []));
+
+  unmount();
+
+  expect(mockConsoleLog).toHaveBeenCalledWith('Component unmounted');
+});

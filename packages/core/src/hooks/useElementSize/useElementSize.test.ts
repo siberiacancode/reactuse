@@ -121,7 +121,32 @@ targets.forEach((target) => {
       expect(result.current.value).toStrictEqual({ width: 200, height: 200 });
     });
 
-    it('Should disconnect on unmount', () => {
+    it('Should handle target changes', () => {
+      const { result, rerender } = renderHook(
+        (target) => {
+          if (target)
+            return useElementSize(target) as {
+              ref: StateRef<HTMLDivElement>;
+            } & UseElementSizeReturn;
+          return useElementSize<HTMLDivElement>();
+        },
+        {
+          initialProps: target
+        }
+      );
+
+      if (!target) act(() => result.current.ref(element));
+
+      expect(mockResizeObserverObserve).toHaveBeenCalledTimes(1);
+      expect(mockResizeObserverDisconnect).not.toHaveBeenCalled();
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(mockResizeObserverObserve).toHaveBeenCalledTimes(2);
+      expect(mockResizeObserverDisconnect).toHaveBeenCalledTimes(1);
+    });
+
+    it('Should clean up on unmount', () => {
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result, unmount } = renderHook(() => {
         if (target)

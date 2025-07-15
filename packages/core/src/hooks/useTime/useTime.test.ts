@@ -35,3 +35,13 @@ it('Should updates every second', () => {
   expect(result.current.minutes).toBe(1);
   expect(result.current.seconds).toBe(0);
 });
+
+it('Should clear up on unmount', () => {
+  const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
+  const { unmount } = renderHook(useTime);
+
+  unmount();
+
+  expect(clearIntervalSpy).toHaveBeenCalled();
+  clearIntervalSpy.mockRestore();
+});

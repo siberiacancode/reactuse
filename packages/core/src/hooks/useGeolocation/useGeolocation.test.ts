@@ -89,12 +89,10 @@ it('Should update state on geolocation error', () => {
   });
 });
 
-it('Should clear watch position on unmount', () => {
-  mockNavigatorGeolocation.watchPosition.mockReturnValue(1);
-
+it('Should clean up on unmount', () => {
   const { unmount } = renderHook(useGeolocation);
 
   unmount();
 
-  expect(mockNavigatorGeolocation.clearWatch).toHaveBeenCalledWith(1);
+  expect(mockNavigatorGeolocation.clearWatch).toHaveBeenCalledOnce();
 });

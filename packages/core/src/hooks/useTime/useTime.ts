@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getDate } from '@/utils/helpers';
 
-import { useInterval } from '../useInterval/useInterval';
-
 export interface UseTimeReturn {
+  /** The current day of the month (1-31) */
   day: number;
+  /** The current hour in 24-hour format (0-23) */
   hours: number;
+  /** The current hour in 12-hour format with meridiem type (AM/PM) */
   meridiemHours: { value: number; type: string };
+  /** The current minute (0-59) */
   minutes: number;
+  /** The current month (1-12) */
   month: number;
+  /** The current second (0-59) */
   seconds: number;
+  /** The current Unix timestamp in milliseconds */
   timestamp: number;
+  /** The current year */
   year: number;
 }
 
@@ -27,6 +33,14 @@ export interface UseTimeReturn {
  */
 export const useTime = (): UseTimeReturn => {
   const [time, setTime] = useState(getDate());
-  useInterval(() => setTime(getDate()), 1000);
+
+  useEffect(() => {
+    const timerId = setInterval(() => setTime(getDate()), 1000);
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, []);
+
   return time;
 };

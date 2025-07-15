@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getDate } from '@/utils/helpers';
-import { useInterval } from '../useInterval/useInterval';
 /**
  * @name useTime
  * @description - Hook that gives you current time in different values
@@ -13,6 +12,11 @@ import { useInterval } from '../useInterval/useInterval';
  */
 export const useTime = () => {
   const [time, setTime] = useState(getDate());
-  useInterval(() => setTime(getDate()), 1000);
+  useEffect(() => {
+    const timerId = setInterval(() => setTime(getDate()), 1000);
+    return () => {
+      clearInterval(timerId);
+    };
+  }, []);
   return time;
 };

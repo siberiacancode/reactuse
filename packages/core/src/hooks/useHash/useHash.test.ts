@@ -77,3 +77,12 @@ it('Should prefer existing hash over initial value', () => {
   expect(window.location.hash).toBe('#existing');
   expect(result.current[0]).toBe('existing');
 });
+
+it('Should clean up on unmount', () => {
+  const { unmount } = renderHook(useHash);
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('hashchange', expect.any(Function));
+});

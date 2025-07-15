@@ -42,7 +42,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  void vi.unstubAllGlobals();
+  vi.unstubAllGlobals();
   mockMediaQueryListAddEventListener.mockClear();
   mockMediaQueryListRemoveEventListener.mockClear();
 });
@@ -89,7 +89,7 @@ it('Should handle media query change', () => {
   expect(result.current.ratio).toEqual(3);
 });
 
-it('Should disconnect on onmount', () => {
+it('Should cleanup on unmount', () => {
   const { unmount } = renderHook(useDevicePixelRatio);
 
   unmount();

@@ -53,7 +53,7 @@ targets.forEach((target) => {
 
       act(() => element.dispatchEvent(new MouseEvent('mousedown')));
 
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledOnce();
     });
 
     it('Should handle double click with touch', () => {
@@ -72,7 +72,7 @@ targets.forEach((target) => {
 
       act(() => element.dispatchEvent(new TouchEvent('touchstart')));
 
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledOnce();
     });
 
     it('Should handle single click', () => {
@@ -95,7 +95,7 @@ targets.forEach((target) => {
 
       act(() => vi.advanceTimersByTime(DEFAULT_THRESHOLD_TIME));
 
-      expect(onSingleClick).toBeCalledTimes(1);
+      expect(onSingleClick).toHaveBeenCalledOnce();
     });
 
     it('Should respect custom threshold', () => {
@@ -117,7 +117,35 @@ targets.forEach((target) => {
 
       act(() => element.dispatchEvent(new MouseEvent('mousedown')));
 
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledOnce();
+    });
+
+    it('Should handle target changes', () => {
+      const callback = vi.fn();
+      const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+      const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
+
+      const { result, rerender } = renderHook(
+        (target) => {
+          if (target) {
+            return useDoubleClick(target, callback) as unknown as StateRef<HTMLDivElement>;
+          }
+          return useDoubleClick(callback);
+        },
+        {
+          initialProps: target
+        }
+      );
+
+      if (!target) act(() => result.current(element));
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+      expect(removeEventListenerSpy).not.toHaveBeenCalled();
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
     });
 
     it('Should cleanup on unmount', () => {

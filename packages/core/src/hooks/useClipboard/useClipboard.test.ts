@@ -81,3 +81,34 @@ it('Should change value upon cut event', async () => {
   expect(result.current.value).toBe('cut');
   expect(mockNavigatorClipboardReadText).toHaveBeenCalled();
 });
+
+it('Should handle enabled changes', () => {
+  const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
+  const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+
+  const { rerender } = renderHook((enabled) => useClipboard({ enabled }), {
+    initialProps: true
+  });
+
+  expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+  expect(removeEventListenerSpy).not.toHaveBeenCalled();
+
+  rerender(false);
+
+  expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+
+  rerender(true);
+
+  expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
+  expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+});
+
+it('Should cleanup on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+  const { unmount } = renderHook(() => useClipboard({ enabled: true }));
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('copy', expect.any(Function));
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('cut', expect.any(Function));
+});

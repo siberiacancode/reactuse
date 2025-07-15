@@ -5,6 +5,7 @@ export * from './useBattery/useBattery';
 export * from './useBluetooth/useBluetooth';
 export * from './useBoolean/useBoolean';
 export * from './useBreakpoints/useBreakpoints';
+export * from './useBroadcastChannel/useBroadcastChannel';
 export * from './useBrowserLanguage/useBrowserLanguage';
 export * from './useClickOutside/useClickOutside';
 export * from './useClipboard/useClipboard';

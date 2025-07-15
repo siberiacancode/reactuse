@@ -59,7 +59,6 @@ export const useThrottleCallback = <Params extends unknown[], Return>(
 
     throttledCallback.cancel = cancel;
 
-    console.log('cancel', timeoutRef.current);
     cancel();
     return throttledCallback;
   }, [delay]);
