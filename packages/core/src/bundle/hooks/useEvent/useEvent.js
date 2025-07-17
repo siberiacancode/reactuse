@@ -13,10 +13,10 @@ import { useCallback, useRef } from 'react';
  * const onClick = useEvent(() => console.log('clicked'));
  */
 export const useEvent = (callback) => {
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
   return useCallback((...args) => {
-    const fn = callbackRef.current;
+    const fn = internalCallbackRef.current;
     return fn(...args);
   }, []);
 };
