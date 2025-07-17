@@ -7,7 +7,7 @@ import { useEventListener } from '../useEventListener/useEventListener';
 /**
  * @name useWindowEvent
  * @description - Hook attaches an event listener to the window object for the specified event
- * @category Events
+ * @category Sensors
  *
  * @template Event Key of window event map.
  * @param {Event} event The event to listen for.
