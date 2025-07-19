@@ -1,12 +1,12 @@
 import { useActiveElement } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const activeElement = useActiveElement();
-  const activeElementId = activeElement?.dataset?.id ?? 'null';
+  const activeElement = useActiveElement<HTMLDivElement>();
+  const activeElementId = activeElement?.value?.dataset?.id ?? 'null';
 
   return (
     <>
-      <div className='mt-1 grid grid-cols-2 gap-1'>
+      <div ref={activeElement.ref} className='mt-1 grid grid-cols-2 gap-1'>
         {Array.from({ length: 6 }, (_, i) => i + 1).map((id) => (
           <input
             key={id}

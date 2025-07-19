@@ -38,8 +38,9 @@ const getStopwatchTime = (time) => {
 export const useStopwatch = (...params) => {
   const initialTime = (typeof params[0] === 'number' ? params[0] : params[0]?.initialTime) ?? 0;
   const options = typeof params[0] === 'number' ? params[1] : params[0];
+  const immediately = options?.immediately ?? false;
   const [time, setTime] = useState(getStopwatchTime(initialTime));
-  const [paused, setPaused] = useState(!options?.enabled);
+  const [paused, setPaused] = useState(!immediately && !initialTime);
   useEffect(() => {
     if (paused) return;
     const onInterval = () => {

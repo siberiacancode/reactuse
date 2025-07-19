@@ -1,17 +1,16 @@
 import { useAutoScroll } from '@siberiacancode/reactuse';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 const Demo = () => {
   const [messages, setMessages] = useState([`Message 1 at ${new Date().toLocaleTimeString()}`]);
 
   const listRef = useAutoScroll<HTMLUListElement>();
 
-  const onAddMessage = useCallback(() => {
+  const onAddMessage = () =>
     setMessages((prev) => [
       ...prev,
       `Message ${prev.length + 1} at ${new Date().toLocaleTimeString()}`
     ]);
-  }, []);
 
   return (
     <div className='flex flex-col gap-4'>

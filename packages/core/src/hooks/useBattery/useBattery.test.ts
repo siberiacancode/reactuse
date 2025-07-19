@@ -13,7 +13,6 @@ const mockBatteryManager = {
   level: 1,
   addEventListener: (type: string, callback: () => void) => trigger.add(type, callback),
   removeEventListener: (type: string, callback: () => void) => {
-    console.log('removeEventListener', type, callback);
     mockRemoveEventListener(type, callback);
     if (trigger.get(type) === callback) trigger.delete(type);
   },
@@ -28,6 +27,7 @@ beforeEach(() => {
   Object.assign(navigator, {
     getBattery: mockNavigatorGetBattery
   });
+  trigger.clear();
 });
 
 it('Should use battery', async () => {

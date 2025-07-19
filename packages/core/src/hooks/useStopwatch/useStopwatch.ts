@@ -46,8 +46,8 @@ export interface UseStopwatchReturn {
 
 /** The use stopwatch options */
 export interface UseStopwatchOptions {
-  /** The enabled state of the timer */
-  enabled?: boolean;
+  /** The immediately state of the timer */
+  immediately?: boolean;
 }
 
 interface UseStopwatch {
@@ -86,8 +86,10 @@ export const useStopwatch = ((...params: any[]) => {
       ? (params[1] as UseStopwatchOptions | undefined)
       : (params[0] as (UseStopwatchOptions & { initialTime?: number }) | undefined);
 
+  const immediately = options?.immediately ?? false;
+
   const [time, setTime] = useState(getStopwatchTime(initialTime));
-  const [paused, setPaused] = useState(!options?.enabled);
+  const [paused, setPaused] = useState(!immediately && !initialTime);
 
   useEffect(() => {
     if (paused) return;

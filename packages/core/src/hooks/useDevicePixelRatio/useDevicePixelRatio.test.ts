@@ -39,6 +39,7 @@ beforeEach(() => {
       return { ...mockMediaQueryList, media: query };
     })
   );
+  trigger.clear();
 });
 
 afterEach(() => {
