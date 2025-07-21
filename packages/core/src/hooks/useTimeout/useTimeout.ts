@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useEvent } from '../useEvent/useEvent';
 
@@ -39,10 +39,10 @@ export function useTimeout(callback: () => void, delay: number): UseTimeoutRetur
     };
   }, [delay]);
 
-  const clear = () => {
+  const clear = useCallback(() => {
     clearTimeout(timeoutIdRef.current);
     setReady(true);
-  };
+  }, [timeoutIdRef, setReady]);
 
   return { ready, clear };
 }
