@@ -38,36 +38,34 @@ export const useDisplayMedia = (...params) => {
   const options = params[1] ? params[1] : params[0];
   const immediately = options?.immediately ?? false;
   const [sharing, setSharing] = useState(false);
+  const elementRef = useRef(null);
   const streamRef = useRef(null);
   const internalRef = useRefState();
   const stop = () => {
-    if (!streamRef.current || !supported) return;
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    if (!streamRef.current || !supported || !elementRef.current) return;
     setSharing(false);
-    element.srcObject = null;
+    elementRef.current.srcObject = null;
     streamRef.current.getTracks().forEach((track) => track.stop());
     streamRef.current = null;
   };
   const start = async () => {
-    if (!supported) return;
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    if (!supported || !elementRef.current) return;
     const displayMedia = await navigator.mediaDevices.getDisplayMedia({
       video: options?.video,
       audio: options?.audio
     });
     setSharing(true);
     streamRef.current = displayMedia;
-    element.srcObject = displayMedia;
+    elementRef.current.srcObject = displayMedia;
     displayMedia.getTracks().forEach((track) => (track.onended = stop));
     return displayMedia;
   };
   useEffect(() => {
-    if (!supported || !immediately) return;
-    if (!target && !internalRef.state) return;
+    if (!supported || (!target && !internalRef.state)) return;
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
+    elementRef.current = element;
+    if (!immediately) return;
     start();
     return () => {
       stop();

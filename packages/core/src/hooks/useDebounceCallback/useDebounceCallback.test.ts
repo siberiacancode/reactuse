@@ -87,16 +87,15 @@ it('Should return new function when delay changes', () => {
   const { result, rerender } = renderHook((delay) => useDebounceCallback(callback, delay), {
     initialProps: 100
   });
-  const debouncedCallback = result.current;
 
-  debouncedCallback();
+  result.current();
 
   act(() => vi.advanceTimersByTime(50));
   expect(callback).not.toHaveBeenCalled();
 
   rerender(200);
 
-  debouncedCallback();
+  result.current();
 
   act(() => vi.advanceTimersByTime(200));
   expect(callback).toHaveBeenCalledOnce();

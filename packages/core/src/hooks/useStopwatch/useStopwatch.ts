@@ -54,8 +54,8 @@ export interface UseStopwatchReturn {
 
 /** The use stopwatch options */
 export interface UseStopwatchOptions {
-  /** The enabled state of the timer */
-  enabled?: boolean;
+  /** The immediately state of the timer */
+  immediately?: boolean;
   /** The update interval of the timer */
   updateInterval?: number;
 }
@@ -71,21 +71,21 @@ interface UseStopwatch {
  *
  * @overload
  * @param {number} [initialTime=0] The initial time of the timer
- * @param {boolean} [options.enabled=true] The enabled state of the timer
+ * @param {boolean} [options.immediately=false] The enabled state of the timer
  * @param {number} [options.updateInterval=1000] The update interval of the timer
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
- * const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { enabled: false, updateInterval: 1000 });
+ * const { milliseconds, seconds, minutes, start, pause, reset } = useStopwatch(1000, { immediately: false, updateInterval: 1000 });
  *
  * @overload
  * @param {number} [options.initialTime=0] -The initial time of the timer
- * @param {boolean} [options.enabled=true] The enabled state of the timer
+ * @param {boolean} [options.immediately=true] The enabled state of the timer
  * @param {number} [options.updateInterval=1000] The update interval of the timer
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
- * const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, enabled: false, updateInterval: 1000 });
+ * const { milliseconds, seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, immediately: false, updateInterval: 1000 });
  */
 export const useStopwatch = ((...params: any[]) => {
   const initialTime =
@@ -98,7 +98,7 @@ export const useStopwatch = ((...params: any[]) => {
       ? (params[1] as UseStopwatchOptions | undefined)
       : (params[0] as (UseStopwatchOptions & { initialTime?: number }) | undefined);
 
-  const enabled = options?.enabled ?? true;
+  const immediately = options?.immediately ?? false;
   const updateInterval = options?.updateInterval ?? 1000;
 
   const [milliseconds, setMilliseconds] = useState(initialTime);
@@ -108,7 +108,7 @@ export const useStopwatch = ((...params: any[]) => {
     () => setMilliseconds(getMillsDiffOrZero(timestamp)),
     updateInterval,
     {
-      immediately: enabled
+      immediately
     }
   );
 

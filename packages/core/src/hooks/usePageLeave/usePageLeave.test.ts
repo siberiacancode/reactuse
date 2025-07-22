@@ -14,7 +14,7 @@ it('Should call the callback on page leave', () => {
   expect(result.current).toBeFalsy();
 
   act(() => document.dispatchEvent(new Event('mouseleave')));
-  expect(callback).toBeCalledTimes(1);
+  expect(callback).toHaveBeenCalledOnce();
   expect(result.current).toBeTruthy();
 
   act(() => document.dispatchEvent(new Event('mouseenter')));
@@ -23,4 +23,14 @@ it('Should call the callback on page leave', () => {
   act(() => document.dispatchEvent(new Event('mouseleave')));
   expect(callback).toBeCalledTimes(2);
   expect(result.current).toBeTruthy();
+});
+
+it('Should cleanup up on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+  const { unmount } = renderHook(usePageLeave);
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('mouseenter', expect.any(Function));
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('mouseleave', expect.any(Function));
 });

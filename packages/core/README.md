@@ -27,17 +27,17 @@ npm install @siberiacancode/reactuse
 ```tsx
 import { useCounter } from '@siberiacancode/reactuse';
 
-function App() {
+const App = () => {
   const counter = useCounter(0);
 
   return (
     <div>
-      <h1>Count: {const.value}</h1>
-      <button onClick={() => const.inc()}>+1</button>
-      <button onClick={() => const.dec()}>-1</button>
+      <h1>Count: {counter.value}</h1>
+      <button onClick={() => counter.inc()}>+1</button>
+      <button onClick={() => counter.dec()}>-1</button>
     </div>
   );
-}
+};
 ```
 
 ## CLI installation

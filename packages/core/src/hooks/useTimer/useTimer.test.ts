@@ -104,7 +104,7 @@ it('Should call callback when timer ends', () => {
 
   expect(result.current.seconds).toBe(0);
   expect(result.current.active).toBeFalsy();
-  expect(callback).toBeCalledTimes(1);
+  expect(callback).toHaveBeenCalledOnce();
 });
 
 it('Should not be active when disabled', () => {
@@ -157,14 +157,14 @@ it('Should call onExpire when timer ends', () => {
 
   expect(result.current.seconds).toBe(0);
   expect(result.current.active).toBeFalsy();
-  expect(onExpire).toBeCalledTimes(1);
+  expect(onExpire).toHaveBeenCalledOnce();
 });
 
 it('Should call onStart when timer starts', () => {
   const onStart = vi.fn();
   const { result } = renderHook(() => useTimer(1, { onStart }));
 
-  expect(onStart).toBeCalledTimes(1);
+  expect(onStart).toHaveBeenCalledOnce();
 
   act(result.current.pause);
   act(result.current.resume);
@@ -174,11 +174,17 @@ it('Should call onStart when timer starts', () => {
 
 it('Should call onTick on each second', () => {
   const onTick = vi.fn();
-  renderHook(() => useTimer(1, { onTick }));
+  renderHook(() => useTimer(2, { onTick }));
 
   act(() => vi.advanceTimersToNextTimer());
 
-  expect(onTick).toBeCalledTimes(1);
+  expect(onTick).toHaveBeenCalledOnce();
+  expect(onTick).toBeCalledWith(2);
+
+  act(() => vi.advanceTimersToNextTimer());
+
+  expect(onTick).toBeCalledTimes(2);
+  expect(onTick).toBeCalledWith(1);
 });
 
 it('Should pause timer', () => {
@@ -318,5 +324,5 @@ it('Should accept callback as second parameter', () => {
 
   act(() => vi.advanceTimersToNextTimer());
 
-  expect(callback).toBeCalledTimes(1);
+  expect(callback).toHaveBeenCalledOnce();
 });

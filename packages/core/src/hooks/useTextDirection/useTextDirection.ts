@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -6,7 +6,6 @@ import { getElement, isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
-import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The use text direction value type */
@@ -80,7 +79,7 @@ export const useTextDirection = ((...params: any[]) => {
     element.setAttribute('dir', value);
   };
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     if (!target && !internalRef.state) return;
 
     const element = (target ? getElement(target) : internalRef.current) as Element;

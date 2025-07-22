@@ -9,6 +9,13 @@ beforeEach(() => {
   store = createStore(() => 0);
 });
 
+it('Should create store', () => {
+  expect(store.set).toBeTypeOf('function');
+  expect(store.get).toBeTypeOf('function');
+  expect(store.subscribe).toBeTypeOf('function');
+  expect(store.use).toBeTypeOf('function');
+});
+
 it('Should return initial state', () => {
   expect(store.get()).toEqual(0);
 });

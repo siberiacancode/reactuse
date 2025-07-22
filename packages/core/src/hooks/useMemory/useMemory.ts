@@ -1,6 +1,4 @@
-import { useState } from 'react';
-
-import { useInterval } from '../useInterval/useInterval';
+import { useEffect, useState } from 'react';
 
 declare global {
   interface Performance {
@@ -42,9 +40,11 @@ export const useMemory = (): UseMemoryReturn => {
     }
   );
 
-  useInterval(() => setValue(performance.memory), 1000, {
-    immediately: supported
-  });
+  useEffect(() => {
+    if (!supported) return;
+    const intervalId = setInterval(() => setValue(performance.memory), 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return { supported, value };
 };

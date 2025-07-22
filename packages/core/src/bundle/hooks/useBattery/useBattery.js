@@ -17,14 +17,14 @@ export const useBattery = () => {
     'getBattery' in navigator &&
     typeof navigator.getBattery === 'function';
   const [value, setValue] = useState({
-    loading: true,
+    loading: supported,
     level: 0,
     charging: false,
     chargingTime: 0,
     dischargingTime: 0
   });
   useEffect(() => {
-    if (!supported) return setValue({ ...value, loading: false });
+    if (!supported) return;
     let battery;
     const onChange = () =>
       setValue({
@@ -44,6 +44,7 @@ export const useBattery = () => {
     });
     return () => {
       if (!battery) return;
+      console.log('unmount', battery);
       battery.removeEventListener('levelchange', onChange);
       battery.removeEventListener('chargingchange', onChange);
       battery.removeEventListener('chargingtimechange', onChange);

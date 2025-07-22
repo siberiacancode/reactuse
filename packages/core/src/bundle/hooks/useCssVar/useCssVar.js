@@ -12,7 +12,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseCssVarReturn & { ref: StateRef<Element> }} The object containing the value of the CSS variable and ref
  *
  * @example
- * const { ref, value, set } = useCssVar('--color', 'red');
+ * const { ref, value, set, remove } = useCssVar('--color', 'red');
  *
  * @overload
  * @param {HookTarget} target The target element
@@ -21,7 +21,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseCssVarReturn} The object containing the value of the CSS variable
  *
  * @example
- * const { value, set } = useCssVar(ref, '--color', 'red');
+ * const { value, set, remove } = useCssVar(ref, '--color', 'red');
  */
 export const useCssVar = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -31,16 +31,15 @@ export const useCssVar = (...params) => {
   const internalRef = useRefState(window.document.documentElement);
   const set = (value) => {
     const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
-    if (element.style) {
-      if (!value) {
-        element.style.removeProperty(key);
-        setValue(value);
-        return;
-      }
-      element.style.setProperty(key, value);
-      setValue(value);
-    }
+    if (!element || !element.style) return;
+    element.style.setProperty(key, value);
+    setValue(value);
+  };
+  const remove = () => {
+    const element = target ? getElement(target) : internalRef.current;
+    if (!element || !element.style) return;
+    element.style.removeProperty(key);
+    setValue('');
   };
   useEffect(() => {
     if (initialValue) set(initialValue);
@@ -59,6 +58,6 @@ export const useCssVar = (...params) => {
       observer.disconnect();
     };
   }, [target, internalRef.state]);
-  if (target) return { value, set };
-  return { ref: internalRef, value, set };
+  if (target) return { value, set, remove };
+  return { ref: internalRef, value, set, remove };
 };

@@ -13,7 +13,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {boolean} The pressed state of the key
  *
  * @example
- * const isKeyPressed = useKeyPress('a', window);
+ * const isKeyPressed = useKeyPress(ref, 'a');
  *
  * @overload
  * @template Target The target element type
@@ -32,8 +32,8 @@ export const useKeyPress = (...params) => {
   const internalRef = useRefState(window);
   const keyRef = useRef(key);
   keyRef.current = key;
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
   useEffect(() => {
     if (!target && !internalRef.state) return;
     const element = target ? getElement(target) : internalRef.current;
@@ -46,7 +46,7 @@ export const useKeyPress = (...params) => {
           : keyboardEvent.key === keyRef.current
       ) {
         setPressed(true);
-        callbackRef.current?.(true, keyboardEvent);
+        internalCallbackRef.current?.(true, keyboardEvent);
       }
     };
     const onKeyUp = (event) => {
@@ -57,7 +57,7 @@ export const useKeyPress = (...params) => {
           : keyboardEvent.key === keyRef.current
       ) {
         setPressed(false);
-        callbackRef.current?.(false, keyboardEvent);
+        internalCallbackRef.current?.(false, keyboardEvent);
       }
     };
     element.addEventListener('keydown', onKeyDown);

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -8,11 +8,11 @@ import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
-/** The keyboard event handler type */
+/** The use keyboard event handler type */
 export type KeyboardEventHandler = (event: KeyboardEvent) => void;
 
-/** The use keyboard options type */
-export interface UseKeyboardOptions {
+/** The use keyboard event options type */
+export interface UseKeyboardEventOptions {
   /** The callback function to be invoked on key down */
   onKeyDown?: KeyboardEventHandler;
   /** The callback function to be invoked on key up */
@@ -20,9 +20,21 @@ export interface UseKeyboardOptions {
 }
 
 export interface UseKeyboard {
-  (target: HookTarget | Window, options: UseKeyboardOptions): void;
+  (target: HookTarget, callback: KeyboardEventHandler): void;
 
-  <Target extends Element>(options: UseKeyboardOptions, target?: never): { ref: StateRef<Target> };
+  (target: HookTarget, options: UseKeyboardEventOptions): void;
+
+  <Target extends HTMLElement>(
+    callback: KeyboardEventHandler,
+    target?: never
+  ): { ref: StateRef<Target> };
+
+  <Target extends HTMLElement>(
+    options: UseKeyboardEventOptions,
+    target?: never
+  ): {
+    ref: StateRef<Target>;
+  };
 }
 
 /**
@@ -31,8 +43,16 @@ export interface UseKeyboard {
  * @category Sensors
  *
  * @overload
- * @param {HookTarget | Window} target The target to attach the event listeners to
- * @param {UseKeyboardOptions} [options] The keyboard event options
+ * @param {HookTarget} target The target to attach the event listeners to
+ * @param {KeyboardEventHandler} callback The callback function to be invoked on key down
+ * @returns {void}
+ *
+ * @example
+ * useKeyboard(ref, (event) => console.log('key down'));
+ *
+ * @overload
+ * @param {HookTarget} target The target to attach the event listeners to
+ * @param {UseKeyboardEventOptions} [options] The keyboard event options
  * @returns {void}
  *
  * @example
@@ -40,7 +60,15 @@ export interface UseKeyboard {
  *
  * @overload
  * @template Target The target element type
- * @param {UseKeyboardOptions} [options] The keyboard event options
+ * @param {KeyboardEventHandler} callback The callback function to be invoked on key down
+ * @returns {{ ref: StateRef<Target> }} An object containing the ref
+ *
+ * @example
+ * const ref = useKeyboard((event) => console.log('key down'));
+ *
+ * @overload
+ * @template Target The target element type
+ * @param {UseKeyboardEventOptions} [options] The keyboard event options
  * @returns {{ ref: StateRef<Target> }} An object containing the ref
  *
  * @example
@@ -48,18 +76,29 @@ export interface UseKeyboard {
  */
 export const useKeyboard = ((...params: any[]) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
-  const options = (target ? params[1] : params[0]) as UseKeyboardOptions;
+  const options = (
+    target
+      ? typeof params[1] === 'object'
+        ? params[1]
+        : { onKeyDown: params[1] }
+      : typeof params[0] === 'object'
+        ? params[0]
+        : { onKeyDown: params[0] }
+  ) as UseKeyboardEventOptions;
 
   const internalRef = useRefState(window);
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
 
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
     if (!element) return;
 
-    const onKeyDown = (event: Event) => options?.onKeyDown?.(event as KeyboardEvent);
-    const onKeyUp = (event: Event) => options?.onKeyUp?.(event as KeyboardEvent);
+    const onKeyDown = (event: Event) =>
+      internalOptionsRef.current?.onKeyDown?.(event as KeyboardEvent);
+    const onKeyUp = (event: Event) => internalOptionsRef.current?.onKeyUp?.(event as KeyboardEvent);
 
     element.addEventListener('keydown', onKeyDown);
     element.addEventListener('keyup', onKeyUp);

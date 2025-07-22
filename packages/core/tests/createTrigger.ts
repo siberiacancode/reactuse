@@ -14,6 +14,9 @@ export function createTrigger<Key, Callback extends (...args: any[]) => void>() 
     },
     get(key: Key) {
       return observers.get(key);
+    },
+    clear() {
+      observers.clear();
     }
   };
 }

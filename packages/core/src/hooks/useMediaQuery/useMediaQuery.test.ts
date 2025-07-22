@@ -5,6 +5,8 @@ import { createTrigger, renderHookServer } from '@/tests';
 import { useMediaQuery } from './useMediaQuery';
 
 const trigger = createTrigger<string, () => void>();
+const mockRemoveEventListener = vi.fn();
+const mockAddEventListener = vi.fn();
 const mockMatchMedia = {
   matches: false,
   media: '(max-width: 768px)',
@@ -12,12 +14,12 @@ const mockMatchMedia = {
   addListener: vi.fn(),
   removeListener: vi.fn(),
   addEventListener: (type: string, callback: () => void) => {
+    mockAddEventListener(type, callback);
     trigger.add(type, callback);
   },
   removeEventListener: (type: string, callback: () => void) => {
-    if (trigger.get(type) === callback) {
-      trigger.delete(type);
-    }
+    mockRemoveEventListener(type, callback);
+    if (trigger.get(type) === callback) trigger.delete(type);
   },
   dispatchEvent: vi.fn()
 };
@@ -32,9 +34,7 @@ beforeEach(() => {
   });
 });
 
-afterEach(() => {
-  vi.restoreAllMocks();
-});
+afterEach(vi.restoreAllMocks);
 
 it('Should use media query"', () => {
   const { result } = renderHook(() => useMediaQuery('(max-width: 768px)'));
@@ -56,7 +56,7 @@ it('Should return true if media query matches', () => {
   expect(result.current).toEqual(true);
 });
 
-it('returns false if media query does not match after change', async () => {
+it('Should return false if media query does not match after change', async () => {
   const { result } = renderHook(() => useMediaQuery('(max-width: 768px)'));
 
   expect(result.current).toEqual(true);
@@ -65,4 +65,26 @@ it('returns false if media query does not match after change', async () => {
   act(() => trigger.callback('change'));
 
   expect(result.current).toEqual(false);
+});
+
+it('Should handle query changes', () => {
+  const { rerender } = renderHook((query) => useMediaQuery(query), {
+    initialProps: '(max-width: 768px)'
+  });
+
+  expect(mockAddEventListener).toHaveBeenCalled();
+  expect(mockRemoveEventListener).not.toHaveBeenCalledOnce();
+
+  rerender('(min-width: 1024px)');
+
+  expect(mockAddEventListener).toHaveBeenCalledTimes(2);
+  expect(mockRemoveEventListener).toHaveBeenCalledTimes(1);
+});
+
+it('Should cleanup up on unmount', () => {
+  const { unmount } = renderHook(() => useMediaQuery('(max-width: 768px)'));
+
+  unmount();
+
+  expect(mockRemoveEventListener).toHaveBeenCalledWith('change', expect.any(Function));
 });

@@ -41,3 +41,12 @@ it('Should update visibility state on visibilitychange event', () => {
   act(() => document.dispatchEvent(new Event('visibilitychange')));
   expect(result.current).toBe('visible');
 });
+
+it('Should cleanup on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+  const { unmount } = renderHook(useDocumentVisibility);
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+});

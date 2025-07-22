@@ -11,14 +11,20 @@ const Demo = () => {
             <span className='line'>
               <span
                 style={
-                  { '--shiki-light': '#6F42C1', '--shiki-dark': '#B392F0' } as React.CSSProperties
+                  {
+                    '--shiki-light': '#6F42C1',
+                    '--shiki-dark': '#B392F0'
+                  } as React.CSSProperties
                 }
               >
                 npm
               </span>
               <span
                 style={
-                  { '--shiki-light': '#032F62', '--shiki-dark': '#9ECBFF' } as React.CSSProperties
+                  {
+                    '--shiki-light': '#032F62',
+                    '--shiki-dark': '#9ECBFF'
+                  } as React.CSSProperties
                 }
               >
                 {' '}
@@ -26,7 +32,10 @@ const Demo = () => {
               </span>
               <span
                 style={
-                  { '--shiki-light': '#032F62', '--shiki-dark': '#9ECBFF' } as React.CSSProperties
+                  {
+                    '--shiki-light': '#032F62',
+                    '--shiki-dark': '#9ECBFF'
+                  } as React.CSSProperties
                 }
               >
                 {' '}
@@ -37,7 +46,11 @@ const Demo = () => {
         </pre>
       </div>
       <p>Click the button to copy the installation command to your clipboard.</p>
-      <button type='button' onClick={() => copy('npm install @siberiacancode/reactuse')}>
+      <button
+        disabled={copied}
+        type='button'
+        onClick={() => copy('npm install @siberiacancode/reactuse')}
+      >
         {copied ? 'Copied' : 'Copy'}
       </button>
     </>

@@ -64,3 +64,12 @@ it('Should update memory values when they change', () => {
 
   expect(result.current.value).toEqual(updatedMemory);
 });
+
+it('Should cleanup up on unmount', () => {
+  const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
+  const { unmount } = renderHook(useMemory);
+
+  unmount();
+
+  expect(clearIntervalSpy).toHaveBeenCalledTimes(1);
+});

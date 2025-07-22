@@ -39,3 +39,12 @@ it('Should handle language change event', () => {
 
   expect(result.current).toBe('en');
 });
+
+it('Should cleanup on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(useBrowserLanguage);
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('languagechange', expect.any(Function));
+});

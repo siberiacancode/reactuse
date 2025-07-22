@@ -36,7 +36,7 @@ export interface UseKeyPress {
  * @returns {boolean} The pressed state of the key
  *
  * @example
- * const isKeyPressed = useKeyPress('a', window);
+ * const isKeyPressed = useKeyPress(ref, 'a');
  *
  * @overload
  * @template Target The target element type
@@ -57,8 +57,8 @@ export const useKeyPress = ((...params: any[]) => {
 
   const keyRef = useRef(key);
   keyRef.current = key;
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
   useEffect(() => {
     if (!target && !internalRef.state) return;
@@ -74,7 +74,7 @@ export const useKeyPress = ((...params: any[]) => {
           : keyboardEvent.key === keyRef.current
       ) {
         setPressed(true);
-        callbackRef.current?.(true, keyboardEvent);
+        internalCallbackRef.current?.(true, keyboardEvent);
       }
     };
 
@@ -86,7 +86,7 @@ export const useKeyPress = ((...params: any[]) => {
           : keyboardEvent.key === keyRef.current
       ) {
         setPressed(false);
-        callbackRef.current?.(false, keyboardEvent);
+        internalCallbackRef.current?.(false, keyboardEvent);
       }
     };
 

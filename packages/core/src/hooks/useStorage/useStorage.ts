@@ -26,16 +26,12 @@ export interface UseStorageReturn<Value> {
 }
 
 export interface UseStorage {
-  <Value>(
-    key: string,
-    options: UseStorageOptions<Value> & { initialValue: UseStorageInitialValue<Value> }
-  ): UseStorageReturn<Value>;
-
   <Value>(key: string, options?: UseStorageOptions<Value>): UseStorageReturn<Value | undefined>;
 
-  <Value>(key: string, initialValue: UseStorageInitialValue<Value>): UseStorageReturn<Value>;
-
-  <Value>(key: string): UseStorageReturn<Value | undefined>;
+  <Value>(
+    key: string,
+    initialValue?: UseStorageInitialValue<Value>
+  ): UseStorageReturn<Value | undefined>;
 }
 
 export const STORAGE_EVENT = 'reactuse-storage';
@@ -47,7 +43,12 @@ const setStorageItem = (storage: Storage, key: string, value: string) => {
   const oldValue = storage.getItem(key);
 
   storage.setItem(key, value);
-  dispatchStorageEvent({ key, oldValue, newValue: value, storageArea: storage });
+  dispatchStorageEvent({
+    key,
+    oldValue,
+    newValue: value,
+    storageArea: storage
+  });
 };
 
 const removeStorageItem = (storage: Storage, key: string) => {

@@ -18,7 +18,10 @@ export interface UseKeysPressed {
   (
     target: HookTarget | Window,
     options?: UseKeysPressedOptions
-  ): Array<{ key: string; code: string }>;
+  ): Array<{
+    key: string;
+    code: string;
+  }>;
 
   <Target extends Element>(
     options?: UseKeysPressedOptions

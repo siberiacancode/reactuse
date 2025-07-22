@@ -112,3 +112,12 @@ it('Should get all cookies', () => {
 
   expect(result.current.getAll()).toEqual({ cookie: 'value' });
 });
+
+it('Should cleanup on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(() => useCookies());
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith(COOKIE_EVENT, expect.any(Function));
+});

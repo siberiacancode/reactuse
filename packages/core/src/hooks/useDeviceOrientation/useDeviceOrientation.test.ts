@@ -40,3 +40,12 @@ it('Should set new values when device orientation change', () => {
   expect(result.current.value.gamma).toBe(90);
   expect(result.current.value.absolute).toBeTruthy();
 });
+
+it('Should cleanup on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(useDeviceOrientation);
+
+  unmount();
+
+  expect(removeEventListenerSpy).toBeCalledWith('deviceorientation', expect.any(Function));
+});

@@ -26,26 +26,26 @@ const getMillsDiffOrZero = (millis) => (Date.now() - millis > 0 ? Date.now() - m
  *
  * @overload
  * @param {number} [initialTime=0] The initial time of the timer
- * @param {boolean} [options.enabled=true] The enabled state of the timer
+ * @param {boolean} [options.immediately=false] The enabled state of the timer
  * @param {number} [options.updateInterval=1000] The update interval of the timer
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
- * const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { enabled: false, updateInterval: 1000 });
+ * const { milliseconds, seconds, minutes, start, pause, reset } = useStopwatch(1000, { immediately: false, updateInterval: 1000 });
  *
  * @overload
  * @param {number} [options.initialTime=0] -The initial time of the timer
- * @param {boolean} [options.enabled=true] The enabled state of the timer
+ * @param {boolean} [options.immediately=true] The enabled state of the timer
  * @param {number} [options.updateInterval=1000] The update interval of the timer
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
- * const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, enabled: false, updateInterval: 1000 });
+ * const { milliseconds, seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, immediately: false, updateInterval: 1000 });
  */
 export const useStopwatch = (...params) => {
   const initialTime = (typeof params[0] === 'number' ? params[0] : params[0]?.initialTime) ?? 0;
   const options = typeof params[0] === 'number' ? params[1] : params[0];
-  const enabled = options?.enabled ?? true;
+  const immediately = options?.immediately ?? false;
   const updateInterval = options?.updateInterval ?? 1000;
   const [milliseconds, setMilliseconds] = useState(initialTime);
   const [timestamp, setTimestamp] = useState(Date.now() - initialTime);
@@ -53,7 +53,7 @@ export const useStopwatch = (...params) => {
     () => setMilliseconds(getMillsDiffOrZero(timestamp)),
     updateInterval,
     {
-      immediately: enabled
+      immediately
     }
   );
   const start = () => {

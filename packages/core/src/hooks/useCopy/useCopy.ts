@@ -7,7 +7,7 @@ export interface UseCopyReturn {
   /** Whether copy is in progress */
   copied: boolean;
   /** The copied value */
-  value: string | null;
+  value?: string;
   /** Function to copy text */
   copy: (value: string) => Promise<void>;
 }
@@ -32,7 +32,7 @@ export interface UseCopyParams {
  * const { copied, value, copy } = useCopy();
  */
 export const useCopy = (delay: number = 1000): UseCopyReturn => {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState<string | undefined>();
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = async (text: string) => {

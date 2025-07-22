@@ -19,7 +19,6 @@ export interface StoreApi<Value> {
  * @category Helpers
  *
  * @template Value - The type of the store state
- *
  * @param {StateCreator<Value>} createState - Function that initializes the store state
  * @returns {StoreApi<Value>} - Object containing store methods and hook for accessing state
  *

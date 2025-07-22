@@ -14,7 +14,7 @@ const targets = [
   target(() => document.getElementById('target')!),
   { current: document.getElementById('target') }
 ];
-const element = document.getElementById('target')! as HTMLDivElement;
+const element = document.getElementById('target') as HTMLDivElement;
 
 targets.forEach((target) => {
   describe(`${target}`, () => {
@@ -102,6 +102,53 @@ targets.forEach((target) => {
 
       expect(onEntry).toHaveBeenCalledTimes(1);
       expect(onLeave).toHaveBeenCalledTimes(1);
+    });
+
+    it('Should handle target changes', () => {
+      const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+      const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
+
+      const { result, rerender } = renderHook(
+        (target) => {
+          if (target)
+            return useHover(target) as unknown as {
+              ref: StateRef<HTMLDivElement>;
+            } & UseHoverReturn;
+          return useHover<HTMLDivElement>();
+        },
+        {
+          initialProps: target
+        }
+      );
+
+      if (!target) act(() => result.current.ref(element));
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+      expect(removeEventListenerSpy).not.toHaveBeenCalled();
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('Should clean up on unmount', () => {
+      const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
+
+      const { result, unmount } = renderHook(() => {
+        if (target)
+          return useHover(target) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseHoverReturn;
+        return useHover<HTMLDivElement>();
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      unmount();
+
+      expect(removeEventListenerSpy).toHaveBeenCalledWith('mouseenter', expect.any(Function));
+      expect(removeEventListenerSpy).toHaveBeenCalledWith('mouseleave', expect.any(Function));
     });
   });
 });

@@ -14,7 +14,7 @@ import { copy } from '@/utils/helpers';
  * const { copied, value, copy } = useCopy();
  */
 export const useCopy = (delay = 1000) => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState();
   const [copied, setCopied] = useState(false);
   const copyToClipboard = async (text) => {
     await copy(text);

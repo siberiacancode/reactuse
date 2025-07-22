@@ -41,9 +41,13 @@ it('Should remove script after unmount', () => {
 
   expect(result.current).toBe('loading');
 
+  const script = document.querySelector(`script[src="${src}"]`)!;
+  const scriptRemoveSpy = vi.spyOn(script, 'remove');
+
   expect(document.querySelector(`script[src="${src}"]`)).not.toBeNull();
 
   unmount();
+  expect(scriptRemoveSpy).toHaveBeenCalledOnce();
 
   expect(document.querySelector(`script[src="${src}"]`)).toBeNull();
 });
@@ -68,4 +72,16 @@ it('Should display unknown status when script already exist', () => {
   const { result } = renderHook(() => useScript(src));
 
   expect(result.current).toBe('unknown');
+});
+
+it('Should clean up on unmount', () => {
+  const { unmount } = renderHook(() => useScript(src));
+
+  const script = document.querySelector(`script[src="${src}"]`)!;
+  const scriptRemoveListenerSpy = vi.spyOn(script, 'removeEventListener');
+
+  unmount();
+
+  expect(scriptRemoveListenerSpy).toHaveBeenCalledWith('load', expect.any(Function));
+  expect(scriptRemoveListenerSpy).toHaveBeenCalledWith('error', expect.any(Function));
 });

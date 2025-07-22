@@ -26,3 +26,12 @@ it('Should change value upon language changes', () => {
   act(() => window.dispatchEvent(new Event('languagechange')));
   expect(result.current).toEqual(['en', 'en-US', 'fr', 'fr-FR', 'de']);
 });
+
+it('Should cleanup up on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(usePreferredLanguages);
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('languagechange', expect.any(Function));
+});

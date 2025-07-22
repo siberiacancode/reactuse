@@ -12,12 +12,19 @@ import { useRefState } from '../useRefState/useRefState';
 export interface UseCssVarReturn {
   /** The value of the CSS variable */
   value: string;
+  /** Remove the value of the CSS variable */
+  remove: () => void;
   /** Set the value of the CSS variable */
   set: (value: string) => void;
 }
 
 export interface UseCssVar {
-  (key: string, initialValue?: string): UseCssVarReturn & { ref: StateRef<Element> };
+  <Target extends HTMLElement>(
+    key: string,
+    initialValue?: string
+  ): UseCssVarReturn & {
+    ref: StateRef<Target>;
+  };
 
   (target: HookTarget, key: string, initialValue?: string): UseCssVarReturn;
 }
@@ -33,7 +40,7 @@ export interface UseCssVar {
  * @returns {UseCssVarReturn & { ref: StateRef<Element> }} The object containing the value of the CSS variable and ref
  *
  * @example
- * const { ref, value, set } = useCssVar('--color', 'red');
+ * const { ref, value, set, remove } = useCssVar('--color', 'red');
  *
  * @overload
  * @param {HookTarget} target The target element
@@ -42,7 +49,7 @@ export interface UseCssVar {
  * @returns {UseCssVarReturn} The object containing the value of the CSS variable
  *
  * @example
- * const { value, set } = useCssVar(ref, '--color', 'red');
+ * const { value, set, remove } = useCssVar(ref, '--color', 'red');
  */
 export const useCssVar = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
@@ -50,22 +57,24 @@ export const useCssVar = ((...params: any[]) => {
   const initialValue = (target ? params[2] : params[1]) as string | undefined;
 
   const [value, setValue] = useState(initialValue ?? '');
-  const internalRef = useRefState<Element>(window.document.documentElement);
+  const internalRef = useRefState<HTMLElement>(window.document.documentElement);
 
   const set = (value: string) => {
     const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
-    if (!element) return;
 
-    if (element.style) {
-      if (!value) {
-        element.style.removeProperty(key);
-        setValue(value);
-        return;
-      }
+    if (!element || !element.style) return;
 
-      element.style.setProperty(key, value);
-      setValue(value);
-    }
+    element.style.setProperty(key, value);
+    setValue(value);
+  };
+
+  const remove = () => {
+    const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
+
+    if (!element || !element.style) return;
+
+    element.style.removeProperty(key);
+    setValue('');
   };
 
   useEffect(() => {
@@ -75,14 +84,12 @@ export const useCssVar = ((...params: any[]) => {
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
+
     if (!element) return;
 
     const onChange = () => {
-      const value = window
-        .getComputedStyle(element as Element)
-        .getPropertyValue(key)
-        ?.trim();
+      const value = window.getComputedStyle(element).getPropertyValue(key)?.trim();
 
       setValue(value ?? initialValue);
     };
@@ -96,6 +103,6 @@ export const useCssVar = ((...params: any[]) => {
     };
   }, [target, internalRef.state]);
 
-  if (target) return { value, set };
-  return { ref: internalRef, value, set };
+  if (target) return { value, set, remove };
+  return { ref: internalRef, value, set, remove };
 }) as UseCssVar;

@@ -40,11 +40,11 @@ it('Should copy value to clipboard if writeText not supported', async () => {
   mockNavigatorClipboardWriteText.mockRejectedValueOnce(new Error('writeText not supported'));
   const { result } = renderHook(useClipboard);
 
-  await act(() => result.current.copy('string'));
+  await act(() => result.current.copy('value'));
 
   const { execCommand } = document;
 
-  expect(result.current.value).toBe('string');
+  expect(result.current.value).toBe('value');
   expect(execCommand).toHaveBeenCalledOnce();
   expect(execCommand).toHaveBeenLastCalledWith('copy');
 });
@@ -80,4 +80,35 @@ it('Should change value upon cut event', async () => {
 
   expect(result.current.value).toBe('cut');
   expect(mockNavigatorClipboardReadText).toHaveBeenCalled();
+});
+
+it('Should handle enabled changes', () => {
+  const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
+  const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+
+  const { rerender } = renderHook((enabled) => useClipboard({ enabled }), {
+    initialProps: true
+  });
+
+  expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+  expect(removeEventListenerSpy).not.toHaveBeenCalled();
+
+  rerender(false);
+
+  expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+
+  rerender(true);
+
+  expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
+  expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+});
+
+it('Should cleanup on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+  const { unmount } = renderHook(() => useClipboard({ enabled: true }));
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('copy', expect.any(Function));
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('cut', expect.any(Function));
 });
