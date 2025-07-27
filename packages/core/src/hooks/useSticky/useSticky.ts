@@ -1,15 +1,85 @@
+import type { RefObject } from 'react';
+
 import { useEffect, useState } from 'react';
 
+import type { StateRef } from '@/hooks';
 import type { HookTarget } from '@/utils/helpers';
 
+import { useRefState } from '@/hooks';
 import { getElement, isTarget } from '@/utils/helpers';
 
-import type { StateRef } from '../useRefState/useRefState';
+const getRootIndent = (root: Document | HTMLElement) => {
+  if (!(root instanceof HTMLElement))
+    return { leftIndent: 0, rightIndent: 0, topIndent: 0, bottomIndent: 0 };
+  const style = getComputedStyle(root);
+  return {
+    leftIndent:
+      (Number.parseFloat(style.paddingLeft) || 0) + (Number.parseFloat(style.borderLeftWidth) || 0),
+    rightIndent:
+      (Number.parseFloat(style.paddingRight) || 0) +
+      (Number.parseFloat(style.borderRightWidth) || 0),
+    topIndent:
+      (Number.parseFloat(style.paddingTop) || 0) + (Number.parseFloat(style.borderTopWidth) || 0),
+    bottomIndent:
+      (Number.parseFloat(style.paddingBottom) || 0) +
+      (Number.parseFloat(style.borderBottomWidth) || 0)
+  };
+};
 
-import { useRefState } from '../useRefState/useRefState';
+const getRelativeBoundingClientRect = (element: HTMLElement, parent: HTMLElement) => {
+  const elementRect = element.getBoundingClientRect();
+  const parentRect = parent.getBoundingClientRect();
+
+  const { leftIndent, topIndent, bottomIndent, rightIndent } = getRootIndent(parent);
+
+  const left = elementRect.left - parentRect.left - leftIndent;
+  const top = elementRect.top - parentRect.top - topIndent;
+  const right = elementRect.right - parentRect.left + rightIndent;
+  const bottom = elementRect.bottom - parentRect.top + bottomIndent;
+
+  return {
+    left,
+    top,
+    right,
+    bottom,
+    width: elementRect.width,
+    height: elementRect.height
+  };
+};
+
+const getPageOffset = (element: HTMLElement) => {
+  return {
+    pageOffsetTop: element.getBoundingClientRect().top,
+    pageOffsetBottom: element.getBoundingClientRect().bottom,
+    pageOffsetLeft: element.getBoundingClientRect().left,
+    pageOffsetRight: element.getBoundingClientRect().right
+  };
+};
+
+const getRelativeOffset = (element: HTMLElement, root: HTMLElement) => {
+  return {
+    pageOffsetTop: getRelativeBoundingClientRect(element, root).top,
+    pageOffsetBottom: getRelativeBoundingClientRect(element, root).bottom,
+    pageOffsetLeft: getRelativeBoundingClientRect(element, root).left,
+    pageOffsetRight: getRelativeBoundingClientRect(element, root).right
+  };
+};
+
+const getStickyOffsets = (element: HTMLElement) => {
+  return {
+    stickyOffsetTop: Number.parseInt(getComputedStyle(element).top),
+    stickyOffsetBottom: Number.parseInt(getComputedStyle(element).bottom),
+    stickyOffsetLeft: Number.parseInt(getComputedStyle(element).left),
+    stickyOffsetRight: Number.parseInt(getComputedStyle(element).right)
+  };
+};
+
+/** The use sticky root type */
+export type UseStickyRoot = Document | Element | RefObject<Element | null | undefined>;
 
 /** The use sticky return type */
-export interface UseStickyReturn {
+export interface UseStickyReturn<Target> {
+  ref: StateRef<Target>;
   stuck: boolean;
 }
 
@@ -18,17 +88,14 @@ export type UseStickyAxis = 'horizontal' | 'vertical';
 
 /** The use sticky options type */
 export interface UseStickyOptions {
-  axis?: UseStickyAxis;
+  axis: UseStickyAxis;
   root?: HookTarget;
 }
 
 export interface UseSticky {
-  (target: HookTarget, options?: UseStickyOptions): boolean;
+  <Target extends Element>(target: HookTarget, options?: UseStickyOptions): UseStickyReturn<Target>;
 
-  <Target extends Element>(
-    options?: UseStickyOptions,
-    target?: never
-  ): { ref: StateRef<Target> } & UseStickyReturn;
+  <Target extends Element>(options?: UseStickyOptions, target?: never): UseStickyReturn<Target>;
 }
 
 /**
@@ -43,12 +110,12 @@ export interface UseSticky {
  * @returns {UseStickyReturn} The state of the sticky
  *
  * @example
- * const stuck  = useSticky(ref);
+ * const { stuck } = useSticky(ref, {axis: 'vertical'});
  *
  * @overload
  * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component
  * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component
- * @returns {{ stickyRef: StateRef<Target> } & UseStickyReturn} The state of the sticky
+ * @returns {UseStickyReturn} The state of the sticky
  *
  * @example
  * const { stuck, ref } = useSticky();
@@ -64,26 +131,31 @@ export const useSticky = ((...params: any[]) => {
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
 
     if (!element) return;
 
-    const root = (options?.root ? getElement(options.root) : document) as Element;
-    const elementOffsetTop =
-      element.getBoundingClientRect().top + root.scrollTop - root.getBoundingClientRect().top;
-    const elementOffsetLeft =
-      element.getBoundingClientRect().left + root.scrollLeft - root.getBoundingClientRect().left;
+    const root = options?.root ? (getElement(options.root) as Document | HTMLElement) : document;
 
     const onSticky = () => {
-      if (axis === 'vertical') {
-        const scrollTop = root.scrollTop;
-        setStuck(scrollTop >= elementOffsetTop);
-      }
+      const { pageOffsetTop, pageOffsetBottom, pageOffsetLeft, pageOffsetRight } =
+        root instanceof Document ? getPageOffset(element) : getRelativeOffset(element, root);
+      const { stickyOffsetTop, stickyOffsetBottom, stickyOffsetLeft, stickyOffsetRight } =
+        getStickyOffsets(element);
 
-      if (axis === 'horizontal') {
-        const scrollLeft = root.scrollLeft;
-        setStuck(scrollLeft >= elementOffsetLeft);
-      }
+      const scrollTop = root instanceof Document ? window.innerHeight : root.offsetHeight;
+      const scrollLeft = root instanceof Document ? window.innerWidth : root.offsetWidth;
+
+      const stuckTop = pageOffsetTop <= stickyOffsetTop;
+      const stuckBottom = scrollTop - pageOffsetBottom <= stickyOffsetBottom;
+      const stuckLeft = pageOffsetLeft <= stickyOffsetLeft;
+      const stuckRight = scrollLeft - pageOffsetRight <= stickyOffsetRight;
+
+      const stuck = {
+        vertical: stuckTop || stuckBottom,
+        horizontal: stuckLeft || stuckRight
+      }[axis];
+      setStuck(stuck);
     };
 
     root.addEventListener('scroll', onSticky);
@@ -99,7 +171,6 @@ export const useSticky = ((...params: any[]) => {
     };
   }, [target, internalRef.state, axis, options?.root]);
 
-  if (target) return stuck;
   return {
     stuck,
     ref: internalRef
