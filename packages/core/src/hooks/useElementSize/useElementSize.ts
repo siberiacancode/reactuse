@@ -25,7 +25,11 @@ export interface UseElementSizeReturn {
 export interface UseElementSize {
   (target: HookTarget): UseElementSizeReturn;
 
-  <Target extends Element>(target?: never): { ref: StateRef<Target> } & UseElementSizeReturn;
+  <Target extends Element>(
+    target?: never
+  ): {
+    ref: StateRef<Target>;
+  } & UseElementSizeReturn;
 }
 
 /**

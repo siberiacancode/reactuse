@@ -57,11 +57,11 @@ export const createStore = <Value>(createState: StateCreator<Value> | Value) => 
     state = createState;
   }
 
-  const useStore = <Selected>(selector: (state: Value) => Selected) =>
+  const useStore = <Selected>(selector?: (state: Value) => Selected) =>
     useSyncExternalStore(
       subscribe,
-      () => selector(getState()),
-      () => selector(getInitialState())
+      () => (selector ? selector(getState()) : getState()),
+      () => (selector ? selector(getInitialState()) : getInitialState())
     );
 
   return {

@@ -4,7 +4,7 @@ import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useAutoScroll
  * @description - Hook that automatically scrolls a list element to the bottom
- * @category Sensors
+ * @category Elements
  *
  * @overload
  * @param {HookTarget} target The target element to auto-scroll

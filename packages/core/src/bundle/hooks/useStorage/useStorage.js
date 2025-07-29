@@ -25,7 +25,7 @@ const getStorageItem = (storage, key) => {
 /**
  * @name useStorage
  * @description - Hook that manages storage value
- * @category Browser
+ * @category State
  *
  * @overload
  * @param {string} key The key of the storage

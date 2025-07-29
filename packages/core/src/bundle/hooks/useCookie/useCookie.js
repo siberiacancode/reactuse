@@ -38,7 +38,7 @@ export const getCookie = (key) => {
 /**
  * @name useCookie
  * @description - Hook that manages cookie value
- * @category Browser
+ * @category State
  *
  * @overload
  * @template Value The type of the cookie value

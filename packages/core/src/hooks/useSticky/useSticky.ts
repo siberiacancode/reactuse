@@ -28,13 +28,15 @@ export interface UseSticky {
   <Target extends Element>(
     options?: UseStickyOptions,
     target?: never
-  ): { ref: StateRef<Target> } & UseStickyReturn;
+  ): {
+    ref: StateRef<Target>;
+  } & UseStickyReturn;
 }
 
 /**
  * @name UseSticky
  * @description - Hook that allows you to detect that your sticky component is stuck
- * @category Browser
+ * @category Elements
  *
  * @overload
  * @param {HookTarget} target The target sticky element

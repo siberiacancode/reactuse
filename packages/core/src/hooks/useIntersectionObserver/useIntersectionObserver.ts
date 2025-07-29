@@ -8,11 +8,13 @@ import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
+export type UseIntersectionObserverCallback = (entry: IntersectionObserverEntry) => void;
+
 /** The intersection observer options type */
 export interface UseIntersectionObserverOptions extends Omit<IntersectionObserverInit, 'root'> {
   enabled?: boolean;
+  onChange?: UseIntersectionObserverCallback;
   root?: HookTarget;
-  onChange?: (entry: IntersectionObserverEntry) => void;
 }
 
 /** The intersection observer return type */
@@ -30,20 +32,17 @@ export interface UseIntersectionObserver {
   (target: HookTarget, options?: UseIntersectionObserverOptions): UseIntersectionObserverReturn;
 
   <Target extends Element>(
-    callback: (entry: IntersectionObserverEntry) => void,
+    callback: UseIntersectionObserverCallback,
     target?: never
   ): UseIntersectionObserverReturn & { ref: StateRef<Target> };
 
-  (
-    callback: (entry: IntersectionObserverEntry) => void,
-    target: HookTarget
-  ): UseIntersectionObserverReturn;
+  (callback: UseIntersectionObserverCallback, target: HookTarget): UseIntersectionObserverReturn;
 }
 
 /**
  * @name useIntersectionObserver
  * @description - Hook that gives you intersection observer state
- * @category Browser
+ * @category Sensors
  *
  * @browserapi IntersectionObserver https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver
  *
@@ -69,14 +68,14 @@ export interface UseIntersectionObserver {
  *
  * @overload
  * @template Target The target element
- * @param {(entry: IntersectionObserverEntry) => void} callback The callback to execute when intersection is detected
+ * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
  * const { ref, entry, inView } = useIntersectionObserver(() => console.log('callback'));
  *
  * @overload
- * @param {(entry: IntersectionObserverEntry) => void} callback The callback to execute when intersection is detected
+ * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
  * @param {HookTarget} target The target element to detect intersection
  * @returns {UseIntersectionObserverReturn} An object containing the state
  *
@@ -102,8 +101,8 @@ export const useIntersectionObserver = ((...params: any[]) => {
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
 
   const internalRef = useRefState<Element>();
-  const internalOnChangeRef = useRef<UseIntersectionObserverOptions['onChange']>(callback);
-  internalOnChangeRef.current = callback;
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
@@ -114,7 +113,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setEntry(entry);
-        internalOnChangeRef.current?.(entry);
+        internalCallbackRef.current?.(entry);
       },
       {
         ...options,

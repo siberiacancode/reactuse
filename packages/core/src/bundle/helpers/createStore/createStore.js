@@ -39,8 +39,8 @@ export const createStore = (createState) => {
   const useStore = (selector) =>
     useSyncExternalStore(
       subscribe,
-      () => selector(getState()),
-      () => selector(getInitialState())
+      () => (selector ? selector(getState()) : getState()),
+      () => (selector ? selector(getInitialState()) : getInitialState())
     );
   return {
     set: setState,

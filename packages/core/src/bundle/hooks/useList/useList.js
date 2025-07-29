@@ -2,7 +2,7 @@ import { useState } from 'react';
 /**
  * @name useList
  * @description - Hook that provides state and helper methods to manage a list of items
- * @category Utilities
+ * @category State
  *
  * @template Item The type of the item
  * @param {Item[] | (() => Item[])} initialList The initial list of items
@@ -27,5 +27,14 @@ export const useList = (initialList = []) => {
     );
   const clear = () => setList([]);
   const reset = () => setList(initialList);
-  return { value: list, set: setList, push, removeAt, insertAt, updateAt, clear, reset };
+  return {
+    value: list,
+    set: setList,
+    push,
+    removeAt,
+    insertAt,
+    updateAt,
+    clear,
+    reset
+  };
 };

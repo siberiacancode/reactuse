@@ -6,7 +6,6 @@ import { getElement, isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
-import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The use infinite scroll options type */
@@ -72,32 +71,35 @@ export const useInfiniteScroll = ((...params: any[]) => {
   const internalRef = useRefState<Element>();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
-
-  const onLoadMore = useEvent(async (event: Event) => {
-    if (loading) return;
-    const { clientHeight, scrollHeight, scrollTop, clientWidth, scrollWidth, scrollLeft } =
-      event.target as Element;
-    const scrollBottom = scrollHeight - (scrollTop + clientHeight);
-    const scrollRight = scrollWidth - (scrollLeft + clientWidth);
-
-    const distances = {
-      bottom: scrollBottom,
-      top: scrollTop,
-      right: scrollRight,
-      left: scrollLeft
-    };
-
-    if (distances[direction] <= distance) {
-      setIsLoading(true);
-      await internalCallbackRef.current(event);
-      setIsLoading(false);
-    }
-  });
+  const internalLoadingRef = useRef(loading);
+  internalLoadingRef.current = loading;
 
   useEffect(() => {
     if (!target && !internalRef.state) return;
     const element = (target ? getElement(target) : internalRef.current) as Element;
     if (!element) return;
+
+    const onLoadMore = async (event: Event) => {
+      if (internalLoadingRef.current) return;
+
+      const { clientHeight, scrollHeight, scrollTop, clientWidth, scrollWidth, scrollLeft } =
+        event.target as Element;
+      const scrollBottom = scrollHeight - (scrollTop + clientHeight);
+      const scrollRight = scrollWidth - (scrollLeft + clientWidth);
+
+      const distances = {
+        bottom: scrollBottom,
+        top: scrollTop,
+        right: scrollRight,
+        left: scrollLeft
+      };
+
+      if (distances[direction] <= distance) {
+        setIsLoading(true);
+        await internalCallbackRef.current(event);
+        setIsLoading(false);
+      }
+    };
 
     element.addEventListener('scroll', onLoadMore);
 

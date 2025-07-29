@@ -20,7 +20,7 @@ export const getOperatingSystem = (): OperatingSystem => {
 /**
  * @name useOperatingSystem
  * @description - Hook that returns the operating system of the current browser
- * @category Browser
+ * @category User
  *
  * @returns {OperatingSystem} The operating system
  *

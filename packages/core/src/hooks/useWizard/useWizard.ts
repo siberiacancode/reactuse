@@ -8,7 +8,7 @@ export interface WizardItem<WizardStepId> {
 /**
  * @name useWizard
  * @description - Hook that manages a wizard
- * @category Utilities
+ * @category State
  *
  * @param {WizardItem<WizardStepId>[]} map The map of the wizard
  * @param {WizardStepId} [initialStepId] The initial step id

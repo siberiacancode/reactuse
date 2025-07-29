@@ -34,7 +34,7 @@ export interface UseResizeObserver {
 /**
  *  @name useResizeObserver
  *  @description - Hook that gives you resize observer state
- *  @category Browser
+ *  @category Sensors
  *
  *  @browserapi ResizeObserver https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
  *

@@ -29,7 +29,7 @@ export const dispatchUrlSearchParamsEvent = () =>
 /**
  * @name useUrlSearchParam
  * @description - Hook that provides reactive URLSearchParams for a single key
- * @category Browser
+ * @category State
  *
  * @overload
  * @template Value The type of the url param values

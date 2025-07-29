@@ -28,18 +28,22 @@ export interface UseHover {
   <Target extends Element>(
     callback?: (event: Event) => void,
     target?: never
-  ): { ref: StateRef<Target> } & UseHoverReturn;
+  ): {
+    ref: StateRef<Target>;
+  } & UseHoverReturn;
 
   <Target extends Element>(
     options?: UseHoverOptions,
     target?: never
-  ): { ref: StateRef<Target> } & UseHoverReturn;
+  ): {
+    ref: StateRef<Target>;
+  } & UseHoverReturn;
 }
 
 /**
  * @name useHover
  * @description - Hook that defines the logic when hovering an element
- * @category Sensors
+ * @category Elements
  *
  * @overload
  * @param {HookTarget} target The target element to be hovered

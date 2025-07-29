@@ -17,7 +17,7 @@ export interface UseAsyncReturn<Data> {
 /**
  * @name useAsync
  * @description - Hook that provides the state of an async callback
- * @category Utilities
+ * @category Async
  *
  * @param {() => Promise<Data>} callback The async callback
  * @param {DependencyList} deps The dependencies of the callback

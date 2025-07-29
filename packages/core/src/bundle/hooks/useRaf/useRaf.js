@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 /**
  * @name useRaf
  * @description - Hook that defines the logic for raf callback
- * @category Utilities
+ * @category Browser
  *
  * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
  *

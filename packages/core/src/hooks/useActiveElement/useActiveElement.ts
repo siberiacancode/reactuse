@@ -49,9 +49,8 @@ export const useActiveElement = ((...params: any[]) => {
   const internalRef = useRefState(window);
 
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-
     const element = (target ? getElement(target) : internalRef.current) as Element;
+
     if (!element) return;
 
     const observer = new MutationObserver((mutations) => {

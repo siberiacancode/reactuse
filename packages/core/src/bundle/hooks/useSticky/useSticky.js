@@ -4,7 +4,7 @@ import { useRefState } from '../useRefState/useRefState';
 /**
  * @name UseSticky
  * @description - Hook that allows you to detect that your sticky component is stuck
- * @category Browser
+ * @category Elements
  *
  * @overload
  * @param {HookTarget} target The target sticky element

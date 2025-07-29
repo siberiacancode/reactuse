@@ -8,7 +8,7 @@ type UseHashReturn = [string, (value: string) => void];
 /**
  * @name useHash
  * @description - Hook that manages the hash value
- * @category Browser
+ * @category State
  *
  * @param {string} [initialValue] The initial hash value if no hash exists
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value

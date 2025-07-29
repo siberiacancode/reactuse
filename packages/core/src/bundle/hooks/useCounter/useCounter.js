@@ -2,7 +2,7 @@ import { useState } from 'react';
 /**
  * @name useCounter
  * @description - Hook that manages a counter
- * @category Utilities
+ * @category State
  *
  * @overload
  * @param {number} [initialValue=0] The initial number value

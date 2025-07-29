@@ -3,21 +3,21 @@ import { useRef, useState } from 'react';
 import { useUnmount } from '../useUnmount/useUnmount';
 
 /* The use raf value params type */
-export type UseRafValueReturn<Value> = [Value, (value: Value) => void];
+export type UseRafStateReturn<Value> = [Value, (value: Value) => void];
 
 /**
- * @name useRafValue
+ * @name useRafState
  * @description - Hook that returns the value and a function to set the value
- * @category Utilities
+ * @category State
  *
  * @template Value The type of the value
  * @param {Value} initialValue The initial value
- * @returns {UseRafValueReturn<Value>} An array containing the value and a function to set the value
+ * @returns {UseRafStateReturn<Value>} An array containing the value and a function to set the value
  *
  * @example
- * const [value, setValue] = useRafValue(initialValue);
+ * const [value, setValue] = useRafState(initialValue);
  */
-export const useRafValue = <Value>(initialValue: (() => Value) | Value) => {
+export const useRafState = <Value>(initialValue: (() => Value) | Value) => {
   const rafIdRef = useRef(0);
   const [value, setValue] = useState(initialValue);
 

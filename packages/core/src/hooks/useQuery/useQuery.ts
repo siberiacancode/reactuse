@@ -61,7 +61,7 @@ export interface UseQueryReturn<Data> {
 /**
  * @name useQuery
  * @description - Hook that defines the logic when query data
- * @category Utilities
+ * @category Async
  *
  * @template Data The type of the data
  * @param {() => Promise<Data>} callback The callback function to be invoked

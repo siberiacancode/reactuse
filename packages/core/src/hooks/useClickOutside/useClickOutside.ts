@@ -17,7 +17,7 @@ export interface UseClickOutside {
 /**
  * @name useClickOutside
  * @description - Hook to handle click events outside the specified target element(s)
- * @category Sensors
+ * @category Elements
  *
  * @overload
  * @param {HookTarget} target The target element(s) to detect outside clicks for

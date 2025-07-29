@@ -71,7 +71,7 @@ export const stateHistoryReducer = (state, action) => {
 /**
  * @name useStateHistory
  * @description - Hook that manages state with history functionality
- * @category Utilities
+ * @category State
  *
  * @param {Value} initialValue - The initial value to start the history with
  * @param {number} [capacity=10] - Maximum number of history entries and undo actions to keep

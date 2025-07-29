@@ -42,7 +42,7 @@ export interface UseMutationObserver {
 /**
  * @name useMutationObserver
  * @description - Hook that gives you mutation observer state
- * @category Browser
+ * @category Sensors
  *
  * @overload
  * @template Target The target element

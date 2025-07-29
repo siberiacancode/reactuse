@@ -4,7 +4,7 @@ import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useHover
  * @description - Hook that defines the logic when hovering an element
- * @category Sensors
+ * @category Elements
  *
  * @overload
  * @param {HookTarget} target The target element to be hovered

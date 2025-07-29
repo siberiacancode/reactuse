@@ -8,7 +8,7 @@ const subscribe = (callback) => {
 /**
  * @name useBrowserLanguage
  * @description - Hook that returns the current browser language
- * @category Browser
+ * @category User
  *
  * @browserapi navigator.language https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
  *

@@ -10,7 +10,7 @@ const subscribe = (callback) => {
 /**
  * @name usePreferredLanguages
  * @description Hook that returns a browser preferred languages from navigator
- * @category Browser
+ * @category User
  *
  * @browserapi navigator.languages https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages
  *

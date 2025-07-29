@@ -87,7 +87,9 @@ export const useEventSource = <QueryData = any, Data = QueryData>(
   const open = () => {
     close();
 
-    const eventSource = new EventSource(url, { withCredentials: options.withCredentials ?? false });
+    const eventSource = new EventSource(url, {
+      withCredentials: options.withCredentials ?? false
+    });
     eventSourceRef.current = eventSource;
 
     setIsConnecting(true);
