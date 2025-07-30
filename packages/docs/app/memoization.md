@@ -24,12 +24,10 @@ Memoization is a tool that should be in the hands of the application developer, 
 import { useCounter } from '@siberiacancode/reactuse';
 import { useCallback, useMemo } from 'react';
 
-function ExpensiveComponent() {
+export const Component = () => {
   const counter = useCounter(0);
 
-  const expensiveValue = useMemo(() => {
-    return performHeavyCalculation(counter.value);
-  }, [counter.value]);
+  const expensiveValue = useMemo(() => performHeavyCalculation(counter.value), [counter.value]);
 
   const handleIncrement = useCallback(() => {
     performHeavyOperation();
@@ -37,7 +35,7 @@ function ExpensiveComponent() {
   }, [counter.inc]);
 
   // ...
-}
+};
 ```
 
 ## React compiler
