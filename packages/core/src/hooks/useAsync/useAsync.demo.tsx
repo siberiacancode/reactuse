@@ -21,7 +21,7 @@ const Demo = () => {
         Next
       </button>
 
-      {getPokemonQuery.isLoading && (
+      {getPokemonQuery.data && !getPokemonQuery.isLoading && (
         <div className='flex animate-pulse flex-col gap-2'>
           <div className='h-7 w-40 rounded-md bg-neutral-600' />
           <div className='size-96 rounded-md bg-neutral-600' />
