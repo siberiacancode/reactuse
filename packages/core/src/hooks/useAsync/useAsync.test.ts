@@ -1,68 +1,61 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { useAsync } from './useAsync';
 
-const successfulCallback = vi.fn((data = 'test data') => Promise.resolve(data));
-const failingCallback = vi.fn((error = new Error('Something went wrong')) => Promise.reject(error));
+afterEach(() => {
+  vi.clearAllMocks();
+});
 
-describe('useAsync', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
+it('Should use async', async () => {
+  const { result } = renderHook(() => useAsync(() => Promise.resolve('data')));
+
+  expect(result.current.isLoading).toBeTruthy();
+  expect(result.current.isError).toBeFalsy();
+  expect(result.current.error).toBeUndefined();
+  expect(result.current.data).toBeUndefined();
+});
+
+it('Should handle successful promise resolution', async () => {
+  const { result } = renderHook(() => useAsync(() => Promise.resolve('data')));
+
+  await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+
+  expect(result.current.isError).toBeFalsy();
+  expect(result.current.error).toBeUndefined();
+  expect(result.current.data).toBe('data');
+});
+
+it('Should handle failed promise rejection', async () => {
+  const error = new Error('Async error');
+  const { result } = renderHook(() => useAsync(() => Promise.reject(error), []));
+
+  await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+
+  expect(result.current.isError).toBeTruthy();
+  expect(result.current.error).toBe(error);
+  expect(result.current.data).toBeUndefined();
+});
+
+it('Should not re-run callback if dependencies have not changed', async () => {
+  const { result, rerender } = renderHook(() => useAsync(() => Promise.resolve('data'), [1]));
+
+  await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+
+  rerender();
+  expect(result.current.isLoading).toBeFalsy();
+});
+
+it('Should re-run callback when dependencies change', async () => {
+  const callback = vi.fn(() => Promise.resolve('data'));
+  const { result, rerender } = renderHook((deps) => useAsync(callback, deps), {
+    initialProps: ['key']
   });
 
-  it('should have the correct initial state', () => {
-    const { result } = renderHook(() => useAsync(successfulCallback, []));
+  await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+  expect(callback).toHaveBeenCalledTimes(1);
 
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.isError).toBe(false);
-    expect(result.current.error).toBeUndefined();
-    expect(result.current.data).toBeUndefined();
+  rerender(['new-key']);
 
-    expect(successfulCallback).toHaveBeenCalledOnce();
-  });
-
-  it('should handle a successful promise resolution', async () => {
-    const { result } = renderHook(() => useAsync(successfulCallback, []));
-
-    await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-    expect(result.current.isError).toBe(false);
-    expect(result.current.error).toBeUndefined();
-    expect(result.current.data).toBe('test data');
-  });
-
-  it('should handle a failed promise rejection', async () => {
-    const error = new Error('Async error');
-    const { result } = renderHook(() => useAsync(() => failingCallback(error), []));
-
-    await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-    expect(result.current.isError).toBe(true);
-    expect(result.current.error).toBe(error);
-    expect(result.current.data).toBeUndefined();
-  });
-
-  it('should not re-run the callback if dependencies have not changed', async () => {
-    const { rerender } = renderHook(() => useAsync(successfulCallback, [1]));
-
-    await waitFor(() => expect(successfulCallback).toHaveBeenCalledOnce());
-
-    rerender();
-
-    expect(successfulCallback).toHaveBeenCalledOnce();
-  });
-
-  it('should re-run the callback when dependencies change', async () => {
-    const { rerender } = renderHook(({ deps }) => useAsync(successfulCallback, deps), {
-      initialProps: { deps: [1] }
-    });
-
-    await waitFor(() => expect(successfulCallback).toHaveBeenCalledOnce());
-
-    rerender({ deps: [2] });
-
-    await waitFor(() => expect(successfulCallback).toHaveBeenCalledTimes(2));
-    expect(successfulCallback).toHaveBeenCalledTimes(2);
-  });
+  await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+  expect(callback).toHaveBeenCalledTimes(2);
 });
