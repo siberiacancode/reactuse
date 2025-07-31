@@ -13,27 +13,28 @@ export * from './useEyeDropper/useEyeDropper';
 export * from './useFavicon/useFavicon';
 export * from './useFps/useFps';
 export * from './useFullscreen/useFullscreen';
-
 export * from './useGamepad/useGamepad';
+
 export * from './useGeolocation/useGeolocation';
 export * from './useMediaControls/useMediaControls';
 export * from './useMemory/useMemory';
-
 export * from './useNetwork/useNetwork';
-export * from './useOnline/useOnline';
 
+export * from './useOnline/useOnline';
 export * from './useOtpCredential/useOtpCredential';
+
 export * from './usePermission/usePermission';
 export * from './usePictureInPicture/usePictureInPicture';
-
 export * from './usePointerLock/usePointerLock';
+
 export * from './usePostMessage/usePostMessage';
 export * from './useRaf/useRaf';
 export * from './useShare/useShare';
-
 export * from './useSpeechRecognition/useSpeechRecognition';
-export * from './useSpeechSynthesis/useSpeechSynthesis';
 
+export * from './useSpeechSynthesis/useSpeechSynthesis';
 export * from './useVibrate/useVibrate';
+
+export * from './useVirtualKeyboard/useVirtualKeyboard';
 export * from './useWakeLock/useWakeLock';
 export * from './useWebSocket/useWebSocket';

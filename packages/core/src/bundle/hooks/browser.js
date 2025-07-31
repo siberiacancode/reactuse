@@ -28,5 +28,6 @@ export * from './useShare/useShare';
 export * from './useSpeechRecognition/useSpeechRecognition';
 export * from './useSpeechSynthesis/useSpeechSynthesis';
 export * from './useVibrate/useVibrate';
+export * from './useVirtualKeyboard/useVirtualKeyboard';
 export * from './useWakeLock/useWakeLock';
 export * from './useWebSocket/useWebSocket';
