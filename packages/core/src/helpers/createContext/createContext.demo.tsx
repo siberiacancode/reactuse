@@ -6,7 +6,7 @@ const profileContext = createContext(DEFAULT_PROFILE);
 const App = () => {
   const name = profileContext.useSelect((state) => state.name);
   const age = profileContext.useSelect((state) => state.age);
-  const profile = profileContext.useSelect()!;
+  const profile = profileContext.useSelect();
 
   const nameField = useField({
     initialValue: DEFAULT_PROFILE.name

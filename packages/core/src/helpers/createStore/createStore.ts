@@ -1,10 +1,21 @@
 import { useSyncExternalStore } from 'react';
 
-type SetStateAction<Value> = ((prev: Value) => Value) | Value;
+type SetStateAction<Value> = ((prev: Value) => Partial<Value>) | Partial<Value>;
+
+type Listener<Value> = (state: Value, prevState: Value) => void;
+
 type StateCreator<Value> = (
   set: (action: SetStateAction<Value>) => void,
   get: () => Value
 ) => Value;
+
+function isStateCreator<Value>(fn: unknown): fn is StateCreator<Value> {
+  return typeof fn === 'function';
+}
+
+function isActionFunction<Value>(fn: unknown): fn is (prev: Value) => Partial<Value> {
+  return typeof fn === 'function';
+}
 
 export interface StoreApi<Value> {
   getInitialState: () => Value;
@@ -29,40 +40,47 @@ export interface StoreApi<Value> {
  * }));
  */
 export const createStore = <Value>(createState: StateCreator<Value> | Value) => {
-  type Listener = (state: Value, prevState: Value) => void;
   let state: Value;
-  const listeners: Set<Listener> = new Set();
+  const listeners: Set<Listener<Value>> = new Set();
 
-  const setState = (action: SetStateAction<Value>) => {
-    const nextState =
-      typeof action === 'function' ? (action as (state: Value) => Value)(state) : action;
+  const setState: StoreApi<Value>['setState'] = (action: SetStateAction<Value>) => {
+    const nextState = isActionFunction<Value>(action) ? action(state) : action;
 
     if (!Object.is(nextState, state)) {
       const prevState = state;
-      state = nextState;
+      state =
+        typeof nextState !== 'object' || nextState === null
+          ? nextState
+          : Object.assign({}, state, nextState);
+
       listeners.forEach((listener) => listener(state, prevState));
     }
+  };
+
+  const subscribe = (listener: Listener<Value>) => {
+    listeners.add(listener);
+
+    return () => listeners.delete(listener);
   };
 
   const getState = () => state;
   const getInitialState = () => state;
 
-  const subscribe = (listener: Listener) => {
-    listeners.add(listener);
-    return () => listeners.delete(listener);
-  };
-  if (typeof createState === 'function') {
-    state = (createState as StateCreator<Value>)(setState, getState);
+  if (isStateCreator<Value>(createState)) {
+    state = createState(setState, getState);
   } else {
     state = createState;
   }
 
-  const useStore = <Selected>(selector: (state: Value) => Selected) =>
-    useSyncExternalStore(
+  function useStore(): Value;
+  function useStore<Selected>(selector: (state: Value) => Selected): Selected;
+  function useStore<Selected>(selector?: (state: Value) => Selected): Selected | Value {
+    return useSyncExternalStore(
       subscribe,
-      () => selector(getState()),
-      () => selector(getInitialState())
+      () => (selector ? selector(getState()) : getState()),
+      () => (selector ? selector(getInitialState()) : getInitialState())
     );
+  }
 
   return {
     set: setState,
