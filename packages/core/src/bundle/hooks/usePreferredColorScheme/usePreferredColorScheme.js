@@ -2,7 +2,7 @@ import { useMediaQuery } from '../useMediaQuery/useMediaQuery';
 /**
  * @name usePreferredColorScheme
  * @description - Hook that returns user preferred color scheme
- * @category Browser
+ * @category User
  *
  * @returns {UsePreferredColorSchemeReturn} String of preferred color scheme
  *

@@ -7,8 +7,8 @@ import { getElement, isTarget } from '@/utils/helpers';
 import type { StateRef } from '../useRefState/useRefState';
 
 import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
+import { useOrientation } from '../useOrientation/useOrientation';
 import { useRefState } from '../useRefState/useRefState';
-import { useScreenOrientation } from '../useScreenOrientation/useScreenOrientation';
 
 /** The use parallax value type */
 export interface UseParallaxValue {
@@ -74,7 +74,7 @@ export const useParallax = ((...params: any[]) => {
 
   const internalRef = useRefState<Element>();
 
-  const screenOrientation = useScreenOrientation();
+  const screenOrientation = useOrientation();
   const deviceOrientation = useDeviceOrientation();
 
   const {

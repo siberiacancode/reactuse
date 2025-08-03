@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useCssVar
  * @description - Hook that returns the value of a css variable
- * @category Utilities
+ * @category Browser
  *
  * @overload
  * @param {string} key The CSS variable key
@@ -28,26 +28,34 @@ export const useCssVar = (...params) => {
   const key = target ? params[1] : params[0];
   const initialValue = target ? params[2] : params[1];
   const [value, setValue] = useState(initialValue ?? '');
-  const internalRef = useRefState(window.document.documentElement);
+  const internalRef = useRefState();
+  const elementRef = useRef(null);
   const set = (value) => {
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element || !element.style) return;
+    if (!elementRef.current) return;
+    const element = elementRef.current;
+    if (!element.style) return;
     element.style.setProperty(key, value);
     setValue(value);
   };
   const remove = () => {
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element || !element.style) return;
+    if (!elementRef.current) return;
+    const element = elementRef.current;
+    if (!element.style) return;
     element.style.removeProperty(key);
     setValue('');
   };
   useEffect(() => {
-    if (initialValue) set(initialValue);
+    if (!initialValue) return;
+    const element =
+      (target ? getElement(target) : internalRef.current) ?? window.document.documentElement;
+    if (!element.style) return;
+    element.style.setProperty(key, initialValue);
+    setValue(initialValue);
   }, []);
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    const element =
+      (target ? getElement(target) : internalRef.current) ?? window.document.documentElement;
+    elementRef.current = element;
     const onChange = () => {
       const value = window.getComputedStyle(element).getPropertyValue(key)?.trim();
       setValue(value ?? initialValue);

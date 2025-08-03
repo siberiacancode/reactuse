@@ -1,16 +1,21 @@
 import { useRef } from 'react';
 
+/** The use render info return type */
 export interface UseRenderInfoReturn {
+  /** The name of the component */
   component: string;
+  /** The number of renders */
   renders: number;
+  /** The time since the last render */
   sinceLast: number;
+  /** The timestamp of the render */
   timestamp: number | null;
 }
 
 /**
  * @name useRenderInfo
  * @description - Hook for getting information about component rerender
- * @category Lifecycle
+ * @category Debug
  *
  * @param {string} [name='Unknown'] Component name
  * @param {boolean} [log=true] Toggle logging

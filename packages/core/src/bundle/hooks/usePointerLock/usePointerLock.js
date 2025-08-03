@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 /**
  * @name usePointerLock
  * @description - Hook that provides reactive pointer lock
- * @category Sensors
+ * @category Browser
  *
  * @browserapi pointerLockElement https://developer.mozilla.org/en-US/docs/Web/API/Document/pointerLockElement
  *

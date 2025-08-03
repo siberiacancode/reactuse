@@ -168,7 +168,7 @@ export interface UsePaint {
 /**
  * @name usePaint
  * @description - Hook that allows you to draw in a specific area
- * @category Browser
+ * @category Elements
  *
  * @overload
  * @param {HookTarget} target The target element to be painted
@@ -295,7 +295,12 @@ export const usePaint = ((...params: any[]) => {
     if (!contextRef.current) return;
 
     if (paintRef.current.points.length) {
-      paintRef.current.lines.push({ points: paintRef.current.points, color, opacity, radius });
+      paintRef.current.lines.push({
+        points: paintRef.current.points,
+        color,
+        opacity,
+        radius
+      });
       paintRef.current.points = [];
     }
 
@@ -347,5 +352,12 @@ export const usePaint = ((...params: any[]) => {
   }, [target, internalRef.state]);
 
   if (target) return { drawing, clear, undo, draw, lines: paintRef.current.lines };
-  return { ref: internalRef, drawing, clear, undo, draw, lines: paintRef.current.lines };
+  return {
+    ref: internalRef,
+    drawing,
+    clear,
+    undo,
+    draw,
+    lines: paintRef.current.lines
+  };
 }) as UsePaint;

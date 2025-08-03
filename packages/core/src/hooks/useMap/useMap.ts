@@ -21,7 +21,7 @@ export interface UseMapReturn<Key, Value> {
 /**
  * @name useMap
  * @description - Hook that manages a map structure
- * @category Utilities
+ * @category State
  *
  * @template Value The type of the value
  * @param {Value[]} [values] The initial array of the map

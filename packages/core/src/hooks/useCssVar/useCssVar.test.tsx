@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -65,6 +65,19 @@ targets.forEach((target) => {
       expect(result.current.set).toBeTypeOf('function');
 
       if (!target) expect(result.current.ref).toBeTypeOf('function');
+    });
+
+    it('Should use css var on server side  ', () => {
+      const { result } = renderHookServer(() => {
+        if (target) {
+          return useCssVar(target, '--test-color', 'green') as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseCssVarReturn;
+        }
+        return useCssVar('--test-color', 'green');
+      });
+
+      expect(result.current.value).toBe('green');
     });
 
     it('Should work without initial value', () => {

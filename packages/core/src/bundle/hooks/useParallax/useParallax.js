@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
 import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
+import { useOrientation } from '../useOrientation/useOrientation';
 import { useRefState } from '../useRefState/useRefState';
-import { useScreenOrientation } from '../useScreenOrientation/useScreenOrientation';
 /**
  * @name useParallax
  * @description - Hook to help create parallax effect
@@ -28,7 +28,7 @@ export const useParallax = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = params[1] ? params[1] : params[0];
   const internalRef = useRefState();
-  const screenOrientation = useScreenOrientation();
+  const screenOrientation = useOrientation();
   const deviceOrientation = useDeviceOrientation();
   const {
     deviceOrientationRollAdjust = (value) => value,

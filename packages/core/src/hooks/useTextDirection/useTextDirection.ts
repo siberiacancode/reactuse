@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -33,10 +33,10 @@ export interface UseTextDirection {
 /**
  * @name useTextDirection
  * @description - Hook that can get and set the direction of the element
- * @category Browser
+ * @category Elements
  *
  * @overload
- * @param {HookTarget} target The target element to observe
+ * @param {HookTarget} [target=document.querySelector('html')] The target element to observe
  * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element
  * @returns {UseTextDirectionReturn} An object containing the current text direction of the element
  *
@@ -55,7 +55,8 @@ export const useTextDirection = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const initialValue = ((target ? params[1] : params[0]) as UseTextDirectionValue) ?? 'ltr';
 
-  const internalRef = useRefState<Element>();
+  const internalRef = useRefState();
+  const elementRef = useRef<Element>(null);
 
   const getDirection = () => {
     const element = (target ? getElement(target) : internalRef.current) as Element;
@@ -65,25 +66,27 @@ export const useTextDirection = ((...params: any[]) => {
   const [value, setValue] = useState<UseTextDirectionValue>(getDirection());
 
   const remove = () => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-    if (!element) return;
+    if (!elementRef.current) return;
 
-    element?.removeAttribute('dir');
+    elementRef.current?.removeAttribute('dir');
   };
 
   const set = (value: UseTextDirectionValue) => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-    if (!element) return;
+    if (!elementRef.current) return;
 
     setValue(value);
-    element.setAttribute('dir', value);
+    elementRef.current.setAttribute('dir', value);
   };
 
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element =
+      ((target ? getElement(target) : internalRef.current) as Element) ??
+      document.querySelector('html');
     if (!element) return;
+
+    elementRef.current = element;
 
     const direction = getDirection();
     element.setAttribute('dir', direction);

@@ -2,7 +2,7 @@ import { useMediaQuery } from '../useMediaQuery/useMediaQuery';
 /**
  * @name usePreferredReducedMotion
  * @description - Hook that returns the reduced motion preference
- * @category Browser
+ * @category User
  *
  * @returns {UsePreferredReducedMotionReturn} The reduced motion preference
  *

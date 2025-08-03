@@ -80,8 +80,8 @@ export const useDisplayMedia = ((...params: any[]) => {
 
   const [sharing, setSharing] = useState(false);
 
-  const elementRef = useRef<HTMLVideoElement | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
+  const elementRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream>(null);
   const internalRef = useRefState<Element>();
 
   const stop = () => {

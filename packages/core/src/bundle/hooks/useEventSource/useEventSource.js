@@ -34,7 +34,9 @@ export const useEventSource = (url, events = [], options = {}) => {
   };
   const open = () => {
     close();
-    const eventSource = new EventSource(url, { withCredentials: options.withCredentials ?? false });
+    const eventSource = new EventSource(url, {
+      withCredentials: options.withCredentials ?? false
+    });
     eventSourceRef.current = eventSource;
     setIsConnecting(true);
     eventSource.onopen = () => {

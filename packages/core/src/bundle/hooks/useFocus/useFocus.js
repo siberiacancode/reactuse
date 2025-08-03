@@ -4,7 +4,7 @@ import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useFocus
  * @description - Hook that allows you to focus on a specific element
- * @category Browser
+ * @category Elements
  *
  * @overload
  * @param {HookTarget} target The target element to focus

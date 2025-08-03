@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 /**
  * @name useRerender
  * @description - Hook that defines the logic to force rerender a component
- * @category Lifecycle
+ * @category Debug
  *
  * @returns {UseRerenderReturn} The rerender function
  *

@@ -4,9 +4,7 @@ const Demo = () => {
   const list = useList([1, 2, 3, 4, 5, 6]);
   const infiniteScroll = useInfiniteScroll<HTMLDivElement>(
     async () => {
-      await new Promise((resolve) => {
-        setTimeout(resolve, 1000);
-      });
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       list.set((prevList) => {
         const length = prevList.length + 1;
@@ -24,28 +22,10 @@ const Demo = () => {
   return (
     <div
       ref={infiniteScroll.ref}
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '8px',
-        padding: '16px',
-        margin: 'auto',
-        width: '300px',
-        height: '300px',
-        overflowY: 'scroll',
-        background: '#6b72800d',
-        borderRadius: '4px'
-      }}
+      className='mx-auto flex h-[300px] w-[300px] flex-col gap-2 overflow-y-scroll rounded bg-slate-500/5 p-4'
     >
       {list.value.map((item) => (
-        <div
-          key={item}
-          style={{
-            background: '#6b72800d',
-            borderRadius: '4px',
-            padding: '12px'
-          }}
-        >
+        <div key={item} className='rounded bg-slate-500/5 p-3'>
           {item}
         </div>
       ))}

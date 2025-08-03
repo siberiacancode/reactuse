@@ -5,7 +5,7 @@ import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 /**
  * @name useLogger
  * @description - Hook for debugging lifecycle
- * @category Lifecycle
+ * @category Debug
  *
  * @param {string} name The name or identifier for the logger
  * @param {unknown[]} params Additional arguments to be logged

@@ -1,38 +1,93 @@
 import { useEffect, useState } from 'react';
 
-/** The use orientation return type */
-export interface UseOrientationReturn {
-  /** The current screen orientation angle */
+declare global {
+  interface ScreenOrientation {
+    lock: (orientation: OrientationLockType) => Promise<void>;
+  }
+}
+
+/* The use device orientation value type */
+export interface UseOrientationValue {
+  /** The current angle */
   angle: number;
-  /** The screen orientation type */
-  type: OrientationType;
+  /** The current orientation type */
+  orientationType: OrientationType;
+}
+
+/* The screen lock orientation type */
+export type OrientationLockType =
+  | 'any'
+  | 'landscape-primary'
+  | 'landscape-secondary'
+  | 'landscape'
+  | 'natural'
+  | 'portrait-primary'
+  | 'portrait-secondary'
+  | 'portrait';
+
+/* The use device orientation return type */
+export interface useOrientationReturn {
+  /** Whether the screen orientation is supported */
+  supported: boolean;
+  /** The current screen orientation value */
+  value: UseOrientationValue;
+  /** Lock the screen orientation */
+  lock: (orientation: OrientationLockType) => void;
+  /** Unlock the screen orientation */
+  unlock: () => void;
 }
 
 /**
  * @name useOrientation
- * @description - Hook that returns the current screen orientation
- * @category Browser
+ * @description - Hook that provides the current screen orientation
+ * @category Sensors
  *
- * @browserapi window.screen.orientation https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
+ * @browserapi screen.orientation https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
  *
- * @returns {UseOrientationReturn} An object containing the current screen orientation
+ * @returns {useOrientationReturn} The current screen orientation
  *
  * @example
- * const { angle, type } = useOrientation();
+ * const { supported, value, lock, unlock } = useOrientation();
  */
-export const useOrientation = (): UseOrientationReturn => {
-  const [orientation, setOrientation] = useState<{
-    angle: number;
-    type: OrientationType;
-  }>({ angle: 0, type: 'landscape-primary' });
+export const useOrientation = (): useOrientationReturn => {
+  const supported =
+    typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
+  const orientation = (supported ? window.screen.orientation : {}) as ScreenOrientation;
+
+  const [value, setValue] = useState<UseOrientationValue>(() => {
+    return {
+      angle: orientation?.angle ?? 0,
+      orientationType: orientation?.type
+    };
+  });
 
   useEffect(() => {
-    const onChange = () => setOrientation(window.screen.orientation);
-    window.screen.orientation.addEventListener('change', onChange);
-    return () => {
-      window.screen.orientation.removeEventListener('change', onChange);
-    };
-  }, []);
+    if (!supported) return;
 
-  return orientation;
+    const onOrientationChange = () =>
+      setValue({
+        angle: orientation.angle,
+        orientationType: orientation.type
+      });
+
+    window.addEventListener('orientationchange', onOrientationChange);
+    return () => {
+      window.removeEventListener('orientationchange', onOrientationChange);
+    };
+  });
+
+  const lock = (type: OrientationLockType) => {
+    if (supported && typeof orientation.lock === 'function') return orientation.lock(type);
+  };
+
+  const unlock = () => {
+    if (supported && typeof orientation.unlock === 'function') orientation.unlock();
+  };
+
+  return {
+    supported,
+    value,
+    lock,
+    unlock
+  };
 };

@@ -12,7 +12,7 @@ const subscribe = (callback) => {
 /**
  * @name useOnline
  * @description - Hook that manages if the user is online
- * @category Sensors
+ * @category Browser
  *
  * @browserapi navigator.onLine https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine
  *

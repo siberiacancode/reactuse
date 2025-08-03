@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 /**
  * @name useEvent
  * @description - Hook that creates an event and returns a stable reference of it
- * @category Browser
+ * @category Utilities
  *
  * @template Params The type of the params
  * @template Return The type of the return

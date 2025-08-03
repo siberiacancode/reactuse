@@ -2,7 +2,7 @@ import { useRef } from 'react';
 /**
  * @name useLockCallback
  * @description - Hook that prevents a callback from being executed multiple times simultaneously
- * @category Utilities
+ * @category Async
  *
  * @param {Function} callback The callback to be locked
  * @returns {Function} The locked callback

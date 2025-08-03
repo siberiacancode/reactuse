@@ -36,7 +36,7 @@ const clearCookieItems = () => {
 /**
  * @name useCookies
  * @description - Hook that manages cookie values
- * @category Browser
+ * @category State
  *
  * @overload
  * @template {object} Value The type of the cookie values

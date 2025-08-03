@@ -2,7 +2,7 @@ import { useState } from 'react';
 /**
  * @name useDisclosure
  * @description - Hook that allows you to open and close a modal
- * @category Utilities
+ * @category State
  *
  * @param {boolean} [initialValue=false] The initial value of the component
  * @param {() => void} [options.onOpen] The callback function to be invoked on open

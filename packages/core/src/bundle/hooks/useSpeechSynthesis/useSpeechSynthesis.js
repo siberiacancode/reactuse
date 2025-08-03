@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 /**
  * @name useSpeechSynthesis
  * @description - Hook that provides speech synthesis functionality
- * @category Sensors
+ * @category Browser
  *
  * @browserapi SpeechSynthesis https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
  *

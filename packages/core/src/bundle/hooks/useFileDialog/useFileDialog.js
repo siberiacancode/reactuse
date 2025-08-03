@@ -7,7 +7,7 @@ const DEFAULT_OPTIONS = {
 /**
  * @name useFileDialog
  * @description - Hook to handle file input
- * @category Browser
+ * @category Elements
  *
  * @overload
  * @param {(value: FileList | null) => void} callback The callback to execute when a file is selected

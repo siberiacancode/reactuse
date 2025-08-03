@@ -2,7 +2,7 @@ import { useStorage } from '../useStorage/useStorage';
 /**
  * @name useLocalStorage
  * @description - Hook that manages local storage value
- * @category Browser
+ * @category State
  *
  * @browserapi localStorage https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
  *

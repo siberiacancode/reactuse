@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
-import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useInfiniteScroll
@@ -37,28 +36,30 @@ export const useInfiniteScroll = (...params) => {
   const internalRef = useRefState();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
-  const onLoadMore = useEvent(async (event) => {
-    if (loading) return;
-    const { clientHeight, scrollHeight, scrollTop, clientWidth, scrollWidth, scrollLeft } =
-      event.target;
-    const scrollBottom = scrollHeight - (scrollTop + clientHeight);
-    const scrollRight = scrollWidth - (scrollLeft + clientWidth);
-    const distances = {
-      bottom: scrollBottom,
-      top: scrollTop,
-      right: scrollRight,
-      left: scrollLeft
-    };
-    if (distances[direction] <= distance) {
-      setIsLoading(true);
-      await internalCallbackRef.current(event);
-      setIsLoading(false);
-    }
-  });
+  const internalLoadingRef = useRef(loading);
+  internalLoadingRef.current = loading;
   useEffect(() => {
     if (!target && !internalRef.state) return;
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
+    const onLoadMore = async (event) => {
+      if (internalLoadingRef.current) return;
+      const { clientHeight, scrollHeight, scrollTop, clientWidth, scrollWidth, scrollLeft } =
+        event.target;
+      const scrollBottom = scrollHeight - (scrollTop + clientHeight);
+      const scrollRight = scrollWidth - (scrollLeft + clientWidth);
+      const distances = {
+        bottom: scrollBottom,
+        top: scrollTop,
+        right: scrollRight,
+        left: scrollLeft
+      };
+      if (distances[direction] <= distance) {
+        setIsLoading(true);
+        await internalCallbackRef.current(event);
+        setIsLoading(false);
+      }
+    };
     element.addEventListener('scroll', onLoadMore);
     return () => {
       element.removeEventListener('scroll', onLoadMore);

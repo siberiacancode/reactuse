@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
  * @description - Hook that manages the document title and allows updating it
  * @category Browser
  *
+ * @browserapi document.title https://developer.mozilla.org/en-US/docs/Web/API/Document/title
+ *
  * @param {string} [initialValue] The initial title. If not provided, the current document title will be used
  * @param {boolean} [options.restoreOnUnmount] Restore the previous title on unmount
  * @returns {UseDocumentTitleReturn} An array containing the current title and a function to update the title
@@ -31,7 +33,9 @@ export function useDocumentTitle(initialValue, options) {
         return prevValue;
       });
     });
-    observer.observe(document.head.querySelector('title'), { childList: true });
+    observer.observe(document.head.querySelector('title'), {
+      childList: true
+    });
     return () => {
       observer.disconnect();
     };

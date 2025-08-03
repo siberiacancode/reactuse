@@ -4,7 +4,7 @@ import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useIntersectionObserver
  * @description - Hook that gives you intersection observer state
- * @category Browser
+ * @category Sensors
  *
  * @browserapi IntersectionObserver https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver
  *
@@ -30,14 +30,14 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @template Target The target element
- * @param {(entry: IntersectionObserverEntry) => void} callback The callback to execute when intersection is detected
+ * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
  * const { ref, entry, inView } = useIntersectionObserver(() => console.log('callback'));
  *
  * @overload
- * @param {(entry: IntersectionObserverEntry) => void} callback The callback to execute when intersection is detected
+ * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
  * @param {HookTarget} target The target element to detect intersection
  * @returns {UseIntersectionObserverReturn} An object containing the state
  *
@@ -57,8 +57,8 @@ export const useIntersectionObserver = (...params) => {
   const enabled = options?.enabled ?? true;
   const [entry, setEntry] = useState();
   const internalRef = useRefState();
-  const internalOnChangeRef = useRef(callback);
-  internalOnChangeRef.current = callback;
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
     const element = target ? getElement(target) : internalRef.current;
@@ -66,7 +66,7 @@ export const useIntersectionObserver = (...params) => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setEntry(entry);
-        internalOnChangeRef.current?.(entry);
+        internalCallbackRef.current?.(entry);
       },
       {
         ...options,
