@@ -1,4 +1,10 @@
 import { useSyncExternalStore } from 'react';
+function isStateCreator(fn) {
+  return typeof fn === 'function';
+}
+function isActionFunction(fn) {
+  return typeof fn === 'function';
+}
 /**
  * @name createStore
  * @description - Creates a store with state management capabilities
@@ -18,30 +24,34 @@ export const createStore = (createState) => {
   let state;
   const listeners = new Set();
   const setState = (action) => {
-    const nextState = typeof action === 'function' ? action(state) : action;
+    const nextState = isActionFunction(action) ? action(state) : action;
     if (!Object.is(nextState, state)) {
       const prevState = state;
-      state = nextState;
+      state =
+        typeof nextState !== 'object' || nextState === null
+          ? nextState
+          : Object.assign({}, state, nextState);
       listeners.forEach((listener) => listener(state, prevState));
     }
   };
-  const getState = () => state;
-  const getInitialState = () => state;
   const subscribe = (listener) => {
     listeners.add(listener);
     return () => listeners.delete(listener);
   };
-  if (typeof createState === 'function') {
+  const getState = () => state;
+  const getInitialState = () => state;
+  if (isStateCreator(createState)) {
     state = createState(setState, getState);
   } else {
     state = createState;
   }
-  const useStore = (selector) =>
-    useSyncExternalStore(
+  function useStore(selector) {
+    return useSyncExternalStore(
       subscribe,
       () => (selector ? selector(getState()) : getState()),
       () => (selector ? selector(getInitialState()) : getInitialState())
     );
+  }
   return {
     set: setState,
     get: getState,
