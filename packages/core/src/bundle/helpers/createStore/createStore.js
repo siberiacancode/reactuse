@@ -1,10 +1,4 @@
 import { useSyncExternalStore } from 'react';
-function isStateCreator(fn) {
-  return typeof fn === 'function';
-}
-function isActionFunction(fn) {
-  return typeof fn === 'function';
-}
 /**
  * @name createStore
  * @description - Creates a store with state management capabilities
@@ -24,7 +18,7 @@ export const createStore = (createState) => {
   let state;
   const listeners = new Set();
   const setState = (action) => {
-    const nextState = isActionFunction(action) ? action(state) : action;
+    const nextState = typeof action === 'function' ? action(state) : action;
     if (!Object.is(nextState, state)) {
       const prevState = state;
       state =
@@ -40,7 +34,7 @@ export const createStore = (createState) => {
   };
   const getState = () => state;
   const getInitialState = () => state;
-  if (isStateCreator(createState)) {
+  if (typeof createState === 'function') {
     state = createState(setState, getState);
   } else {
     state = createState;

@@ -1,27 +1,19 @@
 import { useSyncExternalStore } from 'react';
 
-type SetStateAction<Value> = ((prev: Value) => Partial<Value>) | Partial<Value>;
+type StoreSetAction<Value> = ((prev: Value) => Partial<Value>) | Partial<Value>;
 
-type Listener<Value> = (state: Value, prevState: Value) => void;
+type StoreListener<Value> = (state: Value, prevState: Value) => void;
 
-type StateCreator<Value> = (
-  set: (action: SetStateAction<Value>) => void,
+type StoreCreator<Value> = (
+  set: (action: StoreSetAction<Value>) => void,
   get: () => Value
 ) => Value;
-
-function isStateCreator<Value>(fn: unknown): fn is StateCreator<Value> {
-  return typeof fn === 'function';
-}
-
-function isActionFunction<Value>(fn: unknown): fn is (prev: Value) => Partial<Value> {
-  return typeof fn === 'function';
-}
 
 export interface StoreApi<Value> {
   getInitialState: () => Value;
   getState: () => Value;
-  setState: (action: SetStateAction<Value>) => void;
-  subscribe: (listener: (state: Value, prevState: Value) => void) => () => void;
+  setState: (action: StoreSetAction<Value>) => void;
+  subscribe: (listener: StoreListener<Value>) => () => void;
 }
 
 /**
@@ -39,12 +31,12 @@ export interface StoreApi<Value> {
  *   increment: () => set(state => ({ count: state.count + 1 }))
  * }));
  */
-export const createStore = <Value>(createState: StateCreator<Value> | Value) => {
+export const createStore = <Value>(createState: StoreCreator<Value> | Value) => {
   let state: Value;
-  const listeners: Set<Listener<Value>> = new Set();
+  const listeners: Set<StoreListener<Value>> = new Set();
 
-  const setState: StoreApi<Value>['setState'] = (action: SetStateAction<Value>) => {
-    const nextState = isActionFunction<Value>(action) ? action(state) : action;
+  const setState: StoreApi<Value>['setState'] = (action: StoreSetAction<Value>) => {
+    const nextState = typeof action === 'function' ? action(state) : action;
 
     if (!Object.is(nextState, state)) {
       const prevState = state;
@@ -57,7 +49,7 @@ export const createStore = <Value>(createState: StateCreator<Value> | Value) => 
     }
   };
 
-  const subscribe = (listener: Listener<Value>) => {
+  const subscribe = (listener: StoreListener<Value>) => {
     listeners.add(listener);
 
     return () => listeners.delete(listener);
@@ -66,12 +58,11 @@ export const createStore = <Value>(createState: StateCreator<Value> | Value) => 
   const getState = () => state;
   const getInitialState = () => state;
 
-  if (isStateCreator<Value>(createState)) {
-    state = createState(setState, getState);
+  if (typeof createState === 'function') {
+    state = (createState as StoreCreator<Value>)(setState, getState);
   } else {
     state = createState;
   }
-
 
   function useStore(): Value;
   function useStore<Selected>(selector: (state: Value) => Selected): Selected;
