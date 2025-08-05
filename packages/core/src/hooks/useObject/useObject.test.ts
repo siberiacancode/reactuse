@@ -2,72 +2,136 @@ import { act, renderHook } from '@testing-library/react';
 
 import { useObject } from './useObject';
 
-const INITIAL_OBJECT = { a: 1, b: 2, c: 3 };
+it('Should use object', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2, c: 3 }));
 
-describe('useObject', () => {
-  it('Should use object', () => {
-    const { result } = renderHook(() => useObject(INITIAL_OBJECT));
-    const obj = result.current;
+  expect(result.current.value).toEqual({ a: 1, b: 2, c: 3 });
+  expect(result.current.set).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+  expect(result.current.remove).toBeTypeOf('function');
+  expect(result.current.clear).toBeTypeOf('function');
+  expect(result.current.has).toBeTypeOf('function');
+  expect(result.current.keys).toBeTypeOf('object');
+  expect(result.current.empty).toBeTypeOf('boolean');
+  expect(result.current.size).toBeTypeOf('number');
+});
 
-    expect(obj.state).toEqual(INITIAL_OBJECT);
-    expect(obj.set).toBeTypeOf('function');
-    expect(obj.get).toBeTypeOf('function');
-    expect(obj.reset).toBeTypeOf('function');
-    expect(obj.update).toBeTypeOf('function');
-    expect(obj.merge).toBeTypeOf('function');
-    expect(obj.remove).toBeTypeOf('function');
+it('Should set initial value', () => {
+  const { result } = renderHook(() => useObject({ name: 'John', age: 30 }));
+
+  expect(result.current.value).toEqual({ name: 'John', age: 30 });
+});
+
+it('Should set partial object', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2, c: 3 }));
+
+  act(() => result.current.set({ a: 42 }));
+
+  expect(result.current.value).toEqual({ a: 42, b: 2, c: 3 });
+});
+
+it('Should set multiple properties', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2, c: 3 }));
+
+  act(() => result.current.set({ a: 42, c: 99 }));
+
+  expect(result.current.value).toEqual({ a: 42, b: 2, c: 99 });
+});
+
+it('Should reset object', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2 }));
+
+  act(() => result.current.set({ a: 99 }));
+  act(() => result.current.reset());
+
+  expect(result.current.value).toEqual({ a: 1, b: 2 });
+});
+
+it('Should remove property', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2, c: 3 }));
+
+  act(() => result.current.remove('b'));
+
+  expect(result.current.value).toEqual({ a: 1, c: 3 });
+});
+
+it('Should not remove non-existing property', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2 }));
+
+  act(() => result.current.remove('c' as any));
+
+  expect(result.current.value).toEqual({ a: 1, b: 2 });
+});
+
+it('Should clear object', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2, c: 3 }));
+
+  act(() => result.current.clear());
+
+  expect(result.current.value).toEqual({});
+});
+
+it('Should check if property exists', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2 }));
+
+  expect(result.current.has('a')).toBe(true);
+  expect(result.current.has('b')).toBe(true);
+  expect(result.current.has('c' as any)).toBe(false);
+});
+
+it('Should return object keys', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2, c: 3 }));
+
+  expect(result.current.keys).toEqual(['a', 'b', 'c']);
+});
+
+it('Should update keys when object changes', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2, c: 3 }));
+
+  expect(result.current.keys).toEqual(['a', 'b', 'c']);
+
+  act(() => result.current.remove('b'));
+
+  expect(result.current.keys).toEqual(['a', 'c']);
+});
+
+it('Should check if object is empty', () => {
+  const { result } = renderHook(() => useObject({}));
+
+  expect(result.current.empty).toBe(true);
+
+  act(() => result.current.set({ a: 1 }));
+
+  expect(result.current.empty).toBe(false);
+});
+
+it('Should return object size', () => {
+  const { result } = renderHook(() => useObject({ a: 1, b: 2, c: 3 }));
+
+  expect(result.current.size).toBe(3);
+
+  act(() => result.current.remove('b'));
+
+  expect(result.current.size).toBe(2);
+});
+
+describe('Empty object', () => {
+  it('Should handle empty initial object', () => {
+    const { result } = renderHook(() => useObject({}));
+
+    expect(result.current.value).toEqual({});
+    expect(result.current.empty).toBe(true);
+    expect(result.current.size).toBe(0);
+    expect(result.current.keys).toEqual([]);
   });
 
-  it('Should set property', () => {
-    const { result } = renderHook(() => useObject(INITIAL_OBJECT));
-    const obj = result.current;
+  it('Should add properties to empty object', () => {
+    const { result } = renderHook(() => useObject({}));
 
-    act(() => obj.set('a', 42));
+    act(() => result.current.set({ a: 1, b: 2 }));
 
-    expect(result.current.state).toEqual({ a: 42, b: 2, c: 3 });
-  });
-
-  it('Should get property', () => {
-    const { result } = renderHook(() => useObject(INITIAL_OBJECT));
-    const obj = result.current;
-
-    expect(obj.get('b')).toBe(2);
-  });
-
-  it('Should reset object', () => {
-    const { result } = renderHook(() => useObject(INITIAL_OBJECT));
-    const obj = result.current;
-
-    act(() => obj.set('a', 99));
-    act(() => obj.reset());
-
-    expect(result.current.state).toEqual(INITIAL_OBJECT);
-  });
-
-  it('Should update object', () => {
-    const { result } = renderHook(() => useObject(INITIAL_OBJECT));
-    const obj = result.current;
-
-    act(() => obj.update((prev) => ({ ...prev, d: 4 }) as typeof INITIAL_OBJECT & { d: number }));
-
-    expect(result.current.state).toEqual({ a: 1, b: 2, c: 3, d: 4 });
-  });
-
-  it('Should merge object', () => {
-    const { result } = renderHook(() => useObject(INITIAL_OBJECT));
-    const obj = result.current;
-
-    act(() => obj.merge({ b: 10 }));
-
-    expect(result.current.state).toEqual({ a: 1, b: 10, c: 3 });
-  });
-
-  it('Should remove property', () => {
-    const { result } = renderHook(() => useObject(INITIAL_OBJECT));
-    const obj = result.current;
-
-    act(() => obj.remove('b'));
-
-    expect(result.current.state).toEqual({ a: 1, c: 3 });
+    expect(result.current.value).toEqual({ a: 1, b: 2 });
+    expect(result.current.empty).toBe(false);
+    expect(result.current.size).toBe(2);
   });
 });
