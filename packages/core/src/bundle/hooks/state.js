@@ -12,6 +12,7 @@ export * from './useList/useList';
 // storage
 export * from './useLocalStorage/useLocalStorage';
 export * from './useMap/useMap';
+export * from './useObject/useObject';
 export * from './useOffsetPagination/useOffsetPagination';
 export * from './useQuery/useQuery';
 export * from './useQueue/useQueue';
