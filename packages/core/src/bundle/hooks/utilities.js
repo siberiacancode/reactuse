@@ -2,6 +2,7 @@
 export * from './useConst/useConst';
 // timing
 export * from './useDebounceCallback/useDebounceCallback';
+export * from './useDebounceEffect/useDebounceEffect';
 export * from './useDebounceValue/useDebounceValue';
 export * from './useEvent/useEvent';
 export * from './useLastChanged/useLastChanged';
