@@ -60,66 +60,64 @@ afterEach(vi.clearAllMocks);
 
 targets.forEach((target) => {
   describe(`${target}`, () => {
-    // it("Should use auto scroll", () => {
-    //   const { result } = renderHook(() => {
-    //     if (target)
-    //       return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
-    //     return useAutoScroll<HTMLElement>();
-    //   });
+    it('Should use auto scroll', () => {
+      const { result } = renderHook(() => {
+        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        return useAutoScroll<HTMLElement>();
+      });
 
-    //   if (!target) expect(result.current).toBeTypeOf("function");
-    // });
+      if (!target) expect(result.current).toBeTypeOf('function');
+    });
 
-    // it("Should auto scroll when content changes", () => {
-    //   const { result } = renderHook(() => {
-    //     if (target)
-    //       return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
-    //     return useAutoScroll<HTMLElement>();
-    //   });
+    it('Should auto scroll when content changes', () => {
+      const { result } = renderHook(() => {
+        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        return useAutoScroll<HTMLElement>();
+      });
 
-    //   if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current(element));
 
-    //   act(() => trigger.callback(element));
+      act(() => trigger.callback(element));
 
-    //   expect(element.scrollTo).toHaveBeenCalledWith({ top: 1000 });
-    // });
+      expect(element.scrollTo).toHaveBeenCalledWith({ top: 1000 });
+    });
 
-    // it("Should respect enabled option", () => {
-    //   const { result } = renderHook(() => {
-    //     if (target)
-    //       return useAutoScroll(target, {
-    //         enabled: false,
-    //       }) as unknown as StateRef<HTMLElement>;
-    //     return useAutoScroll<HTMLElement>({ enabled: false });
-    //   });
+    it('Should respect enabled option', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useAutoScroll(target, {
+            enabled: false
+          }) as unknown as StateRef<HTMLElement>;
+        return useAutoScroll<HTMLElement>({ enabled: false });
+      });
 
-    //   if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current(element));
 
-    //   act(() => trigger.callback(element));
+      act(() => trigger.callback(element));
 
-    //   expect(element.scrollTo).not.toHaveBeenCalled();
-    // });
+      expect(element.scrollTo).not.toHaveBeenCalled();
+    });
 
-    // it("Should respect force option", () => {
-    //   const { result } = renderHook(() => {
-    //     if (target)
-    //       return useAutoScroll(target, {
-    //         force: true,
-    //       }) as unknown as StateRef<HTMLElement>;
-    //     return useAutoScroll<HTMLElement>({ force: true });
-    //   });
+    it('Should respect force option', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useAutoScroll(target, {
+            force: true
+          }) as unknown as StateRef<HTMLElement>;
+        return useAutoScroll<HTMLElement>({ force: true });
+      });
 
-    //   if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current(element));
 
-    //   act(() => {
-    //     Object.defineProperty(element, "scrollTop", { value: 200 });
-    //     element.dispatchEvent(new WheelEvent("wheel", { deltaY: -100 }));
-    //   });
+      act(() => {
+        Object.defineProperty(element, 'scrollTop', { value: 200 });
+        element.dispatchEvent(new WheelEvent('wheel', { deltaY: -100 }));
+      });
 
-    //   act(() => trigger.callback(element));
+      act(() => trigger.callback(element));
 
-    //   expect(element.scrollTo).toHaveBeenCalledWith({ top: 1000 });
-    // });
+      expect(element.scrollTo).toHaveBeenCalledWith({ top: 1000 });
+    });
 
     it('Should handle auto scroll on manual scroll up', () => {
       const { result } = renderHook(() => {
