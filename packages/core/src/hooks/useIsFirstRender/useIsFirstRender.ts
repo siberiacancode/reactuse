@@ -4,6 +4,7 @@ import { useRef } from 'react';
  * @name useIsFirstRender
  * @description - Hook that returns true if the component is first render
  * @category Lifecycle
+ * @usage low
  *
  * @returns {boolean} True if the component is first render
  *

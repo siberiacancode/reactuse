@@ -43,6 +43,7 @@ export interface UseMutationObserver {
  * @name useMutationObserver
  * @description - Hook that gives you mutation observer state
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @template Target The target element

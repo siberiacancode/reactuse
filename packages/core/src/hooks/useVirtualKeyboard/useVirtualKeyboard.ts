@@ -76,6 +76,8 @@ export const useVirtualKeyboard = (initialValue = false): UseVirtualKeyboardRetu
       setOpened(height > 0);
     };
 
+    if (navigator.virtualKeyboard) navigator.virtualKeyboard.overlaysContent = true;
+
     navigator.virtualKeyboard &&
       navigator.virtualKeyboard.addEventListener('geometrychange', onGeometryChange);
     window.visualViewport && window.visualViewport.addEventListener('resize', onResize);

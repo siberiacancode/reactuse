@@ -18,6 +18,7 @@ const getStopwatchTime = (time) => {
  * @name useStopwatch
  * @description - Hook that creates a stopwatch functionality
  * @category Time
+ * @usage high
  *
  * @overload
  * @param {number} [initialTime=0] The initial time of the timer

@@ -5,6 +5,7 @@ import { useMount } from '../useMount/useMount';
  * @name useFavicon
  * @description - Hook that manages the favicon
  * @category Browser
+ * @usage low
  *
  * @param {string} [initialFavicon] The initial favicon. If not provided, the current favicon will be used
  * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon

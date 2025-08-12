@@ -22,6 +22,7 @@ export interface UseMemoryReturn {
  * @name useMemory
  * @description - Hook that gives you current memory usage
  * @category Browser
+ * @usage low
  *
  * @browserapi performance.memory https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory
  *

@@ -6,6 +6,7 @@ export type UsePostMessageReturn<Message> = (message: Message) => void;
  * @name usePostMessage
  * @description - Hook that allows you to receive messages from other origins
  * @category Browser
+ * @usage low
  *
  * @overload
  * @template Message The message data type

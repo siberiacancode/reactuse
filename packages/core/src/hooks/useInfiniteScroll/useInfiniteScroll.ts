@@ -37,6 +37,7 @@ export interface UseInfiniteScroll {
  * @name useInfiniteScroll
  * @description - Hook that defines the logic for infinite scroll
  * @category Sensors
+ * @usage medium
  *
  * @overload
  * @template Target The target element

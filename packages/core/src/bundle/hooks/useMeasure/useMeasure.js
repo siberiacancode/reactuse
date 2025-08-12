@@ -5,6 +5,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useMeasure
  * @description - Hook to measure the size and position of an element
  * @category Browser
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The element to measure

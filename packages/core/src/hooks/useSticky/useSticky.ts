@@ -37,6 +37,7 @@ export interface UseSticky {
  * @name UseSticky
  * @description - Hook that allows you to detect that your sticky component is stuck
  * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target sticky element

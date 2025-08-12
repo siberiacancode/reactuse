@@ -4,7 +4,8 @@ import { copy } from '@/utils/helpers';
  * @name useClipboard
  * @description - Hook that manages a copy to clipboard
  * @category Browser
- *
+ * @usage medium
+
  * @browserapi navigator.clipboard https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard
  *
  * @param {boolean} [params.enabled=false] Whether the copy to clipboard is enabled

@@ -17,7 +17,7 @@ const activeInstallTab = ref('library');
 
 {{ $params.description }}
 
-<Badges :category="$params.category" :is-test="$params.isTest" />
+<Badges :category="$params.category" :is-test="$params.isTest" :usage="$params.usage" />
 
 <Meta :last-modified="$params.lastModified" />
 
@@ -82,7 +82,7 @@ Copy and paste the following code into your project. Update the import paths to 
 
 ## Usage
 
-<Code :value="$params.usage" lang="typescript" />
+<Code :value="$params.example" lang="typescript" />
 
 ## Demo
 

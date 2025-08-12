@@ -26,6 +26,7 @@ export interface UseAutoScroll {
  * @name useAutoScroll
  * @description - Hook that automatically scrolls a list element to the bottom
  * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element to auto-scroll

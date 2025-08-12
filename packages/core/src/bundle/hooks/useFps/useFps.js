@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
  * @name useFps
  * @description - Hook that measures frames per second
  * @category Browser
+ * @usage low
  *
  * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
  *

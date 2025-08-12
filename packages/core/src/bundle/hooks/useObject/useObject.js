@@ -3,6 +3,7 @@ import { useState } from 'react';
  * @name useObject
  * @description - Hook that provides state and helper methods to manage an object
  * @category State
+ * @usage medium
  *
  * @template Value The type of the object
  * @param {Value} initialValue The initial object value

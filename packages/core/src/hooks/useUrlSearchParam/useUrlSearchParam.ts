@@ -89,6 +89,7 @@ export interface UseUrlSearchParam {
  * @name useUrlSearchParam
  * @description - Hook that provides reactive URLSearchParams for a single key
  * @category State
+ * @usage high
  *
  * @overload
  * @template Value The type of the url param values

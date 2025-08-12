@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
  * @name useBroadcastChannel
  * @description Hook that provides cross-tab/window communication
  * @category Browser
+ * @usage low
  *
  * @browserapi BroadcastChannel https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel
  *

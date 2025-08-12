@@ -4,6 +4,7 @@ import { getDate } from '@/utils/helpers';
  * @name useTime
  * @description - Hook that gives you current time in different values
  * @category Time
+ * @usage medium
  *
  * @returns {UseTimeReturn} An object containing the current time
  *

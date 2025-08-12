@@ -47,6 +47,7 @@ export interface UseOtpCredential {
  * @name useOtpCredential
  * @description - Hook that creates an otp credential
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.credentials https://developer.mozilla.org/en-US/docs/Web/API/Navigator/credentials
  *

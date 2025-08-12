@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
  * @name useInterval
  * @description - Hook that makes and interval and returns controlling functions
  * @category Time
+ * @usage high
  *
  * @overload
  * @param {() => void} callback Any callback function

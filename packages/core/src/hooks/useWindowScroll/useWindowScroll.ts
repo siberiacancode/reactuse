@@ -20,6 +20,7 @@ export const scrollTo = ({
  * @name useWindowScroll
  * @description - Hook that manages the window scroll position
  * @category Sensors
+ * @usage low
  *
  * @returns {UseWindowScrollReturn} An object containing the current window scroll position
  *

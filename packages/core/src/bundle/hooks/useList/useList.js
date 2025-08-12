@@ -3,6 +3,7 @@ import { useState } from 'react';
  * @name useList
  * @description - Hook that provides state and helper methods to manage a list of items
  * @category State
+ * @usage medium
  *
  * @template Item The type of the item
  * @param {Item[] | (() => Item[])} initialList The initial list of items

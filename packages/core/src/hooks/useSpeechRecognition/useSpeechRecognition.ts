@@ -51,6 +51,7 @@ export const getSpeechRecognition = () =>
  * @name useSpeechRecognition
  * @description - Hook that provides a streamlined interface for incorporating speech-to-text functionality
  * @category Browser
+ * @usage low
  *
  * @browserapi window.SpeechRecognition https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
  *

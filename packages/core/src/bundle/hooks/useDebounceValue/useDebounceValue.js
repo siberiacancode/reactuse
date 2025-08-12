@@ -4,7 +4,8 @@ import { useDebounceCallback } from '../useDebounceCallback/useDebounceCallback'
  * @name useDebounceValue
  * @description - Hook that creates a debounced value
  * @category Utilities
- *
+ * @usage high
+
  * @template Value The type of the value
  * @param {Value} value The value to be debounced
  * @param {number} delay The delay in milliseconds

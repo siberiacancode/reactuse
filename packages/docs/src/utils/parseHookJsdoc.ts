@@ -3,7 +3,8 @@ import { parse } from 'comment-parser';
 export const parseHookJsdoc = (file: string) => {
   const jsdoc = parse(file)[0];
   const description = jsdoc.tags.find(({ tag }) => tag === 'description');
-  const usages = jsdoc.tags.filter(({ tag }) => tag === 'example');
+  const examples = jsdoc.tags.filter(({ tag }) => tag === 'example');
+  const usage = jsdoc.tags.find(({ tag }) => tag === 'usage');
   const deprecated = jsdoc.tags.find(({ tag }) => tag === 'deprecated');
   const category = jsdoc.tags.find(({ tag }) => tag === 'category');
   const warning = jsdoc.tags.find(({ tag }) => tag === 'warning');
@@ -12,5 +13,14 @@ export const parseHookJsdoc = (file: string) => {
     ({ tag }) => tag === 'param' || tag === 'overload' || tag === 'returns'
   );
 
-  return { description, usages, apiParameters, deprecated, category, browserapi, warning };
+  return {
+    description,
+    examples,
+    usage,
+    apiParameters,
+    deprecated,
+    category,
+    browserapi,
+    warning
+  };
 };

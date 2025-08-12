@@ -6,7 +6,8 @@ export const DEFAULT_THRESHOLD_TIME = 300;
  * @name useDoubleClick
  * @description - Hook that defines the logic when double clicking an element
  * @category Elements
- *
+ * @usage medium
+
  * @overload
  * @param {HookTarget} target The target element to be double clicked
  * @param {(event: DoubleClickEvents) => void} callback The callback function to be invoked on double click

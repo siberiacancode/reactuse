@@ -44,6 +44,7 @@ export interface UseHover {
  * @name useHover
  * @description - Hook that defines the logic when hovering an element
  * @category Elements
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} target The target element to be hovered

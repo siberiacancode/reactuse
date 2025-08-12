@@ -5,6 +5,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useIntersectionObserver
  * @description - Hook that gives you intersection observer state
  * @category Sensors
+ * @usage medium
  *
  * @browserapi IntersectionObserver https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver
  *

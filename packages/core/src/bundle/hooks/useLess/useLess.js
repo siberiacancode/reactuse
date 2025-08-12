@@ -3,6 +3,7 @@ import { useEffect } from 'react';
  * @name useLess
  * @description - Hook that can be so useless
  * @category Humor
+ * @usage low
  *
  * @warning - This hook is a joke. Please do not use it in production code!
  *

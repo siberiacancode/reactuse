@@ -90,7 +90,7 @@ export default {
 
         const jsdoc = parseHookJsdoc(jsdocMatch);
 
-        if (!jsdoc.description || !jsdoc.usages.length) {
+        if (!jsdoc.description) {
           console.error(`No content found for ${element.name}`);
           return null;
         }
@@ -99,11 +99,11 @@ export default {
 
         const typeDeclarations = extractTypeInfo(sourceFile);
 
-        const usage = jsdoc.usages.reduce((acc, usage, index) => {
-          if (index !== jsdoc.usages.length - 1) {
-            acc += `${usage.description}\n// or\n`;
+        const example = jsdoc.examples.reduce((acc, example, index) => {
+          if (index !== jsdoc.examples.length - 1) {
+            acc += `${example.description}\n// or\n`;
           } else {
-            acc += usage.description;
+            acc += example.description;
           }
           return acc;
         }, '');
@@ -137,19 +137,14 @@ export default {
             ...(typeDeclarations && {
               typeDeclarations: await createHtmlCode(typeDeclarations)
             }),
-            ...(jsdoc.browserapi && {
-              browserapi: {
-                name: jsdoc.browserapi.name,
-                description: jsdoc.browserapi.description
-              }
-            }),
+            usage: 'necessary',
             ...(jsdoc.warning && {
               warning: jsdoc.warning.description
             }),
             description: jsdoc.description.description,
             category: jsdoc.category!.name,
             lastModified: new Date(lastCommit?.date ?? new Date()).getTime(),
-            usage: await createHtmlCode(usage),
+            example: await createHtmlCode(example),
             apiParameters: jsdoc.apiParameters ?? [],
             contributors
           }

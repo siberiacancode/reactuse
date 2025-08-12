@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react';
  * @name useAudio
  * @description - Hook that manages audio playback with sprite support
  * @category Browser
- *
+ * @usage low
+
  * @browserapi Audio https://developer.mozilla.org/en-US/docs/Web/API/Audio
  *
  * @template Value The type of the value

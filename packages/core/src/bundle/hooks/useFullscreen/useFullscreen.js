@@ -6,6 +6,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useFullscreen
  * @description - Hook to handle fullscreen events
  * @category Browser
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element for fullscreen

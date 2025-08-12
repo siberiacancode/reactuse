@@ -44,6 +44,7 @@ export interface UseFullScreen {
  * @name useFullscreen
  * @description - Hook to handle fullscreen events
  * @category Browser
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element for fullscreen

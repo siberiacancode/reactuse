@@ -45,6 +45,7 @@ export interface UseDisplayMedia {
  * @name useDisplayMedia
  * @description - Hook that provides screen sharing functionality
  * @category Browser
+ * @usage low
  *
  * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia
  *

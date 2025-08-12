@@ -4,7 +4,8 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  * @name useDidUpdate
  * @description – Hook that triggers the effect callback on updates
  * @category Lifecycle
- *
+ * @usage necessary
+
  * @param {EffectCallback} effect The effect callback
  * @param {DependencyList} [deps] The dependencies list for the effect
  *

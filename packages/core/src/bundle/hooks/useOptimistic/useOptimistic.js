@@ -4,6 +4,7 @@ import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
  * @name useOptimistic
  * @description - Hook that allows get optimistic value before its update
  * @category Async
+ * @usage medium
  *
  * @template State The type of the state
  * @param {State} state The value to be returned initially and whenever no action is pending

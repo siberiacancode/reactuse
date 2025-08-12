@@ -17,6 +17,7 @@ const loadImage = async (src, options = {}) =>
  * @name useImage
  * @description - Hook that load an image in the browser
  * @category Elements
+ * @usage low
  *
  * @param {string} src The source of the image
  * @param {string} [options.srcset] The srcset of the image

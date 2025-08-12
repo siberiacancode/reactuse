@@ -34,7 +34,8 @@ export interface UseCounter {
  * @name useCounter
  * @description - Hook that manages a counter
  * @category State
- *
+ * @usage low
+
  * @overload
  * @param {number} [initialValue=0] The initial number value
  * @param {number} [options.min=Number.NEGATIVE_INFINITY] The min of count value

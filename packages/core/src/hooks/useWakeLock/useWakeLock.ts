@@ -24,6 +24,7 @@ export interface UseWakeLockReturn {
  * @name useWakeLock
  * @description - Hook that provides a wake lock functionality
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.wakeLock https://developer.mozilla.org/en-US/docs/Web/API/WakeLock
  *

@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
  * @name useOffsetPagination
  * @description - Hook that defines the logic when pagination
  * @category State
+ * @usage medium
  *
  * @param {UseOffsetPaginationOptions} options - The options for the hook
  * @param {number} [options.total] - The total number of items

@@ -36,6 +36,7 @@ export interface UseEyeDropperReturn {
  * @name useEyeDropper
  * @description - Hook that gives you access to the eye dropper
  * @category Browser
+ * @usage low
  *
  * @browserapi EyeDropper https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper
  *

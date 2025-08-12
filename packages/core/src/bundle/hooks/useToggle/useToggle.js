@@ -3,6 +3,7 @@ import { useReducer } from 'react';
  * @name useToggle
  * @description - Hook that create toggle
  * @category State
+ * @usage high
  *
  * @template Value The type of the value
  * @param {Value[]} [values=[false, true]] The values to toggle

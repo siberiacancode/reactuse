@@ -5,6 +5,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useActiveElement
  * @description - Hook that returns the active element
  * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} [target=window] The target element to observe active element changes

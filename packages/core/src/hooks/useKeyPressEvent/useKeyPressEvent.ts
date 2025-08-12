@@ -41,6 +41,7 @@ export interface UseKeyPressEvent {
  * @name useKeyPressEvent
  * @description - Hook that listens for key press events on specified targets
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {UseKeyPressEventKey} key The key or array of keys to listen for.

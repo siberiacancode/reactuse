@@ -28,6 +28,7 @@ export interface UseKeyPress {
  * @name useKeyPress
  * @description - Hook that listens for key press events
  * @category Sensors
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} [target=window] The target to attach the event listeners to

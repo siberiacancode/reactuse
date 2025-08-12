@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
  * @name useEffectOnce
  * @description - Hook that runs an effect only once. Please do not use it in production code!
  * @category Humor
+ * @usage low
  *
  * @warning - This hook will run effect only once even in strict mode. Please do not use it in production code!
  *

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
  * @name useWindowFocus
  * @description - Hook that provides the current focus state of the window
  * @category Elements
+ * @usage low
  *
  * @returns {boolean} The current focus state of the window
  *

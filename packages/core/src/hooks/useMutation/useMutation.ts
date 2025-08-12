@@ -39,6 +39,7 @@ export interface RequestOptions<Data> extends UseMutationOptions<Data> {
  * @name useMutation
  * @description - Hook that defines the logic when mutate data
  * @category Async
+ * @usage high
  *
  * @template Body The type of the body
  * @template Data The type of the data

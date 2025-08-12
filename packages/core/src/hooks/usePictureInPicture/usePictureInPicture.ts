@@ -42,6 +42,7 @@ export interface UsePictureInPicture {
  * @name usePictureInPicture
  * @description - Hook that provides Picture-in-Picture functionality for video elements
  * @category Browser
+ * @usage low
  *
  * @browserapi window.PictureInPicture https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API
  *

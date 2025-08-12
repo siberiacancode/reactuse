@@ -4,6 +4,7 @@ export const SCRIPT_STATUS_ATTRIBUTE_NAME = 'script-status';
  * @name useScript
  * @description - Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
  * @category Elements
+ * @usage low
  *
  * @param {string} src The source of the script
  * @param {UseScriptOptions} [options] The options of the script extends from attributes script tag

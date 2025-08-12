@@ -4,6 +4,7 @@ import { flushSync } from 'react-dom';
  * @name useQueue
  * @description - Hook that manages a queue
  * @category State
+ * @usage medium
  *
  * @template Value The type of the value
  * @param {Value[]} [initialValue=[]] The initial value of the queue

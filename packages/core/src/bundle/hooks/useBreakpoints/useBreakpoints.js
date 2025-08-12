@@ -5,6 +5,7 @@ const match = (query) => window.matchMedia(query).matches;
  * @name useBreakpoints
  * @description - Hook that manages breakpoints
  * @category Browser
+ * @usage medium
  *
  * @template {string} Breakpoint The name of the breakpoint
  * @param {Breakpoints<Breakpoint>} breakpoints The breakpoints to use

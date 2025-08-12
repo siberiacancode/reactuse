@@ -5,6 +5,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useScrollIntoView
  * @description - Hook that provides functionality to scroll an element into view
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element to scroll into view

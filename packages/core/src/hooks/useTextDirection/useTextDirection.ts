@@ -34,6 +34,7 @@ export interface UseTextDirection {
  * @name useTextDirection
  * @description - Hook that can get and set the direction of the element
  * @category Elements
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} [target=document.querySelector('html')] The target element to observe

@@ -59,7 +59,8 @@ export interface UseEventListener {
  * @name useEventListener
  * @description - Hook that attaches an event listener to the specified target
  * @category Browser
- *
+ * @usage necessary
+
  * @overload
  * @template Event Key of window event map
  * @param {Window} target The window object to attach the event listener to

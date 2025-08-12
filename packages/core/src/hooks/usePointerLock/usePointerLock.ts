@@ -18,6 +18,7 @@ interface UsePointerLockReturn {
  * @name usePointerLock
  * @description - Hook that provides reactive pointer lock
  * @category Browser
+ * @usage low
  *
  * @browserapi pointerLockElement https://developer.mozilla.org/en-US/docs/Web/API/Document/pointerLockElement
  *

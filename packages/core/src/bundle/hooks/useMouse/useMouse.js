@@ -5,6 +5,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useMouse
  * @description - Hook that manages a mouse position
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {HookTarget} [target=window] The target element to manage the mouse position for

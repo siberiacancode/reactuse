@@ -6,6 +6,7 @@ const DEFAULT_THRESHOLD_TIME = 400;
  * @name useLongPress
  * @description - Hook that defines the logic when long pressing an element
  * @category Elements
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} target The target element to be long pressed

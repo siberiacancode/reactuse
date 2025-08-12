@@ -13,7 +13,9 @@ const contributors = ref<Contributor[]>(data.contributors);
 
 <template>
   <div class="mt-20">
-    <div class="mb-10 text-center text-6xl font-bold">Team & Contributors</div>
+    <div class="mb-10 text-center text-6xl font-bold">
+      Team & Contributors
+    </div>
 
     <div class="flex items-center justify-center">
       <a
@@ -25,7 +27,7 @@ const contributors = ref<Contributor[]>(data.contributors);
           src="https://avatars.githubusercontent.com/u/122668137?s=200&v=4"
           alt="SIBERIA CAN CODE"
           class="size-10 rounded-lg"
-        />
+        >
         <div class="text-2xl font-bold">SIBERIA CAN CODE</div>
       </a>
     </div>
@@ -43,7 +45,7 @@ const contributors = ref<Contributor[]>(data.contributors);
             :alt="contributor.name"
             class="size-6 rounded-full"
             loading="lazy"
-          />
+          >
           <div class="text-xs">
             {{ contributor.name }}
           </div>

@@ -3,6 +3,7 @@ import { useRef } from 'react';
  * @name useRenderInfo
  * @description - Hook for getting information about component rerender
  * @category Debug
+ * @usage low
  *
  * @param {string} [name='Unknown'] Component name
  * @param {boolean} [log=true] Toggle logging

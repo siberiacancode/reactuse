@@ -21,7 +21,8 @@ export interface UseDeviceMotionParams {
 /**
  * @name useDeviceMotion
  * @description - Hook that work with device motion
- * @category Utilities
+ * @category Sensors
+ * @usage low
  *
  * @browserapi DeviceMotionEvent https://developer.mozilla.org/en-US/docs/Web/API/Window/DeviceMotionEvent
  *

@@ -9,6 +9,7 @@ import {
  * @name useUrlSearchParams
  * @description - Hook that provides reactive URLSearchParams
  * @category State
+ * @usage high
  *
  * @overload
  * @template Value The type of the url param values

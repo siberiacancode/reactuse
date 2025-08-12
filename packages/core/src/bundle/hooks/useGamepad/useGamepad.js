@@ -4,6 +4,7 @@ import { useRaf } from '../useRaf/useRaf';
  * @name useGamepad
  * @description - Hook for getting information about gamepad
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.getGamepads https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getGamepads
  *

@@ -37,6 +37,7 @@ export interface UseKeysPressed {
  * @name useKeysPressed
  * @description Tracks all currently pressed keyboard keys and their codes
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {HookTarget | Window} target DOM element or ref to attach keyboard listeners to

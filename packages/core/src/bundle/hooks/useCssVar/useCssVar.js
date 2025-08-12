@@ -5,7 +5,8 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useCssVar
  * @description - Hook that returns the value of a css variable
  * @category Browser
- *
+ * @usage low
+
  * @overload
  * @param {string} key The CSS variable key
  * @param {string} initialValue The initial value of the CSS variable

@@ -10,6 +10,7 @@ export type UsePerformanceObserverOptions = PerformanceObserverInit & {
  * @name usePerformanceObserver
  * @description - Hook that allows you to observe performance entries
  * @category Sensors
+ * @usage low
  *
  * @browserapi PerformanceObserver https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver
  *

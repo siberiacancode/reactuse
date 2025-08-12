@@ -9,6 +9,9 @@ export type UseRafStateReturn<Value> = [Value, (value: Value) => void];
  * @name useRafState
  * @description - Hook that returns the value and a function to set the value
  * @category State
+ * @usage low
+ *
+ * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
  *
  * @template Value The type of the value
  * @param {Value} initialValue The initial value

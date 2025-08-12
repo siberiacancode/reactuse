@@ -19,6 +19,7 @@ export const isHotkeyMatch = (hotkey, keys) =>
  * @name useHotkeys
  * @description - Hook that listens for hotkeys
  * @category Sensors
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} [target=window] The target element to attach the event listener to

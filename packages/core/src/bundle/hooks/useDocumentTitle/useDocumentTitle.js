@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react';
  * @name useDocumentTitle
  * @description - Hook that manages the document title and allows updating it
  * @category Browser
- *
+ * @usage low
+
  * @browserapi document.title https://developer.mozilla.org/en-US/docs/Web/API/Document/title
  *
  * @param {string} [initialValue] The initial title. If not provided, the current document title will be used

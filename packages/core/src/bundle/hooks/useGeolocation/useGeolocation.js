@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
  * @name useGeolocation
  * @description - Hook that returns the current geolocation
  * @category Browser
+ * @usage medium
  *
  * @browserapi navigator.geolocation https://developer.mozilla.org/en-US/docs/Web/API/Navigator/geolocation
  *

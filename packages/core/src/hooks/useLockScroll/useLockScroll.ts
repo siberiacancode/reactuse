@@ -42,7 +42,7 @@ export interface UseLockScroll {
  * @name useLockScroll
  * @description - Hook that locks scroll on an element or document body
  * @category Elements
- *
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} [target=document.body] The target element to lock scroll on

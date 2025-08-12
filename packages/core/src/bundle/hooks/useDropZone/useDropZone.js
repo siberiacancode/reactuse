@@ -5,7 +5,8 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useDropZone
  * @description - Hook that provides drop zone functionality
  * @category Elements
- *
+ * @usage medium
+
  * @overload
  * @template Target The target element
  * @param {Target} target The target element drop zone's

@@ -29,7 +29,7 @@ export const getContentItems = async () => {
 
       const jsdoc = parseHookJsdoc(match[0].trim());
 
-      if (!jsdoc.description || !jsdoc.usages.length) {
+      if (!jsdoc.description || !jsdoc.examples.length) {
         console.error(`No content found for ${item.name}`);
         return null;
       }

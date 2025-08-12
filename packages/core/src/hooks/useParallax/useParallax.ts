@@ -51,6 +51,7 @@ export interface UseParallax {
  * @name useParallax
  * @description - Hook to help create parallax effect
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element for the parallax effect

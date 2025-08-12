@@ -6,6 +6,7 @@ import { useStorage } from '../useStorage/useStorage';
  * @name useSessionStorage
  * @description - Hook that manages session storage value
  * @category State
+ * @usage medium
  *
  * @browserapi sessionStorage https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
  *

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
  * @name useBluetooth
  * @description - Hook for getting information about bluetooth
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.bluetooth https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth
  *

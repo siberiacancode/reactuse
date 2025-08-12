@@ -46,6 +46,7 @@ interface UseEventSourceReturn<Data = any> {
  * @name useEventSource
  * @description - Hook that provides a reactive wrapper for event source
  * @category Browser
+ * @usage low
  *
  * @browserapi EventSource https://developer.mozilla.org/en-US/docs/Web/API/EventSource
  *

@@ -3,6 +3,7 @@ import { useMediaQuery } from '../useMediaQuery/useMediaQuery';
  * @name usePreferredContrast
  * @description - Hook that returns the contrast preference
  * @category User
+ * @usage medium
  *
  * @returns {UsePreferredContrastReturn} The contrast preference
  *

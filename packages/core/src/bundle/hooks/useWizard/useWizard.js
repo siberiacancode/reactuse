@@ -3,6 +3,7 @@ import { useState } from 'react';
  * @name useWizard
  * @description - Hook that manages a wizard
  * @category State
+ * @usage medium
  *
  * @param {WizardItem<WizardStepId>[]} map The map of the wizard
  * @param {WizardStepId} [initialStepId] The initial step id

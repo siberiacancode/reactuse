@@ -23,6 +23,7 @@ export interface UseVibrateReturn {
  * @name useVibrate
  * @description - Hook that provides vibrate api
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.vibrate https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate
  *

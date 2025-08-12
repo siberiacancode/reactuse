@@ -5,6 +5,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useRightClick
  * @description - Hook that handles right-click events and long press on mobile devices
  * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element for right-click handling

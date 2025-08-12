@@ -41,6 +41,7 @@ export interface useOrientationReturn {
  * @name useOrientation
  * @description - Hook that provides the current screen orientation
  * @category Sensors
+ * @usage low
  *
  * @browserapi screen.orientation https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
  *

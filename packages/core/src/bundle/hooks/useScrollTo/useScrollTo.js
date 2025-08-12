@@ -5,6 +5,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useScrollTo
  * @description - Hook for scrolling to a specific element
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element for scrolling to

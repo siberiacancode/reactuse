@@ -6,6 +6,7 @@ const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
  * @name useScroll
  * @description - Hook that allows you to control scroll a element
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @template Target The target element

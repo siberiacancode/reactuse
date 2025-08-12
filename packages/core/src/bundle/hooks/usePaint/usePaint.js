@@ -95,6 +95,7 @@ export class Paint {
  * @name usePaint
  * @description - Hook that allows you to draw in a specific area
  * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element to be painted

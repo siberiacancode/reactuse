@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
  * @name useRenderCount
  * @description - Hook returns count component render times
  * @category Debug
+ * @usage low
  *
  * @returns {number} A number which determines how many times component renders
  *

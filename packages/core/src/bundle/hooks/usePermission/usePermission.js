@@ -4,6 +4,7 @@ import { useEvent } from '../useEvent/useEvent';
  *  @name usePermission
  *  @description - Hook that gives you the state of permission
  *  @category Browser
+ *  @usage medium
  *
  *  @browserapi navigator.permissions https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions
  *

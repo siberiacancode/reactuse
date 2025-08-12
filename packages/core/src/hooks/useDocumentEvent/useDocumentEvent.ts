@@ -8,7 +8,8 @@ import { useEventListener } from '../useEventListener/useEventListener';
  * @name useDocumentEvent
  * @description - Hook attaches an event listener to the document object for the specified event
  * @category Browser
- *
+ * @usage low
+
  * @template Event Key of document event map.
  * @param {Event} event The event to listen for.
  * @param {(event: DocumentEventMap[Event]) => void} listener The callback function to be executed when the event is triggered

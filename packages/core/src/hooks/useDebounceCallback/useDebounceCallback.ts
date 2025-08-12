@@ -8,6 +8,7 @@ export type DebouncedCallback<Params extends unknown[]> = ((...args: Params) => 
  * @name useDebounceCallback
  * @description - Hook that creates a debounced callback
  * @category Utilities
+ * @usage high
  *
  * @template Params The type of the params
  * @template Return The type of the return

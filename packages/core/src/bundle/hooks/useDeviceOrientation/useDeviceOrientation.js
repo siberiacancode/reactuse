@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
  * @name useDeviceOrientation
  * @description - Hook that provides the current device orientation
  * @category Sensors
+ * @usage low
  *
  * @browserapi DeviceOrientationEvent https://developer.mozilla.org/en-US/docs/Web/API/Window/DeviceOrientationEvent
  *

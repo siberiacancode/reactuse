@@ -3,6 +3,7 @@ import { useMemo, useRef } from 'react';
  * @name useLatest
  * @description - Hook that returns the stable reference of the value
  * @category Utilities
+ * @usage medium
  *
  * @template Value The type of the value
  * @param {Value} value The value to get the previous value

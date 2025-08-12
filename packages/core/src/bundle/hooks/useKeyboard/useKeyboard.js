@@ -5,6 +5,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @name useKeyboard
  * @description - Hook that helps to listen for keyboard events
  * @category Sensors
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} target The target to attach the event listeners to
