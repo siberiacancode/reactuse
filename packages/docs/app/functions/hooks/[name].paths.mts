@@ -90,7 +90,7 @@ export default {
 
         const jsdoc = parseHookJsdoc(jsdocMatch);
 
-        if (!jsdoc.description) {
+        if (!jsdoc.description || !jsdoc.examples.length) {
           console.error(`No content found for ${element.name}`);
           return null;
         }
@@ -137,7 +137,7 @@ export default {
             ...(typeDeclarations && {
               typeDeclarations: await createHtmlCode(typeDeclarations)
             }),
-            usage: 'necessary',
+            usage: jsdoc.usage!.name ?? 'low',
             ...(jsdoc.warning && {
               warning: jsdoc.warning.description
             }),
