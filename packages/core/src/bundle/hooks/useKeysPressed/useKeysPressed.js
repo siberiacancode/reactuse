@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
- * Hook that tracks which keyboard keys are currently pressed
- *
  * @name useKeysPressed
  * @description Tracks all currently pressed keyboard keys and their codes
  * @category Sensors

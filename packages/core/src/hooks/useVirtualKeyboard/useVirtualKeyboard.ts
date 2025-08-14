@@ -31,6 +31,7 @@ export interface UseVirtualKeyboardReturn {
  * @name useVirtualKeyboard
  * @description - Hook that manages virtual keyboard state
  * @category Browser
+ * @usage low
  *
  * @browserapi VirtualKeyboard https://developer.mozilla.org/en-US/docs/Web/API/VirtualKeyboard
  *

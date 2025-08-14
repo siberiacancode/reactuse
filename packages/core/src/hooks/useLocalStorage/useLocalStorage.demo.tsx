@@ -1,7 +1,9 @@
 import { useLocalStorage } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const { value, set, remove } = useLocalStorage('siberiacancode-use-local-storage', 0);
+  const { value, set, remove } = useLocalStorage('siberiacancode-use-local-storage', 5);
+
+  console.log(value);
 
   return (
     <div>

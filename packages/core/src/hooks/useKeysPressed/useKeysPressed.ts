@@ -32,8 +32,6 @@ export interface UseKeysPressed {
 }
 
 /**
- * Hook that tracks which keyboard keys are currently pressed
- *
  * @name useKeysPressed
  * @description Tracks all currently pressed keyboard keys and their codes
  * @category Sensors

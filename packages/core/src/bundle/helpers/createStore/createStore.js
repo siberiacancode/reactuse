@@ -3,6 +3,7 @@ import { useSyncExternalStore } from 'react';
  * @name createStore
  * @description - Creates a store with state management capabilities
  * @category Helpers
+ * @usage medium
  *
  * @template Value - The type of the store state
  * @param {StateCreator<Value>} createState - Function that initializes the store state
