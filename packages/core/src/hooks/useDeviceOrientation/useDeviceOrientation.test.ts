@@ -1,12 +1,12 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useDeviceOrientation } from './useDeviceOrientation';
 
-beforeAll(() => {
-  Object.defineProperty(window, 'DeviceOrientationEvent', {
-    configurable: true,
-    value: {},
-    writable: true
+beforeEach(() => {
+  Object.assign(globalThis.window, {
+    DeviceOrientationEvent: {}
   });
 });
 
@@ -18,6 +18,25 @@ it('Should use on device orientation', () => {
   expect(result.current.value.beta).toBeNull();
   expect(result.current.value.gamma).toBeNull();
   expect(result.current.value.absolute).toBeFalsy();
+});
+
+it('Should use on device orientation on server side', () => {
+  const { result } = renderHookServer(useDeviceOrientation);
+
+  expect(result.current.supported).toBeFalsy();
+  expect(result.current.value.alpha).toBeNull();
+  expect(result.current.value.beta).toBeNull();
+  expect(result.current.value.gamma).toBeNull();
+  expect(result.current.value.absolute).toBeFalsy();
+});
+
+it('Should use on device orientation for unsupported', () => {
+  Object.assign(globalThis.window, {
+    DeviceOrientationEvent: undefined
+  });
+  const { result } = renderHook(useDeviceOrientation);
+
+  expect(result.current.supported).toBeFalsy();
 });
 
 it('Should set new values when device orientation change', () => {
@@ -42,7 +61,7 @@ it('Should set new values when device orientation change', () => {
 });
 
 it('Should cleanup on unmount', () => {
-  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const removeEventListenerSpy = vi.spyOn(globalThis.window, 'removeEventListener');
   const { unmount } = renderHook(useDeviceOrientation);
 
   unmount();

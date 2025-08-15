@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -20,6 +21,15 @@ targets.forEach((target) => {
   describe(`${target}`, () => {
     it('Should use click outside', () => {
       const { result } = renderHook(() => {
+        if (target) return useClickOutside(target, vi.fn()) as unknown as StateRef<HTMLDivElement>;
+        return useClickOutside(vi.fn());
+      });
+
+      if (!target) expect(result.current).toBeTypeOf('function');
+    });
+
+    it('Should use click outside on server side', () => {
+      const { result } = renderHookServer(() => {
         if (target) return useClickOutside(target, vi.fn()) as unknown as StateRef<HTMLDivElement>;
         return useClickOutside(vi.fn());
       });

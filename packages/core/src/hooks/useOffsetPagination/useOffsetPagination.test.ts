@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useOffsetPagination } from './useOffsetPagination';
 
 it('Should use offset pagination', () => {
@@ -8,8 +10,22 @@ it('Should use offset pagination', () => {
   expect(result.current.page).toBe(1);
   expect(result.current.pageSize).toBe(10);
   expect(result.current.pageCount).toBe(Number.POSITIVE_INFINITY);
-  expect(result.current.isFirstPage).toBe(true);
-  expect(result.current.isLastPage).toBe(false);
+  expect(result.current.isFirstPage).toBeTruthy();
+  expect(result.current.isLastPage).toBeFalsy();
+  expect(result.current.next).toBeTypeOf('function');
+  expect(result.current.prev).toBeTypeOf('function');
+  expect(result.current.setPage).toBeTypeOf('function');
+  expect(result.current.setPageSize).toBeTypeOf('function');
+});
+
+it('Should use offset pagination on server side', () => {
+  const { result } = renderHookServer(useOffsetPagination);
+
+  expect(result.current.page).toBe(1);
+  expect(result.current.pageSize).toBe(10);
+  expect(result.current.pageCount).toBe(Number.POSITIVE_INFINITY);
+  expect(result.current.isFirstPage).toBeTruthy();
+  expect(result.current.isLastPage).toBeFalsy();
   expect(result.current.next).toBeTypeOf('function');
   expect(result.current.prev).toBeTypeOf('function');
   expect(result.current.setPage).toBeTypeOf('function');
@@ -28,8 +44,8 @@ it('Should set initial options', () => {
   expect(result.current.page).toBe(3);
   expect(result.current.pageSize).toBe(20);
   expect(result.current.pageCount).toBe(5);
-  expect(result.current.isFirstPage).toBe(false);
-  expect(result.current.isLastPage).toBe(false);
+  expect(result.current.isFirstPage).toBeFalsy();
+  expect(result.current.isLastPage).toBeFalsy();
 });
 
 it('Should calculate page count', () => {
@@ -52,30 +68,30 @@ it('Should return minimum one page when total is zero', () => {
   );
 
   expect(result.current.pageCount).toBe(1);
-  expect(result.current.isFirstPage).toBe(true);
-  expect(result.current.isLastPage).toBe(true);
+  expect(result.current.isFirstPage).toBeTruthy();
+  expect(result.current.isLastPage).toBeTruthy();
 });
 
 it('Should detect first page', () => {
   const { result } = renderHook(() =>
     useOffsetPagination({ initialPage: 1, total: 100, initialPageSize: 10 })
   );
-  expect(result.current.isFirstPage).toBe(true);
+  expect(result.current.isFirstPage).toBeTruthy();
 
   act(() => result.current.next());
 
-  expect(result.current.isFirstPage).toBe(false);
+  expect(result.current.isFirstPage).toBeFalsy();
 });
 
 it('Should detect last page', () => {
   const { result } = renderHook(() =>
     useOffsetPagination({ initialPage: 9, total: 100, initialPageSize: 10 })
   );
-  expect(result.current.isLastPage).toBe(false);
+  expect(result.current.isLastPage).toBeFalsy();
 
   act(() => result.current.next());
 
-  expect(result.current.isLastPage).toBe(true);
+  expect(result.current.isLastPage).toBeTruthy();
 });
 
 it('Should go to next page', () => {
@@ -157,7 +173,7 @@ it('Should not go beyond last page on next', () => {
   );
 
   expect(result.current.page).toBe(10);
-  expect(result.current.isLastPage).toBe(true);
+  expect(result.current.isLastPage).toBeTruthy();
 
   act(() => result.current.next());
 
@@ -176,7 +192,7 @@ it('Should not go before first page on prev', () => {
     })
   );
 
-  expect(result.current.isFirstPage).toBe(true);
+  expect(result.current.isFirstPage).toBeTruthy();
 
   act(() => result.current.prev());
 

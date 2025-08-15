@@ -19,7 +19,8 @@ import { useEffect, useRef, useState } from 'react';
  * const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } = useSpeechSynthesis();
  */
 export const useSpeechSynthesis = (options = {}) => {
-  const supported = typeof window !== 'undefined' && 'speechSynthesis' in window;
+  const supported =
+    typeof window !== 'undefined' && 'speechSynthesis' in window && !!window.speechSynthesis;
   const { text = '', lang = 'en-US', pitch = 1, rate = 1, voice = null, volume = 1 } = options;
   const [playing, setPlaying] = useState(false);
   const [status, setStatus] = useState('init');

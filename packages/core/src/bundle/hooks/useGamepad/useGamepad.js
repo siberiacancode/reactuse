@@ -14,7 +14,8 @@ import { useRaf } from '../useRaf/useRaf';
  * const { supported, gamepads, active } = useGamepad();
  */
 export const useGamepad = () => {
-  const supported = typeof navigator !== 'undefined' && 'getGamepads' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'getGamepads' in navigator && !!navigator.getGamepads;
   const [gamepads, setGamepads] = useState({});
   const createGamepad = (gamepad) => {
     const hapticActuators = [];

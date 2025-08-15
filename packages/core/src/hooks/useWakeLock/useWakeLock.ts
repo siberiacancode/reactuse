@@ -35,7 +35,8 @@ export interface UseWakeLockReturn {
  * const { supported, active, request, release } = useWakeLock();
  */
 export const useWakeLock = (options?: UseWakeLockOptions): UseWakeLockReturn => {
-  const supported = typeof navigator !== 'undefined' && 'wakeLock' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'wakeLock' in navigator && !!navigator.wakeLock;
 
   const [active, setActive] = useState(false);
   const sentinel = useRef<WakeLockSentinel>(undefined);

@@ -1,5 +1,7 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useMount } from './useMount';
 
 it('Should use mount', () => {
@@ -7,6 +9,13 @@ it('Should use mount', () => {
   renderHook(() => useMount(callback));
 
   expect(callback).toHaveBeenCalled();
+});
+
+it('Should use mount on server side', () => {
+  const callback = vi.fn();
+  renderHookServer(() => useMount(callback));
+
+  expect(callback).not.toHaveBeenCalled();
 });
 
 it('Should not call callback after rerender', () => {

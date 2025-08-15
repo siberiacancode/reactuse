@@ -1,9 +1,21 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useCounter } from './useCounter';
 
 it('Should use counter', () => {
   const { result } = renderHook(useCounter);
+
+  expect(result.current.value).toBe(0);
+  expect(result.current.inc).toBeTypeOf('function');
+  expect(result.current.dec).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+  expect(result.current.set).toBeTypeOf('function');
+});
+
+it('Should use counter on server side', () => {
+  const { result } = renderHookServer(useCounter);
 
   expect(result.current.value).toBe(0);
   expect(result.current.inc).toBeTypeOf('function');

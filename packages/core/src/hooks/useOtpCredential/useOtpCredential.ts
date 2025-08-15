@@ -67,6 +67,9 @@ export interface UseOtpCredential {
  * useOtpCredential({ onSuccess: (credential) => console.log(credential), onError: (error) => console.log(error) });
  */
 export const useOtpCredential = ((...params: any[]) => {
+  const supported =
+    typeof navigator !== 'undefined' && 'OTPCredential' in navigator && !!navigator.OTPCredential;
+
   const onSuccess =
     typeof params[0] === 'function'
       ? (params[0] as UseOtpCredentialCallback | undefined)
@@ -77,7 +80,6 @@ export const useOtpCredential = ((...params: any[]) => {
       ? (params[0] as UseOtpCredentialParams | undefined)?.onError
       : undefined;
 
-  const supported = typeof navigator !== 'undefined' && 'OTPCredential' in window;
   const [aborted, setAborted] = useState(false);
 
   const abortControllerRef = useRef<AbortController>(new AbortController());

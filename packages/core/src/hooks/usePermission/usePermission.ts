@@ -56,7 +56,8 @@ export const usePermission = (
   permissionDescriptorName: UsePermissionName,
   options?: UsePermissionOptions
 ) => {
-  const supported = typeof navigator !== 'undefined' && 'permissions' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'permissions' in navigator && !!navigator.permissions;
   const [state, setState] = useState<PermissionState>('prompt');
   const enabled = options?.enabled ?? true;
 

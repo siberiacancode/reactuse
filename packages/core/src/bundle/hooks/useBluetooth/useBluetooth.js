@@ -16,7 +16,8 @@ import { useEffect, useState } from 'react';
  * const { supported, connected, device, requestDevice, server } = useBluetooth(options);
  */
 export const useBluetooth = (options) => {
-  const supported = typeof navigator !== 'undefined' && 'bluetooth' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'bluetooth' in navigator && !!navigator.bluetooth;
   const { acceptAllDevices = false, filters, optionalServices } = options ?? {};
   const [connected, setIsConnected] = useState(false);
   const [device, setDevice] = useState(undefined);

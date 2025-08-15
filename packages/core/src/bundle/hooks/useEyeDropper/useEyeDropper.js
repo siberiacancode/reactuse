@@ -14,7 +14,7 @@ import { useState } from 'react';
  * const { supported, value, open } = useEyeDropper();
  */
 export const useEyeDropper = (initialValue = undefined) => {
-  const supported = typeof window !== 'undefined' && 'EyeDropper' in window;
+  const supported = typeof window !== 'undefined' && 'EyeDropper' in window && !!window.EyeDropper;
   const [value, setValue] = useState(initialValue);
   const open = async (colorSelectionOptions) => {
     if (!window.EyeDropper) throw new Error('EyeDropper is not supported');

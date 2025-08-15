@@ -13,7 +13,10 @@ import { useEffect, useState } from 'react';
  * const { supported, lock, unlock, element } = usePointerLock();
  */
 export const usePointerLock = () => {
-  const supported = typeof document !== 'undefined' && 'pointerLockElement' in document;
+  const supported =
+    typeof document !== 'undefined' &&
+    'pointerLockElement' in document &&
+    !!document.pointerLockElement;
   const [element, setElement] = useState();
   useEffect(() => {
     if (!supported) return;

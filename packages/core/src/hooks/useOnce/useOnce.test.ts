@@ -1,6 +1,8 @@
 import { renderHook } from '@testing-library/react';
 import React from 'react';
 
+import { renderHookServer } from '@/tests';
+
 import { useOnce } from './useOnce';
 
 it('Should use once', () => {
@@ -8,6 +10,13 @@ it('Should use once', () => {
   renderHook(() => useOnce(callback));
 
   expect(callback).toHaveBeenCalled();
+});
+
+it('Should use once on server side', () => {
+  const callback = vi.fn();
+  renderHookServer(() => useOnce(callback));
+
+  expect(callback).not.toHaveBeenCalled();
 });
 
 it('Should use once even in strict mode', () => {

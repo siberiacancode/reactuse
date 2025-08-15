@@ -37,7 +37,8 @@ export const useBroadcastChannel = <Data = unknown>(
   name: string,
   callback?: (data: Data) => void
 ): UseBroadcastChannelReturn<Data> => {
-  const supported = typeof window !== 'undefined' && 'BroadcastChannel' in window;
+  const supported =
+    typeof window !== 'undefined' && 'BroadcastChannel' in window && !!window.BroadcastChannel;
 
   const [closed, setClosed] = useState(false);
   const [data, setData] = useState<Data>();

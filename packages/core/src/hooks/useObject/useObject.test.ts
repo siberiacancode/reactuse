@@ -1,9 +1,25 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useObject } from './useObject';
 
 it('Should use object', () => {
   const { result } = renderHook(() => useObject({ a: 1, b: 2, c: 3 }));
+
+  expect(result.current.value).toEqual({ a: 1, b: 2, c: 3 });
+  expect(result.current.set).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+  expect(result.current.remove).toBeTypeOf('function');
+  expect(result.current.clear).toBeTypeOf('function');
+  expect(result.current.has).toBeTypeOf('function');
+  expect(result.current.keys).toBeTypeOf('object');
+  expect(result.current.empty).toBeTypeOf('boolean');
+  expect(result.current.size).toBeTypeOf('number');
+});
+
+it('Should use object on server side', () => {
+  const { result } = renderHookServer(() => useObject({ a: 1, b: 2, c: 3 }));
 
   expect(result.current.value).toEqual({ a: 1, b: 2, c: 3 });
   expect(result.current.set).toBeTypeOf('function');
@@ -74,9 +90,9 @@ it('Should clear object', () => {
 it('Should check if property exists', () => {
   const { result } = renderHook(() => useObject({ a: 1, b: 2 }));
 
-  expect(result.current.has('a')).toBe(true);
-  expect(result.current.has('b')).toBe(true);
-  expect(result.current.has('c' as any)).toBe(false);
+  expect(result.current.has('a')).toBeTruthy();
+  expect(result.current.has('b')).toBeTruthy();
+  expect(result.current.has('c' as any)).toBeFalsy();
 });
 
 it('Should return object keys', () => {
@@ -98,11 +114,11 @@ it('Should update keys when object changes', () => {
 it('Should check if object is empty', () => {
   const { result } = renderHook(() => useObject({}));
 
-  expect(result.current.empty).toBe(true);
+  expect(result.current.empty).toBeTruthy();
 
   act(() => result.current.set({ a: 1 }));
 
-  expect(result.current.empty).toBe(false);
+  expect(result.current.empty).toBeFalsy();
 });
 
 it('Should return object size', () => {
@@ -120,7 +136,7 @@ describe('Empty object', () => {
     const { result } = renderHook(() => useObject({}));
 
     expect(result.current.value).toEqual({});
-    expect(result.current.empty).toBe(true);
+    expect(result.current.empty).toBeTruthy();
     expect(result.current.size).toBe(0);
     expect(result.current.keys).toEqual([]);
   });
@@ -131,7 +147,7 @@ describe('Empty object', () => {
     act(() => result.current.set({ a: 1, b: 2 }));
 
     expect(result.current.value).toEqual({ a: 1, b: 2 });
-    expect(result.current.empty).toBe(false);
+    expect(result.current.empty).toBeFalsy();
     expect(result.current.size).toBe(2);
   });
 });

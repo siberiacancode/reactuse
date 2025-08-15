@@ -49,7 +49,7 @@ export interface UseEyeDropperReturn {
 export const useEyeDropper = (
   initialValue: string | undefined = undefined
 ): UseEyeDropperReturn => {
-  const supported = typeof window !== 'undefined' && 'EyeDropper' in window;
+  const supported = typeof window !== 'undefined' && 'EyeDropper' in window && !!window.EyeDropper;
   const [value, setValue] = useState(initialValue);
 
   const open = async (colorSelectionOptions?: ColorSelectionOptions) => {

@@ -15,7 +15,8 @@ import { useEffect, useRef, useState } from 'react';
  * const { supported, data, post, error } = useBroadcastChannel('channel');
  */
 export const useBroadcastChannel = (name, callback) => {
-  const supported = typeof window !== 'undefined' && 'BroadcastChannel' in window;
+  const supported =
+    typeof window !== 'undefined' && 'BroadcastChannel' in window && !!window.BroadcastChannel;
   const [closed, setClosed] = useState(false);
   const [data, setData] = useState();
   const [error, setError] = useState();

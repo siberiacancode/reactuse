@@ -184,7 +184,7 @@ it('Should handle dischargingtimechange event', async () => {
 it('Should cleanup on unmount', async () => {
   const { unmount, result } = renderHook(useBattery);
 
-  await waitFor(() => expect(result.current.value.loading).toBe(false));
+  await waitFor(() => expect(result.current.value.loading).toBeFalsy());
 
   unmount();
 

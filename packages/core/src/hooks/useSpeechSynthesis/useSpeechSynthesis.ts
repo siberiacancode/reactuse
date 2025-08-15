@@ -65,7 +65,8 @@ export interface UseSpeechSynthesisReturn {
 export const useSpeechSynthesis = (
   options: UseSpeechSynthesisOptions = {}
 ): UseSpeechSynthesisReturn => {
-  const supported = typeof window !== 'undefined' && 'speechSynthesis' in window;
+  const supported =
+    typeof window !== 'undefined' && 'speechSynthesis' in window && !!window.speechSynthesis;
 
   const { text = '', lang = 'en-US', pitch = 1, rate = 1, voice = null, volume = 1 } = options;
 

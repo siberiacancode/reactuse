@@ -14,7 +14,8 @@ import { useEffect, useRef, useState } from 'react';
  * const { supported, active, request, release } = useWakeLock();
  */
 export const useWakeLock = (options) => {
-  const supported = typeof navigator !== 'undefined' && 'wakeLock' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'wakeLock' in navigator && !!navigator.wakeLock;
   const [active, setActive] = useState(false);
   const sentinel = useRef(undefined);
   const immediately = options?.immediately ?? false;

@@ -13,7 +13,7 @@
  * const { share, supported } = useShare();
  */
 export const useShare = (params) => {
-  const supported = typeof navigator !== 'undefined' && 'share' in navigator;
+  const supported = typeof navigator !== 'undefined' && 'share' in navigator && !!navigator.share;
   const trigger = async (shareParams) => {
     if (!supported) return;
     const data = {

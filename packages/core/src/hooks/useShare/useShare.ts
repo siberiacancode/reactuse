@@ -33,7 +33,7 @@ export interface UseShareReturn {
  * const { share, supported } = useShare();
  */
 export const useShare = (params?: UseShareParams) => {
-  const supported = typeof navigator !== 'undefined' && 'share' in navigator;
+  const supported = typeof navigator !== 'undefined' && 'share' in navigator && !!navigator.share;
 
   const trigger = async (shareParams: ShareData) => {
     if (!supported) return;

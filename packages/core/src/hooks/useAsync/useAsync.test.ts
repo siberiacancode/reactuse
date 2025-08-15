@@ -1,5 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useAsync } from './useAsync';
 
 afterEach(() => {
@@ -8,6 +10,15 @@ afterEach(() => {
 
 it('Should use async', async () => {
   const { result } = renderHook(() => useAsync(() => Promise.resolve('data')));
+
+  expect(result.current.isLoading).toBeTruthy();
+  expect(result.current.isError).toBeFalsy();
+  expect(result.current.error).toBeUndefined();
+  expect(result.current.data).toBeUndefined();
+});
+
+it('Should use async on server side', async () => {
+  const { result } = renderHookServer(() => useAsync(() => Promise.resolve('data')));
 
   expect(result.current.isLoading).toBeTruthy();
   expect(result.current.isError).toBeFalsy();

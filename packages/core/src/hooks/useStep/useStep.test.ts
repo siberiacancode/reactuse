@@ -1,11 +1,25 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useStep } from './useStep';
 
 const STEPS = ['1', '2', '3'];
 
 it('Should use step', () => {
   const { result } = renderHook(() => useStep(STEPS.length));
+
+  expect(result.current.currentStep).toBe(1);
+  expect(result.current.counts).toBe(3);
+  expect(result.current.isFirst).toBeTruthy();
+  expect(result.current.isLast).toBeFalsy();
+  expect(result.current.next).toBeTypeOf('function');
+  expect(result.current.back).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+});
+
+it('Should use step on server side', () => {
+  const { result } = renderHookServer(() => useStep(STEPS.length));
 
   expect(result.current.currentStep).toBe(1);
   expect(result.current.counts).toBe(3);

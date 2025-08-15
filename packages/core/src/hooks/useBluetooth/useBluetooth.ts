@@ -41,7 +41,8 @@ export interface UseBluetoothOptions {
  * const { supported, connected, device, requestDevice, server } = useBluetooth(options);
  */
 export const useBluetooth = (options?: UseBluetoothOptions): UseBluetoothReturn => {
-  const supported = typeof navigator !== 'undefined' && 'bluetooth' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'bluetooth' in navigator && !!navigator.bluetooth;
   const { acceptAllDevices = false, filters, optionalServices } = options ?? {};
 
   const [connected, setIsConnected] = useState(false);

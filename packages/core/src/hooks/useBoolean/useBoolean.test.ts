@@ -1,9 +1,19 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useBoolean } from './useBoolean';
 
-it('Should use counter', () => {
+it('Should use boolean', () => {
   const { result } = renderHook(useBoolean);
+  const [on, toggle] = result.current;
+
+  expect(on).toBeFalsy();
+  expect(toggle).toBeTypeOf('function');
+});
+
+it('Should use boolean on server side', () => {
+  const { result } = renderHookServer(useBoolean);
   const [on, toggle] = result.current;
 
   expect(on).toBeFalsy();

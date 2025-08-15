@@ -13,13 +13,16 @@ import { useEffect, useState } from 'react';
  * const { supported, value } = useMemory();
  */
 export const useMemory = () => {
-  const supported = performance && 'memory' in performance && !!performance.memory;
+  const supported =
+    typeof performance !== 'undefined' && 'memory' in performance && !!performance.memory;
   const [value, setValue] = useState(
-    performance?.memory ?? {
-      jsHeapSizeLimit: 0,
-      totalJSHeapSize: 0,
-      usedJSHeapSize: 0
-    }
+    supported
+      ? performance.memory
+      : {
+          jsHeapSizeLimit: 0,
+          totalJSHeapSize: 0,
+          usedJSHeapSize: 0
+        }
   );
   useEffect(() => {
     if (!supported) return;

@@ -69,6 +69,15 @@ targets.forEach((target) => {
       if (!target) expect(result.current).toBeTypeOf('function');
     });
 
+    it('Should use auto scroll on server side', () => {
+      const { result } = renderHook(() => {
+        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        return useAutoScroll<HTMLElement>();
+      });
+
+      if (!target) expect(result.current).toBeTypeOf('function');
+    });
+
     it('Should auto scroll when content changes', () => {
       const { result } = renderHook(() => {
         if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;

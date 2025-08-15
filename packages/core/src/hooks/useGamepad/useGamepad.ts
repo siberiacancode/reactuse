@@ -32,7 +32,8 @@ export interface UseGamepadStateReturn {
  * const { supported, gamepads, active } = useGamepad();
  */
 export const useGamepad = () => {
-  const supported = typeof navigator !== 'undefined' && 'getGamepads' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'getGamepads' in navigator && !!navigator.getGamepads;
   const [gamepads, setGamepads] = useState<Record<number, Gamepad>>({});
 
   const createGamepad = (gamepad: Gamepad) => {

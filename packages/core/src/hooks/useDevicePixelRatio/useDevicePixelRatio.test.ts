@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 
 import { useDevicePixelRatio } from './useDevicePixelRatio';
 
@@ -31,19 +31,19 @@ const MockMediaQueryList = class MediaQueryList {
 };
 
 beforeEach(() => {
-  vi.stubGlobal('devicePixelRatio', 1);
-  vi.stubGlobal(
-    'matchMedia',
-    vi.fn().mockImplementation((query) => {
+  Object.assign(globalThis.window, {
+    devicePixelRatio: 1,
+    matchMedia: vi.fn().mockImplementation((query) => {
       const mockMediaQueryList = new MockMediaQueryList(query);
       return { ...mockMediaQueryList, media: query };
     })
-  );
+  });
+
   trigger.clear();
 });
 
 afterEach(() => {
-  vi.unstubAllGlobals();
+  vi.clearAllMocks();
   mockMediaQueryListAddEventListener.mockClear();
   mockMediaQueryListRemoveEventListener.mockClear();
 });
@@ -55,8 +55,17 @@ it('Should use device pixel ratio', () => {
   expect(result.current.supported).toBeTruthy();
 });
 
-it('Should correct return for unsupported matchMedia', () => {
-  vi.stubGlobal('matchMedia', undefined);
+it('Should use device pixel ratio on server side', () => {
+  const { result } = renderHookServer(useDevicePixelRatio);
+
+  expect(result.current.ratio).toEqual(1);
+  expect(result.current.supported).toBeFalsy();
+});
+
+it('Should use device pixel ratio for unsupported', () => {
+  Object.assign(globalThis.window, {
+    matchMedia: undefined
+  });
   const { result } = renderHook(useDevicePixelRatio);
 
   expect(result.current.ratio).toEqual(1);
@@ -64,7 +73,9 @@ it('Should correct return for unsupported matchMedia', () => {
 });
 
 it('Should correct return for unsupported devicePixelRatio', () => {
-  vi.stubGlobal('devicePixelRatio', undefined);
+  Object.assign(globalThis.window, {
+    devicePixelRatio: undefined
+  });
   const { result } = renderHook(useDevicePixelRatio);
 
   expect(result.current.ratio).toEqual(1);
@@ -75,9 +86,8 @@ it('Should handle media query change', () => {
   const { result } = renderHook(useDevicePixelRatio);
   expect(result.current.ratio).toEqual(1);
 
-  Object.defineProperty(window, 'devicePixelRatio', {
-    value: 3,
-    configurable: true
+  Object.assign(globalThis.window, {
+    devicePixelRatio: 3
   });
 
   expect(mockMediaQueryListAddEventListener).toHaveBeenCalledOnce();

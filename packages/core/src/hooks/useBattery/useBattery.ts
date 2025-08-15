@@ -53,6 +53,7 @@ export const useBattery = (): UseBatteryStateReturn => {
     typeof navigator !== 'undefined' &&
     'getBattery' in navigator &&
     typeof navigator.getBattery === 'function';
+
   const [value, setValue] = useState<UseBatteryValue>({
     loading: supported,
     level: 0,

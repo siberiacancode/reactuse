@@ -27,6 +27,10 @@ import { useRefState } from '../useRefState/useRefState';
  * const { ref, open, supported, enter, exit, toggle } = usePictureInPicture();
  */
 export const usePictureInPicture = (...params) => {
+  const supported =
+    typeof document !== 'undefined' &&
+    'pictureInPictureEnabled' in document &&
+    !!document.pictureInPictureEnabled;
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = (target ? params[1] : params[0]) ?? {};
   const [open, setOpen] = useState(false);
@@ -34,7 +38,6 @@ export const usePictureInPicture = (...params) => {
   const elementRef = useRef(null);
   const onOptionsRef = useRef(options);
   onOptionsRef.current = options;
-  const supported = typeof document !== 'undefined' && 'pictureInPictureEnabled' in document;
   const enter = async () => {
     if (!supported) return;
     if (!elementRef.current) return;

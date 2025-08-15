@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useClipboard } from './useClipboard';
 
 const mockNavigatorClipboardWriteText = vi.fn();
@@ -14,13 +16,25 @@ Object.assign(navigator, {
 
 const mockDocumentExecCommand = vi.fn();
 const mockDocumentGetSelection = vi.fn();
-Object.assign(document, {
-  execCommand: mockDocumentExecCommand,
-  getSelection: mockDocumentGetSelection
+
+beforeEach(() => {
+  Object.assign(document, {
+    execCommand: mockDocumentExecCommand,
+    getSelection: mockDocumentGetSelection
+  });
 });
+
+afterEach(vi.clearAllMocks);
 
 it('Should use copy to clipboard', () => {
   const { result } = renderHook(useClipboard);
+
+  expect(result.current.value).toBeNull();
+  expect(result.current.copy).toBeTypeOf('function');
+});
+
+it('Should use copy to clipboard on server side', () => {
+  const { result } = renderHookServer(useClipboard);
 
   expect(result.current.value).toBeNull();
   expect(result.current.copy).toBeTypeOf('function');

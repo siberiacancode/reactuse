@@ -64,6 +64,11 @@ export interface UsePictureInPicture {
  * const { ref, open, supported, enter, exit, toggle } = usePictureInPicture();
  */
 export const usePictureInPicture = ((...params: any[]) => {
+  const supported =
+    typeof document !== 'undefined' &&
+    'pictureInPictureEnabled' in document &&
+    !!document.pictureInPictureEnabled;
+
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = ((target ? params[1] : params[0]) as UsePictureInPictureOptions) ?? {};
 
@@ -73,8 +78,6 @@ export const usePictureInPicture = ((...params: any[]) => {
   const elementRef = useRef<HTMLVideoElement>(null);
   const onOptionsRef = useRef<UsePictureInPictureOptions>(options);
   onOptionsRef.current = options;
-
-  const supported = typeof document !== 'undefined' && 'pictureInPictureEnabled' in document;
 
   const enter = async () => {
     if (!supported) return;

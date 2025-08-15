@@ -34,7 +34,10 @@ export interface UseDeviceOrientationReturn {
  * const { supported, value } = useDeviceOrientation();
  */
 export const useDeviceOrientation = (): UseDeviceOrientationReturn => {
-  const supported = typeof window !== 'undefined' && 'DeviceOrientationEvent' in window;
+  const supported =
+    typeof window !== 'undefined' &&
+    'DeviceOrientationEvent' in window &&
+    !!window.DeviceOrientationEvent;
 
   const [value, setValue] = useState<UseDeviceOrientationValue>({
     alpha: null,

@@ -13,7 +13,10 @@ import { useEffect, useState } from 'react';
  * const { supported, value } = useDeviceOrientation();
  */
 export const useDeviceOrientation = () => {
-  const supported = typeof window !== 'undefined' && 'DeviceOrientationEvent' in window;
+  const supported =
+    typeof window !== 'undefined' &&
+    'DeviceOrientationEvent' in window &&
+    !!window.DeviceOrientationEvent;
   const [value, setValue] = useState({
     alpha: null,
     beta: null,

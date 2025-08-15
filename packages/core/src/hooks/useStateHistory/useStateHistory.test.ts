@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useStateHistory } from './useStateHistory';
 
 it('Should use state history', () => {
@@ -7,9 +9,24 @@ it('Should use state history', () => {
   expect(result.current.value).toBe(0);
   expect(result.current.history).toEqual([0]);
   expect(result.current.index).toBe(0);
-  expect(result.current.canUndo).toBe(false);
-  expect(result.current.canRedo).toBe(false);
+  expect(result.current.canUndo).toBeFalsy();
+  expect(result.current.canRedo).toBeFalsy();
 
+  expect(result.current.back).toBeTypeOf('function');
+  expect(result.current.forward).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+  expect(result.current.undo).toBeTypeOf('function');
+  expect(result.current.redo).toBeTypeOf('function');
+});
+
+it('Should use state history on server side', () => {
+  const { result } = renderHookServer(() => useStateHistory(0));
+
+  expect(result.current.value).toBe(0);
+  expect(result.current.history).toEqual([0]);
+  expect(result.current.index).toBe(0);
+  expect(result.current.canUndo).toBeFalsy();
+  expect(result.current.canRedo).toBeFalsy();
   expect(result.current.back).toBeTypeOf('function');
   expect(result.current.forward).toBeTypeOf('function');
   expect(result.current.reset).toBeTypeOf('function');
@@ -32,7 +49,7 @@ it('Should change canUndo flag when pushing new value', () => {
 
   act(() => result.current.set(1));
 
-  expect(result.current.canUndo).toBe(true);
+  expect(result.current.canUndo).toBeTruthy();
 });
 
 it('Should respect history max size parameter', () => {

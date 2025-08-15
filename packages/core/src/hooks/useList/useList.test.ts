@@ -1,11 +1,25 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useList } from './useList';
 
 const INITIAL_LIST = ['a', 'b', 'c'];
 
 it('Should use list', () => {
   const { result } = renderHook(() => useList(INITIAL_LIST));
+
+  expect(result.current.value).toEqual(INITIAL_LIST);
+  expect(result.current.push).toBeTypeOf('function');
+  expect(result.current.removeAt).toBeTypeOf('function');
+  expect(result.current.insertAt).toBeTypeOf('function');
+  expect(result.current.updateAt).toBeTypeOf('function');
+  expect(result.current.clear).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+});
+
+it('Should use list on server side', () => {
+  const { result } = renderHookServer(() => useList(INITIAL_LIST));
 
   expect(result.current.value).toEqual(INITIAL_LIST);
   expect(result.current.push).toBeTypeOf('function');

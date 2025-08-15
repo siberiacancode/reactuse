@@ -59,7 +59,7 @@ targets.forEach((target) => {
     if (!target) expect(result.current.ref).toBeTypeOf('function');
   });
 
-  it('Should use display media on server', () => {
+  it('Should use display media on server side', () => {
     const { result } = renderHookServer(() => {
       if (target)
         return useDisplayMedia(target) as {

@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -29,9 +30,25 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      if (target) expect(result.current).toBe(false);
+      if (target) expect(result.current).toBeFalsy();
       if (!target) {
-        expect(result.current.value).toBe(false);
+        expect(result.current.value).toBeFalsy();
+        expect(result.current.ref).toBeTypeOf('function');
+      }
+    });
+
+    it('Should use hover on server side', () => {
+      const { result } = renderHookServer(() => {
+        if (target)
+          return useHover(target) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseHoverReturn;
+        return useHover<HTMLDivElement>();
+      });
+
+      if (target) expect(result.current).toBeFalsy();
+      if (!target) {
+        expect(result.current.value).toBeFalsy();
         expect(result.current.ref).toBeTypeOf('function');
       }
     });
@@ -47,18 +64,18 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      if (target) expect(result.current).toBe(false);
-      if (!target) expect(result.current.value).toBe(false);
+      if (target) expect(result.current).toBeFalsy();
+      if (!target) expect(result.current.value).toBeFalsy();
 
       act(() => element.dispatchEvent(new Event('mouseenter')));
 
-      if (target) expect(result.current).toBe(true);
-      if (!target) expect(result.current.value).toBe(true);
+      if (target) expect(result.current).toBeTruthy();
+      if (!target) expect(result.current.value).toBeTruthy();
 
       act(() => element.dispatchEvent(new Event('mouseleave')));
 
-      if (target) expect(result.current).toBe(false);
-      if (!target) expect(result.current.value).toBe(false);
+      if (target) expect(result.current).toBeFalsy();
+      if (!target) expect(result.current.value).toBeFalsy();
     });
 
     it('Should call callback on hover', () => {

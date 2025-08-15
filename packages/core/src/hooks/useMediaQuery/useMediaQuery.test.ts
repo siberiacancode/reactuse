@@ -39,13 +39,13 @@ afterEach(vi.restoreAllMocks);
 it('Should use media query"', () => {
   const { result } = renderHook(() => useMediaQuery('(max-width: 768px)'));
 
-  expect(result.current).toBe(false);
+  expect(result.current).toBeFalsy();
 });
 
 it('Should use media query on server', () => {
   const { result } = renderHookServer(() => useMediaQuery('(max-width: 768px)'));
 
-  expect(result.current).toBe(false);
+  expect(result.current).toBeFalsy();
 });
 
 it('Should return true if media query matches', () => {

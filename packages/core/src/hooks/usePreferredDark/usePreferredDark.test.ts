@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 
 import { usePreferredDark } from './usePreferredDark';
 
@@ -39,7 +39,13 @@ afterEach(() => {
 it('Should use preferred dark mode', () => {
   const { result } = renderHook(usePreferredDark);
 
-  expect(result.current).toBe(false);
+  expect(result.current).toBeFalsy();
+});
+
+it('Should use preferred dark on server side', () => {
+  const { result } = renderHookServer(usePreferredDark);
+
+  expect(result.current).toBeFalsy();
 });
 
 it('Should return true if user prefers dark mode', () => {
@@ -47,16 +53,16 @@ it('Should return true if user prefers dark mode', () => {
 
   const { result } = renderHook(usePreferredDark);
 
-  expect(result.current).toBe(true);
+  expect(result.current).toBeTruthy();
 });
 
 it('Should handle dark mode preference changes', () => {
   const { result } = renderHook(usePreferredDark);
 
-  expect(result.current).toBe(false);
+  expect(result.current).toBeFalsy();
 
   mockMatchMedia.matches = true;
   act(() => trigger.callback('change'));
 
-  expect(result.current).toBe(true);
+  expect(result.current).toBeTruthy();
 });

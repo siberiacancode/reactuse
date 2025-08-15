@@ -28,7 +28,10 @@ interface UsePointerLockReturn {
  * const { supported, lock, unlock, element } = usePointerLock();
  */
 export const usePointerLock = (): UsePointerLockReturn => {
-  const supported = typeof document !== 'undefined' && 'pointerLockElement' in document;
+  const supported =
+    typeof document !== 'undefined' &&
+    'pointerLockElement' in document &&
+    !!document.pointerLockElement;
   const [element, setElement] = useState<Element>();
 
   useEffect(() => {

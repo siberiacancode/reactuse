@@ -25,7 +25,7 @@ export const usePerformanceObserver = (
   options: UsePerformanceObserverOptions,
   callback?: PerformanceObserverCallback
 ) => {
-  const supported = typeof window !== 'undefined' && typeof PerformanceObserver !== 'undefined';
+  const supported = typeof window !== 'undefined' && !!window.PerformanceObserver;
   const [entries, setEntries] = useState<PerformanceEntry[]>([]);
 
   const observerRef = useRef<PerformanceObserver | null>(null);

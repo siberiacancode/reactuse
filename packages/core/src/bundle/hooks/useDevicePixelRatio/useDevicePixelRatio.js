@@ -17,7 +17,7 @@ export const useDevicePixelRatio = () => {
     typeof window !== 'undefined' &&
     typeof window.matchMedia === 'function' &&
     typeof window.devicePixelRatio === 'number';
-  const [ratio, setRatio] = useState(window.devicePixelRatio ?? 1);
+  const [ratio, setRatio] = useState(supported ? window.devicePixelRatio : 1);
   useEffect(() => {
     if (!supported) return;
     const onChange = () => setRatio(window.devicePixelRatio);

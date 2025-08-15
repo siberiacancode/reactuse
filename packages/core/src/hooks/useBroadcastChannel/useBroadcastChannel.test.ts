@@ -28,7 +28,9 @@ class MockBroadcastChannel {
 }
 
 beforeEach(() => {
-  window.BroadcastChannel = MockBroadcastChannel as any;
+  Object.assign(globalThis.window, {
+    BroadcastChannel: MockBroadcastChannel
+  });
 });
 
 afterEach(vi.clearAllMocks);
@@ -58,7 +60,9 @@ it('Should use broadcast on server side', () => {
 });
 
 it('Should correct return for unsupported broadcast channel', () => {
-  delete (window as any).BroadcastChannel;
+  Object.assign(globalThis.window, {
+    BroadcastChannel: undefined
+  });
   const { result } = renderHook(() => useBroadcastChannel(channelName));
 
   expect(result.current.supported).toBeFalsy();
