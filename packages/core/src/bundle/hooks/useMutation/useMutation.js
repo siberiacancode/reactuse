@@ -44,6 +44,7 @@ export const useMutation = (callback, options) => {
           typeof requestOptions?.retryDelay === 'function'
             ? requestOptions?.retryDelay(attempt, error)
             : requestOptions?.retryDelay;
+        console.log('retryDelay', retryDelay);
         if (typeof retry === 'boolean' && retry) {
           if (retryDelay) {
             setTimeout(

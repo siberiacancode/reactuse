@@ -1,5 +1,7 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useQuery } from './useQuery';
 
 it('Should use query', () => {
@@ -7,6 +9,20 @@ it('Should use query', () => {
 
   expect(result.current.isLoading).toBeTruthy();
   expect(result.current.isFetching).toBeTruthy();
+  expect(result.current.isError).toBeFalsy();
+  expect(result.current.isRefetching).toBeFalsy();
+  expect(result.current.isSuccess).toBeFalsy();
+  expect(result.current.refetch).toBeTypeOf('function');
+  expect(result.current.abort).toBeTypeOf('function');
+  expect(result.current.error).toBeUndefined();
+  expect(result.current.data).toBeUndefined();
+});
+
+it('Should use query on server side', () => {
+  const { result } = renderHookServer(() => useQuery(() => Promise.resolve('data')));
+
+  expect(result.current.isLoading).toBeFalsy();
+  expect(result.current.isFetching).toBeFalsy();
   expect(result.current.isError).toBeFalsy();
   expect(result.current.isRefetching).toBeFalsy();
   expect(result.current.isSuccess).toBeFalsy();
@@ -175,12 +191,13 @@ it('Should retry on error multiple times', async () => {
 
   const { result } = renderHook(() =>
     useQuery(
-      () =>
-        new Promise((resolve, reject) => {
-          if (retries === 2) resolve('data');
-          retries++;
-          reject(new Error('error'));
-        }),
+      () => {
+        retries++;
+        if (retries < 2) {
+          return Promise.reject(new Error('error'));
+        }
+        return Promise.resolve('data');
+      },
       {
         retry: 2
       }
@@ -194,9 +211,9 @@ it('Should retry on error multiple times', async () => {
 
 it('Should be listen enabled param', async () => {
   const { result, rerender } = renderHook(
-    ({ enabled }) => useQuery(() => Promise.resolve('data'), { enabled }),
+    (enabled) => useQuery(() => Promise.resolve('data'), { enabled }),
     {
-      initialProps: { enabled: false }
+      initialProps: false
     }
   );
 
@@ -205,7 +222,7 @@ it('Should be listen enabled param', async () => {
   expect(result.current.isRefetching).toBeFalsy();
   expect(result.current.data).toBeUndefined();
 
-  rerender({ enabled: true });
+  rerender(true);
 
   expect(result.current.isLoading).toBeTruthy();
   expect(result.current.isFetching).toBeTruthy();
@@ -219,14 +236,14 @@ it('Should be listen enabled param', async () => {
     expect(result.current.data).toBe('data');
   });
 
-  rerender({ enabled: false });
+  rerender(false);
 
   expect(result.current.isLoading).toBeFalsy();
   expect(result.current.isFetching).toBeFalsy();
   expect(result.current.isRefetching).toBeFalsy();
   expect(result.current.data).toBe('data');
 
-  rerender({ enabled: true });
+  rerender(true);
 
   expect(result.current.isLoading).toBeFalsy();
   expect(result.current.isFetching).toBeTruthy();
@@ -243,12 +260,9 @@ it('Should be listen enabled param', async () => {
 
 it('Should refresh data when keys change', async () => {
   const { result, rerender } = renderHook(
-    ({ keys }) =>
-      useQuery(({ keys }) => Promise.resolve(`data-${keys[0]}`), {
-        keys
-      }),
+    (keys) => useQuery(({ keys }) => Promise.resolve(`data-${keys[0]}`), { keys }),
     {
-      initialProps: { keys: ['initial'] }
+      initialProps: ['initial']
     }
   );
 
@@ -257,7 +271,115 @@ it('Should refresh data when keys change', async () => {
     expect(result.current.data).toBe('data-initial');
   });
 
-  rerender({ keys: ['new'] });
+  rerender(['new']);
 
   await waitFor(() => expect(result.current.data).toBe('data-new'));
+});
+
+it('Should refetch with interval', async () => {
+  let callCount = 0;
+  const { result } = renderHook(() =>
+    useQuery(() => Promise.resolve(`data-${++callCount}`), {
+      refetchInterval: 100
+    })
+  );
+
+  await waitFor(() => expect(result.current.data).toBe('data-1'));
+
+  await waitFor(() => expect(result.current.data).toBe('data-2'), {
+    timeout: 200
+  });
+});
+
+it('Should retry with delay', async () => {
+  let callCount = 0;
+  const { result } = renderHook(() =>
+    useQuery(
+      () => {
+        callCount++;
+        if (callCount < 2) {
+          return Promise.reject(new Error('error'));
+        }
+        return Promise.resolve('data');
+      },
+      {
+        retry: 1,
+        retryDelay: 100
+      }
+    )
+  );
+
+  expect(result.current.isLoading).toBeTruthy();
+
+  await waitFor(() => expect(result.current.data).toBe('data'));
+});
+
+it('Should retry with function delay', async () => {
+  const retryDelayFn = vi.fn(() => 100);
+  let retries = 0;
+
+  const { result } = renderHook(() =>
+    useQuery(
+      () => {
+        retries++;
+        if (retries < 2) {
+          return Promise.reject(new Error('error'));
+        }
+        return Promise.resolve('data');
+      },
+      {
+        retry: 1,
+        retryDelay: retryDelayFn
+      }
+    )
+  );
+
+  await waitFor(() => expect(result.current.data).toBe('data'));
+  expect(retryDelayFn).toHaveBeenCalledTimes(1);
+});
+
+it('Should use placeholder data as function', () => {
+  const placeholderData = vi.fn(() => 'lazy-placeholder');
+
+  const { result } = renderHook(() =>
+    useQuery(() => Promise.resolve('data'), {
+      placeholderData
+    })
+  );
+
+  expect(result.current.data).toBe('lazy-placeholder');
+  expect(result.current.isSuccess).toBeTruthy();
+  expect(placeholderData).toHaveBeenCalledOnce();
+});
+
+it('Should cleanup interval on unmount', () => {
+  const clearIntervalSpy = vi.spyOn(globalThis, 'clearInterval');
+
+  const { unmount } = renderHook(() =>
+    useQuery(() => Promise.resolve('data'), {
+      refetchInterval: 1000
+    })
+  );
+
+  unmount();
+
+  expect(clearIntervalSpy).toHaveBeenCalled();
+});
+
+it('Should abort during retry', async () => {
+  const { result } = renderHook(() =>
+    useQuery(() => Promise.reject(new Error('error')), {
+      retry: 2,
+      retryDelay: 100
+    })
+  );
+
+  expect(result.current.isLoading).toBeTruthy();
+
+  act(result.current.abort);
+
+  await waitFor(() => {
+    expect(result.current.isLoading).toBeFalsy();
+    expect(result.current.isFetching).toBeFalsy();
+  });
 });

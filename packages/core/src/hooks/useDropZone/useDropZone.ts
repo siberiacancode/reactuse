@@ -138,11 +138,7 @@ export const useDropZone = ((...params: any[]) => {
     if (!dataTypes.length) return true;
     if (!types.length) return false;
 
-    return types.every((type) => {
-      console.log('type', type);
-      console.log('dataTypes', dataTypes);
-      return dataTypes.some((dataType) => type.includes(dataType));
-    });
+    return types.every((type) => dataTypes.some((dataType) => type.includes(dataType)));
   };
 
   const checkValidity = (items: DataTransferItemList) => {

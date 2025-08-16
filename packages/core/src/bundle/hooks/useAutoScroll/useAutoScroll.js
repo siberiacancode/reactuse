@@ -42,13 +42,6 @@ export const useAutoScroll = (...params) => {
       const { scrollHeight, clientHeight, scrollTop } = element;
       const maxScrollHeight = scrollHeight - clientHeight;
       const scrollThreshold = maxScrollHeight / 2;
-      console.log(
-        maxScrollHeight,
-        scrollTop,
-        scrollThreshold,
-        scrollTop < lastScrollTop,
-        maxScrollHeight - scrollTop <= scrollThreshold
-      );
       if (scrollTop < lastScrollTop) shouldAutoScroll = false;
       else if (maxScrollHeight - scrollTop <= scrollThreshold) shouldAutoScroll = true;
       lastScrollTop = scrollTop;

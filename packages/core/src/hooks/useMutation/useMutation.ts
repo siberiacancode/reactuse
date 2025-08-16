@@ -92,6 +92,8 @@ export const useMutation = <Body, Data>(
             ? requestOptions?.retryDelay(attempt, error)
             : requestOptions?.retryDelay;
 
+        console.log('retryDelay', retryDelay);
+
         if (typeof retry === 'boolean' && retry) {
           if (retryDelay) {
             setTimeout(

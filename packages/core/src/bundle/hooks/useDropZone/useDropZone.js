@@ -74,11 +74,7 @@ export const useDropZone = (...params) => {
     if (typeof dataTypes === 'function') return dataTypes(types);
     if (!dataTypes.length) return true;
     if (!types.length) return false;
-    return types.every((type) => {
-      console.log('type', type);
-      console.log('dataTypes', dataTypes);
-      return dataTypes.some((dataType) => type.includes(dataType));
-    });
+    return types.every((type) => dataTypes.some((dataType) => type.includes(dataType)));
   };
   const checkValidity = (items) => {
     const types = Array.from(items).map((item) => item.type);

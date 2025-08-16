@@ -2,7 +2,6 @@ import type { Dispatch, SetStateAction } from 'react';
 
 import { useState } from 'react';
 
-import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 import { useMount } from '../useMount/useMount';
 
 /** The use favicon return type */
@@ -18,11 +17,14 @@ export type UseFaviconReturn = [string, Dispatch<SetStateAction<string>>];
  * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon
  *
  * @example
- * const { href, set } = useFavicon('https://www.google.com/favicon.ico');
+ * const { href, set } = useFavicon('https://siberiacancode.github.io/reactuse/favicon.ico');
  */
 export const useFavicon = (initialHref?: string) => {
   const [href, setHref] = useState(
-    initialHref ?? document.querySelector<HTMLLinkElement>(`link[rel*="icon"]`)?.href
+    initialHref ??
+      (typeof document !== 'undefined'
+        ? document.querySelector<HTMLLinkElement>(`link[rel*="icon"]`)?.href
+        : undefined)
   );
 
   const injectFavicon = (favicon: string) => {
@@ -44,12 +46,6 @@ export const useFavicon = (initialHref?: string) => {
     if (!initialHref) return;
     injectFavicon(initialHref);
   });
-
-  useDidUpdate(() => {
-    if (!initialHref) return;
-    setHref(initialHref);
-    injectFavicon(initialHref);
-  }, [initialHref]);
 
   return { href, set } as const;
 };
