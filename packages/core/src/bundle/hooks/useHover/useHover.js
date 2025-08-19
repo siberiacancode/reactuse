@@ -50,12 +50,13 @@ export const useHover = (...params) => {
     : typeof params[0] === 'object'
       ? params[0]
       : { onEntry: params[0] };
+  const enabled = options?.enabled ?? true;
   const [hovering, setHovering] = useState(false);
   const internalRef = useRefState();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
   useEffect(() => {
-    if (!target && !internalRef.state) return;
+    if (!enabled || (!target && !internalRef.state)) return;
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
     const onMouseEnter = (event) => {
@@ -72,7 +73,7 @@ export const useHover = (...params) => {
       element.removeEventListener('mouseenter', onMouseEnter);
       element.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, [target, internalRef.state]);
+  }, [enabled, target, internalRef.state]);
   if (target) return hovering;
   return {
     ref: internalRef,

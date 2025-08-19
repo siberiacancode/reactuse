@@ -67,6 +67,7 @@ targets.forEach((target) => {
       });
 
       if (!target) expect(result.current).toBeTypeOf('function');
+      if (target) expect(result.current).toBeUndefined();
     });
 
     it('Should use auto scroll on server side', () => {
@@ -76,6 +77,7 @@ targets.forEach((target) => {
       });
 
       if (!target) expect(result.current).toBeTypeOf('function');
+      if (target) expect(result.current).toBeUndefined();
     });
 
     it('Should auto scroll when content changes', () => {
@@ -216,6 +218,25 @@ targets.forEach((target) => {
       expect(removeEventListenerSpy).toHaveBeenCalledWith('wheel', expect.any(Function));
       expect(removeEventListenerSpy).toHaveBeenCalledWith('touchstart', expect.any(Function));
       expect(removeEventListenerSpy).toHaveBeenCalledWith('touchmove', expect.any(Function));
+    });
+
+    it('Should handle target changes', () => {
+      const { result, rerender } = renderHook(
+        (target) => {
+          if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+          return useAutoScroll<HTMLElement>();
+        },
+        { initialProps: target }
+      );
+
+      if (!target) act(() => result.current(element));
+
+      expect(mockMutationObserverObserve).toHaveBeenCalledTimes(1);
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(mockMutationObserverObserve).toHaveBeenCalledTimes(2);
+      expect(mockMutationObserverDisconnect).toHaveBeenCalledTimes(1);
     });
   });
 });

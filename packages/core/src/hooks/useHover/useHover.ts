@@ -10,6 +10,8 @@ import { useRefState } from '../useRefState/useRefState';
 
 /** The use hover options type */
 export interface UseHoverOptions {
+  /** The enabled state of the hook */
+  enabled?: boolean;
   /** The on entry callback */
   onEntry?: (event: Event) => void;
   /** The on leave callback */
@@ -93,13 +95,16 @@ export const useHover = ((...params: any[]) => {
         : { onEntry: params[0] }
   ) as UseHoverOptions | undefined;
 
+  const enabled = options?.enabled ?? true;
+
   const [hovering, setHovering] = useState(false);
   const internalRef = useRefState<Element>();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
 
   useEffect(() => {
-    if (!target && !internalRef.state) return;
+    if (!enabled || (!target && !internalRef.state)) return;
+
     const element = (target ? getElement(target) : internalRef.current) as Element;
 
     if (!element) return;
@@ -121,7 +126,7 @@ export const useHover = ((...params: any[]) => {
       element.removeEventListener('mouseenter', onMouseEnter);
       element.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, [target, internalRef.state]);
+  }, [enabled, target, internalRef.state]);
 
   if (target) return hovering;
   return {

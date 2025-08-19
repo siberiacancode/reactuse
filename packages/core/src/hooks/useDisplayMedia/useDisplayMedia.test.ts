@@ -57,6 +57,7 @@ targets.forEach((target) => {
     expect(result.current.start).toBeTypeOf('function');
     expect(result.current.stop).toBeTypeOf('function');
     if (!target) expect(result.current.ref).toBeTypeOf('function');
+    if (target) expect(result.current.ref).toBeUndefined();
   });
 
   it('Should use display media on server side', () => {
@@ -74,6 +75,7 @@ targets.forEach((target) => {
     expect(result.current.start).toBeTypeOf('function');
     expect(result.current.stop).toBeTypeOf('function');
     if (!target) expect(result.current.ref).toBeTypeOf('function');
+    if (target) expect(result.current.ref).toBeUndefined();
   });
 
   it('Should use display media for unsupported', () => {
@@ -95,6 +97,7 @@ targets.forEach((target) => {
     expect(result.current.start).toBeTypeOf('function');
     expect(result.current.stop).toBeTypeOf('function');
     if (!target) expect(result.current.ref).toBeTypeOf('function');
+    if (target) expect(result.current.ref).toBeUndefined();
   });
 
   it('Should be able to start and stop sharing', async () => {
@@ -178,5 +181,26 @@ targets.forEach((target) => {
     unmount();
 
     await waitFor(() => expect(mockTrack.stop).toHaveBeenCalledOnce());
+  });
+
+  it('Should handle target changes', () => {
+    const { result, rerender } = renderHook(
+      (target) => {
+        if (target)
+          return useDisplayMedia(target) as {
+            ref: StateRef<HTMLVideoElement>;
+          } & UseDisplayMediaReturn;
+        return useDisplayMedia<HTMLVideoElement>();
+      },
+      { initialProps: target }
+    );
+
+    if (!target) act(() => result.current.ref(element));
+
+    expect(result.current.sharing).toBe(false);
+
+    rerender({ current: document.getElementById('target') });
+
+    expect(result.current.sharing).toBe(false);
   });
 });

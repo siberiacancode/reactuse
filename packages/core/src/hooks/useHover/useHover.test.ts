@@ -30,7 +30,10 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      if (target) expect(result.current).toBeFalsy();
+      if (target) {
+        expect(result.current).toBeFalsy();
+        expect(result.current.ref).toBeUndefined();
+      }
       if (!target) {
         expect(result.current.value).toBeFalsy();
         expect(result.current.ref).toBeTypeOf('function');
@@ -46,7 +49,10 @@ targets.forEach((target) => {
         return useHover<HTMLDivElement>();
       });
 
-      if (target) expect(result.current).toBeFalsy();
+      if (target) {
+        expect(result.current).toBeFalsy();
+        expect(result.current.ref).toBeUndefined();
+      }
       if (!target) {
         expect(result.current.value).toBeFalsy();
         expect(result.current.ref).toBeTypeOf('function');
@@ -119,6 +125,16 @@ targets.forEach((target) => {
 
       expect(onEntry).toHaveBeenCalledTimes(1);
       expect(onLeave).toHaveBeenCalledTimes(1);
+    });
+
+    it('Should handle enabled option', () => {
+      const { result } = renderHook(() => useHover<HTMLDivElement>({ enabled: false }));
+
+      if (!target) act(() => result.current.ref(element));
+
+      act(() => element.dispatchEvent(new Event('mouseenter')));
+
+      expect(result.current.value).toBeFalsy();
     });
 
     it('Should handle target changes', () => {

@@ -62,6 +62,7 @@ targets.forEach((target) => {
       });
       expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
       if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current.ref).toBeUndefined();
     });
 
     it('Should use element size on server side', () => {
@@ -75,6 +76,7 @@ targets.forEach((target) => {
 
       expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
       if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current.ref).toBeUndefined();
     });
 
     it('Should set initial value', () => {

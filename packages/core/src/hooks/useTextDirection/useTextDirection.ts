@@ -60,6 +60,7 @@ export const useTextDirection = ((...params: any[]) => {
   const elementRef = useRef<Element>(null);
 
   const getDirection = () => {
+    if (typeof window === 'undefined') return initialValue;
     const element = (target ? getElement(target) : internalRef.current) as Element;
     return (element?.getAttribute('dir') as UseTextDirectionValue) ?? initialValue;
   };
@@ -93,7 +94,7 @@ export const useTextDirection = ((...params: any[]) => {
     element.setAttribute('dir', direction);
     setValue(direction);
 
-    const observer = new MutationObserver(getDirection);
+    const observer = new MutationObserver(() => setValue(getDirection()));
 
     observer.observe(element, { attributes: true });
 

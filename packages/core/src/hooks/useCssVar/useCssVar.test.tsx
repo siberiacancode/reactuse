@@ -65,6 +65,7 @@ targets.forEach((target) => {
       expect(result.current.set).toBeTypeOf('function');
 
       if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current.ref).toBeUndefined();
     });
 
     it('Should use css var on server side  ', () => {
@@ -78,6 +79,8 @@ targets.forEach((target) => {
       });
 
       expect(result.current.value).toBe('green');
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current.ref).toBeUndefined();
     });
 
     it('Should work without initial value', () => {

@@ -8,18 +8,24 @@ import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
+/** The intersection observer callback type */
 export type UseIntersectionObserverCallback = (entry: IntersectionObserverEntry) => void;
 
 /** The intersection observer options type */
 export interface UseIntersectionObserverOptions extends Omit<IntersectionObserverInit, 'root'> {
+  /** The enabled state of the intersection observer */
   enabled?: boolean;
+  /** The callback to execute when intersection is detected */
   onChange?: UseIntersectionObserverCallback;
+  /** The root element to observe */
   root?: HookTarget;
 }
 
 /** The intersection observer return type */
 export interface UseIntersectionObserverReturn {
+  /** The intersection observer entry */
   entry?: IntersectionObserverEntry;
+  /** The in view state of the intersection observer */
   inView: boolean;
 }
 
@@ -36,7 +42,7 @@ export interface UseIntersectionObserver {
     target?: never
   ): UseIntersectionObserverReturn & { ref: StateRef<Target> };
 
-  (callback: UseIntersectionObserverCallback, target: HookTarget): UseIntersectionObserverReturn;
+  (target: HookTarget, callback: UseIntersectionObserverCallback): UseIntersectionObserverReturn;
 }
 
 /**

@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -34,6 +35,16 @@ targets.forEach((target) => {
       });
 
       if (!target) expect(result.current).toBeTypeOf('function');
+      if (target) expect(result.current).toBeUndefined();
+    });
+
+    it('Should use double click on server side', () => {
+      const { result } = renderHookServer(() => {
+        if (target) return useDoubleClick(target, vi.fn()) as unknown as StateRef<HTMLDivElement>;
+        return useDoubleClick(vi.fn());
+      });
+      if (!target) expect(result.current).toBeTypeOf('function');
+      if (target) expect(result.current).toBeUndefined();
     });
 
     it('Should handle double click with mouse', () => {
