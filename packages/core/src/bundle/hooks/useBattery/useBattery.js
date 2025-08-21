@@ -45,7 +45,6 @@ export const useBattery = () => {
     });
     return () => {
       if (!battery) return;
-      console.log('unmount', battery);
       battery.removeEventListener('levelchange', onChange);
       battery.removeEventListener('chargingchange', onChange);
       battery.removeEventListener('chargingtimechange', onChange);

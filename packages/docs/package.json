@@ -50,7 +50,6 @@
     "simple-git": "^3.28.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "4.0.7",
-    "prettier-plugin-tailwindcss": "^0.6.14",
     "vitepress": "^1.6.4",
     "vue": "^3.5.18"
   },

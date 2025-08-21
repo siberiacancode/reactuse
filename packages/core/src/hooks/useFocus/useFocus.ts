@@ -10,6 +10,8 @@ import { useRefState } from '../useRefState/useRefState';
 
 /** The use focus options type */
 export interface UseFocusOptions {
+  /** The enabled state of the focus hook */
+  enabled?: boolean;
   /** The initial focus state of the target */
   initialValue?: boolean;
   /** The on blur callback */
@@ -29,7 +31,14 @@ export interface UseFocusReturn {
 }
 
 export interface UseFocus {
+  (target: HookTarget, callback?: (event: FocusEvent) => void): UseFocusReturn;
+
   (target: HookTarget, options?: UseFocusOptions): UseFocusReturn;
+
+  <Target extends Element>(
+    callback?: (event: FocusEvent) => void,
+    target?: never
+  ): UseFocusReturn & { ref: StateRef<Target> };
 
   <Target extends Element>(
     options?: UseFocusOptions,
@@ -45,6 +54,15 @@ export interface UseFocus {
  *
  * @overload
  * @param {HookTarget} target The target element to focus
+ * @param {(event: FocusEvent) => void} [callback] The callback function to be invoked on focus
+ * @returns {UseFocusReturn} An object with focus state and methods
+ *
+ * @example
+ * const { focus, blur, focused } = useFocus(ref, () => console.log('focused'));
+ *
+ * @overload
+ * @param {HookTarget} target The target element to focus
+ * @param {boolean} [options.enabled=true] The enabled state of the focus hook
  * @param {boolean} [options.initialValue=false] The initial focus state of the target
  * @param {(event: FocusEvent) => void} [options.onFocus] The callback function to be invoked on focus
  * @param {(event: FocusEvent) => void} [options.onBlur] The callback function to be invoked on blur
@@ -55,6 +73,15 @@ export interface UseFocus {
  *
  * @overload
  * @template Target The target element
+ * @param {(event: FocusEvent) => void} [callback] The callback function to be invoked on focus
+ * @returns {UseFocusReturn & { ref: StateRef<Target> }} An object with focus state, methods and ref
+ *
+ * @example
+ * const { ref, focus, blur, focused } = useFocus(() => console.log('focused'));
+ *
+ * @overload
+ * @template Target The target element
+ * @param {boolean} [options.enabled=true] The enabled state of the focus hook
  * @param {boolean} [options.initialValue=false] The initial focus state of the target
  * @param {(event: FocusEvent) => void} [options.onFocus] The callback function to be invoked on focus
  * @param {(event: FocusEvent) => void} [options.onBlur] The callback function to be invoked on blur
@@ -65,8 +92,18 @@ export interface UseFocus {
  */
 export const useFocus = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
-  const options = ((target ? params[1] : params[0]) as UseFocusOptions) ?? {};
-  const initialValue = options.initialValue ?? false;
+
+  const options = (
+    target
+      ? typeof params[1] === 'object'
+        ? params[1]
+        : { onFocus: params[1] }
+      : typeof params[0] === 'object'
+        ? params[0]
+        : { onFocus: params[0] }
+  ) as UseFocusOptions | undefined;
+  const enabled = options?.enabled ?? true;
+  const initialValue = options?.initialValue ?? false;
 
   const [focused, setFocused] = useState(initialValue);
   const internalRef = useRefState<Element>();
@@ -75,11 +112,20 @@ export const useFocus = ((...params: any[]) => {
 
   const elementRef = useRef<HTMLElement | null>(null);
 
-  const focus = () => elementRef.current?.focus();
-  const blur = () => elementRef.current?.blur();
+  const focus = () => {
+    if (!elementRef.current) return;
+    elementRef.current.focus();
+    setFocused(true);
+  };
+
+  const blur = () => {
+    if (!elementRef.current) return;
+    elementRef.current.blur();
+    setFocused(false);
+  };
 
   useEffect(() => {
-    if (!target && !internalRef.state) return;
+    if (!enabled || (!target && !internalRef.state)) return;
     const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
     if (!element) return;
 
@@ -104,7 +150,7 @@ export const useFocus = ((...params: any[]) => {
       element.removeEventListener('focus', onFocus);
       element.removeEventListener('blur', onBlur);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, enabled]);
 
   if (target) return { focus, blur, focused };
   return {

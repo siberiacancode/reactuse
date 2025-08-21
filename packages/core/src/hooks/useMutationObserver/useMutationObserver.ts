@@ -8,35 +8,40 @@ import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
-/** The mutation observer target element type */
-export type UseMutationObserverTarget = HookTarget;
-
-/** The mutation observer return type */
-export interface UseMutationObserverReturn {
-  /** The mutation observer instance */
-  observer: MutationObserver;
-  /** The mutation observer entries */
-  stop: () => void;
-}
+/** The mutation observer callback type */
+export type UseMutationObserverCallback = (
+  mutations: MutationRecord[],
+  observer: MutationObserver
+) => void;
 
 /** The mutation observer options type */
 export interface UseMutationObserverOptions extends MutationObserverInit {
   /** The enabled state of the mutation observer */
   enabled?: boolean;
+  /** The callback to execute when mutation is detected */
+  onChange?: UseMutationObserverCallback;
+}
+
+/** The mutation observer return type */
+export interface UseMutationObserverReturn {
+  /** The mutation observer instance */
+  observer?: MutationObserver;
 }
 
 export interface UseMutationObserver {
-  (
-    target: HookTarget,
-    callback: MutationCallback,
-    options?: UseMutationObserverOptions
-  ): UseMutationObserverReturn;
-
   <Target extends Element>(
-    callback: MutationCallback,
     options?: UseMutationObserverOptions,
     target?: never
   ): UseMutationObserverReturn & { ref: StateRef<Target> };
+
+  (target: HookTarget, options?: UseMutationObserverOptions): UseMutationObserverReturn;
+
+  <Target extends Element>(
+    callback: UseMutationObserverCallback,
+    target?: never
+  ): UseMutationObserverReturn & { ref: StateRef<Target> };
+
+  (target: HookTarget, callback: UseMutationObserverCallback): UseMutationObserverReturn;
 }
 
 /**
@@ -45,73 +50,104 @@ export interface UseMutationObserver {
  * @category Sensors
  * @usage low
  *
- * @overload
- * @template Target The target element
- * @param {MutationCallback} callback The callback to execute when mutation is detected
- * @param {boolean} [options.enabled=true] The enabled state of the mutation observer
- * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed
- * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed
- * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed
- * @param {boolean} [options.subtree]  Set to true if mutations to not just target, but also target's descendants are to be observed
- * @param {boolean} [options.characterDataOldValue] Set to true if characterData is set to true or omitted and target's data before the mutation needs to be recorded
- * @param {boolean} [options.attributeOldValue]  Set to a list of attribute local names (without namespace) if not all attribute mutations need to be observed and attributes is true or omitted
- * @param {string[]} [options.attributeFilter] Set to a list of attribute local names (without namespace) if not all attribute mutations need to be observed and attributes is true or omitted
- * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} An object containing the mutation observer state
- *
- * @example
- * const { ref, observer, stop } = useMutationObserver(() => console.log('callback'))
+ * @browserapi MutationObserver https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
  *
  * @overload
  * @param {HookTarget} target The target element to observe
- * @param {MutationCallback} callback The callback to execute when mutation is detected
  * @param {boolean} [options.enabled=true] The enabled state of the mutation observer
+ * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected
  * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed
  * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed
  * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed
- * @param {boolean} [options.subtree]  Set to true if mutations to not just target, but also target's descendants are to be observed
- * @param {boolean} [options.characterDataOldValue] Set to true if characterData is set to true or omitted and target's data before the mutation needs to be recorded
- * @param {boolean} [options.attributeOldValue]  Set to a list of attribute local names (without namespace) if not all attribute mutations need to be observed and attributes is true or omitted
- * @param {string[]} [options.attributeFilter] Set to a list of attribute local names (without namespace) if not all attribute mutations need to be observed and attributes is true or omitted
+ * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed
  * @returns {UseMutationObserverReturn} An object containing the mutation observer state
  *
  * @example
- * const { observer, stop } = useMutationObserver(ref, () => console.log('callback'))
+ * const { observer, stop } = useMutationObserver(ref, { childList: true });
+ *
+ * @overload
+ * @template Target The target element
+ * @param {boolean} [options.enabled=true] The enabled state of the mutation observer
+ * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected
+ * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed
+ * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed
+ * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed
+ * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed
+ * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
+ *
+ * @example
+ * const { ref, observer, stop } = useMutationObserver({ childList: true });
+ *
+ * @overload
+ * @template Target The target element
+ * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected
+ * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
+ *
+ * @example
+ * const { ref, observer, stop } = useMutationObserver((mutations) => console.log(mutations));
+ *
+ * @overload
+ * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected
+ * @param {HookTarget} target The target element to observe
+ * @returns {UseMutationObserverReturn} An object containing the mutation observer state
+ *
+ * @example
+ * const { observer, stop } = useMutationObserver((mutations) => console.log(mutations), ref);
  */
 export const useMutationObserver = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
-  const callback = (target ? params[1] : params[0]) as MutationCallback;
-  const options = (target ? params[2] : params[1]) as UseMutationObserverOptions | undefined;
 
-  const [observer, setObserver] = useState<MutationObserver>();
+  const options = (
+    target
+      ? typeof params[1] === 'object'
+        ? params[1]
+        : { onChange: params[1] }
+      : typeof params[0] === 'object'
+        ? params[0]
+        : { onChange: params[0] }
+  ) as UseMutationObserverOptions | undefined;
+
+  const callback = options?.onChange;
   const enabled = options?.enabled ?? true;
 
-  const internalRef = useRefState<Element>(window.document.documentElement);
-  const internalCallbackRef = useRef<MutationCallback>(callback);
+  const [observer, setObserver] = useState<MutationObserver>();
+
+  const internalRef = useRefState<Element>();
+  const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
-  const internalOptionsRef = useRef(options);
-  internalOptionsRef.current = options;
 
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
 
-    const observer = new MutationObserver(internalCallbackRef.current);
+    const observer = new MutationObserver((mutations, observer) => {
+      internalCallbackRef.current?.(mutations, observer);
+    });
+
     setObserver(observer);
-    observer.observe(element, internalOptionsRef.current);
+    observer.observe(element as Element, options);
 
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.state]);
+  }, [
+    target,
+    internalRef.state,
+    options?.childList,
+    options?.attributes,
+    options?.characterData,
+    options?.subtree,
+    options?.attributeOldValue,
+    options?.characterDataOldValue,
+    options?.attributeFilter,
+    enabled
+  ]);
 
-  const stop = () => observer?.disconnect();
-
-  if (target) return { stop, observer };
+  if (target) return { observer };
   return {
     ref: internalRef,
-    stop,
     observer
   };
 }) as UseMutationObserver;

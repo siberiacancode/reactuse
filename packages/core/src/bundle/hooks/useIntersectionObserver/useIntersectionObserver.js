@@ -17,7 +17,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseIntersectionObserverReturn} An object containing the state
  *
  * @example
- * const { ref, entry, inView } = useIntersectionObserver();
+ * const { ref, entry, inView, observer } = useIntersectionObserver();
  *
  * @overload
  * @template Target The target element
@@ -27,7 +27,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { entry, inView } = useIntersectionObserver(ref);
+ * const { entry, inView, observer } = useIntersectionObserver(ref);
  *
  * @overload
  * @template Target The target element
@@ -35,7 +35,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { ref, entry, inView } = useIntersectionObserver(() => console.log('callback'));
+ * const { ref, entry, inView, observer } = useIntersectionObserver(() => console.log('callback'));
  *
  * @overload
  * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
@@ -43,7 +43,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseIntersectionObserverReturn} An object containing the state
  *
  * @example
- * const { entry, inView } = useIntersectionObserver(() => console.log('callback'), ref);
+ * const { entry, inView, observer } = useIntersectionObserver(() => console.log('callback'), ref);
  */
 export const useIntersectionObserver = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -56,6 +56,7 @@ export const useIntersectionObserver = (...params) => {
       : { onChange: params[0] };
   const callback = options?.onChange;
   const enabled = options?.enabled ?? true;
+  const [observer, setObserver] = useState();
   const [entry, setEntry] = useState();
   const internalRef = useRefState();
   const internalCallbackRef = useRef(callback);
@@ -65,22 +66,24 @@ export const useIntersectionObserver = (...params) => {
     const element = target ? getElement(target) : internalRef.current;
     if (!element) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
+      ([entry], observer) => {
         setEntry(entry);
-        internalCallbackRef.current?.(entry);
+        internalCallbackRef.current?.(entry, observer);
       },
       {
         ...options,
         root: options?.root ? getElement(options.root) : document
       }
     );
+    setObserver(observer);
     observer.observe(element);
     return () => {
       observer.disconnect();
     };
   }, [target, internalRef.state, options?.rootMargin, options?.threshold, options?.root, enabled]);
-  if (target) return { entry, inView: !!entry?.isIntersecting };
+  if (target) return { observer, entry, inView: !!entry?.isIntersecting };
   return {
+    observer,
     ref: internalRef,
     entry,
     inView: !!entry?.isIntersecting

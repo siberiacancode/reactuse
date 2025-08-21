@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -65,15 +65,18 @@ targets.forEach((target) => {
         return useIntersectionObserver<HTMLDivElement>();
       });
 
+      if (!target) act(() => result.current.ref(element));
+
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
 
       expect(result.current.entry).toBeUndefined();
       expect(result.current.inView).toBe(false);
+      expect(result.current.observer).toBeInstanceOf(MockIntersectionObserver);
     });
 
     it('Should use intersection observer on server side', () => {
-      const { result } = renderHook(() => {
+      const { result } = renderHookServer(() => {
         if (target)
           return useIntersectionObserver(target) as unknown as {
             ref: StateRef<HTMLDivElement>;
@@ -86,6 +89,7 @@ targets.forEach((target) => {
 
       expect(result.current.entry).toBeUndefined();
       expect(result.current.inView).toBe(false);
+      expect(result.current.observer).toBeUndefined();
     });
 
     it('Should observe element', () => {
@@ -143,10 +147,10 @@ targets.forEach((target) => {
       if (!target) act(() => result.current.ref(element));
 
       const [entry] = createMockIntersectionObserverElement(true);
-      act(() => trigger.callback(element, [entry]));
+      act(() => trigger.callback(element, [entry], result.current.observer));
 
       expect(onChange).toHaveBeenCalledOnce();
-      expect(onChange).toHaveBeenCalledWith(entry);
+      expect(onChange).toHaveBeenCalledWith(entry, result.current.observer);
     });
 
     it('Should call callback on intersection', () => {
@@ -163,28 +167,31 @@ targets.forEach((target) => {
       if (!target) act(() => result.current.ref(element));
 
       const [entry] = createMockIntersectionObserverElement(true);
-      act(() => trigger.callback(element, [entry]));
+      act(() => trigger.callback(element, [entry], result.current.observer));
 
       expect(callback).toHaveBeenCalledOnce();
-      expect(callback).toHaveBeenCalledWith(entry);
+      expect(callback).toHaveBeenCalledWith(entry, result.current.observer);
     });
 
     it('Should handle options properly', () => {
-      const { result } = renderHook(() =>
-        useIntersectionObserver<HTMLDivElement>({
-          threshold: 0.5,
-          rootMargin: '10px'
-        })
-      );
+      const options = {
+        threshold: 0.5,
+        rootMargin: '10px'
+      };
 
-      act(() => result.current.ref(element));
+      const { result } = renderHook(() => {
+        if (target)
+          return useIntersectionObserver(target, options) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseIntersectionObserverReturn;
+        return useIntersectionObserver<HTMLDivElement>(options);
+      });
+
+      if (!target) act(() => result.current.ref(element));
 
       expect(mockIntersectionObserverObserve).toHaveBeenCalledWith(
         element,
-        expect.objectContaining({
-          threshold: 0.5,
-          rootMargin: '10px'
-        })
+        expect.objectContaining(options)
       );
     });
   });
