@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
-import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useEventListener
@@ -58,17 +57,21 @@ export const useEventListener = (...params) => {
   const event = target ? params[1] : params[0];
   const listener = target ? params[2] : params[1];
   const options = target ? params[3] : params[2];
-  const internalRef = useRefState(window);
-  const internalListener = useEvent(listener);
+  const enabled = options?.enabled ?? true;
+  const internalRef = useRefState();
+  const internalListenerRef = useRef(listener);
+  internalListenerRef.current = listener;
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
-    const callback = (event) => internalListener(event);
-    element.addEventListener(event, callback, options);
+    if (!enabled || (!target && !internalRef.state)) return;
+    const element = (target ? getElement(target) : internalRef.current) ?? window;
+    const listener = (event) => internalListenerRef.current(event);
+    element.addEventListener(event, listener, options);
     return () => {
-      element.removeEventListener(event, callback, options);
+      element.removeEventListener(event, listener, options);
     };
-  }, [target, internalRef.state, event, options]);
+  }, [target, internalRef.state, event, enabled]);
   if (target) return;
   return internalRef;
 };
