@@ -68,7 +68,6 @@ export const useLockScroll = ((...params: any[]): any => {
   const [locked, setLocked] = useState(enabled);
 
   const internalRef = useRefState<Element>();
-
   const elementRef = useRef<Element>(null);
 
   useIsomorphicLayoutEffect(() => {

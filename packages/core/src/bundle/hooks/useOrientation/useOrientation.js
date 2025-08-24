@@ -16,24 +16,22 @@ export const useOrientation = () => {
   const supported =
     typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
   const orientation = supported ? window.screen.orientation : {};
-  const [value, setValue] = useState(() => {
-    return {
-      angle: orientation?.angle ?? 0,
-      orientationType: orientation?.type
-    };
+  const [value, setValue] = useState({
+    angle: orientation.angle ?? 0,
+    orientationType: orientation.type
   });
   useEffect(() => {
     if (!supported) return;
     const onOrientationChange = () =>
       setValue({
-        angle: orientation.angle,
-        orientationType: orientation.type
+        angle: window.screen.orientation.angle,
+        orientationType: window.screen.orientation.type
       });
     window.addEventListener('orientationchange', onOrientationChange);
     return () => {
       window.removeEventListener('orientationchange', onOrientationChange);
     };
-  });
+  }, []);
   const lock = (type) => {
     if (supported && typeof orientation.lock === 'function') return orientation.lock(type);
   };

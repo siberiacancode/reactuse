@@ -11,7 +11,7 @@ export interface UseOrientationValue {
   /** The current angle */
   angle: number;
   /** The current orientation type */
-  orientationType: OrientationType;
+  orientationType?: OrientationType;
 }
 
 /* The screen lock orientation type */
@@ -55,11 +55,9 @@ export const useOrientation = (): useOrientationReturn => {
     typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
   const orientation = (supported ? window.screen.orientation : {}) as ScreenOrientation;
 
-  const [value, setValue] = useState<UseOrientationValue>(() => {
-    return {
-      angle: orientation?.angle ?? 0,
-      orientationType: orientation?.type
-    };
+  const [value, setValue] = useState<UseOrientationValue>({
+    angle: orientation.angle ?? 0,
+    orientationType: orientation.type
   });
 
   useEffect(() => {
@@ -67,15 +65,15 @@ export const useOrientation = (): useOrientationReturn => {
 
     const onOrientationChange = () =>
       setValue({
-        angle: orientation.angle,
-        orientationType: orientation.type
+        angle: window.screen.orientation.angle,
+        orientationType: window.screen.orientation.type
       });
 
     window.addEventListener('orientationchange', onOrientationChange);
     return () => {
       window.removeEventListener('orientationchange', onOrientationChange);
     };
-  });
+  }, []);
 
   const lock = (type: OrientationLockType) => {
     if (supported && typeof orientation.lock === 'function') return orientation.lock(type);
