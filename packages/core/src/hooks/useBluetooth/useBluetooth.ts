@@ -62,28 +62,27 @@ export const useBluetooth = (options?: UseBluetoothOptions): UseBluetoothReturn 
   };
 
   useEffect(() => {
-    if (device && device.gatt) {
-      const connectToBluetoothGATTServer = async () => {
-        if (!device.gatt) return;
-        const gattServer = await device.gatt.connect();
-        setServer(gattServer);
-        setIsConnected(gattServer.connected);
-      };
+    if (!device?.gatt) return;
 
-      const reset = () => {
-        setServer(undefined);
-        setDevice(undefined);
-        setIsConnected(false);
-      };
+    const connectToBluetoothGATTServer = async () => {
+      const gattServer = await device.gatt!.connect();
+      setServer(gattServer);
+      setIsConnected(gattServer.connected);
+    };
 
-      device.addEventListener('gattserverdisconnected', reset);
-      connectToBluetoothGATTServer();
+    const reset = () => {
+      setServer(undefined);
+      setDevice(undefined);
+      setIsConnected(false);
+    };
 
-      return () => {
-        device.removeEventListener('gattserverdisconnected', reset);
-        device.gatt?.disconnect();
-      };
-    }
+    device.addEventListener('gattserverdisconnected', reset);
+    connectToBluetoothGATTServer();
+
+    return () => {
+      device.removeEventListener('gattserverdisconnected', reset);
+      device.gatt?.disconnect();
+    };
   }, [device]);
 
   return {

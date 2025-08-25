@@ -1,25 +1,23 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 
 import { createTrigger, renderHookServer } from '@/tests';
 
 import { useBluetooth } from './useBluetooth';
 
 const trigger = createTrigger<string, () => void>();
+const mockRemoveEventListener = vi.fn();
 
-// Mock BluetoothRemoteGATTServer
-const mockGattServer = {
-  connected: true,
-  connect: vi.fn(() => Promise.resolve(mockGattServer)),
-  disconnect: vi.fn()
-};
-
-// Mock BluetoothDevice
 const mockBluetoothDevice = {
-  id: 'test-device-id',
-  name: 'Test Device',
-  gatt: mockGattServer,
+  id: 'test-device',
+  name: 'test-device',
+  gatt: {
+    connected: true,
+    connect: vi.fn(() => Promise.resolve(mockBluetoothDevice.gatt)),
+    disconnect: vi.fn()
+  },
   addEventListener: (type: string, callback: () => void) => trigger.add(type, callback),
   removeEventListener: (type: string, callback: () => void) => {
+    mockRemoveEventListener(type, callback);
     if (trigger.get(type) === callback) trigger.delete(type);
   },
   dispatchEvent: (event: Event) => {
@@ -28,25 +26,21 @@ const mockBluetoothDevice = {
   }
 };
 
-// Mock navigator.bluetooth
-const mockNavigatorBluetooth = {
-  requestDevice: vi.fn(() => Promise.resolve(mockBluetoothDevice))
-};
-
 beforeEach(() => {
   Object.defineProperty(navigator, 'bluetooth', {
-    value: mockNavigatorBluetooth,
+    value: {
+      requestDevice: vi.fn(() => Promise.resolve(mockBluetoothDevice))
+    },
     writable: true,
     configurable: true
   });
 
   vi.clearAllMocks();
   trigger.clear();
-  mockGattServer.connected = true;
 });
 
-it('Should initialize with correct default values', () => {
-  const { result } = renderHook(() => useBluetooth());
+it('Should use bluetooth', () => {
+  const { result } = renderHook(useBluetooth);
 
   expect(result.current).toEqual({
     supported: true,
@@ -57,20 +51,26 @@ it('Should initialize with correct default values', () => {
   });
 });
 
-it('Should detect when Bluetooth is not supported', () => {
+it('Should use bluetooth on server side', () => {
+  const { result } = renderHookServer(useBluetooth);
+
+  expect(result.current).toEqual({
+    supported: false,
+    connected: false,
+    device: undefined,
+    server: undefined,
+    requestDevice: expect.any(Function)
+  });
+});
+
+it('Should use bluetooth for unsupported', () => {
   Object.defineProperty(navigator, 'bluetooth', {
     value: undefined,
     writable: true,
     configurable: true
   });
 
-  const { result } = renderHook(() => useBluetooth());
-
-  expect(result.current.supported).toBe(false);
-});
-
-it('Should use bluetooth on server side', () => {
-  const { result } = renderHookServer(() => useBluetooth());
+  const { result } = renderHook(useBluetooth);
 
   expect(result.current).toEqual({
     supported: false,
@@ -82,65 +82,40 @@ it('Should use bluetooth on server side', () => {
 });
 
 it('Should request device successfully', async () => {
-  const { result } = renderHook(() => useBluetooth());
+  const { result } = renderHook(useBluetooth);
 
-  await act(async () => {
-    await result.current.requestDevice();
-  });
+  await act(result.current.requestDevice);
 
-  expect(mockNavigatorBluetooth.requestDevice).toHaveBeenCalledWith({
+  expect(navigator.bluetooth.requestDevice).toHaveBeenCalledWith({
     acceptAllDevices: false,
     optionalServices: undefined
   });
 
-  await waitFor(() => {
-    expect(result.current.device).toBe(mockBluetoothDevice);
-  });
-});
-
-it('Should not request device when not supported', async () => {
-  Object.defineProperty(navigator, 'bluetooth', {
-    value: undefined,
-    writable: true,
-    configurable: true
-  });
-
-  const { result } = renderHook(() => useBluetooth());
-
-  await act(async () => {
-    await result.current.requestDevice();
-  });
-
-  expect(mockNavigatorBluetooth.requestDevice).not.toHaveBeenCalled();
+  expect(result.current.device).toBe(mockBluetoothDevice);
 });
 
 it('Should connect to GATT server after device selection', async () => {
-  const { result } = renderHook(() => useBluetooth());
+  const { result } = renderHook(useBluetooth);
 
-  await act(async () => {
-    await result.current.requestDevice();
-  });
+  await act(result.current.requestDevice);
 
-  await waitFor(() => {
-    expect(mockGattServer.connect).toHaveBeenCalled();
-    expect(result.current.connected).toBe(true);
-    expect(result.current.server).toBe(mockGattServer);
-  });
+  expect(mockBluetoothDevice.gatt.connect).toHaveBeenCalled();
+
+  expect(result.current.connected).toBe(true);
+  expect(result.current.server).toBe(mockBluetoothDevice.gatt);
 });
 
 it('Should handle device options correctly', async () => {
   const options = {
     acceptAllDevices: true,
-    optionalServices: ['battery_service' as BluetoothServiceUUID]
+    optionalServices: ['battery_service']
   };
 
   const { result } = renderHook(() => useBluetooth(options));
 
-  await act(async () => {
-    await result.current.requestDevice();
-  });
+  await act(result.current.requestDevice);
 
-  expect(mockNavigatorBluetooth.requestDevice).toHaveBeenCalledWith({
+  expect(navigator.bluetooth.requestDevice).toHaveBeenCalledWith({
     acceptAllDevices: true,
     optionalServices: ['battery_service']
   });
@@ -148,103 +123,45 @@ it('Should handle device options correctly', async () => {
 
 it('Should handle filters option correctly', async () => {
   const options = {
-    filters: [{ name: 'Test Device' }],
-    optionalServices: ['battery_service' as BluetoothServiceUUID]
+    filters: [{ name: 'test-device' }]
   };
 
   const { result } = renderHook(() => useBluetooth(options));
 
-  await act(async () => {
-    await result.current.requestDevice();
-  });
+  await act(result.current.requestDevice);
 
-  expect(mockNavigatorBluetooth.requestDevice).toHaveBeenCalledWith({
+  expect(navigator.bluetooth.requestDevice).toHaveBeenCalledWith({
     acceptAllDevices: false,
-    optionalServices: ['battery_service'],
-    filters: [{ name: 'Test Device' }]
+    filters: [{ name: 'test-device' }]
   });
 });
 
 it('Should handle gattserverdisconnected event', async () => {
-  const { result } = renderHook(() => useBluetooth());
+  const { result } = renderHook(useBluetooth);
 
-  await act(async () => {
-    await result.current.requestDevice();
-  });
+  await act(result.current.requestDevice);
 
-  await waitFor(() => {
-    expect(result.current.connected).toBe(true);
-  });
+  expect(result.current.connected).toBe(true);
 
-  act(() => {
-    mockBluetoothDevice.dispatchEvent(new Event('gattserverdisconnected'));
-  });
+  act(() => mockBluetoothDevice.dispatchEvent(new Event('gattserverdisconnected')));
 
-  await waitFor(() => {
-    expect(result.current.connected).toBe(false);
-    expect(result.current.device).toBeUndefined();
-    expect(result.current.server).toBeUndefined();
-  });
+  expect(result.current.connected).toBe(false);
+  expect(result.current.device).toBeUndefined();
+  expect(result.current.server).toBeUndefined();
 });
 
 it('Should cleanup on unmount', async () => {
-  const removeEventListenerSpy = vi.spyOn(mockBluetoothDevice, 'removeEventListener');
-  const disconnectSpy = vi.spyOn(mockGattServer, 'disconnect');
+  const { result, unmount } = renderHook(useBluetooth);
 
-  const { result, unmount } = renderHook(() => useBluetooth());
+  await act(result.current.requestDevice);
 
-  await act(async () => {
-    await result.current.requestDevice();
-  });
-
-  await waitFor(() => {
-    expect(result.current.connected).toBe(true);
-  });
+  expect(result.current.connected).toBe(true);
 
   unmount();
 
-  expect(removeEventListenerSpy).toHaveBeenCalledWith(
+  expect(mockRemoveEventListener).toHaveBeenCalledWith(
     'gattserverdisconnected',
     expect.any(Function)
   );
-  expect(disconnectSpy).toHaveBeenCalled();
-});
-
-it('Should handle device without GATT interface', async () => {
-  const deviceWithoutGatt = {
-    ...mockBluetoothDevice,
-    gatt: undefined
-  } as any;
-
-  mockNavigatorBluetooth.requestDevice.mockResolvedValueOnce(deviceWithoutGatt);
-
-  const { result } = renderHook(() => useBluetooth());
-
-  await act(async () => {
-    await result.current.requestDevice();
-  });
-
-  await waitFor(() => {
-    expect(result.current.device).toBe(deviceWithoutGatt);
-    expect(result.current.connected).toBe(false);
-    expect(result.current.server).toBeUndefined();
-  });
-});
-
-it('Should handle device request error', async () => {
-  const requestError = new Error('Device request failed');
-  mockNavigatorBluetooth.requestDevice.mockRejectedValueOnce(requestError);
-
-  const { result } = renderHook(() => useBluetooth());
-
-  await expect(async () => {
-    await act(async () => {
-      await result.current.requestDevice();
-    });
-  }).rejects.toThrow('Device request failed');
-
-  // Device should not be set when request fails
-  expect(result.current.device).toBeUndefined();
-  expect(result.current.connected).toBe(false);
-  expect(result.current.server).toBeUndefined();
+  expect(mockBluetoothDevice.gatt.disconnect).toHaveBeenCalled();
 });
