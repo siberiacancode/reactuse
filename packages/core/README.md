@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://reactuse.dev">
+  <a href="https://siberiacancode.github.io/reactuse/">
     <picture>
       <img alt="React Use logo" src="https://siberiacancode.github.io/reactuse/logo.svg" height="128">
     </picture>
@@ -25,7 +25,7 @@ npm install @siberiacancode/reactuse
 ```
 
 ```tsx
-import { useCounter } from '@siberiacancode/reactuse';
+import { useCounter } from "@siberiacancode/reactuse";
 
 const App = () => {
   const counter = useCounter(0);
