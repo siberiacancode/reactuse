@@ -99,7 +99,6 @@ export const useLockScroll = ((...params: any[]): any => {
   };
 
   const unlock = () => {
-    console.log('unlock', (elementRef.current as any).__originalOverflow);
     if (!elementRef.current) return;
     const element = elementRef.current as HTMLElement;
     element.style.overflow = (elementRef.current as any).__originalOverflow;
@@ -107,7 +106,6 @@ export const useLockScroll = ((...params: any[]): any => {
   };
 
   const toggle = () => {
-    console.log('toggle', locked, locked ? 'unlock' : 'lock');
     if (locked) return unlock();
     lock();
   };
