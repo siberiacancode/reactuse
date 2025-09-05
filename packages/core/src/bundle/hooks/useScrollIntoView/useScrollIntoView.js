@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useScrollIntoView
@@ -40,7 +41,7 @@ export const useScrollIntoView = (...params) => {
     immediately = true
   } = options ?? {};
   const elementRef = useRef(null);
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!immediately) return;
     if (!target && !internalRef.state) return;
     const element = (target ? getElement(target) : internalRef.current) ?? window;

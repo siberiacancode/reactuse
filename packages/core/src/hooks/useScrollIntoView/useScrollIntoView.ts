@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -6,6 +6,7 @@ import { getElement, isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The scroll into view options type */
@@ -74,7 +75,7 @@ export const useScrollIntoView = ((...params: any[]) => {
   } = options ?? {};
   const elementRef = useRef<Element>(null);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!immediately) return;
     if (!target && !internalRef.state) return;
 

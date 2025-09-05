@@ -1,7 +1,11 @@
 import { useScrollTo } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const scrollTo = useScrollTo<HTMLDivElement>({ x: 0, y: 260 });
+  const scrollTo = useScrollTo<HTMLDivElement>({
+    x: 0,
+    y: 260,
+    behavior: 'smooth'
+  });
 
   return (
     <div>
