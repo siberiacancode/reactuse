@@ -27,7 +27,8 @@ export const configSchema = z
     aliases: z.object({
       hooks: z.string(),
       utils: z.string()
-    })
+    }),
+    case: z.literal(['camel', 'kebab']).optional()
   })
   .strict();
 

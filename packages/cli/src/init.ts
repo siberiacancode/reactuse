@@ -43,7 +43,8 @@ export const init = async () => {
       aliases: {
         hooks: '@/shared/hooks',
         utils: '@/utils/lib'
-      }
+      },
+      case: 'camel'
     };
     await fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
     console.log(JSON.stringify(config, null, 2));
