@@ -109,9 +109,10 @@ export const useFileDialog = ((...params: any[]) => {
 
     inputRef.current = init();
     return () => {
-      inputRef.current?.remove();
+      if (!inputRef.current) return;
+      inputRef.current.remove();
     };
-  }, [options?.multiple, options?.accept, options?.capture, options?.reset]);
+  }, []);
 
   return { value, open, reset };
 }) as UseFileDialog;

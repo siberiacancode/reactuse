@@ -32,7 +32,7 @@ const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
  *
  * @overload
  * @template Target The target element
- * @param {Target} target The target element to scroll
+ * @param {Target} [target=window] The target element to scroll
  * @param {ScrollBehavior} [options.behavior=auto] The behavior of scrolling
  * @param {number} [options.offset.left=0] The left offset for arrived states
  * @param {number} [options.offset.right=0]  The right offset for arrived states
@@ -70,8 +70,7 @@ export const useScroll = (...params) => {
   const scrollPositionRef = useRef({ x: 0, y: 0 });
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    const element = (target ? getElement(target) : internalRef.current) ?? window;
     const onScrollEnd = (event) => {
       setScrolling(false);
       options?.onStop?.(event);

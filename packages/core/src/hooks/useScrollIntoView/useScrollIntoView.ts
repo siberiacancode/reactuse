@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -10,8 +10,8 @@ import { useRefState } from '../useRefState/useRefState';
 
 /** The scroll into view options type */
 export interface UseScrollIntoViewOptions extends ScrollIntoViewOptions {
-  /** Whether to enable the scroll into view */
-  enabled?: boolean;
+  /** Whether to immediately the scroll into view */
+  immediately?: boolean;
 }
 
 /** The scroll into view return type */
@@ -30,7 +30,7 @@ export interface UseScrollIntoView {
     target?: never
   ): UseScrollIntoViewReturn & { ref: StateRef<Target> };
 
-  (target: HookTarget, options?: UseScrollIntoViewOptions): UseScrollIntoViewReturn;
+  (target?: HookTarget, options?: UseScrollIntoViewOptions): UseScrollIntoViewReturn;
 }
 
 /**
@@ -40,7 +40,8 @@ export interface UseScrollIntoView {
  * @usage low
  *
  * @overload
- * @param {HookTarget} target The target element to scroll into view
+ * @param {HookTarget} [target=window] The target element to scroll into view
+ * @param {boolean} [options.immediately=true] Whether to scroll immediately
  * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior
  * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment
  * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment
@@ -51,6 +52,7 @@ export interface UseScrollIntoView {
  *
  * @overload
  * @template Target The target element
+ * @param {boolean} [options.immediately=true] Whether to scroll immediately
  * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior
  * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment
  * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment
@@ -68,34 +70,35 @@ export const useScrollIntoView = ((...params: any[]) => {
     behavior = 'smooth',
     block = 'start',
     inline = 'nearest',
-    enabled = true
+    immediately = true
   } = options ?? {};
+  const elementRef = useRef<Element>(null);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!immediately) return;
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-    if (!element) return;
+    const element = ((target ? getElement(target) : internalRef.current) as Element) ?? window;
+
+    elementRef.current = element;
 
     element.scrollIntoView({
       behavior,
       block,
       inline
     });
-  }, [target, internalRef.state, enabled]);
+  }, [target, internalRef.state]);
 
   const trigger = (params?: {
     behavior?: ScrollBehavior;
     block?: ScrollLogicalPosition;
     inline?: ScrollLogicalPosition;
   }) => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-    if (!element) return;
+    if (!elementRef.current) return;
 
     const { behavior, block, inline } = params ?? {};
 
-    element.scrollIntoView({
+    elementRef.current.scrollIntoView({
       behavior,
       block,
       inline

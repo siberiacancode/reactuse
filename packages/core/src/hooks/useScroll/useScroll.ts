@@ -48,9 +48,12 @@ export interface UseScrollCallbackParams {
 }
 
 export interface UseScroll {
-  (target: HookTarget, callback?: (params: UseScrollCallbackParams, event: Event) => void): boolean;
+  (
+    target?: HookTarget,
+    callback?: (params: UseScrollCallbackParams, event: Event) => void
+  ): boolean;
 
-  (target: HookTarget, options?: UseScrollOptions): boolean;
+  (target?: HookTarget, options?: UseScrollOptions): boolean;
 
   <Target extends Element>(
     callback?: (params: UseScrollCallbackParams, event: Event) => void,
@@ -99,7 +102,7 @@ export interface UseScroll {
  *
  * @overload
  * @template Target The target element
- * @param {Target} target The target element to scroll
+ * @param {Target} [target=window] The target element to scroll
  * @param {ScrollBehavior} [options.behavior=auto] The behavior of scrolling
  * @param {number} [options.offset.left=0] The left offset for arrived states
  * @param {number} [options.offset.right=0]  The right offset for arrived states
@@ -142,9 +145,7 @@ export const useScroll = ((...params: any[]) => {
 
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-
-    if (!element) return;
+    const element = ((target ? getElement(target) : internalRef.current) as Element) ?? window;
 
     const onScrollEnd = (event: Event) => {
       setScrolling(false);

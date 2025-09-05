@@ -1,5 +1,6 @@
-import { useLayoutEffect } from 'react';
+import { useRef } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useScrollTo
@@ -8,8 +9,11 @@ import { useRefState } from '../useRefState/useRefState';
  * @usage low
  *
  * @overload
- * @param {HookTarget} target The target element for scrolling to
- * @param {UseScrollToOptions} [options] The scroll options
+ * @param {HookTarget} [target=window] The target element for scrolling to
+ * @param {boolean} [options.immediately=true] Whether to scroll immediately
+ * @param {number} [options.x] The horizontal position to scroll to
+ * @param {number} [options.y] The vertical position to scroll to
+ * @param {ScrollBehavior} [options.behavior=auto] The scrolling behavior
  * @returns {UseScrollToReturn} The scroll trigger function
  *
  * @example
@@ -17,7 +21,10 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @template Target The target element
- * @param {UseScrollToOptions} [options] The scroll options
+ * @param {boolean} [options.immediately=true] Whether to scroll immediately
+ * @param {number} [options.x] The horizontal position to scroll to
+ * @param {number} [options.y] The vertical position to scroll to
+ * @param {ScrollBehavior} [options.behavior=auto] The scrolling behavior
  * @returns {UseScrollToReturn & { ref: StateRef<Target> }} The scroll trigger function and ref
  *
  * @example
@@ -26,20 +33,20 @@ import { useRefState } from '../useRefState/useRefState';
 export const useScrollTo = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = target ? params[1] : params[0];
-  const { x, y, behavior = 'auto', enabled = true } = options ?? {};
+  const { x, y, behavior = 'auto', immediately = true } = options ?? {};
   const internalRef = useRefState();
-  useLayoutEffect(() => {
-    if (!enabled) return;
+  const elementRef = useRef(null);
+  useIsomorphicLayoutEffect(() => {
+    if (!immediately) return;
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    const element = (target ? getElement(target) : internalRef.current) ?? window;
+    elementRef.current = element;
     element.scrollTo({ top: y, left: x, behavior });
   }, [target, internalRef.state]);
   const trigger = (params) => {
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    if (!elementRef.current) return;
     const { x, y, behavior } = params ?? {};
-    element.scrollTo({ left: x, top: y, behavior });
+    elementRef.current.scrollTo({ left: x, top: y, behavior });
   };
   if (target) return { trigger };
   return { ref: internalRef, trigger };
