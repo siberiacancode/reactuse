@@ -1,5 +1,6 @@
 // base
 export * from './useBoolean/useBoolean';
+export * from './useControllableState/useControllableState';
 export * from './useCookie/useCookie';
 export * from './useCookies/useCookies';
 export * from './useCounter/useCounter';
@@ -10,6 +11,7 @@ export * from './useHash/useHash';
 
 // collections
 export * from './useList/useList';
+
 // storage
 export * from './useLocalStorage/useLocalStorage';
 export * from './useMap/useMap';

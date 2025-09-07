@@ -31,10 +31,7 @@ const RerenderInfo = ({ componentName }: { componentName: string }) => {
   });
 
   return (
-    <code
-      ref={codeRef}
-      className='bg-bac absolute right-0 top-0 hidden rounded px-2 text-xs text-white'
-    >
+    <code ref={codeRef} className='absolute right-0 top-0 hidden rounded px-2 text-xs text-white'>
       {componentName} x{countRef.current}
     </code>
   );

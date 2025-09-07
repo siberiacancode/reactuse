@@ -1,5 +1,6 @@
 // base
 export * from './useBoolean/useBoolean';
+export * from './useControllableState/useControllableState';
 export * from './useCookie/useCookie';
 export * from './useCookies/useCookies';
 export * from './useCounter/useCounter';
