@@ -1,23 +1,26 @@
 import { useDebounceState } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const [debouncedCounterCount, setDebouncedCounterCount] = useDebounceState(0, 500);
+  const [debouncedValue, setDebouncedValue] = useDebounceState('', 500);
 
   return (
-    <div>
-      <p>
-        Value: <code>{debouncedCounterCount}</code>
-      </p>
-      <p>
-        Debounced value: <code>{debouncedCounterCount}</code>
-      </p>
-      <button type='button' onClick={() => setDebouncedCounterCount(debouncedCounterCount + 1)}>
-        Increment
-      </button>
-      <button type='button' onClick={() => setDebouncedCounterCount(debouncedCounterCount - 1)}>
-        Decrement
-      </button>
-    </div>
+    <>
+      <div>
+        <label className='mb-2 block text-sm font-medium'>Enter value to see debounce effect</label>
+        <input
+          className='w-full'
+          defaultValue={debouncedValue}
+          type='text'
+          onChange={(event) => setDebouncedValue(event.target.value)}
+          placeholder='Enter value to see debounce effect'
+        />
+      </div>
+      <div className='flex flex-col gap-1'>
+        <div className='text-sm'>
+          Debounced value: <code>{debouncedValue || 'empty string'}</code>
+        </div>
+      </div>
+    </>
   );
 };
 

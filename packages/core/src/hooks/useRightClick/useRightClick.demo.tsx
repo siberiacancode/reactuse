@@ -16,7 +16,6 @@ const useContextMenu = () => {
     },
     {
       onStart: (event) => {
-        console.log('onStart', event);
         timerIdRef.current = setTimeout(() => {
           if (event instanceof MouseEvent) return;
           const touchEvent = event as TouchEvent;

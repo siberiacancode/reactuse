@@ -11,7 +11,7 @@ interface CollapseProps {
 const Collapse = ({ title, children, isOpen, defaultOpen = false, onToggle }: CollapseProps) => {
   const [isOpenState, setIsOpenState] = useControllableState({
     value: isOpen,
-    defaultValue: defaultOpen,
+    initialValue: defaultOpen,
     onChange: onToggle
   });
 

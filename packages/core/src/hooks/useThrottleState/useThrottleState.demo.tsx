@@ -1,23 +1,26 @@
 import { useThrottleState } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const [throttledCounterCount, setThrottledCounterCount] = useThrottleState(0, 1000);
+  const [throttledValue, setThrottledValue] = useThrottleState('', 500);
 
   return (
-    <div>
-      <p>
-        Value: <code>{throttledCounterCount}</code>
-      </p>
-      <p>
-        Throttled value: <code>{throttledCounterCount}</code>
-      </p>
-      <button type='button' onClick={() => setThrottledCounterCount(throttledCounterCount + 1)}>
-        Increment
-      </button>
-      <button type='button' onClick={() => setThrottledCounterCount(throttledCounterCount - 1)}>
-        Decrement
-      </button>
-    </div>
+    <>
+      <div>
+        <label className='mb-2 block text-sm font-medium'>Enter value to see throttle effect</label>
+        <input
+          className='w-full'
+          defaultValue={throttledValue}
+          type='text'
+          onChange={(event) => setThrottledValue(event.target.value)}
+          placeholder='Enter value to see throttle effect'
+        />
+      </div>
+      <div className='flex flex-col gap-1'>
+        <div className='text-sm'>
+          Throttled value: <code>{throttledValue || 'empty string'}</code>
+        </div>
+      </div>
+    </>
   );
 };
 
