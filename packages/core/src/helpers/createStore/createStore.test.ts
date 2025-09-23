@@ -130,6 +130,5 @@ it('Should work correct with array state', () => {
 
   expect(store.get()).toEqual([]);
   store.set([1, 2, 3]);
-
   expect(store.get()).toEqual([1, 2, 3]);
 });
