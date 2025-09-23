@@ -1,3 +1,4 @@
+export * from './useAsyncEffect/useAsyncEffect';
 export * from './useDidUpdate/useDidUpdate';
 export * from './useIsFirstRender/useIsFirstRender';
 // effects

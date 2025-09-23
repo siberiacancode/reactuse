@@ -132,7 +132,7 @@ export default async () => {
           },
           footer: {
             message: 'Released under the MIT License.',
-            copyright: 'Copyright © 2024 siberiacancode'
+            copyright: `Copyright © ${new Date().getFullYear()} siberiacancode`
           },
           editLink: {
             pattern: ({ filePath, params }) => {

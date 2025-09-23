@@ -26,10 +26,9 @@ import { useRefState } from '../useRefState/useRefState';
 export const useActiveElement = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const [value, setValue] = useState(null);
-  const internalRef = useRefState(window);
+  const internalRef = useRefState();
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    const element = (target ? getElement(target) : internalRef.current) ?? window;
     const observer = new MutationObserver((mutations) => {
       mutations
         .filter((mutation) => mutation.removedNodes.length)

@@ -1,24 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import type { HookTarget } from '@/utils/helpers';
+import type { HookTarget } from "@/utils/helpers";
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { getElement, isTarget } from "@/utils/helpers";
 
-import type { StateRef } from '../useRefState/useRefState';
+import type { StateRef } from "../useRefState/useRefState";
 
-import { useRefState } from '../useRefState/useRefState';
+import { useRefState } from "../useRefState/useRefState";
+
+/** The use active element return type */
+export type UseActiveElementReturn<
+  ActiveElement extends HTMLElement = HTMLElement
+> = ActiveElement | null;
 
 export interface UseActiveElement {
-  (): HTMLElement | null;
+  (): UseActiveElementReturn;
 
   <Target extends Element, ActiveElement extends HTMLElement = HTMLElement>(
     target?: never
   ): {
     ref: StateRef<Target>;
-    value: ActiveElement | null;
+    value: UseActiveElementReturn<ActiveElement>;
   };
 
-  <ActiveElement extends HTMLElement = HTMLElement>(target: HookTarget): ActiveElement | null;
+  <ActiveElement extends HTMLElement = HTMLElement>(
+    target: HookTarget
+  ): UseActiveElementReturn<ActiveElement>;
 }
 
 /**
@@ -44,15 +51,16 @@ export interface UseActiveElement {
  * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useActiveElement.html}
  */
 export const useActiveElement = ((...params: any[]) => {
-  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
+  const target = (isTarget(params[0]) ? params[0] : undefined) as
+    | HookTarget
+    | undefined;
 
   const [value, setValue] = useState<HTMLElement | null>(null);
-  const internalRef = useRefState(window);
+  const internalRef = useRefState();
 
   useEffect(() => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-
-    if (!element) return;
+    const element = ((target ? getElement(target) : internalRef.current) ??
+      window) as Element;
 
     const observer = new MutationObserver((mutations) => {
       mutations
@@ -61,7 +69,8 @@ export const useActiveElement = ((...params: any[]) => {
         .flat()
         .forEach((node) => {
           setValue((prevActiveElement) => {
-            if (node === prevActiveElement) return document.activeElement as HTMLElement | null;
+            if (node === prevActiveElement)
+              return document.activeElement as HTMLElement | null;
             return prevActiveElement;
           });
         });
@@ -69,24 +78,25 @@ export const useActiveElement = ((...params: any[]) => {
 
     observer.observe(element, {
       childList: true,
-      subtree: true
+      subtree: true,
     });
 
-    const onActiveElementChange = () => setValue(document?.activeElement as HTMLElement | null);
+    const onActiveElementChange = () =>
+      setValue(document?.activeElement as HTMLElement | null);
 
-    element.addEventListener('focus', onActiveElementChange, true);
-    element.addEventListener('blur', onActiveElementChange, true);
+    element.addEventListener("focus", onActiveElementChange, true);
+    element.addEventListener("blur", onActiveElementChange, true);
 
     return () => {
       observer.disconnect();
-      element.removeEventListener('focus', onActiveElementChange, true);
-      element.removeEventListener('blur', onActiveElementChange, true);
+      element.removeEventListener("focus", onActiveElementChange, true);
+      element.removeEventListener("blur", onActiveElementChange, true);
     };
   }, [target, internalRef.state]);
 
   if (target) return value;
   return {
     ref: internalRef,
-    value
+    value,
   };
 }) as UseActiveElement;

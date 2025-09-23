@@ -25,7 +25,7 @@ npm install @siberiacancode/reactuse
 ```
 
 ```tsx
-import { useCounter } from "@siberiacancode/reactuse";
+import { useCounter } from '@siberiacancode/reactuse';
 
 const App = () => {
   const counter = useCounter(0);
