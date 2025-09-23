@@ -41,10 +41,11 @@ export const createStore = <Value>(createState: StoreCreator<Value> | Value) => 
 
     if (!Object.is(nextState, state)) {
       const prevState = state;
-      state =
-        typeof nextState !== 'object' || nextState === null
+      state = (
+        typeof nextState !== 'object' || nextState === null || Array.isArray(nextState)
           ? nextState
-          : Object.assign({}, state, nextState);
+          : Object.assign({}, state, nextState)
+      ) as Value;
 
       listeners.forEach((listener) => listener(state, prevState));
     }

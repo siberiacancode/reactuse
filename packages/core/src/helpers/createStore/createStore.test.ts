@@ -106,3 +106,30 @@ it('Should work with partial state change', () => {
   expect(store.get()).toEqual({ count: 1, value: 'value' });
   expect(listener).toHaveBeenCalledWith({ count: 1, value: 'value' }, { count: 0, value: 'value' });
 });
+
+it('Should work with create state function', () => {
+  interface State {
+    count: number;
+    increment: () => void;
+  }
+
+  const store = createStore<State>((set) => ({
+    count: 0,
+    increment: () => set((state) => ({ count: state.count + 1 }))
+  }));
+
+  expect(store.get().count).toBe(0);
+  store.set((state) => ({ count: state.count + 1 }));
+  expect(store.get().count).toBe(1);
+  store.set((state) => ({ count: state.count + 1 }));
+  expect(store.get().count).toBe(2);
+});
+
+it('Should work correct with array state', () => {
+  const store = createStore<number[]>([]);
+
+  expect(store.get()).toEqual([]);
+  store.set([1, 2, 3]);
+
+  expect(store.get()).toEqual([1, 2, 3]);
+});
