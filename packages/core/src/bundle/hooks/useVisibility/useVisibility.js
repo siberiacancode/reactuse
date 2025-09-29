@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { getElement, isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
- * @name useIntersectionObserver
- * @description - Hook that gives you intersection observer state
+ * @name useVisibility
+ * @description - Hook that gives you visibility observer state
  * @category Sensors
  * @usage medium
  *
@@ -11,41 +11,41 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @param {HookTarget} target The target element to detect intersection
- * @param {boolean} [options.enabled=true] The IntersectionObserver options
- * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected
+ * @param {boolean} [options.enabled=true] The Intersection options
+ * @param {((entries: IntersectionEntry[], observer: Intersection) => void) | undefined} [options.onChange] The callback to execute when intersection is detected
  * @param {HookTarget} [options.root=document] The root element to observe
- * @returns {UseIntersectionObserverReturn} An object containing the state
+ * @returns {UseVisibilityReturn} An object containing the state
  *
  * @example
- * const { ref, entries, observer } = useIntersectionObserver();
+ * const { ref, entries, observer } = useVisibility();
  *
  * @overload
  * @template Target The target element
- * @param {boolean} [options.enabled=true] The IntersectionObserver options
- * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected
+ * @param {boolean} [options.enabled=true] The Intersection options
+ * @param {((entries: IntersectionEntry[], observer: Intersection) => void) | undefined} [options.onChange] The callback to execute when intersection is detected
  * @param {HookTarget} [options.root=document] The root element to observe
- * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
+ * @returns {UseVisibilityReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { entries, observer } = useIntersectionObserver(ref);
+ * const { entries, observer } = useVisibility(ref);
  *
  * @overload
  * @template Target The target element
- * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
- * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
+ * @param {UseVisibilityCallback} callback The callback to execute when intersection is detected
+ * @returns {UseVisibilityReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { ref, entries, observer } = useIntersectionObserver(() => console.log('callback'));
+ * const { ref, entries, observer } = useVisibility(() => console.log('callback'));
  *
  * @overload
- * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
+ * @param {UseVisibilityCallback} callback The callback to execute when intersection is detected
  * @param {HookTarget} target The target element to detect intersection
- * @returns {UseIntersectionObserverReturn} An object containing the state
+ * @returns {UseVisibilityReturn} An object containing the state
  *
  * @example
- * const { entries, observer } = useIntersectionObserver(ref, () => console.log('callback'));
+ * const { entries, observer } = useVisibility(ref, () => console.log('callback'));
  */
-export const useIntersectionObserver = (...params) => {
+export const useVisibility = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = target
     ? typeof params[1] === 'object'
@@ -57,7 +57,7 @@ export const useIntersectionObserver = (...params) => {
   const callback = options?.onChange;
   const enabled = options?.enabled ?? true;
   const [observer, setObserver] = useState();
-  const [entries, setEntries] = useState();
+  const [entry, setEntry] = useState();
   const internalRef = useRefState();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
@@ -67,8 +67,9 @@ export const useIntersectionObserver = (...params) => {
     if (!element) return;
     const observer = new IntersectionObserver(
       (entries, observer) => {
-        setEntries(entries);
-        internalCallbackRef.current?.(entries, observer);
+        const entry = entries.pop();
+        setEntry(entry);
+        internalCallbackRef.current?.(entry, observer);
       },
       {
         ...options,
@@ -81,10 +82,11 @@ export const useIntersectionObserver = (...params) => {
       observer.disconnect();
     };
   }, [target, internalRef.state, options?.rootMargin, options?.threshold, options?.root, enabled]);
-  if (target) return { observer, entries };
+  if (target) return { observer, entry, inView: !!entry?.isIntersecting };
   return {
     observer,
     ref: internalRef,
-    entries
+    entry,
+    inView: !!entry?.isIntersecting
   };
 };

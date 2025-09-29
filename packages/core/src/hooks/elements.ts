@@ -8,6 +8,7 @@ export * from './useDropZone/useDropZone';
 export * from './useFileDialog/useFileDialog';
 
 export * from './useFocus/useFocus';
+export * from './useFocusTrap/useFocusTrap';
 export * from './useHover/useHover';
 // ui
 export * from './useImage/useImage';

@@ -10,7 +10,7 @@ import { useRefState } from '../useRefState/useRefState';
 
 /** The intersection observer callback type */
 export type UseIntersectionObserverCallback = (
-  entry: IntersectionObserverEntry,
+  entries: IntersectionObserverEntry[],
   observer: IntersectionObserver
 ) => void;
 
@@ -27,9 +27,7 @@ export interface UseIntersectionObserverOptions extends Omit<IntersectionObserve
 /** The intersection observer return type */
 export interface UseIntersectionObserverReturn {
   /** The intersection observer entry */
-  entry?: IntersectionObserverEntry;
-  /** The in view state of the intersection observer */
-  inView: boolean;
+  entries?: IntersectionObserverEntry[];
   /** The intersection observer instance */
   observer?: IntersectionObserver;
 }
@@ -66,7 +64,7 @@ export interface UseIntersectionObserver {
  * @returns {UseIntersectionObserverReturn} An object containing the state
  *
  * @example
- * const { ref, entry, inView, observer } = useIntersectionObserver();
+ * const { ref, entries, observer } = useIntersectionObserver();
  *
  * @overload
  * @template Target The target element
@@ -76,7 +74,7 @@ export interface UseIntersectionObserver {
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { entry, inView, observer } = useIntersectionObserver(ref);
+ * const { entries, observer } = useIntersectionObserver(ref);
  *
  * @overload
  * @template Target The target element
@@ -84,7 +82,7 @@ export interface UseIntersectionObserver {
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { ref, entry, inView, observer } = useIntersectionObserver(() => console.log('callback'));
+ * const { ref, entries, observer } = useIntersectionObserver(() => console.log('callback'));
  *
  * @overload
  * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
@@ -92,7 +90,7 @@ export interface UseIntersectionObserver {
  * @returns {UseIntersectionObserverReturn} An object containing the state
  *
  * @example
- * const { entry, inView, observer } = useIntersectionObserver(() => console.log('callback'), ref);
+ * const { entries, observer } = useIntersectionObserver(ref, () => console.log('callback'));
  */
 export const useIntersectionObserver = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
@@ -111,7 +109,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
   const enabled = options?.enabled ?? true;
 
   const [observer, setObserver] = useState<IntersectionObserver>();
-  const [entry, setEntry] = useState<IntersectionObserverEntry>();
+  const [entries, setEntries] = useState<IntersectionObserverEntry[]>();
 
   const internalRef = useRefState<Element>();
   const internalCallbackRef = useRef(callback);
@@ -124,9 +122,9 @@ export const useIntersectionObserver = ((...params: any[]) => {
     if (!element) return;
 
     const observer = new IntersectionObserver(
-      ([entry], observer) => {
-        setEntry(entry);
-        internalCallbackRef.current?.(entry, observer);
+      (entries, observer) => {
+        setEntries(entries);
+        internalCallbackRef.current?.(entries, observer);
       },
       {
         ...options,
@@ -142,11 +140,10 @@ export const useIntersectionObserver = ((...params: any[]) => {
     };
   }, [target, internalRef.state, options?.rootMargin, options?.threshold, options?.root, enabled]);
 
-  if (target) return { observer, entry, inView: !!entry?.isIntersecting };
+  if (target) return { observer, entries };
   return {
     observer,
     ref: internalRef,
-    entry,
-    inView: !!entry?.isIntersecting
+    entries
   };
 }) as UseIntersectionObserver;

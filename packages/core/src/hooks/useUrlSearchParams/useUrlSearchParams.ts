@@ -98,7 +98,7 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
       'mode' in params ||
       'write' in params)
       ? params
-      : undefined
+      : {}
   ) as UseUrlSearchParamsOptions<Value>;
   const initialValue = (
     options ? options?.initialValue : params

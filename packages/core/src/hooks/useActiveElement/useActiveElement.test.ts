@@ -1,13 +1,13 @@
-import { act, renderHook } from "@testing-library/react";
-import { vi } from "vitest";
+import { act, renderHook } from '@testing-library/react';
+import { vi } from 'vitest';
 
-import { createTrigger, renderHookServer } from "@/tests";
-import { target } from "@/utils/helpers";
+import { createTrigger, renderHookServer } from '@/tests';
+import { target } from '@/utils/helpers';
 
-import type { StateRef } from "../useRefState/useRefState";
-import type { UseActiveElementReturn } from "./useActiveElement";
+import type { StateRef } from '../useRefState/useRefState';
+import type { UseActiveElementReturn } from './useActiveElement';
 
-import { useActiveElement } from "./useActiveElement";
+import { useActiveElement } from './useActiveElement';
 
 const trigger = createTrigger<Element, MutationCallback>();
 
@@ -36,17 +36,17 @@ afterEach(vi.clearAllMocks);
 
 const targets = [
   undefined,
-  target("#target"),
-  target(document.getElementById("target")!),
-  target(() => document.getElementById("target")!),
-  { current: document.getElementById("target") },
+  target('#target'),
+  target(document.getElementById('target')!),
+  target(() => document.getElementById('target')!),
+  { current: document.getElementById('target') }
 ];
 
-const element = document.getElementById("target") as HTMLDivElement;
+const element = document.getElementById('target') as HTMLDivElement;
 
 targets.forEach((target) => {
   describe(`${target}`, () => {
-    it("Should use active element", () => {
+    it('Should use active element', () => {
       const { result } = renderHook(() => {
         if (target)
           return useActiveElement(target) as unknown as {
@@ -57,14 +57,14 @@ targets.forEach((target) => {
       });
 
       if (!target) {
-        expect(result.current.ref).toBeTypeOf("function");
+        expect(result.current.ref).toBeTypeOf('function');
         expect(result.current.value).toBeNull();
       } else {
         expect(result.current).toBeNull();
       }
     });
 
-    it("Should use active element on server side", () => {
+    it('Should use active element on server side', () => {
       const { result } = renderHookServer(() => {
         if (target)
           return useActiveElement(target) as unknown as {
@@ -75,14 +75,14 @@ targets.forEach((target) => {
       });
 
       if (!target) {
-        expect(result.current.ref).toBeTypeOf("function");
+        expect(result.current.ref).toBeTypeOf('function');
         expect(result.current.value).toBeNull();
       } else {
         expect(result.current).toBeNull();
       }
     });
 
-    it("Should set active element on focus", () => {
+    it('Should set active element on focus', () => {
       const { result } = renderHook(() => {
         if (target)
           return useActiveElement(target) as unknown as {
@@ -104,7 +104,7 @@ targets.forEach((target) => {
 
       act(() => {
         element.focus();
-        element.dispatchEvent(new FocusEvent("focus", { bubbles: true }));
+        element.dispatchEvent(new FocusEvent('focus', { bubbles: true }));
       });
 
       if (!target) {
@@ -114,7 +114,7 @@ targets.forEach((target) => {
       }
     });
 
-    it("Should unset active element on blur", () => {
+    it('Should unset active element on blur', () => {
       const { result } = renderHook(() => {
         if (target)
           return useActiveElement(target) as unknown as {
@@ -125,10 +125,10 @@ targets.forEach((target) => {
       });
 
       if (!target) {
-        act(() => "ref" in result.current! && result.current.ref(element));
+        act(() => 'ref' in result.current! && result.current.ref(element));
       }
 
-      if (!target && "value" in result.current!) {
+      if (!target && 'value' in result.current!) {
         expect(result.current.value).toBeNull();
       } else {
         expect(result.current).toBeNull();
@@ -136,10 +136,10 @@ targets.forEach((target) => {
 
       act(() => {
         element.focus();
-        element.dispatchEvent(new FocusEvent("focus", { bubbles: true }));
+        element.dispatchEvent(new FocusEvent('focus', { bubbles: true }));
       });
 
-      if (!target && "value" in result.current!) {
+      if (!target && 'value' in result.current!) {
         expect(result.current.value).toBe(element);
       } else {
         expect(result.current).toBe(element);
@@ -147,14 +147,14 @@ targets.forEach((target) => {
 
       act(() => element.blur());
 
-      if (!target && "value" in result.current!) {
+      if (!target && 'value' in result.current!) {
         expect(result.current.value).toBe(document.activeElement);
       } else {
         expect(result.current).toBe(document.activeElement);
       }
     });
 
-    it("Should handle target changes", () => {
+    it('Should handle target changes', () => {
       const { rerender } = renderHook(
         (target) => {
           if (target)
@@ -168,14 +168,14 @@ targets.forEach((target) => {
 
       expect(mockMutationObserverObserve).toHaveBeenCalledTimes(1);
 
-      rerender({ current: document.getElementById("target") });
+      rerender({ current: document.getElementById('target') });
 
       expect(mockMutationObserverObserve).toHaveBeenCalledTimes(2);
       expect(mockMutationObserverDisconnect).toHaveBeenCalledTimes(1);
     });
 
-    it("Should clean up on unmount", () => {
-      const removeEventListenerSpy = vi.spyOn(element, "removeEventListener");
+    it('Should clean up on unmount', () => {
+      const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
       const { result, unmount } = renderHook(() => {
         if (target)
@@ -191,16 +191,8 @@ targets.forEach((target) => {
       unmount();
 
       expect(mockMutationObserverDisconnect).toHaveBeenCalled();
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        "focus",
-        expect.any(Function),
-        true
-      );
-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
-        "blur",
-        expect.any(Function),
-        true
-      );
+      expect(removeEventListenerSpy).toHaveBeenCalledWith('focus', expect.any(Function), true);
+      expect(removeEventListenerSpy).toHaveBeenCalledWith('blur', expect.any(Function), true);
     });
   });
 });
