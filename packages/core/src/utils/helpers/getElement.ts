@@ -1,18 +1,13 @@
 import type { RefObject } from 'react';
 
-export type Target = (() => Element) | string | Document | Element | Window;
+import { Target } from './target';
+
 export type HookTarget =
   | RefObject<Element | null | undefined>
   | {
       value: Target;
       type: symbol;
     };
-
-export const targetSymbol = Symbol('target');
-export const target = (target: Target) => ({
-  value: target,
-  type: targetSymbol
-});
 
 export const getElement = (target: HookTarget) => {
   if ('current' in target) {

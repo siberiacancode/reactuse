@@ -4,4 +4,6 @@ export * from './getDate';
 export * from './getElement';
 export * from './getRetry';
 export * from './isTarget';
+export * from './target';
+export * from './targetSymbol';
 export * from './throttle';
