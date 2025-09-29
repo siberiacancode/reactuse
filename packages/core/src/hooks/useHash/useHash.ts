@@ -18,7 +18,11 @@ type UseHashReturn = [string, (value: string) => void];
 export interface UseHash {
   (initialValue?: string, options?: UseHashOptions): UseHashReturn;
 
+  (options?: UseHashOptions): UseHashReturn;
+
   (initialValue?: string, callback?: (hash: string) => void): UseHashReturn;
+
+  (callback?: (hash: string) => void): UseHashReturn;
 }
 
 /**
@@ -48,14 +52,18 @@ export interface UseHash {
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash("initial", (newHash) => console.log('Hash changed:', newHash));
+ * const [hash, setHash] = useHash("initial", (newHash) => console.log('callback'));
  */
 export const useHash = ((...params: any[]) => {
-  const [initialValue = '', param] = params;
-
-  const options = (typeof param === 'function' ? { onChange: param } : param) as
-    | UseHashOptions
-    | undefined;
+  const initialValue = typeof params[0] === 'string' ? params[0] : '';
+  const options =
+    typeof params[1] === 'object'
+      ? params[1]
+      : typeof params[1] === 'function'
+        ? { onChange: params[1] }
+        : typeof params[0] === 'object'
+          ? params[0]
+          : {};
 
   const enabled = options?.enabled ?? true;
   const mode = options?.mode ?? 'replace';

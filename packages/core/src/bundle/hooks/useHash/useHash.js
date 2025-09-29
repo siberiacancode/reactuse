@@ -27,11 +27,18 @@ export const getHash = () => decodeURIComponent(window.location.hash.replace('#'
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash("initial", (newHash) => console.log('Hash changed:', newHash));
+ * const [hash, setHash] = useHash("initial", (newHash) => console.log('callback'));
  */
 export const useHash = (...params) => {
-  const [initialValue = '', param] = params;
-  const options = typeof param === 'function' ? { onChange: param } : param;
+  const initialValue = typeof params[0] === 'string' ? params[0] : '';
+  const options =
+    typeof params[1] === 'object'
+      ? params[1]
+      : typeof params[1] === 'function'
+        ? { onChange: params[1] }
+        : typeof params[0] === 'object'
+          ? params[0]
+          : {};
   const enabled = options?.enabled ?? true;
   const mode = options?.mode ?? 'replace';
   const [hash, setHash] = useState(() => {
