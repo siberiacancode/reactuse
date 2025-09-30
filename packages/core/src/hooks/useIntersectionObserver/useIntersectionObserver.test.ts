@@ -1,30 +1,27 @@
-import { act, renderHook } from "@testing-library/react";
+import { act, renderHook } from '@testing-library/react';
 
-import { createTrigger, renderHookServer } from "@/tests";
-import { target } from "@/utils/helpers";
+import { createTrigger, renderHookServer } from '@/tests';
+import { target } from '@/utils/helpers';
 
-import type { StateRef } from "../useRefState/useRefState";
-import type { UseIntersectionObserverReturn } from "./useIntersectionObserver";
+import type { StateRef } from '../useRefState/useRefState';
+import type { UseIntersectionObserverReturn } from './useIntersectionObserver';
 
-import { useIntersectionObserver } from "./useIntersectionObserver";
+import { useIntersectionObserver } from './useIntersectionObserver';
 
 const trigger = createTrigger<Element, IntersectionObserverCallback>();
 
 const createMockIntersectionObserverElement = (isIntersecting: boolean) => [
   {
     isIntersecting,
-    element: document.getElementById("target") as HTMLDivElement,
-  } as unknown as IntersectionObserverEntry,
+    element: document.getElementById('target') as HTMLDivElement
+  } as unknown as IntersectionObserverEntry
 ];
 
 const mockIntersectionObserverObserve = vi.fn();
 const mockIntersectionObserverDisconnect = vi.fn();
 
 class MockIntersectionObserver {
-  constructor(
-    callback: IntersectionObserverCallback,
-    options?: IntersectionObserverInit
-  ) {
+  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
     this.callback = callback;
     this.options = options || {};
   }
@@ -44,13 +41,13 @@ globalThis.IntersectionObserver = MockIntersectionObserver as any;
 
 const targets = [
   undefined,
-  target("#target"),
-  target(document.getElementById("target")!),
-  target(() => document.getElementById("target")!),
-  { current: document.getElementById("target") },
+  target('#target'),
+  target(document.getElementById('target')!),
+  target(() => document.getElementById('target')!),
+  { current: document.getElementById('target') }
 ];
 
-const element = document.getElementById("target") as HTMLDivElement;
+const element = document.getElementById('target') as HTMLDivElement;
 
 afterEach(() => {
   vi.clearAllMocks();
@@ -59,7 +56,7 @@ afterEach(() => {
 
 targets.forEach((target) => {
   describe(`${target}`, () => {
-    it("Should use intersection observer", () => {
+    it('Should use intersection observer', () => {
       const { result } = renderHook(() => {
         if (target)
           return useIntersectionObserver(target) as unknown as {
@@ -70,14 +67,14 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      if (!target) expect(result.current.ref).toBeTypeOf("function");
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
 
       expect(result.current.entries).toBeUndefined();
       expect(result.current.observer).toBeInstanceOf(MockIntersectionObserver);
     });
 
-    it("Should use intersection observer on server side", () => {
+    it('Should use intersection observer on server side', () => {
       const { result } = renderHookServer(() => {
         if (target)
           return useIntersectionObserver(target) as unknown as {
@@ -86,14 +83,14 @@ targets.forEach((target) => {
         return useIntersectionObserver<HTMLDivElement>();
       });
 
-      if (!target) expect(result.current.ref).toBeTypeOf("function");
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
 
       expect(result.current.entries).toBeUndefined();
       expect(result.current.observer).toBeUndefined();
     });
 
-    it("Should observe element", () => {
+    it('Should observe element', () => {
       const { result } = renderHook(() => {
         if (target)
           return useIntersectionObserver(target) as unknown as {
@@ -105,19 +102,16 @@ targets.forEach((target) => {
       if (!target) act(() => result.current.ref(element));
 
       expect(mockIntersectionObserverObserve).toHaveBeenCalledTimes(1);
-      expect(mockIntersectionObserverObserve).toHaveBeenCalledWith(
-        element,
-        expect.any(Object)
-      );
+      expect(mockIntersectionObserverObserve).toHaveBeenCalledWith(element, expect.any(Object));
     });
 
-    it("Should call onChange callback when intersection", () => {
+    it('Should call onChange callback when intersection', () => {
       const onChange = vi.fn();
 
       const { result } = renderHook(() => {
         if (target)
           return useIntersectionObserver(target, {
-            onChange,
+            onChange
           }) as unknown as {
             ref: StateRef<HTMLDivElement>;
           } & UseIntersectionObserverReturn;
@@ -133,7 +127,7 @@ targets.forEach((target) => {
       expect(onChange).toHaveBeenCalledWith([entry], result.current.observer);
     });
 
-    it("Should call callback on intersection", () => {
+    it('Should call callback on intersection', () => {
       const callback = vi.fn();
 
       const { result } = renderHook(() => {
@@ -153,10 +147,10 @@ targets.forEach((target) => {
       expect(callback).toHaveBeenCalledWith([entry], result.current.observer);
     });
 
-    it("Should handle options properly", () => {
+    it('Should handle options properly', () => {
       const options = {
         threshold: 0.5,
-        rootMargin: "10px",
+        rootMargin: '10px'
       };
 
       const { result } = renderHook(() => {
@@ -176,7 +170,7 @@ targets.forEach((target) => {
     });
   });
 
-  it("Should handle enabled option", () => {
+  it('Should handle enabled option', () => {
     const { result } = renderHook(() =>
       useIntersectionObserver<HTMLDivElement>({ enabled: false })
     );
@@ -189,7 +183,7 @@ targets.forEach((target) => {
     expect(mockIntersectionObserverObserve).not.toHaveBeenCalled();
   });
 
-  it("Should handle target changes", () => {
+  it('Should handle target changes', () => {
     const { result, rerender } = renderHook(
       (target) => {
         if (target)
@@ -205,13 +199,13 @@ targets.forEach((target) => {
 
     expect(mockIntersectionObserverObserve).toHaveBeenCalledTimes(1);
 
-    rerender({ current: document.getElementById("target") });
+    rerender({ current: document.getElementById('target') });
 
     expect(mockIntersectionObserverObserve).toHaveBeenCalledTimes(2);
     expect(mockIntersectionObserverDisconnect).toHaveBeenCalledTimes(1);
   });
 
-  it("Should disconnect observer on unmount", () => {
+  it('Should disconnect observer on unmount', () => {
     const { result, unmount } = renderHook(() => {
       if (target)
         return useIntersectionObserver(target) as unknown as {

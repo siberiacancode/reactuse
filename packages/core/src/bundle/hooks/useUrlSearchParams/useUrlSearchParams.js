@@ -60,17 +60,19 @@ export const useUrlSearchParams = (params) => {
     }
   };
   const setUrlSearchParams = (mode, value, write = 'replace') => {
-    const urlSearchParams = new URLSearchParams();
+    const urlSearchParams = getUrlSearchParams(mode);
     Object.entries(value).forEach(([key, param]) => {
-      if (Array.isArray(param)) {
-        param.forEach((value) => urlSearchParams.set(key, serializer(value)));
+      if (param === undefined) {
+        urlSearchParams.delete(key);
       } else {
-        urlSearchParams.set(key, serializer(param));
+        const serializedValue = serializer ? serializer(param) : String(param);
+        urlSearchParams.set(key, serializedValue);
       }
     });
     const query = createQueryString(urlSearchParams, mode);
     if (write === 'replace') window.history.replaceState({}, '', query);
     if (write === 'push') window.history.pushState({}, '', query);
+    dispatchUrlSearchParamsEvent();
     return urlSearchParams;
   };
   const getParsedUrlSearchParams = (searchParams) => {
@@ -102,7 +104,6 @@ export const useUrlSearchParams = (params) => {
       options?.write ?? writeMode
     );
     setValue(getParsedUrlSearchParams(searchParams));
-    dispatchUrlSearchParamsEvent();
   };
   useEffect(() => {
     const onParamsChange = () => {

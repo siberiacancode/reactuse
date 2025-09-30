@@ -90,22 +90,21 @@ export const useUrlSearchParam = (key, params) => {
     }
   };
   const setUrlSearchParam = (key, value, mode, write = 'replace') => {
-    const searchParams = getUrlSearchParams(mode);
-    const serializedValue =
-      value !== undefined ? (serializer ? serializer(value) : String(value)) : '';
+    const urlSearchParams = getUrlSearchParams(mode);
     if (value === undefined) {
-      searchParams.delete(key);
+      urlSearchParams.delete(key);
     } else {
-      searchParams.set(key, serializedValue);
+      const serializedValue = serializer ? serializer(value) : String(value);
+      urlSearchParams.set(key, serializedValue);
     }
-    const query = createQueryString(searchParams, mode);
+    const query = createQueryString(urlSearchParams, mode);
     if (write === 'replace') window.history.replaceState({}, '', query);
     if (write === 'push') window.history.pushState({}, '', query);
     dispatchUrlSearchParamsEvent();
   };
   const [value, setValue] = useState(() => {
-    const searchParams = getUrlSearchParams(mode);
-    const currentValue = searchParams.get(key);
+    const urlSearchParams = getUrlSearchParams(mode);
+    const currentValue = urlSearchParams.get(key);
     if (currentValue === null && initialValue !== undefined) {
       setUrlSearchParam(key, initialValue, mode, writeMode);
       return initialValue;
@@ -122,8 +121,8 @@ export const useUrlSearchParam = (key, params) => {
   };
   useEffect(() => {
     const onParamsChange = () => {
-      const searchParams = getUrlSearchParams(mode);
-      const newValue = searchParams.get(key);
+      const urlSearchParams = getUrlSearchParams(mode);
+      const newValue = urlSearchParams.get(key);
       setValue(newValue ? deserializer(newValue) : undefined);
     };
     window.addEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);

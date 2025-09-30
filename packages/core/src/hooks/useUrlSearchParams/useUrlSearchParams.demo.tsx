@@ -6,8 +6,6 @@ const Demo = () => {
     enabled: false
   });
 
-  console.log(urlSearchParams.value);
-
   return (
     <div className='flex flex-col'>
       <div className='flex items-center gap-2'>
@@ -24,7 +22,11 @@ const Demo = () => {
         <input
           checked={urlSearchParams.value.enabled}
           type='checkbox'
-          onChange={(event) => urlSearchParams.set({ enabled: event.target.checked })}
+          onChange={(event) =>
+            urlSearchParams.set({
+              enabled: event.target.checked
+            })
+          }
         />
         <label htmlFor='enabled'>enabled toggle</label>
       </div>
