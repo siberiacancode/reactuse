@@ -44,25 +44,22 @@ export const useWindowSize = (params?: UseWindowSizeParams) => {
   })
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+
     const onResize = () => {
-      if (includeScrollbar) {
-        setSize({
-          width: window.innerWidth,
-          height: window.innerHeight
-        })
-      } else {
-        setSize({
-          width: window.document.documentElement.clientWidth,
-          height: window.document.documentElement.clientHeight
-        })
-      }
+      const { innerWidth, innerHeight, document } = window
+      const { clientWidth, clientHeight } = document.documentElement
+
+      setSize({
+        width: includeScrollbar ? innerWidth : clientWidth,
+        height: includeScrollbar ? innerHeight : clientHeight,
+      })
     }
 
     window.addEventListener('resize', onResize)
-    return () => {
-      window.removeEventListener('resize', onResize)
-    }
+    return () => window.removeEventListener('resize', onResize)
   }, [params?.includeScrollbar])
+
 
   return size
 }
