@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 /** The use window size return type */
 interface UseWindowSizeParams {
   /** Whether to include the scrollbar in the window size calculation */
-  includeScrollbar?: boolean;
+  includeScrollbar?: boolean
 }
 
 /** The use window size return type */
 export interface UseWindowSizeReturn {
   /** The current window height */
-  height: number;
+  height: number
   /** The current window width */
-  width: number;
+  width: number
 }
 
 /**
@@ -28,20 +28,20 @@ export interface UseWindowSizeReturn {
  * const { width, height } = useWindowSize();
  */
 export const useWindowSize = (params?: UseWindowSizeParams) => {
-  const includeScrollbar = params?.includeScrollbar ?? true;
+  const includeScrollbar = params?.includeScrollbar ?? true
   const [size, setSize] = useState(() => {
     if (typeof window === 'undefined') {
       return {
         width: Number.POSITIVE_INFINITY,
         height: Number.POSITIVE_INFINITY
-      };
+      }
     }
 
     return {
       width: includeScrollbar ? window.innerWidth : window.document.documentElement.clientWidth,
       height: includeScrollbar ? window.innerHeight : window.document.documentElement.clientHeight
-    };
-  });
+    }
+  })
 
   useEffect(() => {
     const onResize = () => {
@@ -49,20 +49,20 @@ export const useWindowSize = (params?: UseWindowSizeParams) => {
         setSize({
           width: window.innerWidth,
           height: window.innerHeight
-        });
+        })
       } else {
         setSize({
           width: window.document.documentElement.clientWidth,
           height: window.document.documentElement.clientHeight
-        });
+        })
       }
-    };
+    }
 
-    window.addEventListener('resize', onResize);
+    window.addEventListener('resize', onResize)
     return () => {
-      window.removeEventListener('resize', onResize);
-    };
-  }, [params?.includeScrollbar]);
+      window.removeEventListener('resize', onResize)
+    }
+  }, [params?.includeScrollbar])
 
-  return size;
-};
+  return size
+}
