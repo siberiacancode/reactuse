@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 const DEFAULT_THRESHOLD_TIME = 400;
 /**
@@ -40,7 +40,7 @@ export const useLongPress = (...params) => {
   internalOptionsRef.current = options;
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onStart = (event) => {
       internalOptionsRef.current?.onStart?.(event);

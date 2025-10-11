@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name usePictureInPicture
@@ -52,7 +52,7 @@ export const usePictureInPicture = (...params) => {
     options.onExit?.();
   };
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     elementRef.current = element;
     const onEnterPictureInPicture = () => {

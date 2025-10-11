@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useResizeObserver
@@ -63,7 +63,7 @@ export const useResizeObserver = (...params) => {
   internalCallbackRef.current = callback;
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const observer = new ResizeObserver(([entry], observer) => {
       setEntry(entry);

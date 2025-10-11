@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 const DEFAULT_BRUSH_RADIUS = 10;
@@ -229,7 +229,7 @@ export const usePaint = (...params) => {
   };
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     contextRef.current = element.getContext('2d');
     if (options?.initialLines) {

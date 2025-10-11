@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -70,7 +70,7 @@ export const useRightClick = ((...params: any[]): any => {
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
 
     const onContextMenu = (event: RightClickEvent) => {

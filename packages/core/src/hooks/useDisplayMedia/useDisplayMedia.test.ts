@@ -2,7 +2,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, expect, vi } from 'vitest';
 
 import { renderHookServer } from '@/tests';
-import { getElement, target } from '@/utils/helpers';
+import { isTarget, target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 import type { UseDisplayMediaReturn } from './useDisplayMedia';
@@ -114,7 +114,9 @@ targets.forEach((target) => {
 
     await act(result.current.start);
 
-    const element = (target ? getElement(target) : result.current.ref.current) as HTMLVideoElement;
+    const element = (
+      target ? isTarget.getElement(target) : result.current.ref.current
+    ) as HTMLVideoElement;
     expect(element.srcObject).toBeTruthy();
     expect(result.current.sharing).toBe(true);
     expect(result.current.stream).toBeTruthy();

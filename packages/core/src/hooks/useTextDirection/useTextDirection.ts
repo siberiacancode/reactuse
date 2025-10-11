@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -61,7 +61,7 @@ export const useTextDirection = ((...params: any[]) => {
 
   const getDirection = () => {
     if (typeof window === 'undefined') return initialValue;
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
     return (element?.getAttribute('dir') as UseTextDirectionValue) ?? initialValue;
   };
 
@@ -84,7 +84,7 @@ export const useTextDirection = ((...params: any[]) => {
     if (!target && !internalRef.state) return;
 
     const element =
-      ((target ? getElement(target) : internalRef.current) as Element) ??
+      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ??
       document.querySelector('html');
     if (!element) return;
 

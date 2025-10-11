@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -99,7 +99,9 @@ export const usePictureInPicture = ((...params: any[]) => {
   };
 
   useEffect(() => {
-    const element = target ? (getElement(target) as HTMLVideoElement) : internalRef.current;
+    const element = target
+      ? (isTarget.getElement(target) as HTMLVideoElement)
+      : internalRef.current;
     if (!element) return;
 
     elementRef.current = element;

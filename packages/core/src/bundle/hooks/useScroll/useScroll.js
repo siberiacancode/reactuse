@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
 /**
@@ -71,7 +71,7 @@ export const useScroll = (...params) => {
   const scrollPositionRef = useRef({ x: 0, y: 0 });
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = (target ? getElement(target) : internalRef.current) ?? window;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     elementRef.current = element;
     const onScrollEnd = (event) => {
       setScrolling(false);

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 export const DEFAULT_THRESHOLD_TIME = 300;
 /**
@@ -41,7 +41,7 @@ export const useDoubleClick = (...params) => {
   internalOptionsRef.current = options;
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onClick = (event) => {
       clickCountRef.current += 1;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useMeasure
@@ -36,7 +36,7 @@ export const useMeasure = (...params) => {
   });
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];

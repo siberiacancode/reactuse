@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -67,11 +67,11 @@ export const useSticky = ((...params: any[]) => {
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
 
     if (!element) return;
 
-    const root = (options?.root ? getElement(options.root) : document) as Element;
+    const root = (options?.root ? isTarget.getElement(options.root) : document) as Element;
     const elementOffsetTop =
       element.getBoundingClientRect().top + root.scrollTop - root.getBoundingClientRect().top;
     const elementOffsetLeft =

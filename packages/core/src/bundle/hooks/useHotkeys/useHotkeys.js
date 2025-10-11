@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 export const isHotkeyMatch = (hotkey, keys) =>
@@ -74,7 +74,7 @@ export const useHotkeys = (...params) => {
   useEffect(() => {
     keysRef.current = [];
     if (!target && !internalRef.state && !enabled) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     element.addEventListener('keydown', onKeyDown);
     element.addEventListener('keyup', onKeyUp);

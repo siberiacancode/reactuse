@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 export const FOCUS_SELECTOR = 'a, input, select, textarea, button, object, [tabindex]';
@@ -48,7 +48,7 @@ export const useFocusTrap = (...params) => {
   const toggle = () => setActive((prevActive) => !prevActive);
   useIsomorphicLayoutEffect(() => {
     if (!active) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const htmlElement = element;
     focusElement(htmlElement);

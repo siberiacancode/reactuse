@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -118,7 +118,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
 
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
 
     const observer = new IntersectionObserver(
@@ -128,7 +128,7 @@ export const useIntersectionObserver = ((...params: any[]) => {
       },
       {
         ...options,
-        root: options?.root ? (getElement(options.root) as Document | Element) : document
+        root: options?.root ? (isTarget.getElement(options.root) as Document | Element) : document
       }
     );
 

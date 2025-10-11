@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useTextDirection
@@ -30,7 +30,7 @@ export const useTextDirection = (...params) => {
   const elementRef = useRef(null);
   const getDirection = () => {
     if (typeof window === 'undefined') return initialValue;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     return element?.getAttribute('dir') ?? initialValue;
   };
   const [value, setValue] = useState(getDirection());
@@ -46,7 +46,8 @@ export const useTextDirection = (...params) => {
   useEffect(() => {
     if (!target && !internalRef.state) return;
     const element =
-      (target ? getElement(target) : internalRef.current) ?? document.querySelector('html');
+      (target ? isTarget.getElement(target) : internalRef.current) ??
+      document.querySelector('html');
     if (!element) return;
     elementRef.current = element;
     const direction = getDirection();

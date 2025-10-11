@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useInfiniteScroll
@@ -41,7 +41,7 @@ export const useInfiniteScroll = (...params) => {
   internalLoadingRef.current = loading;
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onLoadMore = async (event) => {
       if (internalLoadingRef.current) return;

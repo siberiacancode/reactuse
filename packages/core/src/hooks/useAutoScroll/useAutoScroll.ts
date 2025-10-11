@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -57,7 +57,7 @@ export const useAutoScroll = ((...params: any[]) => {
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
 
-    const element = (target ? getElement(target) : internalRef.state) as HTMLElement;
+    const element = (target ? isTarget.getElement(target) : internalRef.state) as HTMLElement;
 
     if (!element) return;
 

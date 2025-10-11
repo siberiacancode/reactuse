@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -78,7 +78,9 @@ export const useMouse = ((...params: any[]) => {
 
   useEffect(() => {
     const onMouseMove = (event: MouseEvent) => {
-      const element = (target ? getElement(target) : internalRef.current) as Element | undefined;
+      const element = (target ? isTarget.getElement(target) : internalRef.current) as
+        | Element
+        | undefined;
 
       const updatedValue = {
         x: event.pageX,

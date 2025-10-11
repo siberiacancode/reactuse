@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useKeyboard
@@ -53,7 +53,7 @@ export const useKeyboard = (...params) => {
   internalOptionsRef.current = options;
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onKeyDown = (event) => internalOptionsRef.current?.onKeyDown?.(event);
     const onKeyUp = (event) => internalOptionsRef.current?.onKeyUp?.(event);

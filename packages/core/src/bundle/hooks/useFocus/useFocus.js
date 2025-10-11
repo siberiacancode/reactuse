@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useFocus
@@ -73,7 +73,7 @@ export const useFocus = (...params) => {
   };
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     elementRef.current = element;
     const onFocus = (event) => {

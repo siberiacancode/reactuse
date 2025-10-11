@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -85,7 +85,7 @@ export const useFocusTrap = ((...params: any[]) => {
   useIsomorphicLayoutEffect(() => {
     if (!active) return;
 
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
 
     const htmlElement = element as HTMLElement;

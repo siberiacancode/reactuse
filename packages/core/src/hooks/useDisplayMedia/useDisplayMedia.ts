@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -113,7 +113,9 @@ export const useDisplayMedia = ((...params: any[]) => {
   useEffect(() => {
     if (!supported || (!target && !internalRef.state)) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as HTMLVideoElement;
+    const element = (
+      target ? isTarget.getElement(target) : internalRef.current
+    ) as HTMLVideoElement;
 
     if (!element) return;
 

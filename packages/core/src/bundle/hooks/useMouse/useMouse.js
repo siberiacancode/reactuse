@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useMouse
@@ -36,7 +36,7 @@ export const useMouse = (...params) => {
   const internalRef = useRefState();
   useEffect(() => {
     const onMouseMove = (event) => {
-      const element = target ? getElement(target) : internalRef.current;
+      const element = target ? isTarget.getElement(target) : internalRef.current;
       const updatedValue = {
         x: event.pageX,
         y: event.pageY,

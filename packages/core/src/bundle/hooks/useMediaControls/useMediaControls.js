@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 export const timeRangeToArray = (timeRanges) => {
   let ranges = [];
@@ -68,7 +68,7 @@ export const useMediaControls = (...params) => {
   const [muted, setMutedState] = useState(false);
   const [volume, setVolumeState] = useState(1);
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     elementRef.current = element;
     element.src = options.src;

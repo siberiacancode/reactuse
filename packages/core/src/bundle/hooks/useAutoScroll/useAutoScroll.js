@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useAutoScroll
@@ -32,7 +32,7 @@ export const useAutoScroll = (...params) => {
   internalOptionsRef.current = options;
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
-    const element = target ? getElement(target) : internalRef.state;
+    const element = target ? isTarget.getElement(target) : internalRef.state;
     if (!element) return;
     let shouldAutoScroll = true;
     let touchStartY = 0;

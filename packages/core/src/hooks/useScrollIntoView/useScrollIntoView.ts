@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -79,7 +79,8 @@ export const useScrollIntoView = ((...params: any[]) => {
     if (!immediately) return;
     if (!target && !internalRef.state) return;
 
-    const element = ((target ? getElement(target) : internalRef.current) as Element) ?? window;
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;
 
     elementRef.current = element;
 

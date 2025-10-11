@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name UseSticky
@@ -32,9 +32,9 @@ export const useSticky = (...params) => {
   const [stuck, setStuck] = useState(false);
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
-    const root = options?.root ? getElement(options.root) : document;
+    const root = options?.root ? isTarget.getElement(options.root) : document;
     const elementOffsetTop =
       element.getBoundingClientRect().top + root.scrollTop - root.getBoundingClientRect().top;
     const elementOffsetLeft =

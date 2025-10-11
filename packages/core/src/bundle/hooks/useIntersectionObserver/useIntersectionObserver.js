@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useIntersectionObserver
@@ -63,7 +63,7 @@ export const useIntersectionObserver = (...params) => {
   internalCallbackRef.current = callback;
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const observer = new IntersectionObserver(
       (entries, observer) => {
@@ -72,7 +72,7 @@ export const useIntersectionObserver = (...params) => {
       },
       {
         ...options,
-        root: options?.root ? getElement(options.root) : document
+        root: options?.root ? isTarget.getElement(options.root) : document
       }
     );
     setObserver(observer);

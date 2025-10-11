@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useKeyPressEvent
@@ -38,7 +38,7 @@ export const useKeyPressEvent = (...params) => {
   const listenerRef = useRef(listener);
   listenerRef.current = listener;
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onKeyDown = (event) => {
       const keyboardEvent = event;

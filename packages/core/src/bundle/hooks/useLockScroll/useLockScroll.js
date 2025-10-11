@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -32,7 +32,7 @@ export const useLockScroll = (...params) => {
   const internalRef = useRefState();
   const elementRef = useRef(null);
   useIsomorphicLayoutEffect(() => {
-    const element = (target ? getElement(target) : internalRef.current) ?? document.body;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? document.body;
     if (!(element instanceof HTMLElement)) return;
     elementRef.current = element;
     if (!enabled) return;

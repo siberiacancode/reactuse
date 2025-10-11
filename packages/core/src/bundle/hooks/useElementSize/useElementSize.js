@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getElement } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -26,7 +26,7 @@ export const useElementSize = (...params) => {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const internalRef = useRefState();
   useIsomorphicLayoutEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const { width, height } = element.getBoundingClientRect();
     setSize({

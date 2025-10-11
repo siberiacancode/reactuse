@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useActiveElement
@@ -28,7 +28,7 @@ export const useActiveElement = (...params) => {
   const [value, setValue] = useState(null);
   const internalRef = useRefState();
   useEffect(() => {
-    const element = (target ? getElement(target) : internalRef.current) ?? window;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     const observer = new MutationObserver((mutations) => {
       mutations
         .filter((mutation) => mutation.removedNodes.length)

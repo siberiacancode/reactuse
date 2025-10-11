@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import screenfull from 'screenfull';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useFullscreen
@@ -44,7 +44,7 @@ export const useFullscreen = (...params) => {
     setValue(screenfull.isFullscreen);
   };
   const enter = () => {
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     if (screenfull.isEnabled) {
       try {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
 import { useOrientation } from '../useOrientation/useOrientation';
 import { useRefState } from '../useRefState/useRefState';
@@ -44,7 +44,7 @@ export const useParallax = (...params) => {
   });
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onMouseMove = (event) => {
       const { left, top } = element.getBoundingClientRect();

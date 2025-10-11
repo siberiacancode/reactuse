@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useClickOutside
@@ -34,7 +34,7 @@ export const useClickOutside = (...params) => {
   useEffect(() => {
     if (!target && !internalRef.state) return;
     const onClick = (event) => {
-      const element = target ? getElement(target) : internalRef.current;
+      const element = target ? isTarget.getElement(target) : internalRef.current;
       if (element && !element.contains(event.target)) {
         internalCallbackRef.current(event);
       }

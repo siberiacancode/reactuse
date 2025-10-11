@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useHover
@@ -57,7 +57,7 @@ export const useHover = (...params) => {
   internalOptionsRef.current = options;
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onMouseEnter = (event) => {
       internalOptionsRef.current?.onEntry?.(event);

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -130,7 +130,7 @@ export const useHotkeys = ((...params: any[]) => {
     keysRef.current = [];
     if (!target && !internalRef.state && !enabled) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
     element.addEventListener('keydown', onKeyDown as EventListener);

@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
 import { createTrigger, renderHookServer } from '@/tests';
-import { getElement, target } from '@/utils/helpers';
+import { isTarget, target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 import type { UseElementSizeReturn } from './useElementSize';
@@ -111,7 +111,9 @@ targets.forEach((target) => {
         act(() => result.current.ref(document.getElementById('target')! as HTMLDivElement));
 
       act(() => {
-        const element = (target ? getElement(target) : result.current.ref.current) as Element;
+        const element = (
+          target ? isTarget.getElement(target) : result.current.ref.current
+        ) as Element;
         if (!element) return;
 
         mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 200, 200));

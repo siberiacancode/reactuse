@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -83,7 +83,7 @@ export const useCssVar = ((...params: any[]) => {
     if (!initialValue) return;
 
     const element =
-      ((target ? getElement(target) : internalRef.current) as HTMLElement) ??
+      ((target ? isTarget.getElement(target) : internalRef.current) as HTMLElement) ??
       window.document.documentElement;
 
     if (!element.style) return;
@@ -93,7 +93,7 @@ export const useCssVar = ((...params: any[]) => {
 
   useEffect(() => {
     const element =
-      ((target ? getElement(target) : internalRef.current) as HTMLElement) ??
+      ((target ? isTarget.getElement(target) : internalRef.current) as HTMLElement) ??
       window.document.documentElement;
 
     elementRef.current = element;

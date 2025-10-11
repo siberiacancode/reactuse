@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useCssVar
@@ -48,14 +48,16 @@ export const useCssVar = (...params) => {
   useEffect(() => {
     if (!initialValue) return;
     const element =
-      (target ? getElement(target) : internalRef.current) ?? window.document.documentElement;
+      (target ? isTarget.getElement(target) : internalRef.current) ??
+      window.document.documentElement;
     if (!element.style) return;
     element.style.setProperty(key, initialValue);
     setValue(initialValue);
   }, []);
   useEffect(() => {
     const element =
-      (target ? getElement(target) : internalRef.current) ?? window.document.documentElement;
+      (target ? isTarget.getElement(target) : internalRef.current) ??
+      window.document.documentElement;
     elementRef.current = element;
     const onChange = () => {
       const value = window.getComputedStyle(element).getPropertyValue(key)?.trim();

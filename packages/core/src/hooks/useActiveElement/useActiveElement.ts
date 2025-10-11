@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -56,7 +56,8 @@ export const useActiveElement = ((...params: any[]) => {
   const internalRef = useRefState();
 
   useEffect(() => {
-    const element = ((target ? getElement(target) : internalRef.current) ?? window) as Element;
+    const element = ((target ? isTarget.getElement(target) : internalRef.current) ??
+      window) as Element;
 
     const observer = new MutationObserver((mutations) => {
       mutations
