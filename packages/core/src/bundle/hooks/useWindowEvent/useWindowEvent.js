@@ -1,4 +1,4 @@
-import { target } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useEventListener } from '../useEventListener/useEventListener';
 /**
  * @name useWindowEvent
@@ -16,4 +16,4 @@ import { useEventListener } from '../useEventListener/useEventListener';
  * useWindowEvent('click', () => console.log('clicked'));
  */
 export const useWindowEvent = (event, listener, options) =>
-  useEventListener(target(window), event, listener, options);
+  useEventListener(isTarget.wrap(window), event, listener, options);

@@ -1,4 +1,4 @@
-import { target } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useEventListener } from '../useEventListener/useEventListener';
 /**
  * @name useDocumentEvent
@@ -16,4 +16,4 @@ import { useEventListener } from '../useEventListener/useEventListener';
  * useDocumentEvent('click', () => console.log('clicked'));
  */
 export const useDocumentEvent = (event, listener, options) =>
-  useEventListener(target(document), event, listener, options);
+  useEventListener(isTarget.wrap(document), event, listener, options);

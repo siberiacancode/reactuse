@@ -1,4 +1,4 @@
-import { target } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { UseEventListenerOptions } from '../useEventListener/useEventListener';
 
@@ -23,4 +23,4 @@ export const useWindowEvent = <Event extends keyof WindowEventMap>(
   event: Event,
   listener: (this: Window, event: WindowEventMap[Event]) => any,
   options?: UseEventListenerOptions
-) => useEventListener(target(window), event, listener, options);
+) => useEventListener(isTarget.wrap(window), event, listener, options);

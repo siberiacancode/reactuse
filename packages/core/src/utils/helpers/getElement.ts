@@ -1,6 +1,6 @@
 import type { RefObject } from 'react';
 
-import { Target } from './target';
+export type Target = (() => Element) | string | Document | Element | Window;
 
 export type HookTarget =
   | RefObject<Element | null | undefined>
