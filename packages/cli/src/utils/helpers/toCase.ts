@@ -1,4 +1,8 @@
-import { toKebabCase } from "./toKebabCase";
+export const toCase = (string: string, mode: "camel" | "kebab" = "camel") => {
+  if (mode === "camel") return string;
 
-export const toCase = (string: string, mode: "camel" | "kebab" = "camel") =>
-  mode === "camel" ? string : toKebabCase(string);
+  return string.replace(
+    /[A-Z]+(?![a-z])|[A-Z]/g,
+    (match, offset) => (offset ? "-" : "") + match.toLowerCase()
+  );
+};
