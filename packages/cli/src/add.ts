@@ -9,10 +9,10 @@ import ora from 'ora';
 import prompts from 'prompts';
 import { createMatchPath, loadConfig } from 'tsconfig-paths';
 
-import type { AddOptionsSchema, Registry } from '@/utils/types';
+import type { AddOptionsSchema, ConfigSchema, Registry } from '@/utils/types';
 
 import { APP_PATH, REPO_URLS } from '@/utils/constants';
-import { getConfig, getPackageManager } from '@/utils/helpers';
+import { getConfig, getPackageManager, toCase } from '@/utils/helpers';
 import { addOptionsSchema } from '@/utils/types';
 
 type FileType = 'hook' | 'package' | 'util';
@@ -45,13 +45,29 @@ const resolveDependencies = (registry: Registry, hooks: string[]): Map<string, F
   return files;
 };
 
-const updateImports = async (filePath: string, utilsPath: string) => {
-  const fileContent = await fs.readFileSync(filePath, 'utf-8');
-  const utilsImportRegex = /import\s+\{([^}]+)\}\s+from\s+['"](@\/utils[^'"]*)['"]/g;
+interface UpdateImportsRules {
+  regex: RegExp;
+  replacer: (...args: string[]) => string;
+}
 
-  const updatedContent = fileContent.replace(
-    utilsImportRegex,
-    (_, imports) => `import {${imports}} from '${utilsPath}'`
+const updateImports = async (filePath: string, config: ConfigSchema) => {
+  const fileContent = fs.readFileSync(filePath, 'utf-8');
+
+  const rules: UpdateImportsRules[] = [
+    {
+      regex: /import\s+\{([^}]+)\}\s+from\s+['"](@\/utils[^'"]*)['"]/g,
+      replacer: (_, imports) => `import {${imports}} from '${config.aliases.utils}'`
+    },
+    {
+      regex: /import\s+(?:type\s+)?\{([^}]+)\}\s+from\s+['"](\.[^'"]*)['"]/g,
+      replacer: (_, imports, internalPath) =>
+        `import {${imports}} from '${toCase(internalPath, config.case)}'`
+    }
+  ];
+
+  const updatedContent = rules.reduce(
+    (acc, { regex, replacer }) => acc.replace(regex, replacer),
+    fileContent
   );
 
   fs.writeFileSync(filePath, updatedContent);
@@ -165,9 +181,11 @@ export const add = {
     const files = Array.from(dependencies.values())
       .map((dependency) => {
         if (dependency.type === 'hook') {
-          const filePath = `${dependency.name}/${dependency.name}`;
+          const filePath = toCase(`${dependency.name}/${dependency.name}`, config.case);
           const directoryPath = `${pathToLoadHooks}/${filePath}.${language}`;
-          const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/hooks/${filePath}.${language}`;
+          const registryPath = `${
+            REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]
+          }/hooks/${dependency.name}/${dependency.name}.${language}`;
           const indexPath = `${pathToLoadHooks}/index.${language}`;
           return {
             name: dependency.name,
@@ -180,9 +198,11 @@ export const add = {
         }
 
         if (dependency.type === 'util') {
-          const filePath = `${dependency.name}`;
+          const filePath = toCase(`${dependency.name}`, config.case);
           const directoryPath = `${pathToLoadUtils}/${filePath}.${language}`;
-          const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/utils/helpers/${filePath}.${language}`;
+          const registryPath = `${
+            REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]
+          }/utils/helpers/${dependency.name}.${language}`;
           const indexPath = `${pathToLoadUtils}/index.${language}`;
           return {
             name: dependency.name,
@@ -233,9 +253,7 @@ export const add = {
 
       const fileResponse = await fetches.get<Buffer>(registryPath);
       await fs.writeFileSync(directoryPath, fileResponse.data);
-      if (type === 'hook') {
-        await updateImports(directoryPath, config.aliases.utils);
-      }
+      await updateImports(directoryPath, config);
 
       const exportStatement = `export * from './${filePath}';\n`;
 
@@ -247,7 +265,9 @@ export const add = {
 
     const packageManager = await getPackageManager(options.cwd);
 
-    spinner.text = `Installing packages ${chalk.bold(packages.join(', '))} with ${chalk.cyan(packageManager)}`;
+    spinner.text = `Installing packages ${chalk.bold(packages.join(', '))} with ${chalk.cyan(
+      packageManager
+    )}`;
     if (packages.length) {
       await execa(packageManager, [packageManager === 'npm' ? 'install' : 'add', ...packages], {
         cwd: options.cwd
