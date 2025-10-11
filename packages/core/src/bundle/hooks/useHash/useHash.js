@@ -15,11 +15,7 @@ export const getHash = () => decodeURIComponent(window.location.hash.replace('#'
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash("initial", {
- *   enabled: true,
- *   mode: "replace",
- *   onChange: (newHash) => console.log('Hash changed:', newHash)
- * });
+ * const [hash, setHash] = useHash("initial");
  *
  * @overload
  * @param {string} [initialValue] The initial hash value if no hash exists
@@ -28,6 +24,23 @@ export const getHash = () => decodeURIComponent(window.location.hash.replace('#'
  *
  * @example
  * const [hash, setHash] = useHash("initial", (newHash) => console.log('callback'));
+ *
+ * @overload
+ * @param {UseHashOptions} [options] Configuration options
+ * @param {boolean} [options.enabled] The enabled state of the hook
+ * @param {'initial' | 'replace'} [options.mode] The mode of hash setting
+ * @param {(hash: string) => void} [options.onChange] Callback function called when hash changes
+ * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
+ *
+ * @example
+ * const [hash, setHash] = useHash();
+ *
+ * @overload
+ * @param {(hash: string) => void} [callback] Callback function called when hash changes
+ * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
+ *
+ * @example
+ * const [hash, setHash] = useHash((newHash) => console.log('callback'));
  */
 export const useHash = (...params) => {
   const initialValue = typeof params[0] === 'string' ? params[0] : '';
