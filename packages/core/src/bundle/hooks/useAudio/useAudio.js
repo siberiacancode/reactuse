@@ -30,24 +30,28 @@ export const useAudio = (src, options = {}) => {
     audio.volume = volume;
     audio.playbackRate = playbackRate;
     audioRef.current = audio;
-    if (options.immediately) audio.play();
+    if (options.immediately) {
+      try {
+        setPlaying(true);
+        audio.play();
+      } catch {
+        setPlaying(false);
+      }
+    }
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
     const onEnded = () => setPlaying(false);
-    const onTimeUpdate = () => {};
     const onVolumeChange = () => setCurrentVolume(audio.volume);
     const onRateChange = () => setPlaybackRate(audio.playbackRate);
     audio.addEventListener('play', onPlay);
     audio.addEventListener('pause', onPause);
     audio.addEventListener('ended', onEnded);
-    audio.addEventListener('timeupdate', onTimeUpdate);
     audio.addEventListener('volumechange', onVolumeChange);
     audio.addEventListener('ratechange', onRateChange);
     return () => {
       audio.removeEventListener('play', onPlay);
       audio.removeEventListener('pause', onPause);
       audio.removeEventListener('ended', onEnded);
-      audio.removeEventListener('timeupdate', onTimeUpdate);
       audio.removeEventListener('volumechange', onVolumeChange);
       audio.removeEventListener('ratechange', onRateChange);
       audio.pause();
@@ -58,10 +62,12 @@ export const useAudio = (src, options = {}) => {
     if (!audioRef.current) return;
     audioRef.current.pause();
     audioRef.current.currentTime = 0;
+    setPlaying(false);
   };
   const play = async (spriteName) => {
     if (!audioRef.current) return;
     if (options.interrupt) stop();
+    setPlaying(true);
     if (!spriteName || !options.sprite?.[spriteName]) {
       await audioRef.current.play();
       return;
@@ -79,7 +85,11 @@ export const useAudio = (src, options = {}) => {
     };
     requestAnimationFrame(checkTime);
   };
-  const pause = () => audioRef.current?.pause();
+  const pause = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    setPlaying(false);
+  };
   const setVolume = (value) => {
     if (!audioRef.current) return;
     const newVolume = Math.max(0, Math.min(1, value));

@@ -75,19 +75,24 @@ export const useAudio = (src: string, options: UseAudioOptions = {}): UseAudioRe
     audio.playbackRate = playbackRate;
     audioRef.current = audio;
 
-    if (options.immediately) audio.play();
+    if (options.immediately) {
+      try {
+        setPlaying(true);
+        audio.play();
+      } catch {
+        setPlaying(false);
+      }
+    }
 
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
     const onEnded = () => setPlaying(false);
-    const onTimeUpdate = () => {};
     const onVolumeChange = () => setCurrentVolume(audio.volume);
     const onRateChange = () => setPlaybackRate(audio.playbackRate);
 
     audio.addEventListener('play', onPlay);
     audio.addEventListener('pause', onPause);
     audio.addEventListener('ended', onEnded);
-    audio.addEventListener('timeupdate', onTimeUpdate);
     audio.addEventListener('volumechange', onVolumeChange);
     audio.addEventListener('ratechange', onRateChange);
 
@@ -95,7 +100,6 @@ export const useAudio = (src: string, options: UseAudioOptions = {}): UseAudioRe
       audio.removeEventListener('play', onPlay);
       audio.removeEventListener('pause', onPause);
       audio.removeEventListener('ended', onEnded);
-      audio.removeEventListener('timeupdate', onTimeUpdate);
       audio.removeEventListener('volumechange', onVolumeChange);
       audio.removeEventListener('ratechange', onRateChange);
 
@@ -108,11 +112,14 @@ export const useAudio = (src: string, options: UseAudioOptions = {}): UseAudioRe
     if (!audioRef.current) return;
     audioRef.current.pause();
     audioRef.current.currentTime = 0;
+    setPlaying(false);
   };
 
   const play = async (spriteName?: string) => {
     if (!audioRef.current) return;
     if (options.interrupt) stop();
+
+    setPlaying(true);
 
     if (!spriteName || !options.sprite?.[spriteName]) {
       await audioRef.current.play();
@@ -137,7 +144,11 @@ export const useAudio = (src: string, options: UseAudioOptions = {}): UseAudioRe
     requestAnimationFrame(checkTime);
   };
 
-  const pause = () => audioRef.current?.pause();
+  const pause = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    setPlaying(false);
+  };
 
   const setVolume = (value: number) => {
     if (!audioRef.current) return;

@@ -60,12 +60,12 @@ const updateImports = async (filePath: string, config: ConfigSchema) => {
     {
       regex: /import\s+\{([^}]+)\}\s+from\s+['"](@\/utils[^'"]*)['"]/g,
       replacer: (_, imports) =>
-        `import { ${imports} } from '${config.aliases.utils}'`,
+        `import {${imports}} from '${config.aliases.utils}'`,
     },
     {
       regex: /import\s+(?:type\s+)?\{([^}]+)\}\s+from\s+['"](\.[^'"]*)['"]/g,
       replacer: (_, imports, internalPath) =>
-        `import { ${imports} } from '${toCase(internalPath, config.case)}'`,
+        `import {${imports}} from '${toCase(internalPath, config.case)}'`,
     },
   ];
 
