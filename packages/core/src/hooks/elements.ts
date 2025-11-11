@@ -18,4 +18,5 @@ export * from './useRightClick/useRightClick';
 
 export * from './useScript/useScript';
 export * from './useSticky/useSticky';
+export * from './useTextareaAutosize/useTextareaAutosize';
 export * from './useTextDirection/useTextDirection';
