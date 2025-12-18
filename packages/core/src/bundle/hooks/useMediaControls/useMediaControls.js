@@ -128,7 +128,7 @@ export const useMediaControls = (...params) => {
       element.removeEventListener('volumechange', onVolumechange);
       element.removeEventListener('ratechange', onRatechange);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   const play = async () => {
     const element = elementRef.current;
     if (!element) return;

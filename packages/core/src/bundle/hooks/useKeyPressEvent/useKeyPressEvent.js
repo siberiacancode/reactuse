@@ -57,7 +57,14 @@ export const useKeyPressEvent = (...params) => {
         capture: options?.capture
       });
     };
-  }, [target, internalRef.state, options?.capture, options?.passive, options?.once]);
+  }, [
+    target,
+    internalRef.state,
+    isTarget.getRefState(target),
+    options?.capture,
+    options?.passive,
+    options?.once
+  ]);
   if (target) return;
   return internalRef;
 };

@@ -53,7 +53,7 @@ export const useActiveElement = (...params) => {
       element.removeEventListener('focus', onActiveElementChange, true);
       element.removeEventListener('blur', onActiveElementChange, true);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   if (target) return value;
   return {
     ref: internalRef,

@@ -106,7 +106,7 @@ export const useRightClick = ((...params: any[]): any => {
       element.removeEventListener('touchstart', onTouchStart as EventListener);
       element.removeEventListener('touchend', onTouchEnd as EventListener);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
 
   if (target) return;
   return internalRef;

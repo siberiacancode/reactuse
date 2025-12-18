@@ -74,7 +74,7 @@ export const useResizeObserver = (...params) => {
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.state, options?.box, enabled]);
+  }, [target, internalRef.state, isTarget.getRefState(target), options?.box, enabled]);
   if (target) return { entry, observer };
   return {
     ref: internalRef,

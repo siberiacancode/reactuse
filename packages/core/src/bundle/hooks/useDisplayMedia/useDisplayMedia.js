@@ -71,7 +71,7 @@ export const useDisplayMedia = (...params) => {
     return () => {
       stop();
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   if (target)
     return {
       stream: streamRef.current,

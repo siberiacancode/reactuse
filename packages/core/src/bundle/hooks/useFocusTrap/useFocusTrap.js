@@ -70,7 +70,7 @@ export const useFocusTrap = (...params) => {
     return () => {
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [active, target, internalRef.state]);
+  }, [active, target, internalRef.state, isTarget.getRefState(target)]);
   if (target) return { active, enable, disable, toggle };
   return { active, enable, disable, toggle, ref: internalRef };
 };

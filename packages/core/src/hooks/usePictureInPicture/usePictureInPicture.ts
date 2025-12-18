@@ -123,7 +123,7 @@ export const usePictureInPicture = ((...params: any[]) => {
       element.removeEventListener('enterpictureinpicture', onEnterPictureInPicture);
       element.removeEventListener('leavepictureinpicture', onLeavePictureInPicture);
     };
-  }, [target]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
 
   const toggle = async () => {
     if (open) await exit();

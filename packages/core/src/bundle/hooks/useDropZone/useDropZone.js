@@ -132,7 +132,7 @@ export const useDropZone = (...params) => {
       element.removeEventListener('dragleave', onDragLeave);
       element.removeEventListener('drop', onDrop);
     };
-  }, [target, internalRef.current]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   if (target) return { overed, files };
   return { ref: internalRef, overed, files };
 };

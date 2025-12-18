@@ -138,7 +138,15 @@ export const useIntersectionObserver = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.state, options?.rootMargin, options?.threshold, options?.root, enabled]);
+  }, [
+    target,
+    internalRef.state,
+    isTarget.getRefState(target),
+    options?.rootMargin,
+    options?.threshold,
+    options?.root,
+    enabled
+  ]);
 
   if (target) return { observer, entries };
   return {

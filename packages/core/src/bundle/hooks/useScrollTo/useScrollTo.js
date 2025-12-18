@@ -42,7 +42,7 @@ export const useScrollTo = (...params) => {
     const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     elementRef.current = element;
     element.scrollTo({ top: y, left: x, behavior });
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   const trigger = (params) => {
     if (!elementRef.current) return;
     const { x, y, behavior } = params ?? {};

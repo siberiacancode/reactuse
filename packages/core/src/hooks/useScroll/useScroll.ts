@@ -229,7 +229,7 @@ export const useScroll = ((...params: any[]) => {
       element.removeEventListener('scroll', onScroll);
       element.removeEventListener('scrollend', onScrollEnd);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
 
   const scrollIntoView = (params?: {
     behavior?: ScrollBehavior;

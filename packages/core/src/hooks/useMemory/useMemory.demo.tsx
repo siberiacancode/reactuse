@@ -75,7 +75,7 @@ const Demo = () => {
               style={{
                 width: `${(memory.value.usedJSHeapSize / memory.value.jsHeapSizeLimit) * 100}%`
               }}
-              className='flex flex-col justify-center whitespace-nowrap bg-blue-500 text-center text-white shadow-none transition-all duration-500'
+              className='flex flex-col justify-center bg-blue-500 text-center whitespace-nowrap text-white shadow-none transition-all duration-500'
             />
           </div>
         </div>

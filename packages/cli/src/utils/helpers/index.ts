@@ -1,3 +1,3 @@
-export * from "./getConfig";
-export * from "./getPackageManager";
-export * from "./toCase";
+export * from './getConfig';
+export * from './getPackageManager';
+export * from './toCase';

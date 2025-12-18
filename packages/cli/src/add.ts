@@ -1,31 +1,28 @@
-import type { Argv } from "yargs";
+import type { Argv } from 'yargs';
 
-import fetches from "@siberiacancode/fetches";
-import chalk from "chalk";
-import { execa } from "execa";
-import fs from "node:fs";
-import path from "node:path";
-import ora from "ora";
-import prompts from "prompts";
-import { createMatchPath, loadConfig } from "tsconfig-paths";
+import fetches from '@siberiacancode/fetches';
+import chalk from 'chalk';
+import { execa } from 'execa';
+import fs from 'node:fs';
+import path from 'node:path';
+import ora from 'ora';
+import prompts from 'prompts';
+import { createMatchPath, loadConfig } from 'tsconfig-paths';
 
-import type { AddOptionsSchema, ConfigSchema, Registry } from "@/utils/types";
+import type { AddOptionsSchema, ConfigSchema, Registry } from '@/utils/types';
 
-import { APP_PATH, REPO_URLS } from "@/utils/constants";
-import { getConfig, getPackageManager, toCase } from "@/utils/helpers";
-import { addOptionsSchema } from "@/utils/types";
+import { APP_PATH, REPO_URLS } from '@/utils/constants';
+import { getConfig, getPackageManager, toCase } from '@/utils/helpers';
+import { addOptionsSchema } from '@/utils/types';
 
-type FileType = "hook" | "package" | "util";
+type FileType = 'hook' | 'package' | 'util';
 interface FileItem {
   name: string;
   parent: string;
   type: FileType;
 }
 
-const resolveDependencies = (
-  registry: Registry,
-  hooks: string[]
-): Map<string, FileItem> => {
+const resolveDependencies = (registry: Registry, hooks: string[]): Map<string, FileItem> => {
   const files = new Map<string, FileItem>();
 
   const addFile = (name: string, type: FileType, parent: string) =>
@@ -36,10 +33,10 @@ const resolveDependencies = (
 
     const item = registry[hook]!;
 
-    addFile(hook, "hook", item.name);
+    addFile(hook, 'hook', item.name);
 
-    item.utils.forEach((util) => addFile(util, "util", item.name));
-    item.packages.forEach((pkg) => addFile(pkg, "package", item.name));
+    item.utils.forEach((util) => addFile(util, 'util', item.name));
+    item.packages.forEach((pkg) => addFile(pkg, 'package', item.name));
     item.hooks.forEach(resolveDependency);
   };
 
@@ -54,19 +51,18 @@ interface UpdateImportsRules {
 }
 
 const updateImports = async (filePath: string, config: ConfigSchema) => {
-  const fileContent = fs.readFileSync(filePath, "utf-8");
+  const fileContent = fs.readFileSync(filePath, 'utf-8');
 
   const rules: UpdateImportsRules[] = [
     {
       regex: /import\s+\{([^}]+)\}\s+from\s+['"](@\/utils[^'"]*)['"]/g,
-      replacer: (_, imports) =>
-        `import {${imports}} from '${config.aliases.utils}'`,
+      replacer: (_, imports) => `import {${imports}} from '${config.aliases.utils}'`
     },
     {
       regex: /import\s+(?:type\s+)?\{([^}]+)\}\s+from\s+['"](\.[^'"]*)['"]/g,
       replacer: (_, imports, internalPath) =>
-        `import {${imports}} from '${toCase(internalPath, config.case)}'`,
-    },
+        `import {${imports}} from '${toCase(internalPath, config.case)}'`
+    }
   ];
 
   const updatedContent = rules.reduce(
@@ -78,40 +74,39 @@ const updateImports = async (filePath: string, config: ConfigSchema) => {
 };
 
 export const add = {
-  command: "add [hooks...]",
-  describe: "Add a hook to your project",
+  command: 'add [hooks...]',
+  describe: 'Add a hook to your project',
   builder: (yargs: Argv) =>
     yargs
-      .positional("hooks", {
-        describe: "List of hooks to add",
-        type: "string",
+      .positional('hooks', {
+        describe: 'List of hooks to add',
+        type: 'string',
         demandOption: true,
         array: true,
-        default: [],
+        default: []
       })
-      .option("all", {
-        alias: "a",
-        type: "boolean",
+      .option('all', {
+        alias: 'a',
+        type: 'boolean',
         default: false,
-        description: "add all available hooks",
+        description: 'add all available hooks'
       })
-      .option("cwd", {
-        type: "string",
-        description:
-          "the working directory. defaults to the current directory.",
-        default: APP_PATH,
+      .option('cwd', {
+        type: 'string',
+        description: 'the working directory. defaults to the current directory.',
+        default: APP_PATH
       })
-      .option("overwrite", {
-        alias: "o",
-        type: "boolean",
+      .option('overwrite', {
+        alias: 'o',
+        type: 'boolean',
         default: false,
-        description: "overwrite existing files",
+        description: 'overwrite existing files'
       })
-      .option("registry", {
-        type: "string",
-        description: "url of the registry to use",
+      .option('registry', {
+        type: 'string',
+        description: 'url of the registry to use',
         demandOption: true,
-        default: "https://siberiacancode.github.io/reactuse/registry.json",
+        default: 'https://siberiacancode.github.io/reactuse/registry.json'
       }),
 
   handler: async (argv: AddOptionsSchema) => {
@@ -120,30 +115,30 @@ export const add = {
       all: argv.all,
       registry: argv.registry,
       overwrite: argv.overwrite,
-      cwd: argv.cwd,
+      cwd: argv.cwd
     });
 
     const registryResponse = await fetches.get<Registry>(options.registry);
     const registry = registryResponse.data;
 
     if (!registry) {
-      console.log("Registry is missing. Please check the url.");
+      console.log('Registry is missing. Please check the url.');
       process.exit(1);
     }
 
     let selectedHooks = options.all ? Object.keys(registry) : options.hooks;
     if (!selectedHooks.length) {
       const { hooks } = await prompts({
-        type: "multiselect",
-        name: "hooks",
-        message: `Which ${chalk.cyan("hooks")} would you like to add?`,
-        hint: "Space to select. A to toggle all. Enter to submit.",
+        type: 'multiselect',
+        name: 'hooks',
+        message: `Which ${chalk.cyan('hooks')} would you like to add?`,
+        hint: 'Space to select. A to toggle all. Enter to submit.',
         instructions: false,
         choices: Object.values(registry).map((hook) => ({
           title: hook.name,
           value: hook.name,
-          selected: false,
-        })),
+          selected: false
+        }))
       });
       if (hooks) selectedHooks = hooks;
     }
@@ -158,39 +153,26 @@ export const add = {
     }
 
     if (!selectedHooks.length) {
-      console.log("No hooks selected.");
+      console.log('No hooks selected.');
       process.exit(0);
     }
 
     const config = await getConfig(options.cwd);
-    const language = config?.ts ? "ts" : "js";
+    const language = config?.ts ? 'ts' : 'js';
 
     const projectConfig = loadConfig(options.cwd);
-    if (projectConfig.resultType === "failed") {
+    if (projectConfig.resultType === 'failed') {
       throw new Error(
-        `Failed to load ${language}config.json. ${
-          projectConfig.message ?? ""
-        }`.trim()
+        `Failed to load ${language}config.json. ${projectConfig.message ?? ''}`.trim()
       );
     }
 
-    const matchPath = createMatchPath(
-      projectConfig.absoluteBaseUrl,
-      projectConfig.paths
-    );
-    const pathToLoadHooks = matchPath(
-      config.aliases.hooks,
-      undefined,
-      () => true
-    );
-    const pathToLoadUtils = matchPath(
-      config.aliases.utils,
-      undefined,
-      () => true
-    );
+    const matchPath = createMatchPath(projectConfig.absoluteBaseUrl, projectConfig.paths);
+    const pathToLoadHooks = matchPath(config.aliases.hooks, undefined, () => true);
+    const pathToLoadUtils = matchPath(config.aliases.utils, undefined, () => true);
 
     if (!pathToLoadHooks || !pathToLoadUtils) {
-      console.log("Failed to load paths.");
+      console.log('Failed to load paths.');
       process.exit(1);
     }
 
@@ -198,11 +180,8 @@ export const add = {
     const packages: string[] = [];
     const files = Array.from(dependencies.values())
       .map((dependency) => {
-        if (dependency.type === "hook") {
-          const filePath = toCase(
-            `${dependency.name}/${dependency.name}`,
-            config.case
-          );
+        if (dependency.type === 'hook') {
+          const filePath = toCase(`${dependency.name}/${dependency.name}`, config.case);
           const directoryPath = `${pathToLoadHooks}/${filePath}.${language}`;
           const registryPath = `${
             REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]
@@ -214,11 +193,11 @@ export const add = {
             registryPath,
             type: dependency.type,
             indexPath,
-            filePath,
+            filePath
           };
         }
 
-        if (dependency.type === "util") {
+        if (dependency.type === 'util') {
           const filePath = toCase(`${dependency.name}`, config.case);
           const directoryPath = `${pathToLoadUtils}/${filePath}.${language}`;
           const registryPath = `${
@@ -231,11 +210,11 @@ export const add = {
             registryPath,
             type: dependency.type,
             indexPath,
-            filePath,
+            filePath
           };
         }
 
-        if (dependency.type === "package") {
+        if (dependency.type === 'package') {
           packages.push(dependency.name);
           return undefined;
         }
@@ -244,10 +223,9 @@ export const add = {
       })
       .filter(Boolean);
 
-    const spinner = ora("Installing files...").start();
+    const spinner = ora('Installing files...').start();
     for (const file of files) {
-      const { directoryPath, registryPath, indexPath, filePath, name, type } =
-        file!;
+      const { directoryPath, registryPath, indexPath, filePath, name, type } = file!;
       spinner.text = `Installing ${name}...`;
       const directory = path.dirname(directoryPath);
 
@@ -255,17 +233,15 @@ export const add = {
       if (isExists && !options.overwrite) {
         spinner.stop();
         const { overwrite } = await prompts({
-          type: "confirm",
-          name: "overwrite",
+          type: 'confirm',
+          name: 'overwrite',
           message: `File ${name} already exists. Would you like to overwrite?`,
-          initial: false,
+          initial: false
         });
 
         if (!overwrite) {
           console.log(
-            `Skipped ${name}. To overwrite, run with the ${chalk.green(
-              "--overwrite"
-            )} flag.`
+            `Skipped ${name}. To overwrite, run with the ${chalk.green('--overwrite')} flag.`
           );
           continue;
         }
@@ -281,34 +257,30 @@ export const add = {
 
       const exportStatement = `export * from './${filePath}';\n`;
 
-      if (!fs.existsSync(indexPath)) fs.writeFileSync(indexPath, "");
-      const indexFileContent = fs.readFileSync(indexPath, "utf-8");
+      if (!fs.existsSync(indexPath)) fs.writeFileSync(indexPath, '');
+      const indexFileContent = fs.readFileSync(indexPath, 'utf-8');
       if (!indexFileContent.includes(exportStatement))
-        fs.appendFileSync(indexPath, exportStatement, "utf-8");
+        fs.appendFileSync(indexPath, exportStatement, 'utf-8');
     }
 
     const packageManager = await getPackageManager(options.cwd);
 
     spinner.text = `Installing packages ${chalk.bold(
-      packages.join(", ")
+      packages.join(', ')
     )} with ${chalk.cyan(packageManager)}`;
     if (packages.length) {
-      await execa(
-        packageManager,
-        [packageManager === "npm" ? "install" : "add", ...packages],
-        {
-          cwd: options.cwd,
-        }
-      );
+      await execa(packageManager, [packageManager === 'npm' ? 'install' : 'add', ...packages], {
+        cwd: options.cwd
+      });
     }
 
     spinner.stop();
 
     const installedHooks = files
-      .filter((file) => file!.type === "hook")
+      .filter((file) => file!.type === 'hook')
       .map((file) => chalk.green(file!.name))
-      .join(", ");
+      .join(', ');
     console.log(`\nInstalled hooks: ${installedHooks}`);
-    console.log(chalk.bold("\n🎉 Hooks added successfully! 🎉"));
-  },
+    console.log(chalk.bold('\n🎉 Hooks added successfully! 🎉'));
+  }
 };

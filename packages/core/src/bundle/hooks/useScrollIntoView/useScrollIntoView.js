@@ -51,7 +51,7 @@ export const useScrollIntoView = (...params) => {
       block,
       inline
     });
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   const trigger = (params) => {
     if (!elementRef.current) return;
     const { behavior, block, inline } = params ?? {};

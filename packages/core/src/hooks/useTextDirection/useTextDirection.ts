@@ -101,7 +101,7 @@ export const useTextDirection = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [internalRef.state, target]);
+  }, [internalRef.state, target, isTarget.getRefState(target)]);
 
   if (target) return { value, set, remove };
   return {

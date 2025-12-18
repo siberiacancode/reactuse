@@ -16,7 +16,7 @@ const Demo = () => {
         <b>Parallax data:</b>
         <p>{JSON.stringify(parallax.value, null, 2)}</p>
       </pre>
-      <div className='perspective-[300px] mx-auto my-12'>
+      <div className='mx-auto my-12 perspective-[300px]'>
         <div
           style={{
             transform: `rotateX(${parallax.value.roll * 20}deg) rotateY(${parallax.value.tilt * 20}deg)`

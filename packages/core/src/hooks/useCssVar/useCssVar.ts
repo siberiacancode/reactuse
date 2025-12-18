@@ -111,7 +111,7 @@ export const useCssVar = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
 
   if (target) return { value, set, remove };
   return { ref: internalRef, value, set, remove };

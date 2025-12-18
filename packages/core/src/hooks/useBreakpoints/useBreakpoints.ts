@@ -8,7 +8,7 @@ export type Breakpoints<Breakpoint extends string = string> = Record<Breakpoint,
 /** The use breakpoints strategy */
 export type UseBreakpointsStrategy = 'desktop-first' | 'mobile-first';
 
-const match = (query: string) => window.matchMedia(query).matches;
+const match = (query: string) => typeof window !== 'undefined' && window.matchMedia(query).matches;
 
 /** The use breakpoints return type */
 export type UseBreakpointsReturn<Breakpoint extends string = string> = {
@@ -22,16 +22,6 @@ export type UseBreakpointsReturn<Breakpoint extends string = string> = {
   smallerOrEqual: (breakpoint: Breakpoint) => boolean;
   /** The function that checks if the current breakpoint is between to the given breakpoints */
   between: (a: Breakpoint, b: Breakpoint) => boolean;
-  /** The function that checks if the current breakpoint is greater than to the given breakpoint */
-  isGreater: (breakpoint: Breakpoint) => boolean;
-  /** The function that checks if the current breakpoint is greater than or equal to the given breakpoint */
-  isGreaterOrEqual: (breakpoint: Breakpoint) => boolean;
-  /** The function that checks if the current breakpoint is smaller than to the given breakpoint */
-  isSmaller: (breakpoint: Breakpoint) => boolean;
-  /** The function that checks if the current breakpoint is smaller than or equal to the given breakpoint */
-  isSmallerOrEqual: (breakpoint: Breakpoint) => boolean;
-  /** The function that checks if the current breakpoint is between to the given breakpoints */
-  isInBetween: (a: Breakpoint, b: Breakpoint) => boolean;
   /** The function that returns the current breakpoints */
   current: () => Breakpoint[];
   /** The function that returns the current active breakpoint */
@@ -50,7 +40,7 @@ export type UseBreakpointsReturn<Breakpoint extends string = string> = {
  * @returns {UseBreakpointsReturn<Breakpoint>} An object containing the current breakpoint
  *
  * @example
- * const { greaterOrEqual, smallerOrEqual, current } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });
+ * const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });
  */
 export const useBreakpoints = <Breakpoint extends string>(
   breakpoints: Breakpoints<Breakpoint>,
@@ -64,7 +54,7 @@ export const useBreakpoints = <Breakpoint extends string>(
   };
 
   useEffect(() => {
-    const onResize = () => rerender();
+    const onResize = rerender;
     window.addEventListener('resize', onResize);
     return () => {
       window.removeEventListener('resize', onResize);
@@ -73,11 +63,13 @@ export const useBreakpoints = <Breakpoint extends string>(
 
   const greaterOrEqual = (breakpoint: Breakpoint) => match(`(min-width: ${getValue(breakpoint)})`);
   const smallerOrEqual = (breakpoint: Breakpoint) => match(`(max-width: ${getValue(breakpoint)})`);
+
   const current = () =>
     Object.keys(breakpoints)
       .map((breakpoint) => [breakpoint, greaterOrEqual(breakpoint as Breakpoint)])
       .filter(([, value]) => value)
       .map(([breakpoint]) => breakpoint) as Breakpoint[];
+
   const active = () => {
     const breakpoints = current();
     return (breakpoints.length ? breakpoints.at(-1) : undefined) as Breakpoint;
@@ -106,11 +98,6 @@ export const useBreakpoints = <Breakpoint extends string>(
     greater,
     smaller,
     between,
-    isGreater: greater,
-    isGreaterOrEqual: greaterOrEqual,
-    isSmaller: smaller,
-    isSmallerOrEqual: smallerOrEqual,
-    isInBetween: between,
     ...breakpointsKeys
   };
 };

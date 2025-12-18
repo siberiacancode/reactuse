@@ -27,7 +27,7 @@ const shouldShowCollapse = props.value.split('\n').length > 20;
 
       <div
         v-if="shouldShowCollapse && !isExpanded"
-        class="absolute bottom-0 left-0 right-0 z-10 h-24 bg-gradient-to-t from-[var(--vp-code-block-bg)] to-transparent"
+        class="absolute right-0 bottom-0 left-0 z-10 h-24 bg-gradient-to-t from-[var(--vp-code-block-bg)] to-transparent"
       />
     </div>
 

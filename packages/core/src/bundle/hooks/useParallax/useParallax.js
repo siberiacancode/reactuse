@@ -129,6 +129,7 @@ export const useParallax = (...params) => {
   }, [
     target,
     internalRef.state,
+    isTarget.getRefState(target),
     screenOrientation.value.angle,
     screenOrientation.value.orientationType,
     deviceOrientation.value.gamma,

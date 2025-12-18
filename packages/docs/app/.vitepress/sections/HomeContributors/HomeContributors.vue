@@ -21,7 +21,7 @@ const contributors = ref<Contributor[]>(data.contributors);
       <a
         href="https://github.com/siberiacancode"
         target="_blank"
-        class="no-underline! text-[var(--vp-c-text-1)]! flex items-center gap-2"
+        class="flex items-center gap-2 text-[var(--vp-c-text-1)]! no-underline!"
       >
         <img
           src="https://avatars.githubusercontent.com/u/122668137?s=200&v=4"

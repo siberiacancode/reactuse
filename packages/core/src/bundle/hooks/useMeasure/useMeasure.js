@@ -48,7 +48,7 @@ export const useMeasure = (...params) => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   if (target) return rect;
   return { ref: internalRef, ...rect };
 };

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRerender } from '../useRerender/useRerender';
-const match = (query) => window.matchMedia(query).matches;
+const match = (query) => typeof window !== 'undefined' && window.matchMedia(query).matches;
 /**
  * @name useBreakpoints
  * @description - Hook that manages breakpoints
@@ -13,7 +13,7 @@ const match = (query) => window.matchMedia(query).matches;
  * @returns {UseBreakpointsReturn<Breakpoint>} An object containing the current breakpoint
  *
  * @example
- * const { greaterOrEqual, smallerOrEqual, current } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });
+ * const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });
  */
 export const useBreakpoints = (breakpoints, strategy = 'mobile-first') => {
   const rerender = useRerender();
@@ -22,7 +22,7 @@ export const useBreakpoints = (breakpoints, strategy = 'mobile-first') => {
     return `${breakpoints[breakpoint]}px`;
   };
   useEffect(() => {
-    const onResize = () => rerender();
+    const onResize = rerender;
     window.addEventListener('resize', onResize);
     return () => {
       window.removeEventListener('resize', onResize);
@@ -57,11 +57,6 @@ export const useBreakpoints = (breakpoints, strategy = 'mobile-first') => {
     greater,
     smaller,
     between,
-    isGreater: greater,
-    isGreaterOrEqual: greaterOrEqual,
-    isSmaller: smaller,
-    isSmallerOrEqual: smallerOrEqual,
-    isInBetween: between,
     ...breakpointsKeys
   };
 };

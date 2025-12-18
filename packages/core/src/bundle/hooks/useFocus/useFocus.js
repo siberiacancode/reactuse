@@ -91,7 +91,7 @@ export const useFocus = (...params) => {
       element.removeEventListener('focus', onFocus);
       element.removeEventListener('blur', onBlur);
     };
-  }, [target, internalRef.state, enabled]);
+  }, [target, internalRef.state, enabled, isTarget.getRefState(target)]);
   if (target) return { focus, blur, focused };
   return {
     ref: internalRef,

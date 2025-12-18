@@ -1,5 +1,5 @@
 import { useState } from 'react';
-const createRefState = (initialValue, setState) => {
+export const createRefState = (initialValue, setState) => {
   let temp = initialValue;
   function ref(value) {
     if (temp === value) return;

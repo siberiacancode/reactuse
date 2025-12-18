@@ -81,7 +81,15 @@ export const useVisibility = (...params) => {
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.state, options?.rootMargin, options?.threshold, options?.root, enabled]);
+  }, [
+    target,
+    internalRef.state,
+    isTarget.getRefState(target),
+    options?.rootMargin,
+    options?.threshold,
+    options?.root,
+    enabled
+  ]);
   if (target) return { observer, entry, inView: !!entry?.isIntersecting };
   return {
     observer,

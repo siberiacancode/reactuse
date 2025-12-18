@@ -43,7 +43,7 @@ export const useLockScroll = (...params) => {
       element.style.overflow = originalStyle;
       elementRef.current = null;
     };
-  }, [target, internalRef.state, enabled]);
+  }, [target, internalRef.state, isTarget.getRefState(target), enabled]);
   const lock = () => {
     if (!elementRef.current) return;
     const element = elementRef.current;

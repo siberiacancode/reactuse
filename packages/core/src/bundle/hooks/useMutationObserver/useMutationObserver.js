@@ -81,6 +81,7 @@ export const useMutationObserver = (...params) => {
   }, [
     target,
     internalRef.state,
+    isTarget.getRefState(target),
     options?.childList,
     options?.attributes,
     options?.characterData,

@@ -106,7 +106,7 @@ export const useDoubleClick = ((...params: any[]): any => {
       element.removeEventListener('touchstart', onClick as EventListener);
       if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
 
   if (target) return;
   return internalRef;

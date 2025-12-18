@@ -65,7 +65,7 @@ export const useInfiniteScroll = (...params) => {
     return () => {
       element.removeEventListener('scroll', onLoadMore);
     };
-  }, [target, internalRef.state, direction, distance]);
+  }, [target, internalRef.state, isTarget.getRefState(target), direction, distance]);
   if (target) return loading;
   return {
     ref: internalRef,

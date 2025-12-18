@@ -10,7 +10,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @param {HookTarget} target The target element to be hovered
  * @param {(event: Event) => void} [callback] The callback function to be invoked on mouse enter
- * @returns {boolean} The state of the hover
+ * @returns {boolean} The value of the hover
  *
  * @example
  * const hovering = useHover(ref, () => console.log('callback'));
@@ -19,7 +19,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @param {HookTarget} target The target element to be hovered
  * @param {(event: Event) => void} [options.onEntry] The callback function to be invoked on mouse enter
  * @param {(event: Event) => void} [options.onLeave] The callback function to be invoked on mouse leave
- * @returns {boolean} The state of the hover
+ * @returns {boolean} The value of the hover
  *
  * @example
  * const hovering = useHover(ref, options);
@@ -27,19 +27,19 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @template Target The target element
  * @param {(event: Event) => void} [callback] The callback function to be invoked on mouse enter
- * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The state of the hover
+ * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The object with the ref and the value of the hover
  *
  * @example
- * const [ref, hovering] = useHover(() => console.log('callback'));
+ * const { ref, value } = useHover(() => console.log('callback'));
  *
  * @overload
  * @template Target The target element
  * @param {(event: Event) => void} [options.onEntry] The callback function to be invoked on mouse enter
  * @param {(event: Event) => void} [options.onLeave] The callback function to be invoked on mouse leave
- * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The state of the hover
+ * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The object with the ref and the value of the hover
  *
  * @example
- * const [ref, hovering] = useHover(options);
+ * const { ref, value } = useHover(options);
  */
 export const useHover = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -73,7 +73,7 @@ export const useHover = (...params) => {
       element.removeEventListener('mouseenter', onMouseEnter);
       element.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, [enabled, target, internalRef.state]);
+  }, [enabled, target, internalRef.state, isTarget.getRefState(target)]);
   if (target) return hovering;
   return {
     ref: internalRef,

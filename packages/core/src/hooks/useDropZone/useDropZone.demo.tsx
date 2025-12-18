@@ -61,7 +61,7 @@ const Demo = () => {
           <div className='flex flex-col gap-3'>
             <div className='relative'>
               <button
-                className='absolute right-2 top-1 flex size-8 items-center justify-center'
+                className='absolute top-1 right-2 flex size-8 items-center justify-center'
                 onClick={onRemove}
               >
                 ✕

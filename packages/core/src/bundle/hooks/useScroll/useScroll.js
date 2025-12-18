@@ -121,7 +121,7 @@ export const useScroll = (...params) => {
       element.removeEventListener('scroll', onScroll);
       element.removeEventListener('scrollend', onScrollEnd);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   const scrollIntoView = (params) => {
     if (!elementRef.current) return;
     const { behavior, block, inline } = params ?? {};

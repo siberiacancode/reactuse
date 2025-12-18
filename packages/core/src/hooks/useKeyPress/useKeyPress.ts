@@ -98,7 +98,7 @@ export const useKeyPress = ((...params: any[]) => {
       element.removeEventListener('keydown', onKeyDown);
       element.removeEventListener('keyup', onKeyUp);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
 
   if (target) return pressed;
   return { pressed, ref: internalRef };

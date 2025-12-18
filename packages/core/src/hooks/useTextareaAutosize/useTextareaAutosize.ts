@@ -142,7 +142,7 @@ export const useTextareaAutosize = ((...params: any[]) => {
       element.removeEventListener('input', onInput as EventListener);
       element.removeEventListener('resize', onResize as EventListener);
     };
-  }, [target, internalRef.state, options?.initialValue]);
+  }, [target, internalRef.state, isTarget.getRefState(target), options?.initialValue]);
 
   useEffect(() => {
     const textarea = textareaRef.current;

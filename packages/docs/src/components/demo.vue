@@ -33,7 +33,7 @@ onUnmounted(() => {
 
 <template>
   <div class="relative mb-2 rounded-lg bg-[var(--vp-code-block-bg)] p-6">
-    <p class="absolute right-2 top-0 text-xs font-medium transition-colors">
+    <p class="absolute top-0 right-2 text-xs font-medium transition-colors">
       <a :href="sourceLink" target="_blank">source</a>
     </p>
     <div ref="demoRef" />

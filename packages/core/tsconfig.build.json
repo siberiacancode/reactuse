@@ -16,7 +16,8 @@
     "outDir": "src/bundle",
     "removeComments": false,
     "sourceMap": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["**/*.test.*", "**/*.demo.*"]

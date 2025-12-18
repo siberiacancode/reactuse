@@ -108,7 +108,7 @@ export const useKeyboard = ((...params: any[]) => {
       element.removeEventListener('keydown', onKeyDown);
       element.removeEventListener('keyup', onKeyUp);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
 
   if (target) return;
   return internalRef;

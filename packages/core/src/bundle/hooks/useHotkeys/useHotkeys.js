@@ -82,7 +82,15 @@ export const useHotkeys = (...params) => {
       element.removeEventListener('keydown', onKeyDown);
       element.removeEventListener('keyup', onKeyUp);
     };
-  }, [target, internalRef.state, enabled, hotkeys, onKeyDown, onKeyUp]);
+  }, [
+    target,
+    internalRef.state,
+    isTarget.getRefState(target),
+    enabled,
+    hotkeys,
+    onKeyDown,
+    onKeyUp
+  ]);
   if (target) return;
   return internalRef;
 };

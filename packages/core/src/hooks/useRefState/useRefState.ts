@@ -6,7 +6,7 @@ export interface StateRef<Value> {
   state?: Value;
 }
 
-const createRefState = <Value>(
+export const createRefState = <Value>(
   initialValue: Value | undefined,
   setState: (value: Value) => void
 ) => {

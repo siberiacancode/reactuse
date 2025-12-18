@@ -18,7 +18,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @template Target The target element(s)
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
- * @returns {(node: Target) => void} A React ref to attach to the target element
+ * @returns {StateRef<Target>} A ref to attach to the target element
  *
  * @example
  * const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
@@ -33,9 +33,10 @@ export const useClickOutside = (...params) => {
   internalCallbackRef.current = callback;
   useEffect(() => {
     if (!target && !internalRef.state) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
     const onClick = (event) => {
-      const element = target ? isTarget.getElement(target) : internalRef.current;
-      if (element && !element.contains(event.target)) {
+      if (!element.contains(event.target)) {
         internalCallbackRef.current(event);
       }
     };
@@ -43,7 +44,7 @@ export const useClickOutside = (...params) => {
     return () => {
       document.removeEventListener('click', onClick);
     };
-  }, [target, internalRef.state]);
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   if (target) return;
   return internalRef;
 };

@@ -25,7 +25,7 @@ const filteredHooks = computed(() =>
 
 <template>
   <div
-    class="py-8! px-3! mt-10 h-[315px] overflow-hidden rounded-lg bg-[var(--vp-c-bg-soft)] md:px-6"
+    class="mt-10 h-[315px] overflow-hidden rounded-lg bg-[var(--vp-c-bg-soft)] px-3! py-8! md:px-6"
   >
     <div
       class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center md:px-6"
@@ -60,10 +60,10 @@ const filteredHooks = computed(() =>
       <div v-for="hook in filteredHooks.slice(0, 40)" :key="hook.name">
         <a
           :href="`/reactuse/functions/hooks/${hook.name}`"
-          class="no-underline! text-[var(--vp-c-text-1)]! text-2xl"
+          class="text-2xl text-[var(--vp-c-text-1)]! no-underline!"
         >
           <div
-            class="hover:border-[var(--vp-c-brand-1)]/80 items-center rounded-lg border-[1px] border-transparent bg-[var(--vp-c-default-soft)] px-6 py-2 transition-all duration-200 hover:shadow-md"
+            class="items-center rounded-lg border-[1px] border-transparent bg-[var(--vp-c-default-soft)] px-6 py-2 transition-all duration-200 hover:border-[var(--vp-c-brand-1)]/80 hover:shadow-md"
             :class="{
               'opacity-50': hook.disabled
             }"

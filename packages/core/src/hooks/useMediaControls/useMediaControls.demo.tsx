@@ -36,7 +36,7 @@ const Demo = () => {
 
       <div
         ref={scrubberRef}
-        className='relative h-2 cursor-pointer select-none rounded bg-black bg-opacity-20'
+        className='bg-opacity-20 relative h-2 cursor-pointer rounded bg-black select-none'
         onMouseDown={() => setScrubbing(true)}
         onMouseMove={onMouseMove}
         onMouseUp={() => setScrubbing(false)}
@@ -49,7 +49,7 @@ const Demo = () => {
                 100
               }%)`
             }}
-            className='absolute left-0 top-0 h-full w-full rounded bg-emerald-700 opacity-30'
+            className='absolute top-0 left-0 h-full w-full rounded bg-emerald-700 opacity-30'
           />
 
           <div
@@ -62,7 +62,7 @@ const Demo = () => {
                 100
               }%)`
             }}
-            className='absolute left-0 top-0 h-full w-full rounded bg-cyan-700 opacity-30'
+            className='absolute top-0 left-0 h-full w-full rounded bg-cyan-700 opacity-30'
           />
           <div
             style={{

@@ -133,7 +133,7 @@ export const useEventListener = ((...params: any[]) => {
     return () => {
       element.removeEventListener(event, listener, options);
     };
-  }, [target, internalRef.state, event, enabled]);
+  }, [target, internalRef.state, isTarget.getRefState(target), event, enabled]);
 
   if (target) return;
   return internalRef;
