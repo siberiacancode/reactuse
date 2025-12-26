@@ -33,7 +33,18 @@ export default async () => {
     description:
       'Improve your react applications with our library 📦 designed for comfort and speed',
     markdown: {
-      codeTransformers: [transformerTwoslash()],
+      codeTransformers: [
+        transformerTwoslash({
+          twoslashOptions: {
+            compilerOptions: {
+              baseUrl: fileURLToPath(new URL('.', import.meta.url)),
+              paths: {
+                '@siberiacancode/reactuse': ['../../../core/src/index.ts']
+              }
+            }
+          }
+        })
+      ],
       languages: ['js', 'jsx', 'ts', 'tsx']
     } as unknown as MarkdownOptions,
     vite: {
