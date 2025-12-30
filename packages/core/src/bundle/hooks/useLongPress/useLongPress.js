@@ -57,23 +57,19 @@ export const useLongPress = (...params) => {
         } else if (isPressedRef.current) {
           internalOptionsRef.current?.onCancel?.(event);
         }
+        isPressedRef.current = false;
+        if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
         return false;
       });
-      isPressedRef.current = false;
-      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
     element.addEventListener('mousedown', onStart);
-    element.addEventListener('touchstart', onStart);
-    element.addEventListener('mouseup', onCancel);
-    element.addEventListener('touchend', onCancel);
     window.addEventListener('mouseup', onCancel);
+    element.addEventListener('touchstart', onStart);
     window.addEventListener('touchend', onCancel);
     return () => {
       element.removeEventListener('mousedown', onStart);
-      element.removeEventListener('touchstart', onStart);
-      element.removeEventListener('mouseup', onCancel);
-      element.removeEventListener('touchend', onCancel);
       window.removeEventListener('mouseup', onCancel);
+      element.removeEventListener('touchstart', onStart);
       window.removeEventListener('touchend', onCancel);
       if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };

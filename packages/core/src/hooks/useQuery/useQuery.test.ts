@@ -315,7 +315,7 @@ it('Should retry with delay', async () => {
 });
 
 it('Should retry with function delay', async () => {
-  const retryDelayFn = vi.fn(() => 100);
+  const retryDelay = vi.fn(() => 100);
   let retries = 0;
 
   const { result } = renderHook(() =>
@@ -329,13 +329,13 @@ it('Should retry with function delay', async () => {
       },
       {
         retry: 1,
-        retryDelay: retryDelayFn
+        retryDelay
       }
     )
   );
 
   await waitFor(() => expect(result.current.data).toBe('data'));
-  expect(retryDelayFn).toHaveBeenCalledTimes(1);
+  expect(retryDelay).toHaveBeenCalledTimes(1);
 });
 
 it('Should use placeholder data as function', () => {

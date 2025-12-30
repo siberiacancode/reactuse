@@ -5,13 +5,17 @@ import { createTrigger, renderHookServer } from '@/tests';
 import { useBattery } from './useBattery';
 
 const trigger = createTrigger<string, () => void>();
+const mockAddEventListener = vi.fn();
 const mockRemoveEventListener = vi.fn();
 const mockBatteryManager = {
   charging: true,
   chargingTime: 0,
   dischargingTime: 5,
   level: 1,
-  addEventListener: (type: string, callback: () => void) => trigger.add(type, callback),
+  addEventListener: (type: string, callback: () => void) => {
+    mockAddEventListener(type, callback);
+    trigger.add(type, callback);
+  },
   removeEventListener: (type: string, callback: () => void) => {
     mockRemoveEventListener(type, callback);
     if (trigger.get(type) === callback) trigger.delete(type);

@@ -118,6 +118,7 @@ export const useField = (params) => {
     setValue,
     reset,
     watch,
-    focus
+    focus,
+    ref: inputRef
   };
 };

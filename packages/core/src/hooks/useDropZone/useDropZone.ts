@@ -102,7 +102,6 @@ export interface UseDropZone {
  * @example
  * const { ref, overed, files } = useDropZone(() => console.log('callback'));
  */
-
 export const useDropZone = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
 

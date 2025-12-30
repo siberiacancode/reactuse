@@ -18,7 +18,7 @@ class MockBroadcastChannel {
   postMessage = mockBroadcastChannelPostMessage;
   close = mockBroadcastChannelClose;
   addEventListener = (type: string, callback: (event: MessageEvent) => void) => {
-    mockAddEventListener();
+    mockAddEventListener(type, callback);
     trigger.add(type, callback);
   };
   removeEventListener = (type: string, callback: (event: MessageEvent) => void) => {

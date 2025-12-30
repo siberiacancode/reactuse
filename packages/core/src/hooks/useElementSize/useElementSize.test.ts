@@ -31,8 +31,8 @@ const mockResizeObserver = class ResizeObserver {
   unobserve = vi.fn();
 };
 
-beforeEach(() => void vi.stubGlobal('ResizeObserver', mockResizeObserver));
-afterEach(() => void vi.unstubAllGlobals());
+beforeEach(() => vi.stubGlobal('ResizeObserver', mockResizeObserver));
+afterEach(vi.unstubAllGlobals);
 
 const targets = [
   undefined,

@@ -1,3 +1,5 @@
+import type { RefObject } from 'react';
+
 import { useRef, useState } from 'react';
 
 import { useRerender } from '../useRerender/useRerender';
@@ -57,6 +59,8 @@ export interface UseFieldReturn<Value> {
   dirty: boolean;
   /** The error state */
   error?: string;
+  /** The input ref */
+  ref: RefObject<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null>;
   /** The set error function */
   touched: boolean;
   /** The set error function */
@@ -226,6 +230,7 @@ export const useField = <
     setValue,
     reset,
     watch,
-    focus
+    focus,
+    ref: inputRef
   };
 };
