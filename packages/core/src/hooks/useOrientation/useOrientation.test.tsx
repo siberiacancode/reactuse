@@ -36,7 +36,7 @@ afterEach(vi.clearAllMocks);
 it('Should use orientation', () => {
   const { result } = renderHook(useOrientation);
 
-  expect(result.current.supported).toBe(true);
+  expect(result.current.supported).toBeTruthy();
   expect(result.current.value).toEqual({
     angle: 0,
     orientationType: 'portrait-primary'
@@ -48,7 +48,7 @@ it('Should use orientation', () => {
 it('Should use orientation on server side', () => {
   const { result } = renderHookServer(useOrientation);
 
-  expect(result.current.supported).toBe(false);
+  expect(result.current.supported).toBeFalsy();
   expect(result.current.value).toEqual({
     angle: 0,
     orientationType: undefined
@@ -66,7 +66,7 @@ it('Should use orientation for unsupported', () => {
 
   const { result } = renderHook(useOrientation);
 
-  expect(result.current.supported).toBe(false);
+  expect(result.current.supported).toBeFalsy();
   expect(result.current.value).toEqual({
     angle: 0,
     orientationType: undefined

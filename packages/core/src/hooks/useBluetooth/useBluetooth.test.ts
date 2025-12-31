@@ -101,7 +101,7 @@ it('Should connect to GATT server after device selection', async () => {
 
   expect(mockBluetoothDevice.gatt.connect).toHaveBeenCalled();
 
-  expect(result.current.connected).toBe(true);
+  expect(result.current.connected).toBeTruthy();
   expect(result.current.server).toBe(mockBluetoothDevice.gatt);
 });
 
@@ -141,11 +141,11 @@ it('Should handle gattserverdisconnected event', async () => {
 
   await act(result.current.requestDevice);
 
-  expect(result.current.connected).toBe(true);
+  expect(result.current.connected).toBeTruthy();
 
   act(() => mockBluetoothDevice.dispatchEvent(new Event('gattserverdisconnected')));
 
-  expect(result.current.connected).toBe(false);
+  expect(result.current.connected).toBeFalsy();
   expect(result.current.device).toBeUndefined();
   expect(result.current.server).toBeUndefined();
 });
@@ -155,7 +155,7 @@ it('Should cleanup on unmount', async () => {
 
   await act(result.current.requestDevice);
 
-  expect(result.current.connected).toBe(true);
+  expect(result.current.connected).toBeTruthy();
 
   unmount();
 

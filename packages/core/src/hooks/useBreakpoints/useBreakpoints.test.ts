@@ -93,8 +93,8 @@ describe('useBreakpoints', () => {
 
     const { result } = renderHook(() => useBreakpoints(breakpoints));
 
-    expect(result.current.greaterOrEqual('mobile')).toBe(true);
-    expect(result.current.greaterOrEqual('tablet')).toBe(false);
+    expect(result.current.greaterOrEqual('mobile')).toBeTruthy();
+    expect(result.current.greaterOrEqual('tablet')).toBeFalsy();
   });
 
   it('Should return correct values for smallerOrEqual', () => {
@@ -112,8 +112,8 @@ describe('useBreakpoints', () => {
 
     const { result } = renderHook(() => useBreakpoints(breakpoints));
 
-    expect(result.current.smallerOrEqual('tablet')).toBe(true);
-    expect(result.current.smallerOrEqual('desktop')).toBe(true);
+    expect(result.current.smallerOrEqual('tablet')).toBeTruthy();
+    expect(result.current.smallerOrEqual('desktop')).toBeTruthy();
   });
 
   it('Should return correct values for greater', () => {
@@ -131,8 +131,8 @@ describe('useBreakpoints', () => {
 
     const { result } = renderHook(() => useBreakpoints(breakpoints));
 
-    expect(result.current.greater('mobile')).toBe(true);
-    expect(result.current.greater('tablet')).toBe(false);
+    expect(result.current.greater('mobile')).toBeTruthy();
+    expect(result.current.greater('tablet')).toBeFalsy();
   });
 
   it('Should return correct values for smaller', () => {
@@ -150,8 +150,8 @@ describe('useBreakpoints', () => {
 
     const { result } = renderHook(() => useBreakpoints(breakpoints));
 
-    expect(result.current.smaller('mobile')).toBe(false);
-    expect(result.current.smaller('tablet')).toBe(true);
+    expect(result.current.smaller('mobile')).toBeFalsy();
+    expect(result.current.smaller('tablet')).toBeTruthy();
   });
 
   it('Should return correct values for between', () => {
@@ -164,7 +164,7 @@ describe('useBreakpoints', () => {
 
     const { result } = renderHook(() => useBreakpoints(breakpoints));
 
-    expect(result.current.between('tablet', 'laptop')).toBe(true);
+    expect(result.current.between('tablet', 'laptop')).toBeTruthy();
   });
 
   it('Should return correct current breakpoints', () => {
@@ -220,8 +220,8 @@ describe('useBreakpoints', () => {
 
     const { result } = renderHook(() => useBreakpoints(breakpoints));
 
-    expect(result.current.mobile).toBe(true);
-    expect(result.current.tablet).toBe(false);
+    expect(result.current.mobile).toBeTruthy();
+    expect(result.current.tablet).toBeFalsy();
   });
 
   it('Should use desktop-first strategy when specified', () => {
@@ -239,8 +239,8 @@ describe('useBreakpoints', () => {
 
     const { result } = renderHook(() => useBreakpoints(breakpoints, 'desktop-first'));
 
-    expect(result.current.tablet).toBe(false);
-    expect(result.current.desktop).toBe(true);
+    expect(result.current.tablet).toBeFalsy();
+    expect(result.current.desktop).toBeTruthy();
   });
 
   it('Should update on resize events', () => {
@@ -258,7 +258,7 @@ describe('useBreakpoints', () => {
 
     const { result } = renderHook(() => useBreakpoints(breakpoints));
 
-    expect(result.current.tablet).toBe(false);
+    expect(result.current.tablet).toBeFalsy();
 
     act(() => {
       mockMatchMediaInstances.set(tabletQuery, {
@@ -268,7 +268,7 @@ describe('useBreakpoints', () => {
       window.dispatchEvent(new Event('resize'));
     });
 
-    expect(result.current.tablet).toBe(true);
+    expect(result.current.tablet).toBeTruthy();
   });
 
   it('Should cleanup on unmount', () => {

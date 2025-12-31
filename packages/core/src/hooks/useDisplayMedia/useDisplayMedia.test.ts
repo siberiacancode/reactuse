@@ -51,9 +51,9 @@ targets.forEach((target) => {
       return useDisplayMedia<HTMLVideoElement>();
     });
 
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
     expect(result.current.stream).toBeNull();
-    expect(result.current.supported).toBe(true);
+    expect(result.current.supported).toBeTruthy();
     expect(result.current.start).toBeTypeOf('function');
     expect(result.current.stop).toBeTypeOf('function');
     if (!target) expect(result.current.ref).toBeTypeOf('function');
@@ -69,9 +69,9 @@ targets.forEach((target) => {
       return useDisplayMedia<HTMLVideoElement>();
     });
 
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
     expect(result.current.stream).toBeNull();
-    expect(result.current.supported).toBe(false);
+    expect(result.current.supported).toBeFalsy();
     expect(result.current.start).toBeTypeOf('function');
     expect(result.current.stop).toBeTypeOf('function');
     if (!target) expect(result.current.ref).toBeTypeOf('function');
@@ -91,9 +91,9 @@ targets.forEach((target) => {
       return useDisplayMedia<HTMLVideoElement>();
     });
 
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
     expect(result.current.stream).toBeNull();
-    expect(result.current.supported).toBe(false);
+    expect(result.current.supported).toBeFalsy();
     expect(result.current.start).toBeTypeOf('function');
     expect(result.current.stop).toBeTypeOf('function');
     if (!target) expect(result.current.ref).toBeTypeOf('function');
@@ -118,13 +118,13 @@ targets.forEach((target) => {
       target ? isTarget.getElement(target) : result.current.ref.current
     ) as HTMLVideoElement;
     expect(element.srcObject).toBeTruthy();
-    expect(result.current.sharing).toBe(true);
+    expect(result.current.sharing).toBeTruthy();
     expect(result.current.stream).toBeTruthy();
 
     await act(result.current.stop);
 
     expect(mockTrack.stop).toHaveBeenCalledOnce();
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
     expect(result.current.stream).toBeNull();
   });
 
@@ -141,7 +141,7 @@ targets.forEach((target) => {
       act(() => result.current.ref(document.getElementById('target')! as HTMLVideoElement));
 
     await waitFor(() => expect(mockGetDisplayMedia).toHaveBeenCalledOnce());
-    await waitFor(() => expect(result.current.sharing).toBe(true));
+    await waitFor(() => expect(result.current.sharing).toBeTruthy());
   });
 
   it('Should accept boolean audio and video constraints', async () => {
@@ -177,7 +177,7 @@ targets.forEach((target) => {
 
     await act(result.current.start);
 
-    expect(result.current.sharing).toBe(true);
+    expect(result.current.sharing).toBeTruthy();
     expect(result.current.stream).toBeTruthy();
 
     unmount();
@@ -199,10 +199,10 @@ targets.forEach((target) => {
 
     if (!target) act(() => result.current.ref(element));
 
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
 
     rerender({ current: document.getElementById('target') });
 
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
   });
 });

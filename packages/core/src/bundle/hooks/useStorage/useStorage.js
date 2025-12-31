@@ -90,13 +90,19 @@ export const useStorage = (key, params) => {
     return storageValue ? deserializer(storageValue) : undefined;
   });
   useEffect(() => {
-    const onChange = () => {
+    const onChange = (event) => {
+      if (event && event.storageArea !== storage) return;
+      if (event && event.key !== key) return;
       const storageValue = getStorageItem(storage, key);
       setValue(storageValue ? deserializer(storageValue) : undefined);
     };
     window.addEventListener(STORAGE_EVENT, onChange);
-    return () => window.removeEventListener(STORAGE_EVENT, onChange);
-  }, [key]);
+    window.addEventListener('storage', onChange, { passive: true });
+    return () => {
+      window.removeEventListener(STORAGE_EVENT, onChange);
+      window.removeEventListener('storage', onChange);
+    };
+  }, [key, storage]);
   return {
     value: value,
     set,

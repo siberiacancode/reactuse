@@ -1,6 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
+
 import { useDebounceCallback } from './useDebounceCallback';
 
 beforeEach(vi.useFakeTimers);
@@ -12,6 +14,11 @@ afterEach(() => {
 
 it('Should use debounce callback', () => {
   const { result } = renderHook(() => useDebounceCallback(vi.fn(), 100));
+  expect(result.current).toBeTypeOf('function');
+});
+
+it('Should use debounce callback on server side', () => {
+  const { result } = renderHookServer(() => useDebounceCallback(vi.fn(), 100));
   expect(result.current).toBeTypeOf('function');
 });
 

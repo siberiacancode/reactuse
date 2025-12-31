@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 /**
  * @name useSpeechSynthesis
  * @description - Hook that provides speech synthesis functionality
@@ -25,7 +25,7 @@ export const useSpeechSynthesis = (options = {}) => {
   const [playing, setPlaying] = useState(false);
   const [status, setStatus] = useState('init');
   const [error, setError] = useState();
-  const speechSynthesisUtteranceRef = useRef(null);
+  const [utterance, setUtterance] = useState();
   const bindSpeechSynthesisUtterance = (speechSynthesisUtterance) => {
     speechSynthesisUtterance.lang = lang;
     speechSynthesisUtterance.pitch = pitch;
@@ -57,20 +57,32 @@ export const useSpeechSynthesis = (options = {}) => {
     if (!supported) return;
     const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
     bindSpeechSynthesisUtterance(speechSynthesisUtterance);
-    speechSynthesisUtteranceRef.current = speechSynthesisUtterance;
+    setUtterance(speechSynthesisUtterance);
     return () => {
       window.speechSynthesis?.cancel();
     };
-  }, [text, lang, pitch, rate, voice, volume]);
+  }, [
+    text,
+    lang,
+    pitch,
+    rate,
+    volume,
+    voice?.default,
+    voice?.lang,
+    voice?.localService,
+    voice?.name,
+    voice?.voiceURI
+  ]);
   const speak = (text) => {
     if (!supported) return;
     if (text) {
-      speechSynthesisUtteranceRef.current = new SpeechSynthesisUtterance(text);
-      bindSpeechSynthesisUtterance(speechSynthesisUtteranceRef.current);
+      const utterance = new SpeechSynthesisUtterance(text);
+      setUtterance(utterance);
+      bindSpeechSynthesisUtterance(utterance);
     }
     window.speechSynthesis?.cancel();
-    if (speechSynthesisUtteranceRef.current)
-      window.speechSynthesis?.speak(speechSynthesisUtteranceRef.current);
+    if (utterance) window.speechSynthesis?.speak(utterance);
+    setPlaying(true);
   };
   const stop = () => {
     if (!supported) return;
@@ -98,7 +110,7 @@ export const useSpeechSynthesis = (options = {}) => {
     supported,
     playing,
     status,
-    utterance: speechSynthesisUtteranceRef.current,
+    utterance,
     error,
     stop,
     toggle,

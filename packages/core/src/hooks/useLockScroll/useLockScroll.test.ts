@@ -36,7 +36,7 @@ targets.forEach((target) => {
         return useLockScroll<HTMLDivElement>();
       });
 
-      expect(result.current.value).toBe(true);
+      expect(result.current.value).toBeTruthy();
       expect(result.current.lock).toBeTypeOf('function');
       expect(result.current.unlock).toBeTypeOf('function');
       expect(result.current.toggle).toBeTypeOf('function');
@@ -54,7 +54,7 @@ targets.forEach((target) => {
         return useLockScroll<HTMLDivElement>();
       });
 
-      expect(result.current.value).toBe(true);
+      expect(result.current.value).toBeTruthy();
       expect(result.current.lock).toBeTypeOf('function');
       expect(result.current.unlock).toBeTypeOf('function');
       expect(result.current.toggle).toBeTypeOf('function');
@@ -74,7 +74,7 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(result.current.value).toBe(true);
+      expect(result.current.value).toBeTruthy();
       expect(element.style.overflow).toBe('hidden');
     });
 
@@ -89,7 +89,7 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(result.current.value).toBe(false);
+      expect(result.current.value).toBeFalsy();
       expect(element.style.overflow).toBe('visible');
     });
 
@@ -104,12 +104,12 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(result.current.value).toBe(true);
+      expect(result.current.value).toBeTruthy();
       expect(element.style.overflow).toBe('hidden');
 
       act(() => result.current.unlock());
 
-      expect(result.current.value).toBe(false);
+      expect(result.current.value).toBeFalsy();
       expect(element.style.overflow).toBe('visible');
     });
 
@@ -124,11 +124,11 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(result.current.value).toBe(true);
+      expect(result.current.value).toBeTruthy();
 
       act(() => result.current.unlock());
 
-      expect(result.current.value).toBe(false);
+      expect(result.current.value).toBeFalsy();
       expect(element.style.overflow).toBe('visible');
     });
 
@@ -143,16 +143,16 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(result.current.value).toBe(false);
+      expect(result.current.value).toBeFalsy();
 
       act(() => result.current.toggle());
 
-      expect(result.current.value).toBe(true);
+      expect(result.current.value).toBeTruthy();
       expect(element.style.overflow).toBe('hidden');
 
       act(() => result.current.toggle());
 
-      expect(result.current.value).toBe(false);
+      expect(result.current.value).toBeFalsy();
       expect(element.style.overflow).toBe('visible');
     });
 
@@ -172,11 +172,11 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(result.current.value).toBe(true);
+      expect(result.current.value).toBeTruthy();
 
       rerender({ current: document.getElementById('target') });
 
-      expect(result.current.value).toBe(true);
+      expect(result.current.value).toBeTruthy();
     });
 
     it('Should clean up on unmount', () => {

@@ -64,7 +64,6 @@ export const useSpeechRecognition = (options = {}) => {
       onError?.(event);
     };
     speechRecognition.onresult = (event) => {
-      console.log('onresult', event);
       const currentResult = event.results[event.resultIndex];
       const { transcript } = currentResult[0];
       setTranscript(transcript);

@@ -23,6 +23,6 @@ export const useWindowFocus = () => {
       window.removeEventListener('focus', onFocus);
       window.removeEventListener('blur', onBlur);
     };
-  });
+  }, []);
   return focused;
 };

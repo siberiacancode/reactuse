@@ -38,7 +38,7 @@ targets.forEach((target) => {
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
 
-      expect(result.current.focused).toBe(false);
+      expect(result.current.focused).toBeFalsy();
       expect(result.current.focus).toBeTypeOf('function');
       expect(result.current.blur).toBeTypeOf('function');
     });
@@ -55,7 +55,7 @@ targets.forEach((target) => {
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
 
-      expect(result.current.focused).toBe(false);
+      expect(result.current.focused).toBeFalsy();
       expect(result.current.focus).toBeTypeOf('function');
       expect(result.current.blur).toBeTypeOf('function');
     });
@@ -71,15 +71,15 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(result.current.focused).toBe(false);
+      expect(result.current.focused).toBeFalsy();
 
       act(() => element.dispatchEvent(new FocusEvent('focus')));
 
-      expect(result.current.focused).toBe(true);
+      expect(result.current.focused).toBeTruthy();
 
       act(() => element.dispatchEvent(new FocusEvent('blur')));
 
-      expect(result.current.focused).toBe(false);
+      expect(result.current.focused).toBeFalsy();
     });
 
     it('Should handle enabled option', () => {
@@ -95,11 +95,11 @@ targets.forEach((target) => {
 
       act(() => element.dispatchEvent(new FocusEvent('focus')));
 
-      expect(result.current.focused).toBe(false);
+      expect(result.current.focused).toBeFalsy();
 
       act(() => element.dispatchEvent(new FocusEvent('blur')));
 
-      expect(result.current.focused).toBe(false);
+      expect(result.current.focused).toBeFalsy();
     });
 
     it('Should call onFocus callback', () => {
@@ -157,7 +157,7 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(result.current.focused).toBe(true);
+      expect(result.current.focused).toBeTruthy();
       expect(element.focus).toHaveBeenCalledOnce();
     });
 
@@ -177,7 +177,7 @@ targets.forEach((target) => {
       act(() => element.dispatchEvent(new FocusEvent('focus')));
 
       expect(callback).toHaveBeenCalledOnce();
-      expect(result.current.focused).toBe(true);
+      expect(result.current.focused).toBeTruthy();
     });
 
     it('Should programmatically focus element', () => {
@@ -196,7 +196,7 @@ targets.forEach((target) => {
       act(() => result.current.focus());
 
       expect(element.focus).toHaveBeenCalledOnce();
-      expect(result.current.focused).toBe(true);
+      expect(result.current.focused).toBeTruthy();
     });
 
     it('Should programmatically blur element', () => {

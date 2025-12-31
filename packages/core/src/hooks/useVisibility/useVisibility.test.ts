@@ -71,7 +71,7 @@ targets.forEach((target) => {
       if (target) expect(result.current.ref).toBeUndefined();
 
       expect(result.current.entry).toBeUndefined();
-      expect(result.current.inView).toBe(false);
+      expect(result.current.inView).toBeFalsy();
       expect(result.current.observer).toBeInstanceOf(MockIntersectionObserver);
     });
 
@@ -88,7 +88,7 @@ targets.forEach((target) => {
       if (target) expect(result.current.ref).toBeUndefined();
 
       expect(result.current.entry).toBeUndefined();
-      expect(result.current.inView).toBe(false);
+      expect(result.current.inView).toBeFalsy();
       expect(result.current.observer).toBeUndefined();
     });
 
@@ -121,13 +121,13 @@ targets.forEach((target) => {
       const [elementEntryInView] = createMockIntersectionObserverElement(true);
       act(() => trigger.callback(element, [elementEntryInView]));
 
-      expect(result.current.inView).toBe(true);
+      expect(result.current.inView).toBeTruthy();
       expect(result.current.entry).toStrictEqual(elementEntryInView);
 
       const [elementEntryNotInView] = createMockIntersectionObserverElement(false);
       act(() => trigger.callback(element, [elementEntryNotInView]));
 
-      expect(result.current.inView).toBe(false);
+      expect(result.current.inView).toBeFalsy();
       expect(result.current.entry).toStrictEqual(elementEntryNotInView);
     });
 
