@@ -17,6 +17,14 @@ import { useRefState } from '../useRefState/useRefState';
  * const { value, setValue, clear } = useTextareaAutosize(ref);
  *
  * @overload
+ * @param {HookTarget} target The target textarea element
+ * @param {string} initialValue The initial value for the textarea
+ * @returns {UseTextareaAutosizeReturn} An object containing value, setValue and clear
+ *
+ * @example
+ * const { value, setValue, clear } = useTextareaAutosize(ref, 'initial');
+ *
+ * @overload
  * @template Target The textarea element type
  * @param {string} initialValue The initial value for the textarea
  * @returns {UseTextareaAutosizeReturn & { ref: StateRef<Target> }} An object containing ref, value, setValue and clear
@@ -36,13 +44,16 @@ import { useRefState } from '../useRefState/useRefState';
 export const useTextareaAutosize = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = target
-    ? params[1]
-    : typeof params[0] === 'string'
-      ? { initialValue: params[0] }
-      : params[0];
+    ? typeof params[1] === 'object'
+      ? params[1]
+      : { initialValue: params[1] }
+    : typeof params[0] === 'object'
+      ? params[0]
+      : { initialValue: params[0] };
   const [value, setValue] = useState(options?.initialValue ?? '');
   const internalRef = useRefState();
   const textareaRef = useRef(null);
+  const scrollHeightRef = useRef(0);
   const onTextareaResize = () => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -55,7 +66,17 @@ export const useTextareaAutosize = (...params) => {
     textarea.style.height = `${scrollHeight}px`;
     textarea.style.minHeight = originalMinHeight;
     textarea.style.maxHeight = originalMaxHeight;
-    options?.onResize?.();
+    if (scrollHeight !== scrollHeightRef.current) options?.onResize?.();
+    scrollHeightRef.current = scrollHeight;
+  };
+  const setTextareaValue = (newValue) => {
+    setValue(newValue);
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    textarea.value = newValue;
+    requestAnimationFrame(() => {
+      onTextareaResize();
+    });
   };
   useEffect(() => {
     if (!target && !internalRef.state) return;
@@ -66,7 +87,7 @@ export const useTextareaAutosize = (...params) => {
     onTextareaResize();
     const onInput = (event) => {
       const newValue = event.target.value;
-      setValue(newValue);
+      setTextareaValue(newValue);
       requestAnimationFrame(() => {
         onTextareaResize();
       });
@@ -82,36 +103,18 @@ export const useTextareaAutosize = (...params) => {
       element.removeEventListener('input', onInput);
       element.removeEventListener('resize', onResize);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target), options?.initialValue]);
-  useEffect(() => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-    textarea.value = value;
-    requestAnimationFrame(() => {
-      onTextareaResize();
-    });
-  }, [value]);
-  const setTextareaValue = (newValue) => {
-    setValue(newValue);
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.value = newValue;
-      requestAnimationFrame(() => {
-        onTextareaResize();
-      });
-    }
-  };
+  }, [target, internalRef.state, isTarget.getRefState(target)]);
   const clear = () => setValue('');
   if (target)
     return {
       value,
-      setValue: setTextareaValue,
+      set: setTextareaValue,
       clear
     };
   return {
     ref: internalRef,
     value,
-    setValue: setTextareaValue,
+    set: setTextareaValue,
     clear
   };
 };

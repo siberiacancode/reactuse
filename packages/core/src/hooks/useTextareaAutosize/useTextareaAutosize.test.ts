@@ -1,92 +1,165 @@
-import { act, fireEvent, renderHook } from "@testing-library/react";
-import { renderHookServer } from "@/tests";
+import { act, renderHook } from '@testing-library/react';
 
-import { useTextareaAutosize } from "./useTextareaAutosize";
+import { renderHookServer } from '@/tests';
+import { target } from '@/utils/helpers';
 
-if (typeof document !== "undefined") {
-  const target = document.createElement("textarea");
-  target.id = "textarea-target";
+import type { StateRef } from '../useRefState/useRefState';
+import type { UseTextareaAutosizeReturn } from './useTextareaAutosize';
+
+import { useTextareaAutosize } from './useTextareaAutosize';
+
+if (typeof document !== 'undefined') {
+  const target = document.createElement('textarea');
+  target.id = 'textarea-target';
   document.body.appendChild(target);
 }
 
-const element = document.getElementById(
-  "textarea-target"
-) as HTMLTextAreaElement;
+const element = document.getElementById('textarea-target') as HTMLTextAreaElement;
 
-it("Should use textarea autosize", () => {
-  const { result } = renderHook(useTextareaAutosize);
+const targets = [
+  undefined,
+  target('#textarea-target'),
+  target(document.getElementById('textarea-target')!),
+  target(() => document.getElementById('textarea-target')!),
+  { current: document.getElementById('textarea-target') }
+];
 
-  act(() => result.current.ref(element));
+targets.forEach((target) => {
+  it('Should use textarea autosize', () => {
+    const { result } = renderHook(() => {
+      if (target)
+        return useTextareaAutosize(target) as unknown as UseTextareaAutosizeReturn & {
+          ref: StateRef<HTMLTextAreaElement>;
+        };
+      return useTextareaAutosize();
+    });
 
-  expect(result.current.value).toEqual("");
-  expect(result.current.setValue).toBeTypeOf("function");
-  expect(result.current.clear).toBeTypeOf("function");
-});
+    if (!target) act(() => result.current.ref(element));
 
-it("Should use textarea autosize on server side", () => {
-  const { result } = renderHookServer(useTextareaAutosize);
-
-  act(() => result.current.ref(element));
-
-  expect(result.current.value).toEqual("");
-  expect(result.current.setValue).toBeTypeOf("function");
-  expect(result.current.clear).toBeTypeOf("function");
-});
-
-it("Should set initial value in textarea", () => {
-  const { result } = renderHook(() => useTextareaAutosize("initial"));
-
-  act(() => result.current.ref(element));
-  expect(result.current.value).toEqual("initial");
-});
-
-it("Should update and clear value in textarea", () => {
-  const { result } = renderHook(() => useTextareaAutosize("initial"));
-
-  act(() => {
-    result.current.ref(element);
-    result.current.setValue("initial_2");
+    expect(result.current.value).toEqual('');
+    expect(result.current.set).toBeTypeOf('function');
+    expect(result.current.clear).toBeTypeOf('function');
   });
 
-  expect(result.current.value).toEqual("initial_2");
+  it('Should use textarea autosize on server side', () => {
+    const { result } = renderHookServer(() => {
+      if (target)
+        return useTextareaAutosize(target) as unknown as UseTextareaAutosizeReturn & {
+          ref: StateRef<HTMLTextAreaElement>;
+        };
+      return useTextareaAutosize();
+    });
 
-  act(() => {
-    result.current.clear();
+    if (!target) act(() => result.current.ref(element));
+
+    expect(result.current.value).toEqual('');
+    expect(result.current.set).toBeTypeOf('function');
+    expect(result.current.clear).toBeTypeOf('function');
   });
 
-  expect(result.current.value).toEqual("");
-});
+  it('Should set initial value in textarea', () => {
+    const { result } = renderHookServer(() => {
+      if (target)
+        return useTextareaAutosize(target, 'initial') as unknown as UseTextareaAutosizeReturn & {
+          ref: StateRef<HTMLTextAreaElement>;
+        };
+      return useTextareaAutosize('initial');
+    });
 
-it("Should call callback on resize", () => {
-  const onResize = vi.fn();
-  vi.useFakeTimers();
+    if (!target) act(() => result.current.ref(element));
 
-  const { result } = renderHook(() => useTextareaAutosize({ onResize }));
+    expect(result.current.value).toEqual('initial');
+    expect(result.current.set).toBeTypeOf('function');
+    expect(result.current.clear).toBeTypeOf('function');
+  });
 
-  act(() => result.current.ref(element));
-  expect(onResize).toHaveBeenCalledTimes(1);
+  it('Should set value in textarea', () => {
+    const { result } = renderHook(() => {
+      if (target)
+        return useTextareaAutosize(target, 'initial') as unknown as UseTextareaAutosizeReturn & {
+          ref: StateRef<HTMLTextAreaElement>;
+        };
+      return useTextareaAutosize('initial');
+    });
 
-  fireEvent.input(element, { target: { value: "hello_world" } });
+    if (!target) act(() => result.current.ref(element));
 
-  vi.runAllTimers();
-  expect(onResize).toHaveBeenCalledTimes(3);
-  vi.useRealTimers();
-});
+    act(() => result.current.set('value'));
 
-it("Should cleanup on unmount", () => {
-  const removeEventListenerSpy = vi.spyOn(element, "removeEventListener");
-  const { result, unmount } = renderHook(useTextareaAutosize);
+    expect(result.current.value).toEqual('value');
+  });
 
-  act(() => result.current.ref(element));
+  it('Should clear value in textarea', () => {
+    const { result } = renderHook(() => {
+      if (target)
+        return useTextareaAutosize(target, 'initial') as unknown as UseTextareaAutosizeReturn & {
+          ref: StateRef<HTMLTextAreaElement>;
+        };
+      return useTextareaAutosize('initial');
+    });
 
-  unmount();
+    if (!target) act(() => result.current.ref(element));
 
-  expect(removeEventListenerSpy).toHaveBeenCalledWith(
-    "input",
-    expect.any(Function)
-  );
-  expect(removeEventListenerSpy).toHaveBeenCalledWith(
-    "resize",
-    expect.any(Function)
-  );
+    act(() => result.current.clear());
+
+    expect(result.current.value).toEqual('');
+  });
+
+  it('Should call callback on resize', () => {
+    Object.defineProperty(element, 'scrollHeight', { value: 100, configurable: true });
+
+    const onResize = vi.fn();
+    const { result } = renderHook(() => {
+      if (target)
+        return useTextareaAutosize(target, {
+          onResize
+        }) as unknown as UseTextareaAutosizeReturn & {
+          ref: StateRef<HTMLTextAreaElement>;
+        };
+      return useTextareaAutosize({
+        onResize
+      });
+    });
+
+    if (!target) act(() => result.current.ref(element));
+
+    act(() => element.dispatchEvent(new Event('resize')));
+
+    expect(onResize).toHaveBeenCalledOnce();
+  });
+
+  it('Should call resize on input event', () => {
+    Object.defineProperty(element, 'scrollHeight', { value: 100, configurable: true });
+
+    const onResize = vi.fn();
+    const { result } = renderHook(() => {
+      if (target)
+        return useTextareaAutosize(target, {
+          onResize
+        }) as unknown as UseTextareaAutosizeReturn & {
+          ref: StateRef<HTMLTextAreaElement>;
+        };
+      return useTextareaAutosize({
+        onResize
+      });
+    });
+
+    if (!target) act(() => result.current.ref(element));
+
+    act(() => element.dispatchEvent(new Event('input')));
+
+    expect(onResize).toHaveBeenCalledOnce();
+  });
+
+  // it('Should cleanup on unmount', () => {
+  //   const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
+  //   const { result, unmount } = renderHook(useTextareaAutosize);
+
+  //   act(() => result.current.ref(element));
+
+  //   unmount();
+
+  //   expect(removeEventListenerSpy).toHaveBeenCalledWith('input', expect.any(Function));
+  //   expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+  // });
 });

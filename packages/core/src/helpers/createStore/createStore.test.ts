@@ -134,9 +134,9 @@ it('Should work correct with array state', () => {
 });
 
 it('Should return initial state after state changes', () => {
-  const counterStore = createStore<number>(0)
+  const store = createStore<{ count: number }>({ count: 0 });
 
-  counterStore.set(1)
+  store.set({ count: 1 });
 
-  expect(store.getInitialState()).toEqual(0)
-})
+  expect(store.getInitial()).toEqual({ count: 0 });
+});

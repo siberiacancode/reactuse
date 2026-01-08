@@ -59,7 +59,7 @@ it('Should use broadcast on server side', () => {
   expect(result.current.close).toBeTypeOf('function');
 });
 
-it('Should correct return for unsupported broadcast channel', () => {
+it('Should use broadcast channel for unsupported', () => {
   Object.assign(globalThis.window, {
     BroadcastChannel: undefined
   });

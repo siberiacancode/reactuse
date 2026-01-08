@@ -10,14 +10,14 @@ type StoreCreator<Value> = (
 ) => Value;
 
 export interface StoreApi<Value> {
-  getInitialState: () => Value;
   get: () => Value;
+  getInitial: () => Value;
   set: (action: StoreSetAction<Value>) => void;
   subscribe: (listener: StoreListener<Value>) => () => void;
 
-  use(): Value;
-  use<Selected>(selector: (state: Value) => Selected): Selected;
-  use<Selected>(selector?: (state: Value) => Selected): Value | Selected;
+  use: (() => Value) &
+    (<Selected>(selector: (state: Value) => Selected) => Selected) &
+    (<Selected>(selector?: (state: Value) => Selected) => Selected | Value);
 }
 
 /**
@@ -84,7 +84,7 @@ export const createStore = <Value>(createState: StoreCreator<Value> | Value): St
   return {
     set: setState,
     get: getState,
-    getInitialState,
+    getInitial: getInitialState,
     use: useStore,
     subscribe
   };

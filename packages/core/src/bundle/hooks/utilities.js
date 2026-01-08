@@ -1,3 +1,4 @@
+export * from './useBatchedCallback/useBatchedCallback';
 // base
 export * from './useConst/useConst';
 // timing

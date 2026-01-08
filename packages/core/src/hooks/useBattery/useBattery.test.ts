@@ -37,46 +37,34 @@ beforeEach(() => {
 it('Should use battery', async () => {
   const { result } = renderHook(useBattery);
 
-  expect(result.current).toEqual({
-    supported: true,
-    value: {
-      loading: true,
-      level: 0,
-      charging: false,
-      chargingTime: 0,
-      dischargingTime: 0
-    }
-  });
+  expect(result.current.supported).toBeTruthy();
+  expect(result.current.value.loading).toBeTruthy();
+  expect(result.current.value.level).toBe(0);
+  expect(result.current.value.charging).toBeFalsy();
+  expect(result.current.value.chargingTime).toBe(0);
+  expect(result.current.value.dischargingTime).toBe(0);
 
   expect(navigator.getBattery).toHaveBeenCalledOnce();
 
-  await waitFor(() =>
-    expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: true,
-        chargingTime: 0,
-        dischargingTime: 5,
-        level: 1,
-        loading: false
-      }
-    })
-  );
+  await waitFor(() => {
+    expect(result.current.supported).toBeTruthy();
+    expect(result.current.value.charging).toBeTruthy();
+    expect(result.current.value.chargingTime).toBe(0);
+    expect(result.current.value.dischargingTime).toBe(5);
+    expect(result.current.value.level).toBe(1);
+    expect(result.current.value.loading).toBeFalsy();
+  });
 });
 
 it('Should use battery on server side', async () => {
   const { result } = renderHookServer(useBattery);
 
-  expect(result.current).toEqual({
-    supported: false,
-    value: {
-      charging: false,
-      chargingTime: 0,
-      dischargingTime: 0,
-      level: 0,
-      loading: false
-    }
-  });
+  expect(result.current.supported).toBeFalsy();
+  expect(result.current.value.loading).toBeFalsy();
+  expect(result.current.value.level).toBe(0);
+  expect(result.current.value.charging).toBeFalsy();
+  expect(result.current.value.chargingTime).toBe(0);
+  expect(result.current.value.dischargingTime).toBe(0);
 });
 
 it('Should use battery for unsupported', async () => {
@@ -85,16 +73,12 @@ it('Should use battery for unsupported', async () => {
   });
   const { result } = renderHook(useBattery);
 
-  expect(result.current).toEqual({
-    supported: false,
-    value: {
-      charging: false,
-      chargingTime: 0,
-      dischargingTime: 0,
-      level: 0,
-      loading: false
-    }
-  });
+  expect(result.current.supported).toBeFalsy();
+  expect(result.current.value.loading).toBeFalsy();
+  expect(result.current.value.level).toBe(0);
+  expect(result.current.value.charging).toBeFalsy();
+  expect(result.current.value.chargingTime).toBe(0);
+  expect(result.current.value.dischargingTime).toBe(0);
 });
 
 it('Should handle levelchange event', async () => {
@@ -105,18 +89,14 @@ it('Should handle levelchange event', async () => {
     mockBatteryManager.dispatchEvent(new Event('levelchange'));
   });
 
-  await waitFor(() =>
-    expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: true,
-        chargingTime: 0,
-        dischargingTime: 5,
-        level: 2,
-        loading: false
-      }
-    })
-  );
+  await waitFor(() => {
+    expect(result.current.supported).toBeTruthy();
+    expect(result.current.value.charging).toBeTruthy();
+    expect(result.current.value.chargingTime).toBe(0);
+    expect(result.current.value.dischargingTime).toBe(5);
+    expect(result.current.value.level).toBe(2);
+    expect(result.current.value.loading).toBeFalsy();
+  });
 });
 
 it('Should handle chargingchange event', async () => {
@@ -127,18 +107,14 @@ it('Should handle chargingchange event', async () => {
     mockBatteryManager.dispatchEvent(new Event('chargingchange'));
   });
 
-  await waitFor(() =>
-    expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: false,
-        chargingTime: 0,
-        dischargingTime: 5,
-        level: 2,
-        loading: false
-      }
-    })
-  );
+  await waitFor(() => {
+    expect(result.current.supported).toBeTruthy();
+    expect(result.current.value.charging).toBeFalsy();
+    expect(result.current.value.chargingTime).toBe(0);
+    expect(result.current.value.dischargingTime).toBe(5);
+    expect(result.current.value.level).toBe(2);
+    expect(result.current.value.loading).toBeFalsy();
+  });
 });
 
 it('Should handle chargingtimechange event', async () => {
@@ -149,18 +125,14 @@ it('Should handle chargingtimechange event', async () => {
     mockBatteryManager.dispatchEvent(new Event('chargingtimechange'));
   });
 
-  await waitFor(() =>
-    expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: false,
-        chargingTime: 1,
-        dischargingTime: 5,
-        level: 2,
-        loading: false
-      }
-    })
-  );
+  await waitFor(() => {
+    expect(result.current.supported).toBeTruthy();
+    expect(result.current.value.charging).toBeFalsy();
+    expect(result.current.value.chargingTime).toBe(1);
+    expect(result.current.value.dischargingTime).toBe(5);
+    expect(result.current.value.level).toBe(2);
+    expect(result.current.value.loading).toBeFalsy();
+  });
 });
 
 it('Should handle dischargingtimechange event', async () => {
@@ -171,18 +143,14 @@ it('Should handle dischargingtimechange event', async () => {
     mockBatteryManager.dispatchEvent(new Event('dischargingtimechange'));
   });
 
-  await waitFor(() =>
-    expect(result.current).toEqual({
-      supported: true,
-      value: {
-        charging: false,
-        chargingTime: 1,
-        dischargingTime: 6,
-        level: 2,
-        loading: false
-      }
-    })
-  );
+  await waitFor(() => {
+    expect(result.current.supported).toBeTruthy();
+    expect(result.current.value.charging).toBeFalsy();
+    expect(result.current.value.chargingTime).toBe(1);
+    expect(result.current.value.dischargingTime).toBe(6);
+    expect(result.current.value.level).toBe(2);
+    expect(result.current.value.loading).toBeFalsy();
+  });
 });
 
 it('Should cleanup on unmount', async () => {

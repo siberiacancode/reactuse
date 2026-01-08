@@ -31,7 +31,7 @@ interface UseSpeechRecognitionReturn {
   /** Whether the hook is currently listening for speech */
   listening: boolean;
   /** The speech recognition instance */
-  recognition: SpeechRecognition;
+  recognition?: SpeechRecognition;
   /** Whether the current browser supports the Web Speech API */
   supported: boolean;
   /** The current transcript */
@@ -90,8 +90,8 @@ export const useSpeechRecognition = (
   const [transcript, setTranscript] = useState('');
   const [final, setFinal] = useState(false);
   const [error, setError] = useState<SpeechRecognitionErrorEvent | null>(null);
-  const [recognition] = useState<SpeechRecognition>(() => {
-    if (!supported) return {} as SpeechRecognition;
+  const [recognition] = useState<SpeechRecognition | undefined>(() => {
+    if (!supported) return undefined;
 
     const SpeechRecognition = getSpeechRecognition();
     const speechRecognition = new SpeechRecognition();
@@ -107,10 +107,6 @@ export const useSpeechRecognition = (
       setFinal(false);
       onStart?.();
     };
-    speechRecognition.onend = () => {
-      setListening(false);
-      onEnd?.();
-    };
     speechRecognition.onerror = (event) => {
       setError(event);
       setListening(false);
@@ -120,22 +116,24 @@ export const useSpeechRecognition = (
       const currentResult = event.results[event.resultIndex];
       const { transcript } = currentResult[0];
 
+      setListening(false);
       setTranscript(transcript);
       setError(null);
       onResult?.(event);
     };
     speechRecognition.onend = () => {
       setListening(false);
+      onEnd?.();
       speechRecognition.lang = language;
     };
 
     return speechRecognition;
   });
 
-  useEffect(() => () => recognition.stop(), []);
+  useEffect(() => () => recognition?.stop(), []);
 
-  const start = () => recognition.start();
-  const stop = () => recognition.stop();
+  const start = () => recognition?.start();
+  const stop = () => recognition?.stop();
 
   const toggle = (value = !listening) => {
     if (value) return start();

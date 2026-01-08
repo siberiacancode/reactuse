@@ -17,6 +17,7 @@ import { useSyncExternalStore } from 'react';
  */
 export const createStore = (createState) => {
   let state;
+  let initialState;
   const listeners = new Set();
   const setState = (action) => {
     const nextState = typeof action === 'function' ? action(state) : action;
@@ -34,11 +35,11 @@ export const createStore = (createState) => {
     return () => listeners.delete(listener);
   };
   const getState = () => state;
-  const getInitialState = () => state;
+  const getInitialState = () => initialState;
   if (typeof createState === 'function') {
-    state = createState(setState, getState);
+    initialState = state = createState(setState, getState);
   } else {
-    state = createState;
+    initialState = state = createState;
   }
   function useStore(selector) {
     return useSyncExternalStore(
@@ -50,6 +51,7 @@ export const createStore = (createState) => {
   return {
     set: setState,
     get: getState,
+    getInitial: getInitialState,
     use: useStore,
     subscribe
   };

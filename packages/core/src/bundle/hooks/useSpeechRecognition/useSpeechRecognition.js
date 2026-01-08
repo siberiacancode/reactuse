@@ -41,7 +41,7 @@ export const useSpeechRecognition = (options = {}) => {
   const [final, setFinal] = useState(false);
   const [error, setError] = useState(null);
   const [recognition] = useState(() => {
-    if (!supported) return {};
+    if (!supported) return undefined;
     const SpeechRecognition = getSpeechRecognition();
     const speechRecognition = new SpeechRecognition();
     speechRecognition.continuous = continuous;
@@ -54,10 +54,6 @@ export const useSpeechRecognition = (options = {}) => {
       setFinal(false);
       onStart?.();
     };
-    speechRecognition.onend = () => {
-      setListening(false);
-      onEnd?.();
-    };
     speechRecognition.onerror = (event) => {
       setError(event);
       setListening(false);
@@ -66,19 +62,21 @@ export const useSpeechRecognition = (options = {}) => {
     speechRecognition.onresult = (event) => {
       const currentResult = event.results[event.resultIndex];
       const { transcript } = currentResult[0];
+      setListening(false);
       setTranscript(transcript);
       setError(null);
       onResult?.(event);
     };
     speechRecognition.onend = () => {
       setListening(false);
+      onEnd?.();
       speechRecognition.lang = language;
     };
     return speechRecognition;
   });
-  useEffect(() => () => recognition.stop(), []);
-  const start = () => recognition.start();
-  const stop = () => recognition.stop();
+  useEffect(() => () => recognition?.stop(), []);
+  const start = () => recognition?.start();
+  const stop = () => recognition?.stop();
   const toggle = (value = !listening) => {
     if (value) return start();
     stop();

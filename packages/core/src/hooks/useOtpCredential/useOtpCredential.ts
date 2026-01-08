@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 declare global {
   interface OTPOptions {
@@ -20,17 +20,15 @@ export type UseOtpCredentialCallback = (otp: Credential | null) => void;
 /* The use otp credential options type */
 export interface UseOtpCredentialParams {
   /* The callback function to be invoked on error */
-  onError: (error: any) => void;
+  onError?: (error: any) => void;
   /* The callback function to be invoked on success */
-  onSuccess: (credential: Credential | null) => void;
+  onSuccess?: (credential: Credential | null) => void;
 }
 
 /* The use otp credential return type */
 export interface UseOtpCredentialReturn {
   /* The abort function */
   abort: AbortController['abort'];
-  /*  The aborted state of the query */
-  aborted: boolean;
   /* The supported state of the otp credential */
   supported: boolean;
   /* The get otp credential function */
@@ -70,17 +68,12 @@ export const useOtpCredential = ((...params: any[]) => {
   const supported =
     typeof navigator !== 'undefined' && 'OTPCredential' in navigator && !!navigator.OTPCredential;
 
-  const onSuccess =
-    typeof params[0] === 'function'
-      ? (params[0] as UseOtpCredentialCallback | undefined)
-      : (params[0] as UseOtpCredentialParams | undefined)?.onSuccess;
-
-  const onError =
-    typeof params[0] === 'function'
-      ? (params[0] as UseOtpCredentialParams | undefined)?.onError
-      : undefined;
-
-  const [aborted, setAborted] = useState(false);
+  const options =
+    typeof params[0] === 'object'
+      ? params[0]
+      : {
+          onSuccess: params[0]
+        };
 
   const abortControllerRef = useRef<AbortController>(new AbortController());
 
@@ -93,19 +86,18 @@ export const useOtpCredential = ((...params: any[]) => {
         otp: { transport: ['sms'] },
         signal: abortControllerRef.current.signal
       });
-      onSuccess?.(credential);
-      setAborted(false);
+      options.onSuccess?.(credential);
+
       return credential;
     } catch (error) {
-      onError?.(error);
+      options.onError?.(error);
     }
   };
 
   const abort = () => {
     abortControllerRef.current.abort();
     abortControllerRef.current = new AbortController();
-    abortControllerRef.current.signal.onabort = () => setAborted(true);
   };
 
-  return { supported, abort, aborted, get };
+  return { supported, abort, get };
 }) as UseOtpCredential;
