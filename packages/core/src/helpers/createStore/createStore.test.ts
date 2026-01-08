@@ -132,3 +132,11 @@ it('Should work correct with array state', () => {
   store.set([1, 2, 3]);
   expect(store.get()).toEqual([1, 2, 3]);
 });
+
+it('Should return initial state after state changes', () => {
+  const counterStore = createStore<number>(0)
+
+  counterStore.set(1)
+
+  expect(store.getInitialState()).toEqual(0)
+})

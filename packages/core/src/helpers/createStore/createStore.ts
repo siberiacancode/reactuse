@@ -11,9 +11,13 @@ type StoreCreator<Value> = (
 
 export interface StoreApi<Value> {
   getInitialState: () => Value;
-  getState: () => Value;
-  setState: (action: StoreSetAction<Value>) => void;
+  get: () => Value;
+  set: (action: StoreSetAction<Value>) => void;
   subscribe: (listener: StoreListener<Value>) => () => void;
+
+  use(): Value;
+  use<Selected>(selector: (state: Value) => Selected): Selected;
+  use<Selected>(selector?: (state: Value) => Selected): Value | Selected;
 }
 
 /**
@@ -32,11 +36,12 @@ export interface StoreApi<Value> {
  *   increment: () => set(state => ({ count: state.count + 1 }))
  * }));
  */
-export const createStore = <Value>(createState: StoreCreator<Value> | Value) => {
+export const createStore = <Value>(createState: StoreCreator<Value> | Value): StoreApi<Value> => {
   let state: Value;
+  let initialState: Value;
   const listeners: Set<StoreListener<Value>> = new Set();
 
-  const setState: StoreApi<Value>['setState'] = (action: StoreSetAction<Value>) => {
+  const setState: StoreApi<Value>['set'] = (action: StoreSetAction<Value>) => {
     const nextState = typeof action === 'function' ? action(state) : action;
 
     if (!Object.is(nextState, state)) {
@@ -58,12 +63,12 @@ export const createStore = <Value>(createState: StoreCreator<Value> | Value) => 
   };
 
   const getState = () => state;
-  const getInitialState = () => state;
+  const getInitialState = () => initialState;
 
   if (typeof createState === 'function') {
-    state = (createState as StoreCreator<Value>)(setState, getState);
+    initialState = state = (createState as StoreCreator<Value>)(setState, getState);
   } else {
-    state = createState;
+    initialState = state = createState;
   }
 
   function useStore(): Value;
@@ -79,6 +84,7 @@ export const createStore = <Value>(createState: StoreCreator<Value> | Value) => 
   return {
     set: setState,
     get: getState,
+    getInitialState,
     use: useStore,
     subscribe
   };
