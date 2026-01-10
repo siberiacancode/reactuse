@@ -64,7 +64,7 @@ export const useEventListener = (...params) => {
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
   useEffect(() => {
-    if (!enabled || (!target && !internalRef.state)) return;
+    if (!enabled) return;
     const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     const listener = (event) => internalListenerRef.current(event);
     element.addEventListener(event, listener, options);
