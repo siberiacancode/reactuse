@@ -17,7 +17,7 @@ export interface UseDisclosureReturn {
   /** Function to open the modal */
   open: () => void;
   /** Function to toggle the modal */
-  toggle: () => void;
+  toggle: (nextOpened?: boolean) => void;
 }
 
 /**
@@ -58,7 +58,7 @@ export const useDisclosure = (
       return opened;
     });
 
-  const toggle = () => (opened ? close() : open());
+  const toggle = (nextOpened?: boolean) => ((nextOpened ?? !opened) ? open() : close());
 
   return { opened, open, close, toggle };
 };
