@@ -137,7 +137,7 @@ export const useSpeechRecognition = (
 
   const toggle = (value = !listening) => {
     if (value) return start();
-    stop();
+    return stop();
   };
 
   return {

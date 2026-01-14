@@ -156,6 +156,29 @@ targets.forEach((target) => {
       expect(element.style.overflow).toBe('visible');
     });
 
+    it('Should toggle scroll state with value', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useLockScroll(target, { enabled: false }) as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseLockScrollReturn<Element>;
+        return useLockScroll<HTMLDivElement>({ enabled: false });
+      });
+      if (!target) act(() => result.current.ref(element));
+
+      expect(result.current.value).toBeFalsy();
+
+      act(() => result.current.toggle(true));
+
+      expect(result.current.value).toBeTruthy();
+      expect(element.style.overflow).toBe('hidden');
+
+      act(() => result.current.toggle(false));
+
+      expect(result.current.value).toBeFalsy();
+      expect(element.style.overflow).toBe('visible');
+    });
+
     it('Should handle target changes', () => {
       const { result, rerender } = renderHook(
         (target) => {

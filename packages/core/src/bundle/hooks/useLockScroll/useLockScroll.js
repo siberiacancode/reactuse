@@ -57,9 +57,9 @@ export const useLockScroll = (...params) => {
     element.style.overflow = elementRef.current.__originalOverflow;
     setLocked(false);
   };
-  const toggle = () => {
-    if (locked) return unlock();
-    lock();
+  const toggle = (value = !locked) => {
+    if (value) return lock();
+    return unlock();
   };
   if (target)
     return {

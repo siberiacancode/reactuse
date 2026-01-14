@@ -38,6 +38,16 @@ it('Should toggle boolean', () => {
   expect(result.current.opened).toBeFalsy();
 });
 
+it('Should toggle boolean with value', () => {
+  const { result } = renderHook(useDisclosure);
+
+  act(() => result.current.toggle(true));
+  expect(result.current.opened).toBeTruthy();
+
+  act(() => result.current.toggle(false));
+  expect(result.current.opened).toBeFalsy();
+});
+
 it('Should change value after open', () => {
   const { result } = renderHook(useDisclosure);
 

@@ -138,9 +138,9 @@ export const useMediaControls = (...params) => {
     if (!elementRef.current) return;
     elementRef.current.pause();
   };
-  const toggle = async () => {
-    if (playing) return pause();
-    return play();
+  const toggle = async (value = !playing) => {
+    if (value) return play();
+    return pause();
   };
   const seek = (time) => {
     if (!elementRef.current) return;

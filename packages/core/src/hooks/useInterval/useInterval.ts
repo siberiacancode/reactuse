@@ -81,7 +81,7 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
     setActive(true);
   };
 
-  const toggle = () => setActive(!active);
+  const toggle = (value = !active) => setActive(value);
 
   return {
     active,

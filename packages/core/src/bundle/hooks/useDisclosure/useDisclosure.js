@@ -31,6 +31,6 @@ export const useDisclosure = (initialValue = false, options) => {
       }
       return opened;
     });
-  const toggle = () => (opened ? close() : open());
+  const toggle = (value = !opened) => (value ? open() : close());
   return { opened, open, close, toggle };
 };

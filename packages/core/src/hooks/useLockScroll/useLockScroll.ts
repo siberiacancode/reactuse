@@ -24,7 +24,7 @@ export interface UseLockScrollReturn<Target extends Element> {
   /** Lock the scroll */
   lock: () => void;
   /** Toggle the scroll lock */
-  toggle: () => void;
+  toggle: (value?: boolean) => void;
   /** Unlock the scroll */
   unlock: () => void;
 }
@@ -105,9 +105,9 @@ export const useLockScroll = ((...params: any[]): any => {
     setLocked(false);
   };
 
-  const toggle = () => {
-    if (locked) return unlock();
-    lock();
+  const toggle = (value = !locked) => {
+    if (value) return lock();
+    return unlock();
   };
 
   if (target)

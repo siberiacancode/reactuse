@@ -178,6 +178,20 @@ it('Should toggle listening state', () => {
   expect(result.current.recognition!.lang).toBe('en-US');
 });
 
+it('Should toggle listening state with value', () => {
+  const { result } = renderHook(useSpeechRecognition);
+
+  act(() => result.current.toggle(true));
+
+  expect(result.current.listening).toBeTruthy();
+  expect(result.current.final).toBeFalsy();
+
+  act(() => result.current.toggle(false));
+
+  expect(result.current.listening).toBeFalsy();
+  expect(result.current.recognition!.lang).toBe('en-US');
+});
+
 it('Should handle result events', () => {
   const onResult = vi.fn();
   const { result } = renderHook(() => useSpeechRecognition({ onResult }));
