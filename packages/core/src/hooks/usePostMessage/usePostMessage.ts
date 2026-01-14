@@ -23,13 +23,18 @@ export const usePostMessage = <Message>(
 ): UsePostMessageReturn<Message> => {
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
+  const internalOriginRef = useRef(origin);
+  internalOriginRef.current = origin;
 
   useEffect(() => {
     const onMessage = (event: MessageEvent<Message>) => {
-      if (
-        (Array.isArray(origin) && (!origin.includes(event.origin) || !origin.includes('*'))) ||
-        (event.origin !== origin && origin !== '*')
-      )
+      if (Array.isArray(internalOriginRef.current)) {
+        if (
+          !internalOriginRef.current.includes(event.origin) &&
+          !internalOriginRef.current.includes('*')
+        )
+          return;
+      } else if (internalOriginRef.current !== '*' && event.origin !== internalOriginRef.current)
         return;
 
       internalCallbackRef.current(event.data as Message, event);
@@ -40,12 +45,10 @@ export const usePostMessage = <Message>(
   }, []);
 
   const postMessage = (message: Message) => {
-    if (Array.isArray(origin)) {
-      origin.forEach((origin) => window.postMessage(message, origin));
-      return;
-    }
+    if (Array.isArray(internalOriginRef.current))
+      return internalOriginRef.current.forEach((origin) => window.postMessage(message, origin));
 
-    window.postMessage(message, origin);
+    window.postMessage(message, internalOriginRef.current);
   };
 
   return postMessage;
