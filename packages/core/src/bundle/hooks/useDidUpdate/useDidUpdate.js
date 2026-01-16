@@ -13,18 +13,18 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  * useDidUpdate(() => console.log("effect runs on updates"), deps);
  */
 export const useDidUpdate = (effect, deps) => {
-  const mounted = useRef(false);
+  const mountedRef = useRef(false);
   useIsomorphicLayoutEffect(
     () => () => {
-      mounted.current = false;
+      mountedRef.current = false;
     },
     []
   );
   useIsomorphicLayoutEffect(() => {
-    if (mounted.current) {
+    if (mountedRef.current) {
       return effect();
     }
-    mounted.current = true;
+    mountedRef.current = true;
     return undefined;
   }, deps);
 };

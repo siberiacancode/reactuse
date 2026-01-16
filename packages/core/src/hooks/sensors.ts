@@ -5,6 +5,7 @@ export * from './useDevicePixelRatio/useDevicePixelRatio';
 export * from './useDocumentEvent/useDocumentEvent';
 export * from './useDocumentVisibility/useDocumentVisibility';
 export * from './useElementSize/useElementSize';
+export * from './useElementVisibility/useElementVisibility';
 export * from './useEventListener/useEventListener';
 export * from './useHotkeys/useHotkeys';
 export * from './useIdle/useIdle';

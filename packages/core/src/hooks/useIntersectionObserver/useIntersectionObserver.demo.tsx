@@ -18,14 +18,14 @@ const Demo = () => {
 
       <div
         ref={rootRef}
-        className='my-8 h-52 overflow-y-scroll rounded-xl border-2 border-dashed border-gray-400'
+        className='my-10 h-52 overflow-y-scroll rounded-xl border-2 border-dashed border-gray-400'
       >
         <p className='mb-72 py-8 text-center text-xl italic opacity-80'>Scroll me down!</p>
         <div
           ref={intersectionObserver.ref}
           className='mx-8 mb-96 max-h-40 rounded-xl border-2 border-dashed border-blue-500 p-4'
         >
-          <p>Hello world!</p>
+          <p>Hello intersection observer!</p>
         </div>
       </div>
     </div>

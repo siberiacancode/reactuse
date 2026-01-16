@@ -64,7 +64,7 @@ const Demo = () => {
                   src={preview}
                   onLoad={() => URL.revokeObjectURL(preview)}
                 />
-                <div className='bg-background/40 absolute inset-0' />
+                <div className='absolute inset-0 bg-[var(--vp-code-block-bg)]/40' />
               </div>
               <div className='relative z-10 flex items-center justify-center'>
                 <img className='max-h-[300px] max-w-full rounded-md object-contain' src={preview} />
