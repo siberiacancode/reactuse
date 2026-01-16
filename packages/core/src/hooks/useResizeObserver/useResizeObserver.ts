@@ -130,7 +130,7 @@ export const useResizeObserver = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.state, isTarget.getRefState(target), options?.box, enabled]);
+  }, [target && isTarget.getRawElement(target), internalRef.state, options?.box, enabled]);
 
   if (target) return { entry, observer };
   return {

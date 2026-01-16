@@ -63,7 +63,7 @@ export const useRightClick = (...params) => {
       element.removeEventListener('touchstart', onTouchStart);
       element.removeEventListener('touchend', onTouchEnd);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
   return internalRef;
 };

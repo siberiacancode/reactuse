@@ -21,7 +21,11 @@ const targets = [
   target('#textarea-target'),
   target(document.getElementById('textarea-target')!),
   target(() => document.getElementById('textarea-target')!),
-  { current: document.getElementById('textarea-target') }
+  { current: document.getElementById('textarea-target') },
+  Object.assign(() => {}, {
+    state: document.getElementById('textarea-target'),
+    current: document.getElementById('textarea-target')
+  })
 ];
 
 targets.forEach((target) => {

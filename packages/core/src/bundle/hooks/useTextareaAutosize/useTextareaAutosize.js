@@ -103,7 +103,7 @@ export const useTextareaAutosize = (...params) => {
       element.removeEventListener('input', onInput);
       element.removeEventListener('resize', onResize);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   const clear = () => setValue('');
   if (target)
     return {

@@ -141,9 +141,8 @@ export const useHotkeys = ((...params: any[]) => {
       element.removeEventListener('keyup', onKeyUp as EventListener);
     };
   }, [
-    target,
+    target && isTarget.getRawElement(target),
     internalRef.state,
-    isTarget.getRefState(target),
     enabled,
     hotkeys,
     onKeyDown,

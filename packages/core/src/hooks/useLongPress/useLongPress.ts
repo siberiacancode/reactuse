@@ -126,7 +126,7 @@ export const useLongPress = ((...params: any[]): any => {
 
       if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target) return pressed;
   return {

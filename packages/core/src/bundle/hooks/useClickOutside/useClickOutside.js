@@ -44,7 +44,7 @@ export const useClickOutside = (...params) => {
     return () => {
       document.removeEventListener('click', onClick);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
   return internalRef;
 };

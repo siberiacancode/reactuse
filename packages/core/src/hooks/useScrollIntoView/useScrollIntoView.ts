@@ -89,7 +89,7 @@ export const useScrollIntoView = ((...params: any[]) => {
       block,
       inline
     });
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   const trigger = (params?: {
     behavior?: ScrollBehavior;

@@ -58,7 +58,7 @@ export const useSticky = (...params) => {
       window.removeEventListener('resize', onSticky);
       window.removeEventListener('orientationchange', onSticky);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target), axis, options?.root]);
+  }, [target && isTarget.getRawElement(target), internalRef.state, axis, options?.root]);
   if (target) return stuck;
   return {
     stuck,

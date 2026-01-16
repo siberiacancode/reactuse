@@ -77,7 +77,7 @@ export const useElementSize = ((...params: any[]) => {
     return () => {
       observer.disconnect();
     };
-  }, [internalRef.state, target, isTarget.getRefState(target)]);
+  }, [internalRef.state, target && isTarget.getRawElement(target)]);
 
   if (target) return { value: size };
   return {

@@ -87,7 +87,7 @@ export const useActiveElement = ((...params: any[]) => {
       element.removeEventListener('focus', onActiveElementChange, true);
       element.removeEventListener('blur', onActiveElementChange, true);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target) return value;
   return {

@@ -58,7 +58,7 @@ export const useTextDirection = (...params) => {
     return () => {
       observer.disconnect();
     };
-  }, [internalRef.state, target, isTarget.getRefState(target)]);
+  }, [internalRef.state, target && isTarget.getRawElement(target)]);
   if (target) return { value, set, remove };
   return {
     ref: internalRef,

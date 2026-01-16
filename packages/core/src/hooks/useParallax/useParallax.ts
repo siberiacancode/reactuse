@@ -185,9 +185,8 @@ export const useParallax = ((...params: any[]) => {
       document.removeEventListener('mousemove', onMouseMove);
     };
   }, [
-    target,
+    target && isTarget.getRawElement(target),
     internalRef.state,
-    isTarget.getRefState(target),
     screenOrientation.value.angle,
     screenOrientation.value.orientationType,
     deviceOrientation.value.gamma,

@@ -71,7 +71,7 @@ export const useDisplayMedia = (...params) => {
     return () => {
       stop();
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target)
     return {
       stream: streamRef.current,

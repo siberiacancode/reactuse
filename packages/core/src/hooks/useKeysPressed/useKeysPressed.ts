@@ -88,7 +88,7 @@ export const useKeysPressed = ((...params: any[]) => {
       element.removeEventListener('keydown', onKeyDown);
       element.removeEventListener('keyup', onKeyUp);
     };
-  }, [enabled, internalRef.state, target, isTarget.getRefState(target)]);
+  }, [enabled, internalRef.state, target && isTarget.getRawElement(target)]);
 
   if (target) return value;
   return { value, ref: internalRef };

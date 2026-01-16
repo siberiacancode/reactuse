@@ -133,9 +133,8 @@ export const useMutationObserver = ((...params: any[]) => {
       observer.disconnect();
     };
   }, [
-    target,
+    target && isTarget.getRawElement(target),
     internalRef.state,
-    isTarget.getRefState(target),
     options?.childList,
     options?.attributes,
     options?.characterData,

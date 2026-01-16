@@ -134,7 +134,7 @@ export const useMouse = ((...params: any[]) => {
       document.removeEventListener('scroll', onScroll);
       document.removeEventListener('mousemove', onMouseMove);
     };
-  }, [internalRef.state, target, isTarget.getRefState(target)]);
+  }, [internalRef.state, target && isTarget.getRawElement(target)]);
 
   if (target) return value;
   return {

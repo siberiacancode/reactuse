@@ -125,7 +125,7 @@ export const useAutoScroll = ((...params: any[]) => {
       element.removeEventListener('touchstart', onTouchStart);
       element.removeEventListener('touchmove', onTouchMove);
     };
-  }, [enabled, target, internalRef.state, isTarget.getRefState(target)]);
+  }, [enabled, target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target) return;
   return internalRef;

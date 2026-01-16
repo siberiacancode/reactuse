@@ -44,7 +44,11 @@ const targets = [
   target('#target'),
   target(document.getElementById('target')!),
   target(() => document.getElementById('target')!),
-  { current: document.getElementById('target') }
+  { current: document.getElementById('target') },
+  Object.assign(() => {}, {
+    state: document.getElementById('target'),
+    current: document.getElementById('target')
+  })
 ];
 
 const element = document.getElementById('target') as HTMLDivElement;

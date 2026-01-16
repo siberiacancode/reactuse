@@ -78,7 +78,7 @@ export const useMeasure = ((...params: any[]) => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target) return rect;
   return { ref: internalRef, ...rect };

@@ -100,9 +100,8 @@ export const useKeyPressEvent = ((...params: any[]) => {
       });
     };
   }, [
-    target,
+    target && isTarget.getRawElement(target),
     internalRef.state,
-    isTarget.getRefState(target),
     options?.capture,
     options?.passive,
     options?.once

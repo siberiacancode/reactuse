@@ -81,7 +81,7 @@ export const useScrollTo = ((...params: any[]) => {
     elementRef.current = element;
 
     element.scrollTo({ top: y, left: x, behavior });
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   const trigger = (params?: { x: number; y: number; behavior?: ScrollBehavior }) => {
     if (!elementRef.current) return;

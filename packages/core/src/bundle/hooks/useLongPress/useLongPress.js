@@ -73,7 +73,7 @@ export const useLongPress = (...params) => {
       window.removeEventListener('touchend', onCancel);
       if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return pressed;
   return {
     ref: internalRef,

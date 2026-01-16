@@ -107,7 +107,7 @@ export const useInfiniteScroll = ((...params: any[]) => {
     return () => {
       element.removeEventListener('scroll', onLoadMore);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target), direction, distance]);
+  }, [target && isTarget.getRawElement(target), internalRef.state, direction, distance]);
 
   if (target) return loading;
   return {

@@ -128,7 +128,7 @@ export const useDisplayMedia = ((...params: any[]) => {
     return () => {
       stop();
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target)
     return {

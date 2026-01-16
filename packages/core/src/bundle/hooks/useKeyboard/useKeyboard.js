@@ -63,7 +63,7 @@ export const useKeyboard = (...params) => {
       element.removeEventListener('keydown', onKeyDown);
       element.removeEventListener('keyup', onKeyUp);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
   return internalRef;
 };

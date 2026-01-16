@@ -68,7 +68,7 @@ export const useCssVar = (...params) => {
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return { value, set, remove };
   return { ref: internalRef, value, set, remove };
 };

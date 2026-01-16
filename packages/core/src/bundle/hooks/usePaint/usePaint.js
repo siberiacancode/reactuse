@@ -247,7 +247,7 @@ export const usePaint = (...params) => {
       element.removeEventListener('mousemove', onMouseMove);
       element.removeEventListener('mouseup', onMouseUp);
     };
-  }, [target, internalRef.state, isTarget.getRefState(target)]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return { drawing, clear, undo, draw, lines: paintRef.current.lines };
   return {
     ref: internalRef,

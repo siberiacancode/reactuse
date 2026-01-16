@@ -82,9 +82,8 @@ export const useVisibility = (...params) => {
       observer.disconnect();
     };
   }, [
-    target,
+    target && isTarget.getRawElement(target),
     internalRef.state,
-    isTarget.getRefState(target),
     options?.rootMargin,
     options?.threshold,
     options?.root,
