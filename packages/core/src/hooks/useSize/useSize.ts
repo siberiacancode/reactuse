@@ -9,51 +9,56 @@ import type { StateRef } from '../useRefState/useRefState';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 
-/** The element size value type */
-export interface UseElementSizeValue {
+/** The size value type */
+export interface UseSizeValue {
   /** The element's height */
   height: number;
   /** The element's width */
   width: number;
 }
 
-/** The use element size return type */
-export interface UseElementSizeReturn {
-  value: UseElementSizeValue;
+/** The use size return type */
+export interface UseSizeReturn {
+  /** The resize observer instance */
+  observer?: ResizeObserver;
+  /** The current size value */
+  value: UseSizeValue;
 }
 
-export interface UseElementSize {
-  (target: HookTarget): UseElementSizeReturn;
+export interface UseSize {
+  (target: HookTarget): UseSizeReturn;
 
   <Target extends Element>(
     target?: never
   ): {
     ref: StateRef<Target>;
-  } & UseElementSizeReturn;
+  } & UseSizeReturn;
 }
 
 /**
- * @name useElementSize
+ * @name useSize
  * @description - Hook that observes and returns the width and height of element
  * @category Elements
  * @usage low
-
+ *
  * @overload
  * @param {HookTarget} target The target element to observe
- * @returns {UseElementSizeReturn} An object containing the current width and height of the element
+ * @returns {UseSizeReturn} An object containing the resize observer, current width and height of the element
  *
  * @example
- * const { value } = useElementSize(ref);
+ * const { value, observer } = useSize(ref);
  *
  * @overload
- * @returns { { ref: StateRef<Target> } & UseElementSizeReturn } An object containing the current width and height of the element
+ * @template Target The target element type
+ * @returns { { ref: StateRef<Target> } & UseSizeReturn } An object containing the resize observer, current width and height of the element
  *
  * @example
- * const { ref, value } = useElementSize();
+ * const { ref, value, observer } = useSize();
  */
-export const useElementSize = ((...params: any[]) => {
+export const useSize = ((...params: any[]) => {
   const target = params[0] as HookTarget | undefined;
   const [size, setSize] = useState({ width: 0, height: 0 });
+  const [observer, setObserver] = useState<ResizeObserver>();
   const internalRef = useRefState<Element>();
 
   useIsomorphicLayoutEffect(() => {
@@ -72,6 +77,7 @@ export const useElementSize = ((...params: any[]) => {
       setSize({ width, height });
     });
 
+    setObserver(observer);
     observer.observe(element);
 
     return () => {
@@ -79,9 +85,10 @@ export const useElementSize = ((...params: any[]) => {
     };
   }, [internalRef.state, target && isTarget.getRawElement(target)]);
 
-  if (target) return { value: size };
+  if (target) return { observer, value: size };
   return {
+    observer,
     ref: internalRef,
     value: size
   };
-}) as UseElementSize;
+}) as UseSize;

@@ -1,17 +1,17 @@
-import { useElementSize } from '@siberiacancode/reactuse';
+import { useSize } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const elementSize = useElementSize<HTMLTextAreaElement>();
+  const size = useSize<HTMLTextAreaElement>();
 
   return (
     <div className='flex flex-col gap-4'>
       <p>Resize the box to see changes</p>
       <textarea
         disabled
-        ref={elementSize.ref}
+        ref={size.ref}
         className='h-[200px] w-[200px]'
         style={{ resize: 'both' }}
-        value={`width: ${Math.floor(elementSize.value.width)}\nheight: ${Math.floor(elementSize.value.height)}`}
+        value={`width: ${Math.floor(size.value.width)}\nheight: ${Math.floor(size.value.height)}`}
       />
     </div>
   );

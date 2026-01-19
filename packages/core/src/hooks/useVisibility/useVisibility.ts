@@ -29,8 +29,7 @@ export interface UseVisibilityReturn {
   /** The intersection observer entry */
   entry?: IntersectionObserverEntry;
   /** The intersection observer in view */
-  inView?: boolean;
-
+  inView: boolean;
   /** The intersection observer instance */
   observer?: IntersectionObserver;
 }
@@ -113,6 +112,7 @@ export const useVisibility = ((...params: any[]) => {
 
   const [observer, setObserver] = useState<IntersectionObserver>();
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
+  const inView = entry?.isIntersecting ?? false;
 
   const internalRef = useRefState<Element>();
   const internalCallbackRef = useRef(callback);
@@ -126,9 +126,11 @@ export const useVisibility = ((...params: any[]) => {
 
     const observer = new IntersectionObserver(
       (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-        const entry = entries.pop()!;
-        setEntry(entry);
-        internalCallbackRef.current?.(entry, observer);
+        const firstEntry = entries[0];
+        if (firstEntry) {
+          setEntry(firstEntry);
+          internalCallbackRef.current?.(firstEntry, observer);
+        }
       },
       {
         ...options,
@@ -151,11 +153,11 @@ export const useVisibility = ((...params: any[]) => {
     enabled
   ]);
 
-  if (target) return { observer, entry, inView: !!entry?.isIntersecting };
+  if (target) return { observer, entry, inView };
   return {
     observer,
     ref: internalRef,
     entry,
-    inView: !!entry?.isIntersecting
+    inView
   };
 }) as UseVisibility;

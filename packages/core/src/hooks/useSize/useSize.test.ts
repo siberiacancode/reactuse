@@ -4,9 +4,9 @@ import { createTrigger, renderHookServer } from '@/tests';
 import { isTarget, target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
-import type { UseElementSizeReturn } from './useElementSize';
+import type { UseSizeReturn } from './useSize';
 
-import { useElementSize } from './useElementSize';
+import { useSize } from './useSize';
 
 const trigger = createTrigger<Element, ResizeObserverCallback>();
 const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
@@ -55,27 +55,27 @@ targets.forEach((target) => {
   });
 
   describe(`${target}`, () => {
-    it('Should use element size', () => {
+    it('Should use size', () => {
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result } = renderHook(() => {
         if (target)
-          return useElementSize(target) as {
+          return useSize(target) as {
             ref: StateRef<HTMLDivElement>;
-          } & UseElementSizeReturn;
-        return useElementSize<HTMLDivElement>();
+          } & UseSizeReturn;
+        return useSize<HTMLDivElement>();
       });
       expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
     });
 
-    it('Should use element size on server side', () => {
+    it('Should use size on server side', () => {
       const { result } = renderHookServer(() => {
         if (target)
-          return useElementSize(target) as {
+          return useSize(target) as {
             ref: StateRef<HTMLDivElement>;
-          } & UseElementSizeReturn;
-        return useElementSize<HTMLDivElement>();
+          } & UseSizeReturn;
+        return useSize<HTMLDivElement>();
       });
 
       expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
@@ -87,10 +87,10 @@ targets.forEach((target) => {
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 200, 200));
       const { result } = renderHook(() => {
         if (target)
-          return useElementSize(target) as {
+          return useSize(target) as {
             ref: StateRef<HTMLDivElement>;
-          } & UseElementSizeReturn;
-        return useElementSize<HTMLDivElement>();
+          } & UseSizeReturn;
+        return useSize<HTMLDivElement>();
       });
 
       if (!target)
@@ -103,10 +103,10 @@ targets.forEach((target) => {
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result } = renderHook(() => {
         if (target)
-          return useElementSize(target) as {
+          return useSize(target) as {
             ref: StateRef<HTMLDivElement>;
-          } & UseElementSizeReturn;
-        return useElementSize<HTMLDivElement>();
+          } & UseSizeReturn;
+        return useSize<HTMLDivElement>();
       });
 
       expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
@@ -133,10 +133,10 @@ targets.forEach((target) => {
       const { result, rerender } = renderHook(
         (target) => {
           if (target)
-            return useElementSize(target) as {
+            return useSize(target) as {
               ref: StateRef<HTMLDivElement>;
-            } & UseElementSizeReturn;
-          return useElementSize<HTMLDivElement>();
+            } & UseSizeReturn;
+          return useSize<HTMLDivElement>();
         },
         {
           initialProps: target
@@ -158,10 +158,10 @@ targets.forEach((target) => {
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result, unmount } = renderHook(() => {
         if (target)
-          return useElementSize(target) as {
+          return useSize(target) as {
             ref: StateRef<HTMLDivElement>;
-          } & UseElementSizeReturn;
-        return useElementSize<HTMLDivElement>();
+          } & UseSizeReturn;
+        return useSize<HTMLDivElement>();
       });
 
       if (!target) act(() => result.current.ref(element));

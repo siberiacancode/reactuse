@@ -58,6 +58,7 @@ export const useVisibility = (...params) => {
   const enabled = options?.enabled ?? true;
   const [observer, setObserver] = useState();
   const [entry, setEntry] = useState();
+  const inView = entry?.isIntersecting ?? false;
   const internalRef = useRefState();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
@@ -67,9 +68,11 @@ export const useVisibility = (...params) => {
     if (!element) return;
     const observer = new IntersectionObserver(
       (entries, observer) => {
-        const entry = entries.pop();
-        setEntry(entry);
-        internalCallbackRef.current?.(entry, observer);
+        const firstEntry = entries[0];
+        if (firstEntry) {
+          setEntry(firstEntry);
+          internalCallbackRef.current?.(firstEntry, observer);
+        }
       },
       {
         ...options,
@@ -89,11 +92,11 @@ export const useVisibility = (...params) => {
     options?.root,
     enabled
   ]);
-  if (target) return { observer, entry, inView: !!entry?.isIntersecting };
+  if (target) return { observer, entry, inView };
   return {
     observer,
     ref: internalRef,
     entry,
-    inView: !!entry?.isIntersecting
+    inView
   };
 };
