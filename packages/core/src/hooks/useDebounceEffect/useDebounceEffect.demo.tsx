@@ -1,43 +1,29 @@
-import { useCounter, useDebounceEffect } from '@siberiacancode/reactuse';
+import { useDebounceEffect, useField } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const Demo = () => {
-  const counter = useCounter();
-  const debounceCounter = useCounter();
-  const effectCounter = useCounter();
+  const inputField = useField();
+  const [list, setList] = useState<string[]>([]);
+
+  const inputValue = inputField.watch();
 
   useDebounceEffect(
     () => {
-      debounceCounter.inc();
-      effectCounter.inc();
+      setList((currentList) => [...currentList, inputValue]);
     },
     500,
-    [counter.value]
+    [inputValue]
   );
 
   return (
     <>
-      <div className='flex flex-col gap-1'>
-        <div className='text-sm'>
-          Current count: <code>{counter.value}</code>
-        </div>
-        <div className='text-sm'>
-          Debounced count: <code>{debounceCounter.value}</code>
-        </div>
-        <div className='text-sm'>
-          Effect runs: <code>{effectCounter.value}</code>
-        </div>
-      </div>
-
-      <div className='mt-4 flex flex-wrap'>
-        <button type='button' onClick={() => counter.inc()}>
-          Increment
-        </button>
-        <button type='button' onClick={() => counter.dec()}>
-          Decrement
-        </button>
-      </div>
-
-      <div className='mt-4 text-xs'>Click buttons rapidly to see the debounce effect.</div>
+      <div>Write to see the debounce effect</div>
+      <input {...inputField.register()} />
+      <ul className='text-sm'>
+        {list.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
     </>
   );
 };
