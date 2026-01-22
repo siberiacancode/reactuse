@@ -28,7 +28,7 @@ export default async () => {
   );
 
   return defineConfig({
-    base: '/reactuse/',
+    base: '/',
     title: 'reactuse',
     description:
       'Improve your react applications with our library 📦 designed for comfort and speed',
