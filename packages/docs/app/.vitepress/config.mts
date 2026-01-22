@@ -62,8 +62,8 @@ export default async () => {
       }
     },
     head: [
-      ['link', { rel: 'icon', href: '/reactuse/favicon.ico' }],
-      ['link', { rel: 'manifest', href: '/reactuse/manifest.json' }],
+      ['link', { rel: 'icon', href: '/favicon.ico' }],
+      ['link', { rel: 'manifest', href: '/manifest.json' }],
       [
         'script',
         { type: 'text/javascript' },

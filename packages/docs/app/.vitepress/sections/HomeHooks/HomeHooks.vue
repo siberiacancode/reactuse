@@ -30,9 +30,7 @@ const filteredHooks = computed(() =>
     <div
       class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center md:px-6"
     >
-      <div class="text-center text-4xl font-bold xl:text-6xl">
-        The hooks you need
-      </div>
+      <div class="text-center text-4xl font-bold xl:text-6xl">The hooks you need</div>
 
       <div
         class="flex w-full items-center gap-3 rounded-lg bg-[var(--vp-c-default-soft)] p-2 px-4 text-2xl md:w-fit"
@@ -52,14 +50,14 @@ const filteredHooks = computed(() =>
           <path d="m21 21-4.34-4.34" />
           <circle cx="11" cy="11" r="8" />
         </svg>
-        <input v-model="searchQuery" type="text" placeholder="search hook">
+        <input v-model="searchQuery" type="text" placeholder="search hook" />
       </div>
     </div>
 
     <div class="mt-10 flex w-[130%] flex-wrap justify-start gap-3">
       <div v-for="hook in filteredHooks.slice(0, 40)" :key="hook.name">
         <a
-          :href="`/reactuse/functions/hooks/${hook.name}`"
+          :href="`/functions/hooks/${hook.name}`"
           class="text-2xl text-[var(--vp-c-text-1)]! no-underline!"
         >
           <div
