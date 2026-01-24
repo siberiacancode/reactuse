@@ -42,9 +42,9 @@ export const useUrlSearchParams = (params) => {
       'mode' in params ||
       'write' in params)
       ? params
-      : {};
+      : undefined;
   const initialValue = options ? options?.initialValue : params;
-  const { mode = 'history', write: writeMode = 'replace' } = options;
+  const { mode = 'history', write: writeMode = 'replace' } = options ?? {};
   const serializer = (value) => {
     if (options?.serializer) return options.serializer(value);
     if (typeof value === 'string') return value;

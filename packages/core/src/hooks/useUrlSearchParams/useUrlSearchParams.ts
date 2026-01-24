@@ -98,13 +98,13 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
       'mode' in params ||
       'write' in params)
       ? params
-      : {}
-  ) as UseUrlSearchParamsOptions<Value>;
+      : undefined
+  ) as UseUrlSearchParamsOptions<Value> | undefined;
   const initialValue = (
     options ? options?.initialValue : params
   ) as UseUrlSearchParamsInitialValue<Value>;
 
-  const { mode = 'history', write: writeMode = 'replace' } = options;
+  const { mode = 'history', write: writeMode = 'replace' } = options ?? {};
 
   const serializer = (value: Value[keyof Value]) => {
     if (options?.serializer) return options.serializer(value);
