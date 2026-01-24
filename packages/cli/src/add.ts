@@ -106,7 +106,7 @@ export const add = {
         type: 'string',
         description: 'url of the registry to use',
         demandOption: true,
-        default: 'https://siberiacancode.github.io/reactuse/registry.json'
+        default: 'https://reactuse.org/registry.json'
       }),
 
   handler: async (argv: AddOptionsSchema) => {
@@ -225,7 +225,7 @@ export const add = {
 
     const spinner = ora('Installing files...').start();
     for (const file of files) {
-      const { directoryPath, registryPath, indexPath, filePath, name, type } = file!;
+      const { directoryPath, registryPath, indexPath, filePath, name } = file!;
       spinner.text = `Installing ${name}...`;
       const directory = path.dirname(directoryPath);
 

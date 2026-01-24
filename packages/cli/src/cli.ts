@@ -13,7 +13,7 @@ export const cli = () => {
     .scriptName('reactuse')
     .usage('$0 <cmd> [args]')
     .command(add)
-    .epilogue('More info: https://siberiacancode.github.io/reactuse/cli')
+    .epilogue('More info: https://reactuse.org/cli')
     .version()
     .alias('v', 'version')
     .help()
