@@ -154,8 +154,11 @@ export const useDropZone = ((...params: any[]) => {
     const element = target ? isTarget.getElement(target) : internalRef.current;
 
     if (!element) return;
-
-    const onEvent = (event: DragEvent, type: 'drop' | 'enter' | 'leave' | 'over') => {
+    
+    const controller = new AbortController();
+    const options = { signal: controller.signal };
+    
+    const onEvent = (event: DragEvent) => {
       if (!event.dataTransfer) return;
 
       const isValid = checkValidity(event.dataTransfer.items);
@@ -169,7 +172,7 @@ export const useDropZone = ((...params: any[]) => {
 
       const currentFiles = getFiles(event);
 
-      if (type === 'drop') {
+      if (event.type === 'drop') {
         counterRef.current = 0;
         setOvered(false);
         setFiles(currentFiles);
@@ -177,39 +180,29 @@ export const useDropZone = ((...params: any[]) => {
         return;
       }
 
-      if (type === 'enter') {
+      if (event.type === 'dragenter') {
         counterRef.current += 1;
         setOvered(true);
         options.onEnter?.(event);
         return;
       }
 
-      if (type === 'leave') {
-        counterRef.current -= 1;
-        if (counterRef.current !== 0) return;
+      if (event.type === 'dragleave' && (counterRef.current -= 1) === 0) {
         setOvered(false);
         options.onLeave?.(event);
         return;
       }
 
-      if (type === 'over') options.onOver?.(event);
+      if (event.type === 'dragover') options.onOver?.(event);
     };
 
-    const onDrop = ((event: DragEvent) => onEvent(event, 'drop')) as EventListener;
-    const onDragOver = ((event: DragEvent) => onEvent(event, 'over')) as EventListener;
-    const onDragEnter = ((event: DragEvent) => onEvent(event, 'enter')) as EventListener;
-    const onDragLeave = ((event: DragEvent) => onEvent(event, 'leave')) as EventListener;
-
-    element.addEventListener('dragenter', onDragEnter);
-    element.addEventListener('dragover', onDragOver);
-    element.addEventListener('dragleave', onDragLeave);
-    element.addEventListener('drop', onDrop);
+    element.addEventListener('dragenter', onEvent, options);
+    element.addEventListener('dragover', onEvent, options);
+    element.addEventListener('dragleave', onEvent, options);
+    element.addEventListener('drop', onEvent, options);
 
     return () => {
-      element.removeEventListener('dragenter', onDragEnter);
-      element.removeEventListener('dragover', onDragOver);
-      element.removeEventListener('dragleave', onDragLeave);
-      element.removeEventListener('drop', onDrop);
+      controller.abort();
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 
