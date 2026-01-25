@@ -182,7 +182,7 @@ it('Should recreate audio element when src changes', () => {
   expect(mockAudioPlay).toHaveBeenCalledTimes(2);
 });
 
-it('Should clean up audio element on unmount', () => {
+it('Should cleanup audio element on unmount', () => {
   const { unmount } = renderHook(() => useAudio('audio.mp3'));
 
   unmount();

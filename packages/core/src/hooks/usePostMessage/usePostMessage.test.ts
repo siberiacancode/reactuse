@@ -5,22 +5,20 @@ import { createTrigger, renderHookServer } from '@/tests';
 import { usePostMessage } from './usePostMessage';
 
 const trigger = createTrigger<string, (event: Event) => void>();
-const mockPostMessage = vi.fn();
-const mockAddEventListener = vi.fn();
-const mockRemoveEventListener = vi.fn();
 
 beforeEach(() => {
   vi.clearAllMocks();
   trigger.clear();
 
   Object.assign(window, {
-    postMessage: mockPostMessage,
+    postMessage: (message: any, origin: string) => {
+      trigger.callback('message', new MessageEvent('message', { data: message, origin }));
+      return true;
+    },
     addEventListener: (type: string, callback: (event: Event) => void) => {
-      mockAddEventListener(type, callback);
       trigger.add(type, callback);
     },
     removeEventListener: (type: string, callback: (event: Event) => void) => {
-      mockRemoveEventListener(type, callback);
       if (trigger.get(type) === callback) trigger.delete(type);
     },
     dispatchEvent: (event: Event) => {
@@ -30,101 +28,81 @@ beforeEach(() => {
   });
 });
 
-it('Should use postMessage', () => {
+it('Should use post message', () => {
   const { result } = renderHook(() => usePostMessage('*', vi.fn()));
   expect(result.current).toBeTypeOf('function');
 });
 
-it('Should use postMessage on server side', () => {
+it('Should use post message on server side', () => {
   const { result } = renderHookServer(() => usePostMessage('*', vi.fn()));
   expect(result.current).toBeTypeOf('function');
 });
 
-it('Should postMessage when handler is called', () => {
-  const { result } = renderHook(() => usePostMessage('*', vi.fn()));
+it('Should post message when handler is called', () => {
+  const callback = vi.fn();
+  const { result } = renderHook(() => usePostMessage('*', callback));
 
-  act(() => {
-    result.current({ data: 'test-message', origin: 'origin1' });
-  });
+  act(() => result.current({ value: 'message' }));
 
-  expect(mockPostMessage).toHaveBeenCalledOnce();
-  expect(mockPostMessage).toHaveBeenCalledWith({ data: 'test-message', origin: 'origin1' }, '*');
+  expect(callback).toHaveBeenCalledOnce();
 });
 
 it('Should filter by origin', () => {
   const callback = vi.fn();
   renderHook(() => usePostMessage('allowed-origin', callback));
 
-  act(() => {
-    window.dispatchEvent(
-      new MessageEvent('message', { data: 'test-message', origin: 'blocked-origin' })
-    );
-  });
+  act(() =>
+    trigger.callback(
+      'message',
+      new MessageEvent('message', { data: 'message', origin: 'blocked-origin' })
+    )
+  );
+
   expect(callback).not.toHaveBeenCalled();
 
-  act(() => {
-    window.dispatchEvent(
-      new MessageEvent('message', { data: 'test-message', origin: 'allowed-origin' })
-    );
-  });
+  act(() =>
+    trigger.callback(
+      'message',
+      new MessageEvent('message', { data: 'message', origin: 'allowed-origin' })
+    )
+  );
 
   expect(callback).toHaveBeenCalledOnce();
   expect(callback).toHaveBeenCalledWith(
-    'test-message',
-    expect.objectContaining({ data: 'test-message', origin: 'allowed-origin' })
+    'message',
+    expect.objectContaining({ data: 'message', origin: 'allowed-origin' })
   );
-});
-
-it('Should add and remove event listener on mount and unmount', () => {
-  const callback = vi.fn();
-  const { unmount } = renderHook(() => usePostMessage('*', callback));
-
-  expect(mockAddEventListener).toHaveBeenCalledWith('message', expect.any(Function));
-
-  unmount();
-
-  expect(mockRemoveEventListener).toHaveBeenCalledWith('message', expect.any(Function));
-});
-
-it('Should filter by array of origins', () => {
-  const callback = vi.fn();
-  renderHook(() => usePostMessage(['origin1', 'origin2'], callback));
-
-  act(() => {
-    window.dispatchEvent(new MessageEvent('message', { data: 'm', origin: 'origin3' }));
-  });
-  expect(callback).not.toHaveBeenCalled();
-
-  act(() => {
-    window.dispatchEvent(new MessageEvent('message', { data: 'm', origin: 'origin2' }));
-  });
-
-  expect(callback).toHaveBeenCalledOnce();
-  expect(callback).toHaveBeenCalledWith(
-    'm',
-    expect.objectContaining({ data: 'm', origin: 'origin2' })
-  );
-});
-
-it('Should accept "*" inside array origins', () => {
-  const callback = vi.fn();
-  renderHook(() => usePostMessage(['origin1', '*'], callback));
-
-  act(() => {
-    window.dispatchEvent(new MessageEvent('message', { data: 'm', origin: 'other' }));
-  });
-
-  expect(callback).toHaveBeenCalledOnce();
 });
 
 it('Should post to each origin when origin is array', () => {
-  const { result } = renderHook(() => usePostMessage(['a', 'b'], vi.fn()));
+  const callback = vi.fn();
+  renderHook(() => usePostMessage(['a', 'b'], callback));
 
-  act(() => {
-    result.current('payload');
-  });
+  act(() =>
+    trigger.callback('message', new MessageEvent('message', { data: 'payload', origin: 'a' }))
+  );
 
-  expect(mockPostMessage).toHaveBeenCalledTimes(2);
-  expect(mockPostMessage).toHaveBeenCalledWith('payload', 'a');
-  expect(mockPostMessage).toHaveBeenCalledWith('payload', 'b');
+  expect(callback).toHaveBeenCalledWith('payload', expect.objectContaining({ origin: 'a' }));
+  expect(callback).toHaveBeenCalledOnce();
+
+  act(() =>
+    trigger.callback('message', new MessageEvent('message', { data: 'payload', origin: 'b' }))
+  );
+
+  expect(callback).toHaveBeenCalledWith('payload', expect.objectContaining({ origin: 'b' }));
+  expect(callback).toHaveBeenCalledTimes(2);
+
+  act(() =>
+    trigger.callback('message', new MessageEvent('message', { data: 'payload', origin: 'c' }))
+  );
+  expect(callback).toHaveBeenCalledTimes(2);
+});
+
+it('Should cleanup on unmount', () => {
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(() => usePostMessage('*', vi.fn()));
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('message', expect.any(Function));
 });

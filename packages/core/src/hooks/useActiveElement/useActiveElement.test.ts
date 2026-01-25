@@ -178,7 +178,7 @@ targets.forEach((target) => {
       expect(mockMutationObserverDisconnect).toHaveBeenCalledTimes(1);
     });
 
-    it('Should clean up on unmount', () => {
+    it('Should cleanup on unmount', () => {
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
       const { result, unmount } = renderHook(() => {

@@ -78,7 +78,7 @@ it('Should call callback on interval', () => {
   expect(callback).toBeCalledTimes(2);
 });
 
-it('Should clean up on unmount', () => {
+it('Should cleanup on unmount', () => {
   const callback = vi.fn();
   const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
 

@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
 
+/** The origin of the message */
+export type UsePostMessageOrigin = string | '*' | string[];
+
+/** The return type of the usePostMessage hook */
 export type UsePostMessageReturn<Message> = (message: Message) => void;
 
 /**
@@ -10,7 +14,7 @@ export type UsePostMessageReturn<Message> = (message: Message) => void;
  *
  * @overload
  * @template Message The message data type
- * @param {string | string[]} origin The origin of the message
+ * @param {UsePostMessageOrigin} origin The origin of the message
  * @param {(message: Message) => Message} callback callback to get received message
  * @returns {(message: Message) => void} An object containing the current message
  *
@@ -18,7 +22,7 @@ export type UsePostMessageReturn<Message> = (message: Message) => void;
  * const postMessage = usePostMessage();
  */
 export const usePostMessage = <Message>(
-  origin: string | '*' | string[],
+  origin: UsePostMessageOrigin,
   callback: (message: Message, event: MessageEvent<Message>) => void
 ): UsePostMessageReturn<Message> => {
   const internalCallbackRef = useRef(callback);
@@ -29,11 +33,7 @@ export const usePostMessage = <Message>(
   useEffect(() => {
     const onMessage = (event: MessageEvent<Message>) => {
       if (Array.isArray(internalOriginRef.current)) {
-        if (
-          !internalOriginRef.current.includes(event.origin) &&
-          !internalOriginRef.current.includes('*')
-        )
-          return;
+        if (!internalOriginRef.current.includes(event.origin)) return;
       } else if (internalOriginRef.current !== '*' && event.origin !== internalOriginRef.current)
         return;
 

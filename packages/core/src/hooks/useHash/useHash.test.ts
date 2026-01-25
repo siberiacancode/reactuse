@@ -137,7 +137,7 @@ it('Should not work when disabled', () => {
   expect(result.current[0]).toBe('initial');
 });
 
-it('Should clean up on unmount', () => {
+it('Should cleanup on unmount', () => {
   const { unmount } = renderHook(useHash);
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 

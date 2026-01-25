@@ -169,7 +169,7 @@ targets.forEach((target) => {
       expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
     });
 
-    it('Should clean up on unmount', () => {
+    it('Should cleanup on unmount', () => {
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
       const { result, unmount } = renderHook(() => {

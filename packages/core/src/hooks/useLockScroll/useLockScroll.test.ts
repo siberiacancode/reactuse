@@ -206,7 +206,7 @@ targets.forEach((target) => {
       expect(result.current.value).toBeTruthy();
     });
 
-    it('Should clean up on unmount', () => {
+    it('Should cleanup on unmount', () => {
       const { result, unmount } = renderHook(() => {
         if (target)
           return useLockScroll(target) as {

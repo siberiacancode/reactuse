@@ -74,7 +74,7 @@ it('Should display unknown status when script already exist', () => {
   expect(result.current).toBe('unknown');
 });
 
-it('Should clean up on unmount', () => {
+it('Should cleanup on unmount', () => {
   const { unmount } = renderHook(() => useScript(src));
 
   const script = document.querySelector(`script[src="${src}"]`)!;

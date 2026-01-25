@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
  *
  * @overload
  * @template Message The message data type
- * @param {string | string[]} origin The origin of the message
+ * @param {UsePostMessageOrigin} origin The origin of the message
  * @param {(message: Message) => Message} callback callback to get received message
  * @returns {(message: Message) => void} An object containing the current message
  *
@@ -22,11 +22,7 @@ export const usePostMessage = (origin, callback) => {
   useEffect(() => {
     const onMessage = (event) => {
       if (Array.isArray(internalOriginRef.current)) {
-        if (
-          !internalOriginRef.current.includes(event.origin) &&
-          !internalOriginRef.current.includes('*')
-        )
-          return;
+        if (!internalOriginRef.current.includes(event.origin)) return;
       } else if (internalOriginRef.current !== '*' && event.origin !== internalOriginRef.current)
         return;
       internalCallbackRef.current(event.data, event);

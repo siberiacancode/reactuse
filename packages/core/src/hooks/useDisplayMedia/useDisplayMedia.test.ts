@@ -168,7 +168,7 @@ targets.forEach((target) => {
     });
   });
 
-  it('Should clean up on unmount', async () => {
+  it('Should cleanup on unmount', async () => {
     const { result, unmount } = renderHook(() => {
       if (target)
         return useDisplayMedia(target, { immediately: true }) as {

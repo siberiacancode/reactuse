@@ -154,7 +154,7 @@ targets.forEach((target) => {
       expect(mockResizeObserverDisconnect).toHaveBeenCalledTimes(1);
     });
 
-    it('Should clean up on unmount', () => {
+    it('Should cleanup on unmount', () => {
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result, unmount } = renderHook(() => {
         if (target)

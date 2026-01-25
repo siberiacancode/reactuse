@@ -89,7 +89,7 @@ it('Should update state on geolocation error', () => {
   });
 });
 
-it('Should clean up on unmount', () => {
+it('Should cleanup on unmount', () => {
   const { unmount } = renderHook(useGeolocation);
 
   unmount();
