@@ -11,7 +11,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @param {HookTarget} [target=window] The target to attach the event listeners to
  * @param {UseKeyPressKey} key The key or keys to listen for
  * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed
- * @returns {boolean} The pressed state of the key
+ * @returns {UseKeyPressReturn} An object containing the pressed state and ref
  *
  * @example
  * const isKeyPressed = useKeyPress(ref, 'a');
@@ -68,6 +68,6 @@ export const useKeyPress = (...params) => {
       element.removeEventListener('keyup', onKeyUp);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
-  if (target) return pressed;
+  if (target) return { pressed };
   return { pressed, ref: internalRef };
 };

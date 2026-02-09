@@ -18,28 +18,26 @@ export interface UseHoverOptions {
   onLeave?: (event: Event) => void;
 }
 
+/** The use hover return type */
 export interface UseHoverReturn {
+  /** The value of the hover */
   value: boolean;
 }
 
 export interface UseHover {
-  (target: HookTarget, callback?: (event: Event) => void): boolean;
+  (target: HookTarget, callback?: (event: Event) => void): UseHoverReturn;
 
-  (target: HookTarget, options?: UseHoverOptions): boolean;
+  (target: HookTarget, options?: UseHoverOptions): UseHoverReturn;
 
   <Target extends Element>(
     callback?: (event: Event) => void,
     target?: never
-  ): {
-    ref: StateRef<Target>;
-  } & UseHoverReturn;
+  ): UseHoverReturn & { ref: StateRef<Target> };
 
   <Target extends Element>(
     options?: UseHoverOptions,
     target?: never
-  ): {
-    ref: StateRef<Target>;
-  } & UseHoverReturn;
+  ): UseHoverReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -128,7 +126,7 @@ export const useHover = ((...params: any[]) => {
     };
   }, [enabled, target && isTarget.getRawElement(target), internalRef.state]);
 
-  if (target) return hovering;
+  if (target) return { value: hovering };
   return {
     ref: internalRef,
     value: hovering

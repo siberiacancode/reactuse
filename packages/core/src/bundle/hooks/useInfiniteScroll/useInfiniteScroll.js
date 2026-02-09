@@ -12,7 +12,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
  * @param {number} [options.distance=10] The distance in pixels to trigger the callback
  * @param {string} [options.direction='bottom'] The direction to trigger the callback
- * @returns {{ ref: StateRef<Target>, loading: boolean }} An object containing the ref and loading
+ * @returns {UseInfiniteScrollReturn & { ref: StateRef<Target> }} An object containing the ref and loading
  *
  * @example
  * const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));
@@ -22,10 +22,10 @@ import { useRefState } from '../useRefState/useRefState';
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
  * @param {number} [options.distance=10] The distance in pixels to trigger the callback
  * @param {string} [options.direction='bottom'] The direction to trigger the callback
- * @returns {boolean} A loading indicator of the infinite scroll
+ * @returns {UseInfiniteScrollReturn} An object containing the ref and loading
  *
  * @example
- * const loading = useInfiniteScroll(ref, () => console.log('infinite scroll'));
+ * const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));
  */
 export const useInfiniteScroll = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -66,7 +66,7 @@ export const useInfiniteScroll = (...params) => {
       element.removeEventListener('scroll', onLoadMore);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state, direction, distance]);
-  if (target) return loading;
+  if (target) return { loading };
   return {
     ref: internalRef,
     loading

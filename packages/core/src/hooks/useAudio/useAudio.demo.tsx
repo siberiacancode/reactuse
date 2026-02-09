@@ -1,7 +1,7 @@
 import { useAudio } from './useAudio';
 
 const Demo = () => {
-  const popDownAudio = useAudio('/reactuse/pop-down.mp3', {
+  const popDownAudio = useAudio('/pop-down.mp3', {
     volume: 0.5,
     playbackRate: 2
   });

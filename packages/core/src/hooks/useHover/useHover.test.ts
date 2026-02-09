@@ -35,7 +35,7 @@ targets.forEach((target) => {
       if (!target) act(() => result.current.ref(element));
 
       if (target) {
-        expect(result.current).toBeFalsy();
+        expect(result.current.value).toBeFalsy();
         expect(result.current.ref).toBeUndefined();
       }
       if (!target) {
@@ -54,7 +54,7 @@ targets.forEach((target) => {
       });
 
       if (target) {
-        expect(result.current).toBeFalsy();
+        expect(result.current.value).toBeFalsy();
         expect(result.current.ref).toBeUndefined();
       }
       if (!target) {
@@ -74,17 +74,17 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      if (target) expect(result.current).toBeFalsy();
+      if (target) expect(result.current.value).toBeFalsy();
       if (!target) expect(result.current.value).toBeFalsy();
 
       act(() => element.dispatchEvent(new Event('mouseenter')));
 
-      if (target) expect(result.current).toBeTruthy();
+      if (target) expect(result.current.value).toBeTruthy();
       if (!target) expect(result.current.value).toBeTruthy();
 
       act(() => element.dispatchEvent(new Event('mouseleave')));
 
-      if (target) expect(result.current).toBeFalsy();
+      if (target) expect(result.current.value).toBeFalsy();
       if (!target) expect(result.current.value).toBeFalsy();
     });
 

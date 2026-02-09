@@ -46,8 +46,7 @@ targets.forEach((target) => {
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
 
-      if (!target) expect(result.current.pressed).toBeFalsy();
-      if (target) expect(result.current).toBeFalsy();
+      expect(result.current.pressed).toBeFalsy();
     });
 
     it('Should use long press on server side', () => {
@@ -64,8 +63,7 @@ targets.forEach((target) => {
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
 
-      if (!target) expect(result.current.pressed).toBeFalsy();
-      if (target) expect(result.current).toBeFalsy();
+      expect(result.current.pressed).toBeFalsy();
     });
 
     it('Should call onStart on press start', () => {
@@ -175,7 +173,7 @@ targets.forEach((target) => {
       expect(onCancel).toHaveBeenCalledTimes(2);
 
       if (!target) expect(result.current.pressed).toBeFalsy();
-      if (target) expect(result.current).toBeFalsy();
+      if (target) expect(result.current.pressed).toBeFalsy();
     });
 
     it('Should call onFinish when released after threshold', () => {

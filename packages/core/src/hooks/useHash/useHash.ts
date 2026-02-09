@@ -13,7 +13,12 @@ export interface UseHashOptions {
 }
 
 /** The use hash return type */
-type UseHashReturn = [string, (value: string) => void];
+interface UseHashReturn {
+  /** The hash value */
+  value: string;
+  /** The function to set the hash value */
+  set: (value: string) => void;
+}
 
 export interface UseHash {
   (initialValue?: string, options?: UseHashOptions): UseHashReturn;
@@ -40,7 +45,7 @@ export interface UseHash {
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash("initial");
+ * const { value, set } = useHash("initial");
  *
  * @overload
  * @param {string} [initialValue] The initial hash value if no hash exists
@@ -48,7 +53,7 @@ export interface UseHash {
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash("initial", (newHash) => console.log('callback'));
+ * const { value, set } = useHash("initial", (newHash) => console.log('callback'));
  *
  * @overload
  * @param {UseHashOptions} [options] Configuration options
@@ -58,14 +63,14 @@ export interface UseHash {
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash();
+ * const { value, set } = useHash();
  *
  * @overload
  * @param {(hash: string) => void} [callback] Callback function called when hash changes
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash((newHash) => console.log('callback'));
+ * const { value, set } = useHash((newHash) => console.log('callback'));
  */
 export const useHash = ((...params: any[]) => {
   const initialValue = typeof params[0] === 'string' ? params[0] : '';
@@ -112,5 +117,8 @@ export const useHash = ((...params: any[]) => {
     };
   }, [enabled, mode]);
 
-  return [hash, set] as const;
+  return {
+    value: hash,
+    set
+  };
 }) as UseHash;

@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -66,31 +66,40 @@ targets.forEach((target) => {
   describe(`${target}`, () => {
     it('Should use auto scroll', () => {
       const { result } = renderHook(() => {
-        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
         return useAutoScroll<HTMLElement>();
       });
 
-      if (!target) expect(result.current).toBeTypeOf('function');
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current).toBeUndefined();
     });
 
     it('Should use auto scroll on server side', () => {
-      const { result } = renderHook(() => {
-        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+      const { result } = renderHookServer(() => {
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
         return useAutoScroll<HTMLElement>();
       });
 
-      if (!target) expect(result.current).toBeTypeOf('function');
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current).toBeUndefined();
     });
 
     it('Should auto scroll when content changes', () => {
       const { result } = renderHook(() => {
-        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
         return useAutoScroll<HTMLElement>();
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => trigger.callback(element));
 
@@ -102,11 +111,11 @@ targets.forEach((target) => {
         if (target)
           return useAutoScroll(target, {
             enabled: false
-          }) as unknown as StateRef<HTMLElement>;
+          }) as unknown as { ref: StateRef<HTMLElement> };
         return useAutoScroll<HTMLElement>({ enabled: false });
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => trigger.callback(element));
 
@@ -118,11 +127,11 @@ targets.forEach((target) => {
         if (target)
           return useAutoScroll(target, {
             force: true
-          }) as unknown as StateRef<HTMLElement>;
+          }) as unknown as { ref: StateRef<HTMLElement> };
         return useAutoScroll<HTMLElement>({ force: true });
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         Object.defineProperty(element, 'scrollTop', { value: 200 });
@@ -136,11 +145,14 @@ targets.forEach((target) => {
 
     it('Should handle auto scroll on manual scroll up', () => {
       const { result } = renderHook(() => {
-        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
         return useAutoScroll<HTMLElement>();
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         Object.defineProperty(element, 'scrollTop', { value: 200 });
@@ -163,11 +175,14 @@ targets.forEach((target) => {
 
     it('Should handle touch events', () => {
       const { result } = renderHook(() => {
-        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
         return useAutoScroll<HTMLElement>();
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         element.dispatchEvent(
@@ -210,11 +225,14 @@ targets.forEach((target) => {
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
       const { result, unmount } = renderHook(() => {
-        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
         return useAutoScroll<HTMLElement>();
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       unmount();
 
@@ -227,13 +245,16 @@ targets.forEach((target) => {
     it('Should handle target changes', () => {
       const { result, rerender } = renderHook(
         (target) => {
-          if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+          if (target)
+            return useAutoScroll(target) as unknown as {
+              ref: StateRef<HTMLElement>;
+            };
           return useAutoScroll<HTMLElement>();
         },
         { initialProps: target }
       );
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       expect(mockMutationObserverObserve).toHaveBeenCalledTimes(1);
 

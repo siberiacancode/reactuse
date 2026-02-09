@@ -51,7 +51,6 @@ export interface UseMediaControlsReturn {
   volume: number;
   /** Whether the media is currently waiting */
   waiting: boolean;
-
   /** Set the playback rate */
   changePlaybackRate: (rate: number) => void;
   /** Set the volume level (0.0 to 1.0) */

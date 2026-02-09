@@ -11,7 +11,12 @@ import { useRefState } from '../useRefState/useRefState';
 export interface UseClickOutside {
   (target: HookTarget, callback: (event: Event) => void): void;
 
-  <Target extends Element>(callback: (event: Event) => void, target?: never): StateRef<Target>;
+  <Target extends Element>(
+    callback: (event: Event) => void,
+    target?: never
+  ): {
+    ref: StateRef<Target>;
+  };
 }
 
 /**
@@ -31,10 +36,10 @@ export interface UseClickOutside {
  * @overload
  * @template Target The target element(s)
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
- * @returns {StateRef<Target>} A ref to attach to the target element
+ * @returns {{ ref: StateRef<Target> }} A ref to attach to the target element
  *
  * @example
- * const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
+ * const { ref } = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
  *
  * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useClickOutside.html}
  */
@@ -66,5 +71,5 @@ export const useClickOutside = ((...params: any[]) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
-  return internalRef;
+  return { ref: internalRef };
 }) as UseClickOutside;

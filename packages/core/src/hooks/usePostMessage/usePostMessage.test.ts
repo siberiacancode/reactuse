@@ -99,8 +99,11 @@ it('Should post to each origin when origin is array', () => {
 });
 
 it('Should cleanup on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
   const { unmount } = renderHook(() => usePostMessage('*', vi.fn()));
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('message', expect.any(Function));
 
   unmount();
 

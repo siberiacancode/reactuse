@@ -32,9 +32,13 @@ it('Should change value upon network events', () => {
 });
 
 it('Should cleanup up on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
   const { unmount } = renderHook(useOnline);
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('online', expect.any(Function));
+  expect(addEventListenerSpy).toHaveBeenCalledWith('offline', expect.any(Function));
 
   unmount();
 

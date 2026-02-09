@@ -14,14 +14,26 @@ export type UseKeyPressKey = string | string[];
 /** The callback function to be invoked when key is pressed */
 export type UseKeyPressCallback = (pressed: boolean, event: KeyboardEvent) => void;
 
+/** The use key press return type */
+export interface UseKeyPressReturn {
+  /** The pressed state of the key */
+  pressed: boolean;
+  /** The ref to attach to the element */
+  ref: StateRef<Element>;
+}
+
 export interface UseKeyPress {
-  (target: HookTarget | Window, key: UseKeyPressKey, callback?: UseKeyPressCallback): boolean;
+  (
+    target: HookTarget | Window,
+    key: UseKeyPressKey,
+    callback?: UseKeyPressCallback
+  ): UseKeyPressReturn;
 
   <Target extends Element>(
     key: UseKeyPressKey,
     callback?: UseKeyPressCallback,
     target?: never
-  ): { pressed: boolean; ref: StateRef<Target> };
+  ): UseKeyPressReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -34,7 +46,7 @@ export interface UseKeyPress {
  * @param {HookTarget} [target=window] The target to attach the event listeners to
  * @param {UseKeyPressKey} key The key or keys to listen for
  * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed
- * @returns {boolean} The pressed state of the key
+ * @returns {UseKeyPressReturn} An object containing the pressed state and ref
  *
  * @example
  * const isKeyPressed = useKeyPress(ref, 'a');
@@ -100,6 +112,6 @@ export const useKeyPress = ((...params: any[]) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 
-  if (target) return pressed;
+  if (target) return { pressed };
   return { pressed, ref: internalRef };
 }) as UseKeyPress;

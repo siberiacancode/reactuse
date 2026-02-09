@@ -155,9 +155,12 @@ it('Should handle all orientation lock types', () => {
 });
 
 it('Should cleanup on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
   const { unmount } = renderHook(useOrientation);
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('orientationchange', expect.any(Function));
 
   unmount();
 

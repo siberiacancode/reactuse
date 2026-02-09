@@ -74,9 +74,6 @@ export const useLongPress = (...params) => {
       if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
-  if (target) return pressed;
-  return {
-    ref: internalRef,
-    pressed
-  };
+  if (target) return { pressed };
+  return { pressed, ref: internalRef };
 };

@@ -74,7 +74,7 @@ export const useHover = (...params) => {
       element.removeEventListener('mouseleave', onMouseLeave);
     };
   }, [enabled, target && isTarget.getRawElement(target), internalRef.state]);
-  if (target) return hovering;
+  if (target) return { value: hovering };
   return {
     ref: internalRef,
     value: hovering

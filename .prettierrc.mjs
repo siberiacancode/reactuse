@@ -1,4 +1,3 @@
-import { prettier } from '@siberiacancode/prettier';
+import { prettier } from "@siberiacancode/prettier";
 
-/** @type {import('@siberiacancode/prettier').Prettier} */
-export default { ...prettier, plugins: ['prettier-plugin-tailwindcss'] };
+export default { ...prettier, plugins: ["prettier-plugin-tailwindcss"] };

@@ -25,31 +25,42 @@ targets.forEach((target) => {
   describe(`${target}`, () => {
     it('Should use click outside', () => {
       const { result } = renderHook(() => {
-        if (target) return useClickOutside(target, vi.fn()) as unknown as StateRef<HTMLDivElement>;
+        if (target)
+          return useClickOutside(target, vi.fn()) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useClickOutside(vi.fn());
       });
 
-      if (!target) expect(result.current).toBeTypeOf('function');
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current).toBeUndefined();
     });
 
     it('Should use click outside on server side', () => {
       const { result } = renderHookServer(() => {
-        if (target) return useClickOutside(target, vi.fn()) as unknown as StateRef<HTMLDivElement>;
+        if (target)
+          return useClickOutside(target, vi.fn()) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useClickOutside(vi.fn());
       });
 
-      if (!target) expect(result.current).toBeTypeOf('function');
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current).toBeUndefined();
     });
 
     it('Should call callback when clicked outside', () => {
       const callback = vi.fn();
 
       const { result } = renderHook(() => {
-        if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
+        if (target)
+          return useClickOutside(target, callback) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useClickOutside(callback);
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       expect(callback).not.toBeCalled();
 
@@ -62,11 +73,14 @@ targets.forEach((target) => {
       const callback = vi.fn();
 
       const { result } = renderHook(() => {
-        if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
+        if (target)
+          return useClickOutside(target, callback) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useClickOutside(callback);
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => element.dispatchEvent(new Event('click')));
 
@@ -79,11 +93,14 @@ targets.forEach((target) => {
       document.body.appendChild(element);
 
       const { result, unmount } = renderHook(() => {
-        if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
+        if (target)
+          return useClickOutside(target, callback) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useClickOutside(callback);
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       unmount();
 
@@ -98,7 +115,10 @@ targets.forEach((target) => {
 
     const { result, rerender } = renderHook(
       (target) => {
-        if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
+        if (target)
+          return useClickOutside(target, callback) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useClickOutside(callback);
       },
       {
@@ -106,7 +126,7 @@ targets.forEach((target) => {
       }
     );
 
-    if (!target) act(() => result.current(element));
+    if (!target) act(() => result.current.ref(element));
 
     expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
     expect(removeEventListenerSpy).not.toHaveBeenCalled();
@@ -122,11 +142,14 @@ targets.forEach((target) => {
     const callback = vi.fn();
 
     const { result, unmount } = renderHook(() => {
-      if (target) return useClickOutside(target, callback) as unknown as StateRef<HTMLDivElement>;
+      if (target)
+        return useClickOutside(target, callback) as unknown as {
+          ref: StateRef<HTMLDivElement>;
+        };
       return useClickOutside(callback);
     });
 
-    if (!target) act(() => result.current(element));
+    if (!target) act(() => result.current.ref(element));
 
     unmount();
 

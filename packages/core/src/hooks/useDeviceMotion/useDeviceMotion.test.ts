@@ -91,15 +91,6 @@ it('Should be listen enabled param', () => {
   expect(addEventListenerSpy).toBeCalledWith('devicemotion', expect.any(Function));
 });
 
-it('Should disconnect on unmount', () => {
-  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
-  const { unmount } = renderHook(useDeviceMotion);
-
-  unmount();
-
-  expect(removeEventListenerSpy).toBeCalledWith('devicemotion', expect.any(Function));
-});
-
 it('Should throttle events by delay', () => {
   vi.useFakeTimers();
   const onChange = vi.fn();
@@ -155,15 +146,6 @@ it('Should handle enabled changes', () => {
   expect(removeEventListenerSpy).toHaveBeenCalledOnce();
 });
 
-it('Should cleanup throttle on unmount', () => {
-  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
-  const { unmount } = renderHook(useDeviceMotion);
-
-  unmount();
-
-  expect(removeEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
-});
-
 it('Should handle delay and callback', () => {
   const callback = vi.fn();
   renderHook(() => useDeviceMotion(callback, 1000));
@@ -171,4 +153,16 @@ it('Should handle delay and callback', () => {
   act(() => window.dispatchEvent(new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT)));
 
   expect(callback).toHaveBeenCalledOnce();
+});
+
+it('Should cleanup on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(useDeviceMotion);
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
+
+  unmount();
+
+  expect(removeEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
 });

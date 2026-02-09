@@ -9,8 +9,9 @@ import type { StateRef } from '../useRefState/useRefState';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The use active element return type */
-export type UseActiveElementReturn<ActiveElement extends HTMLElement = HTMLElement> =
-  ActiveElement | null;
+export interface UseActiveElementReturn<ActiveElement extends HTMLElement = HTMLElement> {
+  value: ActiveElement | null;
+}
 
 export interface UseActiveElement {
   (): UseActiveElementReturn;
@@ -19,8 +20,7 @@ export interface UseActiveElement {
     target?: never
   ): {
     ref: StateRef<Target>;
-    value: UseActiveElementReturn<ActiveElement>;
-  };
+  } & UseActiveElementReturn<ActiveElement>;
 
   <ActiveElement extends HTMLElement = HTMLElement>(
     target: HookTarget
@@ -89,7 +89,7 @@ export const useActiveElement = ((...params: any[]) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 
-  if (target) return value;
+  if (target) return { value };
   return {
     ref: internalRef,
     value

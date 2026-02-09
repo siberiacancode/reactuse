@@ -35,9 +35,9 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@siberiacancode/eslint": "^2.14.0",
-    "@siberiacancode/prettier": "^1.5.1",
-    "@types/node": "^25.0.3",
+    "@siberiacancode/eslint": "2.14.0",
+    "@siberiacancode/prettier": "^1.6.0",
+    "@types/node": "^25.2.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier-plugin-tailwindcss": "^0.7.2",

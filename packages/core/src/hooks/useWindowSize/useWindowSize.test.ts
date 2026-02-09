@@ -59,8 +59,11 @@ it('Should not include scrollbar', () => {
 });
 
 it('Should cleanup up on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
   const { unmount } = renderHook(() => useWindowSize());
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
 
   unmount();
 

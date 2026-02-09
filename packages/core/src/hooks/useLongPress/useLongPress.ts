@@ -22,12 +22,20 @@ export interface UseLongPressOptions {
   onStart?: (event: LongPressEvents) => void;
 }
 
+/** The use long press return type */
+export interface UseLongPressReturn {
+  /** The long pressing state */
+  pressed: boolean;
+  /** The ref to attach to the element */
+  ref: StateRef<Element>;
+}
+
 export interface UseLongPress {
   (
     target: HookTarget,
     callback: (event: LongPressEvents) => void,
     options?: UseLongPressOptions
-  ): boolean;
+  ): UseLongPressReturn;
 
   <Target extends Element>(
     callback: (event: LongPressEvents) => void,
@@ -35,8 +43,7 @@ export interface UseLongPress {
     target?: never
   ): {
     ref: StateRef<Target>;
-    pressed: boolean;
-  };
+  } & UseLongPressReturn;
 }
 
 const DEFAULT_THRESHOLD_TIME = 400;
@@ -128,9 +135,6 @@ export const useLongPress = ((...params: any[]): any => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 
-  if (target) return pressed;
-  return {
-    ref: internalRef,
-    pressed
-  };
+  if (target) return { pressed };
+  return { pressed, ref: internalRef };
 }) as UseLongPress;

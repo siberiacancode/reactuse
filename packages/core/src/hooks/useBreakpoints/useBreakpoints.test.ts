@@ -272,8 +272,11 @@ describe('useBreakpoints', () => {
   });
 
   it('Should cleanup on unmount', () => {
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
     const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
     const { unmount } = renderHook(() => useBreakpoints(breakpoints));
+
+    expect(addEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
 
     unmount();
 

@@ -28,8 +28,11 @@ it('Should change value upon language changes', () => {
 });
 
 it('Should cleanup up on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
   const { unmount } = renderHook(usePreferredLanguages);
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('languagechange', expect.any(Function));
 
   unmount();
 

@@ -16,21 +16,26 @@ export interface UseInfiniteScrollOptions {
   distance?: number;
 }
 
+/** The use infinite scroll return type */
+export interface UseInfiniteScrollReturn {
+  /** The loading state of the infinite scroll */
+  loading: boolean;
+  /** The ref to attach to the element */
+  ref: StateRef<Element>;
+}
+
 export interface UseInfiniteScroll {
   (
     target: HookTarget,
     callback: (event: Event) => void,
     options?: UseInfiniteScrollOptions
-  ): boolean;
+  ): UseInfiniteScrollReturn;
 
   <Target extends Element>(
     callback: (event: Event) => void,
     options?: UseInfiniteScrollOptions,
     target?: never
-  ): {
-    ref: StateRef<Target>;
-    loading: boolean;
-  };
+  ): UseInfiniteScrollReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -44,7 +49,7 @@ export interface UseInfiniteScroll {
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
  * @param {number} [options.distance=10] The distance in pixels to trigger the callback
  * @param {string} [options.direction='bottom'] The direction to trigger the callback
- * @returns {{ ref: StateRef<Target>, loading: boolean }} An object containing the ref and loading
+ * @returns {UseInfiniteScrollReturn & { ref: StateRef<Target> }} An object containing the ref and loading
  *
  * @example
  * const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));
@@ -54,10 +59,10 @@ export interface UseInfiniteScroll {
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
  * @param {number} [options.distance=10] The distance in pixels to trigger the callback
  * @param {string} [options.direction='bottom'] The direction to trigger the callback
- * @returns {boolean} A loading indicator of the infinite scroll
+ * @returns {UseInfiniteScrollReturn} An object containing the ref and loading
  *
  * @example
- * const loading = useInfiniteScroll(ref, () => console.log('infinite scroll'));
+ * const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));
  */
 export const useInfiniteScroll = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
@@ -109,7 +114,7 @@ export const useInfiniteScroll = ((...params: any[]) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state, direction, distance]);
 
-  if (target) return loading;
+  if (target) return { loading };
   return {
     ref: internalRef,
     loading

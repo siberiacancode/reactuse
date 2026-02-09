@@ -14,21 +14,17 @@ export interface UseKeysPressedOptions {
   enabled?: boolean;
 }
 
+export interface UseKeysPressedReturn {
+  /** The array of currently pressed keys */
+  value: Array<{ key: string; code: string }>;
+}
+
 export interface UseKeysPressed {
-  (
-    target: HookTarget | Window,
-    options?: UseKeysPressedOptions
-  ): Array<{
-    key: string;
-    code: string;
-  }>;
+  (target: HookTarget | Window, options?: UseKeysPressedOptions): UseKeysPressedReturn;
 
   <Target extends Element>(
     options?: UseKeysPressedOptions
-  ): {
-    value: Array<{ key: string; code: string }>;
-    ref: StateRef<Target>;
-  };
+  ): UseKeysPressedReturn & { ref: StateRef<Target> };
 }
 
 /**
@@ -40,15 +36,15 @@ export interface UseKeysPressed {
  * @overload
  * @param {HookTarget | Window} target DOM element or ref to attach keyboard listeners to
  * @param {UseKeysPressedOptions} [options.enabled=true] Enable or disable the event listeners
- * @returns {Array<{ key: string; code: string }>} Array of currently pressed keys with their key and code values
+ * @returns {UseKeysPressedReturn} Object containing the array of currently pressed keys
  *
  * @example
- * const pressedKeys = useKeysPressed(ref);
+ * const { value } = useKeysPressed(ref);
  *
  * @overload
  * @template Target - Type of the target DOM element
  * @param {UseKeysPressedOptions} [options] - Optional configuration options
- * @returns {{ keys: Array<{ key: string; code: string }>; ref: StateRef<Target> }} Object containing pressed keys array and ref to attach to a DOM element
+ * @returns {UseKeysPressedReturn & { ref: StateRef<Target> }} Object containing the array of currently pressed keys and ref to attach to the element
  *
  * @example
  * const { value, ref } = useKeysPressed();
@@ -90,6 +86,6 @@ export const useKeysPressed = ((...params: any[]) => {
     };
   }, [enabled, internalRef.state, target && isTarget.getRawElement(target)]);
 
-  if (target) return value;
+  if (target) return { value };
   return { value, ref: internalRef };
 }) as UseKeysPressed;

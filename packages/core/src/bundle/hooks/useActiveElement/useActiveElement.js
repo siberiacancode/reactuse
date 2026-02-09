@@ -54,7 +54,7 @@ export const useActiveElement = (...params) => {
       element.removeEventListener('blur', onActiveElementChange, true);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
-  if (target) return value;
+  if (target) return { value };
   return {
     ref: internalRef,
     value

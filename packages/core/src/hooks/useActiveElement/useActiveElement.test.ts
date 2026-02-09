@@ -60,12 +60,8 @@ targets.forEach((target) => {
         return useActiveElement<HTMLDivElement>();
       });
 
-      if (!target) {
-        expect(result.current.ref).toBeTypeOf('function');
-        expect(result.current.value).toBeNull();
-      } else {
-        expect(result.current).toBeNull();
-      }
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      expect(result.current.value).toBeNull();
     });
 
     it('Should use active element on server side', () => {
@@ -78,12 +74,8 @@ targets.forEach((target) => {
         return useActiveElement<HTMLDivElement>();
       });
 
-      if (!target) {
-        expect(result.current.ref).toBeTypeOf('function');
-        expect(result.current.value).toBeNull();
-      } else {
-        expect(result.current).toBeNull();
-      }
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      expect(result.current.value).toBeNull();
     });
 
     it('Should set active element on focus', () => {
@@ -96,26 +88,16 @@ targets.forEach((target) => {
         return useActiveElement<HTMLDivElement>();
       });
 
-      if (!target) {
-        act(() => result.current.ref(element));
-      }
+      if (!target) act(() => result.current.ref(element));
 
-      if (!target) {
-        expect(result.current.value).toBeNull();
-      } else {
-        expect(result.current).toBeNull();
-      }
+      expect(result.current.value).toBeNull();
 
       act(() => {
         element.focus();
         element.dispatchEvent(new FocusEvent('focus', { bubbles: true }));
       });
 
-      if (!target) {
-        expect(result.current.value).toBe(element);
-      } else {
-        expect(result.current).toBe(element);
-      }
+      expect(result.current.value).toBe(element);
     });
 
     it('Should unset active element on blur', () => {
@@ -128,34 +110,20 @@ targets.forEach((target) => {
         return useActiveElement<HTMLDivElement>();
       });
 
-      if (!target) {
-        act(() => 'ref' in result.current! && result.current.ref(element));
-      }
+      if (!target) act(() => 'ref' in result.current! && result.current.ref(element));
 
-      if (!target && 'value' in result.current!) {
-        expect(result.current.value).toBeNull();
-      } else {
-        expect(result.current).toBeNull();
-      }
+      expect(result.current.value).toBeNull();
 
       act(() => {
         element.focus();
         element.dispatchEvent(new FocusEvent('focus', { bubbles: true }));
       });
 
-      if (!target && 'value' in result.current!) {
-        expect(result.current.value).toBe(element);
-      } else {
-        expect(result.current).toBe(element);
-      }
+      expect(result.current.value).toBe(element);
 
       act(() => element.blur());
 
-      if (!target && 'value' in result.current!) {
-        expect(result.current.value).toBe(document.activeElement);
-      } else {
-        expect(result.current).toBe(document.activeElement);
-      }
+      expect(result.current.value).toBe(document.activeElement);
     });
 
     it('Should handle target changes', () => {

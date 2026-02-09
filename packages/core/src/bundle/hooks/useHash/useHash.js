@@ -15,7 +15,7 @@ export const getHash = () => decodeURIComponent(window.location.hash.replace('#'
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash("initial");
+ * const { value, set } = useHash("initial");
  *
  * @overload
  * @param {string} [initialValue] The initial hash value if no hash exists
@@ -23,7 +23,7 @@ export const getHash = () => decodeURIComponent(window.location.hash.replace('#'
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash("initial", (newHash) => console.log('callback'));
+ * const { value, set } = useHash("initial", (newHash) => console.log('callback'));
  *
  * @overload
  * @param {UseHashOptions} [options] Configuration options
@@ -33,14 +33,14 @@ export const getHash = () => decodeURIComponent(window.location.hash.replace('#'
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash();
+ * const { value, set } = useHash();
  *
  * @overload
  * @param {(hash: string) => void} [callback] Callback function called when hash changes
  * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [hash, setHash] = useHash((newHash) => console.log('callback'));
+ * const { value, set } = useHash((newHash) => console.log('callback'));
  */
 export const useHash = (...params) => {
   const initialValue = typeof params[0] === 'string' ? params[0] : '';
@@ -78,5 +78,8 @@ export const useHash = (...params) => {
       window.removeEventListener('hashchange', onHashChange);
     };
   }, [enabled, mode]);
-  return [hash, set];
+  return {
+    value: hash,
+    set
+  };
 };

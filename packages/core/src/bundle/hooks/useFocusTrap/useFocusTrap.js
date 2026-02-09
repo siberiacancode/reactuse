@@ -25,7 +25,7 @@ const focusElement = (element) => {
  * @overload
  * @param {HookTarget} target The target element for focus trap
  * @param {boolean} [active=true] Whether focus trap is active
- * @returns {UseFocusTrapReturn} Object with control methods and state
+ * @returns {UseFocusTrapReturn} Object with the focus trap state and methods
  *
  * @example
  * const { active, disable, toggle, enable } = useFocusTrap(ref, true);
@@ -33,7 +33,7 @@ const focusElement = (element) => {
  * @overload
  * @template Target The target element type
  * @param {boolean} [active=true] Whether focus trap is active
- * @returns {UseFocusTrapReturn & { ref: StateRef<Target> }} Object with ref and controls
+ * @returns {UseFocusTrapReturn & { ref: StateRef<Target> }} Object with the focus trap state and methods
  *
  * @example
  * const { ref, active, disable, toggle, enable } = useFocusTrap(true);

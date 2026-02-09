@@ -23,14 +23,14 @@ export interface UseStickyOptions {
 }
 
 export interface UseSticky {
-  (target: HookTarget, options?: UseStickyOptions): boolean;
+  (target: HookTarget, options?: UseStickyOptions): UseStickyReturn;
 
   <Target extends Element>(
     options?: UseStickyOptions,
     target?: never
-  ): {
+  ): UseStickyReturn & {
     ref: StateRef<Target>;
-  } & UseStickyReturn;
+  };
 }
 
 /**
@@ -46,12 +46,12 @@ export interface UseSticky {
  * @returns {UseStickyReturn} The state of the sticky
  *
  * @example
- * const stuck  = useSticky(ref);
+ * const { stuck } = useSticky(ref);
  *
  * @overload
  * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component
  * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component
- * @returns {{ stickyRef: StateRef<Target> } & UseStickyReturn} The state of the sticky
+ * @returns {{ ref: StateRef<Target> } & UseStickyReturn} The state of the sticky
  *
  * @example
  * const { stuck, ref } = useSticky();
@@ -102,7 +102,7 @@ export const useSticky = ((...params: any[]) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state, axis, options?.root]);
 
-  if (target) return stuck;
+  if (target) return { stuck };
   return {
     stuck,
     ref: internalRef
