@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);
 
 const resolveAutoIncrement = (progress: number, trickleRate: number) => {
   if (progress < 0.25) return 0.12 + trickleRate * Math.random();
@@ -41,7 +42,7 @@ export interface UseProgressReturn {
 
 /**
  * @name useProgress
- * @description - Hook that creates a lightweight progress bar state with NProgress-like behavior
+ * @description - Hook that creates a lightweight progress bar
  * @category Time
  * @usage medium
  *
@@ -56,7 +57,10 @@ export interface UseProgressReturn {
  * @example
  * const { value, active, start, done, inc, set, remove } = useProgress(0.2);
  */
-export const useProgress = (initialValue: number = 0, options: UseProgressOptions = {}) => {
+export const useProgress = (
+  initialValue: number = 0,
+  options: UseProgressOptions = {}
+) => {
   const speed = Math.max(options.speed ?? 250, 16);
   const rate = clamp(options.rate ?? 0.02, 0, 0.3);
   const maximum = options.maximum ?? 0.98;
@@ -74,7 +78,9 @@ export const useProgress = (initialValue: number = 0, options: UseProgressOption
   };
 
   const inc = (amount: number = resolveAutoIncrement(value, rate)) =>
-    setValue((currentValue) => clamp(currentValue + amount, initialValue, maximum));
+    setValue((currentValue) =>
+      clamp(currentValue + amount, initialValue, maximum)
+    );
 
   const start = (from: number = initialValue) => {
     setActive(true);
@@ -100,6 +106,6 @@ export const useProgress = (initialValue: number = 0, options: UseProgressOption
     start,
     done,
     inc,
-    remove
+    remove,
   };
 };
