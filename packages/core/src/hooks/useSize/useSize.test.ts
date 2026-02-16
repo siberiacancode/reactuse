@@ -9,7 +9,6 @@ import type { UseSizeReturn } from './useSize';
 import { useSize } from './useSize';
 
 const trigger = createTrigger<Element, ResizeObserverCallback>();
-const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
 const mockResizeObserverDisconnect = vi.fn();
 const mockResizeObserverObserve = vi.fn();
 const mockResizeObserver = class ResizeObserver {
@@ -49,13 +48,9 @@ const targets = [
 const element = document.getElementById('target') as HTMLDivElement;
 
 targets.forEach((target) => {
-  beforeEach(() => {
-    mockResizeObserverObserve.mockClear();
-    mockResizeObserverDisconnect.mockClear();
-  });
-
   describe(`${target}`, () => {
     it('Should use size', () => {
+      const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result } = renderHook(() => {
         if (target)
@@ -84,6 +79,7 @@ targets.forEach((target) => {
     });
 
     it('Should set initial value', () => {
+      const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 200, 200));
       const { result } = renderHook(() => {
         if (target)
@@ -100,6 +96,7 @@ targets.forEach((target) => {
     });
 
     it('Should change value after resize', () => {
+      const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result } = renderHook(() => {
         if (target)
@@ -155,6 +152,7 @@ targets.forEach((target) => {
     });
 
     it('Should cleanup on unmount', () => {
+      const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
       const { result, unmount } = renderHook(() => {
         if (target)

@@ -47,8 +47,6 @@ beforeEach(() => {
   trigger.clear();
 });
 
-afterEach(vi.clearAllMocks);
-
 it('Should use event source', () => {
   const { result } = renderHook(() => useEventSource('https://example.com/events'));
 

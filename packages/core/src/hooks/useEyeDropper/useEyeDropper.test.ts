@@ -17,8 +17,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(vi.clearAllMocks);
-
 it('Should use eye dropper', () => {
   const { result } = renderHook(useEyeDropper);
 

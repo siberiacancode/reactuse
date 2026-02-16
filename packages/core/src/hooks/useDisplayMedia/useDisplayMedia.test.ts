@@ -1,5 +1,5 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { afterEach, beforeEach, expect, vi } from 'vitest';
+import { beforeEach, expect, vi } from 'vitest';
 
 import { renderHookServer } from '@/tests';
 import { isTarget, target } from '@/utils/helpers';
@@ -25,10 +25,6 @@ beforeEach(() => {
   mockGetDisplayMedia.mockResolvedValue({
     getTracks: () => [mockTrack]
   });
-});
-
-afterEach(() => {
-  vi.clearAllMocks();
 });
 
 const targets = [

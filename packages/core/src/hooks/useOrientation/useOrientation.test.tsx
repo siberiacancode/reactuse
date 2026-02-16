@@ -31,8 +31,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(vi.clearAllMocks);
-
 it('Should use orientation', () => {
   const { result } = renderHook(useOrientation);
 

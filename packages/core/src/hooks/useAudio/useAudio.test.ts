@@ -30,8 +30,6 @@ class MockAudio {
   currentTime = 0;
 }
 
-afterEach(vi.clearAllMocks);
-
 globalThis.Audio = MockAudio as unknown as typeof Audio;
 
 it('Should use audio', () => {

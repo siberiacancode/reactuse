@@ -17,10 +17,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(() => {
-  vi.restoreAllMocks();
-});
-
 it('Should use memory', () => {
   const { result } = renderHook(useMemory);
 

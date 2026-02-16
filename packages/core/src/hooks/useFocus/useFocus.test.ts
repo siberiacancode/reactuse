@@ -25,7 +25,6 @@ const element = document.getElementById('target') as HTMLDivElement;
 beforeEach(() => {
   element.matches = vi.fn().mockReturnValue(true);
 });
-afterEach(vi.clearAllMocks);
 targets.forEach((target) => {
   describe(`${target}`, () => {
     it('Should use focus', () => {

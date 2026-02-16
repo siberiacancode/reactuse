@@ -40,8 +40,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(vi.restoreAllMocks);
-
 const breakpoints = {
   mobile: 0,
   tablet: 640,

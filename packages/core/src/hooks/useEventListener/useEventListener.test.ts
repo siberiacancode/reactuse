@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { target } from '@/utils/helpers';
 
@@ -7,8 +7,6 @@ import type { UseEventListenerReturn } from './useEventListener';
 
 import { renderHookServer } from '../../../tests/renderHookServer';
 import { useEventListener } from './useEventListener';
-
-afterEach(vi.clearAllMocks);
 
 const targets = [
   undefined,

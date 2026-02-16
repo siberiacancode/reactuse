@@ -33,8 +33,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(vi.clearAllMocks);
-
 it('Should use broadcast channel', () => {
   const { result } = renderHook(() => useBroadcastChannel(channelName));
 

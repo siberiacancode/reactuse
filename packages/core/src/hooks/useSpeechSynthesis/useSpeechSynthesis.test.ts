@@ -34,8 +34,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(vi.clearAllMocks);
-
 it('Should use speech synthesis', () => {
   const { result } = renderHook(useSpeechSynthesis);
 

@@ -24,8 +24,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(vi.clearAllMocks);
-
 it('Should use copy to clipboard', () => {
   const { result } = renderHook(useClipboard);
 

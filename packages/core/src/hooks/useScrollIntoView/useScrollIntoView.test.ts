@@ -25,7 +25,6 @@ const targets = [
 const element = document.getElementById('target') as HTMLDivElement;
 
 beforeEach(() => {
-  vi.clearAllMocks();
   element.scrollIntoView = mockScrollIntoView;
 });
 

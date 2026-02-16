@@ -32,8 +32,6 @@ class MockMutationObserver {
 globalThis.MutationObserver = MockMutationObserver as any;
 
 beforeEach(trigger.clear);
-afterEach(vi.clearAllMocks);
-
 const targets = [
   undefined,
   target('#target'),

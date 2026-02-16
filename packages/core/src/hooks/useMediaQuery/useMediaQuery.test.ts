@@ -34,8 +34,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(vi.restoreAllMocks);
-
 it('Should use media query"', () => {
   const { result } = renderHook(() => useMediaQuery('(max-width: 768px)'));
 

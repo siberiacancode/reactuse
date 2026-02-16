@@ -7,7 +7,6 @@ import { usePostMessage } from './usePostMessage';
 const trigger = createTrigger<string, (event: Event) => void>();
 
 beforeEach(() => {
-  vi.clearAllMocks();
   trigger.clear();
 
   Object.assign(window, {

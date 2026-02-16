@@ -10,7 +10,7 @@ const resolveAutoIncrement = (progress, trickleRate) => {
 };
 /**
  * @name useProgress
- * @description - Hook that creates a lightweight progress bar state with NProgress-like behavior
+ * @description - Hook that creates a lightweight progress bar
  * @category Time
  * @usage medium
  *
@@ -19,7 +19,7 @@ const resolveAutoIncrement = (progress, trickleRate) => {
  * @param {number} [options.maximum=0.95] Maximum value when progress starts
  * @param {number} [options.speed=250] Auto increment interval in milliseconds
  * @param {number} [options.rate=0.02] Additional random increment amount on each tick
- * @param {number} [options.doneResetDelay=250] Delay before reset to null after done
+ * @param {number} [options.delay=250] Delay before reset to null after done
  * @returns {UseProgressReturn} Current progress state and control methods
  *
  * @example
@@ -29,6 +29,7 @@ export const useProgress = (initialValue = 0, options = {}) => {
   const speed = Math.max(options.speed ?? 250, 16);
   const rate = clamp(options.rate ?? 0.02, 0, 0.3);
   const maximum = options.maximum ?? 0.98;
+  const delay = options.delay ?? 250;
   const [value, setValue] = useState(initialValue);
   const [active, setActive] = useState(!!options.immediately);
   const [internalActive, setInternalActive] = useState(active);
@@ -36,7 +37,7 @@ export const useProgress = (initialValue = 0, options = {}) => {
   const done = () => {
     setValue(1);
     setInternalActive(false);
-    setTimeout(() => setActive(false), 250);
+    setTimeout(() => setActive(false), delay);
   };
   const inc = (amount = resolveAutoIncrement(value, rate)) =>
     setValue((currentValue) => clamp(currentValue + amount, initialValue, maximum));

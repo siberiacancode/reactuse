@@ -43,7 +43,6 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  vi.clearAllMocks();
   mockMediaQueryListAddEventListener.mockClear();
   mockMediaQueryListRemoveEventListener.mockClear();
 });

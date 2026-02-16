@@ -60,8 +60,6 @@ beforeEach(() => {
   trigger.clear();
 });
 
-afterEach(vi.clearAllMocks);
-
 targets.forEach((target) => {
   describe(`${target}`, () => {
     it('Should use auto scroll', () => {

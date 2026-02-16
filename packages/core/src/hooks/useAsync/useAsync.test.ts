@@ -4,10 +4,6 @@ import { renderHookServer } from '@/tests';
 
 import { useAsync } from './useAsync';
 
-afterEach(() => {
-  vi.clearAllMocks();
-});
-
 it('Should use async', async () => {
   const { result } = renderHook(() => useAsync(() => Promise.resolve('data')));
 

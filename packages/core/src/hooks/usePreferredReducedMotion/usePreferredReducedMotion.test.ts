@@ -32,7 +32,6 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  vi.clearAllMocks();
   mockMatchMedia.matches = false;
 });
 

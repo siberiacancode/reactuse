@@ -76,8 +76,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(vi.clearAllMocks);
-
 it('Should use speech recognition', () => {
   const { result } = renderHook(useSpeechRecognition);
 

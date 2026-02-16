@@ -54,7 +54,6 @@ class MockResizeObserver {
 globalThis.ResizeObserver = MockResizeObserver as any;
 
 afterEach(() => {
-  vi.clearAllMocks();
   trigger.clear();
 });
 

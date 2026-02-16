@@ -4,8 +4,6 @@ import { renderHookServer } from '@/tests';
 
 import { useDocumentVisibility } from './useDocumentVisibility';
 
-const mockDocumentVisibility = vi.spyOn(document, 'visibilityState', 'get');
-
 it('Should use document visibility', () => {
   const { result } = renderHook(useDocumentVisibility);
   expect(result.current).toBe(document.visibilityState);
@@ -17,18 +15,21 @@ it('Should use document visibility on server', () => {
 });
 
 it('Should return "hidden" after initialization', () => {
+  const mockDocumentVisibility = vi.spyOn(document, 'visibilityState', 'get');
   mockDocumentVisibility.mockReturnValue('hidden');
   const { result } = renderHook(useDocumentVisibility);
   expect(result.current).toBe('hidden');
 });
 
 it('Should return "visible" after initialization', () => {
+  const mockDocumentVisibility = vi.spyOn(document, 'visibilityState', 'get');
   mockDocumentVisibility.mockReturnValue('visible');
   const { result } = renderHook(useDocumentVisibility);
   expect(result.current).toBe('visible');
 });
 
 it('Should update visibility state on visibilitychange event', () => {
+  const mockDocumentVisibility = vi.spyOn(document, 'visibilityState', 'get');
   mockDocumentVisibility.mockReturnValue('visible');
   const { result } = renderHook(useDocumentVisibility);
   expect(result.current).toBe('visible');

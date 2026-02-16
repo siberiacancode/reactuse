@@ -4,9 +4,8 @@ import { renderHookServer } from '@/tests';
 
 import { usePreferredLanguages } from './usePreferredLanguages';
 
-const mockNavigatorLanguages = vi.spyOn(navigator, 'languages', 'get');
-
 it('Should use preferred languages', () => {
+  const mockNavigatorLanguages = vi.spyOn(navigator, 'languages', 'get');
   mockNavigatorLanguages.mockReturnValue(['en', 'en-US', 'fr', 'fr-FR']);
   const { result } = renderHook(usePreferredLanguages);
   expect(result.current).toEqual(['en', 'en-US', 'fr', 'fr-FR']);
@@ -18,6 +17,7 @@ it('Should use preferred languages on server side', () => {
 });
 
 it('Should change value upon language changes', () => {
+  const mockNavigatorLanguages = vi.spyOn(navigator, 'languages', 'get');
   mockNavigatorLanguages.mockReturnValue(['en', 'en-US', 'fr', 'fr-FR']);
   const { result } = renderHook(usePreferredLanguages);
   expect(result.current).toEqual(['en', 'en-US', 'fr', 'fr-FR']);

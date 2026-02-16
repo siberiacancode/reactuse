@@ -44,7 +44,6 @@ class MockMutationObserver {
 globalThis.MutationObserver = MockMutationObserver as any;
 
 afterEach(() => {
-  vi.clearAllMocks();
   trigger.clear();
 });
 

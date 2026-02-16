@@ -47,7 +47,6 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  vi.clearAllMocks();
   Object.keys(matchState).forEach((key) => {
     matchState[key] = false;
   });

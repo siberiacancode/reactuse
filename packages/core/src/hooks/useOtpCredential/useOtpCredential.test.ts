@@ -8,7 +8,6 @@ import { useOtpCredential } from './useOtpCredential';
 const mockGet = vi.fn();
 
 beforeEach(() => {
-  mockGet.mockReset();
   Object.assign(navigator, {
     OTPCredential: vi.fn(),
     credentials: {
@@ -16,8 +15,6 @@ beforeEach(() => {
     }
   });
 });
-
-afterEach(vi.clearAllMocks);
 
 it('Should use otp credential', () => {
   const { result } = renderHook(useOtpCredential);

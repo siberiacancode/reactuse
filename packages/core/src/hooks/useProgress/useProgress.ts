@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-const clamp = (value: number, min: number, max: number) =>
-  Math.min(Math.max(value, min), max);
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 const resolveAutoIncrement = (progress: number, trickleRate: number) => {
   if (progress < 0.25) return 0.12 + trickleRate * Math.random();
@@ -14,6 +13,8 @@ const resolveAutoIncrement = (progress: number, trickleRate: number) => {
 
 /** The use progress options type */
 export interface UseProgressOptions {
+  /** Delay before reset to null after done */
+  delay?: number;
   /** Start progress immediately */
   immediately?: boolean;
   /** Maximum progress value */
@@ -51,19 +52,17 @@ export interface UseProgressReturn {
  * @param {number} [options.maximum=0.95] Maximum value when progress starts
  * @param {number} [options.speed=250] Auto increment interval in milliseconds
  * @param {number} [options.rate=0.02] Additional random increment amount on each tick
- * @param {number} [options.doneResetDelay=250] Delay before reset to null after done
+ * @param {number} [options.delay=250] Delay before reset to null after done
  * @returns {UseProgressReturn} Current progress state and control methods
  *
  * @example
  * const { value, active, start, done, inc, set, remove } = useProgress(0.2);
  */
-export const useProgress = (
-  initialValue: number = 0,
-  options: UseProgressOptions = {}
-) => {
+export const useProgress = (initialValue: number = 0, options: UseProgressOptions = {}) => {
   const speed = Math.max(options.speed ?? 250, 16);
   const rate = clamp(options.rate ?? 0.02, 0, 0.3);
   const maximum = options.maximum ?? 0.98;
+  const delay = options.delay ?? 250;
 
   const [value, setValue] = useState(initialValue);
   const [active, setActive] = useState(!!options.immediately);
@@ -74,13 +73,11 @@ export const useProgress = (
   const done = () => {
     setValue(1);
     setInternalActive(false);
-    setTimeout(() => setActive(false), 250);
+    setTimeout(() => setActive(false), delay);
   };
 
   const inc = (amount: number = resolveAutoIncrement(value, rate)) =>
-    setValue((currentValue) =>
-      clamp(currentValue + amount, initialValue, maximum)
-    );
+    setValue((currentValue) => clamp(currentValue + amount, initialValue, maximum));
 
   const start = (from: number = initialValue) => {
     setActive(true);
@@ -106,6 +103,6 @@ export const useProgress = (
     start,
     done,
     inc,
-    remove,
+    remove
   };
 };

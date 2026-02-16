@@ -4,13 +4,10 @@ import { renderHookServer } from '@/tests';
 
 import { useWindowSize } from './useWindowSize';
 
-const mockWindowInnerHeight = vi.spyOn(window, 'innerHeight', 'get');
-const mockWindowInnerWidth = vi.spyOn(window, 'innerWidth', 'get');
-
-const mockWindowClientHeight = vi.spyOn(window.document.documentElement, 'clientHeight', 'get');
-const mockWindowClientWidth = vi.spyOn(window.document.documentElement, 'clientWidth', 'get');
-
 it('Should use window size', () => {
+  const mockWindowInnerHeight = vi.spyOn(window, 'innerHeight', 'get');
+  const mockWindowInnerWidth = vi.spyOn(window, 'innerWidth', 'get');
+
   mockWindowInnerHeight.mockReturnValue(100);
   mockWindowInnerWidth.mockReturnValue(100);
 
@@ -29,6 +26,9 @@ it('Should use window size on server side', () => {
 });
 
 it('Should change state upon resize events', () => {
+  const mockWindowInnerHeight = vi.spyOn(window, 'innerHeight', 'get');
+  const mockWindowInnerWidth = vi.spyOn(window, 'innerWidth', 'get');
+
   mockWindowInnerHeight.mockReturnValue(100);
   mockWindowInnerWidth.mockReturnValue(100);
   const { result } = renderHook(useWindowSize);
@@ -45,6 +45,9 @@ it('Should change state upon resize events', () => {
 });
 
 it('Should not include scrollbar', () => {
+  const mockWindowClientHeight = vi.spyOn(window.document.documentElement, 'clientHeight', 'get');
+  const mockWindowClientWidth = vi.spyOn(window.document.documentElement, 'clientWidth', 'get');
+
   mockWindowClientHeight.mockReturnValue(100);
   mockWindowClientWidth.mockReturnValue(100);
   const { result } = renderHook(() => useWindowSize({ includeScrollbar: false }));

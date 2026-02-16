@@ -54,7 +54,6 @@ const targets = [
 const element = document.getElementById('target') as HTMLDivElement;
 
 afterEach(() => {
-  vi.clearAllMocks();
   trigger.clear();
 });
 
