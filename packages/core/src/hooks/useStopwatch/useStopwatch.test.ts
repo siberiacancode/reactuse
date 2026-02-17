@@ -55,33 +55,33 @@ it('Should start counting when enabled', () => {
 
   expect(result.current.seconds).toBe(1);
   expect(result.current.minutes).toBe(0);
-  expect(result.current.count).toBe(1);
+  expect(result.current.count).toBe(1000);
 
   act(() => vi.advanceTimersByTime(59000));
 
   expect(result.current.seconds).toBe(0);
   expect(result.current.minutes).toBe(1);
-  expect(result.current.count).toBe(60);
+  expect(result.current.count).toBe(60_000);
 });
 
 it('Should handle initial time correctly', () => {
-  const { result } = renderHook(() => useStopwatch(90_061));
+  const { result } = renderHook(() => useStopwatch(90_061_000));
 
   expect(result.current.seconds).toBe(1);
   expect(result.current.minutes).toBe(1);
   expect(result.current.hours).toBe(1);
   expect(result.current.days).toBe(1);
-  expect(result.current.count).toBe(90061);
+  expect(result.current.count).toBe(90_061_000);
 });
 
 it('Should handle initial time with options object', () => {
-  const { result } = renderHook(() => useStopwatch({ initialTime: 90_061 }));
+  const { result } = renderHook(() => useStopwatch({ initialTime: 90_061_000 }));
 
   expect(result.current.seconds).toBe(1);
   expect(result.current.minutes).toBe(1);
   expect(result.current.hours).toBe(1);
   expect(result.current.days).toBe(1);
-  expect(result.current.count).toBe(90061);
+  expect(result.current.count).toBe(90_061_000);
 });
 
 it('Should respect immediately option', () => {
@@ -141,7 +141,7 @@ it('Should toggle pause state', () => {
 });
 
 it('Should reset to initial time', () => {
-  const { result } = renderHook(() => useStopwatch(1));
+  const { result } = renderHook(() => useStopwatch(1000));
 
   expect(result.current.seconds).toBe(1);
 
