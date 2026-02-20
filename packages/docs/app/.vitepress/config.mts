@@ -208,7 +208,7 @@ export default async () => {
         options: {
           appId: "62LROXAB1F",
           apiKey: "87ab8dd07b4aba02814c082d98e4b8a7",
-          indexName: "siberiacancodeio",
+          indexName: "reactuse",
         },
       },
       socialLinks: [
