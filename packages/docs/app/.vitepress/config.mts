@@ -1,22 +1,24 @@
-import type { DefaultTheme, MarkdownOptions } from 'vitepress';
+import type { DefaultTheme, MarkdownOptions } from "vitepress";
 
-import { transformerTwoslash } from '@shikijs/vitepress-twoslash';
-import tailwindcss from '@tailwindcss/vite';
-import { fileURLToPath } from 'node:url';
-import { defineConfig } from 'vitepress';
+import { transformerTwoslash } from "@shikijs/vitepress-twoslash";
+import tailwindcss from "@tailwindcss/vite";
+import { fileURLToPath } from "node:url";
+import { defineConfig } from "vitepress";
 
-import { getContentItems } from '../../src/utils';
+import { getContentItems } from "../../src/utils";
 
 export default async () => {
   const contentItems = await getContentItems();
   const sidebarContentItems = contentItems.reduce<DefaultTheme.SidebarItem[]>(
     (categoryItems, contentItem) => {
-      const category = categoryItems.find((group) => group.text === contentItem.category);
+      const category = categoryItems.find(
+        (group) => group.text === contentItem.category
+      );
 
       if (!category) {
         categoryItems.push({
           text: contentItem.category,
-          items: [contentItem]
+          items: [contentItem],
         });
       } else {
         category.items!.push(contentItem);
@@ -28,46 +30,53 @@ export default async () => {
   );
 
   return defineConfig({
-    base: '/',
-    title: 'reactuse',
+    base: "/",
+    title: "reactuse",
     description:
-      'Improve your react applications with our library 📦 designed for comfort and speed',
+      "Improve your react applications with our library 📦 designed for comfort and speed",
     markdown: {
       codeTransformers: [transformerTwoslash()],
-      languages: ['js', 'jsx', 'ts', 'tsx']
+      languages: ["js", "jsx", "ts", "tsx"],
     } as unknown as MarkdownOptions,
     vite: {
       plugins: [tailwindcss()],
       resolve: {
         alias: {
-          '@siberiacancode/reactuse': fileURLToPath(new URL('../../../core/src', import.meta.url)),
-          '@siberiacancode/docs': fileURLToPath(new URL('../../src', import.meta.url)),
-          '@': fileURLToPath(new URL('../../../core/src', import.meta.url))
-        }
-      }
+          "@siberiacancode/reactuse": fileURLToPath(
+            new URL("../../../core/src", import.meta.url)
+          ),
+          "@siberiacancode/docs": fileURLToPath(
+            new URL("../../src", import.meta.url)
+          ),
+          "@": fileURLToPath(new URL("../../../core/src", import.meta.url)),
+        },
+      },
     },
     transformPageData: (pageData) => {
       pageData.frontmatter.head ??= [];
       pageData.frontmatter.head.push([
-        'meta',
+        "meta",
         {
-          name: 'og:image',
+          name: "og:image",
           content:
-            'https://repository-images.githubusercontent.com/799880708/0afee0cb-ca48-40a2-9c38-dc5b64ebdf65'
-        }
+            "https://repository-images.githubusercontent.com/799880708/0afee0cb-ca48-40a2-9c38-dc5b64ebdf65",
+        },
       ]);
 
-      if (pageData.relativePath.includes('hooks')) {
+      if (pageData.relativePath.includes("hooks")) {
         pageData.title = pageData.params?.name;
       }
     },
     head: [
-      ['meta', { name: 'algolia-site-verification', content: '60FB6E25551CE504' }],
-      ['link', { rel: 'icon', href: '/favicon.ico' }],
-      ['link', { rel: 'manifest', href: '/manifest.json' }],
       [
-        'script',
-        { type: 'text/javascript' },
+        "meta",
+        { name: "algolia-site-verification", content: "60FB6E25551CE504" },
+      ],
+      ["link", { rel: "icon", href: "/favicon.ico" }],
+      ["link", { rel: "manifest", href: "/manifest.json" }],
+      [
+        "script",
+        { type: "text/javascript" },
         `(function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
             m[i].l=1*new Date();
@@ -82,34 +91,34 @@ export default async () => {
           clickmap:true,
           trackLinks:true,
           accurateTrackBounce:true
-        });`
+        });`,
       ],
       [
-        'noscript',
+        "noscript",
         {},
-        `<div><img src="https://mc.yandex.ru/watch/102942267" style="position:absolute; left:-9999px;" alt="" /></div>`
+        `<div><img src="https://mc.yandex.ru/watch/102942267" style="position:absolute; left:-9999px;" alt="" /></div>`,
       ],
 
       [
-        'script',
+        "script",
         {},
         `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-         })(window,document,'script','dataLayer','GTM-5SMCHX9Z');`
+         })(window,document,'script','dataLayer','GTM-5SMCHX9Z');`,
       ],
 
       [
-        'script',
+        "script",
         {
-          async: '',
-          src: 'https://www.googletagmanager.com/gtag/js?id=G-RRECQP6XBW'
-        }
+          async: "",
+          src: "https://www.googletagmanager.com/gtag/js?id=G-RRECQP6XBW",
+        },
       ],
 
       [
-        'script',
+        "script",
         {},
         `window.dataLayer = window.dataLayer || [];
          function gtag(){dataLayer.push(arguments);}
@@ -119,66 +128,66 @@ export default async () => {
            client_storage: 'none',
            allow_google_signals: false,
            allow_ad_personalization_signals: false
-         });`
-      ]
+         });`,
+      ],
     ],
     locales: {
       root: {
-        label: 'English',
-        lang: 'en',
+        label: "English",
+        lang: "en",
         themeConfig: {
           logo: {
-            src: '/logo.svg',
-            alt: 'reactuse'
+            src: "/logo.svg",
+            alt: "reactuse",
           },
           footer: {
-            message: 'Released under the MIT License.',
-            copyright: `Copyright © ${new Date().getFullYear()} siberiacancode`
+            message: "Released under the MIT License.",
+            copyright: `Copyright © ${new Date().getFullYear()} siberiacancode`,
           },
           editLink: {
             pattern: ({ filePath, params }) => {
-              if (filePath.includes('hooks') && params?.name) {
+              if (filePath.includes("hooks") && params?.name) {
                 return `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/${params.name}/${params.name}.ts`;
               } else {
                 return `https://github.com/siberiacancode/reactuse/blob/main/packages/docs/app/${filePath}`;
               }
             },
-            text: 'Suggest changes to this page'
+            text: "Suggest changes to this page",
           },
           nav: [
-            { text: 'Home', link: '/' },
+            { text: "Home", link: "/" },
             {
-              text: 'Functions',
+              text: "Functions",
               items: [
-                { text: 'Get Started', link: '/introduction' },
-                { text: 'Installation', link: '/installation' },
-                { text: 'Hooks', link: '/functions/hooks/useAsync.html' }
-              ]
-            }
+                { text: "Get Started", link: "/introduction" },
+                { text: "Installation", link: "/installation" },
+                { text: "Hooks", link: "/functions/hooks/useAsync.html" },
+              ],
+            },
           ],
           sidebar: [
             {
-              text: 'Getting started',
+              text: "Getting started",
               items: [
-                { text: 'Introduction', link: '/introduction' },
-                { text: 'Installation', link: '/installation' },
-                { text: 'reactuse.json', link: '/reactuse-json' },
-                { text: 'CLI', link: '/cli' },
-                { text: 'target', link: '/target' },
-                { text: 'memoization', link: '/memoization' }
-              ]
+                { text: "Introduction", link: "/introduction" },
+                { text: "Installation", link: "/installation" },
+                { text: "reactuse.json", link: "/reactuse-json" },
+                { text: "CLI", link: "/cli" },
+                { text: "target", link: "/target" },
+                { text: "memoization", link: "/memoization" },
+              ],
             },
             {
-              text: 'Installation',
+              text: "Installation",
               items: [
-                { text: 'Vite', link: '/installation/vite' },
-                { text: 'Next.js', link: '/installation/nextjs' }
-              ]
+                { text: "Vite", link: "/installation/vite" },
+                { text: "Next.js", link: "/installation/nextjs" },
+              ],
             },
-            ...sidebarContentItems
-          ]
-        }
-      }
+            ...sidebarContentItems,
+          ],
+        },
+      },
       // ru: {
       //   label: 'Русский',
       //   lang: 'ru',
@@ -195,20 +204,20 @@ export default async () => {
     },
     themeConfig: {
       search: {
-        provider: 'algolia',
+        provider: "algolia",
         options: {
-          appId: '62LROXAB1F',
-          apiKey: 'c1ff07348583383446ca32068eb1300f',
-          indexName: 'siberiacancodeio'
-        }
+          appId: "62LROXAB1F",
+          apiKey: "87ab8dd07b4aba02814c082d98e4b8a7",
+          indexName: "siberiacancodeio",
+        },
       },
       socialLinks: [
-        { icon: 'github', link: 'https://github.com/siberiacancode/reactuse' },
+        { icon: "github", link: "https://github.com/siberiacancode/reactuse" },
         {
-          icon: 'npm',
-          link: 'https://www.npmjs.com/package/@siberiacancode/reactuse'
-        }
-      ]
-    }
+          icon: "npm",
+          link: "https://www.npmjs.com/package/@siberiacancode/reactuse",
+        },
+      ],
+    },
   });
 };

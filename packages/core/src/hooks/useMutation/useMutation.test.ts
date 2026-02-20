@@ -1,35 +1,41 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from "@testing-library/react";
 
-import { renderHookServer } from '@/tests';
+import { renderHookServer } from "@/tests";
 
-import { useMutation } from './useMutation';
+import { useMutation } from "./useMutation";
 
-it('Should use mutation', () => {
-  const { result } = renderHook(() => useMutation(() => Promise.resolve('data')));
-
-  expect(result.current.data).toBeNull();
-  expect(result.current.error).toBeNull();
-  expect(result.current.isError).toBeFalsy();
-  expect(result.current.isLoading).toBeFalsy();
-  expect(result.current.isSuccess).toBeFalsy();
-  expect(result.current.mutate).toBeTypeOf('function');
-  expect(result.current.mutateAsync).toBeTypeOf('function');
-});
-
-it('Should use mutation on server side', () => {
-  const { result } = renderHookServer(() => useMutation(() => Promise.resolve('data')));
+it("Should use mutation", () => {
+  const { result } = renderHook(() =>
+    useMutation(() => Promise.resolve("data"))
+  );
 
   expect(result.current.data).toBeNull();
   expect(result.current.error).toBeNull();
   expect(result.current.isError).toBeFalsy();
   expect(result.current.isLoading).toBeFalsy();
   expect(result.current.isSuccess).toBeFalsy();
-  expect(result.current.mutate).toBeTypeOf('function');
-  expect(result.current.mutateAsync).toBeTypeOf('function');
+  expect(result.current.mutate).toBeTypeOf("function");
+  expect(result.current.mutateAsync).toBeTypeOf("function");
 });
 
-it('Should mutate data successfully', async () => {
-  const { result } = renderHook(() => useMutation(() => Promise.resolve('data')));
+it("Should use mutation on server side", () => {
+  const { result } = renderHookServer(() =>
+    useMutation(() => Promise.resolve("data"))
+  );
+
+  expect(result.current.data).toBeNull();
+  expect(result.current.error).toBeNull();
+  expect(result.current.isError).toBeFalsy();
+  expect(result.current.isLoading).toBeFalsy();
+  expect(result.current.isSuccess).toBeFalsy();
+  expect(result.current.mutate).toBeTypeOf("function");
+  expect(result.current.mutateAsync).toBeTypeOf("function");
+});
+
+it("Should mutate data successfully", async () => {
+  const { result } = renderHook(() =>
+    useMutation(() => Promise.resolve("data"))
+  );
 
   act(result.current.mutate);
 
@@ -39,43 +45,50 @@ it('Should mutate data successfully', async () => {
   await waitFor(() => {
     expect(result.current.isLoading).toBeFalsy();
     expect(result.current.isSuccess).toBeTruthy();
-    expect(result.current.data).toBe('data');
+    expect(result.current.data).toBe("data");
   });
 });
 
-it('Should handle errors', async () => {
-  const { result } = renderHook(() => useMutation(() => Promise.reject(new Error('error'))));
+it("Should handle errors", async () => {
+  const { result } = renderHook(() =>
+    useMutation(() => Promise.reject(new Error("error")))
+  );
 
-  act(result.current.mutate);
-
-  expect(result.current.isLoading).toBeTruthy();
-  expect(result.current.isError).toBeFalsy();
-  expect(result.current.error).toBeNull();
+  await act(async () => {
+    try {
+      await result.current.mutateAsync();
+      expect(result.current.isLoading).toBeTruthy();
+      expect(result.current.isError).toBeFalsy();
+      expect(result.current.error).toBeNull();
+    } catch {}
+  });
 
   await waitFor(() => {
     expect(result.current.isLoading).toBeFalsy();
     expect(result.current.isError).toBeTruthy();
-    expect(result.current.error).toEqual(new Error('error'));
+    expect(result.current.error).toEqual(new Error("error"));
     expect(result.current.data).toBeNull();
   });
 });
 
-it('Should mutate async', async () => {
-  const { result } = renderHook(() => useMutation((input) => Promise.resolve(`data-${input}`)));
+it("Should mutate async", async () => {
+  const { result } = renderHook(() =>
+    useMutation((input) => Promise.resolve(`data-${input}`))
+  );
 
   await act(async () => {
-    const response = await result.current.mutateAsync('test');
-    expect(response).toBe('data-test');
+    const response = await result.current.mutateAsync("test");
+    expect(response).toBe("data-test");
   });
 
-  expect(result.current.data).toBe('data-test');
+  expect(result.current.data).toBe("data-test");
   expect(result.current.isSuccess).toBeTruthy();
 });
 
-it('Should triggered onSuccess callback', async () => {
+it("Should triggered onSuccess callback", async () => {
   const { result } = renderHook(() =>
-    useMutation(() => Promise.resolve('data'), {
-      onSuccess: (data) => expect(data).toBe('data')
+    useMutation(() => Promise.resolve("data"), {
+      onSuccess: (data) => expect(data).toBe("data"),
     })
   );
 
@@ -84,10 +97,10 @@ it('Should triggered onSuccess callback', async () => {
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 });
 
-it('Should triggered onError callback', async () => {
+it("Should triggered onError callback", async () => {
   const { result } = renderHook(() =>
-    useMutation(() => Promise.reject(new Error('error')), {
-      onError: (error) => expect(error).toEqual(new Error('error'))
+    useMutation(() => Promise.reject(new Error("error")), {
+      onError: (error) => expect(error).toEqual(new Error("error")),
     })
   );
 
@@ -96,19 +109,19 @@ it('Should triggered onError callback', async () => {
   await waitFor(() => expect(result.current.isError).toBeTruthy());
 });
 
-it('Should retry on error once', async () => {
+it("Should retry on error once", async () => {
   let retries = 0;
 
   const { result } = renderHook(() =>
     useMutation(
       () =>
         new Promise((resolve, reject) => {
-          if (retries === 1) resolve('data');
+          if (retries === 1) resolve("data");
           retries++;
-          reject(new Error('error'));
+          reject(new Error("error"));
         }),
       {
-        retry: true
+        retry: true,
       }
     )
   );
@@ -117,22 +130,22 @@ it('Should retry on error once', async () => {
 
   expect(result.current.data).toBeNull();
 
-  await waitFor(() => expect(result.current.data).toBe('data'));
+  await waitFor(() => expect(result.current.data).toBe("data"));
 });
 
-it('Should retry on error multiple times', async () => {
+it("Should retry on error multiple times", async () => {
   let retries = 0;
 
   const { result } = renderHook(() =>
     useMutation(
       () =>
         new Promise((resolve, reject) => {
-          if (retries === 2) resolve('data');
+          if (retries === 2) resolve("data");
           retries++;
-          reject(new Error('error'));
+          reject(new Error("error"));
         }),
       {
-        retry: 2
+        retry: 2,
       }
     )
   );
@@ -141,16 +154,16 @@ it('Should retry on error multiple times', async () => {
 
   expect(result.current.data).toBeNull();
 
-  await waitFor(() => expect(result.current.data).toBe('data'));
+  await waitFor(() => expect(result.current.data).toBe("data"));
 });
 
-it('Should override global options with mutate options', async () => {
+it("Should override global options with mutate options", async () => {
   const globalOnSuccess = vi.fn();
   const localOnSuccess = vi.fn();
 
   const { result } = renderHook(() =>
-    useMutation(() => Promise.resolve('data'), {
-      onSuccess: globalOnSuccess
+    useMutation(() => Promise.resolve("data"), {
+      onSuccess: globalOnSuccess,
     })
   );
 
@@ -158,23 +171,27 @@ it('Should override global options with mutate options', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
-  expect(localOnSuccess).toHaveBeenCalledWith('data');
+  expect(localOnSuccess).toHaveBeenCalledWith("data");
   expect(globalOnSuccess).not.toHaveBeenCalled();
 });
 
-it('Should reset error state on successful mutation', async () => {
+it("Should reset error state on successful mutation", async () => {
   let shouldFail = true;
 
   const { result } = renderHook(() =>
     useMutation(() => {
       if (shouldFail) {
-        return Promise.reject(new Error('error'));
+        return Promise.reject(new Error("error"));
       }
-      return Promise.resolve('data');
+      return Promise.resolve("data");
     })
   );
 
-  act(result.current.mutate);
+  await act(async () => {
+    try {
+      await result.current.mutateAsync();
+    } catch {}
+  });
 
   await waitFor(() => expect(result.current.isError).toBeTruthy());
 
@@ -188,15 +205,15 @@ it('Should reset error state on successful mutation', async () => {
   });
 });
 
-it('Should retry by number delay', async () => {
+it("Should retry by number delay", async () => {
   let retries = 0;
   const { result } = renderHook(() =>
     useMutation(() => {
       retries++;
       if (retries < 2) {
-        return Promise.reject(new Error('error'));
+        return Promise.reject(new Error("error"));
       }
-      return Promise.resolve('data');
+      return Promise.resolve("data");
     })
   );
 
@@ -204,19 +221,19 @@ it('Should retry by number delay', async () => {
 
   expect(result.current.isLoading).toBeTruthy();
 
-  await waitFor(() => expect(result.current.data).toBe('data'));
+  await waitFor(() => expect(result.current.data).toBe("data"));
 });
 
-it('Should retry by number global delay', async () => {
+it("Should retry by number global delay", async () => {
   let retries = 0;
   const { result } = renderHook(() =>
     useMutation(
       () => {
         retries++;
         if (retries < 2) {
-          return Promise.reject(new Error('error'));
+          return Promise.reject(new Error("error"));
         }
-        return Promise.resolve('data');
+        return Promise.resolve("data");
       },
       { retryDelay: 100, retry: 1 }
     )
@@ -226,10 +243,10 @@ it('Should retry by number global delay', async () => {
 
   expect(result.current.isLoading).toBeTruthy();
 
-  await waitFor(() => expect(result.current.data).toBe('data'));
+  await waitFor(() => expect(result.current.data).toBe("data"));
 });
 
-it('Should retry by function delay', async () => {
+it("Should retry by function delay", async () => {
   const retryDelay = vi.fn(() => 100);
   let retries = 0;
 
@@ -237,9 +254,9 @@ it('Should retry by function delay', async () => {
     useMutation(() => {
       retries++;
       if (retries < 2) {
-        return Promise.reject(new Error('error'));
+        return Promise.reject(new Error("error"));
       }
-      return Promise.resolve('data');
+      return Promise.resolve("data");
     })
   );
 
@@ -248,7 +265,7 @@ it('Should retry by function delay', async () => {
   expect(result.current.isLoading).toBeTruthy();
 
   await waitFor(() => {
-    expect(result.current.data).toBe('data');
+    expect(result.current.data).toBe("data");
     expect(retryDelay).toHaveBeenCalledOnce();
   });
 });

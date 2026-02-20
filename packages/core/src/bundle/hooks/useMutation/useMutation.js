@@ -44,7 +44,6 @@ export const useMutation = (callback, options) => {
           typeof requestOptions?.retryDelay === 'function'
             ? requestOptions?.retryDelay(attempt, error)
             : requestOptions?.retryDelay;
-        console.log('retryDelay', retryDelay);
         if (typeof retry === 'boolean' && retry) {
           if (retryDelay) {
             setTimeout(
@@ -65,12 +64,13 @@ export const useMutation = (callback, options) => {
           }
           return request(body, { ...requestOptions, attempt: attempt + 1 });
         }
-        requestOptions?.onError?.(error);
         setData(null);
         setIsSuccess(false);
         setIsLoading(false);
         setError(error);
         setIsError(true);
+        if (!requestOptions?.onError) throw error;
+        requestOptions?.onError?.(error);
       });
   };
   const mutate = (body, mutateOptions) => {

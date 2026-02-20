@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 /* The type of the options */
 interface UseMutationOptions<Data> {
@@ -27,7 +27,10 @@ interface UseMutationReturn<Body, Data> {
   /* The mutate function */
   mutate: (body?: Body, options?: UseMutationOptions<Data>) => void;
   /* The mutate async function */
-  mutateAsync: (body?: Body, options?: UseMutationOptions<Data>) => Promise<Data>;
+  mutateAsync: (
+    body?: Body,
+    options?: UseMutationOptions<Data>
+  ) => Promise<Data>;
 }
 
 export interface RequestOptions<Data> extends UseMutationOptions<Data> {
@@ -83,18 +86,16 @@ export const useMutation = <Body, Data>(
       })
       .catch((error: Error) => {
         const retry =
-          typeof requestOptions?.retry === 'function'
+          typeof requestOptions?.retry === "function"
             ? requestOptions?.retry(attempt, error)
             : requestOptions?.retry;
 
         const retryDelay =
-          typeof requestOptions?.retryDelay === 'function'
+          typeof requestOptions?.retryDelay === "function"
             ? requestOptions?.retryDelay(attempt, error)
             : requestOptions?.retryDelay;
 
-        console.log('retryDelay', retryDelay);
-
-        if (typeof retry === 'boolean' && retry) {
+        if (typeof retry === "boolean" && retry) {
           if (retryDelay) {
             setTimeout(
               () => request(body, { ...requestOptions, attempt: attempt + 1 }),
@@ -116,12 +117,13 @@ export const useMutation = <Body, Data>(
           return request(body, { ...requestOptions, attempt: attempt + 1 });
         }
 
-        requestOptions?.onError?.(error);
         setData(null);
         setIsSuccess(false);
         setIsLoading(false);
         setError(error);
         setIsError(true);
+        if (!requestOptions?.onError) throw error;
+        requestOptions?.onError?.(error);
       });
   };
   const mutate = (body: Body, mutateOptions?: UseMutationOptions<Data>) => {
@@ -129,18 +131,21 @@ export const useMutation = <Body, Data>(
       retry: mutateOptions?.retry ?? options?.retry,
       retryDelay: mutateOptions?.retryDelay ?? options?.retryDelay,
       onSuccess: mutateOptions?.onSuccess ?? options?.onSuccess,
-      onError: mutateOptions?.onError ?? options?.onError
+      onError: mutateOptions?.onError ?? options?.onError,
     };
 
     request(body, requestOptions);
   };
 
-  const mutateAsync = async (body: Body, mutateOptions?: UseMutationOptions<Data>) => {
+  const mutateAsync = async (
+    body: Body,
+    mutateOptions?: UseMutationOptions<Data>
+  ) => {
     const requestOptions = {
       retry: mutateOptions?.retry ?? options?.retry,
       retryDelay: mutateOptions?.retryDelay ?? options?.retryDelay,
       onSuccess: mutateOptions?.onSuccess ?? options?.onSuccess,
-      onError: mutateOptions?.onError ?? options?.onError
+      onError: mutateOptions?.onError ?? options?.onError,
     };
 
     return request(body, requestOptions) as Promise<Data>;
@@ -153,6 +158,6 @@ export const useMutation = <Body, Data>(
     mutateAsync,
     isLoading,
     isError,
-    isSuccess
+    isSuccess,
   } as UseMutationReturn<Body, Data>;
 };
