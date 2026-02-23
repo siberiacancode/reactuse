@@ -71,20 +71,26 @@ export const useSticky = ((...params: any[]) => {
 
     if (!element) return;
 
-    const root = (options?.root ? isTarget.getElement(options.root) : document) as Element;
-    const elementOffsetTop =
-      element.getBoundingClientRect().top + root.scrollTop - root.getBoundingClientRect().top;
-    const elementOffsetLeft =
-      element.getBoundingClientRect().left + root.scrollLeft - root.getBoundingClientRect().left;
+    const root = (
+      options?.root ? isTarget.getElement(options.root) : document.documentElement
+    ) as Element;
 
     const onSticky = () => {
       if (axis === 'vertical') {
         const scrollTop = root.scrollTop;
+
+        const elementOffsetTop =
+          element.getBoundingClientRect().top + scrollTop - root.getBoundingClientRect().top;
+
         setStuck(scrollTop >= elementOffsetTop);
       }
 
       if (axis === 'horizontal') {
         const scrollLeft = root.scrollLeft;
+
+        const elementOffsetLeft =
+          element.getBoundingClientRect().left + scrollLeft - root.getBoundingClientRect().left;
+
         setStuck(scrollLeft >= elementOffsetLeft);
       }
     };
