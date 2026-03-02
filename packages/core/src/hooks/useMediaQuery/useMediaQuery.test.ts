@@ -86,3 +86,37 @@ it('Should cleanup up on unmount', () => {
 
   expect(mockRemoveEventListener).toHaveBeenCalledWith('change', expect.any(Function));
 });
+
+it('Should call addEventListener/removeEventListener once for same query', () => {
+  const hook1 = renderHook(() => useMediaQuery('(max-width: 768px)'));
+  const hook2 = renderHook(() => useMediaQuery('(max-width: 768px)'));
+  const hook3 = renderHook(() => useMediaQuery('(max-width: 768px)'));
+
+  expect(mockAddEventListener).toHaveBeenCalledTimes(1);
+
+  hook1.unmount();
+  hook2.unmount();
+  hook3.unmount();
+
+  expect(mockRemoveEventListener).toHaveBeenCalledTimes(1);
+});
+
+it('Should call addEventListener/removeEventListener for each unique query', () => {
+  const hook1 = renderHook(() => useMediaQuery('(max-width: 768px)'));
+  const hook2 = renderHook(() => useMediaQuery('(max-width: 768px)'));
+  const hook3 = renderHook(() => useMediaQuery('(max-width: 992px)'));
+  const hook4 = renderHook(() => useMediaQuery('(max-width: 992px)'));
+  const hook5 = renderHook(() => useMediaQuery('(max-width: 1024px)'));
+  const hook6 = renderHook(() => useMediaQuery('(max-width: 1024px)'));
+
+  expect(mockAddEventListener).toHaveBeenCalledTimes(3);
+
+  hook1.unmount();
+  hook2.unmount();
+  hook3.unmount();
+  hook4.unmount();
+  hook5.unmount();
+  hook6.unmount();
+
+  expect(mockRemoveEventListener).toHaveBeenCalledTimes(3);
+});
