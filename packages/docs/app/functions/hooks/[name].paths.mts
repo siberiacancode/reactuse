@@ -4,7 +4,7 @@ import simpleGit from 'simple-git';
 import ts from 'typescript';
 
 import {
-  checkTest,
+  checkFile,
   getContent,
   getContentFile,
   matchJsdoc,
@@ -108,7 +108,7 @@ export default {
           return acc;
         }, '');
 
-        const isTest = await checkTest(element);
+        const isTest = await checkFile(element, 'test');
 
         const log = await git.log({
           file: `../core/src/${element.type}s/${element.name}/${element.name}.ts`
@@ -127,11 +127,14 @@ export default {
           avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`
         }));
 
+        const isDemo = await checkFile(element, 'demo');
+
         return {
           params: {
             code: await createHtmlCode(content),
             id: element.name,
             isTest,
+            isDemo,
             type: element.type,
             name: element.name,
             ...(typeDeclarations && {

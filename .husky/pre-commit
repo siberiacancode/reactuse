@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pnpm lint-staged
+pnpm lint-staged --no-stash
 
 if git diff --quiet HEAD -- packages/core; then
     echo "No changes in packages/core. Skipping build."
