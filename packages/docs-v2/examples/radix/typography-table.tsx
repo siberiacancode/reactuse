@@ -1,4 +1,4 @@
-export function TypographyTable() {
+function TypographyTable() {
   return (
     <div className="my-6 w-full overflow-y-auto">
       <table className="w-full">

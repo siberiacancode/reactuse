@@ -15,7 +15,7 @@ export async function getAllBlockIds(
   return blocks.map((block) => block.name)
 }
 
-export async function getAllBlocks(
+async function getAllBlocks(
   types: z.infer<typeof registryItemSchema>["type"][] = [
     "registry:block",
     "registry:internal",

@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { AspectRatio } from "@/examples/base/ui/aspect-ratio"
 
-export function AspectRatioSquare() {
+function AspectRatioSquare() {
   return (
     <AspectRatio
       ratio={1 / 1}

@@ -50,7 +50,7 @@ const translations: Translations = {
   },
 }
 
-export function RadioGroupRtl() {
+function RadioGroupRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

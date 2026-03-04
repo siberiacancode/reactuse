@@ -47,7 +47,7 @@ import {
   UserIcon,
 } from "lucide-react"
 
-export function DropdownMenuComplex() {
+function DropdownMenuComplex() {
   const [notifications, setNotifications] = React.useState({
     email: true,
     sms: false,

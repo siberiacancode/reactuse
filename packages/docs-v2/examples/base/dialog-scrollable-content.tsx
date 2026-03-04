@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/examples/base/ui/dialog"
 
-export function DialogScrollableContent() {
+function DialogScrollableContent() {
   return (
     <Dialog>
       <DialogTrigger render={<Button variant="outline" />}>

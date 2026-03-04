@@ -16,7 +16,7 @@ import {
 } from "@/examples/base/ui/input-otp"
 import { RefreshCwIcon } from "lucide-react"
 
-export function InputOTPForm() {
+function InputOTPForm() {
   return (
     <Card className="mx-auto max-w-md">
       <CardHeader>

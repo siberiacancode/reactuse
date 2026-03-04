@@ -12,7 +12,7 @@ import {
 import { format } from "date-fns"
 import { ChevronDownIcon } from "lucide-react"
 
-export function DataPickerWithDropdowns() {
+function DataPickerWithDropdowns() {
   const [date, setDate] = React.useState<Date>()
   const [open, setOpen] = React.useState(false)
 

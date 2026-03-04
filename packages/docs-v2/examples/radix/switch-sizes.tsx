@@ -1,7 +1,7 @@
 import { Field, FieldGroup, FieldLabel } from "@/examples/radix/ui/field"
 import { Switch } from "@/examples/radix/ui/switch"
 
-export function SwitchSizes() {
+function SwitchSizes() {
   return (
     <FieldGroup className="w-full max-w-[10rem]">
       <Field orientation="horizontal">

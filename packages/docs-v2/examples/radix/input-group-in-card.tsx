@@ -18,7 +18,7 @@ import {
 } from "@/examples/radix/ui/input-group"
 import { ExternalLinkIcon, MailIcon } from "lucide-react"
 
-export function InputGroupInCard() {
+function InputGroupInCard() {
   return (
     <Card className="w-full">
       <CardHeader>

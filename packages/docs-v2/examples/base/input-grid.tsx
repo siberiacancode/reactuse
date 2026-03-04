@@ -1,7 +1,7 @@
 import { Field, FieldGroup, FieldLabel } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 
-export function InputGrid() {
+function InputGrid() {
   return (
     <FieldGroup className="grid max-w-sm grid-cols-2">
       <Field>

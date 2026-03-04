@@ -6,7 +6,7 @@ import {
   AvatarImage,
 } from "@/examples/radix/ui/avatar"
 
-export function AvatarGroupCountExample() {
+function AvatarGroupCountExample() {
   return (
     <AvatarGroup className="grayscale">
       <Avatar>

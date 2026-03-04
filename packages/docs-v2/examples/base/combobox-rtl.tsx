@@ -74,7 +74,7 @@ const translations: Translations = {
   },
 }
 
-export function ComboboxRtl() {
+function ComboboxRtl() {
   const { dir, t, language } = useTranslation(translations, "ar")
   const anchor = useComboboxAnchor()
 

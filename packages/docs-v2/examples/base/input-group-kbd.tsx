@@ -6,7 +6,7 @@ import {
 import { Kbd } from "@/examples/base/ui/kbd"
 import { SearchIcon } from "lucide-react"
 
-export function InputGroupKbd() {
+function InputGroupKbd() {
   return (
     <InputGroup className="max-w-sm">
       <InputGroupInput placeholder="Search..." />

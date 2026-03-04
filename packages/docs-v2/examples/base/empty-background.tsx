@@ -10,7 +10,7 @@ import {
 import { IconBell } from "@tabler/icons-react"
 import { RefreshCcwIcon } from "lucide-react"
 
-export function EmptyMuted() {
+function EmptyMuted() {
   return (
     <Empty className="bg-muted/30 h-full">
       <EmptyHeader>

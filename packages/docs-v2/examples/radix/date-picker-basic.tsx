@@ -11,7 +11,7 @@ import {
 } from "@/examples/radix/ui/popover"
 import { format } from "date-fns"
 
-export function DatePickerSimple() {
+function DatePickerSimple() {
   const [date, setDate] = React.useState<Date>()
 
   return (

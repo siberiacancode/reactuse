@@ -5,9 +5,9 @@ import {
   SidebarProvider,
 } from "@/registry/new-york-v4/ui/sidebar"
 
-export const iframeHeight = "800px"
+const iframeHeight = "800px"
 
-export const description = "A sidebar with a header and a search form."
+const description = "A sidebar with a header and a search form."
 
 export default function Page() {
   return (

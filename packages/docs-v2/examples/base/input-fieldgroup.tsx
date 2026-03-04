@@ -7,7 +7,7 @@ import {
 } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 
-export function InputFieldgroup() {
+function InputFieldgroup() {
   return (
     <FieldGroup>
       <Field>

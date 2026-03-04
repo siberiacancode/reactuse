@@ -1,7 +1,7 @@
 import { Field, FieldDescription, FieldLabel } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 
-export function InputField() {
+function InputField() {
   return (
     <Field>
       <FieldLabel htmlFor="input-field-username">Username</FieldLabel>

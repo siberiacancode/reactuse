@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/examples/base/ui/select"
 
-export function SelectGroups() {
+function SelectGroups() {
   const fruits = [
     { label: "Apple", value: "apple" },
     { label: "Banana", value: "banana" },

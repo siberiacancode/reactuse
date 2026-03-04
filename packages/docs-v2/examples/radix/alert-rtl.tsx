@@ -62,7 +62,7 @@ const alerts = [
   },
 ] as const
 
-export function AlertRtl() {
+function AlertRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

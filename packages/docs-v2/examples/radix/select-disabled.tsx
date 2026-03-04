@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/examples/radix/ui/select"
 
-export function SelectDisabled() {
+function SelectDisabled() {
   return (
     <Select disabled>
       <SelectTrigger className="w-full max-w-48">

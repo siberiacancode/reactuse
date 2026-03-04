@@ -9,7 +9,7 @@ import {
 } from "@/examples/base/ui/card"
 import { ChevronRightIcon } from "lucide-react"
 
-export function CardSmall() {
+function CardSmall() {
   const featureName = "Scheduled reports"
 
   return (

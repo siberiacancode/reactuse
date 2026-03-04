@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/examples/base/ui/dropdown-menu"
 
-export function DropdownMenuCheckboxes() {
+function DropdownMenuCheckboxes() {
   const [showStatusBar, setShowStatusBar] = React.useState(true)
   const [showActivityBar, setShowActivityBar] = React.useState(false)
   const [showPanel, setShowPanel] = React.useState(false)

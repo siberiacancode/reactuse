@@ -12,7 +12,7 @@ import {
 import { Input } from "@/examples/radix/ui/input"
 import { Label } from "@/examples/radix/ui/label"
 
-export function DialogCloseButton() {
+function DialogCloseButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>

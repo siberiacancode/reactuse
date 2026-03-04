@@ -1,6 +1,6 @@
 import { ToggleGroup, ToggleGroupItem } from "@/examples/base/ui/toggle-group"
 
-export function ToggleGroupSpacing() {
+function ToggleGroupSpacing() {
   return (
     <ToggleGroup size="sm" defaultValue={["top"]} variant="outline" spacing={2}>
       <ToggleGroupItem value="top" aria-label="Toggle top">

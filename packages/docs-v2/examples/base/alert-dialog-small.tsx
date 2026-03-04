@@ -11,7 +11,7 @@ import {
 } from "@/examples/base/ui/alert-dialog"
 import { Button } from "@/examples/base/ui/button"
 
-export function AlertDialogSmall() {
+function AlertDialogSmall() {
   return (
     <AlertDialog>
       <AlertDialogTrigger

@@ -8,7 +8,7 @@ import {
 
 import { ChevronDownIcon } from "@/registry/icons/__lucide__"
 
-export function CollapsibleBasic() {
+function CollapsibleBasic() {
   return (
     <Card className="mx-auto w-full max-w-sm">
       <CardContent>

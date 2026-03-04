@@ -1,6 +1,6 @@
 import { ToggleGroup, ToggleGroupItem } from "@/examples/base/ui/toggle-group"
 
-export function ToggleGroupSizes() {
+function ToggleGroupSizes() {
   return (
     <div className="flex flex-col gap-4">
       <ToggleGroup size="sm" defaultValue={["top"]} variant="outline">

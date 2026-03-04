@@ -7,7 +7,7 @@ import {
   FieldLabel,
 } from "@/examples/radix/ui/field"
 
-export function CheckboxDescription() {
+function CheckboxDescription() {
   return (
     <FieldGroup className="mx-auto w-72">
       <Field orientation="horizontal">

@@ -1,7 +1,7 @@
 import { Badge } from "@/examples/radix/ui/badge"
 import { ArrowUpRightIcon } from "lucide-react"
 
-export function BadgeAsLink() {
+function BadgeAsLink() {
   return (
     <Badge asChild>
       <a href="#link">

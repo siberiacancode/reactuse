@@ -10,7 +10,7 @@ import {
 } from "@/examples/base/ui/field"
 import { RadioGroup, RadioGroupItem } from "@/examples/base/ui/radio-group"
 
-export function RadioFields() {
+function RadioFields() {
   return (
     <FieldGroup>
       <FieldSet>

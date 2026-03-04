@@ -18,7 +18,7 @@ import {
 } from "@/examples/radix/ui/select"
 import { Switch } from "@/examples/radix/ui/switch"
 
-export function SelectAlignItem() {
+function SelectAlignItem() {
   const [alignItemWithTrigger, setAlignItemWithTrigger] = React.useState(true)
 
   return (

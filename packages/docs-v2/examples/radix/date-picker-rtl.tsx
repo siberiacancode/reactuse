@@ -52,7 +52,7 @@ const dateFnsLocales = {
   he: he,
 } as const
 
-export function DatePickerRtl() {
+function DatePickerRtl() {
   const { dir, t, language } = useTranslation(translations, "ar")
   const [date, setDate] = React.useState<Date>()
 

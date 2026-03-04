@@ -40,7 +40,7 @@ const translations: Translations = {
   },
 }
 
-export function InputRtl() {
+function InputRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

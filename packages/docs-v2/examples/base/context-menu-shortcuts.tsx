@@ -8,7 +8,7 @@ import {
   ContextMenuTrigger,
 } from "@/examples/base/ui/context-menu"
 
-export function ContextMenuShortcuts() {
+function ContextMenuShortcuts() {
   return (
     <ContextMenu>
       <ContextMenuTrigger className="flex aspect-video w-full max-w-xs items-center justify-center rounded-xl border border-dashed text-sm">

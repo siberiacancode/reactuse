@@ -5,7 +5,7 @@ import {
   PaginationLink,
 } from "@/examples/radix/ui/pagination"
 
-export function PaginationSimple() {
+function PaginationSimple() {
   return (
     <Pagination>
       <PaginationContent>

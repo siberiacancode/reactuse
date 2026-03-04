@@ -11,7 +11,7 @@ import {
   MenubarTrigger,
 } from "@/examples/base/ui/menubar"
 
-export function MenubarSubmenu() {
+function MenubarSubmenu() {
   return (
     <Menubar className="w-72">
       <MenubarMenu>

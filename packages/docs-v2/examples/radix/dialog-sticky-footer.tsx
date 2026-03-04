@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/examples/radix/ui/dialog"
 
-export function DialogStickyFooter() {
+function DialogStickyFooter() {
   return (
     <Dialog>
       <DialogTrigger asChild>

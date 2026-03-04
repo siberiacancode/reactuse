@@ -306,23 +306,23 @@ export function getThemesForBaseColor(baseColorName: string) {
   })
 }
 
-export function getBase(name: BaseName) {
+function getBase(name: BaseName) {
   return BASES.find((base) => base.name === name)
 }
 
-export function getStyle(name: StyleName) {
+function getStyle(name: StyleName) {
   return STYLES.find((style) => style.name === name)
 }
 
-export function getTheme(name: ThemeName) {
+function getTheme(name: ThemeName) {
   return THEMES.find((theme) => theme.name === name)
 }
 
-export function getBaseColor(name: BaseColorName) {
+function getBaseColor(name: BaseColorName) {
   return BASE_COLORS.find((color) => color.name === name)
 }
 
-export function getIconLibrary(name: IconLibraryName) {
+function getIconLibrary(name: IconLibraryName) {
   return iconLibraries[name]
 }
 

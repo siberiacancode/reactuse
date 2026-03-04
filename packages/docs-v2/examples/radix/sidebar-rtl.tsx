@@ -184,7 +184,7 @@ const translations: Translations = {
   },
 }
 
-export function SidebarRtl() {
+function SidebarRtl() {
   return (
     <LanguageProvider defaultLanguage="ar">
       <AppSidebarWithProvider />

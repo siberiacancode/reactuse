@@ -13,7 +13,7 @@ import {
   InputGroupTextarea,
 } from "@/examples/base/ui/input-group"
 
-export function InputGroupBlockEnd() {
+function InputGroupBlockEnd() {
   return (
     <FieldGroup className="max-w-sm">
       <Field>

@@ -16,7 +16,7 @@ import {
 } from "@/examples/radix/ui/dropdown-menu"
 import { ChevronDownIcon, DotIcon } from "lucide-react"
 
-export function BreadcrumbDropdown() {
+function BreadcrumbDropdown() {
   return (
     <Breadcrumb>
       <BreadcrumbList>

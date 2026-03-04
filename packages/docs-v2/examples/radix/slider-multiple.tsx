@@ -1,6 +1,6 @@
 import { Slider } from "@/examples/radix/ui/slider"
 
-export function SliderMultiple() {
+function SliderMultiple() {
   return (
     <Slider
       defaultValue={[10, 20, 70]}

@@ -4,7 +4,7 @@ import * as React from "react"
 import { Calendar } from "@/examples/radix/ui/calendar"
 import { Card, CardContent } from "@/examples/radix/ui/card"
 
-export function CalendarWeekNumbers() {
+function CalendarWeekNumbers() {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(new Date().getFullYear(), 1, 3)
   )

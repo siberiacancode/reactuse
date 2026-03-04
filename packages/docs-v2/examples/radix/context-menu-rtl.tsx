@@ -93,7 +93,7 @@ const translations: Translations = {
   },
 }
 
-export function ContextMenuRtl() {
+function ContextMenuRtl() {
   const { t, dir, language } = useTranslation(translations, "ar")
   const [people, setPeople] = React.useState("pedro")
 

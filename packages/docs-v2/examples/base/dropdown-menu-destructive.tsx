@@ -11,7 +11,7 @@ import {
 } from "@/examples/base/ui/dropdown-menu"
 import { PencilIcon, ShareIcon, TrashIcon } from "lucide-react"
 
-export function DropdownMenuDestructive() {
+function DropdownMenuDestructive() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="outline" />}>

@@ -34,7 +34,7 @@ const translations: Translations = {
   },
 }
 
-export function InputOTPRtl() {
+function InputOTPRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

@@ -9,7 +9,7 @@ import {
 } from "@/examples/radix/ui/input-group"
 import { CopyIcon, TrashIcon } from "lucide-react"
 
-export function InputGroupWithButtons() {
+function InputGroupWithButtons() {
   return (
     <FieldGroup>
       <Field>

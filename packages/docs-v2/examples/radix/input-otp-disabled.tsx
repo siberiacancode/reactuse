@@ -5,7 +5,7 @@ import {
   InputOTPSlot,
 } from "@/examples/radix/ui/input-otp"
 
-export function InputOTPDisabled() {
+function InputOTPDisabled() {
   return (
     <InputOTP id="disabled" maxLength={6} disabled value="123456">
       <InputOTPGroup>

@@ -1,7 +1,7 @@
 import { Toggle } from "@/examples/radix/ui/toggle"
 import { BoldIcon, ItalicIcon } from "lucide-react"
 
-export function ToggleOutline() {
+function ToggleOutline() {
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Toggle variant="outline" aria-label="Toggle italic">

@@ -8,7 +8,7 @@ import {
 } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 
-export function FieldFieldset() {
+function FieldFieldset() {
   return (
     <FieldSet className="w-full max-w-sm">
       <FieldLegend>Address Information</FieldLegend>

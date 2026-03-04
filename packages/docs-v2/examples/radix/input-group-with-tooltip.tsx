@@ -37,7 +37,7 @@ import {
 import { ChevronDownIcon, InfoIcon, StarIcon } from "lucide-react"
 import { toast } from "sonner"
 
-export function InputGroupWithTooltip({
+function InputGroupWithTooltip({
   country,
   setCountry,
 }: {

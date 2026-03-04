@@ -7,7 +7,7 @@ import {
 } from "@/examples/base/ui/tooltip"
 import { SaveIcon } from "lucide-react"
 
-export function TooltipKeyboard() {
+function TooltipKeyboard() {
   return (
     <Tooltip>
       <TooltipTrigger render={<Button variant="outline" size="icon-sm" />}>

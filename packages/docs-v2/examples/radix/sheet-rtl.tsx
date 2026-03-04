@@ -60,7 +60,7 @@ const translations: Translations = {
   },
 }
 
-export function SheetRtl() {
+function SheetRtl() {
   const { dir, t, language } = useTranslation(translations, "ar")
 
   return (

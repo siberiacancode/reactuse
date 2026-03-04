@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A radar chart with a grid and circle"
+const description = "A radar chart with a grid and circle"
 
 const chartData = [
   { month: "January", desktop: 186 },

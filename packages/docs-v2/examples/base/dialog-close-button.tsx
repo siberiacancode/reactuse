@@ -12,7 +12,7 @@ import {
 import { Input } from "@/examples/base/ui/input"
 import { Label } from "@/examples/base/ui/label"
 
-export function DialogCloseButton() {
+function DialogCloseButton() {
   return (
     <Dialog>
       <DialogTrigger render={<Button variant="outline" />}>Share</DialogTrigger>

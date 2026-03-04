@@ -45,7 +45,7 @@ const translations: Translations = {
   },
 }
 
-export function BadgeRtl() {
+function BadgeRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

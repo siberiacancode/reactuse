@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/examples/radix/ui/dialog"
 
-export function DialogScrollableContent() {
+function DialogScrollableContent() {
   return (
     <Dialog>
       <DialogTrigger asChild>

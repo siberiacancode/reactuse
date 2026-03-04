@@ -9,7 +9,7 @@ import {
 } from "@/examples/radix/ui/empty"
 import { Spinner } from "@/examples/radix/ui/spinner"
 
-export function SpinnerEmpty() {
+function SpinnerEmpty() {
   return (
     <Empty className="w-full">
       <EmptyHeader>

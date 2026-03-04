@@ -11,7 +11,7 @@ import {
 } from "@/examples/radix/ui/alert-dialog"
 import { Button } from "@/examples/radix/ui/button"
 
-export function AlertDialogSmall() {
+function AlertDialogSmall() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

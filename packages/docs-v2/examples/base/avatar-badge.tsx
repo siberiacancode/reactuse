@@ -5,7 +5,7 @@ import {
   AvatarImage,
 } from "@/examples/base/ui/avatar"
 
-export function AvatarWithBadge() {
+function AvatarWithBadge() {
   return (
     <Avatar>
       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />

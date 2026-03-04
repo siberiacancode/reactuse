@@ -44,7 +44,7 @@ const translations: Translations = {
   },
 }
 
-export function NativeSelectRtl() {
+function NativeSelectRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

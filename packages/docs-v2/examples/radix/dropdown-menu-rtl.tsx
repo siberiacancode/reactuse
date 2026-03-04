@@ -119,7 +119,7 @@ const translations: Translations = {
   },
 }
 
-export function DropdownMenuRtl() {
+function DropdownMenuRtl() {
   const { dir, language, t } = useTranslation(translations, "ar")
   const [showStatusBar, setShowStatusBar] = React.useState(true)
   const [showActivityBar, setShowActivityBar] = React.useState(false)

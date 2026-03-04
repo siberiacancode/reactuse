@@ -38,7 +38,7 @@ const tableData = [
   },
 ]
 
-export function CheckboxInTable() {
+function CheckboxInTable() {
   const [selectedRows, setSelectedRows] = React.useState<Set<string>>(
     new Set(["1"])
   )

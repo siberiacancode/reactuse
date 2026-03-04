@@ -7,7 +7,7 @@ import {
 } from "@/examples/base/ui/item"
 import { InboxIcon } from "lucide-react"
 
-export function ItemVariant() {
+function ItemVariant() {
   return (
     <div className="flex w-full max-w-md flex-col gap-6">
       <Item>

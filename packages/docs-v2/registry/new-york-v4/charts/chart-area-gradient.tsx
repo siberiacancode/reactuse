@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "An area chart with gradient fill"
+const description = "An area chart with gradient fill"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },

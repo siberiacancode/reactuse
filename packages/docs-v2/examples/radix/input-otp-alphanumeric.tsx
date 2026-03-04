@@ -8,7 +8,7 @@ import {
 } from "@/examples/radix/ui/input-otp"
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 
-export function InputOTPAlphanumeric() {
+function InputOTPAlphanumeric() {
   return (
     <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
       <InputOTPGroup>

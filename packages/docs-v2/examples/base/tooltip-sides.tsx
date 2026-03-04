@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/examples/base/ui/tooltip"
 
-export function TooltipSides() {
+function TooltipSides() {
   return (
     <div className="flex flex-wrap gap-2">
       {(["left", "top", "bottom", "right"] as const).map((side) => (

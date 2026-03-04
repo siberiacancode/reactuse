@@ -3,7 +3,7 @@ import { ButtonGroup } from "@/examples/radix/ui/button-group"
 import { Field, FieldLabel } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 
-export function InputButtonGroup() {
+function InputButtonGroup() {
   return (
     <Field>
       <FieldLabel htmlFor="input-button-group">Search</FieldLabel>

@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/examples/radix/ui/dialog"
 
-export function DialogNoCloseButton() {
+function DialogNoCloseButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>

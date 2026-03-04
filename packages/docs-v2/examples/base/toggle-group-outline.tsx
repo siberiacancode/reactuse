@@ -1,6 +1,6 @@
 import { ToggleGroup, ToggleGroupItem } from "@/examples/base/ui/toggle-group"
 
-export function ToggleGroupOutline() {
+function ToggleGroupOutline() {
   return (
     <ToggleGroup variant="outline" defaultValue={["all"]}>
       <ToggleGroupItem value="all" aria-label="Toggle all">

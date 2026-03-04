@@ -6,7 +6,7 @@ import {
 } from "@/examples/radix/ui/field"
 import { RadioGroup, RadioGroupItem } from "@/examples/radix/ui/radio-group"
 
-export function RadioGroupDescription() {
+function RadioGroupDescription() {
   return (
     <RadioGroup defaultValue="comfortable" className="w-fit">
       <Field orientation="horizontal">

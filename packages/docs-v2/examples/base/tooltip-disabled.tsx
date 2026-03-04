@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/examples/base/ui/tooltip"
 
-export function TooltipDisabled() {
+function TooltipDisabled() {
   return (
     <>
       <Tooltip>

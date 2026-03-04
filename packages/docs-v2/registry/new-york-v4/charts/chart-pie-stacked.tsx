@@ -19,7 +19,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A pie chart with stacked sections"
+const description = "A pie chart with stacked sections"
 
 const desktopData = [
   { month: "january", desktop: 186, fill: "var(--color-january)" },

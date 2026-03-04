@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A radial chart with stacked sections"
+const description = "A radial chart with stacked sections"
 
 const chartData = [{ month: "january", desktop: 1260, mobile: 570 }]
 

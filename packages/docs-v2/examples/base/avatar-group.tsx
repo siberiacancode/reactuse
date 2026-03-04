@@ -5,7 +5,7 @@ import {
   AvatarImage,
 } from "@/examples/base/ui/avatar"
 
-export function AvatarGroupExample() {
+function AvatarGroupExample() {
   return (
     <AvatarGroup className="grayscale">
       <Avatar>

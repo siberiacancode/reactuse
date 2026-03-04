@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/examples/radix/ui/tabs"
 
-export function TabsLine() {
+function TabsLine() {
   return (
     <Tabs defaultValue="overview">
       <TabsList variant="line">

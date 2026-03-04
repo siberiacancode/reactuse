@@ -17,7 +17,7 @@ import {
   TrashIcon,
 } from "lucide-react"
 
-export function MenubarIcons() {
+function MenubarIcons() {
   return (
     <Menubar className="w-72">
       <MenubarMenu>

@@ -7,7 +7,7 @@ import {
 } from "@/examples/base/ui/item"
 import { ChevronRightIcon, ExternalLinkIcon } from "lucide-react"
 
-export function ItemLink() {
+function ItemLink() {
   return (
     <div className="flex w-full max-w-md flex-col gap-4">
       <Item render={<a href="#" />}>

@@ -2,12 +2,12 @@ import * as React from "react"
 import Image from "next/image"
 import { ScrollArea, ScrollBar } from "@/examples/radix/ui/scroll-area"
 
-export interface Artwork {
+interface Artwork {
   artist: string
   art: string
 }
 
-export const works: Artwork[] = [
+const works: Artwork[] = [
   {
     artist: "Ornella Binni",
     art: "https://images.unsplash.com/photo-1465869185982-5a1a7522cbcb?auto=format&fit=crop&w=300&q=80",
@@ -22,7 +22,7 @@ export const works: Artwork[] = [
   },
 ]
 
-export function ScrollAreaHorizontalDemo() {
+function ScrollAreaHorizontalDemo() {
   return (
     <ScrollArea className="w-96 rounded-md border whitespace-nowrap">
       <div className="flex w-max space-x-4 p-4">

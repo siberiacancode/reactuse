@@ -75,7 +75,7 @@ const items = [
   },
 ] as const
 
-export function AccordionRtl() {
+function AccordionRtl() {
   const { t } = useTranslation(translations, "ar")
 
   return (

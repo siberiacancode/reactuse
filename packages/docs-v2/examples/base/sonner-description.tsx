@@ -3,7 +3,7 @@
 import { Button } from "@/examples/base/ui/button"
 import { toast } from "sonner"
 
-export function SonnerDescription() {
+function SonnerDescription() {
   return (
     <Button
       onClick={() =>

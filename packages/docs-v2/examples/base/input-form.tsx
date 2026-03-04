@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/examples/base/ui/select"
 
-export function InputForm() {
+function InputForm() {
   const countries = [
     { label: "United States", value: "us" },
     { label: "United Kingdom", value: "uk" },

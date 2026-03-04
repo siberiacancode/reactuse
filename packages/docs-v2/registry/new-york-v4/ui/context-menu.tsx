@@ -243,8 +243,8 @@ export {
   ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuShortcut,
-  ContextMenuGroup,
-  ContextMenuPortal,
+  
+  
   ContextMenuSub,
   ContextMenuSubContent,
   ContextMenuSubTrigger,

@@ -67,7 +67,7 @@ import {
 import { Textarea } from "@/registry/bases/radix/ui/textarea"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 
-export function ComponentExample() {
+function ComponentExample() {
   return (
     <ExampleWrapper>
       <CardExample />

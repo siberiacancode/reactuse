@@ -16,7 +16,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A stacked bar chart with a legend"
+const description = "A stacked bar chart with a legend"
 
 const chartData = [
   { date: "2024-07-15", running: 450, swimming: 300 },

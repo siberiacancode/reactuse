@@ -10,7 +10,7 @@ import {
   PopoverTrigger,
 } from "@/examples/base/ui/popover"
 
-export function PopoverForm() {
+function PopoverForm() {
   return (
     <>
       <Popover>

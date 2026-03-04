@@ -20,7 +20,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "An area chart with a legend"
+const description = "An area chart with a legend"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },

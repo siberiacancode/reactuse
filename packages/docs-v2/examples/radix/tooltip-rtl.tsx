@@ -47,7 +47,7 @@ const translations: Translations = {
 
 const sides = ["left", "top", "bottom", "right"] as const
 
-export function TooltipRtl() {
+function TooltipRtl() {
   const { t } = useTranslation(translations, "ar")
 
   return (

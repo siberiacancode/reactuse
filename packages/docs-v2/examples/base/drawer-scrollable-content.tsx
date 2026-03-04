@@ -10,7 +10,7 @@ import {
   DrawerTrigger,
 } from "@/examples/base/ui/drawer"
 
-export function DrawerScrollableContent() {
+function DrawerScrollableContent() {
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>

@@ -1,7 +1,7 @@
 import { Field, FieldDescription, FieldLabel } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 
-export function InputInvalid() {
+function InputInvalid() {
   return (
     <Field data-invalid>
       <FieldLabel htmlFor="input-invalid">Invalid Input</FieldLabel>

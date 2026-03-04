@@ -16,9 +16,9 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A stacked bar chart with a legend"
-export const iframeHeight = "600px"
-export const containerClassName =
+const description = "A stacked bar chart with a legend"
+const iframeHeight = "600px"
+const containerClassName =
   "[&>div]:w-full [&>div]:max-w-md flex items-center justify-center min-h-svh"
 
 const chartData = [

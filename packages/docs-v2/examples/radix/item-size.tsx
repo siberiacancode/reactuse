@@ -7,7 +7,7 @@ import {
 } from "@/examples/radix/ui/item"
 import { InboxIcon } from "lucide-react"
 
-export function ItemSizeDemo() {
+function ItemSizeDemo() {
   return (
     <div className="flex w-full max-w-md flex-col gap-6">
       <Item variant="outline">

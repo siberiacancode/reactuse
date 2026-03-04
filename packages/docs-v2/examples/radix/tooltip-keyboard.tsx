@@ -7,7 +7,7 @@ import {
 } from "@/examples/radix/ui/tooltip"
 import { SaveIcon } from "lucide-react"
 
-export function TooltipKeyboard() {
+function TooltipKeyboard() {
   return (
     <Tooltip>
       <TooltipTrigger asChild>

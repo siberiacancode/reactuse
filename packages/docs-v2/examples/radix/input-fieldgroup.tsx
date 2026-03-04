@@ -7,7 +7,7 @@ import {
 } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 
-export function InputFieldgroup() {
+function InputFieldgroup() {
   return (
     <FieldGroup>
       <Field>

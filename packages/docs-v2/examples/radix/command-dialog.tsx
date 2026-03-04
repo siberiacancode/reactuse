@@ -20,7 +20,7 @@ import {
   User,
 } from "lucide-react"
 
-export function CommandDialogDemo() {
+function CommandDialogDemo() {
   const [open, setOpen] = React.useState(false)
 
   React.useEffect(() => {

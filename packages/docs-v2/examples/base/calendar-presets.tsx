@@ -6,7 +6,7 @@ import { Calendar } from "@/examples/base/ui/calendar"
 import { Card, CardContent, CardFooter } from "@/examples/base/ui/card"
 import { addDays } from "date-fns"
 
-export function CalendarWithPresets() {
+function CalendarWithPresets() {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(new Date().getFullYear(), 1, 12)
   )

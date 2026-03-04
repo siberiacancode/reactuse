@@ -7,7 +7,7 @@ import {
 } from "@/examples/base/ui/field"
 import { RadioGroup, RadioGroupItem } from "@/examples/base/ui/radio-group"
 
-export function RadioGroupChoiceCard() {
+function RadioGroupChoiceCard() {
   return (
     <RadioGroup defaultValue="plus" className="max-w-sm">
       <FieldLabel htmlFor="plus-plan">

@@ -1,7 +1,7 @@
 import { Field, FieldDescription, FieldLabel } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 
-export function InputRequired() {
+function InputRequired() {
   return (
     <Field>
       <FieldLabel htmlFor="input-required">

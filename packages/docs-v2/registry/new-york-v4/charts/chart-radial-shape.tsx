@@ -22,7 +22,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A radial chart with a custom shape"
+const description = "A radial chart with a custom shape"
 
 const chartData = [
   { browser: "safari", visitors: 1260, fill: "var(--color-safari)" },

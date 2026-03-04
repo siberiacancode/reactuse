@@ -9,7 +9,7 @@ import {
 } from "@/examples/base/ui/item"
 import { ShieldAlertIcon } from "lucide-react"
 
-export function ItemIcon() {
+function ItemIcon() {
   return (
     <div className="flex w-full max-w-lg flex-col gap-6">
       <Item variant="outline">

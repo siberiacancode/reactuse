@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/examples/base/ui/select"
 
-export function SelectDisabled() {
+function SelectDisabled() {
   const items = [
     { label: "Select a fruit", value: null },
     { label: "Apple", value: "apple" },

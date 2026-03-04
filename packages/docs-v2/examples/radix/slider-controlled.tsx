@@ -4,7 +4,7 @@ import * as React from "react"
 import { Label } from "@/examples/radix/ui/label"
 import { Slider } from "@/examples/radix/ui/slider"
 
-export function SliderControlled() {
+function SliderControlled() {
   const [value, setValue] = React.useState([0.3, 0.7])
 
   return (

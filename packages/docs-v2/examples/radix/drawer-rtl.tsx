@@ -107,7 +107,7 @@ const translations: Translations = {
   },
 }
 
-export function DrawerRtl() {
+function DrawerRtl() {
   const { dir, locale, language, t } = useTranslation(translations, "ar")
   const [goal, setGoal] = React.useState(350)
 

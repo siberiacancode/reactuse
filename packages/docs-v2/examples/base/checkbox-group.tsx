@@ -8,7 +8,7 @@ import {
   FieldSet,
 } from "@/examples/base/ui/field"
 
-export function CheckboxGroup() {
+function CheckboxGroup() {
   return (
     <FieldSet>
       <FieldLegend variant="label">

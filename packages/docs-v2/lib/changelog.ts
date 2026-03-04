@@ -9,12 +9,12 @@ export type ChangelogPageData = {
   description?: string
 }
 
-export type ChangelogPage = ReturnType<typeof source.getPages>[number] & {
+type ChangelogPage = ReturnType<typeof source.getPages>[number] & {
   date: Date | null
 }
 
 // Reads the date from the frontmatter of a changelog file.
-export function getDateFromFile(slugs: string[]) {
+function getDateFromFile(slugs: string[]) {
   const filePath = path.join(
     process.cwd(),
     "content/docs",

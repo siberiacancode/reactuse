@@ -7,7 +7,7 @@ import {
 } from "@/examples/base/ui/avatar"
 import { PlusIcon } from "lucide-react"
 
-export function AvatarGroupCountIconExample() {
+function AvatarGroupCountIconExample() {
   return (
     <AvatarGroup className="grayscale">
       <Avatar>

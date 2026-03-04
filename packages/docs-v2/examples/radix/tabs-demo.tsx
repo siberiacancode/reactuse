@@ -12,7 +12,7 @@ import {
   TabsTrigger,
 } from "@/examples/radix/ui/tabs"
 
-export function TabsDemo() {
+function TabsDemo() {
   return (
     <Tabs defaultValue="overview" className="w-[400px]">
       <TabsList>

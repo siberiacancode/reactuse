@@ -8,7 +8,7 @@ import {
 } from "@/examples/base/ui/item"
 import { InboxIcon } from "lucide-react"
 
-export function OutlineItemGroup() {
+function OutlineItemGroup() {
   return (
     <ItemGroup>
       <Item variant="outline">

@@ -23,7 +23,7 @@ const translations: Translations = {
   },
 }
 
-export function SliderRtl() {
+function SliderRtl() {
   const { dir } = useTranslation(translations, "ar")
 
   return (

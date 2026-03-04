@@ -8,7 +8,7 @@ import {
   PopoverTrigger,
 } from "@/examples/base/ui/popover"
 
-export function PopoverBasic() {
+function PopoverBasic() {
   return (
     <>
       <Popover>

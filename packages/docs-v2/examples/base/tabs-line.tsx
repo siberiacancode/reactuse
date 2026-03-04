@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/examples/base/ui/tabs"
 
-export function TabsLine() {
+function TabsLine() {
   return (
     <Tabs defaultValue="overview">
       <TabsList variant="line">

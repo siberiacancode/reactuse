@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/examples/radix/ui/avatar"
 
-export function AvatarSizeExample() {
+function AvatarSizeExample() {
   return (
     <div className="flex flex-wrap items-center gap-2 grayscale">
       <Avatar size="sm">

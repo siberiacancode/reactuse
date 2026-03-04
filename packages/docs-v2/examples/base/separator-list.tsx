@@ -1,6 +1,6 @@
 import { Separator } from "@/examples/base/ui/separator"
 
-export function SeparatorList() {
+function SeparatorList() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-2 text-sm">
       <dl className="flex items-center justify-between">

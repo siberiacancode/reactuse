@@ -18,7 +18,7 @@ import { Field, FieldGroup, FieldLabel } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 import { MaximizeIcon, MinimizeIcon } from "lucide-react"
 
-export function CollapsibleSettings() {
+function CollapsibleSettings() {
   const [isOpen, setIsOpen] = React.useState(false)
 
   return (

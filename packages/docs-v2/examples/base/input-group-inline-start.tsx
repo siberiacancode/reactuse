@@ -6,7 +6,7 @@ import {
 } from "@/examples/base/ui/input-group"
 import { SearchIcon } from "lucide-react"
 
-export function InputGroupInlineStart() {
+function InputGroupInlineStart() {
   return (
     <Field className="max-w-sm">
       <FieldLabel htmlFor="inline-start-input">Input</FieldLabel>

@@ -14,7 +14,7 @@ import {
 } from "@/examples/base/ui/command"
 import { CreditCardIcon, SettingsIcon, UserIcon } from "lucide-react"
 
-export function CommandWithShortcuts() {
+function CommandWithShortcuts() {
   const [open, setOpen] = React.useState(false)
 
   return (

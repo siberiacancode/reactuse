@@ -13,7 +13,7 @@ import {
   UserIcon,
 } from "lucide-react"
 
-export function DropdownMenuIcons() {
+function DropdownMenuIcons() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

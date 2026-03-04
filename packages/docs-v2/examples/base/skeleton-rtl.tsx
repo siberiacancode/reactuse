@@ -23,7 +23,7 @@ const translations: Translations = {
   },
 }
 
-export function SkeletonRtl() {
+function SkeletonRtl() {
   const { dir } = useTranslation(translations, "ar")
 
   return (

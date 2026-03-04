@@ -58,7 +58,7 @@ const physicalSides: Array<"left" | "top" | "bottom" | "right"> = [
   "right",
 ]
 
-export function HoverCardRtl() {
+function HoverCardRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

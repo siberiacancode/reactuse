@@ -1,7 +1,7 @@
 import { Field, FieldGroup, FieldLabel } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 
-export function InputGrid() {
+function InputGrid() {
   return (
     <FieldGroup className="grid max-w-sm grid-cols-2">
       <Field>

@@ -26,7 +26,7 @@ const items = [
   },
 ]
 
-export function AccordionMultiple() {
+function AccordionMultiple() {
   return (
     <Accordion multiple className="max-w-lg" defaultValue={["notifications"]}>
       {items.map((item) => (

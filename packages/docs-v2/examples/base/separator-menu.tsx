@@ -1,6 +1,6 @@
 import { Separator } from "@/examples/base/ui/separator"
 
-export function SeparatorMenu() {
+function SeparatorMenu() {
   return (
     <div className="flex items-center gap-2 text-sm md:gap-4">
       <div className="flex flex-col gap-1">

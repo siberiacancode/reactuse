@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A stacked area chart with expand stacking"
+const description = "A stacked area chart with expand stacking"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80, other: 45 },

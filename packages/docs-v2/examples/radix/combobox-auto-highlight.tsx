@@ -17,7 +17,7 @@ const frameworks = [
   "Astro",
 ] as const
 
-export function ComboboxAutoHighlight() {
+function ComboboxAutoHighlight() {
   return (
     <Combobox items={frameworks} autoHighlight>
       <ComboboxInput placeholder="Select a framework" />

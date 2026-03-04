@@ -10,7 +10,7 @@ import {
 } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 
-export function FieldResponsive() {
+function FieldResponsive() {
   return (
     <div className="w-full max-w-lg">
       <form>

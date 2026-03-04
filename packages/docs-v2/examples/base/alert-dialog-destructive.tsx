@@ -13,7 +13,7 @@ import {
 import { Button } from "@/examples/base/ui/button"
 import { Trash2Icon } from "lucide-react"
 
-export function AlertDialogDestructive() {
+function AlertDialogDestructive() {
   return (
     <AlertDialog>
       <AlertDialogTrigger

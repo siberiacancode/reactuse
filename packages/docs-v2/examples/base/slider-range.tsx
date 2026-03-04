@@ -1,6 +1,6 @@
 import { Slider } from "@/examples/base/ui/slider"
 
-export function SliderRange() {
+function SliderRange() {
   return (
     <Slider
       defaultValue={[25, 50]}

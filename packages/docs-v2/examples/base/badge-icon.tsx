@@ -1,7 +1,7 @@
 import { Badge } from "@/examples/base/ui/badge"
 import { BadgeCheck, BookmarkIcon } from "lucide-react"
 
-export function BadgeWithIconLeft() {
+function BadgeWithIconLeft() {
   return (
     <div className="flex flex-wrap gap-2">
       <Badge variant="secondary">

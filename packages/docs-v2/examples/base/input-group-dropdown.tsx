@@ -15,7 +15,7 @@ import {
 } from "@/examples/base/ui/input-group"
 import { ChevronDownIcon, MoreHorizontal } from "lucide-react"
 
-export function InputGroupDropdown() {
+function InputGroupDropdown() {
   return (
     <div className="grid w-full max-w-sm gap-4">
       <InputGroup>

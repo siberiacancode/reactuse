@@ -21,7 +21,7 @@ import {
   RefreshCwIcon,
 } from "lucide-react"
 
-export function InputGroupTextareaExamples() {
+function InputGroupTextareaExamples() {
   return (
     <FieldGroup>
       <Field>

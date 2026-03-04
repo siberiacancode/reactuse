@@ -1,6 +1,6 @@
 import { ToggleGroup, ToggleGroupItem } from "@/examples/radix/ui/toggle-group"
 
-export function ToggleGroupSizes() {
+function ToggleGroupSizes() {
   return (
     <div className="flex flex-col gap-4">
       <ToggleGroup type="single" size="sm" defaultValue="top" variant="outline">

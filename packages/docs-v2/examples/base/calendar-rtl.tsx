@@ -29,7 +29,7 @@ const locales = {
   he: he,
 } as const
 
-export function CalendarRtl() {
+function CalendarRtl() {
   const { dir, language } = useTranslation(translations, "ar")
   const [date, setDate] = React.useState<Date | undefined>(new Date())
 

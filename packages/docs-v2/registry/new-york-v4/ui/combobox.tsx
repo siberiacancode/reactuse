@@ -300,11 +300,11 @@ export {
   ComboboxLabel,
   ComboboxCollection,
   ComboboxEmpty,
-  ComboboxSeparator,
-  ComboboxChips,
-  ComboboxChip,
-  ComboboxChipsInput,
+  
+  
+  
+  
   ComboboxTrigger,
   ComboboxValue,
-  useComboboxAnchor,
+  
 }

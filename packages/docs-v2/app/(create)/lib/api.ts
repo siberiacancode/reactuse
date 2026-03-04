@@ -41,4 +41,4 @@ export async function getBaseComponent(name: string, base: BaseName) {
 }
 
 // Re-export for server-side use.
-export { getThemesForBaseColor }
+

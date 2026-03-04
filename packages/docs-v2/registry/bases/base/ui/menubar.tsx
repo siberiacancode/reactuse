@@ -260,7 +260,7 @@ function MenubarSubContent({
 
 export {
   Menubar,
-  MenubarPortal,
+  
   MenubarMenu,
   MenubarTrigger,
   MenubarContent,

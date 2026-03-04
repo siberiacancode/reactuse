@@ -1,7 +1,7 @@
 import { Field, FieldLabel } from "@/examples/radix/ui/field"
 import { RadioGroup, RadioGroupItem } from "@/examples/radix/ui/radio-group"
 
-export function RadioGroupDisabled() {
+function RadioGroupDisabled() {
   return (
     <RadioGroup defaultValue="option2" className="w-fit">
       <Field orientation="horizontal" data-disabled>

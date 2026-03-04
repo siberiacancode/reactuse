@@ -368,7 +368,7 @@ function BlockViewerCode() {
   )
 }
 
-export function BlockViewerFileTree() {
+function BlockViewerFileTree() {
   const { tree } = useBlockViewer()
 
   if (!tree) {

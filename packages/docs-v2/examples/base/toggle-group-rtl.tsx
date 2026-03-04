@@ -38,7 +38,7 @@ const translations: Translations = {
   },
 }
 
-export function ToggleGroupRtl() {
+function ToggleGroupRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

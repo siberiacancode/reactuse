@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/examples/radix/ui/select"
 
-export function SelectDemo() {
+function SelectDemo() {
   return (
     <Select>
       <SelectTrigger className="w-full max-w-48">

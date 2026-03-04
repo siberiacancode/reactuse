@@ -22,7 +22,7 @@ import {
   UserIcon,
 } from "lucide-react"
 
-export function CommandWithGroups() {
+function CommandWithGroups() {
   const [open, setOpen] = React.useState(false)
 
   return (

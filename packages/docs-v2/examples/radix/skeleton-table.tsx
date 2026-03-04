@@ -1,6 +1,6 @@
 import { Skeleton } from "@/examples/radix/ui/skeleton"
 
-export function SkeletonTable() {
+function SkeletonTable() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-2">
       {Array.from({ length: 5 }).map((_, index) => (

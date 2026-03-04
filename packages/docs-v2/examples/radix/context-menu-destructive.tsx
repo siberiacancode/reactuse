@@ -8,7 +8,7 @@ import {
 } from "@/examples/radix/ui/context-menu"
 import { PencilIcon, ShareIcon, TrashIcon } from "lucide-react"
 
-export function ContextMenuDestructive() {
+function ContextMenuDestructive() {
   return (
     <ContextMenu>
       <ContextMenuTrigger className="flex aspect-video w-full max-w-xs items-center justify-center rounded-xl border border-dashed text-sm">

@@ -6,7 +6,7 @@ import {
 } from "@/examples/base/ui/field"
 import { Switch } from "@/examples/base/ui/switch"
 
-export function SwitchDescription() {
+function SwitchDescription() {
   return (
     <Field orientation="horizontal" className="max-w-sm">
       <FieldContent>

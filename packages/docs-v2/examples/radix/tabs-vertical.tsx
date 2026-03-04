@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/examples/radix/ui/tabs"
 
-export function TabsVertical() {
+function TabsVertical() {
   return (
     <Tabs defaultValue="account" orientation="vertical">
       <TabsList>

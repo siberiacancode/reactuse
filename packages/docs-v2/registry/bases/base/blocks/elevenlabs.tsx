@@ -144,7 +144,7 @@ function WaveformDemo() {
   )
 }
 
-export interface AudioAnalyserOptions {
+interface AudioAnalyserOptions {
   fftSize?: number
   smoothingTimeConstant?: number
   minDecibels?: number
@@ -186,7 +186,7 @@ function createAudioAnalyser(
  * @param options - Audio analyser options
  * @returns The current volume level (0-1)
  */
-export function useAudioVolume(
+function useAudioVolume(
   mediaStream?: MediaStream | null,
   options: AudioAnalyserOptions = { fftSize: 32, smoothingTimeConstant: 0 }
 ) {
@@ -248,7 +248,7 @@ export function useAudioVolume(
   return volume
 }
 
-export interface MultiBandVolumeOptions {
+interface MultiBandVolumeOptions {
   bands?: number
   loPass?: number // Low frequency cutoff
   hiPass?: number // High frequency cutoff
@@ -279,7 +279,7 @@ const normalizeDb = (value: number) => {
  * @param options - Multiband options
  * @returns Array of volume levels for each frequency band
  */
-export function useMultibandVolume(
+function useMultibandVolume(
   mediaStream?: MediaStream | null,
   options: MultiBandVolumeOptions = {}
 ) {
@@ -378,7 +378,7 @@ type AnimationState =
   | "thinking"
   | undefined
 
-export const useBarAnimator = (
+const useBarAnimator = (
   state: AnimationState,
   columns: number,
   interval: number
@@ -449,14 +449,14 @@ const generateListeningSequenceBar = (columns: number): number[][] => {
   return [[center], [noIndex]]
 }
 
-export type AgentState =
+type AgentState =
   | "connecting"
   | "initializing"
   | "listening"
   | "speaking"
   | "thinking"
 
-export interface BarVisualizerProps
+interface BarVisualizerProps
   extends React.HTMLAttributes<HTMLDivElement> {
   /** Voice assistant state */
   state?: AgentState
@@ -664,7 +664,7 @@ const BarVisualizer = React.memo(
 BarVisualizerComponent.displayName = "BarVisualizerComponent"
 BarVisualizer.displayName = "BarVisualizer"
 
-export type LiveWaveformProps = React.HTMLAttributes<HTMLDivElement> & {
+type LiveWaveformProps = React.HTMLAttributes<HTMLDivElement> & {
   active?: boolean
   processing?: boolean
   deviceId?: string
@@ -686,7 +686,7 @@ export type LiveWaveformProps = React.HTMLAttributes<HTMLDivElement> & {
   onStreamReady?: (stream: MediaStream) => void
   onStreamEnd?: () => void
 }
-export const LiveWaveform = ({
+const LiveWaveform = ({
   active = false,
   processing = false,
   deviceId,

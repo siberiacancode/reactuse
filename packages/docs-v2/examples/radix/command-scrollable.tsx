@@ -39,7 +39,7 @@ import {
   ZoomOutIcon,
 } from "lucide-react"
 
-export function CommandManyItems() {
+function CommandManyItems() {
   const [open, setOpen] = React.useState(false)
 
   return (

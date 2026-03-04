@@ -12,7 +12,7 @@ import {
 
 const DRAWER_SIDES = ["top", "right", "bottom", "left"] as const
 
-export function DrawerWithSides() {
+function DrawerWithSides() {
   return (
     <div className="flex flex-wrap gap-2">
       {DRAWER_SIDES.map((side) => (

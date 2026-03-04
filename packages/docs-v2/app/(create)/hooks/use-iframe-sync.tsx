@@ -9,7 +9,7 @@ type ParentToIframeMessage = {
   data: DesignSystemSearchParams
 }
 
-export const isInIframe = () => {
+const isInIframe = () => {
   if (typeof window === "undefined") {
     return false
   }

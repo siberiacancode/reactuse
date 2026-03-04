@@ -18,12 +18,12 @@ export type RandomizeContext = {
   radius?: string
 }
 
-export type BiasFilter<T> = (
+type BiasFilter<T> = (
   items: readonly T[],
   context: RandomizeContext
 ) => readonly T[]
 
-export type RandomizeBiases = {
+type RandomizeBiases = {
   fonts?: BiasFilter<(typeof FONTS)[number]>
   radius?: BiasFilter<Radius>
   // Add more bias filters as needed:

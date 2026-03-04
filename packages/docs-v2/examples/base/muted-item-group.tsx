@@ -8,7 +8,7 @@ import {
   ItemTitle,
 } from "@/examples/base/ui/item"
 
-export function MutedItemGroup() {
+function MutedItemGroup() {
   return (
     <ItemGroup>
       <Item variant="muted">

@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/examples/radix/ui/tooltip"
 
-export function TooltipDemo() {
+function TooltipDemo() {
   return (
     <Tooltip>
       <TooltipTrigger asChild>

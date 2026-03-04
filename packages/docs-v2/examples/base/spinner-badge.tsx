@@ -1,7 +1,7 @@
 import { Badge } from "@/examples/base/ui/badge"
 import { Spinner } from "@/examples/base/ui/spinner"
 
-export function SpinnerBadge() {
+function SpinnerBadge() {
   return (
     <div className="flex items-center gap-4 [--radius:1.2rem]">
       <Badge>

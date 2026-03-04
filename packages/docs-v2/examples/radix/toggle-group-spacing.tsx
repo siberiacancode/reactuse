@@ -1,6 +1,6 @@
 import { ToggleGroup, ToggleGroupItem } from "@/examples/radix/ui/toggle-group"
 
-export function ToggleGroupSpacing() {
+function ToggleGroupSpacing() {
   return (
     <ToggleGroup
       type="single"

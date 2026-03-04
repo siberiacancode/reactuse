@@ -6,7 +6,7 @@ import {
 } from "@/examples/radix/ui/field"
 import { Switch } from "@/examples/radix/ui/switch"
 
-export function SwitchInvalid() {
+function SwitchInvalid() {
   return (
     <Field orientation="horizontal" className="max-w-sm" data-invalid>
       <FieldContent>

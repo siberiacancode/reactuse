@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/examples/radix/ui/select"
 
-export function SelectGroups() {
+function SelectGroups() {
   return (
     <Select>
       <SelectTrigger className="w-full max-w-48">

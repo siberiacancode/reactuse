@@ -13,7 +13,7 @@ import { Field, FieldGroup } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 import { Label } from "@/examples/radix/ui/label"
 
-export function DialogDemo() {
+function DialogDemo() {
   return (
     <Dialog>
       <form>

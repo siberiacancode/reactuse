@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/examples/radix/ui/dropdown-menu"
 
-export function BreadcrumbDemo() {
+function BreadcrumbDemo() {
   return (
     <Breadcrumb>
       <BreadcrumbList>

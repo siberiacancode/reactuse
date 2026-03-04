@@ -1,7 +1,7 @@
 import { Badge } from "@/examples/base/ui/badge"
 import { Spinner } from "@/examples/base/ui/spinner"
 
-export function BadgeWithSpinner() {
+function BadgeWithSpinner() {
   return (
     <div className="flex flex-wrap gap-2">
       <Badge variant="destructive">

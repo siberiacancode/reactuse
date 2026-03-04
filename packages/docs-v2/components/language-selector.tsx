@@ -27,7 +27,7 @@ export type Translations<
   }
 >
 
-export const languageOptions = [
+const languageOptions = [
   { value: "en", label: "English" },
   { value: "ar", label: "Arabic (العربية)" },
   { value: "he", label: "Hebrew (עברית)" },
@@ -78,7 +78,7 @@ export function useTranslation<T extends Record<string, string>>(
   return { language, setLanguage, dir, locale, t }
 }
 
-export interface LanguageSelectorProps {
+interface LanguageSelectorProps {
   value: Language
   onValueChange: (value: Language) => void
 }

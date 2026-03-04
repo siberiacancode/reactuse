@@ -12,7 +12,7 @@ import {
   MenubarTrigger,
 } from "@/examples/radix/ui/menubar"
 
-export function MenubarRadio() {
+function MenubarRadio() {
   const [user, setUser] = React.useState("benoit")
   const [theme, setTheme] = React.useState("system")
 

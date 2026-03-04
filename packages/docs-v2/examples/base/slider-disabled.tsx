@@ -1,6 +1,6 @@
 import { Slider } from "@/examples/base/ui/slider"
 
-export function SliderDisabled() {
+function SliderDisabled() {
   return (
     <Slider
       defaultValue={[50]}

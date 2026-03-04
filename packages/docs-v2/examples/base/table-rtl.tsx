@@ -116,7 +116,7 @@ const invoices = [
   },
 ]
 
-export function TableRtl() {
+function TableRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

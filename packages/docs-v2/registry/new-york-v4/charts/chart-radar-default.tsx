@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A radar chart"
+const description = "A radar chart"
 
 const chartData = [
   { month: "January", desktop: 186 },

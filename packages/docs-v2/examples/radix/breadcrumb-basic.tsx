@@ -7,7 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/examples/radix/ui/breadcrumb"
 
-export function BreadcrumbBasic() {
+function BreadcrumbBasic() {
   return (
     <Breadcrumb>
       <BreadcrumbList>

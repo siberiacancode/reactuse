@@ -17,7 +17,7 @@ const items = [
   { label: "Pineapple", value: "pineapple" },
 ]
 
-export function SelectDemo() {
+function SelectDemo() {
   return (
     <Select items={items}>
       <SelectTrigger className="w-full max-w-48">

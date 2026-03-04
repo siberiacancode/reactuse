@@ -12,7 +12,7 @@ import {
   ContextMenuTrigger,
 } from "@/examples/base/ui/context-menu"
 
-export function ContextMenuRadio() {
+function ContextMenuRadio() {
   const [user, setUser] = React.useState("pedro")
   const [theme, setTheme] = React.useState("light")
 

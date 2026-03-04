@@ -7,7 +7,7 @@ import {
 
 const HOVER_CARD_SIDES = ["left", "top", "bottom", "right"] as const
 
-export function HoverCardSides() {
+function HoverCardSides() {
   return (
     <div className="flex flex-wrap justify-center gap-2">
       {HOVER_CARD_SIDES.map((side) => (

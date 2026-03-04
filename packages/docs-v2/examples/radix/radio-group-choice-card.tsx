@@ -7,7 +7,7 @@ import {
 } from "@/examples/radix/ui/field"
 import { RadioGroup, RadioGroupItem } from "@/examples/radix/ui/radio-group"
 
-export function RadioGroupChoiceCard() {
+function RadioGroupChoiceCard() {
   return (
     <RadioGroup defaultValue="plus" className="max-w-sm">
       <FieldLabel htmlFor="plus-plan">

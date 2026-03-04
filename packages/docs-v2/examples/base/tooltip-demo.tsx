@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/examples/base/ui/tooltip"
 
-export function TooltipDemo() {
+function TooltipDemo() {
   return (
     <Tooltip>
       <TooltipTrigger render={<Button variant="outline" />}>

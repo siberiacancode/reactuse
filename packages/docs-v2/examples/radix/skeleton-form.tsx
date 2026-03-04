@@ -1,6 +1,6 @@
 import { Skeleton } from "@/examples/radix/ui/skeleton"
 
-export function SkeletonForm() {
+function SkeletonForm() {
   return (
     <div className="flex w-full max-w-xs flex-col gap-7">
       <div className="flex flex-col gap-3">

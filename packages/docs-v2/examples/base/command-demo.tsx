@@ -17,7 +17,7 @@ import {
   User,
 } from "lucide-react"
 
-export function CommandDemo() {
+function CommandDemo() {
   return (
     <Command className="max-w-sm rounded-lg border">
       <CommandInput placeholder="Type a command or search..." />

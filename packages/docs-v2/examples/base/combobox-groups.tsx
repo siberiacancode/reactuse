@@ -49,7 +49,7 @@ const timezones = [
   },
 ] as const
 
-export function ComboboxWithGroupsAndSeparator() {
+function ComboboxWithGroupsAndSeparator() {
   return (
     <Combobox items={timezones}>
       <ComboboxInput placeholder="Select a timezone" />

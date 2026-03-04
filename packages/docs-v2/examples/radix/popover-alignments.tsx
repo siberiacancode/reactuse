@@ -5,7 +5,7 @@ import {
   PopoverTrigger,
 } from "@/examples/radix/ui/popover"
 
-export function PopoverAlignments() {
+function PopoverAlignments() {
   return (
     <div className="flex gap-6">
       <Popover>

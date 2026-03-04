@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/examples/base/ui/tabs"
 
-export function TabsDisabled() {
+function TabsDisabled() {
   return (
     <Tabs defaultValue="home">
       <TabsList>

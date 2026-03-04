@@ -13,7 +13,7 @@ import {
 import { Button } from "@/examples/radix/ui/button"
 import { CircleFadingPlusIcon } from "lucide-react"
 
-export function AlertDialogWithMedia() {
+function AlertDialogWithMedia() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

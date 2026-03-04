@@ -53,7 +53,7 @@ const translations: Translations = {
   },
 }
 
-export function EmptyRtl() {
+function EmptyRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (
