@@ -4,7 +4,7 @@ import { useClickOutside, useCounter } from '@siberiacancode/reactuse';
 const Demo = () => {
   const counter = useCounter();
 
-  const clickOutsideRef = useClickOutside<HTMLDivElement>(() => {
+  const { ref: clickOutsideRef } = useClickOutside<HTMLDivElement>(() => {
     console.log('click outside');
     counter.inc();
   });
