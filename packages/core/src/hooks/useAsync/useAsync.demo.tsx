@@ -21,14 +21,14 @@ const Demo = () => {
         Next
       </button>
 
-      {getPokemonQuery.data && !getPokemonQuery.isLoading && (
+      {getPokemonQuery.isLoading && (
         <div className='flex animate-pulse flex-col gap-2'>
           <div className='h-7 w-40 rounded-md bg-neutral-600' />
           <div className='size-96 rounded-md bg-neutral-600' />
         </div>
       )}
 
-      {getPokemonQuery.data && (
+      {getPokemonQuery.data && !getPokemonQuery.isLoading && (
         <div className='flex flex-col gap-2'>
           <p>
             Name: <code>{getPokemonQuery.data.name}</code>
