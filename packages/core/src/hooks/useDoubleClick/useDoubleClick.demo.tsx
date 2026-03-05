@@ -2,7 +2,7 @@ import { useCounter, useDoubleClick } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const counter = useCounter();
-  const doubleClickRef = useDoubleClick<HTMLButtonElement>(() => counter.inc());
+  const { ref: doubleClickRef } = useDoubleClick<HTMLButtonElement>(() => counter.inc());
 
   return (
     <>
