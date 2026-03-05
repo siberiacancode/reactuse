@@ -4,7 +4,7 @@ import { useState } from 'react';
 const Demo = () => {
   const [messages, setMessages] = useState([`Message 1 at ${new Date().toLocaleTimeString()}`]);
 
-  const listRef = useAutoScroll<HTMLUListElement>();
+  const { ref: listRef } = useAutoScroll<HTMLUListElement>();
 
   const onAddMessage = () =>
     setMessages((prev) => [
