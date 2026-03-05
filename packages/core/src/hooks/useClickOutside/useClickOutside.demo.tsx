@@ -4,7 +4,7 @@ import { useClickOutside, useCounter } from '@siberiacancode/reactuse';
 const Demo = () => {
   const counter = useCounter();
 
-  const { ref: clickOutsideRef } = useClickOutside<HTMLDivElement>(() => {
+  const clickOutside = useClickOutside<HTMLDivElement>(() => {
     console.log('click outside');
     counter.inc();
   });
@@ -16,7 +16,7 @@ const Demo = () => {
       </p>
 
       <div
-        ref={clickOutsideRef}
+        ref={clickOutside.ref}
         className={cn(
           'relative flex flex-col items-center justify-center rounded-xl border-2 border-red-500 p-12',
           { 'border-green-500': counter.value > 5 }
