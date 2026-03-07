@@ -67,7 +67,7 @@ export default function IndexPage() {
           </Button>
         </PageActions>
         <Button asChild size='sm' variant='ghost' className='rounded-lg'>
-          <Link href='/docs/components'>View Components</Link>
+          <Link href='/docs/hooks'>View hooks</Link>
         </Button>
       </PageHeader>
       <div className='container grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3'>

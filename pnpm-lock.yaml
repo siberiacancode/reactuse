@@ -208,6 +208,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      comment-parser:
+        specifier: ^1.4.5
+        version: 1.4.5
       fumadocs-core:
         specifier: 16.0.5
         version: 16.0.5(@types/react@19.2.14)(algoliasearch@5.20.3)(lucide-react@0.474.0(react@19.2.4))(next@16.1.4(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

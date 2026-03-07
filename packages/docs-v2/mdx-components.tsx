@@ -7,6 +7,22 @@ import Link from 'next/link';
 import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
 import { Callout } from './components/callout';
+import { source } from './lib/source';
+import { HooksList } from './components/hooks-list';
+import { PageTreeFolder } from './lib/page-tree';
+
+function HooksListWrapper() {
+  const componentsFolder = source.pageTree.children.find((page) => page.$id === 'components');
+
+  console.log('source.pageTree.children', source.pageTree.children);
+
+  if (componentsFolder?.type !== 'folder') {
+    return null;
+  }
+
+  return <div>Tesst</div>;
+  // <HooksList componentsFolder={componentsFolder as PageTreeFolder} currentBase='radix' />;
+}
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
@@ -217,5 +233,6 @@ export const mdxComponents = {
     />
   ),
   Kbd,
-  Callout
+  Callout,
+  HooksList: HooksListWrapper
 };
