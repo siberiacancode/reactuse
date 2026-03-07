@@ -50,17 +50,7 @@ export function IconPlaceholder({
 
   return (
     <Suspense fallback={<SquareIcon {...props} />}>
-      {iconLibrary === "lucide" && <IconLucide name={iconName} {...props} />}
-      {iconLibrary === "tabler" && <IconTabler name={iconName} {...props} />}
-      {iconLibrary === "hugeicons" && (
-        <IconHugeicons name={iconName} {...props} />
-      )}
-      {iconLibrary === "phosphor" && (
-        <IconPhosphor name={iconName} {...props} />
-      )}
-      {iconLibrary === "remixicon" && (
-        <IconRemixicon name={iconName} {...props} />
-      )}
+      <IconTabler name={iconName} {...props} />
     </Suspense>
   )
 }

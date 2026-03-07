@@ -6,7 +6,6 @@ import {
   CollapsibleTrigger,
 } from "@/examples/base/ui/collapsible"
 
-import { ChevronDownIcon } from "@/registry/icons/__lucide__"
 
 function CollapsibleBasic() {
   return (
@@ -17,7 +16,6 @@ function CollapsibleBasic() {
             render={<Button variant="ghost" className="w-full" />}
           >
             Product details
-            <ChevronDownIcon className="ml-auto group-data-panel-open/button:rotate-180" />
           </CollapsibleTrigger>
           <CollapsibleContent className="flex flex-col items-start gap-2 p-2.5 pt-0 text-sm">
             <div>
