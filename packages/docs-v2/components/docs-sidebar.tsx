@@ -1,0 +1,126 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { getCurrentBase, getPagesFromFolder } from '@/lib/page-tree';
+import type { source } from '@/lib/source';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem
+} from '@/ui/sidebar';
+
+const TOP_LEVEL_SECTIONS = [
+  { name: 'Introduction', href: '/docs' },
+  {
+    name: 'Installation',
+    href: '/docs/installation'
+  },
+  {
+    name: 'reactuse.json',
+    href: '/docs/reactuse-json'
+  },
+  {
+    name: 'CLI',
+    href: '/docs/cli'
+  },
+  {
+    name: 'target',
+    href: '/docs/target'
+  },
+  {
+    name: 'memoization',
+    href: '/docs/memoization'
+  }
+];
+
+const EXCLUDED_SECTIONS = ['Introduction'];
+
+export function DocsSidebar({
+  tree,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { tree: typeof source.pageTree }) {
+  const pathname = usePathname();
+  const currentBase = getCurrentBase(pathname);
+
+  return (
+    <Sidebar
+      className='sticky top-[calc(var(--header-height)+0.6rem)] z-30 hidden h-[calc(100svh-10rem)] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(56)] lg:flex'
+      collapsible='none'
+      {...props}
+    >
+      <div className='h-9' />
+      <div className='from-background via-background/80 to-background/50 absolute top-8 z-10 h-8 w-(--sidebar-menu-width) shrink-0 bg-gradient-to-b blur-xs' />
+      <div className='via-border absolute top-12 right-2 bottom-0 hidden h-full w-px bg-gradient-to-b from-transparent to-transparent lg:flex' />
+      <SidebarContent className='no-scrollbar mx-auto w-(--sidebar-menu-width) overflow-x-hidden px-2'>
+        <SidebarGroup className='pt-6'>
+          <SidebarGroupLabel className='text-muted-foreground font-medium'>
+            Sections
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {TOP_LEVEL_SECTIONS.map(({ name, href }) => {
+                return (
+                  <SidebarMenuItem key={name}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={href === '/docs' ? pathname === href : pathname.startsWith(href)}
+                      className='data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md'
+                    >
+                      <Link href={href}>
+                        <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
+                        {name}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        {tree.children.map((item) => {
+          if (EXCLUDED_SECTIONS.includes((item.name as string) ?? '')) {
+            return null;
+          }
+
+          return (
+            <SidebarGroup key={item.$id}>
+              <SidebarGroupLabel className='text-muted-foreground font-medium'>
+                {item.name}
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                {item.type === 'folder' && (
+                  <SidebarMenu className='gap-0.5'>
+                    {getPagesFromFolder(item, currentBase).map((page) => {
+                      return (
+                        <SidebarMenuItem key={page.url}>
+                          <SidebarMenuButton
+                            asChild
+                            isActive={page.url === pathname}
+                            className='data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md'
+                          >
+                            <Link href={page.url}>
+                              <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
+                              {page.name}
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      );
+                    })}
+                  </SidebarMenu>
+                )}
+              </SidebarGroupContent>
+            </SidebarGroup>
+          );
+        })}
+        <div className='from-background via-background/80 to-background/50 sticky -bottom-1 z-10 h-16 shrink-0 bg-gradient-to-t blur-xs' />
+      </SidebarContent>
+    </Sidebar>
+  );
+}

@@ -6,11 +6,8 @@ import { findNeighbour } from 'fumadocs-core/page-tree';
 
 import { source } from '@/lib/source';
 import { absoluteUrl } from '@/lib/utils';
-// import { DocsBaseSwitcher } from '@/components/docs-base-switcher';
-// import { DocsCopyPage } from '@/components/docs-copy-page';
-// import { DocsTableOfContents } from '@/components/docs-toc';
-// import { OpenInV0Cta } from '@/components/open-in-v0-cta';
 import { Button } from '@/ui/button';
+import { DocsCopyPage } from '@/components/docs-copy-page';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -83,7 +80,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
                 </h1>
                 <div className='docs-nav flex items-center gap-2'>
                   <div className='hidden sm:block'>
-                    {/* <DocsCopyPage page={raw} url={absoluteUrl(page.url)} /> */}
+                    <DocsCopyPage page={raw} url={absoluteUrl(page.url)} />
                   </div>
                   <div className='ml-auto flex gap-2'>
                     {neighbours.previous && (
@@ -148,21 +145,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
       </div>
       <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
         <div className='h-(--top-spacing) shrink-0'></div>
-        {/* {doc.toc?.length ? (
-          <div className='no-scrollbar flex flex-col gap-8 overflow-y-auto px-8'>
-            <DocsTableOfContents toc={doc.toc} />
-          </div>
-        ) : null}
-        <div className='hidden flex-1 flex-col gap-6 px-6 xl:flex'>
-          <OpenInV0Cta />
-        </div> */}
       </div>
     </div>
   );
-}
-
-{
-  /* <DocsPage source={source} {...props}>
-      {props.children}
-    </DocsPage> */
 }

@@ -1,15 +1,12 @@
-import { source } from '@/lib/source';
 import { Button } from './ui/button';
 import Link from 'next/link';
-import { siteConfig } from './config';
+import { siteConfig } from '@/lib/config';
 import { Icons } from './icons';
 import { Separator } from './ui/separator';
 import { GitHubLink } from './github-link';
 import { ModeSwitcher } from './mode-switcher';
 
 export function SiteHeader() {
-  const pageTree = source.pageTree;
-
   return (
     <header className='bg-background sticky top-0 z-50 w-full'>
       <div className='container-wrapper 3xl:fixed:px-0 px-6'>
@@ -20,20 +17,20 @@ export function SiteHeader() {
               <span className='sr-only'>{siteConfig.name}</span>
             </Link>
           </Button>
+          <div className='hidden w-full flex-1 md:flex md:w-auto md:flex-none'>
+            {siteConfig.navItems.map((navItem) => (
+              <Button
+                key={navItem.href}
+                asChild
+                size='sm'
+                variant='ghost'
+                className='hidden h-[31px] rounded-lg sm:flex'
+              >
+                <Link href={navItem.href}>{navItem.label}</Link>
+              </Button>
+            ))}
+          </div>
           <div className='ml-auto flex items-center gap-2 md:flex-1 md:justify-end'>
-            <div className='hidden w-full flex-1 md:flex md:w-auto md:flex-none'>
-              {siteConfig.navItems.map((navItem) => (
-                <Button
-                  key={navItem.href}
-                  asChild
-                  size='sm'
-                  variant='ghost'
-                  className='hidden h-[31px] rounded-lg sm:flex'
-                >
-                  <Link href={navItem.href}>{navItem.label}</Link>
-                </Button>
-              ))}
-            </div>
             <Separator orientation='vertical' className='ml-2 hidden lg:block' />
             <GitHubLink />
             <Separator orientation='vertical' className='3xl:flex hidden' />

@@ -6,6 +6,7 @@ import { Kbd } from '@/ui/kbd';
 import Link from 'next/link';
 import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
+import { Callout } from './components/callout';
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
@@ -185,16 +186,16 @@ export const mdxComponents = {
 
     // npm command.
     const isNpmCommand = __npm__ && __yarn__ && __pnpm__ && __bun__;
-    // if (isNpmCommand) {
-    //   return (
-    //     <CodeBlockCommand
-    //       __npm__={__npm__}
-    //       __yarn__={__yarn__}
-    //       __pnpm__={__pnpm__}
-    //       __bun__={__bun__}
-    //     />
-    //   );
-    // }
+    if (isNpmCommand) {
+      return (
+        <CodeBlockCommand
+          __npm__={__npm__}
+          __yarn__={__yarn__}
+          __pnpm__={__pnpm__}
+          __bun__={__bun__}
+        />
+      );
+    }
 
     return (
       <>
@@ -215,5 +216,6 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  Kbd
+  Kbd,
+  Callout
 };
