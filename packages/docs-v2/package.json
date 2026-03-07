@@ -8,7 +8,7 @@
     "build": "pnpm --filter=shadcn build && next build",
     "start": "next start --port 4000",
     "preview": "pnpm --filter=shadcn build && next build && next start --port 4000",
-    "generate-mdx": "npx ts-node scripts/generate-mdx.ts ../../packages/core/src/hooks && pnpm postinstall",
+    "generate-mdx": "npx ts-node --transpile-only scripts/generate-mdx.ts ../../packages/core/src/hooks && pnpm postinstall",
     "type": "tsc --noEmit",
     "lint": "eslint . --fix",
     "pretty": "yarn type && yarn lint && yarn format",

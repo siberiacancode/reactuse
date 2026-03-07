@@ -2,55 +2,72 @@ import fs from 'fs';
 import path from 'path';
 import { parse } from 'comment-parser';
 
-interface Prop {
-  name: string;
-  type: string;
-  description: string;
-}
+type Prop = any;
 
-function parseJSDoc(filePath: string): Prop[] {
-  const content = fs.readFileSync(filePath, 'utf-8');
-  const blocks = parse(content);
-  const props: Prop[] = [];
-
-  blocks.forEach((block) => {
-    block.tags.forEach((tag) => {
-      if (tag.tag === 'param') {
-        props.push({
-          name: tag.name,
-          type: tag.type || 'unknown',
-          description: tag.description || ''
-        });
-      }
-    });
-  });
-
-  return props;
-}
-
-function escapeMDX(str: string) {
-  if (!str) return '';
-  return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-// --- Генерация MDX ---
-function generateMDX(componentName: string, props: Prop[], outputDir: string) {
-  const tableRows = props
-    .map((p) => `| ${p.name} | ${escapeMDX(p.type)} | - | ${escapeMDX(p.description)} |`)
-    .join('\n');
-
-  console.log('tableRows', tableRows);
-
-  const mdxContent = `---
+const mdxContent = (componentName: string, props: Prop) => `---
 title: ${componentName}
-description: Auto-generated documentation
+description: ${props?.description?.description ?? 'None'}
 ---
+
+## Installation
+
+
+
+\`\`\`bash
+npx useverse@latest add ${componentName}
+\`\`\`
+
+
 `;
 
+export const matchJsdoc = (file: string) => {
+  const jsdocCommentRegex = /\/\*\*\s*\n([^\\*]|(\*(?!\/)))*\*\//;
+  const match = file.match(jsdocCommentRegex);
+  return match ? match[0].trim() : undefined;
+};
+
+export const parseHookJsdoc = (filePath: string) => {
+  const fileContent = fs.readFileSync(filePath, 'utf-8');
+  const jsdocMatch = matchJsdoc(fileContent);
+
+  if (!jsdocMatch) {
+    return;
+  }
+
+  const jsdoc = parse(jsdocMatch)[0];
+
+  if (!jsdoc) {
+    return;
+  }
+
+  const description = jsdoc.tags.find(({ tag }) => tag === 'description');
+  const examples = jsdoc.tags.filter(({ tag }) => tag === 'example');
+  const usage = jsdoc.tags.find(({ tag }) => tag === 'usage');
+  const deprecated = jsdoc.tags.find(({ tag }) => tag === 'deprecated');
+  const category = jsdoc.tags.find(({ tag }) => tag === 'category');
+  const warning = jsdoc.tags.find(({ tag }) => tag === 'warning');
+  const browserapi = jsdoc.tags.find(({ tag }) => tag === 'browserapi');
+  const apiParameters = jsdoc.tags.filter(
+    ({ tag }) => tag === 'param' || tag === 'overload' || tag === 'returns'
+  );
+
+  return {
+    description,
+    examples,
+    usage,
+    apiParameters,
+    deprecated,
+    category,
+    browserapi,
+    warning
+  };
+};
+
+// --- Генерация MDX ---
+function generateMDX(componentName: string, props: Prop, outputDir: string) {
   const outputPath = path.join(outputDir, `${componentName.toLowerCase()}.mdx`);
   fs.mkdirSync(outputDir, { recursive: true });
-  fs.writeFileSync(outputPath, mdxContent, 'utf-8');
-  console.log(`MDX generated: ${outputPath}`);
+  fs.writeFileSync(outputPath, mdxContent(componentName, props), 'utf-8');
 }
 
 // --- Рекурсивный обход папки для поиска компонентов ---
@@ -83,13 +100,16 @@ const componentFiles = getComponentFiles(componentsDir);
 
 componentFiles.forEach((filePath) => {
   const componentName = path.basename(filePath, path.extname(filePath));
-  const props = parseJSDoc(filePath);
 
   if (
     componentName.startsWith('use') &&
     !componentName.endsWith('.test') &&
     !componentName.endsWith('.demo')
   ) {
-    generateMDX(componentName, props, outputDir);
+    const props = parseHookJsdoc(filePath);
+
+    if (props && props.description && props.examples.length) {
+      generateMDX(componentName, props, outputDir);
+    }
   }
 });

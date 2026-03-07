@@ -17,7 +17,7 @@ export const siteConfig = {
       label: 'Installation'
     },
     {
-      href: '/docs/hooks',
+      href: '/docs/hooks/useactiveelement',
       label: 'Hooks'
     }
   ]
