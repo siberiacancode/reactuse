@@ -1,11 +1,7 @@
 ---
 title: Manual Installation
-description: Add reactuse to your project manually.
+description: Add reactuse to your project without relying on a framework-specific guide.
 ---
-
-# Manual Installation
-
-Add reactuse to your project without relying on a framework-specific guide.
 
 ### Install the package
 
@@ -67,24 +63,24 @@ npx useverse@latest add useBoolean
 Then import and use them:
 
 ```tsx showLineNumbers
-import { useBoolean } from '@/shared/hooks';
+import { useBoolean } from "@/shared/hooks"
 
 const App = () => {
-  const [on, toggle] = useBoolean();
+  const [on, toggle] = useBoolean()
 
   return (
     <div>
-      <button type='button' onClick={() => toggle()}>
+      <button type="button" onClick={() => toggle()}>
         Toggle
       </button>
       <p>{on.toString()}</p>
     </div>
-  );
-};
+  )
+}
 ```
 
 If you prefer not to use the CLI, you can import hooks directly from the package:
 
 ```tsx
-import { useBoolean } from '@siberiacancode/reactuse';
+import { useBoolean } from "@siberiacancode/reactuse"
 ```
