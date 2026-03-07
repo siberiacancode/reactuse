@@ -3,15 +3,9 @@ title: Vite
 description: Install and configure reactuse for Vite.
 ---
 
-# Vite
-
-Install and configure reactuse for Vite.
-
 ### Create project
 
 Start by creating a new React project using `vite`. Select the **React + TypeScript** template:
-
-::: code-group
 
 ```bash [npm]
 npm create vite@latest
@@ -29,8 +23,6 @@ pnpm create vite@latest
 bun create vite@latest
 
 ```
-
-:::
 
 ### Edit tsconfig.json file
 
@@ -79,8 +71,6 @@ Add the following code to the `tsconfig.app.json` file to resolve paths, for you
 
 Add the following code to the vite.config.ts so your app can resolve paths without error:
 
-::: code-group
-
 ```bash [npm]
 npm install -D @types/node
 ```
@@ -98,22 +88,20 @@ bun add -D @types/node
 
 ```
 
-:::
-
 ```typescript title="vite.config.ts" showLineNumbers {1,2,8-13}
-import react from '@vitejs/plugin-react';
-import path from 'node:path';
-import { defineConfig } from 'vite';
+import path from "node:path"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  }
-});
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})
 ```
 
 ### Run the CLI
@@ -137,18 +125,18 @@ npx useverse@latest add useBoolean
 Then import and use the hook in your app:
 
 ```tsx showLineNumbers title="src/App.tsx"
-import { useBoolean } from '@/shared/hooks';
+import { useBoolean } from "@/shared/hooks"
 
 const App = () => {
-  const [on, toggle] = useBoolean();
+  const [on, toggle] = useBoolean()
 
   return (
     <div>
       <button onClick={() => toggle()}>Click me</button>
       <p>{on.toString()}</p>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
 ```

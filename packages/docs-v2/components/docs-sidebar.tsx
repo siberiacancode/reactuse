@@ -41,8 +41,8 @@ const TOP_LEVEL_SECTIONS = [
     href: "/docs/memoization",
   },
 ]
-const EXCLUDED_SECTIONS = ["installation", "dark-mode", "changelog", "rtl"]
-const EXCLUDED_PAGES = ["/docs", "/docs/changelog", "/docs/rtl"]
+
+const EXCLUDED_SECTIONS = ["Introduction"]
 
 export function DocsSidebar({
   tree,
@@ -89,7 +89,7 @@ export function DocsSidebar({
           </SidebarGroupContent>
         </SidebarGroup>
         {tree.children.map((item) => {
-          if (EXCLUDED_SECTIONS.includes(item.$id ?? "")) {
+          if (EXCLUDED_SECTIONS.includes(item.name?.toString() ?? "")) {
             return null
           }
 
@@ -103,10 +103,6 @@ export function DocsSidebar({
                   <SidebarMenu className="gap-0.5">
                     {getPagesFromFolder(item, currentBase).map((page) => {
                       if (!showMcpDocs && page.url.includes("/mcp")) {
-                        return null
-                      }
-
-                      if (EXCLUDED_PAGES.includes(page.url)) {
                         return null
                       }
 
