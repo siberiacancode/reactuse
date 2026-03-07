@@ -1,42 +1,40 @@
-import nextVitals from "eslint-config-next/core-web-vitals"
-import tseslint from "typescript-eslint"
+import { eslint } from '@siberiacancode/eslint';
 
-const eslintConfig = tseslint.config(
-  // Remove the @typescript-eslint plugin from next/typescript to prevent
-  // duplicate registration with tseslint.configs.recommended.
-  ...nextVitals.map((config) =>
-    config.name === "next/typescript"
-      ? { ...config, plugins: {} }
-      : config
-  ),
-  ...tseslint.configs.recommended,
+export default eslint(
   {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-      ".source/**",
-      "**/__index__.tsx",
-    ],
+    typescript: true,
+    javascript: true,
+    react: true,
+    jsx: true,
+    vue: true
   },
   {
+    name: 'siberiacancode/core/ignores',
+    ignores: ['**/bundle/**/*.js']
+  },
+  {
+    name: 'siberiacancode/core/hooks',
+    files: ['**/{hooks,helpers}/**/*.{ts,tsx}'],
     rules: {
-      "react-hooks/incompatible-library": "off",
-      "react-hooks/purity": "off",
-      "@next/next/no-html-link-for-pages": "off",
-      "@next/next/no-img-element": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "@typescript-eslint/consistent-type-imports": [
-        "error",
-        {
-          prefer: "type-imports",
-          fixStyle: "inline-type-imports",
-        },
-      ],
-    },
+      'react-dom/no-flush-sync': 'warn',
+      'jsdoc/no-defaults': 'off',
+      'react-hooks/rules-of-hooks': 'warn',
+      'react/no-use-context': 'off',
+      'react/no-context-provider': 'off'
+    }
   },
-)
-
-export default eslintConfig
+  {
+    name: 'siberiacancode/core/tests',
+    files: ['**/*.test.ts'],
+    rules: {
+      'react/no-create-ref': 'off'
+    }
+  },
+  {
+    name: 'siberiacancode/core/demo',
+    files: ['**/*.demo.tsx'],
+    rules: {
+      'no-alert': 'off'
+    }
+  }
+);
