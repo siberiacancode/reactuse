@@ -148,4 +148,4 @@ export const FONTS = [
   },
 ] as const
 
-export type Font = (typeof FONTS)[number]
+type Font = (typeof FONTS)[number]

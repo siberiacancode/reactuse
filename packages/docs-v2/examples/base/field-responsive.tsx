@@ -10,7 +10,7 @@ import {
 } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 
-export function FieldResponsive() {
+function FieldResponsive() {
   return (
     <div className="w-full max-w-lg">
       <form>

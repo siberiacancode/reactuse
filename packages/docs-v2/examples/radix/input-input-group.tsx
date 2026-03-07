@@ -7,7 +7,7 @@ import {
 } from "@/examples/radix/ui/input-group"
 import { InfoIcon } from "lucide-react"
 
-export function InputInputGroup() {
+function InputInputGroup() {
   return (
     <Field>
       <FieldLabel htmlFor="input-group-url">Website URL</FieldLabel>

@@ -3,7 +3,7 @@ import {
   NativeSelectOption,
 } from "@/examples/base/ui/native-select"
 
-export function NativeSelectInvalid() {
+function NativeSelectInvalid() {
   return (
     <NativeSelect aria-invalid="true">
       <NativeSelectOption value="">Error state</NativeSelectOption>

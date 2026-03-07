@@ -1,4 +1,4 @@
-export function TypographyList() {
+function TypographyList() {
   return (
     <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
       <li>1st level of puns: 5 gold coins</li>

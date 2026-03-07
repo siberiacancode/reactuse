@@ -8,7 +8,7 @@ import {
   InputOTPSlot,
 } from "@/examples/radix/ui/input-otp"
 
-export function InputOTPInvalid() {
+function InputOTPInvalid() {
   const [value, setValue] = React.useState("000000")
 
   return (

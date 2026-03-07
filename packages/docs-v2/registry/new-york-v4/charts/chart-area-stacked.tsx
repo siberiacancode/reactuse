@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A stacked area chart"
+const description = "A stacked area chart"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -40,7 +40,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartAreaStacked() {
+function ChartAreaStacked() {
   return (
     <Card>
       <CardHeader>

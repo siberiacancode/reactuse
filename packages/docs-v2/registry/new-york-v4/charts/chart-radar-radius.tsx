@@ -24,7 +24,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A radar chart with a radius axis"
+const description = "A radar chart with a radius axis"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -46,7 +46,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartRadarRadius() {
+function ChartRadarRadius() {
   return (
     <Card>
       <CardHeader className="items-center pb-4">

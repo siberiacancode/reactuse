@@ -13,7 +13,7 @@ import {
 } from "@/examples/base/ui/dropdown-menu"
 import { Building2Icon, CreditCardIcon, WalletIcon } from "lucide-react"
 
-export function DropdownMenuRadioIcons() {
+function DropdownMenuRadioIcons() {
   const [paymentMethod, setPaymentMethod] = React.useState("card")
 
   return (

@@ -158,7 +158,7 @@ interface UnistNode {
   children?: UnistNode[]
 }
 
-export interface UnistTree {
+interface UnistTree {
   type: string
   children: UnistNode[]
 }
@@ -173,7 +173,7 @@ interface NodeToProcess {
   hideCode?: boolean
 }
 
-export function rehypeComponent() {
+function rehypeComponent() {
   return async (tree: UnistTree) => {
     const activeStyle = await getActiveStyle()
     const nodesToProcess: NodeToProcess[] = []

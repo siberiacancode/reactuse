@@ -23,7 +23,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartBarDemoAxis() {
+function ChartBarDemoAxis() {
   return (
     <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
       <BarChart accessibilityLayer data={chartData}>

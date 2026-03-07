@@ -4,7 +4,7 @@ import * as React from "react"
 import { Progress } from "@/examples/radix/ui/progress"
 import { Slider } from "@/examples/radix/ui/slider"
 
-export function ProgressControlled() {
+function ProgressControlled() {
   const [value, setValue] = React.useState([50])
 
   return (

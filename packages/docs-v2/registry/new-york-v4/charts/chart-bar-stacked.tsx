@@ -20,7 +20,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A stacked bar chart with a legend"
+const description = "A stacked bar chart with a legend"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -42,7 +42,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartBarStacked() {
+function ChartBarStacked() {
   return (
     <Card>
       <CardHeader>

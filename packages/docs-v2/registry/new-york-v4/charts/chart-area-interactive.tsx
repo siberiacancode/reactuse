@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from "@/registry/new-york-v4/ui/select"
 
-export const description = "An interactive area chart"
+const description = "An interactive area chart"
 
 const chartData = [
   { date: "2024-04-01", desktop: 222, mobile: 150 },
@@ -136,7 +136,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartAreaInteractive() {
+function ChartAreaInteractive() {
   const [timeRange, setTimeRange] = React.useState("90d")
 
   const filteredData = chartData.filter((item) => {

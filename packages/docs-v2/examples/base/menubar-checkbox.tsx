@@ -9,7 +9,7 @@ import {
   MenubarTrigger,
 } from "@/examples/base/ui/menubar"
 
-export function MenubarCheckbox() {
+function MenubarCheckbox() {
   return (
     <Menubar className="w-72">
       <MenubarMenu>

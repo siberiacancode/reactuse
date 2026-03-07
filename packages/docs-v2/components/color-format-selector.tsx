@@ -58,7 +58,7 @@ export function ColorFormatSelector({
   )
 }
 
-export function ColorFormatSelectorSkeleton({
+function ColorFormatSelectorSkeleton({
   className,
   ...props
 }: React.ComponentProps<typeof Skeleton>) {

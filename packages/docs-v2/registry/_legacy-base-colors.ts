@@ -755,7 +755,7 @@ export const baseColors = [
 
 export type BaseColor = (typeof baseColors)[number]
 
-export const baseColorsV4 = {
+const baseColorsV4 = {
   stone: {
     light: {
       background: "oklch(1 0 0)", // --color-white

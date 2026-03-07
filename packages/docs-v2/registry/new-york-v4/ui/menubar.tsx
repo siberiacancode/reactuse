@@ -258,13 +258,13 @@ function MenubarSubContent({
 
 export {
   Menubar,
-  MenubarPortal,
+  
   MenubarMenu,
   MenubarTrigger,
   MenubarContent,
-  MenubarGroup,
+  
   MenubarSeparator,
-  MenubarLabel,
+  
   MenubarItem,
   MenubarShortcut,
   MenubarCheckboxItem,

@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/examples/radix/ui/select"
 
-export function PaginationIconsOnly() {
+function PaginationIconsOnly() {
   return (
     <div className="flex items-center justify-between gap-4">
       <Field orientation="horizontal" className="w-fit">

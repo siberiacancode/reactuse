@@ -10,7 +10,7 @@ import {
   FieldSet,
 } from "@/examples/base/ui/field"
 
-export function FieldCheckbox() {
+function FieldCheckbox() {
   return (
     <FieldGroup className="w-full max-w-xs">
       <FieldSet>

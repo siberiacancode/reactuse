@@ -6,7 +6,7 @@ import { Calendar } from "@/examples/radix/ui/calendar"
 import { Card, CardContent, CardFooter } from "@/examples/radix/ui/card"
 import { addDays } from "date-fns"
 
-export function CalendarWithPresets() {
+function CalendarWithPresets() {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(new Date().getFullYear(), 1, 12)
   )

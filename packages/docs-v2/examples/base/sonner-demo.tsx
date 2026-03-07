@@ -3,7 +3,7 @@
 import { Button } from "@/examples/base/ui/button"
 import { toast } from "sonner"
 
-export function SonnerDemo() {
+function SonnerDemo() {
   return (
     <Button
       variant="outline"

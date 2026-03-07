@@ -1,7 +1,7 @@
 import { Label } from "@/examples/radix/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/examples/radix/ui/radio-group"
 
-export function RadioGroupDemo() {
+function RadioGroupDemo() {
   return (
     <RadioGroup defaultValue="comfortable" className="w-fit">
       <div className="flex items-center gap-3">

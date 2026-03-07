@@ -17,7 +17,7 @@ import {
   LogOutIcon,
 } from "lucide-react"
 
-export function DropdownMenuAvatar() {
+function DropdownMenuAvatar() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger

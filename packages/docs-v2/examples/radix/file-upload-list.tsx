@@ -12,7 +12,7 @@ import {
 import { Progress } from "@/examples/radix/ui/progress"
 import { FileIcon } from "lucide-react"
 
-export function FileUploadList() {
+function FileUploadList() {
   const files = React.useMemo(
     () => [
       {

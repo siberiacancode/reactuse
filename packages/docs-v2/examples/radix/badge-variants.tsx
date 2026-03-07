@@ -1,6 +1,6 @@
 import { Badge } from "@/examples/radix/ui/badge"
 
-export function BadgeVariants() {
+function BadgeVariants() {
   return (
     <div className="flex flex-wrap gap-2">
       <Badge>Default</Badge>

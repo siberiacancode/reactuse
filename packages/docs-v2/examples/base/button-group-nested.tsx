@@ -13,7 +13,7 @@ import {
 } from "@/examples/base/ui/tooltip"
 import { AudioLinesIcon, PlusIcon } from "lucide-react"
 
-export function ButtonGroupNested() {
+function ButtonGroupNested() {
   return (
     <ButtonGroup>
       <ButtonGroup>

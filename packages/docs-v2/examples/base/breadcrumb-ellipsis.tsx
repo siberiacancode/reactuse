@@ -9,7 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@/examples/base/ui/breadcrumb"
 
-export function BreadcrumbEllipsisDemo() {
+function BreadcrumbEllipsisDemo() {
   return (
     <Breadcrumb>
       <BreadcrumbList>

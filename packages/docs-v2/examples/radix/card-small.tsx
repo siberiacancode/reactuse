@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/examples/radix/ui/card"
 
-export function CardSmall() {
+function CardSmall() {
   return (
     <Card size="sm" className="mx-auto w-full max-w-sm">
       <CardHeader>

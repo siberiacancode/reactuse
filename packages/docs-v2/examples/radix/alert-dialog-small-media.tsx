@@ -13,7 +13,7 @@ import {
 import { Button } from "@/examples/radix/ui/button"
 import { BluetoothIcon } from "lucide-react"
 
-export function AlertDialogSmallWithMedia() {
+function AlertDialogSmallWithMedia() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

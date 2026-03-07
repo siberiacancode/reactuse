@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A line chart with a custom label"
+const description = "A line chart with a custom label"
 
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -55,7 +55,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartLineLabelCustom() {
+function ChartLineLabelCustom() {
   return (
     <Card>
       <CardHeader>

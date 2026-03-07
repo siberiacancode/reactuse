@@ -12,7 +12,7 @@ import {
   CommandList,
 } from "@/examples/radix/ui/command"
 
-export function CommandBasic() {
+function CommandBasic() {
   const [open, setOpen] = React.useState(false)
 
   return (

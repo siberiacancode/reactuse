@@ -1,7 +1,7 @@
 import { Label } from "@/examples/base/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/examples/base/ui/radio-group"
 
-export function RadioGroupDemo() {
+function RadioGroupDemo() {
   return (
     <RadioGroup defaultValue="comfortable" className="w-fit">
       <div className="flex items-center gap-3">

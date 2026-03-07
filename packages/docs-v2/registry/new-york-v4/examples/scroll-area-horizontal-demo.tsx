@@ -3,12 +3,12 @@ import Image from "next/image"
 
 import { ScrollArea, ScrollBar } from "@/registry/new-york-v4/ui/scroll-area"
 
-export interface Artwork {
+interface Artwork {
   artist: string
   art: string
 }
 
-export const works: Artwork[] = [
+const works: Artwork[] = [
   {
     artist: "Ornella Binni",
     art: "https://images.unsplash.com/photo-1465869185982-5a1a7522cbcb?auto=format&fit=crop&w=300&q=80",

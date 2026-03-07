@@ -18,7 +18,7 @@ import { Field, FieldGroup, FieldLabel } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 import { MaximizeIcon, MinimizeIcon } from "lucide-react"
 
-export function CollapsibleSettings() {
+function CollapsibleSettings() {
   const [isOpen, setIsOpen] = React.useState(false)
 
   return (

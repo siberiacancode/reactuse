@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/examples/base/ui/dropdown-menu"
 
-export function AvatarDropdown() {
+function AvatarDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger

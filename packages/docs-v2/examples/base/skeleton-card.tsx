@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/examples/base/ui/card"
 import { Skeleton } from "@/examples/base/ui/skeleton"
 
-export function SkeletonCard() {
+function SkeletonCard() {
   return (
     <Card className="w-full max-w-xs">
       <CardHeader>

@@ -17,7 +17,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "An interactive bar chart"
+const description = "An interactive bar chart"
 
 const chartData = [
   { date: "2024-04-01", desktop: 222, mobile: 150 },
@@ -66,7 +66,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartDemo() {
+function ChartDemo() {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>("desktop")
 

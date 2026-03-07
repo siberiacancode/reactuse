@@ -14,7 +14,7 @@ import { Kbd, KbdGroup } from "@/examples/radix/ui/kbd"
 import { Spinner } from "@/examples/radix/ui/spinner"
 import { CheckIcon, InfoIcon, SearchIcon, SparklesIcon } from "lucide-react"
 
-export function InputGroupWithKbd() {
+function InputGroupWithKbd() {
   return (
     <FieldGroup>
       <Field>

@@ -8,7 +8,7 @@ import {
   PopoverTrigger,
 } from "@/examples/radix/ui/popover"
 
-export function PopoverBasic() {
+function PopoverBasic() {
   return (
     <Popover>
       <PopoverTrigger asChild>

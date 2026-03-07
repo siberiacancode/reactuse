@@ -2,7 +2,7 @@
 
 import { Calendar } from "@/examples/radix/ui/calendar"
 
-export function CalendarCaption() {
+function CalendarCaption() {
   return (
     <Calendar
       mode="single"

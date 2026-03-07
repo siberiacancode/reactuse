@@ -11,7 +11,7 @@ import {
 } from "@/examples/base/ui/input-group"
 import { Clock2Icon } from "lucide-react"
 
-export function CalendarWithTime() {
+function CalendarWithTime() {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(new Date().getFullYear(), new Date().getMonth(), 12)
   )

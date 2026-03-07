@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { AspectRatio } from "@/examples/base/ui/aspect-ratio"
 
-export function AspectRatioPortrait() {
+function AspectRatioPortrait() {
   return (
     <AspectRatio
       ratio={9 / 16}

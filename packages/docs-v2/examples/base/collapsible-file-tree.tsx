@@ -10,7 +10,7 @@ import { ChevronRightIcon, FileIcon, FolderIcon } from "lucide-react"
 
 type FileTreeItem = { name: string } | { name: string; items: FileTreeItem[] }
 
-export function CollapsibleFileTree() {
+function CollapsibleFileTree() {
   const fileTree: FileTreeItem[] = [
     {
       name: "components",

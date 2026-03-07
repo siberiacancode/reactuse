@@ -1,7 +1,7 @@
 import { Tabs, TabsList, TabsTrigger } from "@/examples/base/ui/tabs"
 import { AppWindowIcon, CodeIcon } from "lucide-react"
 
-export function TabsIcons() {
+function TabsIcons() {
   return (
     <Tabs defaultValue="preview">
       <TabsList>

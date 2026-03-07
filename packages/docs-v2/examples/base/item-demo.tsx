@@ -9,7 +9,7 @@ import {
 } from "@/examples/base/ui/item"
 import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
 
-export function ItemDemo() {
+function ItemDemo() {
   return (
     <div className="flex w-full max-w-md flex-col gap-6">
       <Item variant="outline">

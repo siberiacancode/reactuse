@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/examples/radix/ui/card"
 import { addDays } from "date-fns"
 import { type DateRange } from "react-day-picker"
 
-export function CalendarCustomDays() {
+function CalendarCustomDays() {
   const [range, setRange] = React.useState<DateRange | undefined>({
     from: new Date(new Date().getFullYear(), 11, 8),
     to: addDays(new Date(new Date().getFullYear(), 11, 8), 10),

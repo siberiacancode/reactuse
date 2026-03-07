@@ -3,7 +3,7 @@
 import { Button } from "@/examples/base/ui/button"
 import { toast } from "sonner"
 
-export function SonnerPosition() {
+function SonnerPosition() {
   return (
     <div className="flex flex-wrap justify-center gap-2">
       <Button

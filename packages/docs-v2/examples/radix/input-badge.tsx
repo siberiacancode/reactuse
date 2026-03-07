@@ -2,7 +2,7 @@ import { Badge } from "@/examples/radix/ui/badge"
 import { Field, FieldLabel } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 
-export function InputBadge() {
+function InputBadge() {
   return (
     <Field>
       <FieldLabel htmlFor="input-badge">

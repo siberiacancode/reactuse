@@ -17,8 +17,8 @@ export { BASES, type Base }
 export { STYLES, type Style }
 export { THEMES, type Theme }
 export { BASE_COLORS, type BaseColor }
-export { fonts }
-export { iconLibraries, type IconLibrary, type IconLibraryName }
+
+export { iconLibraries,  type IconLibraryName }
 
 export type BaseName = Base["name"]
 export type StyleName = Style["name"]
@@ -62,7 +62,7 @@ export type Radius = (typeof RADII)[number]
 
 export type RadiusValue = Radius["name"]
 
-export const designSystemConfigSchema = z
+const designSystemConfigSchema = z
   .object({
     base: z.enum(BASES.map((b) => b.name) as [BaseName, ...BaseName[]]),
     style: z.enum(STYLES.map((s) => s.name) as [StyleName, ...StyleName[]]),
@@ -107,7 +107,7 @@ export const designSystemConfigSchema = z
     })
   )
 
-export type DesignSystemConfig = z.infer<typeof designSystemConfigSchema>
+type DesignSystemConfig = z.infer<typeof designSystemConfigSchema>
 
 export const DEFAULT_CONFIG: DesignSystemConfig = {
   base: "radix",
@@ -124,13 +124,13 @@ export const DEFAULT_CONFIG: DesignSystemConfig = {
   template: "next",
 }
 
-export type Preset = {
+type Preset = {
   name: string
   title: string
   description: string
 } & DesignSystemConfig
 
-export const PRESETS: Preset[] = [
+const PRESETS: Preset[] = [
   // Radix.
   {
     name: "radix-vega",
@@ -295,7 +295,7 @@ export const PRESETS: Preset[] = [
   },
 ]
 
-export function getThemesForBaseColor(baseColorName: string) {
+function getThemesForBaseColor(baseColorName: string) {
   const baseColorNames = BASE_COLORS.map((bc) => bc.name)
 
   return THEMES.filter((theme) => {
@@ -306,28 +306,28 @@ export function getThemesForBaseColor(baseColorName: string) {
   })
 }
 
-export function getBase(name: BaseName) {
+function getBase(name: BaseName) {
   return BASES.find((base) => base.name === name)
 }
 
-export function getStyle(name: StyleName) {
+function getStyle(name: StyleName) {
   return STYLES.find((style) => style.name === name)
 }
 
-export function getTheme(name: ThemeName) {
+function getTheme(name: ThemeName) {
   return THEMES.find((theme) => theme.name === name)
 }
 
-export function getBaseColor(name: BaseColorName) {
+function getBaseColor(name: BaseColorName) {
   return BASE_COLORS.find((color) => color.name === name)
 }
 
-export function getIconLibrary(name: IconLibraryName) {
+function getIconLibrary(name: IconLibraryName) {
   return iconLibraries[name]
 }
 
 // Builds a registry:theme item from a design system config.
-export function buildRegistryTheme(config: DesignSystemConfig) {
+function buildRegistryTheme(config: DesignSystemConfig) {
   const baseColor = getBaseColor(config.baseColor)
   const theme = getTheme(config.theme)
 
@@ -380,7 +380,7 @@ export function buildRegistryTheme(config: DesignSystemConfig) {
 }
 
 // Builds a registry:base item from a design system config.
-export function buildRegistryBase(config: DesignSystemConfig) {
+function buildRegistryBase(config: DesignSystemConfig) {
   const baseItem = getBase(config.base)
   const iconLibraryItem = getIconLibrary(config.iconLibrary)
 

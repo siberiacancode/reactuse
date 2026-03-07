@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/examples/base/ui/breadcrumb"
 
-export function BreadcrumbLinkDemo() {
+function BreadcrumbLinkDemo() {
   return (
     <Breadcrumb>
       <BreadcrumbList>

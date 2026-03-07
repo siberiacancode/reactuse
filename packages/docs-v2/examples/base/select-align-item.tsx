@@ -28,7 +28,7 @@ const items = [
   { label: "Pineapple", value: "pineapple" },
 ]
 
-export function SelectAlignItem() {
+function SelectAlignItem() {
   const [alignItemWithTrigger, setAlignItemWithTrigger] = React.useState(true)
 
   return (

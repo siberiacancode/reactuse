@@ -8,7 +8,7 @@ import {
 } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 
-export function FieldFieldset() {
+function FieldFieldset() {
   return (
     <FieldSet className="w-full max-w-sm">
       <FieldLegend>Address Information</FieldLegend>

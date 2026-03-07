@@ -15,7 +15,7 @@ import {
   ContextMenuTrigger,
 } from "@/examples/radix/ui/context-menu"
 
-export function ContextMenuDemo() {
+function ContextMenuDemo() {
   return (
     <ContextMenu>
       <ContextMenuTrigger className="flex aspect-video w-full max-w-xs items-center justify-center rounded-xl border border-dashed text-sm">

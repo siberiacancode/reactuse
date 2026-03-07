@@ -7,7 +7,7 @@ import {
 } from "@/examples/base/ui/field"
 import { RadioGroup, RadioGroupItem } from "@/examples/base/ui/radio-group"
 
-export function FieldRadio() {
+function FieldRadio() {
   return (
     <FieldSet className="w-full max-w-xs">
       <FieldLegend variant="label">Subscription Plan</FieldLegend>

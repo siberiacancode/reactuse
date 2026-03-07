@@ -23,7 +23,7 @@ const translations: Translations = {
   },
 }
 
-export function KbdRtl() {
+function KbdRtl() {
   const { dir } = useTranslation(translations, "ar")
 
   return (

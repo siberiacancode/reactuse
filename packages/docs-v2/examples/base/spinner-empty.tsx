@@ -9,7 +9,7 @@ import {
 } from "@/examples/base/ui/empty"
 import { Spinner } from "@/examples/base/ui/spinner"
 
-export function SpinnerEmpty() {
+function SpinnerEmpty() {
   return (
     <Empty className="w-full">
       <EmptyHeader>

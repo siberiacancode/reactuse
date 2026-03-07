@@ -5,7 +5,7 @@ import {
 } from "@/examples/base/ui/input-group"
 import { Search } from "lucide-react"
 
-export function InputGroupDemo() {
+function InputGroupDemo() {
   return (
     <InputGroup className="max-w-xs">
       <InputGroupInput placeholder="Search..." />

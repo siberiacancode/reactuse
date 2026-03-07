@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A bar chart with a custom label"
+const description = "A bar chart with a custom label"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -43,7 +43,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartBarLabelCustom() {
+function ChartBarLabelCustom() {
   return (
     <Card>
       <CardHeader>

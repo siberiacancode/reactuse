@@ -6,7 +6,7 @@ import {
 } from "@/examples/radix/ui/input-group"
 import { EyeOffIcon } from "lucide-react"
 
-export function InputGroupInlineEnd() {
+function InputGroupInlineEnd() {
   return (
     <Field className="max-w-sm">
       <FieldLabel htmlFor="inline-end-input">Input</FieldLabel>

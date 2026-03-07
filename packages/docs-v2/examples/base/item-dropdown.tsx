@@ -36,7 +36,7 @@ const people = [
   },
 ]
 
-export function ItemDropdown() {
+function ItemDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="outline" />}>

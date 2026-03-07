@@ -8,7 +8,7 @@ import {
 } from "@/examples/base/ui/field"
 import { Switch } from "@/examples/base/ui/switch"
 
-export function SwitchChoiceCard() {
+function SwitchChoiceCard() {
   return (
     <FieldGroup className="w-full max-w-sm">
       <FieldLabel htmlFor="switch-share">

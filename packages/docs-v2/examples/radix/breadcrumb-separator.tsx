@@ -9,7 +9,7 @@ import {
 } from "@/examples/radix/ui/breadcrumb"
 import { DotIcon } from "lucide-react"
 
-export function BreadcrumbSeparatorDemo() {
+function BreadcrumbSeparatorDemo() {
   return (
     <Breadcrumb>
       <BreadcrumbList>

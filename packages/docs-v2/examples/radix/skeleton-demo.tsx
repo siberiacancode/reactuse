@@ -1,6 +1,6 @@
 import { Skeleton } from "@/examples/radix/ui/skeleton"
 
-export function SkeletonDemo() {
+function SkeletonDemo() {
   return (
     <div className="flex items-center gap-4">
       <Skeleton className="h-12 w-12 rounded-full" />

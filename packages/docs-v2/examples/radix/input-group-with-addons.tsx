@@ -24,7 +24,7 @@ import {
 } from "lucide-react"
 import { toast } from "sonner"
 
-export function InputGroupWithAddons() {
+function InputGroupWithAddons() {
   return (
     <FieldGroup>
       <Field>

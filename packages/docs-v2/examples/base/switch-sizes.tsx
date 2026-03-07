@@ -1,7 +1,7 @@
 import { Field, FieldGroup, FieldLabel } from "@/examples/base/ui/field"
 import { Switch } from "@/examples/base/ui/switch"
 
-export function SwitchSizes() {
+function SwitchSizes() {
   return (
     <FieldGroup className="w-full max-w-[10rem]">
       <Field orientation="horizontal">

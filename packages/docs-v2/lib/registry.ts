@@ -28,7 +28,7 @@ function getBaseForStyle(styleName: string) {
   return null
 }
 
-export function getDemoComponent(name: string, styleName: string) {
+function getDemoComponent(name: string, styleName: string) {
   const base = getBaseForStyle(styleName)
   if (!base) return undefined
   return ExamplesIndex[base]?.[name]?.component
@@ -82,7 +82,7 @@ export function getRegistryComponent(name: string, styleName: string) {
   return index[key]?.[name]?.component
 }
 
-export async function getRegistryItems(
+async function getRegistryItems(
   styleName: string,
   filter?: (item: z.infer<typeof registryItemSchema>) => boolean
 ) {
@@ -230,7 +230,7 @@ function fixFilePaths(files: z.infer<typeof registryItemSchema>["files"]) {
   })
 }
 
-export function fixImport(content: string) {
+function fixImport(content: string) {
   const regex = /@\/(.+?)\/((?:.*?\/)?(?:components|ui|hooks|lib))\/([\w-]+)/g
 
   const replacement = (
@@ -255,13 +255,13 @@ export function fixImport(content: string) {
   return content.replace(regex, replacement)
 }
 
-export type FileTree = {
+type FileTree = {
   name: string
   path?: string
   children?: FileTree[]
 }
 
-export function createFileTreeForRegistryItemFiles(
+function createFileTreeForRegistryItemFiles(
   files: Array<{ path: string; target?: string }>
 ) {
   const root: FileTree[] = []

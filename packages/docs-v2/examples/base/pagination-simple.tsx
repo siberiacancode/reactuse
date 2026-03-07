@@ -5,7 +5,7 @@ import {
   PaginationLink,
 } from "@/examples/base/ui/pagination"
 
-export function PaginationSimple() {
+function PaginationSimple() {
   return (
     <Pagination>
       <PaginationContent>

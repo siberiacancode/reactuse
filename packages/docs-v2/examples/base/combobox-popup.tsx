@@ -65,7 +65,7 @@ const countries = [
   },
 ]
 
-export function ComboboxPopup() {
+function ComboboxPopup() {
   return (
     <>
       <Combobox items={countries} defaultValue={countries[0]}>

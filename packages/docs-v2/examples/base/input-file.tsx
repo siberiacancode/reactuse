@@ -1,7 +1,7 @@
 import { Field, FieldDescription, FieldLabel } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 
-export function InputFile() {
+function InputFile() {
   return (
     <Field>
       <FieldLabel htmlFor="picture">Picture</FieldLabel>

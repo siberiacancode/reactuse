@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/examples/base/ui/dropdown-menu"
 
-export function DropdownMenuShortcuts() {
+function DropdownMenuShortcuts() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="outline" />}>

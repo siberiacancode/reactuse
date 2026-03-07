@@ -71,11 +71,11 @@ const designSystemSearchParams = {
   custom: parseAsBoolean.withDefault(false),
 }
 
-export const loadDesignSystemSearchParams = createLoader(
+const loadDesignSystemSearchParams = createLoader(
   designSystemSearchParams
 )
 
-export const serializeDesignSystemSearchParams = createSerializer(
+const serializeDesignSystemSearchParams = createSerializer(
   designSystemSearchParams
 )
 
@@ -86,6 +86,6 @@ export const useDesignSystemSearchParams = (options: Options = {}) =>
     ...options,
   })
 
-export type DesignSystemSearchParams = inferParserType<
+type DesignSystemSearchParams = inferParserType<
   typeof designSystemSearchParams
 >

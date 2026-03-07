@@ -10,7 +10,7 @@ import {
   PopoverTrigger,
 } from "@/examples/radix/ui/popover"
 
-export function DatePickerSimple() {
+function DatePickerSimple() {
   const [open, setOpen] = React.useState(false)
   const [date, setDate] = React.useState<Date | undefined>(undefined)
 

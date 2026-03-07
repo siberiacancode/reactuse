@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A bar chart with negative values"
+const description = "A bar chart with negative values"
 
 const chartData = [
   { month: "January", visitors: 186 },
@@ -35,7 +35,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartBarNegative() {
+function ChartBarNegative() {
   return (
     <Card>
       <CardHeader>

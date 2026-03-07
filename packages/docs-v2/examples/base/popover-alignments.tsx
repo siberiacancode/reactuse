@@ -5,7 +5,7 @@ import {
   PopoverTrigger,
 } from "@/examples/base/ui/popover"
 
-export function PopoverAlignments() {
+function PopoverAlignments() {
   return (
     <>
       <div className="flex gap-6">

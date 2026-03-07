@@ -30,7 +30,7 @@ const translations: Translations = {
   },
 }
 
-export function LabelRtl() {
+function LabelRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

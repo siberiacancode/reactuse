@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/examples/base/ui/dialog"
 
-export function DialogNoCloseButton() {
+function DialogNoCloseButton() {
   return (
     <Dialog>
       <DialogTrigger render={<Button variant="outline" />}>

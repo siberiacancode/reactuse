@@ -1,6 +1,6 @@
 import { Slider } from "@/examples/base/ui/slider"
 
-export function SliderVertical() {
+function SliderVertical() {
   return (
     <div className="mx-auto flex w-full max-w-xs items-center justify-center gap-6">
       <Slider

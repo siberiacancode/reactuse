@@ -9,7 +9,7 @@ import {
 } from "@/examples/base/ui/empty"
 import { ArrowUpRightIcon, FolderIcon } from "lucide-react"
 
-export function EmptyInCard() {
+function EmptyInCard() {
   return (
     <Empty>
       <EmptyHeader>

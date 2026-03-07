@@ -11,7 +11,7 @@ import {
 import { format } from "date-fns"
 import { ChevronDownIcon } from "lucide-react"
 
-export function DatePickerDemo() {
+function DatePickerDemo() {
   const [date, setDate] = React.useState<Date>()
 
   return (

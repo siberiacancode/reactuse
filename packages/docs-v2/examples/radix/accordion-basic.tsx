@@ -26,7 +26,7 @@ const items = [
   },
 ]
 
-export function AccordionBasic() {
+function AccordionBasic() {
   return (
     <Accordion
       type="single"

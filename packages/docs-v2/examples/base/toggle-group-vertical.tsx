@@ -1,7 +1,7 @@
 import { ToggleGroup, ToggleGroupItem } from "@/examples/base/ui/toggle-group"
 import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react"
 
-export function ToggleGroupVertical() {
+function ToggleGroupVertical() {
   return (
     <ToggleGroup
       multiple

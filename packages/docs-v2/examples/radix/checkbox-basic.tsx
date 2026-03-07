@@ -1,7 +1,7 @@
 import { Checkbox } from "@/examples/radix/ui/checkbox"
 import { Field, FieldGroup, FieldLabel } from "@/examples/radix/ui/field"
 
-export function CheckboxBasic() {
+function CheckboxBasic() {
   return (
     <FieldGroup className="mx-auto w-56">
       <Field orientation="horizontal">

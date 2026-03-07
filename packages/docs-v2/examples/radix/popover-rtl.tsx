@@ -53,7 +53,7 @@ const translations: Translations = {
 
 const physicalSides = ["left", "top", "bottom", "right"] as const
 
-export function PopoverRtl() {
+function PopoverRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

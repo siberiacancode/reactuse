@@ -39,7 +39,7 @@ const translations: Translations = {
   },
 }
 
-export function ResizableRtl() {
+function ResizableRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

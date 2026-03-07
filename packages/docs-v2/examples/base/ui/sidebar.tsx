@@ -703,7 +703,7 @@ export {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
-  SidebarInput,
+  
   SidebarInset,
   SidebarMenu,
   SidebarMenuAction,
@@ -716,7 +716,7 @@ export {
   SidebarMenuSubItem,
   SidebarProvider,
   SidebarRail,
-  SidebarSeparator,
+  
   SidebarTrigger,
   useSidebar,
 }

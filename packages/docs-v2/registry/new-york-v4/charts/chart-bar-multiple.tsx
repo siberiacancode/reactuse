@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A multiple bar chart"
+const description = "A multiple bar chart"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -40,7 +40,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartBarMultiple() {
+function ChartBarMultiple() {
   return (
     <Card>
       <CardHeader>

@@ -17,7 +17,7 @@ const frameworks = [
   "Astro",
 ] as const
 
-export function ComboboxDisabled() {
+function ComboboxDisabled() {
   return (
     <Combobox items={frameworks}>
       <ComboboxInput placeholder="Select a framework" disabled />

@@ -2,7 +2,7 @@ import { Badge } from "@/examples/base/ui/badge"
 import { Field, FieldLabel } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 
-export function InputBadge() {
+function InputBadge() {
   return (
     <Field>
       <FieldLabel htmlFor="input-badge">

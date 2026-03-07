@@ -12,7 +12,7 @@ import {
 } from "@/examples/base/ui/dropdown-menu"
 import { BellIcon, MailIcon, MessageSquareIcon } from "lucide-react"
 
-export function DropdownMenuCheckboxesIcons() {
+function DropdownMenuCheckboxesIcons() {
   const [notifications, setNotifications] = React.useState({
     email: true,
     sms: false,

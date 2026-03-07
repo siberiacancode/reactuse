@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/examples/radix/ui/tabs"
 
-export function TabsDisabled() {
+function TabsDisabled() {
   return (
     <Tabs defaultValue="home">
       <TabsList>

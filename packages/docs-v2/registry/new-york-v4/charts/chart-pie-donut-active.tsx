@@ -19,7 +19,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A donut chart with an active sector"
+const description = "A donut chart with an active sector"
 
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -55,7 +55,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartPieDonutActive() {
+function ChartPieDonutActive() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">

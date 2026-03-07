@@ -19,7 +19,7 @@ export function GitHubLink() {
   )
 }
 
-export async function StarsCount() {
+async function StarsCount() {
   const data = await fetch("https://api.github.com/repos/siberiacancode/reactuse", {
     next: { revalidate: 86400 },
   })

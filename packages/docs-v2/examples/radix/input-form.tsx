@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/examples/radix/ui/select"
 
-export function InputForm() {
+function InputForm() {
   return (
     <form className="w-full max-w-sm">
       <FieldGroup>

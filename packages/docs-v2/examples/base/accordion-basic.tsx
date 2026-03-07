@@ -26,7 +26,7 @@ const items = [
   },
 ]
 
-export function AccordionBasic() {
+function AccordionBasic() {
   return (
     <Accordion defaultValue={["item-1"]} className="max-w-lg">
       {items.map((item) => (

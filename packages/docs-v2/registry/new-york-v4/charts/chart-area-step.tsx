@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A step area chart"
+const description = "A step area chart"
 
 const chartData = [
   { month: "January", desktop: 186 },
@@ -37,7 +37,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartAreaStep() {
+function ChartAreaStep() {
   return (
     <Card>
       <CardHeader>

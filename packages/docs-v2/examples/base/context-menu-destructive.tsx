@@ -8,7 +8,7 @@ import {
 } from "@/examples/base/ui/context-menu"
 import { ArchiveIcon, PencilIcon, ShareIcon, TrashIcon } from "lucide-react"
 
-export function ContextMenuDestructive() {
+function ContextMenuDestructive() {
   return (
     <ContextMenu>
       <ContextMenuTrigger className="flex aspect-video w-full max-w-xs items-center justify-center rounded-xl border border-dashed text-sm">

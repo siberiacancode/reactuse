@@ -2,7 +2,7 @@ import { Field, FieldGroup, FieldLabel } from "@/examples/radix/ui/field"
 import { Input } from "@/examples/radix/ui/input"
 import { InputGroup, InputGroupInput } from "@/examples/radix/ui/input-group"
 
-export function InputGroupBasic() {
+function InputGroupBasic() {
   return (
     <FieldGroup>
       <Field>

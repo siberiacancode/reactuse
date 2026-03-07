@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/examples/radix/ui/dropdown-menu"
 
-export function DropdownMenuDemo() {
+function DropdownMenuDemo() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

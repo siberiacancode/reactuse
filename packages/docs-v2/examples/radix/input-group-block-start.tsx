@@ -14,7 +14,7 @@ import {
 } from "@/examples/radix/ui/input-group"
 import { CopyIcon, FileCodeIcon } from "lucide-react"
 
-export function InputGroupBlockStart() {
+function InputGroupBlockStart() {
   return (
     <FieldGroup className="max-w-sm">
       <Field>

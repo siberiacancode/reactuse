@@ -13,7 +13,7 @@ import { Field, FieldGroup } from "@/examples/base/ui/field"
 import { Input } from "@/examples/base/ui/input"
 import { Label } from "@/examples/base/ui/label"
 
-export function DialogDemo() {
+function DialogDemo() {
   return (
     <Dialog>
       <form>

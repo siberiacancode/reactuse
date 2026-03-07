@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A line chart"
+const description = "A line chart"
 
 const chartData = [
   { month: "January", desktop: 186 },
@@ -36,7 +36,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartLineDefault() {
+function ChartLineDefault() {
   return (
     <Card>
       <CardHeader>

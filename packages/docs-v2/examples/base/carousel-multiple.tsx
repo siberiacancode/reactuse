@@ -7,7 +7,7 @@ import {
   CarouselPrevious,
 } from "@/examples/base/ui/carousel"
 
-export function CarouselMultiple() {
+function CarouselMultiple() {
   return (
     <Carousel
       className="mx-auto max-w-xs sm:max-w-sm"

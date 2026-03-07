@@ -156,7 +156,7 @@ const translations: Translations = {
   },
 }
 
-export function FieldRtl() {
+function FieldRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   const getMonthLabel = (value: string | null): string => {

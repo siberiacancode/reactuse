@@ -10,7 +10,7 @@ import {
 } from "@/examples/radix/ui/item"
 import { Plus } from "lucide-react"
 
-export function ItemAvatar() {
+function ItemAvatar() {
   return (
     <div className="flex w-full max-w-lg flex-col gap-6">
       <Item variant="outline">

@@ -1754,7 +1754,7 @@ export const colors = {
   ],
 }
 
-export const colorMapping = {
+const colorMapping = {
   light: {
     background: "white",
     foreground: "{{base}}-950",

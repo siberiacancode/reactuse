@@ -19,7 +19,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A pie chart with stacked sections"
+const description = "A pie chart with stacked sections"
 
 const desktopData = [
   { month: "january", desktop: 186, fill: "var(--color-january)" },
@@ -69,7 +69,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartPieStacked() {
+function ChartPieStacked() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">

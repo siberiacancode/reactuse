@@ -26,7 +26,7 @@ import { Label } from "@/examples/base/ui/label"
 import { cn } from "@/lib/utils"
 import { useMediaQuery } from "@/hooks/use-media-query"
 
-export function DrawerDialogDemo() {
+function DrawerDialogDemo() {
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
 

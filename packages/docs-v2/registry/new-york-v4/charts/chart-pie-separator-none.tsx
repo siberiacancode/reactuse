@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A pie chart with no separator"
+const description = "A pie chart with no separator"
 
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -54,7 +54,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartPieSeparatorNone() {
+function ChartPieSeparatorNone() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">

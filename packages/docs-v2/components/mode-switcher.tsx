@@ -13,7 +13,7 @@ import {
   TooltipTrigger,
 } from "@/registry/new-york-v4/ui/tooltip"
 
-export const DARK_MODE_FORWARD_TYPE = "dark-mode-forward"
+const DARK_MODE_FORWARD_TYPE = "dark-mode-forward"
 
 export function ModeSwitcher() {
   const { setTheme, resolvedTheme } = useTheme()
@@ -91,7 +91,7 @@ export function ModeSwitcher() {
   )
 }
 
-export function DarkModeScript() {
+function DarkModeScript() {
   return (
     <Script
       id="dark-mode-listener"

@@ -16,7 +16,7 @@ import {
 } from "@/examples/base/ui/table"
 import { MoreHorizontalIcon } from "lucide-react"
 
-export function TableActions() {
+function TableActions() {
   return (
     <Table>
       <TableHeader>

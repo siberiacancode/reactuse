@@ -59,7 +59,7 @@ const items = [
   ...southAmerica,
 ]
 
-export function SelectScrollable() {
+function SelectScrollable() {
   return (
     <Select items={items}>
       <SelectTrigger className="w-full max-w-64">

@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { AspectRatio } from "@/examples/radix/ui/aspect-ratio"
 
-export function AspectRatioPortrait() {
+function AspectRatioPortrait() {
   return (
     <div className="w-full max-w-[10rem]">
       <AspectRatio ratio={9 / 16} className="bg-muted rounded-lg">

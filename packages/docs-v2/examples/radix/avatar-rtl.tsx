@@ -36,7 +36,7 @@ const translations: Translations = {
   },
 }
 
-export function AvatarRtl() {
+function AvatarRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A radial chart"
+const description = "A radial chart"
 
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -54,7 +54,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartRadialSimple() {
+function ChartRadialSimple() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">

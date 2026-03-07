@@ -22,7 +22,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A radial chart with text"
+const description = "A radial chart with text"
 
 const chartData = [
   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
@@ -38,7 +38,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartRadialText() {
+function ChartRadialText() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">

@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/examples/base/ui/dropdown-menu"
 
-export function BreadcrumbDemo() {
+function BreadcrumbDemo() {
   return (
     <Breadcrumb>
       <BreadcrumbList>

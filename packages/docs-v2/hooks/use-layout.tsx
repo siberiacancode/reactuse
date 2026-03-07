@@ -160,4 +160,4 @@ const LayoutProvider = (props: LayoutProviderProps) => {
   return <Layout {...props} />
 }
 
-export { useLayout, LayoutProvider }
+export {  LayoutProvider }

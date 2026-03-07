@@ -6,7 +6,7 @@ import {
 } from "@/examples/radix/ui/field"
 import { Switch } from "@/examples/radix/ui/switch"
 
-export function SwitchDescription() {
+function SwitchDescription() {
   return (
     <Field orientation="horizontal" className="max-w-sm">
       <FieldContent>

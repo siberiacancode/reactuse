@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A radar chart with no grid"
+const description = "A radar chart with no grid"
 
 const chartData = [
   { month: "January", desktop: 186 },
@@ -36,7 +36,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartRadarGridNone() {
+function ChartRadarGridNone() {
   return (
     <Card>
       <CardHeader className="items-center pb-4">

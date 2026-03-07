@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/examples/base/ui/dialog"
 
-export function DialogStickyFooter() {
+function DialogStickyFooter() {
   return (
     <Dialog>
       <DialogTrigger render={<Button variant="outline" />}>

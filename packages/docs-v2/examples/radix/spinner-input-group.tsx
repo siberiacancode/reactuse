@@ -8,7 +8,7 @@ import {
 import { Spinner } from "@/examples/radix/ui/spinner"
 import { ArrowUpIcon } from "lucide-react"
 
-export function SpinnerInputGroup() {
+function SpinnerInputGroup() {
   return (
     <div className="flex w-full max-w-md flex-col gap-4">
       <InputGroup>

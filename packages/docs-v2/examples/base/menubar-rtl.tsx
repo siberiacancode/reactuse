@@ -140,7 +140,7 @@ const translations: Translations = {
   },
 }
 
-export function MenubarRtl() {
+function MenubarRtl() {
   const { dir, t, language } = useTranslation(translations, "ar")
   const [profile, setProfile] = React.useState("benoit")
 

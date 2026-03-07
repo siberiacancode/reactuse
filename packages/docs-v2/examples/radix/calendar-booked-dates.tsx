@@ -5,7 +5,7 @@ import { Calendar } from "@/examples/radix/ui/calendar"
 import { Card, CardContent } from "@/examples/radix/ui/card"
 import { es } from "react-day-picker/locale"
 
-export function CalendarBookedDates() {
+function CalendarBookedDates() {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(new Date().getFullYear(), 1, 3)
   )

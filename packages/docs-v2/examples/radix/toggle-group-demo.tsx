@@ -1,7 +1,7 @@
 import { ToggleGroup, ToggleGroupItem } from "@/examples/radix/ui/toggle-group"
 import { Bold, Italic, Underline } from "lucide-react"
 
-export function ToggleGroupDemo() {
+function ToggleGroupDemo() {
   return (
     <ToggleGroup variant="outline" type="multiple">
       <ToggleGroupItem value="bold" aria-label="Toggle bold">

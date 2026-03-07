@@ -1,5 +1,5 @@
 import { Input } from "@/examples/base/ui/input"
 
-export function InputBasic() {
+function InputBasic() {
   return <Input placeholder="Enter text" />
 }

@@ -22,7 +22,7 @@ const frameworks = [
   "Astro",
 ] as const
 
-export function ComboboxMultiple() {
+function ComboboxMultiple() {
   const anchor = useComboboxAnchor()
 
   return (

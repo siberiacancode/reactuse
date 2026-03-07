@@ -20,7 +20,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "An area chart with icons"
+const description = "An area chart with icons"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -44,7 +44,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartAreaIcons() {
+function ChartAreaIcons() {
   return (
     <Card>
       <CardHeader>

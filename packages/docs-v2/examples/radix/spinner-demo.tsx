@@ -6,7 +6,7 @@ import {
 } from "@/examples/radix/ui/item"
 import { Spinner } from "@/examples/radix/ui/spinner"
 
-export function SpinnerDemo() {
+function SpinnerDemo() {
   return (
     <div className="flex w-full max-w-xs flex-col gap-4 [--radius:1rem]">
       <Item variant="muted">

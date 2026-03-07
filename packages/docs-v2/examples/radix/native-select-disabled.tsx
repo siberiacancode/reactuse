@@ -3,7 +3,7 @@ import {
   NativeSelectOption,
 } from "@/examples/radix/ui/native-select"
 
-export function NativeSelectDisabled() {
+function NativeSelectDisabled() {
   return (
     <NativeSelect disabled>
       <NativeSelectOption value="">Disabled</NativeSelectOption>

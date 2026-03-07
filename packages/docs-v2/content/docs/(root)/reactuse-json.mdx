@@ -7,11 +7,9 @@ The `reactuse.json` file holds configuration for your project.
 
 We use it to understand how your project is set up and how to generate hooks customized for your project.
 
-::: info
 Note: The `reactuse.json` file is optional and **only required if you're
 using the CLI** to add hooks to your project. If you're using the copy
 and paste method, you don't need this file.
-:::
 
 You can create a `reactuse.json` file in your project by running the following command:
 
@@ -39,10 +37,11 @@ The CLI uses these values and the `paths` config from your `tsconfig.json` or `j
 
 Path aliases have to be set up in your `tsconfig.json` or `jsconfig.json` file.
 
-::: info
-**Important:** If you're using the `src` directory, make sure it is included
-under `paths` in your `tsconfig.json` or `jsconfig.json` file.
-:::
+<Callout className="border-yellow-600 bg-yellow-100 dark:border-yellow-400 dark:bg-yellow-900">
+**Important:** If you're using the src directory, make sure it is included
+under paths in your tsconfig.json or jsconfig.json file.
+</Callout>
+
 
 ### aliases.utils
 

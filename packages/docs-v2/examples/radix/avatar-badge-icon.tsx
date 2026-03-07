@@ -6,7 +6,7 @@ import {
 } from "@/examples/radix/ui/avatar"
 import { PlusIcon } from "lucide-react"
 
-export function AvatarBadgeIconExample() {
+function AvatarBadgeIconExample() {
   return (
     <Avatar className="grayscale">
       <AvatarImage src="https://github.com/pranathip.png" alt="@pranathip" />

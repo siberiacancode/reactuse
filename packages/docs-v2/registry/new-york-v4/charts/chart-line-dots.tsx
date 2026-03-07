@@ -18,7 +18,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A line chart with dots"
+const description = "A line chart with dots"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -40,7 +40,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartLineDots() {
+function ChartLineDots() {
   return (
     <Card>
       <CardHeader>

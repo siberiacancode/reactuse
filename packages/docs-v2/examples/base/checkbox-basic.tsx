@@ -1,7 +1,7 @@
 import { Checkbox } from "@/examples/base/ui/checkbox"
 import { Field, FieldGroup, FieldLabel } from "@/examples/base/ui/field"
 
-export function CheckboxBasic() {
+function CheckboxBasic() {
   return (
     <FieldGroup className="mx-auto w-56">
       <Field orientation="horizontal">

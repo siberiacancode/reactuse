@@ -7,7 +7,7 @@ import {
 } from "@/examples/radix/ui/input-otp"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 
-export function InputOTPFourDigits() {
+function InputOTPFourDigits() {
   return (
     <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS}>
       <InputOTPGroup>

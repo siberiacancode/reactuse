@@ -16,7 +16,7 @@ import {
   type ChartConfig,
 } from "@/registry/new-york-v4/ui/chart"
 
-export const description = "A pie chart with a legend"
+const description = "A pie chart with a legend"
 
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -52,7 +52,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartPieLegend() {
+function ChartPieLegend() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">

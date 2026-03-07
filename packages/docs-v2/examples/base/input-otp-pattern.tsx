@@ -8,7 +8,7 @@ import {
 } from "@/examples/base/ui/input-otp"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 
-export function InputOTPPattern() {
+function InputOTPPattern() {
   return (
     <Field className="w-fit">
       <FieldLabel htmlFor="digits-only">Digits Only</FieldLabel>

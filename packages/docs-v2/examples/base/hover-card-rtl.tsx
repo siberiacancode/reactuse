@@ -60,7 +60,7 @@ const translations: Translations = {
 const physicalSides = ["left", "top", "bottom", "right"] as const
 const logicalSides = ["inline-start", "inline-end"] as const
 
-export function HoverCardRtl() {
+function HoverCardRtl() {
   const { dir, t } = useTranslation(translations, "ar")
 
   return (

@@ -4,7 +4,7 @@ import * as React from "react"
 import { Field, FieldDescription, FieldLabel } from "@/examples/base/ui/field"
 import { ToggleGroup, ToggleGroupItem } from "@/examples/base/ui/toggle-group"
 
-export function ToggleGroupFontWeightSelector() {
+function ToggleGroupFontWeightSelector() {
   const [fontWeight, setFontWeight] = React.useState("normal")
   return (
     <Field>

@@ -4,7 +4,7 @@ import {
   InputOTPSlot,
 } from "@/examples/base/ui/input-otp"
 
-export function InputOTPDemo() {
+function InputOTPDemo() {
   return (
     <InputOTP maxLength={6} defaultValue="123456">
       <InputOTPGroup>
