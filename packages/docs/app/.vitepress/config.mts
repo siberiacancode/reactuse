@@ -31,6 +31,10 @@ export default async () => {
     base: '/',
     title: 'reactuse',
     titleTemplate: false,
+    cleanUrls: true,
+    sitemap: {
+      hostname: 'https://reactuse.org'
+    },
     description:
       'Improve your react applications with our library 📦 designed for comfort and speed',
     markdown: {
