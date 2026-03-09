@@ -68,7 +68,6 @@ export const useSticky = ((...params: any[]) => {
     if (!target && !internalRef.state) return;
 
     const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
-
     if (!element) return;
 
     const root = (options?.root ? isTarget.getElement(options.root) : document) as Element;

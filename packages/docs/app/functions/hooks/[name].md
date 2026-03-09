@@ -85,6 +85,7 @@ Copy and paste the following code into your project. Update the import paths to 
 <Code :value="$params.example" lang="typescript" />
 
 <template v-if="$params.isDemo">
+
 ## Demo
 
 <Demo :type="$params.type" :name="$params.name" />
