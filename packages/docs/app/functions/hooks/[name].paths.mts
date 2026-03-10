@@ -144,6 +144,7 @@ export default {
             ...(jsdoc.warning && {
               warning: jsdoc.warning.description
             }),
+            browserapi: jsdoc.browserapi,
             description: jsdoc.description.description,
             category: jsdoc.category!.name,
             lastModified: new Date(lastCommit?.date ?? new Date()).getTime(),
