@@ -179,7 +179,8 @@ export default async () => {
                 { text: 'reactuse.json', link: '/reactuse-json' },
                 { text: 'CLI', link: '/cli' },
                 { text: 'target', link: '/target' },
-                { text: 'memoization', link: '/memoization' }
+                { text: 'memoization', link: '/memoization' },
+                { text: 'optimization', link: '/optimization' }
               ]
             },
             {

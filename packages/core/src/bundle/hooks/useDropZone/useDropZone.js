@@ -86,7 +86,7 @@ export const useDropZone = (...params) => {
     if (!target && !internalRef.state) return;
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
-    const onEvent = (event, type) => {
+    const onEvent = (event) => {
       if (!event.dataTransfer) return;
       const isValid = checkValidity(event.dataTransfer.items);
       if (!isValid) {
@@ -96,32 +96,32 @@ export const useDropZone = (...params) => {
       event.preventDefault();
       event.dataTransfer.dropEffect = 'copy';
       const currentFiles = getFiles(event);
-      if (type === 'drop') {
+      if (event.type === 'drop') {
         counterRef.current = 0;
         setOvered(false);
         setFiles(currentFiles);
         options.onDrop?.(currentFiles, event);
         return;
       }
-      if (type === 'enter') {
+      if (event.type === 'dragenter') {
         counterRef.current += 1;
         setOvered(true);
         options.onEnter?.(event);
         return;
       }
-      if (type === 'leave') {
+      if (event.type === 'dragleave') {
         counterRef.current -= 1;
         if (counterRef.current !== 0) return;
         setOvered(false);
         options.onLeave?.(event);
         return;
       }
-      if (type === 'over') options.onOver?.(event);
+      if (event.type === 'dragover') options.onOver?.(event);
     };
-    const onDrop = (event) => onEvent(event, 'drop');
-    const onDragOver = (event) => onEvent(event, 'over');
-    const onDragEnter = (event) => onEvent(event, 'enter');
-    const onDragLeave = (event) => onEvent(event, 'leave');
+    const onDrop = (event) => onEvent(event);
+    const onDragOver = (event) => onEvent(event);
+    const onDragEnter = (event) => onEvent(event);
+    const onDragLeave = (event) => onEvent(event);
     element.addEventListener('dragenter', onDragEnter);
     element.addEventListener('dragover', onDragOver);
     element.addEventListener('dragleave', onDragLeave);

@@ -16,7 +16,19 @@ it('Should use window focus on server side', () => {
   expect(result.current).toBe(false);
 });
 
-it('Should update state on focus and blur events', () => {
+it('Should update state on focus event', () => {
+  const { result } = renderHook(useWindowFocus);
+
+  expect(result.current).toBe(false);
+
+  act(() => {
+    window.dispatchEvent(new Event('focus'));
+  });
+
+  expect(result.current).toBe(true);
+});
+
+it('Should update state on blur event', () => {
   const { result } = renderHook(useWindowFocus);
 
   expect(result.current).toBe(false);
@@ -47,16 +59,4 @@ it('Should cleanup on unmount', () => {
 
   expect(removeEventListenerSpy).toHaveBeenCalledWith('focus', expect.any(Function));
   expect(removeEventListenerSpy).toHaveBeenCalledWith('blur', expect.any(Function));
-});
-
-it('Should not update state after unmount', () => {
-  const { result, unmount } = renderHook(useWindowFocus);
-
-  unmount();
-
-  act(() => {
-    window.dispatchEvent(new Event('focus'));
-  });
-
-  expect(result.current).toBe(false);
 });
