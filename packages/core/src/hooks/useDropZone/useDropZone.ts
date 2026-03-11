@@ -154,10 +154,7 @@ export const useDropZone = ((...params: any[]) => {
     const element = target ? isTarget.getElement(target) : internalRef.current;
 
     if (!element) return;
-    
-    const controller = new AbortController();
-    const options = { signal: controller.signal };
-    
+
     const onEvent = (event: DragEvent) => {
       if (!event.dataTransfer) return;
 
@@ -187,7 +184,9 @@ export const useDropZone = ((...params: any[]) => {
         return;
       }
 
-      if (event.type === 'dragleave' && (counterRef.current -= 1) === 0) {
+      if (event.type === 'dragleave') {
+        counterRef.current -= 1;
+        if (counterRef.current !== 0) return;
         setOvered(false);
         options.onLeave?.(event);
         return;
@@ -196,13 +195,16 @@ export const useDropZone = ((...params: any[]) => {
       if (event.type === 'dragover') options.onOver?.(event);
     };
 
-    element.addEventListener('dragenter', onEvent, options);
-    element.addEventListener('dragover', onEvent, options);
-    element.addEventListener('dragleave', onEvent, options);
-    element.addEventListener('drop', onEvent, options);
+    element.addEventListener('dragenter', onEvent as EventListener);
+    element.addEventListener('dragover', onEvent as EventListener);
+    element.addEventListener('dragleave', onEvent as EventListener);
+    element.addEventListener('drop', onEvent as EventListener);
 
     return () => {
-      controller.abort();
+      element.removeEventListener('dragenter', onEvent as EventListener);
+      element.removeEventListener('dragover', onEvent as EventListener);
+      element.removeEventListener('dragleave', onEvent as EventListener);
+      element.removeEventListener('drop', onEvent as EventListener);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 

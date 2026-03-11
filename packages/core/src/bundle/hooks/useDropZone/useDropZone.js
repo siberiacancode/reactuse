@@ -118,19 +118,15 @@ export const useDropZone = (...params) => {
       }
       if (event.type === 'dragover') options.onOver?.(event);
     };
-    const onDrop = (event) => onEvent(event);
-    const onDragOver = (event) => onEvent(event);
-    const onDragEnter = (event) => onEvent(event);
-    const onDragLeave = (event) => onEvent(event);
-    element.addEventListener('dragenter', onDragEnter);
-    element.addEventListener('dragover', onDragOver);
-    element.addEventListener('dragleave', onDragLeave);
-    element.addEventListener('drop', onDrop);
+    element.addEventListener('dragenter', onEvent);
+    element.addEventListener('dragover', onEvent);
+    element.addEventListener('dragleave', onEvent);
+    element.addEventListener('drop', onEvent);
     return () => {
-      element.removeEventListener('dragenter', onDragEnter);
-      element.removeEventListener('dragover', onDragOver);
-      element.removeEventListener('dragleave', onDragLeave);
-      element.removeEventListener('drop', onDrop);
+      element.removeEventListener('dragenter', onEvent);
+      element.removeEventListener('dragover', onEvent);
+      element.removeEventListener('dragleave', onEvent);
+      element.removeEventListener('drop', onEvent);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return { overed, files };
