@@ -28,8 +28,6 @@ export interface UseStopwatchReturn {
   hours: number;
   /** The minute count of the stopwatch */
   minutes: number;
-  /** The over state of the stopwatch */
-  over: boolean;
   /** The paused state of the stopwatch */
   paused: boolean;
   /** The second count of the stopwatch */
@@ -61,19 +59,19 @@ interface UseStopwatch {
  *
  * @overload
  * @param {number} [initialTime=0] The initial time of the timer
- * @param {boolean} [options.enabled=true] The enabled state of the timer
+ * @param {boolean} [options.immediately=false] Start the stopwatch immediately
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
- * const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { enabled: false });
+ * const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { immediately: false });
  *
  * @overload
- * @param {number} [options.initialTime=0] -The initial time of the timer
- * @param {boolean} [options.enabled=true] The enabled state of the timer
+ * @param {number} [options.initialTime=0] The initial time of the timer
+ * @param {boolean} [options.immediately=false] Start the stopwatch immediately
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
- * const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, enabled: false });
+ * const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, immediately: false });
  */
 export const useStopwatch = ((...params: any[]) => {
   const initialTime =
@@ -89,7 +87,7 @@ export const useStopwatch = ((...params: any[]) => {
   const immediately = options?.immediately ?? false;
 
   const [time, setTime] = useState(getStopwatchTime(initialTime));
-  const [paused, setPaused] = useState(!immediately && !initialTime);
+  const [paused, setPaused] = useState(!immediately);
 
   useEffect(() => {
     if (paused) return;
@@ -97,10 +95,12 @@ export const useStopwatch = ((...params: any[]) => {
       setTime((prevTime) => {
         const updatedCount = prevTime.count + 1;
 
-        if (updatedCount % 60 === 0) {
+        if (updatedCount % (60 * 60 * 24) === 0) {
           return {
             ...prevTime,
-            minutes: prevTime.minutes + 1,
+            days: prevTime.days + 1,
+            hours: 0,
+            minutes: 0,
             seconds: 0,
             count: updatedCount
           };
@@ -116,12 +116,10 @@ export const useStopwatch = ((...params: any[]) => {
           };
         }
 
-        if (updatedCount % (60 * 60 * 24) === 0) {
+        if (updatedCount % 60 === 0) {
           return {
             ...prevTime,
-            days: prevTime.days + 1,
-            hours: 0,
-            minutes: 0,
+            minutes: prevTime.minutes + 1,
             seconds: 0,
             count: updatedCount
           };
