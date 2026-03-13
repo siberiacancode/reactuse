@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useMemory } from './useMemory';
 
 beforeEach(() => {
@@ -15,18 +17,41 @@ beforeEach(() => {
   });
 });
 
-afterEach(() => {
-  vi.restoreAllMocks();
-});
-
 it('Should use memory', () => {
   const { result } = renderHook(useMemory);
 
-  expect(result.current.supported).toBe(true);
+  expect(result.current.supported).toBeTruthy();
   expect(result.current.value).toEqual({
     jsHeapSizeLimit: 2147483648,
     totalJSHeapSize: 1073741824,
     usedJSHeapSize: 536870912
+  });
+});
+
+it('Should use memory for unsupported', () => {
+  Object.defineProperty(globalThis.performance, 'memory', {
+    writable: true,
+    value: undefined
+  });
+
+  const { result } = renderHookServer(useMemory);
+
+  expect(result.current.supported).toBeFalsy();
+  expect(result.current.value).toEqual({
+    jsHeapSizeLimit: 0,
+    totalJSHeapSize: 0,
+    usedJSHeapSize: 0
+  });
+});
+
+it('Should use memory on server side', () => {
+  const { result } = renderHookServer(useMemory);
+
+  expect(result.current.supported).toBeFalsy();
+  expect(result.current.value).toEqual({
+    jsHeapSizeLimit: 0,
+    totalJSHeapSize: 0,
+    usedJSHeapSize: 0
   });
 });
 
@@ -38,7 +63,7 @@ it('Should use memory when performance.memory is not supported', () => {
 
   const { result } = renderHook(useMemory);
 
-  expect(result.current.supported).toBe(false);
+  expect(result.current.supported).toBeFalsy();
   expect(result.current.value).toEqual({
     jsHeapSizeLimit: 0,
     totalJSHeapSize: 0,

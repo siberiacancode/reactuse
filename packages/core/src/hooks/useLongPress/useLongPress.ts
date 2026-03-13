@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -22,12 +22,20 @@ export interface UseLongPressOptions {
   onStart?: (event: LongPressEvents) => void;
 }
 
+/** The use long press return type */
+export interface UseLongPressReturn {
+  /** The long pressing state */
+  pressed: boolean;
+  /** The ref to attach to the element */
+  ref: StateRef<Element>;
+}
+
 export interface UseLongPress {
   (
     target: HookTarget,
     callback: (event: LongPressEvents) => void,
     options?: UseLongPressOptions
-  ): boolean;
+  ): UseLongPressReturn;
 
   <Target extends Element>(
     callback: (event: LongPressEvents) => void,
@@ -35,8 +43,7 @@ export interface UseLongPress {
     target?: never
   ): {
     ref: StateRef<Target>;
-    pressed: boolean;
-  };
+  } & UseLongPressReturn;
 }
 
 const DEFAULT_THRESHOLD_TIME = 400;
@@ -44,7 +51,8 @@ const DEFAULT_THRESHOLD_TIME = 400;
 /**
  * @name useLongPress
  * @description - Hook that defines the logic when long pressing an element
- * @category Sensors
+ * @category Elements
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} target The target element to be long pressed
@@ -82,7 +90,7 @@ export const useLongPress = ((...params: any[]): any => {
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
 
     const onStart = (event: LongPressEvents) => {
@@ -103,35 +111,30 @@ export const useLongPress = ((...params: any[]): any => {
           internalOptionsRef.current?.onCancel?.(event);
         }
 
+        isPressedRef.current = false;
+        if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+
         return false;
       });
-
-      isPressedRef.current = false;
-      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
 
     element.addEventListener('mousedown', onStart as EventListener);
-    element.addEventListener('touchstart', onStart as EventListener);
-    element.addEventListener('mouseup', onCancel as EventListener);
-    element.addEventListener('touchend', onCancel as EventListener);
     window.addEventListener('mouseup', onCancel as EventListener);
+
+    element.addEventListener('touchstart', onStart as EventListener);
     window.addEventListener('touchend', onCancel as EventListener);
 
     return () => {
       element.removeEventListener('mousedown', onStart as EventListener);
-      element.removeEventListener('touchstart', onStart as EventListener);
-      element.removeEventListener('mouseup', onCancel as EventListener);
-      element.removeEventListener('touchend', onCancel as EventListener);
       window.removeEventListener('mouseup', onCancel as EventListener);
+
+      element.removeEventListener('touchstart', onStart as EventListener);
       window.removeEventListener('touchend', onCancel as EventListener);
 
       if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
-  if (target) return pressed;
-  return {
-    ref: internalRef,
-    pressed
-  };
+  if (target) return { pressed };
+  return { pressed, ref: internalRef };
 }) as UseLongPress;

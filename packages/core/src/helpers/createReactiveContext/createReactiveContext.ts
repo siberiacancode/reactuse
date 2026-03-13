@@ -109,6 +109,7 @@ const createReactiveContextSelector = <Value, Selected>(
  * @name createReactiveContext
  * @description - Creates a typed context selector with optimized updates for state selection
  * @category Helpers
+ * @usage low
  *
  * @warning - For complex interfaces, we strongly recommend using state management solutions outside of React like createStore, reatom, effector, or zustand instead of context
  *

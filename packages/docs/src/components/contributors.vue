@@ -26,7 +26,7 @@ const props = defineProps<ContributorsProps>();
           :alt="contributor.name"
           class="rounded-full"
           loading="lazy"
-        />
+        >
       </div>
       <span class="text-sm">{{ contributor.name }}</span>
     </div>

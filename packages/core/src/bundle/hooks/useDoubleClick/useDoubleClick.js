@@ -1,17 +1,18 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 export const DEFAULT_THRESHOLD_TIME = 300;
 /**
  * @name useDoubleClick
  * @description - Hook that defines the logic when double clicking an element
- * @category Sensors
- *
+ * @category Elements
+ * @usage medium
+
  * @overload
  * @param {HookTarget} target The target element to be double clicked
  * @param {(event: DoubleClickEvents) => void} callback The callback function to be invoked on double click
  * @param {UseDoubleClickOptions} [options] The options for the double click
- * @returns {boolean} The double clicking state
+ * @returns {void} The double clicking state
  *
  * @example
  * useDoubleClick(ref, () => console.log('double clicked'));
@@ -20,10 +21,10 @@ export const DEFAULT_THRESHOLD_TIME = 300;
  * @template Target The target element
  * @param {(event: DoubleClickEvents) => void} callback The callback function to be invoked on double click
  * @param {UseDoubleClickOptions} [options] The options for the double click
- * @returns {boolean} The double clicking state
+ * @returns {{ ref: StateRef<Target> }} The double clicking state
  *
  * @example
- * const ref = useDoubleClick(() => console.log('double clicked'));
+ * const { ref } = useDoubleClick(() => console.log('double clicked'));
  *
  * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useDoubleClick.html}
  */
@@ -40,7 +41,7 @@ export const useDoubleClick = (...params) => {
   internalOptionsRef.current = options;
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onClick = (event) => {
       clickCountRef.current += 1;
@@ -64,7 +65,9 @@ export const useDoubleClick = (...params) => {
       element.removeEventListener('touchstart', onClick);
       if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
-  return internalRef;
+  return {
+    ref: internalRef
+  };
 };

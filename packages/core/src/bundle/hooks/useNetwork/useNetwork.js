@@ -4,7 +4,8 @@ export const getConnection = () =>
 /**
  * @name useNetwork
  * @description - Hook to track network status
- * @category Sensors
+ * @category Browser
+ * @usage low
  *
  * @browserapi navigator.connection https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection
  *

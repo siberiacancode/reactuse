@@ -39,6 +39,7 @@ export interface UseBatteryStateReturn {
  * @name useBattery
  * @description - Hook for getting information about battery status
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.getBattery https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery
  *
@@ -52,6 +53,7 @@ export const useBattery = (): UseBatteryStateReturn => {
     typeof navigator !== 'undefined' &&
     'getBattery' in navigator &&
     typeof navigator.getBattery === 'function';
+
   const [value, setValue] = useState<UseBatteryValue>({
     loading: supported,
     level: 0,
@@ -86,7 +88,6 @@ export const useBattery = (): UseBatteryStateReturn => {
 
     return () => {
       if (!battery) return;
-      console.log('unmount', battery);
       battery.removeEventListener('levelchange', onChange);
       battery.removeEventListener('chargingchange', onChange);
       battery.removeEventListener('chargingtimechange', onChange);

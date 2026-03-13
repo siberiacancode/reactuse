@@ -62,7 +62,8 @@ export interface UseUrlSearchParams {
 /**
  * @name useUrlSearchParams
  * @description - Hook that provides reactive URLSearchParams
- * @category Browser
+ * @category State
+ * @usage high
  *
  * @overload
  * @template Value The type of the url param values
@@ -98,12 +99,12 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
       'write' in params)
       ? params
       : undefined
-  ) as UseUrlSearchParamsOptions<Value>;
+  ) as UseUrlSearchParamsOptions<Value> | undefined;
   const initialValue = (
     options ? options?.initialValue : params
   ) as UseUrlSearchParamsInitialValue<Value>;
 
-  const { mode = 'history', write: writeMode = 'replace' } = options;
+  const { mode = 'history', write: writeMode = 'replace' } = options ?? {};
 
   const serializer = (value: Value[keyof Value]) => {
     if (options?.serializer) return options.serializer(value);
@@ -127,19 +128,21 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
     value: Partial<Value>,
     write: 'push' | 'replace' = 'replace'
   ) => {
-    const urlSearchParams = new URLSearchParams();
+    const urlSearchParams = getUrlSearchParams(mode);
 
     Object.entries(value).forEach(([key, param]) => {
-      if (Array.isArray(param)) {
-        param.forEach((value) => urlSearchParams.set(key, serializer(value)));
+      if (param === undefined) {
+        urlSearchParams.delete(key);
       } else {
-        urlSearchParams.set(key, serializer(param));
+        const serializedValue = serializer ? serializer(param) : String(param);
+        urlSearchParams.set(key, serializedValue);
       }
     });
 
     const query = createQueryString(urlSearchParams, mode);
     if (write === 'replace') window.history.replaceState({}, '', query);
     if (write === 'push') window.history.pushState({}, '', query);
+    dispatchUrlSearchParamsEvent();
 
     return urlSearchParams;
   };
@@ -183,7 +186,6 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
       options?.write ?? writeMode
     );
     setValue(getParsedUrlSearchParams(searchParams) as Value);
-    dispatchUrlSearchParamsEvent();
   };
 
   useEffect(() => {

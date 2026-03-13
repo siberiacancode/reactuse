@@ -4,24 +4,38 @@ import { getRetry } from '@/utils/helpers';
 
 import { useEvent } from '../useEvent/useEvent';
 
+/** The use web socket url type */
 export type UseWebSocketUrl = (() => string) | string;
 
+/** The use web socket options type */
 export interface UseWebSocketOptions {
+  /** The list of protocols to use */
   protocols?: Array<'soap' | 'wasm'>;
+  /** The number of times to retry the connection */
   retry?: boolean | number;
+  /** The callback function that is called when the WebSocket connection is established */
   onConnected?: (webSocket: WebSocket) => void;
+  /** The callback function that is called when the WebSocket connection is closed */
   onDisconnected?: (event: CloseEvent, webSocket: WebSocket) => void;
+  /** The callback function that is called when an error occurs */
   onError?: (event: Event, webSocket: WebSocket) => void;
+  /** The callback function that is called when a message is received */
   onMessage?: (event: MessageEvent, webSocket: WebSocket) => void;
 }
 
 export type UseWebSocketStatus = 'connected' | 'connecting' | 'disconnected' | 'failed';
 
+/** The use web socket return type */
 export interface UseWebSocketReturn {
+  /** The WebSocket client */
   client?: WebSocket;
+  /** The close function */
   close: WebSocket['close'];
+  /** The send function */
   send: WebSocket['send'];
+  /** The status of the WebSocket connection */
   status: UseWebSocketStatus;
+  /** The open function */
   open: () => void;
 }
 
@@ -29,6 +43,9 @@ export interface UseWebSocketReturn {
  * @name useWebSocket
  * @description - Hook that connects to a WebSocket server and handles incoming and outgoing messages
  * @category Browser
+ * @usage medium
+ *
+ * @browserapi WebSocket https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
  *
  * @param {UseWebSocketUrl} url The URL of the WebSocket server
  * @param {(webSocket: WebSocket) => void} [options.onConnected] The callback function that is called when the WebSocket connection is established

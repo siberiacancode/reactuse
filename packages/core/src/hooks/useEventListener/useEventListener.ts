@@ -1,16 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
-import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The use event listener options */
-export type UseEventListenerOptions = boolean | AddEventListenerOptions;
+export type UseEventListenerOptions = {
+  enabled?: boolean;
+} & AddEventListenerOptions;
 
 /** The use event listener return type */
 export type UseEventListenerReturn<Target extends Element> = StateRef<Target>;
@@ -59,7 +60,8 @@ export interface UseEventListener {
  * @name useEventListener
  * @description - Hook that attaches an event listener to the specified target
  * @category Browser
- *
+ * @usage necessary
+
  * @overload
  * @template Event Key of window event map
  * @param {Window} target The window object to attach the event listener to
@@ -111,20 +113,27 @@ export const useEventListener = ((...params: any[]) => {
   const listener = (target ? params[2] : params[1]) as (...arg: any[]) => undefined | void;
   const options = (target ? params[3] : params[2]) as UseEventListenerOptions | undefined;
 
-  const internalRef = useRefState(window);
-  const internalListener = useEvent(listener);
+  const enabled = options?.enabled ?? true;
+
+  const internalRef = useRefState();
+  const internalListenerRef = useRef(listener);
+  internalListenerRef.current = listener;
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
 
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    if (!enabled) return;
 
-    const callback = (event: Event) => internalListener(event);
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;
 
-    element.addEventListener(event, callback, options);
+    const listener = (event: Event) => internalListenerRef.current(event);
+
+    element.addEventListener(event, listener, options);
     return () => {
-      element.removeEventListener(event, callback, options);
+      element.removeEventListener(event, listener, options);
     };
-  }, [target, internalRef.state, event, options]);
+  }, [target && isTarget.getRawElement(target), internalRef.state, event, enabled]);
 
   if (target) return;
   return internalRef;

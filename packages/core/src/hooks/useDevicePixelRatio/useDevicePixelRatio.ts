@@ -12,6 +12,7 @@ export interface UseDevicePixelRatioReturn {
  * @name useDevicePixelRatio
  * @description - Hook that returns the device's pixel ratio
  * @category Utilities
+ * @usage low
  *
  * @browserapi window.devicePixelRatio https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio
  *
@@ -26,7 +27,7 @@ export const useDevicePixelRatio = (): UseDevicePixelRatioReturn => {
     typeof window.matchMedia === 'function' &&
     typeof window.devicePixelRatio === 'number';
 
-  const [ratio, setRatio] = useState<number>(window.devicePixelRatio ?? 1);
+  const [ratio, setRatio] = useState(supported ? window.devicePixelRatio : 1);
 
   useEffect(() => {
     if (!supported) return;

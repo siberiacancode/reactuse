@@ -3,6 +3,7 @@ import { useSyncExternalStore } from 'react';
  * @name createStore
  * @description - Creates a store with state management capabilities
  * @category Helpers
+ * @usage medium
  *
  * @template Value - The type of the store state
  * @param {StateCreator<Value>} createState - Function that initializes the store state
@@ -16,35 +17,41 @@ import { useSyncExternalStore } from 'react';
  */
 export const createStore = (createState) => {
   let state;
+  let initialState;
   const listeners = new Set();
   const setState = (action) => {
     const nextState = typeof action === 'function' ? action(state) : action;
     if (!Object.is(nextState, state)) {
       const prevState = state;
-      state = nextState;
+      state =
+        typeof nextState !== 'object' || nextState === null || Array.isArray(nextState)
+          ? nextState
+          : Object.assign({}, state, nextState);
       listeners.forEach((listener) => listener(state, prevState));
     }
   };
-  const getState = () => state;
-  const getInitialState = () => state;
   const subscribe = (listener) => {
     listeners.add(listener);
     return () => listeners.delete(listener);
   };
+  const getState = () => state;
+  const getInitialState = () => initialState;
   if (typeof createState === 'function') {
-    state = createState(setState, getState);
+    initialState = state = createState(setState, getState);
   } else {
-    state = createState;
+    initialState = state = createState;
   }
-  const useStore = (selector) =>
-    useSyncExternalStore(
+  function useStore(selector) {
+    return useSyncExternalStore(
       subscribe,
-      () => selector(getState()),
-      () => selector(getInitialState())
+      () => (selector ? selector(getState()) : getState()),
+      () => (selector ? selector(getInitialState()) : getInitialState())
     );
+  }
   return {
     set: setState,
     get: getState,
+    getInitial: getInitialState,
     use: useStore,
     subscribe
   };

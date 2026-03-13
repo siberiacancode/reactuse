@@ -1,22 +1,30 @@
 import { useSyncExternalStore } from 'react';
 
-type SetStateAction<Value> = ((prev: Value) => Value) | Value;
-type StateCreator<Value> = (
-  set: (action: SetStateAction<Value>) => void,
+type StoreSetAction<Value> = ((prev: Value) => Partial<Value>) | Partial<Value>;
+
+type StoreListener<Value> = (state: Value, prevState: Value) => void;
+
+type StoreCreator<Value> = (
+  set: (action: StoreSetAction<Value>) => void,
   get: () => Value
 ) => Value;
 
 export interface StoreApi<Value> {
-  getInitialState: () => Value;
-  getState: () => Value;
-  setState: (action: SetStateAction<Value>) => void;
-  subscribe: (listener: (state: Value, prevState: Value) => void) => () => void;
+  get: () => Value;
+  getInitial: () => Value;
+  set: (action: StoreSetAction<Value>) => void;
+  subscribe: (listener: StoreListener<Value>) => () => void;
+
+  use: (() => Value) &
+    (<Selected>(selector: (state: Value) => Selected) => Selected) &
+    (<Selected>(selector?: (state: Value) => Selected) => Selected | Value);
 }
 
 /**
  * @name createStore
  * @description - Creates a store with state management capabilities
  * @category Helpers
+ * @usage medium
  *
  * @template Value - The type of the store state
  * @param {StateCreator<Value>} createState - Function that initializes the store state
@@ -28,45 +36,55 @@ export interface StoreApi<Value> {
  *   increment: () => set(state => ({ count: state.count + 1 }))
  * }));
  */
-export const createStore = <Value>(createState: StateCreator<Value> | Value) => {
-  type Listener = (state: Value, prevState: Value) => void;
+export const createStore = <Value>(createState: StoreCreator<Value> | Value): StoreApi<Value> => {
   let state: Value;
-  const listeners: Set<Listener> = new Set();
+  let initialState: Value;
+  const listeners: Set<StoreListener<Value>> = new Set();
 
-  const setState = (action: SetStateAction<Value>) => {
-    const nextState =
-      typeof action === 'function' ? (action as (state: Value) => Value)(state) : action;
+  const setState: StoreApi<Value>['set'] = (action: StoreSetAction<Value>) => {
+    const nextState = typeof action === 'function' ? action(state) : action;
 
     if (!Object.is(nextState, state)) {
       const prevState = state;
-      state = nextState;
+      state = (
+        typeof nextState !== 'object' || nextState === null || Array.isArray(nextState)
+          ? nextState
+          : Object.assign({}, state, nextState)
+      ) as Value;
+
       listeners.forEach((listener) => listener(state, prevState));
     }
   };
 
-  const getState = () => state;
-  const getInitialState = () => state;
-
-  const subscribe = (listener: Listener) => {
+  const subscribe = (listener: StoreListener<Value>) => {
     listeners.add(listener);
+
     return () => listeners.delete(listener);
   };
+
+  const getState = () => state;
+  const getInitialState = () => initialState;
+
   if (typeof createState === 'function') {
-    state = (createState as StateCreator<Value>)(setState, getState);
+    initialState = state = (createState as StoreCreator<Value>)(setState, getState);
   } else {
-    state = createState;
+    initialState = state = createState;
   }
 
-  const useStore = <Selected>(selector: (state: Value) => Selected) =>
-    useSyncExternalStore(
+  function useStore(): Value;
+  function useStore<Selected>(selector: (state: Value) => Selected): Selected;
+  function useStore<Selected>(selector?: (state: Value) => Selected): Selected | Value {
+    return useSyncExternalStore(
       subscribe,
-      () => selector(getState()),
-      () => selector(getInitialState())
+      () => (selector ? selector(getState()) : getState()),
+      () => (selector ? selector(getInitialState()) : getInitialState())
     );
+  }
 
   return {
     set: setState,
     get: getState,
+    getInitial: getInitialState,
     use: useStore,
     subscribe
   };

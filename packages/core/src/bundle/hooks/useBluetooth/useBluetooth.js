@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
  * @name useBluetooth
  * @description - Hook for getting information about bluetooth
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.bluetooth https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth
  *
@@ -15,7 +16,8 @@ import { useEffect, useState } from 'react';
  * const { supported, connected, device, requestDevice, server } = useBluetooth(options);
  */
 export const useBluetooth = (options) => {
-  const supported = typeof navigator !== 'undefined' && 'bluetooth' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'bluetooth' in navigator && !!navigator.bluetooth;
   const { acceptAllDevices = false, filters, optionalServices } = options ?? {};
   const [connected, setIsConnected] = useState(false);
   const [device, setDevice] = useState(undefined);
@@ -30,25 +32,23 @@ export const useBluetooth = (options) => {
     setDevice(selectedDevice);
   };
   useEffect(() => {
-    if (device && device.gatt) {
-      const connectToBluetoothGATTServer = async () => {
-        if (!device.gatt) return;
-        const gattServer = await device.gatt.connect();
-        setServer(gattServer);
-        setIsConnected(gattServer.connected);
-      };
-      const reset = () => {
-        setServer(undefined);
-        setDevice(undefined);
-        setIsConnected(false);
-      };
-      device.addEventListener('gattserverdisconnected', reset);
-      connectToBluetoothGATTServer();
-      return () => {
-        device.removeEventListener('gattserverdisconnected', reset);
-        device.gatt?.disconnect();
-      };
-    }
+    if (!device?.gatt) return;
+    const connectToBluetoothGATTServer = async () => {
+      const gattServer = await device.gatt.connect();
+      setServer(gattServer);
+      setIsConnected(gattServer.connected);
+    };
+    const reset = () => {
+      setServer(undefined);
+      setDevice(undefined);
+      setIsConnected(false);
+    };
+    device.addEventListener('gattserverdisconnected', reset);
+    connectToBluetoothGATTServer();
+    return () => {
+      device.removeEventListener('gattserverdisconnected', reset);
+      device.gatt?.disconnect();
+    };
   }, [device]);
   return {
     supported,

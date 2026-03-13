@@ -8,7 +8,8 @@ import {
 /**
  * @name useUrlSearchParams
  * @description - Hook that provides reactive URLSearchParams
- * @category Browser
+ * @category State
+ * @usage high
  *
  * @overload
  * @template Value The type of the url param values
@@ -43,7 +44,7 @@ export const useUrlSearchParams = (params) => {
       ? params
       : undefined;
   const initialValue = options ? options?.initialValue : params;
-  const { mode = 'history', write: writeMode = 'replace' } = options;
+  const { mode = 'history', write: writeMode = 'replace' } = options ?? {};
   const serializer = (value) => {
     if (options?.serializer) return options.serializer(value);
     if (typeof value === 'string') return value;
@@ -59,17 +60,19 @@ export const useUrlSearchParams = (params) => {
     }
   };
   const setUrlSearchParams = (mode, value, write = 'replace') => {
-    const urlSearchParams = new URLSearchParams();
+    const urlSearchParams = getUrlSearchParams(mode);
     Object.entries(value).forEach(([key, param]) => {
-      if (Array.isArray(param)) {
-        param.forEach((value) => urlSearchParams.set(key, serializer(value)));
+      if (param === undefined) {
+        urlSearchParams.delete(key);
       } else {
-        urlSearchParams.set(key, serializer(param));
+        const serializedValue = serializer ? serializer(param) : String(param);
+        urlSearchParams.set(key, serializedValue);
       }
     });
     const query = createQueryString(urlSearchParams, mode);
     if (write === 'replace') window.history.replaceState({}, '', query);
     if (write === 'push') window.history.pushState({}, '', query);
+    dispatchUrlSearchParamsEvent();
     return urlSearchParams;
   };
   const getParsedUrlSearchParams = (searchParams) => {
@@ -101,7 +104,6 @@ export const useUrlSearchParams = (params) => {
       options?.write ?? writeMode
     );
     setValue(getParsedUrlSearchParams(searchParams));
-    dispatchUrlSearchParamsEvent();
   };
   useEffect(() => {
     const onParamsChange = () => {

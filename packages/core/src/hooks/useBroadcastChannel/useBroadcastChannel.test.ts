@@ -18,7 +18,7 @@ class MockBroadcastChannel {
   postMessage = mockBroadcastChannelPostMessage;
   close = mockBroadcastChannelClose;
   addEventListener = (type: string, callback: (event: MessageEvent) => void) => {
-    mockAddEventListener();
+    mockAddEventListener(type, callback);
     trigger.add(type, callback);
   };
   removeEventListener = (type: string, callback: (event: MessageEvent) => void) => {
@@ -28,19 +28,19 @@ class MockBroadcastChannel {
 }
 
 beforeEach(() => {
-  window.BroadcastChannel = MockBroadcastChannel as any;
+  Object.assign(globalThis.window, {
+    BroadcastChannel: MockBroadcastChannel
+  });
 });
-
-afterEach(vi.clearAllMocks);
 
 it('Should use broadcast channel', () => {
   const { result } = renderHook(() => useBroadcastChannel(channelName));
 
-  expect(result.current.supported).toBe(true);
+  expect(result.current.supported).toBeTruthy();
   expect(result.current.channel).toBeUndefined();
   expect(result.current.data).toBeUndefined();
   expect(result.current.error).toBeUndefined();
-  expect(result.current.closed).toBe(false);
+  expect(result.current.closed).toBeFalsy();
   expect(result.current.post).toBeTypeOf('function');
   expect(result.current.close).toBeTypeOf('function');
 });
@@ -48,17 +48,19 @@ it('Should use broadcast channel', () => {
 it('Should use broadcast on server side', () => {
   const { result } = renderHookServer(() => useBroadcastChannel(channelName));
 
-  expect(result.current.supported).toBe(false);
+  expect(result.current.supported).toBeFalsy();
   expect(result.current.channel).toBeUndefined();
   expect(result.current.data).toBeUndefined();
   expect(result.current.error).toBeUndefined();
-  expect(result.current.closed).toBe(false);
+  expect(result.current.closed).toBeFalsy();
   expect(result.current.post).toBeTypeOf('function');
   expect(result.current.close).toBeTypeOf('function');
 });
 
-it('Should correct return for unsupported broadcast channel', () => {
-  delete (window as any).BroadcastChannel;
+it('Should use broadcast channel for unsupported', () => {
+  Object.assign(globalThis.window, {
+    BroadcastChannel: undefined
+  });
   const { result } = renderHook(() => useBroadcastChannel(channelName));
 
   expect(result.current.supported).toBeFalsy();
@@ -79,7 +81,7 @@ it('Should handle closing the channel', () => {
   act(() => result.current.close());
 
   expect(mockBroadcastChannelClose).toHaveBeenCalled();
-  expect(result.current.closed).toBe(true);
+  expect(result.current.closed).toBeTruthy();
 });
 
 it('Should handle received messages', () => {
@@ -107,7 +109,7 @@ it('Should handle close event', () => {
 
   act(() => trigger.callback('close', new MessageEvent('close')));
 
-  expect(result.current.closed).toBe(true);
+  expect(result.current.closed).toBeTruthy();
 });
 
 it('Should cleanup and reinitialize when name changes', () => {

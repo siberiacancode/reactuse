@@ -3,6 +3,7 @@ import { useMemo, useRef } from 'react';
  * @name useDebounceCallback
  * @description - Hook that creates a debounced callback
  * @category Utilities
+ * @usage high
  *
  * @template Params The type of the params
  * @template Return The type of the return

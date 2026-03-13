@@ -22,6 +22,7 @@ export interface UseBroadcastChannelReturn<Data = unknown> {
  * @name useBroadcastChannel
  * @description Hook that provides cross-tab/window communication
  * @category Browser
+ * @usage low
  *
  * @browserapi BroadcastChannel https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel
  *
@@ -36,7 +37,8 @@ export const useBroadcastChannel = <Data = unknown>(
   name: string,
   callback?: (data: Data) => void
 ): UseBroadcastChannelReturn<Data> => {
-  const supported = typeof window !== 'undefined' && 'BroadcastChannel' in window;
+  const supported =
+    typeof window !== 'undefined' && 'BroadcastChannel' in window && !!window.BroadcastChannel;
 
   const [closed, setClosed] = useState(false);
   const [data, setData] = useState<Data>();

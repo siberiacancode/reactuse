@@ -1,29 +1,44 @@
 import { useCounter, useThrottleCallback } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const Demo = () => {
-  const clickCounter = useCounter();
-  const throttledCounter = useCounter();
+  const [squarePosition, setSquarePosition] = useState({ x: 0, y: 0 });
+  const throttledCounter = useCounter(0);
 
-  const throttledIncrement = useThrottleCallback(throttledCounter.inc, 1000);
-
-  const onClick = () => {
-    throttledIncrement();
-    clickCounter.inc();
-  };
+  const throttledMove = useThrottleCallback((x: number, y: number) => {
+    setSquarePosition({ x, y });
+    throttledCounter.inc();
+  }, 25);
 
   return (
-    <div>
-      <p>
-        Button clicked: <code>{clickCounter.value}</code>
-      </p>
-      <p>
-        Event handler called: <code>{throttledCounter.value}</code>
-      </p>
-      <p className='text-sm text-zinc-400'>Delay is set to 1000ms for this demo.</p>
-      <button type='button' onClick={onClick}>
-        Smash me my friend
-      </button>
-    </div>
+    <>
+      <div className='flex flex-col gap-4'>
+        <div className='text-sm'>Move your mouse in the area below</div>
+
+        <div
+          className='relative h-64 w-full border-2 border-dashed'
+          onMouseMove={(event) => {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) throttledMove(x, y);
+          }}
+        >
+          <div
+            style={{
+              left: squarePosition.x - 8,
+              top: squarePosition.y - 8
+            }}
+            className='absolute h-4 w-4 rounded bg-[var(--vp-c-brand-2)]'
+          />
+        </div>
+
+        <div className='text-sm'>
+          Throttle calls: <code>{throttledCounter.value}</code>
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name UseSticky
  * @description - Hook that allows you to detect that your sticky component is stuck
- * @category Browser
+ * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target sticky element
@@ -13,12 +14,12 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseStickyReturn} The state of the sticky
  *
  * @example
- * const stuck  = useSticky(ref);
+ * const { stuck } = useSticky(ref);
  *
  * @overload
  * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component
  * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component
- * @returns {{ stickyRef: StateRef<Target> } & UseStickyReturn} The state of the sticky
+ * @returns {{ ref: StateRef<Target> } & UseStickyReturn} The state of the sticky
  *
  * @example
  * const { stuck, ref } = useSticky();
@@ -31,9 +32,9 @@ export const useSticky = (...params) => {
   const [stuck, setStuck] = useState(false);
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
-    const root = options?.root ? getElement(options.root) : document;
+    const root = options?.root ? isTarget.getElement(options.root) : document;
     const elementOffsetTop =
       element.getBoundingClientRect().top + root.scrollTop - root.getBoundingClientRect().top;
     const elementOffsetLeft =
@@ -57,8 +58,8 @@ export const useSticky = (...params) => {
       window.removeEventListener('resize', onSticky);
       window.removeEventListener('orientationchange', onSticky);
     };
-  }, [target, internalRef.state, axis, options?.root]);
-  if (target) return stuck;
+  }, [target && isTarget.getRawElement(target), internalRef.state, axis, options?.root]);
+  if (target) return { stuck };
   return {
     stuck,
     ref: internalRef

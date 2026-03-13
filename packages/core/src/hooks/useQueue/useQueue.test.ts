@@ -1,9 +1,23 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useQueue } from './useQueue';
 
 it('Should use queue', () => {
   const { result } = renderHook(() => useQueue());
+
+  expect(Array.isArray(result.current.queue)).toBeTruthy();
+  expect(result.current.first).toBeUndefined();
+  expect(result.current.last).toBeUndefined();
+  expect(result.current.size).toBe(0);
+  expect(result.current.add).toBeTypeOf('function');
+  expect(result.current.remove).toBeTypeOf('function');
+  expect(result.current.clear).toBeTypeOf('function');
+});
+
+it('Should use queue on server side', () => {
+  const { result } = renderHookServer(() => useQueue());
 
   expect(Array.isArray(result.current.queue)).toBeTruthy();
   expect(result.current.first).toBeUndefined();

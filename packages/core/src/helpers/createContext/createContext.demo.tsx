@@ -6,7 +6,7 @@ const profileContext = createContext(DEFAULT_PROFILE);
 const App = () => {
   const name = profileContext.useSelect((state) => state.name);
   const age = profileContext.useSelect((state) => state.age);
-  const profile = profileContext.useSelect()!;
+  const profile = profileContext.useSelect();
 
   const nameField = useField({
     initialValue: DEFAULT_PROFILE.name
@@ -17,7 +17,7 @@ const App = () => {
   });
 
   return (
-    <div className='rounded-lg p-4 shadow-md'>
+    <div className='rounded-lg p-4'>
       <div className='mb-6'>
         <h3 className='font-semibold'>Current Profile:</h3>
         <div>

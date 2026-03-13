@@ -11,6 +11,7 @@ export default eslint(
   {
     name: 'siberiacancode/reactuse/md',
     rules: {
+      'react-refresh/only-export-components': 'off',
       'react-hooks/rules-of-hooks': 'off',
       'style/max-len': 'off'
     }

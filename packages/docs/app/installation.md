@@ -32,11 +32,26 @@ bun add @siberiacancode/reactuse
 
 How to install dependencies and structure your app with [cli](./cli.md) and [useverse](https://www.npmjs.com/package/useverse).
 
-<div class="flex flex-col gap-4 md:flex-row">
-  <a href="./installation/vite" class="w-full !no-underline">
+<div class="grid md:grid-cols-2 gap-4 grid-cols-1">
+  <a href="./installation/vite" class="!no-underline">
     <Framework framework="vite" />
   </a>
-  <a href="./installation/nextjs" class="w-full !no-underline">
+  <a href="./installation/nextjs" class="!no-underline">
     <Framework framework="next" />
+  </a>
+  <a href="./installation/astro" class="!no-underline">
+    <Framework framework="astro" />
+  </a>
+  <a href="./installation/react-router" class="!no-underline">
+    <Framework framework="react-router" />
+  </a>
+  <a href="./installation/tanstack-router" class="!no-underline">
+    <Framework framework="tanstack-router" />
+  </a>
+  <a href="./installation/tanstack" class="!no-underline">
+    <Framework framework="tanstack" />
+  </a>
+  <a href="./installation/manual" class="!no-underline">
+    <Framework framework="manual" />
   </a>
 </div>

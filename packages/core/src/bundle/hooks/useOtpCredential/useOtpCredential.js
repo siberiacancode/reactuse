@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 /**
  * @name useOtpCredential
  * @description - Hook that creates an otp credential
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.credentials https://developer.mozilla.org/en-US/docs/Web/API/Navigator/credentials
  *
@@ -22,10 +23,14 @@ import { useRef, useState } from 'react';
  * useOtpCredential({ onSuccess: (credential) => console.log(credential), onError: (error) => console.log(error) });
  */
 export const useOtpCredential = (...params) => {
-  const onSuccess = typeof params[0] === 'function' ? params[0] : params[0]?.onSuccess;
-  const onError = typeof params[0] === 'function' ? params[0]?.onError : undefined;
-  const supported = typeof navigator !== 'undefined' && 'OTPCredential' in window;
-  const [aborted, setAborted] = useState(false);
+  const supported =
+    typeof navigator !== 'undefined' && 'OTPCredential' in navigator && !!navigator.OTPCredential;
+  const options =
+    typeof params[0] === 'object'
+      ? params[0]
+      : {
+          onSuccess: params[0]
+        };
   const abortControllerRef = useRef(new AbortController());
   const get = async () => {
     if (!supported) return;
@@ -35,17 +40,15 @@ export const useOtpCredential = (...params) => {
         otp: { transport: ['sms'] },
         signal: abortControllerRef.current.signal
       });
-      onSuccess?.(credential);
-      setAborted(false);
+      options.onSuccess?.(credential);
       return credential;
     } catch (error) {
-      onError?.(error);
+      options.onError?.(error);
     }
   };
   const abort = () => {
     abortControllerRef.current.abort();
     abortControllerRef.current = new AbortController();
-    abortControllerRef.current.signal.onabort = () => setAborted(true);
   };
-  return { supported, abort, aborted, get };
+  return { supported, abort, get };
 };

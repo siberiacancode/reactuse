@@ -28,7 +28,7 @@ const Demo = () => {
         </div>
       )}
 
-      {getPokemonQuery.data && (
+      {getPokemonQuery.data && !getPokemonQuery.isLoading && (
         <div className='flex flex-col gap-2'>
           <p>
             Name: <code>{getPokemonQuery.data.name}</code>

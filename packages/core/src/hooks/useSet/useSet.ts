@@ -31,7 +31,8 @@ interface UseSetReturn<Value> {
 /**
  * @name useSet
  * @description - Hook that manages a set structure
- * @category Utilities
+ * @category State
+ * @usage medium
  *
  * @template Value The type of the value
  * @param {Value[]} [values] The initial array of the set

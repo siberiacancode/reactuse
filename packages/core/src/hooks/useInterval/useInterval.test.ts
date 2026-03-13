@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useInterval } from './useInterval';
 
 beforeEach(() => {
@@ -12,6 +14,15 @@ afterEach(() => {
 
 it('Should use interval', () => {
   const { result } = renderHook(() => useInterval(vi.fn, 1000));
+
+  expect(result.current.active).toBeTruthy();
+  expect(result.current.pause).toBeTypeOf('function');
+  expect(result.current.resume).toBeTypeOf('function');
+});
+
+it('Should use interval on server side', () => {
+  const { result } = renderHookServer(() => useInterval(vi.fn, 1000));
+
   expect(result.current.active).toBeTruthy();
   expect(result.current.pause).toBeTypeOf('function');
   expect(result.current.resume).toBeTypeOf('function');
@@ -67,7 +78,7 @@ it('Should call callback on interval', () => {
   expect(callback).toBeCalledTimes(2);
 });
 
-it('Should clean up on unmount', () => {
+it('Should cleanup on unmount', () => {
   const callback = vi.fn();
   const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
 

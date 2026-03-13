@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -12,7 +13,11 @@ const targets = [
   target('#target'),
   target(document.getElementById('target')!),
   target(() => document.getElementById('target')!),
-  { current: document.getElementById('target') }
+  { current: document.getElementById('target') },
+  Object.assign(() => {}, {
+    state: document.getElementById('target'),
+    current: document.getElementById('target')
+  })
 ];
 const element = document.getElementById('target') as HTMLDivElement;
 
@@ -29,9 +34,31 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      if (target) expect(result.current).toBe(false);
+      if (target) {
+        expect(result.current.value).toBeFalsy();
+        expect(result.current.ref).toBeUndefined();
+      }
       if (!target) {
-        expect(result.current.value).toBe(false);
+        expect(result.current.value).toBeFalsy();
+        expect(result.current.ref).toBeTypeOf('function');
+      }
+    });
+
+    it('Should use hover on server side', () => {
+      const { result } = renderHookServer(() => {
+        if (target)
+          return useHover(target) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseHoverReturn;
+        return useHover<HTMLDivElement>();
+      });
+
+      if (target) {
+        expect(result.current.value).toBeFalsy();
+        expect(result.current.ref).toBeUndefined();
+      }
+      if (!target) {
+        expect(result.current.value).toBeFalsy();
         expect(result.current.ref).toBeTypeOf('function');
       }
     });
@@ -47,18 +74,18 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      if (target) expect(result.current).toBe(false);
-      if (!target) expect(result.current.value).toBe(false);
+      if (target) expect(result.current.value).toBeFalsy();
+      if (!target) expect(result.current.value).toBeFalsy();
 
       act(() => element.dispatchEvent(new Event('mouseenter')));
 
-      if (target) expect(result.current).toBe(true);
-      if (!target) expect(result.current.value).toBe(true);
+      if (target) expect(result.current.value).toBeTruthy();
+      if (!target) expect(result.current.value).toBeTruthy();
 
       act(() => element.dispatchEvent(new Event('mouseleave')));
 
-      if (target) expect(result.current).toBe(false);
-      if (!target) expect(result.current.value).toBe(false);
+      if (target) expect(result.current.value).toBeFalsy();
+      if (!target) expect(result.current.value).toBeFalsy();
     });
 
     it('Should call callback on hover', () => {
@@ -104,6 +131,16 @@ targets.forEach((target) => {
       expect(onLeave).toHaveBeenCalledTimes(1);
     });
 
+    it('Should handle enabled option', () => {
+      const { result } = renderHook(() => useHover<HTMLDivElement>({ enabled: false }));
+
+      if (!target) act(() => result.current.ref(element));
+
+      act(() => element.dispatchEvent(new Event('mouseenter')));
+
+      expect(result.current.value).toBeFalsy();
+    });
+
     it('Should handle target changes', () => {
       const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
@@ -132,7 +169,7 @@ targets.forEach((target) => {
       expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
     });
 
-    it('Should clean up on unmount', () => {
+    it('Should cleanup on unmount', () => {
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
       const { result, unmount } = renderHook(() => {

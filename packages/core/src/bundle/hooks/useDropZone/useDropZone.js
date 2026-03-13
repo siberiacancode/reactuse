@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useDropZone
  * @description - Hook that provides drop zone functionality
  * @category Elements
- *
+ * @usage medium
+
  * @overload
  * @template Target The target element
  * @param {Target} target The target element drop zone's
@@ -73,11 +74,7 @@ export const useDropZone = (...params) => {
     if (typeof dataTypes === 'function') return dataTypes(types);
     if (!dataTypes.length) return true;
     if (!types.length) return false;
-    return types.every((type) => {
-      console.log('type', type);
-      console.log('dataTypes', dataTypes);
-      return dataTypes.some((dataType) => type.includes(dataType));
-    });
+    return types.every((type) => dataTypes.some((dataType) => type.includes(dataType)));
   };
   const checkValidity = (items) => {
     const types = Array.from(items).map((item) => item.type);
@@ -87,9 +84,9 @@ export const useDropZone = (...params) => {
   };
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
-    const onEvent = (event, type) => {
+    const onEvent = (event) => {
       if (!event.dataTransfer) return;
       const isValid = checkValidity(event.dataTransfer.items);
       if (!isValid) {
@@ -99,43 +96,39 @@ export const useDropZone = (...params) => {
       event.preventDefault();
       event.dataTransfer.dropEffect = 'copy';
       const currentFiles = getFiles(event);
-      if (type === 'drop') {
+      if (event.type === 'drop') {
         counterRef.current = 0;
         setOvered(false);
         setFiles(currentFiles);
         options.onDrop?.(currentFiles, event);
         return;
       }
-      if (type === 'enter') {
+      if (event.type === 'dragenter') {
         counterRef.current += 1;
         setOvered(true);
         options.onEnter?.(event);
         return;
       }
-      if (type === 'leave') {
+      if (event.type === 'dragleave') {
         counterRef.current -= 1;
         if (counterRef.current !== 0) return;
         setOvered(false);
         options.onLeave?.(event);
         return;
       }
-      if (type === 'over') options.onOver?.(event);
+      if (event.type === 'dragover') options.onOver?.(event);
     };
-    const onDrop = (event) => onEvent(event, 'drop');
-    const onDragOver = (event) => onEvent(event, 'over');
-    const onDragEnter = (event) => onEvent(event, 'enter');
-    const onDragLeave = (event) => onEvent(event, 'leave');
-    element.addEventListener('dragenter', onDragEnter);
-    element.addEventListener('dragover', onDragOver);
-    element.addEventListener('dragleave', onDragLeave);
-    element.addEventListener('drop', onDrop);
+    element.addEventListener('dragenter', onEvent);
+    element.addEventListener('dragover', onEvent);
+    element.addEventListener('dragleave', onEvent);
+    element.addEventListener('drop', onEvent);
     return () => {
-      element.removeEventListener('dragenter', onDragEnter);
-      element.removeEventListener('dragover', onDragOver);
-      element.removeEventListener('dragleave', onDragLeave);
-      element.removeEventListener('drop', onDrop);
+      element.removeEventListener('dragenter', onEvent);
+      element.removeEventListener('dragover', onEvent);
+      element.removeEventListener('dragleave', onEvent);
+      element.removeEventListener('drop', onEvent);
     };
-  }, [target, internalRef.current]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return { overed, files };
   return { ref: internalRef, overed, files };
 };

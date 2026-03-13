@@ -4,6 +4,7 @@ import { useThrottleCallback } from '../useThrottleCallback/useThrottleCallback'
  * @name useThrottleValue
  * @description - Hook that creates a throttled value
  * @category Utilities
+ * @usage medium
  *
  * @template Value The type of the value
  * @param {Value} value The value to be throttled
@@ -15,8 +16,8 @@ import { useThrottleCallback } from '../useThrottleCallback/useThrottleCallback'
  */
 export const useThrottleValue = (value, delay) => {
   const previousValueRef = useRef(value);
-  const [throttledValue, setThrottleValue] = useState(value);
-  const throttledSetState = useThrottleCallback(setThrottleValue, delay);
+  const [throttledValue, setThrottledValue] = useState(value);
+  const throttledSetState = useThrottleCallback(setThrottledValue, delay);
   useEffect(() => {
     if (previousValueRef.current === value) return;
     throttledSetState(value);

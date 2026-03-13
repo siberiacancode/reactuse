@@ -31,7 +31,7 @@ interface UseSpeechRecognitionReturn {
   /** Whether the hook is currently listening for speech */
   listening: boolean;
   /** The speech recognition instance */
-  recognition: SpeechRecognition;
+  recognition?: SpeechRecognition;
   /** Whether the current browser supports the Web Speech API */
   supported: boolean;
   /** The current transcript */
@@ -50,7 +50,8 @@ export const getSpeechRecognition = () =>
 /**
  * @name useSpeechRecognition
  * @description - Hook that provides a streamlined interface for incorporating speech-to-text functionality
- * @category Sensors
+ * @category Browser
+ * @usage low
  *
  * @browserapi window.SpeechRecognition https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
  *
@@ -89,8 +90,8 @@ export const useSpeechRecognition = (
   const [transcript, setTranscript] = useState('');
   const [final, setFinal] = useState(false);
   const [error, setError] = useState<SpeechRecognitionErrorEvent | null>(null);
-  const [recognition] = useState<SpeechRecognition>(() => {
-    if (!supported) return {} as SpeechRecognition;
+  const [recognition] = useState<SpeechRecognition | undefined>(() => {
+    if (!supported) return undefined;
 
     const SpeechRecognition = getSpeechRecognition();
     const speechRecognition = new SpeechRecognition();
@@ -106,41 +107,48 @@ export const useSpeechRecognition = (
       setFinal(false);
       onStart?.();
     };
-    speechRecognition.onend = () => {
-      setListening(false);
-      onEnd?.();
-    };
     speechRecognition.onerror = (event) => {
       setError(event);
       setListening(false);
       onError?.(event);
     };
     speechRecognition.onresult = (event) => {
-      console.log('onresult', event);
       const currentResult = event.results[event.resultIndex];
       const { transcript } = currentResult[0];
 
+      setListening(false);
       setTranscript(transcript);
       setError(null);
       onResult?.(event);
     };
     speechRecognition.onend = () => {
       setListening(false);
+      onEnd?.();
       speechRecognition.lang = language;
     };
 
     return speechRecognition;
   });
 
-  useEffect(() => () => recognition.stop(), []);
+  useEffect(() => () => recognition?.stop(), []);
 
-  const start = () => recognition.start();
-  const stop = () => recognition.stop();
+  const start = () => recognition?.start();
+  const stop = () => recognition?.stop();
 
   const toggle = (value = !listening) => {
     if (value) return start();
-    stop();
+    return stop();
   };
 
-  return { supported, transcript, recognition, final, listening, error, start, stop, toggle };
+  return {
+    supported,
+    transcript,
+    recognition,
+    final,
+    listening,
+    error,
+    start,
+    stop,
+    toggle
+  };
 };

@@ -20,6 +20,7 @@ export const scrollTo = ({
  * @name useWindowScroll
  * @description - Hook that manages the window scroll position
  * @category Sensors
+ * @usage low
  *
  * @returns {UseWindowScrollReturn} An object containing the current window scroll position
  *
@@ -27,9 +28,10 @@ export const scrollTo = ({
  * const { value, scrollTo } = useWindowScroll();
  */
 export const useWindowScroll = () => {
-  const [value, setValue] = useState<ScrollPosition>({
-    x: typeof window !== 'undefined' ? window.scrollX : Number.POSITIVE_INFINITY,
-    y: typeof window !== 'undefined' ? window.scrollY : Number.POSITIVE_INFINITY
+  const [value, setValue] = useState<ScrollPosition>(() => {
+    if (typeof window === 'undefined')
+      return { x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY };
+    return { x: window.scrollX, y: window.scrollY };
   });
 
   useEffect(() => {

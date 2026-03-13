@@ -6,9 +6,12 @@ import { useShare } from './useShare';
 
 const mockNavigatorShare = vi.fn();
 const mockNavigatorCanShare = vi.fn();
-Object.assign(navigator, {
-  canShare: mockNavigatorCanShare,
-  share: mockNavigatorShare
+
+beforeEach(() => {
+  Object.assign(globalThis.navigator, {
+    canShare: mockNavigatorCanShare,
+    share: mockNavigatorShare
+  });
 });
 
 it('Should use share', () => {
@@ -16,6 +19,18 @@ it('Should use share', () => {
 
   expect(result.current.trigger).toBeTypeOf('function');
   expect(result.current.supported).toBeTruthy();
+});
+
+it('Should use share for unsupported', () => {
+  Object.defineProperty(globalThis.navigator, 'share', {
+    value: undefined,
+    writable: true
+  });
+
+  const { result } = renderHook(useShare);
+
+  expect(result.current.trigger).toBeTypeOf('function');
+  expect(result.current.supported).toBeFalsy();
 });
 
 it('Should use share on server side', () => {

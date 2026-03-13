@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 export const timeRangeToArray = (timeRanges) => {
   let ranges = [];
@@ -11,6 +11,7 @@ export const timeRangeToArray = (timeRanges) => {
  * @name useMediaControls
  * @description Hook that provides controls for HTML media elements (audio/video)
  * @category Browser
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target media element
@@ -67,7 +68,7 @@ export const useMediaControls = (...params) => {
   const [muted, setMutedState] = useState(false);
   const [volume, setVolumeState] = useState(1);
   useEffect(() => {
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     elementRef.current = element;
     element.src = options.src;
@@ -127,7 +128,7 @@ export const useMediaControls = (...params) => {
       element.removeEventListener('volumechange', onVolumechange);
       element.removeEventListener('ratechange', onRatechange);
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   const play = async () => {
     const element = elementRef.current;
     if (!element) return;
@@ -137,9 +138,9 @@ export const useMediaControls = (...params) => {
     if (!elementRef.current) return;
     elementRef.current.pause();
   };
-  const toggle = async () => {
-    if (playing) return pause();
-    return play();
+  const toggle = async (value = !playing) => {
+    if (value) return play();
+    return pause();
   };
   const seek = (time) => {
     if (!elementRef.current) return;

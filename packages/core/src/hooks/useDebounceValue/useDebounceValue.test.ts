@@ -17,30 +17,30 @@ it('Should use debounce value', () => {
 
 it('Should update value after delay', () => {
   const { result, rerender } = renderHook(({ value, delay }) => useDebounceValue(value, delay), {
-    initialProps: { value: 'value', delay: 100 }
+    initialProps: { value: 'first', delay: 100 }
   });
 
-  rerender({ value: 'new value', delay: 100 });
+  rerender({ value: 'second', delay: 100 });
 
   act(() => vi.advanceTimersByTime(99));
-  expect(result.current).toBe('value');
+  expect(result.current).toBe('first');
 
   act(() => vi.advanceTimersByTime(1));
-  expect(result.current).toBe('new value');
+  expect(result.current).toBe('second');
 });
 
 it('Should apply new delay when delay changes', () => {
   const { result, rerender } = renderHook(({ value, delay }) => useDebounceValue(value, delay), {
-    initialProps: { value: 'value', delay: 100 }
+    initialProps: { value: 'first', delay: 100 }
   });
 
-  rerender({ value: 'new value', delay: 200 });
+  rerender({ value: 'second', delay: 200 });
 
-  expect(result.current).toBe('value');
+  expect(result.current).toBe('first');
 
   act(() => vi.advanceTimersByTime(199));
-  expect(result.current).toBe('value');
+  expect(result.current).toBe('first');
 
   act(() => vi.advanceTimersByTime(1));
-  expect(result.current).toBe('new value');
+  expect(result.current).toBe('second');
 });

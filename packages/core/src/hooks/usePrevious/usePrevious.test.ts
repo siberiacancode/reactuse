@@ -1,9 +1,17 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { usePrevious } from './usePrevious';
 
 it('Should use previous', () => {
   const { result } = renderHook(() => usePrevious(0));
+
+  expect(result.current).toBe(undefined);
+});
+
+it('Should use previous on server side', () => {
+  const { result } = renderHookServer(() => usePrevious(0));
 
   expect(result.current).toBe(undefined);
 });

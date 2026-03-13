@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useMouse
  * @description - Hook that manages a mouse position
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {HookTarget} [target=window] The target element to manage the mouse position for
@@ -35,7 +36,7 @@ export const useMouse = (...params) => {
   const internalRef = useRefState();
   useEffect(() => {
     const onMouseMove = (event) => {
-      const element = target ? getElement(target) : internalRef.current;
+      const element = target ? isTarget.getElement(target) : internalRef.current;
       const updatedValue = {
         x: event.pageX,
         y: event.pageY,
@@ -82,7 +83,7 @@ export const useMouse = (...params) => {
       document.removeEventListener('scroll', onScroll);
       document.removeEventListener('mousemove', onMouseMove);
     };
-  }, [internalRef.state, target]);
+  }, [internalRef.state, target && isTarget.getRawElement(target)]);
   if (target) return value;
   return {
     ref: internalRef,

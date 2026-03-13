@@ -28,7 +28,7 @@ Setting this option to `false` allows hooks to be added as JavaScript with the `
 
 ```json title="reactuse.json"
 {
-  "ts": "true | false"
+  "ts": true | false
 }
 ```
 
@@ -64,5 +64,20 @@ Import alias for your hooks.
   "aliases": {
     "hooks": "@/shared/hooks"
   }
+}
+```
+
+## case
+
+Controls the naming convention for generated files.
+
+There are two options:
+
+- `camel`: All files will be generated in `camelCase` (e.g., `useClickOutside.ts`).
+- `kebab`: All files will be generated in `kebab-case` (e.g., `use-click-outside.ts`).
+
+```json title="reactuse.json"
+{
+  "case": "camel" | "kebab"
 }
 ```

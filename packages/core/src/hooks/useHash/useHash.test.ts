@@ -11,33 +11,29 @@ beforeEach(() => {
 it('Should use hash', () => {
   const { result } = renderHook(useHash);
 
-  const [hash, setHash] = result.current;
-
-  expect(hash).toBe('');
-  expect(setHash).toBeTypeOf('function');
+  expect(result.current.value).toBe('');
+  expect(result.current.set).toBeTypeOf('function');
 });
 
 it('Should set hash', () => {
   const { result } = renderHook(useHash);
 
-  const [_, set] = result.current;
-
-  act(() => set('test'));
+  act(() => result.current.set('test'));
 
   expect(window.location.hash).toBe('#test');
-  expect(result.current[0]).toBe('test');
+  expect(result.current.value).toBe('test');
 });
 
 it('Should set hash on server side', () => {
   const { result } = renderHookServer(useHash);
 
-  expect(result.current[0]).toBe('');
+  expect(result.current.value).toBe('');
 });
 
 it('Should use initial value on server side', () => {
   const { result } = renderHookServer(() => useHash('initial'));
 
-  expect(result.current[0]).toBe('initial');
+  expect(result.current.value).toBe('initial');
 });
 
 it('Should handle hash change', () => {
@@ -48,39 +44,95 @@ it('Should handle hash change', () => {
     window.dispatchEvent(new Event('hashchange'));
   });
 
-  expect(result.current[0]).toBe('external');
+  expect(result.current.value).toBe('external');
 });
 
 it('Should decode hash', () => {
   const { result } = renderHook(useHash);
 
-  const [_, set] = result.current;
+  act(() => result.current.set('testvalue'));
 
-  act(() => set('test value'));
-
-  expect(window.location.hash).toBe('#test%20value');
-  expect(result.current[0]).toBe('test value');
+  expect(window.location.hash).toBe('#testvalue');
+  expect(result.current.value).toBe('testvalue');
 });
 
 it('Should use initial value', () => {
   const { result } = renderHook(() => useHash('initial'));
 
   expect(window.location.hash).toBe('#initial');
-  expect(result.current[0]).toBe('initial');
+  expect(result.current.value).toBe('initial');
 });
 
 it('Should prefer existing hash over initial value', () => {
   window.location.hash = '#existing';
 
-  const { result } = renderHook(() => useHash('initial', 'initial'));
+  const { result } = renderHook(() => useHash('initial', { mode: 'initial' }));
 
   expect(window.location.hash).toBe('#existing');
-  expect(result.current[0]).toBe('existing');
+  expect(result.current.value).toBe('existing');
 });
 
-it('Should clean up on unmount', () => {
-  const { unmount } = renderHook(useHash);
+it('Should call onChange callback when hash changes programmatically', () => {
+  const callback = vi.fn();
+  const { result } = renderHook(() => useHash('initial', callback));
+
+  act(() => result.current.set('testvalue'));
+
+  expect(callback).toHaveBeenCalledWith('testvalue');
+  expect(callback).toHaveBeenCalledTimes(1);
+});
+
+it('Should call onChange callback when hash changes externally', () => {
+  const callback = vi.fn();
+  renderHook(() => useHash('initial', callback));
+
+  act(() => {
+    window.location.hash = '#external-hash';
+    window.dispatchEvent(new Event('hashchange'));
+  });
+
+  expect(callback).toHaveBeenCalledWith('external-hash');
+});
+
+it('Should work with options object', () => {
+  const onChange = vi.fn();
+  const { result } = renderHook(() =>
+    useHash('initial', {
+      onChange
+    })
+  );
+
+  expect(result.current.value).toBe('initial');
+
+  act(() => result.current.set('testvalue'));
+
+  expect(onChange).toHaveBeenCalledWith('testvalue');
+  expect(result.current.value).toBe('testvalue');
+});
+
+it('Should not work when disabled', () => {
+  const { result } = renderHook(() =>
+    useHash('initial', {
+      enabled: false
+    })
+  );
+
+  expect(result.current.value).toBe('initial');
+
+  act(() => {
+    window.location.hash = '#external-hash';
+    window.dispatchEvent(new Event('hashchange'));
+  });
+
+  expect(result.current.value).toBe('initial');
+});
+
+it('Should cleanup on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+  const { unmount } = renderHook(useHash);
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('hashchange', expect.any(Function));
 
   unmount();
 

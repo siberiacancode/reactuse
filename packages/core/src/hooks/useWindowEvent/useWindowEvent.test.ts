@@ -6,6 +6,8 @@ import { useWindowEvent } from './useWindowEvent';
 it('Should use window event', () => {
   const listener = vi.fn();
   renderHook(() => useWindowEvent('click', listener));
+
   window.dispatchEvent(new Event('click'));
+
   expect(listener).toHaveBeenCalled();
 });

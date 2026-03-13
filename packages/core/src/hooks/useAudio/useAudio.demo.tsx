@@ -1,7 +1,7 @@
 import { useAudio } from './useAudio';
 
 const Demo = () => {
-  const popDownAudio = useAudio('/reactuse/pop-down.mp3', {
+  const popDownAudio = useAudio('/pop-down.mp3', {
     volume: 0.5,
     playbackRate: 2
   });
@@ -22,7 +22,7 @@ const Demo = () => {
         </div>
 
         <button
-          className='rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+          className='rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none'
           type='button'
           onClick={() => popDownAudio.play()}
         >

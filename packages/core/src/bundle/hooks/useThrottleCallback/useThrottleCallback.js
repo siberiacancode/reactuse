@@ -3,6 +3,7 @@ import { useMemo, useRef } from 'react';
  * @name useThrottleCallback
  * @description - Hook that creates a throttled callback
  * @category Utilities
+ * @usage medium
  *
  * @template Params The type of the params
  * @template Return The type of the return

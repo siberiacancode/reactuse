@@ -33,25 +33,25 @@
     "lint-staged": "lint-staged"
   },
   "devDependencies": {
-    "@shikijs/twoslash": "3.7.0",
-    "@shikijs/vitepress-twoslash": "3.7.0",
+    "@shikijs/twoslash": "4.0.1",
+    "@shikijs/vitepress-twoslash": "4.0.1",
     "@siberiacancode/reactuse": "*",
     "@tailwindcss/vite": "4.0.7",
-    "@types/md5": "^2.3.5",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
+    "@types/md5": "^2.3.6",
+    "@types/react": "^19.2.13",
+    "@types/react-dom": "^19.2.3",
     "clsx": "^2.1.1",
-    "comment-parser": "^1.4.1",
-    "lucide-vue-next": "^0.525.0",
+    "comment-parser": "^1.4.5",
+    "lucide-vue-next": "^0.577.0",
     "md5": "^2.3.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "shiki": "^3.7.0",
-    "simple-git": "^3.28.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "shiki": "^4.0.1",
+    "simple-git": "^3.30.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "4.0.7",
-    "vitepress": "^1.6.3",
-    "vue": "^3.5.17"
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.27"
   },
   "lint-staged": {
     "*.{vue,md,*ts,*js,jsx,tsx}": [

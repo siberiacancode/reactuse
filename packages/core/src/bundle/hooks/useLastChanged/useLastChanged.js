@@ -3,7 +3,8 @@ import { useDidUpdate } from '../useDidUpdate/useDidUpdate';
 /**
  * @name useLastChanged
  * @description - Hook for records the timestamp of the last change
- * @category Time
+ * @category Utilities
+ * @usage low
  *
  * @param {any} source  The source of the last change
  * @param {number | null} [options.initialValue=null] The initial value

@@ -2,7 +2,10 @@ import { useField, useRenderCount } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const renderCount = useRenderCount();
-  const nameInput = useField({ initialValue: 'Dmtitry', validateOnChange: true });
+  const nameInput = useField({
+    initialValue: 'Dmtitry',
+    validateOnChange: true
+  });
   const sexSelect = useField({ initialValue: 'Male' });
   const aboutTextArea = useField();
   const rememberThisComputerCheckbox = useField();

@@ -22,7 +22,8 @@ export interface UseCopyParams {
  * @name useCopy
  * @description - Hook that manages copying text with status reset
  * @category Browser
- *
+ * @usage medium
+
  * @browserapi navigator.clipboard https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard
  *
  * @param {number} [delay=1000] Delay in ms before resetting copied status

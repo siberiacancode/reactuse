@@ -1,9 +1,17 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useConst } from './useConst';
 
 it('Should use const', () => {
   const { result } = renderHook(() => useConst('value'));
+
+  expect(result.current).toBe('value');
+});
+
+it('Should use const on server side', () => {
+  const { result } = renderHookServer(() => useConst('value'));
 
   expect(result.current).toBe('value');
 });

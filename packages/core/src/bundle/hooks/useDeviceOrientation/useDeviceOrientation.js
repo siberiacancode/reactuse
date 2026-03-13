@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
  * @name useDeviceOrientation
  * @description - Hook that provides the current device orientation
  * @category Sensors
+ * @usage low
  *
  * @browserapi DeviceOrientationEvent https://developer.mozilla.org/en-US/docs/Web/API/Window/DeviceOrientationEvent
  *
@@ -12,7 +13,10 @@ import { useEffect, useState } from 'react';
  * const { supported, value } = useDeviceOrientation();
  */
 export const useDeviceOrientation = () => {
-  const supported = typeof window !== 'undefined' && 'DeviceOrientationEvent' in window;
+  const supported =
+    typeof window !== 'undefined' &&
+    'DeviceOrientationEvent' in window &&
+    !!window.DeviceOrientationEvent;
   const [value, setValue] = useState({
     alpha: null,
     beta: null,

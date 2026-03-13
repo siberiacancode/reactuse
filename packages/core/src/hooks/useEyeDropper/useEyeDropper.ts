@@ -36,6 +36,7 @@ export interface UseEyeDropperReturn {
  * @name useEyeDropper
  * @description - Hook that gives you access to the eye dropper
  * @category Browser
+ * @usage low
  *
  * @browserapi EyeDropper https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper
  *
@@ -48,7 +49,7 @@ export interface UseEyeDropperReturn {
 export const useEyeDropper = (
   initialValue: string | undefined = undefined
 ): UseEyeDropperReturn => {
-  const supported = typeof window !== 'undefined' && 'EyeDropper' in window;
+  const supported = typeof window !== 'undefined' && 'EyeDropper' in window && !!window.EyeDropper;
   const [value, setValue] = useState(initialValue);
 
   const open = async (colorSelectionOptions?: ColorSelectionOptions) => {

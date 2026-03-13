@@ -2,9 +2,21 @@ import { renderHook } from '@testing-library/react';
 import { act } from 'react';
 
 import { useMap } from '@/hooks/useMap/useMap';
+import { renderHookServer } from '@/tests';
 
 it('Should use map', () => {
   const { result } = renderHook(() => useMap());
+
+  expect(result.current.value).toEqual(new Map());
+  expect(result.current.size).toBe(0);
+  expect(result.current.set).toBeTypeOf('function');
+  expect(result.current.remove).toBeTypeOf('function');
+  expect(result.current.clear).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+});
+
+it('Should use map on server side', () => {
+  const { result } = renderHookServer(() => useMap());
 
   expect(result.current.value).toEqual(new Map());
   expect(result.current.size).toBe(0);

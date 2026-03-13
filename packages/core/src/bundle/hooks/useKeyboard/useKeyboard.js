@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useKeyboard
  * @description - Hook that helps to listen for keyboard events
  * @category Sensors
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} target The target to attach the event listeners to
@@ -52,7 +53,7 @@ export const useKeyboard = (...params) => {
   internalOptionsRef.current = options;
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onKeyDown = (event) => internalOptionsRef.current?.onKeyDown?.(event);
     const onKeyUp = (event) => internalOptionsRef.current?.onKeyUp?.(event);
@@ -62,7 +63,7 @@ export const useKeyboard = (...params) => {
       element.removeEventListener('keydown', onKeyDown);
       element.removeEventListener('keyup', onKeyUp);
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
   return internalRef;
 };

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 const DEFAULT_BRUSH_RADIUS = 10;
@@ -94,7 +94,8 @@ export class Paint {
 /**
  * @name usePaint
  * @description - Hook that allows you to draw in a specific area
- * @category Browser
+ * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element to be painted
@@ -201,7 +202,12 @@ export const usePaint = (...params) => {
   const onMouseUp = useEvent((event) => {
     if (!contextRef.current) return;
     if (paintRef.current.points.length) {
-      paintRef.current.lines.push({ points: paintRef.current.points, color, opacity, radius });
+      paintRef.current.lines.push({
+        points: paintRef.current.points,
+        color,
+        opacity,
+        radius
+      });
       paintRef.current.points = [];
     }
     options?.onMouseUp?.(event, paintRef.current);
@@ -223,7 +229,7 @@ export const usePaint = (...params) => {
   };
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     contextRef.current = element.getContext('2d');
     if (options?.initialLines) {
@@ -241,7 +247,14 @@ export const usePaint = (...params) => {
       element.removeEventListener('mousemove', onMouseMove);
       element.removeEventListener('mouseup', onMouseUp);
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return { drawing, clear, undo, draw, lines: paintRef.current.lines };
-  return { ref: internalRef, drawing, clear, undo, draw, lines: paintRef.current.lines };
+  return {
+    ref: internalRef,
+    drawing,
+    clear,
+    undo,
+    draw,
+    lines: paintRef.current.lines
+  };
 };

@@ -16,7 +16,7 @@ const Demo = () => {
           }
         )}
       >
-        <span className='select-none text-center text-lg font-medium text-white'>
+        <span className='text-center text-lg font-medium text-white select-none'>
           Use a ref to add coords
           <br />
           relative to the element
@@ -27,7 +27,7 @@ const Demo = () => {
             left: clientX + 24,
             top: clientY + 24
           }}
-          className='border-1 fixed z-50 rounded-lg bg-[var(--vp-code-block-bg)] p-6'
+          className='fixed z-50 rounded-lg border-1 bg-[var(--vp-code-block-bg)] p-6'
         >
           <div className='flex flex-col gap-2'>
             <div className='text-sm font-medium'>mouse position</div>

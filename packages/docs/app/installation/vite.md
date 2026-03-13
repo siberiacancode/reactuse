@@ -1,3 +1,8 @@
+---
+title: Vite
+description: Install and configure reactuse for Vite.
+---
+
 # Vite
 
 Install and configure reactuse for Vite.
@@ -113,23 +118,23 @@ export default defineConfig({
 
 ### Run the CLI
 
-Run the `useverse` init command to setup your project:
+Run the `useverse` init command to set up your project:
 
 ```bash
 npx useverse@latest init
 ```
 
-This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project.
+This creates a [`reactuse.json`](../reactuse-json.md) config file in your project.
 
 ### Add hooks
 
-You can now start adding hooks to your project.
+Add hooks with the CLI.
 
 ```bash
 npx useverse@latest add useBoolean
 ```
 
-The command above will add the `useBoolean` hook to your project. You can then import it like this:
+Then import and use the hook in your app:
 
 ```tsx showLineNumbers title="src/App.tsx"
 import { useBoolean } from '@/shared/hooks';

@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useIntersectionObserver
  * @description - Hook that gives you intersection observer state
- * @category Browser
+ * @category Sensors
+ * @usage medium
  *
  * @browserapi IntersectionObserver https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver
  *
@@ -16,7 +17,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseIntersectionObserverReturn} An object containing the state
  *
  * @example
- * const { ref, entry, inView } = useIntersectionObserver();
+ * const { ref, entries, observer } = useIntersectionObserver();
  *
  * @overload
  * @template Target The target element
@@ -26,23 +27,23 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { entry, inView } = useIntersectionObserver(ref);
+ * const { entries, observer } = useIntersectionObserver(ref);
  *
  * @overload
  * @template Target The target element
- * @param {(entry: IntersectionObserverEntry) => void} callback The callback to execute when intersection is detected
+ * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
  * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { ref, entry, inView } = useIntersectionObserver(() => console.log('callback'));
+ * const { ref, entries, observer } = useIntersectionObserver(() => console.log('callback'));
  *
  * @overload
- * @param {(entry: IntersectionObserverEntry) => void} callback The callback to execute when intersection is detected
+ * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected
  * @param {HookTarget} target The target element to detect intersection
  * @returns {UseIntersectionObserverReturn} An object containing the state
  *
  * @example
- * const { entry, inView } = useIntersectionObserver(() => console.log('callback'), ref);
+ * const { entries, observer } = useIntersectionObserver(ref, () => console.log('callback'));
  */
 export const useIntersectionObserver = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -55,33 +56,42 @@ export const useIntersectionObserver = (...params) => {
       : { onChange: params[0] };
   const callback = options?.onChange;
   const enabled = options?.enabled ?? true;
-  const [entry, setEntry] = useState();
+  const [observer, setObserver] = useState();
+  const [entries, setEntries] = useState();
   const internalRef = useRefState();
-  const internalOnChangeRef = useRef(callback);
-  internalOnChangeRef.current = callback;
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setEntry(entry);
-        internalOnChangeRef.current?.(entry);
+      (entries, observer) => {
+        setEntries(entries);
+        internalCallbackRef.current?.(entries, observer);
       },
       {
         ...options,
-        root: options?.root ? getElement(options.root) : document
+        root: options?.root ? isTarget.getElement(options.root) : document
       }
     );
+    setObserver(observer);
     observer.observe(element);
     return () => {
       observer.disconnect();
     };
-  }, [target, internalRef.state, options?.rootMargin, options?.threshold, options?.root, enabled]);
-  if (target) return { entry, inView: !!entry?.isIntersecting };
+  }, [
+    target && isTarget.getRawElement(target),
+    internalRef.state,
+    options?.rootMargin,
+    options?.threshold,
+    options?.root,
+    enabled
+  ]);
+  if (target) return { observer, entries };
   return {
+    observer,
     ref: internalRef,
-    entry,
-    inView: !!entry?.isIntersecting
+    entries
   };
 };

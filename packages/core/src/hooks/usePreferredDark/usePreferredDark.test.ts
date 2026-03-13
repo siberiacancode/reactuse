@@ -1,15 +1,28 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 
 import { usePreferredDark } from './usePreferredDark';
+
+const queries = {
+  dark: '(prefers-color-scheme: dark)'
+};
+
+const matchState: Record<string, boolean> = {
+  [queries.dark]: false
+};
 
 const trigger = createTrigger<string, () => void>();
 const mockRemoveEventListener = vi.fn();
 const mockAddEventListener = vi.fn();
 const mockMatchMedia = {
-  matches: false,
-  media: '(prefers-color-scheme: dark)',
+  media: queries.dark,
+  get matches() {
+    return matchState[queries.dark] ?? false;
+  },
+  set matches(value: boolean) {
+    matchState[queries.dark] = value;
+  },
   onchange: null,
   addListener: vi.fn(),
   removeListener: vi.fn(),
@@ -32,31 +45,37 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  vi.clearAllMocks();
   mockMatchMedia.matches = false;
+  trigger.clear();
 });
 
 it('Should use preferred dark mode', () => {
   const { result } = renderHook(usePreferredDark);
 
-  expect(result.current).toBe(false);
+  expect(result.current).toBeFalsy();
+});
+
+it('Should use preferred dark on server side', () => {
+  const { result } = renderHookServer(usePreferredDark);
+
+  expect(result.current).toBeFalsy();
 });
 
 it('Should return true if user prefers dark mode', () => {
-  mockMatchMedia.matches = true;
+  matchState[queries.dark] = true;
 
   const { result } = renderHook(usePreferredDark);
 
-  expect(result.current).toBe(true);
+  expect(result.current).toBeTruthy();
 });
 
 it('Should handle dark mode preference changes', () => {
   const { result } = renderHook(usePreferredDark);
 
-  expect(result.current).toBe(false);
+  expect(result.current).toBeFalsy();
 
-  mockMatchMedia.matches = true;
+  matchState[queries.dark] = true;
   act(() => trigger.callback('change'));
 
-  expect(result.current).toBe(true);
+  expect(result.current).toBeTruthy();
 });

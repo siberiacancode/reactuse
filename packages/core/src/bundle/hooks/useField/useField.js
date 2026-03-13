@@ -3,7 +3,8 @@ import { useRerender } from '../useRerender/useRerender';
 /**
  * @name useField
  * @description - Hook to manage a form field
- * @category Utilities
+ * @category State
+ * @usage medium
  *
  * @template Value The input value
  * @template Type The input value type
@@ -117,6 +118,7 @@ export const useField = (params) => {
     setValue,
     reset,
     watch,
-    focus
+    focus,
+    ref: inputRef
   };
 };

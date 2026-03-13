@@ -2,8 +2,9 @@ import { useState } from 'react';
 /**
  * @name useDefault
  * @description - Hook that returns the default value
- * @category Utilities
- *
+ * @category State
+ * @usage medium
+
  * @template Value The type of the value
  * @param {Value} initialValue The initial value
  * @param {Value} defaultValue The default value

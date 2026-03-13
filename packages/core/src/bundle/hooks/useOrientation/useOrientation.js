@@ -1,24 +1,47 @@
 import { useEffect, useState } from 'react';
 /**
  * @name useOrientation
- * @description - Hook that returns the current screen orientation
- * @category Browser
+ * @description - Hook that provides the current screen orientation
+ * @category Sensors
+ * @usage low
  *
- * @browserapi window.screen.orientation https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
+ * @browserapi screen.orientation https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
  *
- * @returns {UseOrientationReturn} An object containing the current screen orientation
+ * @returns {useOrientationReturn} The current screen orientation
  *
  * @example
- * const { angle, type } = useOrientation();
+ * const { supported, value, lock, unlock } = useOrientation();
  */
 export const useOrientation = () => {
-  const [orientation, setOrientation] = useState({ angle: 0, type: 'landscape-primary' });
+  const supported =
+    typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
+  const orientation = supported ? window.screen.orientation : {};
+  const [value, setValue] = useState({
+    angle: orientation.angle ?? 0,
+    orientationType: orientation.type
+  });
   useEffect(() => {
-    const onChange = () => setOrientation(window.screen.orientation);
-    window.screen.orientation.addEventListener('change', onChange);
+    if (!supported) return;
+    const onOrientationChange = () =>
+      setValue({
+        angle: window.screen.orientation.angle,
+        orientationType: window.screen.orientation.type
+      });
+    window.addEventListener('orientationchange', onOrientationChange);
     return () => {
-      window.screen.orientation.removeEventListener('change', onChange);
+      window.removeEventListener('orientationchange', onOrientationChange);
     };
   }, []);
-  return orientation;
+  const lock = (type) => {
+    if (supported && typeof orientation.lock === 'function') return orientation.lock(type);
+  };
+  const unlock = () => {
+    if (supported && typeof orientation.unlock === 'function') orientation.unlock();
+  };
+  return {
+    supported,
+    value,
+    lock,
+    unlock
+  };
 };

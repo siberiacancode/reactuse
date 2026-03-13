@@ -1,9 +1,17 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useEvent } from './useEvent';
 
 it('Should use event', () => {
   const { result } = renderHook(() => useEvent(vi.fn));
+
+  expect(result.current).toBeTypeOf('function');
+});
+
+it('Should use event on server side', () => {
+  const { result } = renderHookServer(() => useEvent(vi.fn));
 
   expect(result.current).toBeTypeOf('function');
 });

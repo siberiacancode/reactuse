@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -19,13 +19,18 @@ export interface UseAutoScrollOptions {
 export interface UseAutoScroll {
   (target: HookTarget, options?: UseAutoScrollOptions): void;
 
-  <Target extends HTMLElement>(options?: UseAutoScrollOptions): StateRef<Target>;
+  <Target extends HTMLElement>(
+    options?: UseAutoScrollOptions
+  ): {
+    ref: StateRef<Target>;
+  };
 }
 
 /**
  * @name useAutoScroll
  * @description - Hook that automatically scrolls a list element to the bottom
- * @category Sensors
+ * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element to auto-scroll
@@ -38,10 +43,10 @@ export interface UseAutoScroll {
  * @overload
  * @template Target
  * @param {boolean} [options.enabled] Whether auto-scrolling is enabled
- * @returns {StateRef<Target>} A React ref to attach to the list element
+ * @returns {{ ref: StateRef<Target> }} A React ref to attach to the list element
  *
  * @example
- * const ref = useAutoScroll();
+ * const { ref } = useAutoScroll();
  */
 export const useAutoScroll = ((...params: any[]) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -56,7 +61,7 @@ export const useAutoScroll = ((...params: any[]) => {
   useEffect(() => {
     if (!enabled || (!target && !internalRef.state)) return;
 
-    const element = (target ? getElement(target) : internalRef.state) as HTMLElement;
+    const element = (target ? isTarget.getElement(target) : internalRef.state) as HTMLElement;
 
     if (!element) return;
 
@@ -70,13 +75,6 @@ export const useAutoScroll = ((...params: any[]) => {
       const { scrollHeight, clientHeight, scrollTop } = element;
       const maxScrollHeight = scrollHeight - clientHeight;
       const scrollThreshold = maxScrollHeight / 2;
-      console.log(
-        maxScrollHeight,
-        scrollTop,
-        scrollThreshold,
-        scrollTop < lastScrollTop,
-        maxScrollHeight - scrollTop <= scrollThreshold
-      );
 
       if (scrollTop < lastScrollTop) shouldAutoScroll = false;
       else if (maxScrollHeight - scrollTop <= scrollThreshold) shouldAutoScroll = true;
@@ -131,8 +129,8 @@ export const useAutoScroll = ((...params: any[]) => {
       element.removeEventListener('touchstart', onTouchStart);
       element.removeEventListener('touchmove', onTouchMove);
     };
-  }, [enabled, target, internalRef.state]);
+  }, [enabled, target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target) return;
-  return internalRef;
+  return { ref: internalRef };
 }) as UseAutoScroll;

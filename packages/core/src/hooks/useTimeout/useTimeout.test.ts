@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useTimeout } from './useTimeout';
 
 beforeEach(() => {
@@ -8,6 +10,13 @@ beforeEach(() => {
 
 it('Should use timeout', () => {
   const { result } = renderHook(() => useTimeout(vi.fn(), 5000));
+
+  expect(result.current.ready).toBeFalsy();
+  expect(result.current.clear).toBeTypeOf('function');
+});
+
+it('Should use timeout on server side', () => {
+  const { result } = renderHookServer(() => useTimeout(vi.fn(), 5000));
 
   expect(result.current.ready).toBeFalsy();
   expect(result.current.clear).toBeTypeOf('function');

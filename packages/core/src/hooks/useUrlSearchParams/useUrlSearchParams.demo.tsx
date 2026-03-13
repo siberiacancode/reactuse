@@ -22,7 +22,11 @@ const Demo = () => {
         <input
           checked={urlSearchParams.value.enabled}
           type='checkbox'
-          onChange={(event) => urlSearchParams.set({ enabled: event.target.checked })}
+          onChange={(event) =>
+            urlSearchParams.set({
+              enabled: event.target.checked
+            })
+          }
         />
         <label htmlFor='enabled'>enabled toggle</label>
       </div>

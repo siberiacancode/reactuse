@@ -4,7 +4,7 @@ import { useState } from 'react';
 const Demo = () => {
   const [messages, setMessages] = useState([`Message 1 at ${new Date().toLocaleTimeString()}`]);
 
-  const listRef = useAutoScroll<HTMLUListElement>();
+  const autoScroll = useAutoScroll<HTMLUListElement>();
 
   const onAddMessage = () =>
     setMessages((prev) => [
@@ -29,8 +29,8 @@ const Demo = () => {
       </div>
 
       <ul
-        ref={listRef}
-        className='p-0! list-none! scroll-smooth! flex h-[200px] flex-col gap-1 overflow-y-auto'
+        ref={autoScroll.ref}
+        className='flex h-[200px] list-none! flex-col gap-1 overflow-y-auto scroll-smooth! p-0!'
       >
         {messages.map((message, index) => (
           <li key={index} className='rounded border p-2'>

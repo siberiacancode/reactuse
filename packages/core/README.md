@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://reactuse.dev">
+  <a href="https://siberiacancode.github.io/reactuse/">
     <picture>
       <img alt="React Use logo" src="https://siberiacancode.github.io/reactuse/logo.svg" height="128">
     </picture>

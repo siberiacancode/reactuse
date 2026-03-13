@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 export const isHotkeyMatch = (hotkey, keys) =>
@@ -19,6 +19,7 @@ export const isHotkeyMatch = (hotkey, keys) =>
  * @name useHotkeys
  * @description - Hook that listens for hotkeys
  * @category Sensors
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} [target=window] The target element to attach the event listener to
@@ -73,7 +74,7 @@ export const useHotkeys = (...params) => {
   useEffect(() => {
     keysRef.current = [];
     if (!target && !internalRef.state && !enabled) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     element.addEventListener('keydown', onKeyDown);
     element.addEventListener('keyup', onKeyUp);
@@ -81,7 +82,14 @@ export const useHotkeys = (...params) => {
       element.removeEventListener('keydown', onKeyDown);
       element.removeEventListener('keyup', onKeyUp);
     };
-  }, [target, internalRef.state, enabled, hotkeys, onKeyDown, onKeyUp]);
+  }, [
+    target && isTarget.getRawElement(target),
+    internalRef.state,
+    enabled,
+    hotkeys,
+    onKeyDown,
+    onKeyUp
+  ]);
   if (target) return;
   return internalRef;
 };

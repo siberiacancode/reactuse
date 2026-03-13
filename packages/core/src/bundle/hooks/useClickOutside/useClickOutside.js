@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useClickOutside
  * @description - Hook to handle click events outside the specified target element(s)
- * @category Sensors
- *
+ * @category Elements
+ * @usage necessary
+
  * @overload
  * @param {HookTarget} target The target element(s) to detect outside clicks for
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
@@ -17,10 +18,10 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @template Target The target element(s)
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
- * @returns {(node: Target) => void} A React ref to attach to the target element
+ * @returns {{ ref: StateRef<Target> }} A ref to attach to the target element
  *
  * @example
- * const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
+ * const { ref } = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
  *
  * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useClickOutside.html}
  */
@@ -32,9 +33,10 @@ export const useClickOutside = (...params) => {
   internalCallbackRef.current = callback;
   useEffect(() => {
     if (!target && !internalRef.state) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
     const onClick = (event) => {
-      const element = target ? getElement(target) : internalRef.current;
-      if (element && !element.contains(event.target)) {
+      if (!element.contains(event.target)) {
         internalCallbackRef.current(event);
       }
     };
@@ -42,7 +44,7 @@ export const useClickOutside = (...params) => {
     return () => {
       document.removeEventListener('click', onClick);
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
-  return internalRef;
+  return { ref: internalRef };
 };

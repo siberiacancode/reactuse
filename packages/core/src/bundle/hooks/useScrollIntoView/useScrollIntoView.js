@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { useRef } from 'react';
+import { isTarget } from '@/utils/helpers';
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useScrollIntoView
  * @description - Hook that provides functionality to scroll an element into view
  * @category Sensors
+ * @usage low
  *
  * @overload
- * @param {HookTarget} target The target element to scroll into view
+ * @param {HookTarget} [target=window] The target element to scroll into view
+ * @param {boolean} [options.immediately=true] Whether to scroll immediately
  * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior
  * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment
  * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment
@@ -18,6 +21,7 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @template Target The target element
+ * @param {boolean} [options.immediately=true] Whether to scroll immediately
  * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior
  * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment
  * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment
@@ -34,24 +38,24 @@ export const useScrollIntoView = (...params) => {
     behavior = 'smooth',
     block = 'start',
     inline = 'nearest',
-    enabled = true
+    immediately = true
   } = options ?? {};
-  useEffect(() => {
-    if (!enabled) return;
+  const elementRef = useRef(null);
+  useIsomorphicLayoutEffect(() => {
+    if (!immediately) return;
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
+    elementRef.current = element;
     element.scrollIntoView({
       behavior,
       block,
       inline
     });
-  }, [target, internalRef.state, enabled]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   const trigger = (params) => {
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    if (!elementRef.current) return;
     const { behavior, block, inline } = params ?? {};
-    element.scrollIntoView({
+    elementRef.current.scrollIntoView({
       behavior,
       block,
       inline

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /** The use speech synthesis status type */
 export type UseSpeechSynthesisStatus = 'end' | 'init' | 'pause' | 'play';
@@ -30,7 +30,7 @@ export interface UseSpeechSynthesisReturn {
   /** Indicates if the SpeechSynthesis API is supported in the current environment. */
   supported: boolean;
   /** The SpeechSynthesisUtterance instance. */
-  utterance: SpeechSynthesisUtterance | null;
+  utterance: SpeechSynthesisUtterance | undefined;
   /** Function to pause speech synthesis. */
   pause: () => void;
   /** Function to resume speech synthesis. */
@@ -46,7 +46,8 @@ export interface UseSpeechSynthesisReturn {
 /**
  * @name useSpeechSynthesis
  * @description - Hook that provides speech synthesis functionality
- * @category Sensors
+ * @category Browser
+ * @usage low
  *
  * @browserapi SpeechSynthesis https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
  *
@@ -64,14 +65,16 @@ export interface UseSpeechSynthesisReturn {
 export const useSpeechSynthesis = (
   options: UseSpeechSynthesisOptions = {}
 ): UseSpeechSynthesisReturn => {
-  const supported = typeof window !== 'undefined' && 'speechSynthesis' in window;
+  const supported =
+    typeof window !== 'undefined' && 'speechSynthesis' in window && !!window.speechSynthesis;
 
   const { text = '', lang = 'en-US', pitch = 1, rate = 1, voice = null, volume = 1 } = options;
 
   const [playing, setPlaying] = useState(false);
   const [status, setStatus] = useState<UseSpeechSynthesisStatus>('init');
   const [error, setError] = useState<SpeechSynthesisErrorEvent>();
-  const speechSynthesisUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  const [utterance, setUtterance] = useState<SpeechSynthesisUtterance>();
 
   const bindSpeechSynthesisUtterance = (speechSynthesisUtterance: SpeechSynthesisUtterance) => {
     speechSynthesisUtterance.lang = lang;
@@ -110,25 +113,38 @@ export const useSpeechSynthesis = (
     if (!supported) return;
 
     const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
+
     bindSpeechSynthesisUtterance(speechSynthesisUtterance);
-    speechSynthesisUtteranceRef.current = speechSynthesisUtterance;
+    setUtterance(speechSynthesisUtterance);
 
     return () => {
       window.speechSynthesis?.cancel();
     };
-  }, [text, lang, pitch, rate, voice, volume]);
+  }, [
+    text,
+    lang,
+    pitch,
+    rate,
+    volume,
+    voice?.default,
+    voice?.lang,
+    voice?.localService,
+    voice?.name,
+    voice?.voiceURI
+  ]);
 
   const speak = (text?: string) => {
     if (!supported) return;
 
     if (text) {
-      speechSynthesisUtteranceRef.current = new SpeechSynthesisUtterance(text);
-      bindSpeechSynthesisUtterance(speechSynthesisUtteranceRef.current);
+      const utterance = new SpeechSynthesisUtterance(text);
+      setUtterance(utterance);
+      bindSpeechSynthesisUtterance(utterance);
     }
 
     window.speechSynthesis?.cancel();
-    if (speechSynthesisUtteranceRef.current)
-      window.speechSynthesis?.speak(speechSynthesisUtteranceRef.current);
+    if (utterance) window.speechSynthesis?.speak(utterance);
+    setPlaying(true);
   };
 
   const stop = () => {
@@ -163,9 +179,8 @@ export const useSpeechSynthesis = (
     supported,
     playing,
     status,
-    utterance: speechSynthesisUtteranceRef.current,
+    utterance,
     error,
-
     stop,
     toggle,
     speak,

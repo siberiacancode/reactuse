@@ -1,19 +1,20 @@
-import { useLayoutEffect } from 'react';
+import { useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The use scroll to options type */
 export interface UseScrollToOptions {
   /** The scrolling behavior */
   behavior?: ScrollBehavior;
-  /** Whether to enable the scroll to */
-  enabled?: boolean;
+  /** Whether to immediately the scroll to */
+  immediately?: boolean;
   /** The horizontal position to scroll to */
   x: number;
   /** The vertical position to scroll to */
@@ -32,17 +33,21 @@ export interface UseScrollTo {
     target?: never
   ): UseScrollToReturn & { ref: StateRef<Target> };
 
-  (target: HookTarget, options?: UseScrollToOptions): UseScrollToReturn;
+  (target?: HookTarget, options?: UseScrollToOptions): UseScrollToReturn;
 }
 
 /**
  * @name useScrollTo
  * @description - Hook for scrolling to a specific element
  * @category Sensors
+ * @usage low
  *
  * @overload
- * @param {HookTarget} target The target element for scrolling to
- * @param {UseScrollToOptions} [options] The scroll options
+ * @param {HookTarget} [target=window] The target element for scrolling to
+ * @param {boolean} [options.immediately=true] Whether to scroll immediately
+ * @param {number} [options.x] The horizontal position to scroll to
+ * @param {number} [options.y] The vertical position to scroll to
+ * @param {ScrollBehavior} [options.behavior=auto] The scrolling behavior
  * @returns {UseScrollToReturn} The scroll trigger function
  *
  * @example
@@ -50,7 +55,10 @@ export interface UseScrollTo {
  *
  * @overload
  * @template Target The target element
- * @param {UseScrollToOptions} [options] The scroll options
+ * @param {boolean} [options.immediately=true] Whether to scroll immediately
+ * @param {number} [options.x] The horizontal position to scroll to
+ * @param {number} [options.y] The vertical position to scroll to
+ * @param {ScrollBehavior} [options.behavior=auto] The scrolling behavior
  * @returns {UseScrollToReturn & { ref: StateRef<Target> }} The scroll trigger function and ref
  *
  * @example
@@ -59,25 +67,28 @@ export interface UseScrollTo {
 export const useScrollTo = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = (target ? params[1] : params[0]) as UseScrollToOptions | undefined;
-  const { x, y, behavior = 'auto', enabled = true } = options ?? {};
+  const { x, y, behavior = 'auto', immediately = true } = options ?? {};
   const internalRef = useRefState<Element>();
+  const elementRef = useRef<Element>(null);
 
-  useLayoutEffect(() => {
-    if (!enabled) return;
+  useIsomorphicLayoutEffect(() => {
+    if (!immediately) return;
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-    if (!element) return;
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;
+
+    elementRef.current = element;
 
     element.scrollTo({ top: y, left: x, behavior });
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   const trigger = (params?: { x: number; y: number; behavior?: ScrollBehavior }) => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-    if (!element) return;
+    if (!elementRef.current) return;
+
     const { x, y, behavior } = params ?? {};
 
-    element.scrollTo({ left: x, top: y, behavior });
+    elementRef.current.scrollTo({ left: x, top: y, behavior });
   };
 
   if (target) return { trigger };

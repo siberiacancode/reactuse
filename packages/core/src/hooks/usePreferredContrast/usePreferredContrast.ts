@@ -6,7 +6,8 @@ export type UsePreferredContrastReturn = 'custom' | 'less' | 'more' | 'no-prefer
 /**
  * @name usePreferredContrast
  * @description - Hook that returns the contrast preference
- * @category Browser
+ * @category User
+ * @usage medium
  *
  * @returns {UsePreferredContrastReturn} The contrast preference
  *

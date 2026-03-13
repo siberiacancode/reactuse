@@ -1,10 +1,11 @@
-import { target } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useEventListener } from '../useEventListener/useEventListener';
 /**
  * @name useDocumentEvent
  * @description - Hook attaches an event listener to the document object for the specified event
  * @category Browser
- *
+ * @usage low
+
  * @template Event Key of document event map.
  * @param {Event} event The event to listen for.
  * @param {(event: DocumentEventMap[Event]) => void} listener The callback function to be executed when the event is triggered
@@ -15,4 +16,4 @@ import { useEventListener } from '../useEventListener/useEventListener';
  * useDocumentEvent('click', () => console.log('clicked'));
  */
 export const useDocumentEvent = (event, listener, options) =>
-  useEventListener(target(document), event, listener, options);
+  useEventListener(isTarget.wrap(document), event, listener, options);

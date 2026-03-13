@@ -4,8 +4,6 @@ import { renderHookServer } from '@/tests';
 
 import { useNetwork } from './useNetwork';
 
-const mockNavigatorOnline = vi.spyOn(navigator, 'onLine', 'get');
-
 it('Should use network', () => {
   const { result } = renderHook(useNetwork);
   expect(result.current.online).toBeTruthy();
@@ -25,6 +23,8 @@ it('Should use network on server side', () => {
 });
 
 it('Should change state upon network events', () => {
+  const mockNavigatorOnline = vi.spyOn(navigator, 'onLine', 'get');
+
   mockNavigatorOnline.mockReturnValue(true);
   const { result } = renderHook(useNetwork);
   expect(result.current.online).toBeTruthy();
@@ -39,9 +39,17 @@ it('Should change state upon network events', () => {
 });
 
 it('Should cleanup up on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
   const { unmount } = renderHook(useNetwork);
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('online', expect.any(Function), {
+    passive: true
+  });
+  expect(addEventListenerSpy).toHaveBeenCalledWith('offline', expect.any(Function), {
+    passive: true
+  });
 
   unmount();
 

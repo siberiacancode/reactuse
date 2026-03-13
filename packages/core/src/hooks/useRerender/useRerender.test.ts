@@ -1,9 +1,17 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useRerender } from './useRerender';
 
 it('Should use rerender', () => {
   const { result } = renderHook(useRerender);
+
+  expect(result.current).toBeTypeOf('function');
+});
+
+it('Should use rerender on server side', () => {
+  const { result } = renderHookServer(useRerender);
 
   expect(result.current).toBeTypeOf('function');
 });

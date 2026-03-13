@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 const DEFAULT_THRESHOLD_TIME = 400;
 /**
  * @name useLongPress
  * @description - Hook that defines the logic when long pressing an element
- * @category Sensors
+ * @category Elements
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} target The target element to be long pressed
@@ -39,7 +40,7 @@ export const useLongPress = (...params) => {
   internalOptionsRef.current = options;
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onStart = (event) => {
       internalOptionsRef.current?.onStart?.(event);
@@ -56,30 +57,23 @@ export const useLongPress = (...params) => {
         } else if (isPressedRef.current) {
           internalOptionsRef.current?.onCancel?.(event);
         }
+        isPressedRef.current = false;
+        if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
         return false;
       });
-      isPressedRef.current = false;
-      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
     element.addEventListener('mousedown', onStart);
-    element.addEventListener('touchstart', onStart);
-    element.addEventListener('mouseup', onCancel);
-    element.addEventListener('touchend', onCancel);
     window.addEventListener('mouseup', onCancel);
+    element.addEventListener('touchstart', onStart);
     window.addEventListener('touchend', onCancel);
     return () => {
       element.removeEventListener('mousedown', onStart);
-      element.removeEventListener('touchstart', onStart);
-      element.removeEventListener('mouseup', onCancel);
-      element.removeEventListener('touchend', onCancel);
       window.removeEventListener('mouseup', onCancel);
+      element.removeEventListener('touchstart', onStart);
       window.removeEventListener('touchend', onCancel);
       if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
-  }, [target, internalRef.state]);
-  if (target) return pressed;
-  return {
-    ref: internalRef,
-    pressed
-  };
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  if (target) return { pressed };
+  return { pressed, ref: internalRef };
 };

@@ -1,13 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useFocus
  * @description - Hook that allows you to focus on a specific element
- * @category Browser
+ * @category Elements
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} target The target element to focus
+ * @param {(event: FocusEvent) => void} [callback] The callback function to be invoked on focus
+ * @returns {UseFocusReturn} An object with focus state and methods
+ *
+ * @example
+ * const { focus, blur, focused } = useFocus(ref, () => console.log('focused'));
+ *
+ * @overload
+ * @param {HookTarget} target The target element to focus
+ * @param {boolean} [options.enabled=true] The enabled state of the focus hook
  * @param {boolean} [options.initialValue=false] The initial focus state of the target
  * @param {(event: FocusEvent) => void} [options.onFocus] The callback function to be invoked on focus
  * @param {(event: FocusEvent) => void} [options.onBlur] The callback function to be invoked on blur
@@ -18,6 +28,15 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @template Target The target element
+ * @param {(event: FocusEvent) => void} [callback] The callback function to be invoked on focus
+ * @returns {UseFocusReturn & { ref: StateRef<Target> }} An object with focus state, methods and ref
+ *
+ * @example
+ * const { ref, focus, blur, focused } = useFocus(() => console.log('focused'));
+ *
+ * @overload
+ * @template Target The target element
+ * @param {boolean} [options.enabled=true] The enabled state of the focus hook
  * @param {boolean} [options.initialValue=false] The initial focus state of the target
  * @param {(event: FocusEvent) => void} [options.onFocus] The callback function to be invoked on focus
  * @param {(event: FocusEvent) => void} [options.onBlur] The callback function to be invoked on blur
@@ -28,18 +47,33 @@ import { useRefState } from '../useRefState/useRefState';
  */
 export const useFocus = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
-  const options = (target ? params[1] : params[0]) ?? {};
-  const initialValue = options.initialValue ?? false;
+  const options = target
+    ? typeof params[1] === 'object'
+      ? params[1]
+      : { onFocus: params[1] }
+    : typeof params[0] === 'object'
+      ? params[0]
+      : { onFocus: params[0] };
+  const enabled = options?.enabled ?? true;
+  const initialValue = options?.initialValue ?? false;
   const [focused, setFocused] = useState(initialValue);
   const internalRef = useRefState();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
   const elementRef = useRef(null);
-  const focus = () => elementRef.current?.focus();
-  const blur = () => elementRef.current?.blur();
+  const focus = () => {
+    if (!elementRef.current) return;
+    elementRef.current.focus();
+    setFocused(true);
+  };
+  const blur = () => {
+    if (!elementRef.current) return;
+    elementRef.current.blur();
+    setFocused(false);
+  };
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    if (!enabled || (!target && !internalRef.state)) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     elementRef.current = element;
     const onFocus = (event) => {
@@ -57,7 +91,7 @@ export const useFocus = (...params) => {
       element.removeEventListener('focus', onFocus);
       element.removeEventListener('blur', onBlur);
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state, enabled]);
   if (target) return { focus, blur, focused };
   return {
     ref: internalRef,

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-const createRefState = (initialValue, setState) => {
+export const createRefState = (initialValue, setState) => {
   let temp = initialValue;
   function ref(value) {
     if (temp === value) return;
@@ -23,7 +23,8 @@ const createRefState = (initialValue, setState) => {
 /**
  * @name useRefState
  * @description - Hook that returns the state reference of the value
- * @category Utilities
+ * @category State
+ * @usage low
  *
  * @template Value The type of the value
  * @param {Value} [initialValue] The initial value

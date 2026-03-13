@@ -6,7 +6,8 @@ export type UsePreferredReducedMotionReturn = 'no-preference' | 'reduce';
 /**
  * @name usePreferredReducedMotion
  * @description - Hook that returns the reduced motion preference
- * @category Browser
+ * @category User
+ * @usage low
  *
  * @returns {UsePreferredReducedMotionReturn} The reduced motion preference
  *

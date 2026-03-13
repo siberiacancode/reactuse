@@ -2,13 +2,9 @@ import { renderHook } from '@testing-library/react';
 
 import { useLogger } from './useLogger';
 
-const mockConsoleLog = vi.spyOn(console, 'log');
-
-afterEach(() => {
-  vi.clearAllMocks();
-});
-
 it('Should use logger', () => {
+  const mockConsoleLog = vi.spyOn(console, 'log');
+
   renderHook(() => useLogger('Component', [1, 2, 3]));
 
   expect(mockConsoleLog).toHaveBeenCalledWith('Component mounted', 1, 2, 3);
@@ -16,6 +12,8 @@ it('Should use logger', () => {
 });
 
 it('Should log unmount', () => {
+  const mockConsoleLog = vi.spyOn(console, 'log');
+
   const { unmount } = renderHook(() => useLogger('Component', [1, 2, 3]));
 
   unmount();
@@ -24,6 +22,8 @@ it('Should log unmount', () => {
 });
 
 it('Should log on update', () => {
+  const mockConsoleLog = vi.spyOn(console, 'log');
+
   const { rerender } = renderHook(({ name, params }) => useLogger(name, params), {
     initialProps: { name: 'Component', params: [1, 2, 3] }
   });
@@ -34,6 +34,8 @@ it('Should log on update', () => {
 });
 
 it('Should log on un mount', () => {
+  const mockConsoleLog = vi.spyOn(console, 'log');
+
   const { unmount } = renderHook(() => useLogger('Component', []));
 
   unmount();

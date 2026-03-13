@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -42,6 +42,7 @@ export interface UsePictureInPicture {
  * @name usePictureInPicture
  * @description - Hook that provides Picture-in-Picture functionality for video elements
  * @category Browser
+ * @usage low
  *
  * @browserapi window.PictureInPicture https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API
  *
@@ -63,6 +64,11 @@ export interface UsePictureInPicture {
  * const { ref, open, supported, enter, exit, toggle } = usePictureInPicture();
  */
 export const usePictureInPicture = ((...params: any[]) => {
+  const supported =
+    typeof document !== 'undefined' &&
+    'pictureInPictureEnabled' in document &&
+    !!document.pictureInPictureEnabled;
+
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = ((target ? params[1] : params[0]) as UsePictureInPictureOptions) ?? {};
 
@@ -72,8 +78,6 @@ export const usePictureInPicture = ((...params: any[]) => {
   const elementRef = useRef<HTMLVideoElement>(null);
   const onOptionsRef = useRef<UsePictureInPictureOptions>(options);
   onOptionsRef.current = options;
-
-  const supported = typeof document !== 'undefined' && 'pictureInPictureEnabled' in document;
 
   const enter = async () => {
     if (!supported) return;
@@ -95,7 +99,9 @@ export const usePictureInPicture = ((...params: any[]) => {
   };
 
   useEffect(() => {
-    const element = target ? (getElement(target) as HTMLVideoElement) : internalRef.current;
+    const element = target
+      ? (isTarget.getElement(target) as HTMLVideoElement)
+      : internalRef.current;
     if (!element) return;
 
     elementRef.current = element;
@@ -117,7 +123,7 @@ export const usePictureInPicture = ((...params: any[]) => {
       element.removeEventListener('enterpictureinpicture', onEnterPictureInPicture);
       element.removeEventListener('leavepictureinpicture', onLeavePictureInPicture);
     };
-  }, [target]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   const toggle = async () => {
     if (open) await exit();

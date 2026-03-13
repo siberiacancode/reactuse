@@ -1,6 +1,7 @@
-import { createEventEmitter } from '@siberiacancode/reactuse';
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, expect, it, vi } from 'vitest';
+
+import { createEventEmitter } from './createEventEmitter';
 
 interface TestEvents {
   'user:login': { id: string; timestamp: number };

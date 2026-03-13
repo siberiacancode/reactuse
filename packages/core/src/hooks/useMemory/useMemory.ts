@@ -22,6 +22,7 @@ export interface UseMemoryReturn {
  * @name useMemory
  * @description - Hook that gives you current memory usage
  * @category Browser
+ * @usage low
  *
  * @browserapi performance.memory https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory
  *
@@ -31,13 +32,17 @@ export interface UseMemoryReturn {
  * const { supported, value } = useMemory();
  */
 export const useMemory = (): UseMemoryReturn => {
-  const supported = performance && 'memory' in performance && !!performance.memory;
+  const supported =
+    typeof performance !== 'undefined' && 'memory' in performance && !!performance.memory;
+
   const [value, setValue] = useState<Performance['memory']>(
-    performance?.memory ?? {
-      jsHeapSizeLimit: 0,
-      totalJSHeapSize: 0,
-      usedJSHeapSize: 0
-    }
+    supported
+      ? performance.memory
+      : {
+          jsHeapSizeLimit: 0,
+          totalJSHeapSize: 0,
+          usedJSHeapSize: 0
+        }
   );
 
   useEffect(() => {

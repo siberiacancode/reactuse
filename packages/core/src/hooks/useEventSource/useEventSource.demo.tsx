@@ -8,14 +8,14 @@ const Demo = () => {
       <p>
         Status:{' '}
         <code>
-          {eventSource.isConnecting ? 'CONNECTING' : eventSource.isOpen ? 'OPEN' : 'CLOSED'}
+          {eventSource.isConnecting ? 'CONNECTING' : eventSource.opened ? 'OPEN' : 'CLOSED'}
         </code>
       </p>
       {eventSource.isConnecting && <p>Connecting...</p>}
-      {eventSource.isOpen && <p>Data: {eventSource.data}</p>}
+      {eventSource.opened && <p>Data: {eventSource.data}</p>}
 
-      {eventSource.isOpen && <button onClick={eventSource.close}>Close</button>}
-      {!eventSource.isOpen && <button onClick={eventSource.open}>Reconnect</button>}
+      {eventSource.opened && <button onClick={eventSource.close}>Close</button>}
+      {!eventSource.opened && <button onClick={eventSource.open}>Reconnect</button>}
     </div>
   );
 };

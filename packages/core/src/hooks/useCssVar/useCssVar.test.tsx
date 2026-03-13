@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -13,7 +13,11 @@ const targets = [
   target('#target'),
   target(document.getElementById('target')!),
   target(() => document.getElementById('target')!),
-  { current: document.getElementById('target') }
+  { current: document.getElementById('target') },
+  Object.assign(() => {}, {
+    state: document.getElementById('target'),
+    current: document.getElementById('target')
+  })
 ];
 
 const element = document.getElementById('target') as HTMLDivElement;
@@ -65,6 +69,22 @@ targets.forEach((target) => {
       expect(result.current.set).toBeTypeOf('function');
 
       if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current.ref).toBeUndefined();
+    });
+
+    it('Should use css var on server side  ', () => {
+      const { result } = renderHookServer(() => {
+        if (target) {
+          return useCssVar(target, '--test-color', 'green') as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseCssVarReturn;
+        }
+        return useCssVar('--test-color', 'green');
+      });
+
+      expect(result.current.value).toBe('green');
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current.ref).toBeUndefined();
     });
 
     it('Should work without initial value', () => {

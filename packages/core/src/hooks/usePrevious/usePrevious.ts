@@ -8,6 +8,7 @@ export interface UsePreviousOptions<Value> {
  * @name usePrevious
  * @description - Hook that returns the previous value
  * @category Utilities
+ * @usage low
  *
  * @template Value The type of the value
  * @param {Value} value The value to get the previous value

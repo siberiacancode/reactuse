@@ -4,7 +4,7 @@ import simpleGit from 'simple-git';
 import ts from 'typescript';
 
 import {
-  checkTest,
+  checkFile,
   getContent,
   getContentFile,
   matchJsdoc,
@@ -90,7 +90,7 @@ export default {
 
         const jsdoc = parseHookJsdoc(jsdocMatch);
 
-        if (!jsdoc.description || !jsdoc.usages.length) {
+        if (!jsdoc.description || !jsdoc.examples.length) {
           console.error(`No content found for ${element.name}`);
           return null;
         }
@@ -99,16 +99,16 @@ export default {
 
         const typeDeclarations = extractTypeInfo(sourceFile);
 
-        const usage = jsdoc.usages.reduce((acc, usage, index) => {
-          if (index !== jsdoc.usages.length - 1) {
-            acc += `${usage.description}\n// or\n`;
+        const example = jsdoc.examples.reduce((acc, example, index) => {
+          if (index !== jsdoc.examples.length - 1) {
+            acc += `${example.description}\n// or\n`;
           } else {
-            acc += usage.description;
+            acc += example.description;
           }
           return acc;
         }, '');
 
-        const isTest = await checkTest(element);
+        const isTest = await checkFile(element, 'test');
 
         const log = await git.log({
           file: `../core/src/${element.type}s/${element.name}/${element.name}.ts`
@@ -127,29 +127,28 @@ export default {
           avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`
         }));
 
+        const isDemo = await checkFile(element, 'demo');
+
         return {
           params: {
             code: await createHtmlCode(content),
             id: element.name,
             isTest,
+            isDemo,
             type: element.type,
             name: element.name,
             ...(typeDeclarations && {
               typeDeclarations: await createHtmlCode(typeDeclarations)
             }),
-            ...(jsdoc.browserapi && {
-              browserapi: {
-                name: jsdoc.browserapi.name,
-                description: jsdoc.browserapi.description
-              }
-            }),
+            usage: jsdoc.usage!.name ?? 'low',
             ...(jsdoc.warning && {
               warning: jsdoc.warning.description
             }),
+            browserapi: jsdoc.browserapi,
             description: jsdoc.description.description,
             category: jsdoc.category!.name,
             lastModified: new Date(lastCommit?.date ?? new Date()).getTime(),
-            usage: await createHtmlCode(usage),
+            example: await createHtmlCode(example),
             apiParameters: jsdoc.apiParameters ?? [],
             contributors
           }

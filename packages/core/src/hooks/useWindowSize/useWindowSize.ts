@@ -18,6 +18,7 @@ export interface UseWindowSizeReturn {
  * @name useWindowSize
  * @description - Hook that manages a window size
  * @category Elements
+ * @usage low
  *
  * @param {number} [params.initialWidth=Number.POSITIVE_INFINITY] The initial window width
  * @param {number} [params.initialHeight=Number.POSITIVE_INFINITY] The initial window height
@@ -44,23 +45,17 @@ export const useWindowSize = (params?: UseWindowSizeParams) => {
 
   useEffect(() => {
     const onResize = () => {
-      if (includeScrollbar) {
-        setSize({
-          width: window.innerWidth,
-          height: window.innerHeight
-        });
-      } else {
-        setSize({
-          width: window.document.documentElement.clientWidth,
-          height: window.document.documentElement.clientHeight
-        });
-      }
+      const { innerWidth, innerHeight, document } = window;
+      const { clientWidth, clientHeight } = document.documentElement;
+
+      setSize({
+        width: includeScrollbar ? innerWidth : clientWidth,
+        height: includeScrollbar ? innerHeight : clientHeight
+      });
     };
 
     window.addEventListener('resize', onResize);
-    return () => {
-      window.removeEventListener('resize', onResize);
-    };
+    return () => window.removeEventListener('resize', onResize);
   }, [params?.includeScrollbar]);
 
   return size;

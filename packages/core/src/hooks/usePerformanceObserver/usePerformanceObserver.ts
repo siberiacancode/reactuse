@@ -10,6 +10,7 @@ export type UsePerformanceObserverOptions = PerformanceObserverInit & {
  * @name usePerformanceObserver
  * @description - Hook that allows you to observe performance entries
  * @category Sensors
+ * @usage low
  *
  * @browserapi PerformanceObserver https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver
  *
@@ -24,7 +25,7 @@ export const usePerformanceObserver = (
   options: UsePerformanceObserverOptions,
   callback?: PerformanceObserverCallback
 ) => {
-  const supported = typeof window !== 'undefined' && typeof PerformanceObserver !== 'undefined';
+  const supported = typeof window !== 'undefined' && !!window.PerformanceObserver;
   const [entries, setEntries] = useState<PerformanceEntry[]>([]);
 
   const observerRef = useRef<PerformanceObserver | null>(null);

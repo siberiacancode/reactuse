@@ -6,7 +6,8 @@ type UseRerenderReturn = () => void;
 /**
  * @name useRerender
  * @description - Hook that defines the logic to force rerender a component
- * @category Lifecycle
+ * @category Debug
+ * @usage medium
  *
  * @returns {UseRerenderReturn} The rerender function
  *

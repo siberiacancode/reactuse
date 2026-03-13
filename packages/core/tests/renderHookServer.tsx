@@ -1,5 +1,5 @@
 /* eslint-disable ts/ban-ts-comment */
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
@@ -20,13 +20,15 @@ export const renderHookServer = <Hook extends () => any>(
   const originalWindow = globalThis.window;
   const originalNavigator = globalThis.navigator;
   const originalDocument = globalThis.document;
+  const originalPerformance = globalThis.performance;
   // @ts-ignore
   delete globalThis.window;
   // @ts-ignore
   delete globalThis.navigator;
   // @ts-ignore
   delete globalThis.document;
-
+  // @ts-ignore
+  delete globalThis.performance;
   const results: Array<ReturnType<Hook>> = [];
   const result = {
     get current() {
@@ -52,7 +54,7 @@ export const renderHookServer = <Hook extends () => any>(
   globalThis.window = originalWindow;
   globalThis.navigator = originalNavigator;
   globalThis.document = originalDocument;
-
+  globalThis.performance = originalPerformance;
   const hydrate = () => {
     const root = document.createElement('div');
     root.innerHTML = serverOutput;

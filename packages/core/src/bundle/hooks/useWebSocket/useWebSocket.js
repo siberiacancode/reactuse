@@ -5,6 +5,9 @@ import { useEvent } from '../useEvent/useEvent';
  * @name useWebSocket
  * @description - Hook that connects to a WebSocket server and handles incoming and outgoing messages
  * @category Browser
+ * @usage medium
+ *
+ * @browserapi WebSocket https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
  *
  * @param {UseWebSocketUrl} url The URL of the WebSocket server
  * @param {(webSocket: WebSocket) => void} [options.onConnected] The callback function that is called when the WebSocket connection is established

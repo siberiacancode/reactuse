@@ -8,7 +8,8 @@ export type UseToggleReturn<Value> = readonly [Value, (value?: Value) => void];
 /**
  * @name useToggle
  * @description - Hook that create toggle
- * @category Utilities
+ * @category State
+ * @usage high
  *
  * @template Value The type of the value
  * @param {Value[]} [values=[false, true]] The values to toggle

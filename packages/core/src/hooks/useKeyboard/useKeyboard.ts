@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -41,6 +41,7 @@ export interface UseKeyboard {
  * @name useKeyboard
  * @description - Hook that helps to listen for keyboard events
  * @category Sensors
+ * @usage medium
  *
  * @overload
  * @param {HookTarget} target The target to attach the event listeners to
@@ -93,7 +94,7 @@ export const useKeyboard = ((...params: any[]) => {
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as HTMLElement;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as HTMLElement;
     if (!element) return;
 
     const onKeyDown = (event: Event) =>
@@ -107,7 +108,7 @@ export const useKeyboard = ((...params: any[]) => {
       element.removeEventListener('keydown', onKeyDown);
       element.removeEventListener('keyup', onKeyUp);
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target) return;
   return internalRef;

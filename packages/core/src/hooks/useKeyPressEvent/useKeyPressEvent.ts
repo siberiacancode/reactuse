@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -41,6 +41,7 @@ export interface UseKeyPressEvent {
  * @name useKeyPressEvent
  * @description - Hook that listens for key press events on specified targets
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {UseKeyPressEventKey} key The key or array of keys to listen for.
@@ -76,7 +77,7 @@ export const useKeyPressEvent = ((...params: any[]) => {
   listenerRef.current = listener;
 
   useEffect(() => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
     const onKeyDown = (event: Event) => {
@@ -98,7 +99,13 @@ export const useKeyPressEvent = ((...params: any[]) => {
         capture: options?.capture
       });
     };
-  }, [target, internalRef.state, options?.capture, options?.passive, options?.once]);
+  }, [
+    target && isTarget.getRawElement(target),
+    internalRef.state,
+    options?.capture,
+    options?.passive,
+    options?.once
+  ]);
 
   if (target) return;
   return internalRef;

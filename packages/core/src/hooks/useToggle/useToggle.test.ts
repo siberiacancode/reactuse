@@ -1,9 +1,19 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useToggle } from './useToggle';
 
 it('Should use toggle', () => {
   const { result } = renderHook(() => useToggle());
+  const [on, toggle] = result.current;
+
+  expect(on).toBeFalsy();
+  expect(toggle).toBeTypeOf('function');
+});
+
+it('Should use toggle on server side', () => {
+  const { result } = renderHookServer(() => useToggle());
   const [on, toggle] = result.current;
 
   expect(on).toBeFalsy();

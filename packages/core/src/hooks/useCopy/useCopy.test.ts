@@ -17,7 +17,6 @@ Object.assign(document, {
 });
 
 beforeEach(() => {
-  vi.clearAllMocks();
   vi.useFakeTimers();
 });
 

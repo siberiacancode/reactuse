@@ -24,6 +24,7 @@ export interface UseWakeLockReturn {
  * @name useWakeLock
  * @description - Hook that provides a wake lock functionality
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.wakeLock https://developer.mozilla.org/en-US/docs/Web/API/WakeLock
  *
@@ -34,7 +35,8 @@ export interface UseWakeLockReturn {
  * const { supported, active, request, release } = useWakeLock();
  */
 export const useWakeLock = (options?: UseWakeLockOptions): UseWakeLockReturn => {
-  const supported = typeof navigator !== 'undefined' && 'wakeLock' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'wakeLock' in navigator && !!navigator.wakeLock;
 
   const [active, setActive] = useState(false);
   const sentinel = useRef<WakeLockSentinel>(undefined);

@@ -2,29 +2,36 @@ import { useEffect, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
+/** The use active element return type */
+export interface UseActiveElementReturn<ActiveElement extends HTMLElement = HTMLElement> {
+  value: ActiveElement | null;
+}
+
 export interface UseActiveElement {
-  (): HTMLElement | null;
+  (): UseActiveElementReturn;
 
   <Target extends Element, ActiveElement extends HTMLElement = HTMLElement>(
     target?: never
   ): {
     ref: StateRef<Target>;
-    value: ActiveElement | null;
-  };
+  } & UseActiveElementReturn<ActiveElement>;
 
-  <ActiveElement extends HTMLElement = HTMLElement>(target: HookTarget): ActiveElement | null;
+  <ActiveElement extends HTMLElement = HTMLElement>(
+    target: HookTarget
+  ): UseActiveElementReturn<ActiveElement>;
 }
 
 /**
  * @name useActiveElement
  * @description - Hook that returns the active element
  * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} [target=window] The target element to observe active element changes
@@ -46,13 +53,11 @@ export const useActiveElement = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
 
   const [value, setValue] = useState<HTMLElement | null>(null);
-  const internalRef = useRefState(window);
+  const internalRef = useRefState();
 
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-    if (!element) return;
+    const element = ((target ? isTarget.getElement(target) : internalRef.current) ??
+      window) as Element;
 
     const observer = new MutationObserver((mutations) => {
       mutations
@@ -82,9 +87,9 @@ export const useActiveElement = ((...params: any[]) => {
       element.removeEventListener('focus', onActiveElementChange, true);
       element.removeEventListener('blur', onActiveElementChange, true);
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
-  if (target) return value;
+  if (target) return { value };
   return {
     ref: internalRef,
     value

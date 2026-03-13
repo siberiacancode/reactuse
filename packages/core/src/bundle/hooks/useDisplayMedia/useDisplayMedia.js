@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useDisplayMedia
  * @description - Hook that provides screen sharing functionality
  * @category Browser
+ * @usage low
  *
  * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia
  *
@@ -62,7 +63,7 @@ export const useDisplayMedia = (...params) => {
   };
   useEffect(() => {
     if (!supported || (!target && !internalRef.state)) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     elementRef.current = element;
     if (!immediately) return;
@@ -70,7 +71,7 @@ export const useDisplayMedia = (...params) => {
     return () => {
       stop();
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target)
     return {
       stream: streamRef.current,

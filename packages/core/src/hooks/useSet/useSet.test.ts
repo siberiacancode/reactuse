@@ -1,10 +1,27 @@
 import { act, renderHook } from '@testing-library/react';
 import 'core-js/proposals/set-methods-v2';
 
+import { renderHookServer } from '@/tests';
+
 import { useSet } from './useSet';
 
 it('Should use set', () => {
   const { result } = renderHook(() => useSet([1, 2, 3]));
+  const set = result.current;
+
+  expect(set.size).toBe(3);
+  expect(set.clear).toBeTypeOf('function');
+  expect(set.remove).toBeTypeOf('function');
+  expect(set.add).toBeTypeOf('function');
+  expect(set.toggle).toBeTypeOf('function');
+  expect(set.union).toBeTypeOf('function');
+  expect(set.difference).toBeTypeOf('function');
+  expect(set.symmetricDifference).toBeTypeOf('function');
+  expect(set.intersection).toBeTypeOf('function');
+});
+
+it('Should use set on server side', () => {
+  const { result } = renderHookServer(() => useSet([1, 2, 3]));
   const set = result.current;
 
   expect(set.size).toBe(3);

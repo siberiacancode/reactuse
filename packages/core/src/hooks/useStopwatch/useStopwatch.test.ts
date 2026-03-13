@@ -1,6 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
+
 import { useStopwatch } from './useStopwatch';
 
 beforeEach(vi.useFakeTimers);
@@ -18,7 +20,22 @@ it('Should use stopwatch ', () => {
   expect(result.current.minutes).toBe(0);
   expect(result.current.seconds).toBe(0);
   expect(result.current.count).toBe(0);
-  expect(result.current.paused).toBe(true);
+  expect(result.current.paused).toBeTruthy();
+  expect(result.current.start).toBeTypeOf('function');
+  expect(result.current.pause).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+  expect(result.current.toggle).toBeTypeOf('function');
+});
+
+it('Should use stopwatch on server side', () => {
+  const { result } = renderHookServer(useStopwatch);
+
+  expect(result.current.days).toBe(0);
+  expect(result.current.hours).toBe(0);
+  expect(result.current.minutes).toBe(0);
+  expect(result.current.seconds).toBe(0);
+  expect(result.current.count).toBe(0);
+  expect(result.current.paused).toBeTruthy();
   expect(result.current.start).toBeTypeOf('function');
   expect(result.current.pause).toBeTypeOf('function');
   expect(result.current.reset).toBeTypeOf('function');
@@ -32,7 +49,7 @@ it('Should start counting when enabled', () => {
 
   act(() => result.current.start());
 
-  expect(result.current.paused).toBe(false);
+  expect(result.current.paused).toBeFalsy();
 
   act(() => vi.advanceTimersByTime(1000));
 
@@ -72,7 +89,7 @@ it('Should respect immediately option', () => {
     initialProps: true
   });
 
-  expect(result.current.paused).toBe(false);
+  expect(result.current.paused).toBeFalsy();
 });
 
 it('Should pause and resume correctly', () => {
@@ -100,7 +117,7 @@ it('Should pause and resume correctly', () => {
 it('Should toggle pause state', () => {
   const { result } = renderHook(useStopwatch);
 
-  expect(result.current.paused).toBe(true);
+  expect(result.current.paused).toBeTruthy();
 
   act(() => vi.advanceTimersByTime(1000));
 
@@ -108,7 +125,7 @@ it('Should toggle pause state', () => {
 
   act(() => result.current.toggle());
 
-  expect(result.current.paused).toBe(false);
+  expect(result.current.paused).toBeFalsy();
 
   act(() => vi.advanceTimersByTime(1000));
 
@@ -120,7 +137,7 @@ it('Should toggle pause state', () => {
 
   expect(result.current.seconds).toBe(1);
 
-  expect(result.current.paused).toBe(true);
+  expect(result.current.paused).toBeTruthy();
 });
 
 it('Should reset to initial time', () => {

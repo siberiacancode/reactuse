@@ -3,7 +3,7 @@ import screenfull from 'screenfull';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -44,6 +44,7 @@ export interface UseFullScreen {
  * @name useFullscreen
  * @description - Hook to handle fullscreen events
  * @category Browser
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element for fullscreen
@@ -86,7 +87,7 @@ export const useFullscreen = ((...params: any[]) => {
   };
 
   const enter = () => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
     if (screenfull.isEnabled) {

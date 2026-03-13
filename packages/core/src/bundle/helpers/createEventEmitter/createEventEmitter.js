@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
  * @name createEventEmitter
  * @description - Creates a type-safe event emitter
  * @category Helpers
+ * @usage low
  *
  * @template Events - The type of events and their data
  * @returns {EventEmitterApi<Events>} - Object containing event emitter methods and hook

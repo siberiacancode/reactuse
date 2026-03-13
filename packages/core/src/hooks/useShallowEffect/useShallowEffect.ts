@@ -29,6 +29,7 @@ export const deepEqual = (a: any, b: any): boolean => {
  * @name useShallowEffect
  * @description - Hook that executes an effect only when dependencies change shallowly or deeply
  * @category Lifecycle
+ * @usage low
  *
  * @param {EffectCallback} effect The effect callback
  * @param {DependencyList} [deps] The dependencies list for the effect

@@ -4,7 +4,8 @@ export const getSpeechRecognition = () =>
 /**
  * @name useSpeechRecognition
  * @description - Hook that provides a streamlined interface for incorporating speech-to-text functionality
- * @category Sensors
+ * @category Browser
+ * @usage low
  *
  * @browserapi window.SpeechRecognition https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
  *
@@ -40,7 +41,7 @@ export const useSpeechRecognition = (options = {}) => {
   const [final, setFinal] = useState(false);
   const [error, setError] = useState(null);
   const [recognition] = useState(() => {
-    if (!supported) return {};
+    if (!supported) return undefined;
     const SpeechRecognition = getSpeechRecognition();
     const speechRecognition = new SpeechRecognition();
     speechRecognition.continuous = continuous;
@@ -53,35 +54,42 @@ export const useSpeechRecognition = (options = {}) => {
       setFinal(false);
       onStart?.();
     };
-    speechRecognition.onend = () => {
-      setListening(false);
-      onEnd?.();
-    };
     speechRecognition.onerror = (event) => {
       setError(event);
       setListening(false);
       onError?.(event);
     };
     speechRecognition.onresult = (event) => {
-      console.log('onresult', event);
       const currentResult = event.results[event.resultIndex];
       const { transcript } = currentResult[0];
+      setListening(false);
       setTranscript(transcript);
       setError(null);
       onResult?.(event);
     };
     speechRecognition.onend = () => {
       setListening(false);
+      onEnd?.();
       speechRecognition.lang = language;
     };
     return speechRecognition;
   });
-  useEffect(() => () => recognition.stop(), []);
-  const start = () => recognition.start();
-  const stop = () => recognition.stop();
+  useEffect(() => () => recognition?.stop(), []);
+  const start = () => recognition?.start();
+  const stop = () => recognition?.stop();
   const toggle = (value = !listening) => {
     if (value) return start();
-    stop();
+    return stop();
   };
-  return { supported, transcript, recognition, final, listening, error, start, stop, toggle };
+  return {
+    supported,
+    transcript,
+    recognition,
+    final,
+    listening,
+    error,
+    start,
+    stop,
+    toggle
+  };
 };

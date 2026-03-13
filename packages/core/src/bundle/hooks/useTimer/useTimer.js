@@ -17,6 +17,7 @@ export const getTimeFromSeconds = (timestamp) => {
  * @name useTimer
  * @description - Hook that creates a timer functionality
  * @category Time
+ * @usage medium
  *
  * @overload
  * @returns {UseTimerReturn} An object containing the timer properties and functions

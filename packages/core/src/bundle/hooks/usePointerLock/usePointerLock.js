@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 /**
  * @name usePointerLock
  * @description - Hook that provides reactive pointer lock
- * @category Sensors
+ * @category Browser
+ * @usage low
  *
  * @browserapi pointerLockElement https://developer.mozilla.org/en-US/docs/Web/API/Document/pointerLockElement
  *
@@ -12,7 +13,10 @@ import { useEffect, useState } from 'react';
  * const { supported, lock, unlock, element } = usePointerLock();
  */
 export const usePointerLock = () => {
-  const supported = typeof document !== 'undefined' && 'pointerLockElement' in document;
+  const supported =
+    typeof document !== 'undefined' &&
+    'pointerLockElement' in document &&
+    !!document.pointerLockElement;
   const [element, setElement] = useState();
   useEffect(() => {
     if (!supported) return;

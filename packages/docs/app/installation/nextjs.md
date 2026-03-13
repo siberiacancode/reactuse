@@ -7,48 +7,66 @@ description: Install and configure reactuse for Next.js.
 
 Install and configure reactuse for Next.js.
 
-```bash
-npx create-next-app@latest
+### Create project
+
+Create a new Next.js app or use an existing one:
+
+::: code-group
+
+```bash [npm]
+npm create next-app@latest
 ```
+
+```bash [yarn]
+yarn create next-app
+```
+
+```bash [pnpm]
+pnpm create next-app
+```
+
+```bash [bun]
+bun create next-app
+```
+
+:::
 
 ### Edit tsconfig.json file
 
-Make sure your `tsconfig.json` includes the following paths configuration:
+Add `baseUrl` and `paths` so the CLI and imports resolve correctly. Use `"./*"` if the app lives in the project root, or `"./src/*"` if you use a `src` directory:
 
 ```json
 {
   "compilerOptions": {
-    //...
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
     }
-    //...
   }
 }
 ```
 
 ### Run the CLI
 
-Run the `useverse` init command to setup your project:
+Run the `useverse` init command to set up your project:
 
 ```bash
 npx useverse@latest init
 ```
 
-This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project.
+This creates a [`reactuse.json`](../reactuse-json.md) config file in your project.
 
 ### Add hooks
 
-You can now start adding hooks to your project:
+Add hooks with the CLI:
 
 ```bash
 npx useverse@latest add useBoolean
 ```
 
-The command above will add the `useBoolean` hook to your project. You can then import it like this:
+Then import and use the hook (e.g. in `app/page.tsx`). Use `'use client'` when the component uses hooks:
 
-```tsx
+```tsx title="app/page.tsx" showLineNumbers
 'use client';
 
 import { useBoolean } from '@/shared/hooks';

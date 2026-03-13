@@ -1,8 +1,8 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { afterEach, beforeEach, expect, vi } from 'vitest';
+import { beforeEach, expect, vi } from 'vitest';
 
 import { renderHookServer } from '@/tests';
-import { getElement, target } from '@/utils/helpers';
+import { isTarget, target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 import type { UseDisplayMediaReturn } from './useDisplayMedia';
@@ -27,16 +27,16 @@ beforeEach(() => {
   });
 });
 
-afterEach(() => {
-  vi.clearAllMocks();
-});
-
 const targets = [
   undefined,
   target('#target'),
   target(document.getElementById('target')!),
   target(() => document.getElementById('target')!),
-  { current: document.getElementById('target') }
+  { current: document.getElementById('target') },
+  Object.assign(() => {}, {
+    state: document.getElementById('target'),
+    current: document.getElementById('target')
+  })
 ];
 
 const element = document.getElementById('target') as HTMLVideoElement;
@@ -51,15 +51,16 @@ targets.forEach((target) => {
       return useDisplayMedia<HTMLVideoElement>();
     });
 
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
     expect(result.current.stream).toBeNull();
-    expect(result.current.supported).toBe(true);
+    expect(result.current.supported).toBeTruthy();
     expect(result.current.start).toBeTypeOf('function');
     expect(result.current.stop).toBeTypeOf('function');
     if (!target) expect(result.current.ref).toBeTypeOf('function');
+    if (target) expect(result.current.ref).toBeUndefined();
   });
 
-  it('Should use display media on server', () => {
+  it('Should use display media on server side', () => {
     const { result } = renderHookServer(() => {
       if (target)
         return useDisplayMedia(target) as {
@@ -68,12 +69,13 @@ targets.forEach((target) => {
       return useDisplayMedia<HTMLVideoElement>();
     });
 
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
     expect(result.current.stream).toBeNull();
-    expect(result.current.supported).toBe(false);
+    expect(result.current.supported).toBeFalsy();
     expect(result.current.start).toBeTypeOf('function');
     expect(result.current.stop).toBeTypeOf('function');
     if (!target) expect(result.current.ref).toBeTypeOf('function');
+    if (target) expect(result.current.ref).toBeUndefined();
   });
 
   it('Should use display media for unsupported', () => {
@@ -89,12 +91,13 @@ targets.forEach((target) => {
       return useDisplayMedia<HTMLVideoElement>();
     });
 
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
     expect(result.current.stream).toBeNull();
-    expect(result.current.supported).toBe(false);
+    expect(result.current.supported).toBeFalsy();
     expect(result.current.start).toBeTypeOf('function');
     expect(result.current.stop).toBeTypeOf('function');
     if (!target) expect(result.current.ref).toBeTypeOf('function');
+    if (target) expect(result.current.ref).toBeUndefined();
   });
 
   it('Should be able to start and stop sharing', async () => {
@@ -111,15 +114,17 @@ targets.forEach((target) => {
 
     await act(result.current.start);
 
-    const element = (target ? getElement(target) : result.current.ref.current) as HTMLVideoElement;
+    const element = (
+      target ? isTarget.getElement(target) : result.current.ref.current
+    ) as HTMLVideoElement;
     expect(element.srcObject).toBeTruthy();
-    expect(result.current.sharing).toBe(true);
+    expect(result.current.sharing).toBeTruthy();
     expect(result.current.stream).toBeTruthy();
 
     await act(result.current.stop);
 
     expect(mockTrack.stop).toHaveBeenCalledOnce();
-    expect(result.current.sharing).toBe(false);
+    expect(result.current.sharing).toBeFalsy();
     expect(result.current.stream).toBeNull();
   });
 
@@ -136,7 +141,7 @@ targets.forEach((target) => {
       act(() => result.current.ref(document.getElementById('target')! as HTMLVideoElement));
 
     await waitFor(() => expect(mockGetDisplayMedia).toHaveBeenCalledOnce());
-    await waitFor(() => expect(result.current.sharing).toBe(true));
+    await waitFor(() => expect(result.current.sharing).toBeTruthy());
   });
 
   it('Should accept boolean audio and video constraints', async () => {
@@ -159,7 +164,7 @@ targets.forEach((target) => {
     });
   });
 
-  it('Should clean up on unmount', async () => {
+  it('Should cleanup on unmount', async () => {
     const { result, unmount } = renderHook(() => {
       if (target)
         return useDisplayMedia(target, { immediately: true }) as {
@@ -172,11 +177,32 @@ targets.forEach((target) => {
 
     await act(result.current.start);
 
-    expect(result.current.sharing).toBe(true);
+    expect(result.current.sharing).toBeTruthy();
     expect(result.current.stream).toBeTruthy();
 
     unmount();
 
     await waitFor(() => expect(mockTrack.stop).toHaveBeenCalledOnce());
+  });
+
+  it('Should handle target changes', () => {
+    const { result, rerender } = renderHook(
+      (target) => {
+        if (target)
+          return useDisplayMedia(target) as {
+            ref: StateRef<HTMLVideoElement>;
+          } & UseDisplayMediaReturn;
+        return useDisplayMedia<HTMLVideoElement>();
+      },
+      { initialProps: target }
+    );
+
+    if (!target) act(() => result.current.ref(element));
+
+    expect(result.current.sharing).toBeFalsy();
+
+    rerender({ current: document.getElementById('target') });
+
+    expect(result.current.sharing).toBeFalsy();
   });
 });

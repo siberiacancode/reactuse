@@ -4,6 +4,7 @@ import { useRaf } from '../useRaf/useRaf';
  * @name useGamepad
  * @description - Hook for getting information about gamepad
  * @category Browser
+ * @usage low
  *
  * @browserapi navigator.getGamepads https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getGamepads
  *
@@ -13,7 +14,8 @@ import { useRaf } from '../useRaf/useRaf';
  * const { supported, gamepads, active } = useGamepad();
  */
 export const useGamepad = () => {
-  const supported = typeof navigator !== 'undefined' && 'getGamepads' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'getGamepads' in navigator && !!navigator.getGamepads;
   const [gamepads, setGamepads] = useState({});
   const createGamepad = (gamepad) => {
     const hapticActuators = [];

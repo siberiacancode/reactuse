@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -45,6 +45,7 @@ export interface UseDisplayMedia {
  * @name useDisplayMedia
  * @description - Hook that provides screen sharing functionality
  * @category Browser
+ * @usage low
  *
  * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia
  *
@@ -80,8 +81,8 @@ export const useDisplayMedia = ((...params: any[]) => {
 
   const [sharing, setSharing] = useState(false);
 
-  const elementRef = useRef<HTMLVideoElement | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
+  const elementRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream>(null);
   const internalRef = useRefState<Element>();
 
   const stop = () => {
@@ -112,7 +113,9 @@ export const useDisplayMedia = ((...params: any[]) => {
   useEffect(() => {
     if (!supported || (!target && !internalRef.state)) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as HTMLVideoElement;
+    const element = (
+      target ? isTarget.getElement(target) : internalRef.current
+    ) as HTMLVideoElement;
 
     if (!element) return;
 
@@ -125,7 +128,7 @@ export const useDisplayMedia = ((...params: any[]) => {
     return () => {
       stop();
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target)
     return {

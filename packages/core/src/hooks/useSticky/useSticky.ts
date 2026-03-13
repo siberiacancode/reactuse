@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -23,18 +23,21 @@ export interface UseStickyOptions {
 }
 
 export interface UseSticky {
-  (target: HookTarget, options?: UseStickyOptions): boolean;
+  (target: HookTarget, options?: UseStickyOptions): UseStickyReturn;
 
   <Target extends Element>(
     options?: UseStickyOptions,
     target?: never
-  ): { ref: StateRef<Target> } & UseStickyReturn;
+  ): UseStickyReturn & {
+    ref: StateRef<Target>;
+  };
 }
 
 /**
  * @name UseSticky
  * @description - Hook that allows you to detect that your sticky component is stuck
- * @category Browser
+ * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target sticky element
@@ -43,12 +46,12 @@ export interface UseSticky {
  * @returns {UseStickyReturn} The state of the sticky
  *
  * @example
- * const stuck  = useSticky(ref);
+ * const { stuck } = useSticky(ref);
  *
  * @overload
  * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component
  * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component
- * @returns {{ stickyRef: StateRef<Target> } & UseStickyReturn} The state of the sticky
+ * @returns {{ ref: StateRef<Target> } & UseStickyReturn} The state of the sticky
  *
  * @example
  * const { stuck, ref } = useSticky();
@@ -64,11 +67,10 @@ export const useSticky = ((...params: any[]) => {
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
-    const root = (options?.root ? getElement(options.root) : document) as Element;
+    const root = (options?.root ? isTarget.getElement(options.root) : document) as Element;
     const elementOffsetTop =
       element.getBoundingClientRect().top + root.scrollTop - root.getBoundingClientRect().top;
     const elementOffsetLeft =
@@ -97,9 +99,9 @@ export const useSticky = ((...params: any[]) => {
       window.removeEventListener('resize', onSticky);
       window.removeEventListener('orientationchange', onSticky);
     };
-  }, [target, internalRef.state, axis, options?.root]);
+  }, [target && isTarget.getRawElement(target), internalRef.state, axis, options?.root]);
 
-  if (target) return stuck;
+  if (target) return { stuck };
   return {
     stuck,
     ref: internalRef

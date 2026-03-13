@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
+import { useOrientation } from '../useOrientation/useOrientation';
 import { useRefState } from '../useRefState/useRefState';
-import { useScreenOrientation } from '../useScreenOrientation/useScreenOrientation';
 /**
  * @name useParallax
  * @description - Hook to help create parallax effect
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The target element for the parallax effect
@@ -28,7 +29,7 @@ export const useParallax = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = params[1] ? params[1] : params[0];
   const internalRef = useRefState();
-  const screenOrientation = useScreenOrientation();
+  const screenOrientation = useOrientation();
   const deviceOrientation = useDeviceOrientation();
   const {
     deviceOrientationRollAdjust = (value) => value,
@@ -43,7 +44,7 @@ export const useParallax = (...params) => {
   });
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onMouseMove = (event) => {
       const { left, top } = element.getBoundingClientRect();
@@ -126,7 +127,7 @@ export const useParallax = (...params) => {
       document.removeEventListener('mousemove', onMouseMove);
     };
   }, [
-    target,
+    target && isTarget.getRawElement(target),
     internalRef.state,
     screenOrientation.value.angle,
     screenOrientation.value.orientationType,

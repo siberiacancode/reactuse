@@ -1,5 +1,7 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useUnmount } from './useUnmount';
 
 it('Should use unmount', () => {
@@ -9,6 +11,13 @@ it('Should use unmount', () => {
   unmount();
 
   expect(callback).toHaveBeenCalled();
+});
+
+it('Should use unmount on server side', () => {
+  const callback = vi.fn();
+  renderHookServer(() => useUnmount(callback));
+
+  expect(callback).not.toHaveBeenCalled();
 });
 
 it('Should not call callback on mount', () => {

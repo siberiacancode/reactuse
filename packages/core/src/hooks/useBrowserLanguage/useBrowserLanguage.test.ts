@@ -41,8 +41,11 @@ it('Should handle language change event', () => {
 });
 
 it('Should cleanup on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
   const { unmount } = renderHook(useBrowserLanguage);
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('languagechange', expect.any(Function));
 
   unmount();
 

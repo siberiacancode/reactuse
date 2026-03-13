@@ -1,9 +1,19 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useDefault } from './useDefault';
 
 it('Should use default', () => {
   const { result } = renderHook(() => useDefault(5, 10));
+  const [state, setState] = result.current;
+
+  expect(state).toBe(5);
+  expect(setState).toBeTypeOf('function');
+});
+
+it('Should use default on server side', () => {
+  const { result } = renderHookServer(() => useDefault(5, 10));
   const [state, setState] = result.current;
 
   expect(state).toBe(5);

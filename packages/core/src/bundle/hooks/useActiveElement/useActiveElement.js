@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useActiveElement
  * @description - Hook that returns the active element
  * @category Elements
+ * @usage low
  *
  * @overload
  * @param {HookTarget} [target=window] The target element to observe active element changes
@@ -25,11 +26,9 @@ import { useRefState } from '../useRefState/useRefState';
 export const useActiveElement = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const [value, setValue] = useState(null);
-  const internalRef = useRefState(window);
+  const internalRef = useRefState();
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
-    if (!element) return;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     const observer = new MutationObserver((mutations) => {
       mutations
         .filter((mutation) => mutation.removedNodes.length)
@@ -54,8 +53,8 @@ export const useActiveElement = (...params) => {
       element.removeEventListener('focus', onActiveElementChange, true);
       element.removeEventListener('blur', onActiveElementChange, true);
     };
-  }, [target, internalRef.state]);
-  if (target) return value;
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  if (target) return { value };
   return {
     ref: internalRef,
     value

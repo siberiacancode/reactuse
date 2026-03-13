@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -33,10 +33,11 @@ export interface UseTextDirection {
 /**
  * @name useTextDirection
  * @description - Hook that can get and set the direction of the element
- * @category Browser
+ * @category Elements
+ * @usage medium
  *
  * @overload
- * @param {HookTarget} target The target element to observe
+ * @param {HookTarget} [target=document.querySelector('html')] The target element to observe
  * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element
  * @returns {UseTextDirectionReturn} An object containing the current text direction of the element
  *
@@ -55,48 +56,52 @@ export const useTextDirection = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const initialValue = ((target ? params[1] : params[0]) as UseTextDirectionValue) ?? 'ltr';
 
-  const internalRef = useRefState<Element>();
+  const internalRef = useRefState();
+  const elementRef = useRef<Element>(null);
 
   const getDirection = () => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    if (typeof window === 'undefined') return initialValue;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
     return (element?.getAttribute('dir') as UseTextDirectionValue) ?? initialValue;
   };
 
   const [value, setValue] = useState<UseTextDirectionValue>(getDirection());
 
   const remove = () => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-    if (!element) return;
+    if (!elementRef.current) return;
 
-    element?.removeAttribute('dir');
+    elementRef.current?.removeAttribute('dir');
   };
 
   const set = (value: UseTextDirectionValue) => {
-    const element = (target ? getElement(target) : internalRef.current) as Element;
-    if (!element) return;
+    if (!elementRef.current) return;
 
     setValue(value);
-    element.setAttribute('dir', value);
+    elementRef.current.setAttribute('dir', value);
   };
 
   useEffect(() => {
     if (!target && !internalRef.state) return;
 
-    const element = (target ? getElement(target) : internalRef.current) as Element;
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ??
+      document.querySelector('html');
     if (!element) return;
+
+    elementRef.current = element;
 
     const direction = getDirection();
     element.setAttribute('dir', direction);
     setValue(direction);
 
-    const observer = new MutationObserver(getDirection);
+    const observer = new MutationObserver(() => setValue(getDirection()));
 
     observer.observe(element, { attributes: true });
 
     return () => {
       observer.disconnect();
     };
-  }, [internalRef.state, target]);
+  }, [internalRef.state, target && isTarget.getRawElement(target)]);
 
   if (target) return { value, set, remove };
   return {

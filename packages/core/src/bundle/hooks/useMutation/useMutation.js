@@ -2,7 +2,8 @@ import { useState } from 'react';
 /**
  * @name useMutation
  * @description - Hook that defines the logic when mutate data
- * @category Utilities
+ * @category Async
+ * @usage high
  *
  * @template Body The type of the body
  * @template Data The type of the data
@@ -63,12 +64,13 @@ export const useMutation = (callback, options) => {
           }
           return request(body, { ...requestOptions, attempt: attempt + 1 });
         }
-        requestOptions?.onError?.(error);
         setData(null);
         setIsSuccess(false);
         setIsLoading(false);
         setError(error);
         setIsError(true);
+        if (!requestOptions?.onError) throw error;
+        requestOptions?.onError?.(error);
       });
   };
   const mutate = (body, mutateOptions) => {

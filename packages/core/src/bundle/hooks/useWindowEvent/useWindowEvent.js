@@ -1,9 +1,10 @@
-import { target } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useEventListener } from '../useEventListener/useEventListener';
 /**
  * @name useWindowEvent
  * @description - Hook attaches an event listener to the window object for the specified event
  * @category Sensors
+ * @usage low
  *
  * @template Event Key of window event map.
  * @param {Event} event The event to listen for.
@@ -15,4 +16,4 @@ import { useEventListener } from '../useEventListener/useEventListener';
  * useWindowEvent('click', () => console.log('clicked'));
  */
 export const useWindowEvent = (event, listener, options) =>
-  useEventListener(target(window), event, listener, options);
+  useEventListener(isTarget.wrap(window), event, listener, options);

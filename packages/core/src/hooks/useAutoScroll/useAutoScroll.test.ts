@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
@@ -34,7 +34,11 @@ const targets = [
   target('#target'),
   target(document.getElementById('target')!),
   target(() => document.getElementById('target')!),
-  { current: document.getElementById('target') }
+  { current: document.getElementById('target') },
+  Object.assign(() => {}, {
+    state: document.getElementById('target'),
+    current: document.getElementById('target')
+  })
 ];
 
 const element = document.getElementById('target') as HTMLElement;
@@ -56,78 +60,97 @@ beforeEach(() => {
   trigger.clear();
 });
 
-afterEach(vi.clearAllMocks);
-
 targets.forEach((target) => {
   describe(`${target}`, () => {
-    // it("Should use auto scroll", () => {
-    //   const { result } = renderHook(() => {
-    //     if (target)
-    //       return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
-    //     return useAutoScroll<HTMLElement>();
-    //   });
-
-    //   if (!target) expect(result.current).toBeTypeOf("function");
-    // });
-
-    // it("Should auto scroll when content changes", () => {
-    //   const { result } = renderHook(() => {
-    //     if (target)
-    //       return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
-    //     return useAutoScroll<HTMLElement>();
-    //   });
-
-    //   if (!target) act(() => result.current(element));
-
-    //   act(() => trigger.callback(element));
-
-    //   expect(element.scrollTo).toHaveBeenCalledWith({ top: 1000 });
-    // });
-
-    // it("Should respect enabled option", () => {
-    //   const { result } = renderHook(() => {
-    //     if (target)
-    //       return useAutoScroll(target, {
-    //         enabled: false,
-    //       }) as unknown as StateRef<HTMLElement>;
-    //     return useAutoScroll<HTMLElement>({ enabled: false });
-    //   });
-
-    //   if (!target) act(() => result.current(element));
-
-    //   act(() => trigger.callback(element));
-
-    //   expect(element.scrollTo).not.toHaveBeenCalled();
-    // });
-
-    // it("Should respect force option", () => {
-    //   const { result } = renderHook(() => {
-    //     if (target)
-    //       return useAutoScroll(target, {
-    //         force: true,
-    //       }) as unknown as StateRef<HTMLElement>;
-    //     return useAutoScroll<HTMLElement>({ force: true });
-    //   });
-
-    //   if (!target) act(() => result.current(element));
-
-    //   act(() => {
-    //     Object.defineProperty(element, "scrollTop", { value: 200 });
-    //     element.dispatchEvent(new WheelEvent("wheel", { deltaY: -100 }));
-    //   });
-
-    //   act(() => trigger.callback(element));
-
-    //   expect(element.scrollTo).toHaveBeenCalledWith({ top: 1000 });
-    // });
-
-    it('Should handle auto scroll on manual scroll up', () => {
+    it('Should use auto scroll', () => {
       const { result } = renderHook(() => {
-        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
         return useAutoScroll<HTMLElement>();
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current).toBeUndefined();
+    });
+
+    it('Should use auto scroll on server side', () => {
+      const { result } = renderHookServer(() => {
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
+        return useAutoScroll<HTMLElement>();
+      });
+
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (target) expect(result.current).toBeUndefined();
+    });
+
+    it('Should auto scroll when content changes', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
+        return useAutoScroll<HTMLElement>();
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      act(() => trigger.callback(element));
+
+      expect(element.scrollTo).toHaveBeenCalledWith({ top: 1000 });
+    });
+
+    it('Should respect enabled option', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useAutoScroll(target, {
+            enabled: false
+          }) as unknown as { ref: StateRef<HTMLElement> };
+        return useAutoScroll<HTMLElement>({ enabled: false });
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      act(() => trigger.callback(element));
+
+      expect(element.scrollTo).not.toHaveBeenCalled();
+    });
+
+    it('Should respect force option', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useAutoScroll(target, {
+            force: true
+          }) as unknown as { ref: StateRef<HTMLElement> };
+        return useAutoScroll<HTMLElement>({ force: true });
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      act(() => {
+        Object.defineProperty(element, 'scrollTop', { value: 200 });
+        element.dispatchEvent(new WheelEvent('wheel', { deltaY: -100 }));
+      });
+
+      act(() => trigger.callback(element));
+
+      expect(element.scrollTo).toHaveBeenCalledWith({ top: 1000 });
+    });
+
+    it('Should handle auto scroll on manual scroll up', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
+        return useAutoScroll<HTMLElement>();
+      });
+
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         Object.defineProperty(element, 'scrollTop', { value: 200 });
@@ -150,11 +173,14 @@ targets.forEach((target) => {
 
     it('Should handle touch events', () => {
       const { result } = renderHook(() => {
-        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
         return useAutoScroll<HTMLElement>();
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         element.dispatchEvent(
@@ -197,11 +223,14 @@ targets.forEach((target) => {
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
       const { result, unmount } = renderHook(() => {
-        if (target) return useAutoScroll(target) as unknown as StateRef<HTMLElement>;
+        if (target)
+          return useAutoScroll(target) as unknown as {
+            ref: StateRef<HTMLElement>;
+          };
         return useAutoScroll<HTMLElement>();
       });
 
-      if (!target) act(() => result.current(element));
+      if (!target) act(() => result.current.ref(element));
 
       unmount();
 
@@ -209,6 +238,28 @@ targets.forEach((target) => {
       expect(removeEventListenerSpy).toHaveBeenCalledWith('wheel', expect.any(Function));
       expect(removeEventListenerSpy).toHaveBeenCalledWith('touchstart', expect.any(Function));
       expect(removeEventListenerSpy).toHaveBeenCalledWith('touchmove', expect.any(Function));
+    });
+
+    it('Should handle target changes', () => {
+      const { result, rerender } = renderHook(
+        (target) => {
+          if (target)
+            return useAutoScroll(target) as unknown as {
+              ref: StateRef<HTMLElement>;
+            };
+          return useAutoScroll<HTMLElement>();
+        },
+        { initialProps: target }
+      );
+
+      if (!target) act(() => result.current.ref(element));
+
+      expect(mockMutationObserverObserve).toHaveBeenCalledTimes(1);
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(mockMutationObserverObserve).toHaveBeenCalledTimes(2);
+      expect(mockMutationObserverDisconnect).toHaveBeenCalledTimes(1);
     });
   });
 });

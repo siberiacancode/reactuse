@@ -19,8 +19,9 @@ const clearCookieItems = () => {
 /**
  * @name useCookies
  * @description - Hook that manages cookie values
- * @category Browser
- *
+ * @category State
+ * @usage medium
+
  * @overload
  * @template {object} Value The type of the cookie values
  * @returns {UseCookieReturn<Value>} The value and the set function

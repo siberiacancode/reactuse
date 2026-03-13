@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useMeasure
  * @description - Hook to measure the size and position of an element
  * @category Browser
+ * @usage low
  *
  * @overload
  * @param {HookTarget} target The element to measure
@@ -35,7 +36,7 @@ export const useMeasure = (...params) => {
   });
   useEffect(() => {
     if (!target && !internalRef.state) return;
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];
@@ -47,7 +48,7 @@ export const useMeasure = (...params) => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [target, internalRef.state]);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return rect;
   return { ref: internalRef, ...rect };
 };

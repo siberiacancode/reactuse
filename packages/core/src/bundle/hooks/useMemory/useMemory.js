@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
  * @name useMemory
  * @description - Hook that gives you current memory usage
  * @category Browser
+ * @usage low
  *
  * @browserapi performance.memory https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory
  *
@@ -12,13 +13,16 @@ import { useEffect, useState } from 'react';
  * const { supported, value } = useMemory();
  */
 export const useMemory = () => {
-  const supported = performance && 'memory' in performance && !!performance.memory;
+  const supported =
+    typeof performance !== 'undefined' && 'memory' in performance && !!performance.memory;
   const [value, setValue] = useState(
-    performance?.memory ?? {
-      jsHeapSizeLimit: 0,
-      totalJSHeapSize: 0,
-      usedJSHeapSize: 0
-    }
+    supported
+      ? performance.memory
+      : {
+          jsHeapSizeLimit: 0,
+          totalJSHeapSize: 0,
+          usedJSHeapSize: 0
+        }
   );
   useEffect(() => {
     if (!supported) return;

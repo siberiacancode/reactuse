@@ -1,11 +1,20 @@
 import { renderHook } from '@testing-library/react';
 import React from 'react';
 
+import { renderHookServer } from '@/tests';
+
 import { useDidUpdate } from './useDidUpdate';
 
 it('Should use did update', () => {
   const effect = vi.fn();
   renderHook(() => useDidUpdate(effect, []));
+
+  expect(effect).not.toHaveBeenCalled();
+});
+
+it('Should use did update on server side', () => {
+  const effect = vi.fn();
+  renderHookServer(() => useDidUpdate(effect, []));
 
   expect(effect).not.toHaveBeenCalled();
 });

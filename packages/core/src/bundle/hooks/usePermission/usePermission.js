@@ -4,6 +4,7 @@ import { useEvent } from '../useEvent/useEvent';
  *  @name usePermission
  *  @description - Hook that gives you the state of permission
  *  @category Browser
+ *  @usage medium
  *
  *  @browserapi navigator.permissions https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions
  *
@@ -15,7 +16,8 @@ import { useEvent } from '../useEvent/useEvent';
  *  const { state, supported, query } = usePermission('microphone');
  */
 export const usePermission = (permissionDescriptorName, options) => {
-  const supported = typeof navigator !== 'undefined' && 'permissions' in navigator;
+  const supported =
+    typeof navigator !== 'undefined' && 'permissions' in navigator && !!navigator.permissions;
   const [state, setState] = useState('prompt');
   const enabled = options?.enabled ?? true;
   const permissionDescriptor = { name: permissionDescriptorName };

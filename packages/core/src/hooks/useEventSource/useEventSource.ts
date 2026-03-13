@@ -35,7 +35,7 @@ interface UseEventSourceReturn<Data = any> {
   /* The error state of the query */
   isError: boolean;
   /* The open state of the query */
-  isOpen: boolean;
+  opened: boolean;
   /** Closes the EventSource connection gracefully */
   close: () => void;
   /** Reopen the EventSource connection */
@@ -46,6 +46,7 @@ interface UseEventSourceReturn<Data = any> {
  * @name useEventSource
  * @description - Hook that provides a reactive wrapper for event source
  * @category Browser
+ * @usage low
  *
  * @browserapi EventSource https://developer.mozilla.org/en-US/docs/Web/API/EventSource
  *
@@ -55,7 +56,7 @@ interface UseEventSourceReturn<Data = any> {
  * @returns {UseEventSourceReturn<Data>} The EventSource state and controls
  *
  * @example
- * const { instance, data, isConnecting, isOpen, isError, close, open } = useEventSource('url', ['message']);
+ * const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', ['message']);
  */
 export const useEventSource = <QueryData = any, Data = QueryData>(
   url: string | URL,
@@ -63,7 +64,7 @@ export const useEventSource = <QueryData = any, Data = QueryData>(
   options: UseEventSourceOptions<QueryData, Data> = {}
 ): UseEventSourceReturn<Data> => {
   const [isConnecting, setIsConnecting] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
@@ -74,33 +75,42 @@ export const useEventSource = <QueryData = any, Data = QueryData>(
 
   const immediately = options.immediately ?? true;
 
+  const onEventRef = useRef((event: Event & { data?: Data }) => setData(event.data));
+
   const close = () => {
     if (!eventSourceRef.current) return;
 
-    eventSourceRef.current.close();
-    eventSourceRef.current = undefined;
-    setIsOpen(false);
+    setOpened(false);
     setIsConnecting(false);
     setIsError(false);
+
+    events.forEach((eventName) =>
+      eventSourceRef.current!.removeEventListener(eventName, onEventRef.current)
+    );
+
+    eventSourceRef.current.close();
+    eventSourceRef.current = undefined;
   };
 
   const open = () => {
     close();
 
-    const eventSource = new EventSource(url, { withCredentials: options.withCredentials ?? false });
+    const eventSource = new EventSource(url, {
+      withCredentials: options.withCredentials ?? false
+    });
     eventSourceRef.current = eventSource;
 
     setIsConnecting(true);
 
     eventSource.onopen = () => {
-      setIsOpen(true);
+      setOpened(true);
       setIsConnecting(false);
       setError(undefined);
       options?.onOpen?.();
     };
 
     eventSource.onerror = (event) => {
-      setIsOpen(false);
+      setOpened(false);
       setIsConnecting(false);
       setIsError(true);
       setError(event);
@@ -118,6 +128,8 @@ export const useEventSource = <QueryData = any, Data = QueryData>(
           setTimeout(open, retryDelay);
           return;
         }
+
+        return open();
       }
 
       retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
@@ -129,11 +141,7 @@ export const useEventSource = <QueryData = any, Data = QueryData>(
       options?.onMessage?.(event);
     };
 
-    events.forEach((eventName) => {
-      eventSource.addEventListener(eventName, (event: Event & { data?: Data }) => {
-        setData(event.data);
-      });
-    });
+    events.forEach((eventName) => eventSource.addEventListener(eventName, onEventRef.current));
   };
 
   useEffect(() => {
@@ -150,7 +158,7 @@ export const useEventSource = <QueryData = any, Data = QueryData>(
     data,
     error,
     isConnecting,
-    isOpen,
+    opened,
     isError,
     close,
     open

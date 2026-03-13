@@ -33,7 +33,8 @@ const FIRST_STEP_VALUE = 1;
 /**
  * @name useStep
  * @description - Hook that create stepper
- * @category Utilities
+ * @category State
+ * @usage medium
  *
  * @overload
  * @param {number} max Maximum number of steps

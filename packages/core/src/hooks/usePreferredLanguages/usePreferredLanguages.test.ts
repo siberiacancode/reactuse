@@ -4,9 +4,8 @@ import { renderHookServer } from '@/tests';
 
 import { usePreferredLanguages } from './usePreferredLanguages';
 
-const mockNavigatorLanguages = vi.spyOn(navigator, 'languages', 'get');
-
 it('Should use preferred languages', () => {
+  const mockNavigatorLanguages = vi.spyOn(navigator, 'languages', 'get');
   mockNavigatorLanguages.mockReturnValue(['en', 'en-US', 'fr', 'fr-FR']);
   const { result } = renderHook(usePreferredLanguages);
   expect(result.current).toEqual(['en', 'en-US', 'fr', 'fr-FR']);
@@ -18,6 +17,7 @@ it('Should use preferred languages on server side', () => {
 });
 
 it('Should change value upon language changes', () => {
+  const mockNavigatorLanguages = vi.spyOn(navigator, 'languages', 'get');
   mockNavigatorLanguages.mockReturnValue(['en', 'en-US', 'fr', 'fr-FR']);
   const { result } = renderHook(usePreferredLanguages);
   expect(result.current).toEqual(['en', 'en-US', 'fr', 'fr-FR']);
@@ -28,8 +28,11 @@ it('Should change value upon language changes', () => {
 });
 
 it('Should cleanup up on unmount', () => {
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
   const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
   const { unmount } = renderHook(usePreferredLanguages);
+
+  expect(addEventListenerSpy).toHaveBeenCalledWith('languagechange', expect.any(Function));
 
   unmount();
 

@@ -28,8 +28,13 @@ export default async () => {
   );
 
   return defineConfig({
-    base: '/reactuse/',
+    base: '/',
     title: 'reactuse',
+    titleTemplate: false,
+    cleanUrls: true,
+    sitemap: {
+      hostname: 'https://reactuse.org'
+    },
     description:
       'Improve your react applications with our library 📦 designed for comfort and speed',
     markdown: {
@@ -57,13 +62,23 @@ export default async () => {
         }
       ]);
 
-      if (pageData.relativePath.includes('hooks')) {
-        pageData.title = pageData.params?.name;
+      if (pageData.relativePath.includes('hooks') && pageData.params?.name) {
+        const name = pageData.params.name as string;
+        const description = (pageData.params.description as string) ?? '';
+
+        pageData.title = `${name} React hook Reactuse`;
+        pageData.description = description;
+
+        pageData.frontmatter.head.push(
+          ['meta', { property: 'og:title', content: pageData.title }],
+          ['meta', { property: 'og:description', content: pageData.description }]
+        );
       }
     },
     head: [
-      ['link', { rel: 'icon', href: '/reactuse/favicon.ico' }],
-      ['link', { rel: 'manifest', href: '/reactuse/manifest.json' }],
+      ['meta', { name: 'algolia-site-verification', content: '60FB6E25551CE504' }],
+      ['link', { rel: 'icon', href: '/favicon.ico' }],
+      ['link', { rel: 'manifest', href: '/manifest.json' }],
       [
         'script',
         { type: 'text/javascript' },
@@ -132,7 +147,7 @@ export default async () => {
           },
           footer: {
             message: 'Released under the MIT License.',
-            copyright: 'Copyright © 2024 siberiacancode'
+            copyright: `Copyright © ${new Date().getFullYear()} siberiacancode`
           },
           editLink: {
             pattern: ({ filePath, params }) => {
@@ -163,14 +178,25 @@ export default async () => {
                 { text: 'Installation', link: '/installation' },
                 { text: 'reactuse.json', link: '/reactuse-json' },
                 { text: 'CLI', link: '/cli' },
-                { text: 'target', link: '/target' }
+                { text: 'target', link: '/target' },
+                { text: 'memoization', link: '/memoization' },
+                { text: 'optimization', link: '/optimization' }
               ]
             },
             {
               text: 'Installation',
               items: [
                 { text: 'Vite', link: '/installation/vite' },
-                { text: 'Next.js', link: '/installation/nextjs' }
+                { text: 'Next.js', link: '/installation/nextjs' },
+                { text: 'Astro', link: '/installation/astro' },
+                { text: 'React Router', link: '/installation/react-router' },
+                {
+                  text: 'TanStack Router',
+                  link: '/installation/tanstack-router'
+                },
+                { text: 'TanStack Start', link: '/installation/tanstack' },
+                { text: 'Preact', link: '/installation/preact' },
+                { text: 'Manual', link: '/installation/manual' }
               ]
             },
             ...sidebarContentItems
@@ -196,8 +222,8 @@ export default async () => {
         provider: 'algolia',
         options: {
           appId: '62LROXAB1F',
-          apiKey: 'c1ff07348583383446ca32068eb1300f',
-          indexName: 'siberiacancodeio'
+          apiKey: '87ab8dd07b4aba02814c082d98e4b8a7',
+          indexName: 'reactuse'
         }
       },
       socialLinks: [

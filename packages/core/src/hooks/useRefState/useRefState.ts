@@ -6,7 +6,7 @@ export interface StateRef<Value> {
   state?: Value;
 }
 
-const createRefState = <Value>(
+export const createRefState = <Value>(
   initialValue: Value | undefined,
   setState: (value: Value) => void
 ) => {
@@ -36,7 +36,8 @@ const createRefState = <Value>(
 /**
  * @name useRefState
  * @description - Hook that returns the state reference of the value
- * @category Utilities
+ * @category State
+ * @usage low
  *
  * @template Value The type of the value
  * @param {Value} [initialValue] The initial value

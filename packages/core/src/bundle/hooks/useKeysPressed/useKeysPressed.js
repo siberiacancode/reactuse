@@ -1,25 +1,24 @@
 import { useEffect, useState } from 'react';
-import { getElement, isTarget } from '@/utils/helpers';
+import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
- * Hook that tracks which keyboard keys are currently pressed
- *
  * @name useKeysPressed
  * @description Tracks all currently pressed keyboard keys and their codes
  * @category Sensors
+ * @usage low
  *
  * @overload
  * @param {HookTarget | Window} target DOM element or ref to attach keyboard listeners to
  * @param {UseKeysPressedOptions} [options.enabled=true] Enable or disable the event listeners
- * @returns {Array<{ key: string; code: string }>} Array of currently pressed keys with their key and code values
+ * @returns {UseKeysPressedReturn} Object containing the array of currently pressed keys
  *
  * @example
- * const pressedKeys = useKeysPressed(ref);
+ * const { value } = useKeysPressed(ref);
  *
  * @overload
  * @template Target - Type of the target DOM element
  * @param {UseKeysPressedOptions} [options] - Optional configuration options
- * @returns {{ keys: Array<{ key: string; code: string }>; ref: StateRef<Target> }} Object containing pressed keys array and ref to attach to a DOM element
+ * @returns {UseKeysPressedReturn & { ref: StateRef<Target> }} Object containing the array of currently pressed keys and ref to attach to the element
  *
  * @example
  * const { value, ref } = useKeysPressed();
@@ -33,7 +32,7 @@ export const useKeysPressed = (...params) => {
   useEffect(() => {
     if (!enabled) return;
     setValue([]);
-    const element = target ? getElement(target) : internalRef.current;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     const onKeyDown = (event) => {
       const keyboardEvent = event;
@@ -52,7 +51,7 @@ export const useKeysPressed = (...params) => {
       element.removeEventListener('keydown', onKeyDown);
       element.removeEventListener('keyup', onKeyUp);
     };
-  }, [enabled, internalRef.state, target]);
-  if (target) return value;
+  }, [enabled, internalRef.state, target && isTarget.getRawElement(target)]);
+  if (target) return { value };
   return { value, ref: internalRef };
 };

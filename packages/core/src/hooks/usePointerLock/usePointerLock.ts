@@ -17,7 +17,8 @@ interface UsePointerLockReturn {
 /**
  * @name usePointerLock
  * @description - Hook that provides reactive pointer lock
- * @category Sensors
+ * @category Browser
+ * @usage low
  *
  * @browserapi pointerLockElement https://developer.mozilla.org/en-US/docs/Web/API/Document/pointerLockElement
  *
@@ -27,7 +28,10 @@ interface UsePointerLockReturn {
  * const { supported, lock, unlock, element } = usePointerLock();
  */
 export const usePointerLock = (): UsePointerLockReturn => {
-  const supported = typeof document !== 'undefined' && 'pointerLockElement' in document;
+  const supported =
+    typeof document !== 'undefined' &&
+    'pointerLockElement' in document &&
+    !!document.pointerLockElement;
   const [element, setElement] = useState<Element>();
 
   useEffect(() => {

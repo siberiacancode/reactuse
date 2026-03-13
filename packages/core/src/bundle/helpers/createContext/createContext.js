@@ -4,6 +4,7 @@ import { createContext as createReactContext, useContext, useMemo, useState } fr
  * @name createContext
  * @description - Creates a typed context with additional utilities
  * @category Helpers
+ * @usage high
  *
  * @template Value - The type of value that will be stored in the context
  * @param {Value | undefined} [defaultValue] - Default value for the context
