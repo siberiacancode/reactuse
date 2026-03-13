@@ -39,56 +39,26 @@ export const useStopwatch = (...params) => {
   const initialTime = (typeof params[0] === 'number' ? params[0] : params[0]?.initialTime) ?? 0;
   const options = typeof params[0] === 'number' ? params[1] : params[0];
   const immediately = options?.immediately ?? false;
-  const [time, setTime] = useState(getStopwatchTime(initialTime));
+  const [count, setCount] = useState(initialTime);
   const [paused, setPaused] = useState(!immediately);
+  useEffect(() => {
+    setCount(initialTime);
+  }, [initialTime]);
   useEffect(() => {
     if (paused) return;
     const onInterval = () => {
-      setTime((prevTime) => {
-        const updatedCount = prevTime.count + 1;
-        if (updatedCount % (60 * 60 * 24) === 0) {
-          return {
-            ...prevTime,
-            days: prevTime.days + 1,
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
-            count: updatedCount
-          };
-        }
-        if (updatedCount % (60 * 60) === 0) {
-          return {
-            ...prevTime,
-            hours: prevTime.hours + 1,
-            minutes: 0,
-            seconds: 0,
-            count: updatedCount
-          };
-        }
-        if (updatedCount % 60 === 0) {
-          return {
-            ...prevTime,
-            minutes: prevTime.minutes + 1,
-            seconds: 0,
-            count: updatedCount
-          };
-        }
-        return {
-          ...prevTime,
-          seconds: prevTime.seconds + 1,
-          count: updatedCount
-        };
-      });
+      setCount((prevCount) => prevCount + 1);
     };
-    const interval = setInterval(() => onInterval(), 1000);
+    const interval = setInterval(onInterval, 1000);
     return () => clearInterval(interval);
   }, [paused]);
+  const time = getStopwatchTime(count);
   return {
     ...time,
     paused,
     pause: () => setPaused(true),
     start: () => setPaused(false),
-    reset: () => setTime(getStopwatchTime(initialTime)),
+    reset: () => setCount(initialTime),
     toggle: () => setPaused((prevPause) => !prevPause)
   };
 };
