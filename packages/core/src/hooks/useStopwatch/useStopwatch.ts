@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useInterval } from '../useInterval/useInterval';
 
@@ -24,7 +24,10 @@ const getStopwatchTime = (count: number) => {
   return { days, hours, minutes, seconds, milliseconds, count };
 };
 
-const getMillsDiffOrZero = (millis: number) => (Date.now() - millis > 0 ? Date.now() - millis : 0);
+const getMillsDiffOrZero = (ms: number) => {
+  const diff = Date.now() - ms;
+  return diff > 0 ? diff : 0;
+};
 
 /** The use stopwatch return type */
 export interface UseStopwatchReturn {
@@ -91,7 +94,8 @@ export const useStopwatch = ((...params: any[]) => {
   const initialTime =
     (typeof params[0] === 'number'
       ? (params[0] as number | undefined)
-      : (params[0] as UseStopwatchOptions & { initialTime?: number })?.initialTime) ?? 0;
+      : (params[0] as (UseStopwatchOptions & { initialTime?: number }) | undefined)?.initialTime) ??
+    0;
 
   const options =
     typeof params[0] === 'number'
@@ -104,6 +108,11 @@ export const useStopwatch = ((...params: any[]) => {
   const [milliseconds, setMilliseconds] = useState(initialTime);
   const [timestamp, setTimestamp] = useState(Date.now() - initialTime);
 
+  useEffect(() => {
+    setMilliseconds(initialTime);
+    setTimestamp(Date.now() - initialTime);
+  }, [initialTime]);
+
   const interval = useInterval(
     () => setMilliseconds(getMillsDiffOrZero(timestamp)),
     updateInterval,
@@ -115,7 +124,7 @@ export const useStopwatch = ((...params: any[]) => {
   const start = () => {
     if (interval.active) return;
 
-    setTimestamp(new Date().getTime() - milliseconds);
+    setTimestamp(Date.now() - milliseconds);
 
     interval.resume();
   };
@@ -123,9 +132,9 @@ export const useStopwatch = ((...params: any[]) => {
   const pause = () => {
     if (!interval.active) return;
 
-    setMilliseconds(getMillsDiffOrZero(timestamp));
-
     interval.pause();
+
+    setMilliseconds(getMillsDiffOrZero(timestamp));
   };
 
   const reset = () => {

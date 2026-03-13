@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInterval } from '../useInterval/useInterval';
 const getStopwatchTime = (count) => {
   if (!count)
@@ -18,7 +18,10 @@ const getStopwatchTime = (count) => {
   const milliseconds = count % 1000;
   return { days, hours, minutes, seconds, milliseconds, count };
 };
-const getMillsDiffOrZero = (millis) => (Date.now() - millis > 0 ? Date.now() - millis : 0);
+const getMillsDiffOrZero = (ms) => {
+  const diff = Date.now() - ms;
+  return diff > 0 ? diff : 0;
+};
 /**
  * @name useStopwatch
  * @description - Hook that creates a stopwatch functionality
@@ -49,6 +52,10 @@ export const useStopwatch = (...params) => {
   const updateInterval = options?.updateInterval ?? 1000;
   const [milliseconds, setMilliseconds] = useState(initialTime);
   const [timestamp, setTimestamp] = useState(Date.now() - initialTime);
+  useEffect(() => {
+    setMilliseconds(initialTime);
+    setTimestamp(Date.now() - initialTime);
+  }, [initialTime]);
   const interval = useInterval(
     () => setMilliseconds(getMillsDiffOrZero(timestamp)),
     updateInterval,
@@ -58,13 +65,13 @@ export const useStopwatch = (...params) => {
   );
   const start = () => {
     if (interval.active) return;
-    setTimestamp(new Date().getTime() - milliseconds);
+    setTimestamp(Date.now() - milliseconds);
     interval.resume();
   };
   const pause = () => {
     if (!interval.active) return;
-    setMilliseconds(getMillsDiffOrZero(timestamp));
     interval.pause();
+    setMilliseconds(getMillsDiffOrZero(timestamp));
   };
   const reset = () => {
     setMilliseconds(initialTime);
