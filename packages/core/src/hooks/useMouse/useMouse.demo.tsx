@@ -6,7 +6,6 @@ const Demo = () => {
   const modalRef = useRef<HTMLDivElement>(null);
   const mouse = useMouse<HTMLDivElement>((value) => {
     if (!modalRef.current) return;
-    console.log(value);
     const modal = modalRef.current;
     modal.style.left = `${value.clientX + 24}px`;
     modal.style.top = `${value.clientY + 24}px`;
