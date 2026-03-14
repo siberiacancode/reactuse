@@ -19,13 +19,12 @@ import { useRerender } from '../useRerender/useRerender';
  * @example
  * const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();
  */
-export const useField = (params) => {
-  const initialValue = params?.initialValue ?? '';
+export const useField = (initialValue, options) => {
   const inputRef = useRef(null);
   const watchingRef = useRef(false);
   const rerender = useRerender();
   const [dirty, setDirty] = useState(false);
-  const [touched, setTouched] = useState(params?.initialTouched ?? false);
+  const [touched, setTouched] = useState(options?.initialTouched ?? false);
   const [error, setError] = useState(undefined);
   const getValue = () => {
     if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
@@ -76,29 +75,29 @@ export const useField = (params) => {
   const register = (registerParams) => ({
     ref: (node) => {
       if (!inputRef.current && node) {
-        if (params?.autoFocus) node.focus();
+        if (options?.autoFocus) node.focus();
         inputRef.current = node;
         if (inputRef.current.type === 'radio') {
-          inputRef.current.defaultChecked = params?.initialValue === node.value;
+          inputRef.current.defaultChecked = initialValue === node.value;
           return;
         }
         if (inputRef.current.type === 'checkbox') {
-          inputRef.current.defaultChecked = !!params?.initialValue;
+          inputRef.current.defaultChecked = !!initialValue;
           return;
         }
         inputRef.current.defaultValue = String(initialValue);
-        if (registerParams && params?.validateOnMount) validate(registerParams);
+        if (registerParams && options?.validateOnMount) validate(registerParams);
       }
     },
     onChange: async () => {
       if (watchingRef.current) return rerender();
       if (inputRef.current.value !== initialValue) setDirty(true);
       if (dirty && inputRef.current.value === initialValue) setDirty(false);
-      if (registerParams && params?.validateOnChange) await validate(registerParams);
-      if (registerParams && params?.validateOnBlur) setError(undefined);
+      if (registerParams && options?.validateOnChange) await validate(registerParams);
+      if (registerParams && options?.validateOnBlur) setError(undefined);
     },
     onBlur: async () => {
-      if (registerParams && params?.validateOnBlur) await validate(registerParams);
+      if (registerParams && options?.validateOnBlur) await validate(registerParams);
       setTouched(true);
     }
   });

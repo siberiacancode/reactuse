@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
+import { useRerender } from '../useRerender/useRerender';
 /**
  * @name useMouse
  * @description - Hook that manages a mouse position
@@ -9,21 +10,24 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @param {HookTarget} [target=window] The target element to manage the mouse position for
- * @returns {UseMouseReturn} An object with the current mouse position
+ * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates
+ * @returns {UseMouseReturn} An object with mouse value controls
  *
  * @example
- * const { x, y, clientX, clientY, elementX, elementY, elementPositionX, elementPositionY } = useMouse(ref);
+ * const mouse = useMouse(ref);
  *
  * @overload
  * @template Target The target element
- * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with the current mouse position and a ref
+ * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates
+ * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with mouse value controls and a ref
  *
  * @example
- * const { ref, x, y, clientX, clientY, elementX, elementY, elementPositionX, elementPositionY } = useMouse();
+ * const mouse = useMouse<HTMLDivElement>();
  */
 export const useMouse = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
-  const [value, setValue] = useState({
+  const callback = target ? params[1] : params[0];
+  const snapshotRef = useRef({
     x: 0,
     y: 0,
     elementX: 0,
@@ -33,7 +37,20 @@ export const useMouse = (...params) => {
     clientX: 0,
     clientY: 0
   });
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  const watchingRef = useRef(false);
+  const rerender = useRerender();
   const internalRef = useRefState();
+  const updateValue = (nextValue, event) => {
+    snapshotRef.current = nextValue;
+    internalCallbackRef.current?.(nextValue, event);
+    if (watchingRef.current) rerender();
+  };
+  const watch = () => {
+    watchingRef.current = true;
+    return snapshotRef.current;
+  };
   useEffect(() => {
     const onMouseMove = (event) => {
       const element = target ? isTarget.getElement(target) : internalRef.current;
@@ -41,7 +58,11 @@ export const useMouse = (...params) => {
         x: event.pageX,
         y: event.pageY,
         clientX: event.clientX,
-        clientY: event.clientY
+        clientY: event.clientY,
+        elementX: event.pageX,
+        elementY: event.pageY,
+        elementPositionX: 0,
+        elementPositionY: 0
       };
       if (element) {
         const { left, top } = element.getBoundingClientRect();
@@ -53,29 +74,18 @@ export const useMouse = (...params) => {
         updatedValue.elementY = elementY;
         updatedValue.elementPositionX = elementPositionX;
         updatedValue.elementPositionY = elementPositionY;
-        setValue((prevValue) => ({
-          ...prevValue,
-          ...updatedValue
-        }));
-      } else {
-        updatedValue.elementX = event.pageX;
-        updatedValue.elementY = event.pageY;
-        updatedValue.elementPositionX = 0;
-        updatedValue.elementPositionY = 0;
-        setValue((prevValue) => ({
-          ...prevValue,
-          ...updatedValue
-        }));
       }
+      updateValue(updatedValue, event);
     };
-    const onScroll = () => {
-      setValue((prevValue) => ({
-        ...prevValue,
-        x: prevValue.x + window.scrollX - prevValue.elementPositionX,
-        y: prevValue.y + window.scrollY - prevValue.elementPositionY,
+    const onScroll = (event) => {
+      const updatedValue = {
+        ...snapshotRef.current,
+        x: snapshotRef.current.x + window.scrollX - snapshotRef.current.elementPositionX,
+        y: snapshotRef.current.y + window.scrollY - snapshotRef.current.elementPositionY,
         elementPositionX: window.scrollX,
         elementPositionY: window.scrollY
-      }));
+      };
+      updateValue(updatedValue, event);
     };
     document.addEventListener('scroll', onScroll, { passive: true });
     document.addEventListener('mousemove', onMouseMove);
@@ -84,9 +94,10 @@ export const useMouse = (...params) => {
       document.removeEventListener('mousemove', onMouseMove);
     };
   }, [internalRef.state, target && isTarget.getRawElement(target)]);
-  if (target) return value;
+  if (target) return { snapshot: snapshotRef.current, watch };
   return {
     ref: internalRef,
-    ...value
+    snapshot: snapshotRef.current,
+    watch
   };
 };

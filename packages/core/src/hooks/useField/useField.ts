@@ -5,13 +5,11 @@ import { useRef, useState } from 'react';
 import { useRerender } from '../useRerender/useRerender';
 
 /** The use field params type */
-export interface UseFieldParams<Value> {
+export interface UseFieldOptions {
   /** The auto focus */
   autoFocus?: boolean;
   /** The initial touched */
   initialTouched?: boolean;
-  /** The initial value */
-  initialValue?: Value;
   /** The validate on blur */
   validateOnBlur?: boolean;
   /** The validate on mount */
@@ -22,10 +20,6 @@ export interface UseFieldParams<Value> {
 
 /** The use field register params type */
 export interface UseFieldRegisterParams {
-  /** The required validation */
-  required?: string;
-  /** The custom validation */
-  validate?: (value: string) => Promise<string | true>;
   /** The min value validation */
   max?: {
     value: number;
@@ -51,6 +45,10 @@ export interface UseFieldRegisterParams {
     value: RegExp;
     message: string;
   };
+  /** The required validation */
+  required?: string;
+  /** The custom validation */
+  validate?: (value: string) => Promise<string | true>;
 }
 
 /** The use field return type */
@@ -110,16 +108,15 @@ export const useField = <
   Value extends boolean | number | string = string,
   Type = Value extends string ? string : Value extends boolean ? boolean : number
 >(
-  params?: UseFieldParams<Value>
+  initialValue?: Value,
+  options?: UseFieldOptions
 ): UseFieldReturn<Type> => {
-  const initialValue = (params?.initialValue ?? '') as Value;
-
   const inputRef = useRef<HTMLInputElement | null>(null);
   const watchingRef = useRef(false);
   const rerender = useRerender();
 
   const [dirty, setDirty] = useState(false);
-  const [touched, setTouched] = useState(params?.initialTouched ?? false);
+  const [touched, setTouched] = useState(options?.initialTouched ?? false);
   const [error, setError] = useState<string | undefined>(undefined);
 
   const getValue = () => {
@@ -184,30 +181,30 @@ export const useField = <
   const register = (registerParams?: UseFieldRegisterParams) => ({
     ref: (node: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null | undefined) => {
       if (!inputRef.current && node) {
-        if (params?.autoFocus) node.focus();
+        if (options?.autoFocus) node.focus();
         inputRef.current = node as HTMLInputElement;
         if (inputRef.current.type === 'radio') {
-          inputRef.current.defaultChecked = params?.initialValue === node.value;
+          inputRef.current.defaultChecked = initialValue === node.value;
           return;
         }
         if (inputRef.current.type === 'checkbox') {
-          inputRef.current.defaultChecked = !!params?.initialValue;
+          inputRef.current.defaultChecked = !!initialValue;
           return;
         }
         inputRef.current.defaultValue = String(initialValue);
 
-        if (registerParams && params?.validateOnMount) validate(registerParams);
+        if (registerParams && options?.validateOnMount) validate(registerParams);
       }
     },
     onChange: async () => {
       if (watchingRef.current) return rerender();
       if (inputRef.current!.value !== initialValue) setDirty(true);
       if (dirty && inputRef.current!.value === initialValue) setDirty(false);
-      if (registerParams && params?.validateOnChange) await validate(registerParams);
-      if (registerParams && params?.validateOnBlur) setError(undefined);
+      if (registerParams && options?.validateOnChange) await validate(registerParams);
+      if (registerParams && options?.validateOnBlur) setError(undefined);
     },
     onBlur: async () => {
-      if (registerParams && params?.validateOnBlur) await validate(registerParams);
+      if (registerParams && options?.validateOnBlur) await validate(registerParams);
       setTouched(true);
     }
   });

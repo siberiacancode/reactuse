@@ -40,9 +40,6 @@ const Demo = () => {
           <div>
             <b>Scroll position:</b>
             <div>
-              scrolling: <code>{String(scroll.scrolling)}</code>
-            </div>
-            <div>
               x: <code>{values.x}</code>
             </div>
             <div>

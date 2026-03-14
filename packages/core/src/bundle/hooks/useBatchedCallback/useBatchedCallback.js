@@ -14,16 +14,16 @@ import { useMemo, useRef } from 'react';
  * const batched = useBatchedCallback((batch) => console.log(batch), 5);
  */
 export const useBatchedCallback = (callback, size) => {
-  const callbackRef = useRef(callback);
+  const internalCallbackRef = useRef(callback);
   const sizeRef = useRef(size);
   const queueRef = useRef([]);
-  callbackRef.current = callback;
+  internalCallbackRef.current = callback;
   sizeRef.current = size;
   const flush = () => {
     if (!queueRef.current.length) return;
     const batch = queueRef.current;
     queueRef.current = [];
-    callbackRef.current(batch);
+    internalCallbackRef.current(batch);
   };
   const batched = useMemo(() => {
     const batchedCallback = (...args) => {

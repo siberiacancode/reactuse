@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
+import { useRerender } from '../useRerender/useRerender';
 const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
 /**
  * @name useScroll
@@ -57,28 +58,52 @@ const ARRIVED_STATE_THRESHOLD_PIXELS = 1;
 export const useScroll = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = target
-    ? typeof params[1] === 'object'
-      ? params[1]
-      : { onScroll: params[1] }
+    ? typeof params[1] === 'function'
+      ? { ...params[2], onScroll: params[1] }
+      : params[1]
     : typeof params[0] === 'object'
       ? params[0]
-      : { onScroll: params[0] };
+      : typeof params[0] === 'function'
+        ? { ...params[1], onScroll: params[0] }
+        : undefined;
   const internalRef = useRefState();
   const internalOptionsRef = useRef(options);
   const elementRef = useRef(null);
+  const snapshotRef = useRef({
+    x: 0,
+    y: 0,
+    directions: {
+      left: false,
+      right: false,
+      top: false,
+      bottom: false
+    },
+    arrived: {
+      left: true,
+      right: false,
+      top: true,
+      bottom: false
+    }
+  });
+  const watchingRef = useRef(false);
+  const rerender = useRerender();
   internalOptionsRef.current = options;
-  const [scrolling, setScrolling] = useState(false);
-  const scrollPositionRef = useRef({ x: 0, y: 0 });
+  const watch = () => {
+    watchingRef.current = true;
+    return snapshotRef.current;
+  };
+  const updateValue = (value) => {
+    snapshotRef.current = value;
+    if (watchingRef.current) rerender();
+  };
   useEffect(() => {
     if (!target && !internalRef.state) return;
     const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     elementRef.current = element;
     const onScrollEnd = (event) => {
-      setScrolling(false);
-      options?.onStop?.(event);
+      internalOptionsRef.current?.onStop?.(event);
     };
     const onScroll = (event) => {
-      setScrolling(true);
       const target = event.target === document ? event.target.documentElement : event.target;
       const { display, flexDirection, direction } = target.style;
       const directionMultiplier = direction === 'rtl' ? -1 : 1;
@@ -95,15 +120,15 @@ export const useScroll = (...params) => {
         scrollTop + target.clientHeight >=
         target.scrollHeight - (offset?.bottom ?? 0) - ARRIVED_STATE_THRESHOLD_PIXELS;
       const isColumnReverse = display === 'flex' && flexDirection === 'column-reverse';
-      const isRowReverse = display === 'flex' && flexDirection === 'column-reverse';
-      const params = {
+      const isRowReverse = display === 'flex' && flexDirection === 'row-reverse';
+      const updatedValue = {
         x: scrollLeft,
         y: scrollTop,
         directions: {
-          left: scrollLeft < scrollPositionRef.current.x,
-          right: scrollLeft > scrollPositionRef.current.x,
-          top: scrollTop < scrollPositionRef.current.y,
-          bottom: scrollTop > scrollPositionRef.current.y
+          left: scrollLeft < snapshotRef.current.x,
+          right: scrollLeft > snapshotRef.current.x,
+          top: scrollTop < snapshotRef.current.y,
+          bottom: scrollTop > snapshotRef.current.y
         },
         arrived: {
           left: isRowReverse ? right : left,
@@ -112,8 +137,8 @@ export const useScroll = (...params) => {
           bottom: isColumnReverse ? top : bottom
         }
       };
-      scrollPositionRef.current = { x: scrollLeft, y: scrollTop };
-      internalOptionsRef.current?.onScroll?.(params, event);
+      updateValue(updatedValue);
+      internalOptionsRef.current?.onScroll?.(updatedValue, event);
     };
     element.addEventListener('scroll', onScroll);
     element.addEventListener('scrollend', onScrollEnd);
@@ -136,10 +161,11 @@ export const useScroll = (...params) => {
     const { x, y, behavior } = params ?? {};
     elementRef.current.scrollTo({ left: x, top: y, behavior });
   };
-  if (target) return { scrollIntoView, scrollTo, scrolling };
+  if (target) return { scrollIntoView, scrollTo, snapshot: snapshotRef.current, watch };
   return {
     ref: internalRef,
-    scrolling,
+    snapshot: snapshotRef.current,
+    watch,
     scrollIntoView,
     scrollTo
   };
