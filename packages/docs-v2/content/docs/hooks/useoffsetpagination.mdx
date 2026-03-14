@@ -1,14 +1,56 @@
 ---
-title: useOffsetPagination
-description: Hook that defines the logic when pagination
+  title: useOffsetPagination
+  description: Hook that defines the logic when pagination
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useOffsetPagination
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { currentPage, currentPageSize, pageCount, isFirstPage, isLastPage, prev, next } = useOffsetPagination({ total: 100, initialPageSize: 10, initialPage: 1 }); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useOffsetPagination />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

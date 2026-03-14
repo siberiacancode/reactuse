@@ -1,14 +1,60 @@
 ---
-title: useSize
-description: Hook that observes and returns the width and height of element
+  title: useSize
+  description: Hook that observes and returns the width and height of element
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useSize
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { value, observer } = useSize(ref); 
+  ``` 
+   
+  ```tsx 
+    const { ref, value, observer } = useSize(); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useSize />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

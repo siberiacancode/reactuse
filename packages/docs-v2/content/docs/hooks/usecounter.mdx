@@ -1,14 +1,60 @@
 ---
-title: useCounter
-description: Hook that manages a counter
+  title: useCounter
+  description: Hook that manages a counter
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useCounter
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { count, dec, inc, reset, set } = useCounter(5); 
+  ``` 
+   
+  ```tsx 
+    const { count, dec, inc, reset, set } = useCounter({ initialValue: 5, min: 0, max: 10 }); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useCounter />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

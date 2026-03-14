@@ -1,14 +1,56 @@
 ---
-title: useWizard
-description: Hook that manages a wizard
+  title: useWizard
+  description: Hook that manages a wizard
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useWizard
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { currentStepId, set, reset, back, next, history } = useWizard([ { id: 'step1', nodes: ['step2', 'step3'] }, { id: 'step2', nodes: ['step3'] }, { id: 'step3', nodes: [] }, ]) 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useWizard />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

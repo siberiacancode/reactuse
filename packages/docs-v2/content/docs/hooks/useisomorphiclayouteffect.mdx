@@ -1,14 +1,56 @@
 ---
-title: useIsomorphicLayoutEffect
-description: Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
+  title: useIsomorphicLayoutEffect
+  description: Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Lifecycle
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    high
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Lifecycle
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useIsomorphicLayoutEffect
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    useIsomorphicLayoutEffect(() => console.log('effect'), []) 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useIsomorphicLayoutEffect />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

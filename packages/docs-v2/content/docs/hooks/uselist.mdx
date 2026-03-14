@@ -1,14 +1,56 @@
 ---
-title: useList
-description: Hook that provides state and helper methods to manage a list of items
+  title: useList
+  description: Hook that provides state and helper methods to manage a list of items
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useList
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { value, set, push, removeAt, insertAt, updateAt, clear } = useList(); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useList />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

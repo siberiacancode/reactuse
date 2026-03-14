@@ -1,14 +1,56 @@
 ---
-title: useMap
-description: Hook that manages a map structure
+  title: useMap
+  description: Hook that manages a map structure
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    high
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useMap
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { value, set, remove, clear, reset, size, has } = useMap([1, 'one'], [2, 'two']); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useMap />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

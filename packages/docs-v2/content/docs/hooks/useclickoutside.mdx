@@ -1,14 +1,60 @@
 ---
-title: useClickOutside
-description: Hook to handle click events outside the specified target element(s)
+  title: useClickOutside
+  description: Hook to handle click events outside the specified target element(s)
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    necessary
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useClickOutside
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    useClickOutside(ref, () => console.log('click outside')); 
+  ``` 
+   
+  ```tsx 
+    const { ref } = useClickOutside<HTMLDivElement>(() => console.log('click outside')); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useClickOutside />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

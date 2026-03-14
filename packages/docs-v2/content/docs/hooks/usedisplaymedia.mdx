@@ -1,14 +1,60 @@
 ---
-title: useDisplayMedia
-description: Hook that provides screen sharing functionality
+  title: useDisplayMedia
+  description: Hook that provides screen sharing functionality
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useDisplayMedia
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { stream, sharing, start, stop } = useDisplayMedia(ref); 
+  ``` 
+   
+  ```tsx 
+    const { ref, stream, sharing, start, stop } = useDisplayMedia<HTMLVideoElement>(); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useDisplayMedia />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

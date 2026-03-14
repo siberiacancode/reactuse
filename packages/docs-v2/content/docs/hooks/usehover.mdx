@@ -1,14 +1,68 @@
 ---
-title: useHover
-description: Hook that defines the logic when hovering an element
+  title: useHover
+  description: Hook that defines the logic when hovering an element
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useHover
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const hovering = useHover(ref, () => console.log('callback')); 
+  ``` 
+   
+  ```tsx 
+    const hovering = useHover(ref, options); 
+  ``` 
+   
+  ```tsx 
+    const { ref, value } = useHover(() => console.log('callback')); 
+  ``` 
+   
+  ```tsx 
+    const { ref, value } = useHover(options); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useHover />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

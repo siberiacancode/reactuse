@@ -1,14 +1,56 @@
 ---
-title: useTimeout
-description: Hook that executes a callback function after a specified delay
+  title: useTimeout
+  description: Hook that executes a callback function after a specified delay
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Time
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Time
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useTimeout
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { clear, ready } = useTimeout(() => {}, 5000); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useTimeout />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

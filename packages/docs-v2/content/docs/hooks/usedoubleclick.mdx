@@ -1,14 +1,60 @@
 ---
-title: useDoubleClick
-description: Hook that defines the logic when double clicking an element
+  title: useDoubleClick
+  description: Hook that defines the logic when double clicking an element
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useDoubleClick
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    useDoubleClick(ref, () => console.log('double clicked')); 
+  ``` 
+   
+  ```tsx 
+    const { ref } = useDoubleClick(() => console.log('double clicked')); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useDoubleClick />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

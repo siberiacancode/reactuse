@@ -1,14 +1,68 @@
 ---
-title: useKeyboard
-description: Hook that helps to listen for keyboard events
+  title: useKeyboard
+  description: Hook that helps to listen for keyboard events
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useKeyboard
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    useKeyboard(ref, (event) => console.log('key down')); 
+  ``` 
+   
+  ```tsx 
+    useKeyboard(ref, { onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') }); 
+  ``` 
+   
+  ```tsx 
+    const ref = useKeyboard((event) => console.log('key down')); 
+  ``` 
+   
+  ```tsx 
+    const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') }); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useKeyboard />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

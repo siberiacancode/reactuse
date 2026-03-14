@@ -3,10 +3,14 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { getIconForLanguageExtension } from '@/components/icons';
 import { Kbd } from '@/ui/kbd';
+import { Badge } from '@/ui/badge';
+import { Separator } from '@/ui/separator';
+
 import Link from 'next/link';
 import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
 import { Callout } from './components/callout';
+import { HookPreview } from './components/hook-preview';
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
@@ -217,5 +221,8 @@ export const mdxComponents = {
     />
   ),
   Kbd,
-  Callout
+  Callout,
+  Badge,
+  Separator,
+  HookPreview
 };

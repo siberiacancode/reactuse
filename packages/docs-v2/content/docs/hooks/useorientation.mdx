@@ -1,14 +1,56 @@
 ---
-title: useOrientation
-description: Hook that provides the current screen orientation
+  title: useOrientation
+  description: Hook that provides the current screen orientation
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useOrientation
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { supported, value, lock, unlock } = useOrientation(); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useOrientation />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

@@ -1,14 +1,68 @@
 ---
-title: useHotkeys
-description: Hook that listens for hotkeys
+  title: useHotkeys
+  description: Hook that listens for hotkeys
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useHotkeys
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed')); 
+  ``` 
+   
+  ```tsx 
+    useHotkeys(ref, 'ctrl+a, ctrl+b', () => console.log('hotkey pressed')); 
+  ``` 
+   
+  ```tsx 
+    const ref = useHotkeys('ctrl+a', () => console.log('hotkey pressed')); 
+  ``` 
+   
+  ```tsx 
+    const ref = useHotkeys('ctrl+a, ctrl+b', () => console.log('hotkey pressed')); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useHotkeys />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

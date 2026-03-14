@@ -1,14 +1,68 @@
 ---
-title: useIntersectionObserver
-description: Hook that gives you intersection observer state
+  title: useIntersectionObserver
+  description: Hook that gives you intersection observer state
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useIntersectionObserver
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { ref, entries, observer } = useIntersectionObserver(); 
+  ``` 
+   
+  ```tsx 
+    const { entries, observer } = useIntersectionObserver(ref); 
+  ``` 
+   
+  ```tsx 
+    const { ref, entries, observer } = useIntersectionObserver(() => console.log('callback')); 
+  ``` 
+   
+  ```tsx 
+    const { entries, observer } = useIntersectionObserver(ref, () => console.log('callback')); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useIntersectionObserver />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

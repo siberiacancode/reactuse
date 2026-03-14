@@ -1,14 +1,64 @@
 ---
-title: useDeviceMotion
-description: Hook that work with device motion
+  title: useDeviceMotion
+  description: Hook that work with device motion
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useDeviceMotion
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion(500, (event) => console.log(event)); 
+  ``` 
+   
+  ```tsx 
+    const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion((event) => console.log(event)); 
+  ``` 
+   
+  ```tsx 
+    const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion(); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useDeviceMotion />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

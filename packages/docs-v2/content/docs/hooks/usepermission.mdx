@@ -1,14 +1,56 @@
 ---
-title: usePermission
-description: Hook that gives you the state of permission
+  title: usePermission
+  description: Hook that gives you the state of permission
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add usePermission
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { state, supported, query } = usePermission('microphone'); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=usePermission />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

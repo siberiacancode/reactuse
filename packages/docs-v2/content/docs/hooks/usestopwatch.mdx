@@ -1,14 +1,60 @@
 ---
-title: useStopwatch
-description: Hook that creates a stopwatch functionality
+  title: useStopwatch
+  description: Hook that creates a stopwatch functionality
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Time
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    high
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Time
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useStopwatch
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { enabled: false }); 
+  ``` 
+   
+  ```tsx 
+    const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, enabled: false }); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useStopwatch />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

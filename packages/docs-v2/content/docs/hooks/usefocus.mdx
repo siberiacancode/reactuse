@@ -1,14 +1,68 @@
 ---
-title: useFocus
-description: Hook that allows you to focus on a specific element
+  title: useFocus
+  description: Hook that allows you to focus on a specific element
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useFocus
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { focus, blur, focused } = useFocus(ref, () => console.log('focused')); 
+  ``` 
+   
+  ```tsx 
+    const { focus, blur, focused } = useFocus(ref); 
+  ``` 
+   
+  ```tsx 
+    const { ref, focus, blur, focused } = useFocus(() => console.log('focused')); 
+  ``` 
+   
+  ```tsx 
+    const { ref, focus, blur, focused } = useFocus(); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useFocus />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

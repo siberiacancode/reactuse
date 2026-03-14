@@ -1,14 +1,56 @@
 ---
-title: useAsync
-description: Hook that provides the state of an async callback
+  title: useAsync
+  description: Hook that provides the state of an async callback
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Async
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Async
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useAsync
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useAsync />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES2017",
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
+      "@core/*": ["../core*"],
       "@/*": ["./*"],
-      "@/ui/*": ["./components/ui/*"],
-      "fumadocs-mdx:collections/*": [".source/*"]
+      "@/ui/*": ["./components/ui/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

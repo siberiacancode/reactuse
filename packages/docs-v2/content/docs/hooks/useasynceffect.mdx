@@ -1,14 +1,56 @@
 ---
-title: useAsyncEffect
-description: Hook that triggers the effect callback on updates
+  title: useAsyncEffect
+  description: Hook that triggers the effect callback on updates
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Lifecycle
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Lifecycle
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useAsyncEffect
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    useAsyncEffect(async () => console.log("effect runs on updates"), deps); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useAsyncEffect />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

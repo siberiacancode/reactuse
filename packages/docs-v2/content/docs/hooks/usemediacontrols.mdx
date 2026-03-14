@@ -1,14 +1,68 @@
 ---
-title: useMediaControls
-description: that provides controls for HTML media elements (audio/video)
+  title: useMediaControls
+  description: that provides controls for HTML media elements (audio/video)
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useMediaControls
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { playing, play, pause } = useMediaControls(videoRef, 'video.mp4'); 
+  ``` 
+   
+  ```tsx 
+    const { playing, play, pause } = useMediaControls(audioRef, { src: 'audio.mp3', type: 'audio/mp3' }); 
+  ``` 
+   
+  ```tsx 
+    const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>('video.mp4'); 
+  ``` 
+   
+  ```tsx 
+    const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>({ src: 'video.mp4', type: 'video/mp4' }); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useMediaControls />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

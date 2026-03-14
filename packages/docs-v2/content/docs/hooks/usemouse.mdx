@@ -1,14 +1,60 @@
 ---
-title: useMouse
-description: Hook that manages a mouse position
+  title: useMouse
+  description: Hook that manages a mouse position
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useMouse
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { x, y, clientX, clientY, elementX, elementY, elementPositionX, elementPositionY } = useMouse(ref); 
+  ``` 
+   
+  ```tsx 
+    const { ref, x, y, clientX, clientY, elementX, elementY, elementPositionX, elementPositionY } = useMouse(); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useMouse />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

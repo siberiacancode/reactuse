@@ -1,14 +1,60 @@
 ---
-title: useSticky
-description: Hook that allows you to detect that your sticky component is stuck
+  title: useSticky
+  description: Hook that allows you to detect that your sticky component is stuck
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Elements
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useSticky
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { stuck } = useSticky(ref); 
+  ``` 
+   
+  ```tsx 
+    const { stuck, ref } = useSticky(); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useSticky />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

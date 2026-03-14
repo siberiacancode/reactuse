@@ -1,14 +1,56 @@
 ---
-title: useThrottleEffect
-description: Hook that runs an effect at most once per delay period when dependencies change
+  title: useThrottleEffect
+  description: Hook that runs an effect at most once per delay period when dependencies change
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Utilities
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Utilities
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useThrottleEffect
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    useThrottleEffect(() => console.log('effect'), 500, [value]); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useThrottleEffect />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

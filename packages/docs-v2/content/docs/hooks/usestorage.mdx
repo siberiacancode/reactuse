@@ -1,14 +1,56 @@
 ---
-title: useStorage
-description: Hook that manages storage value
+  title: useStorage
+  description: Hook that manages storage value
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    high
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useStorage
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { value, set, remove } = useStorage('key', 'value'); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useStorage />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

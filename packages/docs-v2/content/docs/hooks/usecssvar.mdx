@@ -1,14 +1,60 @@
 ---
-title: useCssVar
-description: Hook that returns the value of a css variable
+  title: useCssVar
+  description: Hook that returns the value of a css variable
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useCssVar
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { ref, value, set, remove } = useCssVar('--color', 'red'); 
+  ``` 
+   
+  ```tsx 
+    const { value, set, remove } = useCssVar(ref, '--color', 'red'); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useCssVar />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

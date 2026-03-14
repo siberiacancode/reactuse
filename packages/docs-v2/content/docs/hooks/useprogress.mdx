@@ -1,14 +1,56 @@
 ---
-title: useProgress
-description: Hook that creates a lightweight progress bar
+  title: useProgress
+  description: Hook that creates a lightweight progress bar
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Time
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Time
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useProgress
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { value, active, start, done, inc, set, remove } = useProgress(0.2); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useProgress />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

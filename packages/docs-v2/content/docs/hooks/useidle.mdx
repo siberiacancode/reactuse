@@ -1,14 +1,56 @@
 ---
-title: useIdle
-description: Hook that defines the logic when the user is idle
+  title: useIdle
+  description: Hook that defines the logic when the user is idle
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useIdle
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { idle, lastActive } = useIdle(); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useIdle />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

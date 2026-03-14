@@ -1,14 +1,56 @@
 ---
-title: useStateHistory
-description: Hook that manages state with history functionality
+  title: useStateHistory
+  description: Hook that manages state with history functionality
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    medium
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useStateHistory
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { value, history, index, set, back, forward, reset, undo, redo, canUndo, canRedo } = useStateHistory(0); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useStateHistory />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

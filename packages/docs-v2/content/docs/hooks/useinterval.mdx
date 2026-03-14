@@ -1,14 +1,60 @@
 ---
-title: useInterval
-description: Hook that makes and interval and returns controlling functions
+  title: useInterval
+  description: Hook that makes and interval and returns controlling functions
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Time
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    high
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Time
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useInterval
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), 2500); 
+  ``` 
+   
+  ```tsx 
+    const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), { interval: 2500 }); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useInterval />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

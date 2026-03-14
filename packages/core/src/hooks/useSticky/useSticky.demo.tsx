@@ -1,4 +1,4 @@
-import { cn } from '@siberiacancode/docs/utils';
+import { cn } from '@siberiacancode/docs/lib/cn';
 import { useSticky } from '@siberiacancode/reactuse';
 import { useRef } from 'react';
 

@@ -1,14 +1,68 @@
 ---
-title: useResizeObserver
-description: Hook that gives you resize observer state
+  title: useResizeObserver
+  description: Hook that gives you resize observer state
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useResizeObserver
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { entries, observer } = useResizeObserver(ref); 
+  ``` 
+   
+  ```tsx 
+    const { ref, entry, observer } = useResizeObserver(); 
+  ``` 
+   
+  ```tsx 
+    const { ref, entry, observer } = useResizeObserver((entry) => console.log(entry)); 
+  ``` 
+   
+  ```tsx 
+    const { entry, observer } = useResizeObserver(ref, (entry) => console.log(entry)); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useResizeObserver />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

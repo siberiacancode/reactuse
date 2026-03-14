@@ -1,14 +1,68 @@
 ---
-title: useHash
-description: Hook that manages the hash value
+  title: useHash
+  description: Hook that manages the hash value
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    State
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useHash
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { value, set } = useHash("initial"); 
+  ``` 
+   
+  ```tsx 
+    const { value, set } = useHash("initial", (newHash) => console.log('callback')); 
+  ``` 
+   
+  ```tsx 
+    const { value, set } = useHash(); 
+  ``` 
+   
+  ```tsx 
+    const { value, set } = useHash((newHash) => console.log('callback')); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useHash />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

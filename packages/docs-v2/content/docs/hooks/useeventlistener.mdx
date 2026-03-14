@@ -1,14 +1,68 @@
 ---
-title: useEventListener
-description: Hook that attaches an event listener to the specified target
+  title: useEventListener
+  description: Hook that attaches an event listener to the specified target
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    necessary
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Browser
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useEventListener
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    useEventListener(window, 'click', () => console.log('click')); 
+  ``` 
+   
+  ```tsx 
+    useEventListener(document, 'click', () => console.log('click')); 
+  ``` 
+   
+  ```tsx 
+    useEventListener(ref, 'click', () => console.log('click')); 
+  ``` 
+   
+  ```tsx 
+    const ref = useEventListener('click', () => console.log('click')); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useEventListener />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

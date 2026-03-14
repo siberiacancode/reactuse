@@ -1,14 +1,56 @@
 ---
-title: useMount
-description: Hook that executes a callback when the component mounts
+  title: useMount
+  description: Hook that executes a callback when the component mounts
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Lifecycle
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    necessary
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Lifecycle
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useMount
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    useMount(() => console.log('This effect runs on the initial render')); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useMount />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>

@@ -1,14 +1,68 @@
 ---
-title: useScroll
-description: Hook that allows you to control scroll a element
+  title: useScroll
+  description: Hook that allows you to control scroll a element
 ---
 
+<div className="flex gap-3">
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+    low
+  </Badge>
+  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+    Sensors
+  </Badge>
+</div>
+
+
+
+
+<Separator className="my-8"/>
+
 ## Installation
-
-
 
 ```bash
 npx useverse@latest add useScroll
 ```
 
+## Usage
 
+ 
+  ```tsx 
+    const { scrolling, scrollIntoView, scrollTo} = useScroll(ref, options); 
+  ``` 
+   
+  ```tsx 
+    const { scrolling, scrollIntoView, scrollTo} = useScroll(ref, () => console.log('callback')); 
+  ``` 
+   
+  ```tsx 
+    const { ref, scrolling, scrollIntoView, scrollTo} = useScroll(options); 
+  ``` 
+   
+  ```tsx 
+    const { ref, scrolling, scrollIntoView, scrollTo} = useScroll(() => console.log('callback')); 
+  ``` 
+  
+
+## Demo
+
+<HookPreview name=useScroll />
+
+## Api
+
+<table>
+  <tr>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+   <th>
+    Test
+  </th>
+  </tr>
+ 
+</table>
