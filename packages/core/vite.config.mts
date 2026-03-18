@@ -35,6 +35,7 @@ export default defineConfig({
         ...Object.keys(pkg.dependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),
         "react/jsx-runtime",
+        "react-dom/client",
       ],
       output: [
         {

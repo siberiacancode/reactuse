@@ -8,7 +8,7 @@ import { useRerender } from '../useRerender/useRerender';
  *
  * @template Value The input value
  * @template Type The input value type
- * @param {Value} [params.initialValue] Initial value
+ * @param {Value} [params.initialValue = ""] Initial value
  * @param {boolean} [params.initialTouched=false] Initial touched state
  * @param {boolean} [params.autoFocus=false] Auto focus
  * @param {boolean} [params.validateOnChange=false] Validate on change
@@ -19,7 +19,7 @@ import { useRerender } from '../useRerender/useRerender';
  * @example
  * const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();
  */
-export const useField = (initialValue, options) => {
+export const useField = (initialValue = '', options) => {
   const inputRef = useRef(null);
   const watchingRef = useRef(false);
   const rerender = useRerender();

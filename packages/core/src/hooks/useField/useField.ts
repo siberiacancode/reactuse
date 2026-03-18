@@ -93,7 +93,7 @@ export interface UseFieldReturn<Value> {
  *
  * @template Value The input value
  * @template Type The input value type
- * @param {Value} [params.initialValue] Initial value
+ * @param {Value} [params.initialValue = ""] Initial value
  * @param {boolean} [params.initialTouched=false] Initial touched state
  * @param {boolean} [params.autoFocus=false] Auto focus
  * @param {boolean} [params.validateOnChange=false] Validate on change
@@ -108,7 +108,7 @@ export const useField = <
   Value extends boolean | number | string = string,
   Type = Value extends string ? string : Value extends boolean ? boolean : number
 >(
-  initialValue?: Value,
+  initialValue: Value = '' as Value,
   options?: UseFieldOptions
 ): UseFieldReturn<Type> => {
   const inputRef = useRef<HTMLInputElement | null>(null);
