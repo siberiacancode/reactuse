@@ -167,3 +167,57 @@ it('Should cleanup interval on unmount', () => {
   expect(clearIntervalSpy).toHaveBeenCalled();
   clearIntervalSpy.mockRestore();
 });
+
+it('Should correctly transition from 59 seconds to 1 minute', () => {
+  const { result } = renderHook(useStopwatch);
+
+  act(() => result.current.start());
+
+  act(() => vi.advanceTimersByTime(59_000));
+
+  expect(result.current.seconds).toBe(59);
+  expect(result.current.minutes).toBe(0);
+
+  act(() => vi.advanceTimersByTime(1_000));
+
+  expect(result.current.seconds).toBe(0);
+  expect(result.current.minutes).toBe(1);
+});
+
+it('Should correctly transition from 59 minutes 59 seconds to 1 hour', () => {
+  const { result } = renderHook(useStopwatch);
+
+  act(() => result.current.start());
+
+  act(() => vi.advanceTimersByTime(3_599_000));
+
+  expect(result.current.hours).toBe(0);
+  expect(result.current.minutes).toBe(59);
+  expect(result.current.seconds).toBe(59);
+
+  act(() => vi.advanceTimersByTime(1_000));
+
+  expect(result.current.hours).toBe(1);
+  expect(result.current.minutes).toBe(0);
+  expect(result.current.seconds).toBe(0);
+});
+
+it('Should correctly transition from 23:59:59 to 1 day', () => {
+  const { result } = renderHook(useStopwatch);
+
+  act(() => result.current.start());
+
+  act(() => vi.advanceTimersByTime(86_399_000));
+
+  expect(result.current.days).toBe(0);
+  expect(result.current.hours).toBe(23);
+  expect(result.current.minutes).toBe(59);
+  expect(result.current.seconds).toBe(59);
+
+  act(() => vi.advanceTimersByTime(1_000));
+
+  expect(result.current.days).toBe(1);
+  expect(result.current.hours).toBe(0);
+  expect(result.current.minutes).toBe(0);
+  expect(result.current.seconds).toBe(0);
+});
