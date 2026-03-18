@@ -29,7 +29,6 @@ targets.forEach((target) => {
 
     afterEach(() => {
       vi.useRealTimers();
-      vi.clearAllMocks();
     });
 
     it('Should use double click', () => {

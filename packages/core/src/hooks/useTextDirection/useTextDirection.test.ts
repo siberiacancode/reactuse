@@ -44,7 +44,6 @@ const element = document.getElementById('target') as HTMLDivElement;
 
 afterEach(() => {
   element.removeAttribute('dir');
-  vi.clearAllMocks();
   trigger.clear();
 });
 

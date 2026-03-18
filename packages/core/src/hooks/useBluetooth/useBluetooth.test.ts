@@ -35,7 +35,6 @@ beforeEach(() => {
     configurable: true
   });
 
-  vi.clearAllMocks();
   trigger.clear();
 });
 

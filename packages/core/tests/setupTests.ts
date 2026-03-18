@@ -5,8 +5,3 @@ if (typeof document !== 'undefined') {
   target.textContent = 'target';
   document.body.appendChild(target);
 }
-
-afterEach(() => {
-  vi.clearAllMocks();
-  vi.resetAllMocks();
-});

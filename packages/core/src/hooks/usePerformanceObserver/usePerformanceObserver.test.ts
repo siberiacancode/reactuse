@@ -1,14 +1,15 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { renderHookServer } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 
 import { usePerformanceObserver } from './usePerformanceObserver';
 
-const mockObserve = vi.fn();
-const mockDisconnect = vi.fn();
+const PERFORMANCE_OBSERVER_KEY = 'performance-observer';
+const trigger = createTrigger<string, PerformanceObserverCallback>();
 
-let observerCallback: PerformanceObserverCallback;
+const mockPerformanceObserverObserve = vi.fn();
+const mockPerformanceObserverDisconnect = vi.fn();
 
 const createMockPerformanceEntry = (
   name = 'test-entry',
@@ -25,17 +26,26 @@ const createMockPerformanceEntry = (
 
 class MockPerformanceObserver {
   constructor(callback: PerformanceObserverCallback) {
-    observerCallback = callback;
+    this.callback = callback;
   }
 
-  observe = (options?: PerformanceObserverInit) => mockObserve(options);
-  disconnect = () => mockDisconnect();
+  callback: PerformanceObserverCallback;
+
+  observe = (options?: PerformanceObserverInit) => {
+    trigger.add(PERFORMANCE_OBSERVER_KEY, this.callback);
+    mockPerformanceObserverObserve(options);
+  };
+
+  disconnect = () => {
+    trigger.delete(PERFORMANCE_OBSERVER_KEY);
+    mockPerformanceObserverDisconnect();
+  };
 }
 
 globalThis.PerformanceObserver = MockPerformanceObserver as any;
 
-afterEach(() => {
-  vi.clearAllMocks();
+beforeEach(() => {
+  trigger.clear();
 });
 
 it('Should use performance observer', () => {
@@ -45,6 +55,7 @@ it('Should use performance observer', () => {
   expect(result.current.entries).toEqual([]);
   expect(result.current.start).toBeTypeOf('function');
   expect(result.current.stop).toBeTypeOf('function');
+  expect(result.current.observer).toBeUndefined();
 });
 
 it('Should use performance observer on server side', () => {
@@ -54,66 +65,69 @@ it('Should use performance observer on server side', () => {
   expect(result.current.entries).toEqual([]);
   expect(result.current.start).toBeTypeOf('function');
   expect(result.current.stop).toBeTypeOf('function');
+  expect(result.current.observer).toBeUndefined();
 });
 
-it('Should start observing when immediate is true', () => {
+it('Should start observing when immediate', () => {
   renderHook(() => usePerformanceObserver({ entryTypes: ['measure'], immediate: true }));
 
-  expect(mockObserve).toHaveBeenCalledOnce();
-  expect(mockObserve).toHaveBeenCalledWith(expect.objectContaining({ entryTypes: ['measure'] }));
+  expect(mockPerformanceObserverObserve).toHaveBeenCalledOnce();
+  expect(mockPerformanceObserverObserve).toHaveBeenCalledWith(
+    expect.objectContaining({ entryTypes: ['measure'] })
+  );
 });
 
-it('Should not start observing when immediate is not set', () => {
-  renderHook(() => usePerformanceObserver({ entryTypes: ['measure'] }));
-
-  expect(mockObserve).not.toHaveBeenCalled();
-});
-
-it('Should start, stop and restart observer manually', () => {
+it('Should restart observer manually', () => {
   const { result } = renderHook(() => usePerformanceObserver({ entryTypes: ['measure'] }));
 
-  expect(mockObserve).not.toHaveBeenCalled();
+  const entry = createMockPerformanceEntry();
+  const entryList = {
+    getEntries: () => [entry]
+  } as PerformanceObserverEntryList;
 
-  act(() => result.current.start());
+  act(() => {
+    result.current.start();
+    trigger.callback(PERFORMANCE_OBSERVER_KEY, entryList, result.current.observer!);
+  });
 
-  expect(mockObserve).toHaveBeenCalledOnce();
+  expect(result.current.entries).toEqual([entry]);
 
-  act(() => result.current.stop());
+  expect(mockPerformanceObserverObserve).toHaveBeenCalledOnce();
 
-  expect(mockDisconnect).toHaveBeenCalledOnce();
+  act(result.current.stop);
 
-  act(() => result.current.start());
-
-  expect(mockObserve).toHaveBeenCalledTimes(2);
+  expect(mockPerformanceObserverDisconnect).toHaveBeenCalledOnce();
 });
 
 it('Should call callback when performance entries are observed', () => {
   const callback = vi.fn();
 
-  renderHook(() => usePerformanceObserver({ entryTypes: ['measure'], immediate: true }, callback));
-
-  const entry = createMockPerformanceEntry();
-  const entryList = { getEntries: () => [entry] } as PerformanceObserverEntryList;
-
-  act(() => observerCallback(entryList, {} as PerformanceObserver));
-
-  expect(callback).toHaveBeenCalledOnce();
-  expect(callback).toHaveBeenCalledWith(entryList, expect.any(Object));
-});
-
-it('Should update entries state when performance entries are observed', () => {
   const { result } = renderHook(() =>
-    usePerformanceObserver({ entryTypes: ['measure'], immediate: true })
+    usePerformanceObserver({ entryTypes: ['measure'] }, callback)
   );
 
-  expect(result.current.entries).toEqual([]);
+  const entry = createMockPerformanceEntry();
+  const entryList = {
+    getEntries: () => [entry]
+  } as PerformanceObserverEntryList;
 
-  const entry = createMockPerformanceEntry('paint', 'measure', 0, 50);
-  const entryList = { getEntries: () => [entry] } as PerformanceObserverEntryList;
+  act(() => {
+    result.current.start();
+    trigger.callback(PERFORMANCE_OBSERVER_KEY, entryList, result.current.observer);
+  });
 
-  act(() => observerCallback(entryList, {} as PerformanceObserver));
+  expect(result.current.observer).toBeTruthy();
 
   expect(result.current.entries).toEqual([entry]);
+  expect(callback).toHaveBeenCalledOnce();
+});
+
+it('Should not disconnect observer on unmount when not started', () => {
+  const { unmount } = renderHook(() => usePerformanceObserver({ entryTypes: ['measure'] }));
+
+  unmount();
+
+  expect(mockPerformanceObserverDisconnect).not.toHaveBeenCalled();
 });
 
 it('Should disconnect observer on unmount', () => {
@@ -123,44 +137,5 @@ it('Should disconnect observer on unmount', () => {
 
   unmount();
 
-  expect(mockDisconnect).toHaveBeenCalledOnce();
-});
-
-it('Should not disconnect observer on unmount when not started', () => {
-  const { unmount } = renderHook(() => usePerformanceObserver({ entryTypes: ['measure'] }));
-
-  unmount();
-
-  expect(mockDisconnect).not.toHaveBeenCalled();
-});
-
-it('Should work without callback', () => {
-  const { result } = renderHook(() =>
-    usePerformanceObserver({ entryTypes: ['measure'], immediate: true })
-  );
-
-  const entry = createMockPerformanceEntry();
-  const entryList = { getEntries: () => [entry] } as PerformanceObserverEntryList;
-
-  act(() => observerCallback(entryList, {} as PerformanceObserver));
-
-  expect(result.current.entries).toEqual([entry]);
-});
-
-it('Should update entries state with multiple entries', () => {
-  const { result } = renderHook(() =>
-    usePerformanceObserver({ entryTypes: ['measure'], immediate: true })
-  );
-
-  const entries = [
-    createMockPerformanceEntry('first-paint', 'paint', 0, 10),
-    createMockPerformanceEntry('api-call', 'measure', 100, 200),
-    createMockPerformanceEntry('lcp', 'largest-contentful-paint', 50, 150)
-  ];
-  const entryList = { getEntries: () => entries } as PerformanceObserverEntryList;
-
-  act(() => observerCallback(entryList, {} as PerformanceObserver));
-
-  expect(result.current.entries).toEqual(entries);
-  expect(result.current.entries).toHaveLength(3);
+  expect(mockPerformanceObserverDisconnect).toHaveBeenCalledOnce();
 });

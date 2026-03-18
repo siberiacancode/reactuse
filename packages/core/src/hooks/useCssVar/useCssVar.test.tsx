@@ -25,7 +25,6 @@ const element = document.getElementById('target') as HTMLDivElement;
 beforeEach(() => {
   element.style.removeProperty('--test-color');
   element.className = '';
-  vi.clearAllMocks();
 });
 
 const trigger = createTrigger<Node, MutationCallback>();

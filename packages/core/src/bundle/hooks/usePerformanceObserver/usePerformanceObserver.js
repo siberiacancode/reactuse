@@ -17,7 +17,7 @@ import { useEffect, useRef, useState } from 'react';
 export const usePerformanceObserver = (options, callback) => {
   const supported = typeof window !== 'undefined' && !!window.PerformanceObserver;
   const [entries, setEntries] = useState([]);
-  const observerRef = useRef(null);
+  const observerRef = useRef(undefined);
   const internalCallback = useRef(callback);
   internalCallback.current = callback;
   const start = () => {
@@ -32,7 +32,7 @@ export const usePerformanceObserver = (options, callback) => {
   const stop = () => {
     if (!supported) return;
     observerRef.current?.disconnect();
-    observerRef.current = null;
+    observerRef.current = undefined;
   };
   useEffect(() => {
     if (!supported) return;
@@ -41,5 +41,5 @@ export const usePerformanceObserver = (options, callback) => {
       stop();
     };
   }, []);
-  return { supported, entries, start, stop };
+  return { supported, entries, start, stop, observer: observerRef.current };
 };
