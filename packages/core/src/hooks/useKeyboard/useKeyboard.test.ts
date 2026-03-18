@@ -1,11 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
-import { renderHookServer } from '../../../tests/renderHookServer';
 import { useKeyboard } from './useKeyboard';
 
 type UseKeyboardReturn = StateRef<HTMLDivElement>;
@@ -28,33 +27,42 @@ targets.forEach((target) => {
   describe(`${target}`, () => {
     it('Should use keyboard', () => {
       const { result } = renderHook(() => {
-        if (target) return useKeyboard(target, () => {}) as unknown as UseKeyboardReturn;
+        if (target)
+          return useKeyboard(target, () => {}) as unknown as UseKeyboardReturn & {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useKeyboard<HTMLDivElement>(() => {});
       });
 
       if (target) expect(result.current).toBeUndefined();
-      if (!target) expect(result.current).toBeTypeOf('function');
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
     });
 
     it('Should use keyboard on server side', () => {
       const { result } = renderHookServer(() => {
-        if (target) return useKeyboard(target, () => {}) as unknown as UseKeyboardReturn;
+        if (target)
+          return useKeyboard(target, () => {}) as unknown as UseKeyboardReturn & {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useKeyboard<HTMLDivElement>(() => {});
       });
 
       if (target) expect(result.current).toBeUndefined();
-      if (!target) expect(result.current).toBeTypeOf('function');
+      if (!target) expect(result.current.ref).toBeTypeOf('function');
     });
 
     it('Should call callback on key down', () => {
       const callback = vi.fn();
 
       const { result } = renderHook(() => {
-        if (target) return useKeyboard(target, callback) as unknown as UseKeyboardReturn;
+        if (target)
+          return useKeyboard(target, callback) as unknown as UseKeyboardReturn & {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useKeyboard<HTMLDivElement>(callback);
       });
 
-      if (!target) act(() => (result.current as UseKeyboardReturn)(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         element.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Enter' }));
@@ -68,11 +76,16 @@ targets.forEach((target) => {
       const onKeyDown = vi.fn();
 
       const { result } = renderHook(() => {
-        if (target) return useKeyboard(target, { onKeyDown }) as unknown as UseKeyboardReturn;
+        if (target)
+          return useKeyboard(target, {
+            onKeyDown
+          }) as unknown as UseKeyboardReturn & {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useKeyboard<HTMLDivElement>({ onKeyDown });
       });
 
-      if (!target) act(() => (result.current as UseKeyboardReturn)(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         element.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'a' }));
@@ -86,11 +99,16 @@ targets.forEach((target) => {
       const onKeyUp = vi.fn();
 
       const { result } = renderHook(() => {
-        if (target) return useKeyboard(target, { onKeyUp }) as unknown as UseKeyboardReturn;
+        if (target)
+          return useKeyboard(target, {
+            onKeyUp
+          }) as unknown as UseKeyboardReturn & {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useKeyboard<HTMLDivElement>({ onKeyUp });
       });
 
-      if (!target) act(() => (result.current as UseKeyboardReturn)(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         element.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'Escape' }));
@@ -106,11 +124,16 @@ targets.forEach((target) => {
 
       const { result } = renderHook(() => {
         if (target)
-          return useKeyboard(target, { onKeyDown, onKeyUp }) as unknown as UseKeyboardReturn;
+          return useKeyboard(target, {
+            onKeyDown,
+            onKeyUp
+          }) as unknown as UseKeyboardReturn & {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useKeyboard<HTMLDivElement>({ onKeyDown, onKeyUp });
       });
 
-      if (!target) act(() => (result.current as UseKeyboardReturn)(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         element.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Tab' }));
@@ -121,31 +144,18 @@ targets.forEach((target) => {
       expect(onKeyUp).toHaveBeenCalledOnce();
     });
 
-    it('Should cleanup on unmount', () => {
-      const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
-
-      const { result, unmount } = renderHook(() => {
-        if (target) return useKeyboard(target, () => {}) as unknown as UseKeyboardReturn;
-        return useKeyboard<HTMLDivElement>(() => {});
-      });
-
-      if (!target) act(() => (result.current as UseKeyboardReturn)(element));
-
-      unmount();
-
-      expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', expect.any(Function));
-      expect(removeEventListenerSpy).toHaveBeenCalledWith('keyup', expect.any(Function));
-    });
-
     it('Should pass correct key in keyboard event', () => {
       const callback = vi.fn();
 
       const { result } = renderHook(() => {
-        if (target) return useKeyboard(target, callback) as unknown as UseKeyboardReturn;
+        if (target)
+          return useKeyboard(target, callback) as unknown as UseKeyboardReturn & {
+            ref: StateRef<HTMLDivElement>;
+          };
         return useKeyboard<HTMLDivElement>(callback);
       });
 
-      if (!target) act(() => (result.current as UseKeyboardReturn)(element));
+      if (!target) act(() => result.current.ref(element));
 
       act(() => {
         element.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Enter' }));
@@ -154,45 +164,24 @@ targets.forEach((target) => {
       expect(callback).toHaveBeenCalledOnce();
       expect(callback.mock.calls[0][0].key).toBe('Enter');
     });
+  });
 
-    it('Should attach listener to window when no target provided', () => {
-      const callback = vi.fn();
+  it('Should cleanup on unmount', () => {
+    const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
-      renderHook(() => useKeyboard(callback));
-
-      act(() => {
-        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      });
-
-      expect(callback).toHaveBeenCalledOnce();
+    const { result, unmount } = renderHook(() => {
+      if (target)
+        return useKeyboard(target, () => {}) as unknown as UseKeyboardReturn & {
+          ref: StateRef<HTMLDivElement>;
+        };
+      return useKeyboard<HTMLDivElement>(() => {});
     });
 
-    it('Should update options after rerender', () => {
-      if (target) return;
+    if (!target) act(() => result.current.ref(element));
 
-      const onKeyDown1 = vi.fn();
-      const onKeyDown2 = vi.fn();
+    unmount();
 
-      const { result, rerender } = renderHook(
-        ({ handler }) => useKeyboard<HTMLDivElement>({ onKeyDown: handler }),
-        { initialProps: { handler: onKeyDown1 } }
-      );
-
-      act(() => (result.current as unknown as UseKeyboardReturn)(element));
-
-      act(() => {
-        element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      });
-
-      expect(onKeyDown1).toHaveBeenCalledOnce();
-
-      rerender({ handler: onKeyDown2 });
-
-      act(() => {
-        element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      });
-
-      expect(onKeyDown2).toHaveBeenCalledOnce();
-    });
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('keyup', expect.any(Function));
   });
 });

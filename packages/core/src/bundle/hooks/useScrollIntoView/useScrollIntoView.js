@@ -9,7 +9,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @usage low
  *
  * @overload
- * @param {HookTarget} [target=window] The target element to scroll into view
+ * @param {HookTarget} target The target element to scroll into view
  * @param {boolean} [options.immediately=true] Whether to scroll immediately
  * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior
  * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment
@@ -44,7 +44,7 @@ export const useScrollIntoView = (...params) => {
   useIsomorphicLayoutEffect(() => {
     if (!immediately) return;
     if (!target && !internalRef.state) return;
-    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
     elementRef.current = element;
     element.scrollIntoView({
       behavior,

@@ -193,7 +193,6 @@ export const useScroll = ((...params: any[]) => {
   };
 
   useEffect(() => {
-    if (!target && !internalRef.state) return;
     const element =
       ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;
 

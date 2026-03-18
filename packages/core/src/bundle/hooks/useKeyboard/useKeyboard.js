@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -29,7 +29,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {{ ref: StateRef<Target> }} An object containing the ref
  *
  * @example
- * const ref = useKeyboard((event) => console.log('key down'));
+ * const keyboard = useKeyboard((event) => console.log('key down'));
  *
  * @overload
  * @template Target The target element type
@@ -37,7 +37,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {{ ref: StateRef<Target> }} An object containing the ref
  *
  * @example
- * const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
+ * const keyboard = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
  */
 export const useKeyboard = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -48,14 +48,11 @@ export const useKeyboard = (...params) => {
     : typeof params[0] === 'object'
       ? params[0]
       : { onKeyDown: params[0] };
-  const [initialValue] = useState(() => (typeof window !== 'undefined' ? window : undefined));
-  const internalRef = useRefState(initialValue);
+  const internalRef = useRefState();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-    const element = target ? isTarget.getElement(target) : internalRef.current;
-    if (!element) return;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     const onKeyDown = (event) => internalOptionsRef.current?.onKeyDown?.(event);
     const onKeyUp = (event) => internalOptionsRef.current?.onKeyUp?.(event);
     element.addEventListener('keydown', onKeyDown);
@@ -66,5 +63,5 @@ export const useKeyboard = (...params) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
-  return internalRef;
+  return { ref: internalRef };
 };

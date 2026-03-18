@@ -62,15 +62,13 @@ targets.forEach((target) => {
     });
 
     it('Should scroll immediately by default', () => {
-      const { result } = renderHook(() => {
+      renderHook(() => {
         if (target)
           return useScrollTo(target, { x: 100, y: 200 }) as unknown as {
             ref: StateRef<HTMLDivElement>;
           } & UseScrollToReturn;
         return useScrollTo<HTMLDivElement>({ x: 100, y: 200 });
       });
-
-      if (!target) act(() => result.current.ref(element));
 
       expect(mockScrollTo).toHaveBeenCalledTimes(1);
       expect(mockScrollTo).toHaveBeenCalledWith({
@@ -81,7 +79,7 @@ targets.forEach((target) => {
     });
 
     it('Should not to scroll when not immediately', () => {
-      const { result } = renderHook(() => {
+      renderHook(() => {
         if (target)
           return useScrollTo(target, {
             x: 100,
@@ -97,8 +95,6 @@ targets.forEach((target) => {
         });
       });
 
-      if (!target) act(() => result.current.ref(element));
-
       expect(mockScrollTo).not.toHaveBeenCalled();
     });
 
@@ -110,8 +106,6 @@ targets.forEach((target) => {
           } & UseScrollToReturn;
         return useScrollTo<HTMLDivElement>({ x: 0, y: 0 });
       });
-
-      if (!target) act(() => result.current.ref(element));
 
       act(() => result.current.trigger({ x: 50, y: 100 }));
 
@@ -132,8 +126,6 @@ targets.forEach((target) => {
         return useScrollTo<HTMLDivElement>({ x: 0, y: 0 });
       });
 
-      if (!target) act(() => result.current.ref(element));
-
       act(() => result.current.trigger({ x: 50, y: 100, behavior: 'smooth' }));
 
       expect(mockScrollTo).toHaveBeenCalledTimes(2);
@@ -145,7 +137,7 @@ targets.forEach((target) => {
     });
 
     it('Should handle behavior option', () => {
-      const { result } = renderHook(() => {
+      renderHook(() => {
         if (target)
           return useScrollTo(target, {
             x: 100,
@@ -161,8 +153,6 @@ targets.forEach((target) => {
         });
       });
 
-      if (!target) act(() => result.current.ref(element));
-
       expect(mockScrollTo).toHaveBeenCalledWith({
         top: 200,
         left: 100,
@@ -171,7 +161,7 @@ targets.forEach((target) => {
     });
 
     it('Should handle target changes', () => {
-      const { result, rerender } = renderHook(
+      const { rerender } = renderHook(
         (target) => {
           if (target)
             return useScrollTo(target, { x: 100, y: 200 }) as unknown as {
@@ -183,8 +173,6 @@ targets.forEach((target) => {
           initialProps: target
         }
       );
-
-      if (!target) act(() => result.current.ref(element));
 
       expect(mockScrollTo).toHaveBeenCalledTimes(1);
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -68,7 +68,7 @@ export interface UseKeyboard {
  * @returns {{ ref: StateRef<Target> }} An object containing the ref
  *
  * @example
- * const ref = useKeyboard((event) => console.log('key down'));
+ * const keyboard = useKeyboard((event) => console.log('key down'));
  *
  * @overload
  * @template Target The target element type
@@ -76,7 +76,7 @@ export interface UseKeyboard {
  * @returns {{ ref: StateRef<Target> }} An object containing the ref
  *
  * @example
- * const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
+ * const keyboard = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
  */
 export const useKeyboard = ((...params: any[]) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -90,19 +90,13 @@ export const useKeyboard = ((...params: any[]) => {
         : { onKeyDown: params[0] }
   ) as UseKeyboardEventOptions;
 
-  const [initialValue] = useState<Window | undefined>(() =>
-    typeof window !== 'undefined' ? window : undefined
-  );
-
-  const internalRef = useRefState<HTMLElement | Window>(initialValue as Window);
+  const internalRef = useRefState<HTMLElement | Window>();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
 
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-
-    const element = (target ? isTarget.getElement(target) : internalRef.current) as HTMLElement;
-    if (!element) return;
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as HTMLElement) ?? window;
 
     const onKeyDown = (event: Event) =>
       internalOptionsRef.current?.onKeyDown?.(event as KeyboardEvent);
@@ -118,5 +112,5 @@ export const useKeyboard = ((...params: any[]) => {
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target) return;
-  return internalRef;
+  return { ref: internalRef };
 }) as UseKeyboard;
