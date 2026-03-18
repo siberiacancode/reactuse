@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -7,6 +7,9 @@ import { isTarget } from '@/utils/helpers';
 import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
+
+/** The use keyboard return type */
+export type UseKeyboardReturn<Target extends HTMLElement> = StateRef<Target>;
 
 /** The use keyboard event handler type */
 export type KeyboardEventHandler = (event: KeyboardEvent) => void;
@@ -87,7 +90,11 @@ export const useKeyboard = ((...params: any[]) => {
         : { onKeyDown: params[0] }
   ) as UseKeyboardEventOptions;
 
-  const internalRef = useRefState(window);
+  const [initialValue] = useState<Window | undefined>(() =>
+    typeof window !== 'undefined' ? window : undefined
+  );
+
+  const internalRef = useRefState<HTMLElement | Window>(initialValue as Window);
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
 

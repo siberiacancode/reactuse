@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -48,7 +48,8 @@ export const useKeyboard = (...params) => {
     : typeof params[0] === 'object'
       ? params[0]
       : { onKeyDown: params[0] };
-  const internalRef = useRefState(window);
+  const [initialValue] = useState(() => (typeof window !== 'undefined' ? window : undefined));
+  const internalRef = useRefState(initialValue);
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
   useEffect(() => {
