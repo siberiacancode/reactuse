@@ -10,7 +10,16 @@ import Link from 'next/link';
 import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
 import { Callout } from './components/callout';
-import { HookPreview } from './components/hook-preview';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption
+} from './components/ui/table';
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
@@ -69,9 +78,6 @@ export const mdxComponents = {
   a: ({ className, ...props }: React.ComponentProps<'a'>) => (
     <a className={cn('font-medium underline underline-offset-4', className)} {...props} />
   ),
-  p: ({ className, ...props }: React.ComponentProps<'p'>) => (
-    <p className={cn('leading-relaxed [&:not(:first-child)]:mt-6', className)} {...props} />
-  ),
   strong: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <strong className={cn('font-medium', className)} {...props} />
   ),
@@ -91,7 +97,7 @@ export const mdxComponents = {
     <img className={cn('rounded-md', className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }: React.ComponentProps<'hr'>) => <hr className='my-4 md:my-8' {...props} />,
-  table: ({ className, ...props }: React.ComponentProps<'table'>) => (
+  table: ({ className, ...props }: React.ComponentProps<'table'>) => {
     <div className='no-scrollbar my-6 w-full overflow-y-auto rounded-xl border'>
       <table
         className={cn(
@@ -100,8 +106,8 @@ export const mdxComponents = {
         )}
         {...props}
       />
-    </div>
-  ),
+    </div>;
+  },
   tr: ({ className, ...props }: React.ComponentProps<'tr'>) => (
     <tr className={cn('m-0 border-b', className)} {...props} />
   ),
@@ -224,5 +230,12 @@ export const mdxComponents = {
   Callout,
   Badge,
   Separator,
-  HookPreview
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption
 };

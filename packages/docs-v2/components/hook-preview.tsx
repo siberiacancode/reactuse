@@ -9,6 +9,27 @@ export function getDemoComponent(name: string) {
   return ExamplesIndex?.[name]?.component;
 }
 
+function DemoSuspense({
+  children,
+  name
+}: {
+  children: React.ReactNode;
+  name: string;
+}) {
+  return (
+    <React.Suspense
+      fallback={
+        <p className='text-muted-foreground mt-6 text-sm'>
+          Loading demo for{' '}
+          <code className='bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm'>{name}</code>
+          …
+        </p>
+      }>
+      {children}
+    </React.Suspense>
+  );
+}
+
 export function HookPreview({
   name,
   type,
@@ -103,7 +124,9 @@ export function HookPreview({
   if (caption) {
     return (
       <figure data-hide-code={hideCode} className='flex flex-col data-[hide-code=true]:gap-4'>
-        <Component />
+        <DemoSuspense name={name}>
+          <Component />
+        </DemoSuspense>
         <figcaption className='text-muted-foreground -mt-8 text-center text-sm data-[hide-code=true]:mt-0'>
           {caption}
         </figcaption>
@@ -111,5 +134,9 @@ export function HookPreview({
     );
   }
 
-  return <Component />;
+  return (
+    <DemoSuspense name={name}>
+      <Component />
+    </DemoSuspense>
+  );
 }
