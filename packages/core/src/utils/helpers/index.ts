@@ -1,4 +1,3 @@
-export * from './cn';
 export * from './copy';
 export * from './debounce';
 export * from './getDate';
