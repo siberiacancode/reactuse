@@ -1,4 +1,4 @@
-import { cn } from '@siberiacancode/docs/utils';;
+import { cn } from '@siberiacancode/docs/utils';
 import { useToggle } from '@siberiacancode/reactuse';
 
 const Demo = () => {
