@@ -20,6 +20,7 @@ import {
   TableCell,
   TableCaption
 } from './components/ui/table';
+import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from './components/ui/avatar';
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
@@ -237,5 +238,11 @@ export const mdxComponents = {
   TableHead,
   TableRow,
   TableCell,
-  TableCaption
+  TableCaption,
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarImage,
+  AvatarGroupCount
 };

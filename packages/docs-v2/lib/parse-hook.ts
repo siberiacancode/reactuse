@@ -1,11 +1,17 @@
 import fs, { existsSync } from 'fs';
 import { parse, Spec } from 'comment-parser';
 import path from 'path';
+import simpleGit from 'simple-git';
+import md5 from 'md5';
 
 interface ApiParameters {
   id: number;
   parameters: Spec[];
   returns: Spec | null;
+}
+interface Contributor {
+  name: string;
+  avatar: string;
 }
 
 export type HookProps = {
@@ -19,7 +25,10 @@ export type HookProps = {
   browserapi?: string;
   warning?: string;
   deprecated?: boolean;
+  contributors: Contributor[];
 };
+
+const git = simpleGit();
 
 const matchJsdoc = (file: string) => {
   const jsdocCommentRegex = /\/\*\*\s*\n([^\\*]|(\*(?!\/)))*\*\//;
@@ -30,13 +39,11 @@ const matchJsdoc = (file: string) => {
 export const isHookPath = (name: string) =>
   name.startsWith('use') && !name.includes('.test.') && !name.endsWith('.demo.tsx');
 
-function createGroup(id: number): ApiParameters {
-  return {
-    id,
-    parameters: [],
-    returns: null
-  };
-}
+const createGroup = (id: number): ApiParameters => ({
+  id,
+  parameters: [],
+  returns: null
+});
 
 function getApiParams(apiParameters: Spec[]) {
   if (!Array.isArray(apiParameters) || apiParameters.length === 0) {
@@ -75,7 +82,7 @@ function getApiParams(apiParameters: Spec[]) {
 }
 
 //TODO: type
-export const parseHookJsdocFromFile = (file: string): any => {
+export const parseHookJsdocFromFile = async (file: string): Promise<any> => {
   const name = path.basename(file, path.extname(file));
   const dir = path.dirname(file);
 
@@ -88,6 +95,24 @@ export const parseHookJsdocFromFile = (file: string): any => {
   if (!jsdoc) {
     return;
   }
+
+  const gitLogs = await git.log({
+    file: `../core/src/hooks/${name}/${name}.ts`
+  });
+
+  const contributors = Array.from(
+    new Map(
+      gitLogs.all.map((commit) => [
+        commit.author_email,
+        { name: commit.author_name, email: commit.author_email }
+      ])
+    ).values()
+  ).map((author) => ({
+    name: author.name,
+    avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`
+  }));
+
+  const lastModified = new Date(gitLogs.latest?.date ?? Date.now()).getTime();
 
   const _jsdoc = parse(jsdoc)[0];
 
@@ -111,6 +136,8 @@ export const parseHookJsdocFromFile = (file: string): any => {
     category: category?.name?.toLowerCase(),
     browserapi: browserapi?.name,
     warning: warning?.description,
-    hasTests
+    hasTests,
+    contributors,
+    lastModified
   };
 };

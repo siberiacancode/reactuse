@@ -2,8 +2,9 @@ import { HookProps } from '@/lib/parse-hook';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { Callout } from './callout';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
-export const getApiParamsTable = (groups: HookProps['apiParameters']) =>
+export const getApiParamsTableUI = (groups: HookProps['apiParameters']) =>
   reactElementToJSXString(
     <div>
       {groups.map((group) => (
@@ -46,7 +47,7 @@ export const getApiParamsTable = (groups: HookProps['apiParameters']) =>
     </div>
   );
 
-export const getWarning = (text?: string) =>
+export const getWarningUI = (text?: string) =>
   text
     ? reactElementToJSXString(
         <Callout className='border-yellow-600 bg-yellow-100 dark:border-yellow-400 dark:bg-yellow-900'>
@@ -54,3 +55,18 @@ export const getWarning = (text?: string) =>
         </Callout>
       )
     : '';
+
+export const getContributorsUI = (contributors: HookProps['contributors']) =>
+  reactElementToJSXString(
+    <div className='my-8 flex gap-4'>
+      {contributors.map(({ name, avatar }) => (
+        <div className='flex gap-2'>
+          <Avatar>
+            <AvatarImage src={avatar} alt='@shadcn' />
+            <AvatarFallback>{name[0]}</AvatarFallback>
+          </Avatar>
+          <h3 className='mt-1 leading-7'>{name}</h3>
+        </div>
+      ))}
+    </div>
+  );

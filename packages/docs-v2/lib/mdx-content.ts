@@ -1,5 +1,6 @@
+import { siteConfig } from './config';
 import { HookProps } from './parse-hook';
-import { getWarning } from '@/components/mdx-content';
+import { getApiParamsTableUI, getContributorsUI, getWarningUI } from '@/components/mdx-content';
 
 const getExamples = (examples: string[]) =>
   examples.map((example) => ` \`\`\`tsx \n ${example} \n \`\`\` `).join('\n');
@@ -25,7 +26,7 @@ export const mdxContent = (componentName: string, props: HookProps) => `---
   </Badge>
 </div>
 
-${getWarning(props.warning)}
+${getWarningUI(props.warning)}
 
 <Separator className="my-8"/>
 
@@ -51,7 +52,7 @@ TODO
 
 ## Api
 
-TODO
+${getApiParamsTableUI(props.apiParameters)}
 
 <Separator className="my-8"/>
 
@@ -59,5 +60,13 @@ TODO
 
 TODO
 
+## Source
+
+[Source](${siteConfig.source(componentName)})
+[Demo](${siteConfig.source(componentName, 'demo.tsx')})
+
 <Separator className="my-8"/>
+
+## Contributors
+  ${getContributorsUI(props.contributors)}
 `;

@@ -20,7 +20,9 @@ export const siteConfig = {
       href: '/docs/hooks/useactiveelement',
       label: 'Hooks'
     }
-  ]
+  ],
+  source: (name: string, type = 'ts') =>
+    `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/${name}/${name}.${type}`
 };
 
 export const META_THEME_COLORS = {

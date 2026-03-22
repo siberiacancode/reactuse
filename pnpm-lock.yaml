@@ -229,6 +229,9 @@ importers:
       lucide-react:
         specifier: 0.474.0
         version: 0.474.0(react@19.2.4)
+      md5:
+        specifier: ^2.3.0
+        version: 2.3.0
       next:
         specifier: 16.1.4
         version: 16.1.4(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -262,6 +265,9 @@ importers:
       shiki:
         specifier: ^1.10.1
         version: 1.29.2
+      simple-git:
+        specifier: ^3.30.0
+        version: 3.30.0
       tailwind-merge:
         specifier: ^3.5.0
         version: 3.5.0

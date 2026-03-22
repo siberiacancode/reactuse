@@ -20,7 +20,7 @@ const createMDXFile = (componentName: string, props: HookProps, outputDir: strin
   fs.writeFileSync(outputPath, mdxContent(componentName, props), 'utf-8');
 };
 
-const startScript = () => {
+const startScript = async () => {
   const componentsDir = path.resolve(process.argv[2]);
   const outputDir = process.argv[3] || path.resolve('content/docs/hooks');
 
@@ -31,14 +31,14 @@ const startScript = () => {
 
   const componentFiles = getComponentFiles(componentsDir);
 
-  componentFiles.forEach((filePath) => {
+  for (const filePath of componentFiles) {
     const componentName = path.basename(filePath, path.extname(filePath));
-    const props = parseHookJsdocFromFile(filePath);
+    const props = await parseHookJsdocFromFile(filePath);
 
     if (props && props.description) {
-      createMDXFile(componentName, props, outputDir);
+      await createMDXFile(componentName, props, outputDir);
     }
-  });
+  }
 };
 
 startScript();
