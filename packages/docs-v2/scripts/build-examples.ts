@@ -1,15 +1,20 @@
 import { promises as fs } from 'fs';
-import path from 'path';
+import path, { resolve } from 'path';
 import { rimraf } from 'rimraf';
 
-async function buildExamplesIndex() {
-  const cwd = process.cwd();
-  const examplesDir = path.join(cwd, '../../packages/core/src/hooks');
+const REPOSITORY_ROOT = resolve(__dirname, '..', '..');
 
-  await fs.access(examplesDir);
+const CORE_ROOT = resolve(REPOSITORY_ROOT, 'core');
+const SOURCE_DIR = resolve(CORE_ROOT, 'src/hooks');
+
+const DOC_ROOT = resolve(REPOSITORY_ROOT, 'docs-v2');
+const OUTPUT_DIR = resolve(DOC_ROOT, '.source');
+
+async function buildExamplesIndex() {
+  await fs.access(SOURCE_DIR);
   console.log('📋 Generating examples/__index__.tsx...');
 
-  const allEntries = await fs.readdir(examplesDir, { withFileTypes: true });
+  const allEntries = await fs.readdir(SOURCE_DIR, { withFileTypes: true });
 
   const folders = allEntries
     .filter((entry) => !entry.isFile())
@@ -18,7 +23,7 @@ async function buildExamplesIndex() {
 
   const files = await Promise.all(
     Array.from(folders).map(async (folder) => {
-      const allEntries = await fs.readdir(path.join(examplesDir, folder), { withFileTypes: true });
+      const allEntries = await fs.readdir(path.join(SOURCE_DIR, folder), { withFileTypes: true });
 
       const files = allEntries
         .filter((entry) => entry.isFile() && entry.name.endsWith('.demo.tsx'))
@@ -57,10 +62,10 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {`;
 
   index += '}';
 
-  const indexPath = path.join(cwd, '__index__.tsx');
+  const indexPath = path.join(OUTPUT_DIR, 'demo.tsx');
   await rimraf(indexPath);
   await fs.writeFile(indexPath, index);
-  console.log(`\n✅ Generated examples/__index__.tsx`);
+  console.log(`\n✅ Generated examples/demo.tsx`);
 }
 
 buildExamplesIndex().catch(console.error);

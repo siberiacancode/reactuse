@@ -9,7 +9,7 @@
     "start": "next start --port 4000",
     "preview": "next build && next start --port 4000",
     "examples:build": "bun scripts/build-examples",
-    "mdx:generate": "bun scripts/generate-mdx.ts ../../packages/core/src/hooks",
+    "docgen": "bun scripts/docgen.ts ",
     "type": "tsc --noEmit",
     "lint": "eslint . --fix",
     "pretty": "yarn type && yarn lint && yarn format",
