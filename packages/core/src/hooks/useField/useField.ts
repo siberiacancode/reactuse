@@ -48,7 +48,7 @@ export interface UseFieldRegisterParams {
   /** The required validation */
   required?: string;
   /** The custom validation */
-  validate?: (value: string) => Promise<string | true>;
+  validate?: (value: string) => string | true | Promise<string | true>;
 }
 
 /** The use field return type */
@@ -105,10 +105,10 @@ export interface UseFieldReturn<Value> {
  * const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();
  */
 export const useField = <
-  Value extends boolean | number | string = string,
+  Value extends boolean | number | string | unknown = string,
   Type = Value extends string ? string : Value extends boolean ? boolean : number
 >(
-  initialValue: Value = '' as Value,
+  initialValue = '' as Value,
   options?: UseFieldOptions
 ): UseFieldReturn<Type> => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -150,20 +150,20 @@ export const useField = <
       return setError(params.required);
     }
 
-    if (params.minLength && inputRef.current!.value.length < params.minLength.value) {
-      return setError(params.minLength.message);
-    }
-
-    if (params.maxLength && inputRef.current!.value.length > params.maxLength.value) {
-      return setError(params.maxLength.message);
-    }
-
     if (params.min && Number(inputRef.current!.value) < params.min.value) {
       return setError(params.min.message);
     }
 
     if (params.max && Number(inputRef.current!.value) > params.max.value) {
       return setError(params.max.message);
+    }
+
+    if (params.minLength && inputRef.current!.value.length < params.minLength.value) {
+      return setError(params.minLength.message);
+    }
+
+    if (params.maxLength && inputRef.current!.value.length > params.maxLength.value) {
+      return setError(params.maxLength.message);
     }
 
     if (params.pattern && !params.pattern.value.test(inputRef.current!.value)) {
@@ -199,7 +199,7 @@ export const useField = <
     onChange: async () => {
       if (watchingRef.current) return rerender();
       if (inputRef.current!.value !== initialValue) setDirty(true);
-      if (dirty && inputRef.current!.value === initialValue) setDirty(false);
+      if (inputRef.current!.value === initialValue) setDirty(false);
       if (registerParams && options?.validateOnChange) await validate(registerParams);
       if (registerParams && options?.validateOnBlur) setError(undefined);
     },

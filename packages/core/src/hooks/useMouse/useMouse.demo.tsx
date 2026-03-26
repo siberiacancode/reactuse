@@ -11,6 +11,7 @@ const Demo = () => {
     modal.style.top = `${value.clientY + 24}px`;
     modalRef.current.textContent = `x: ${value.clientX}, y: ${value.clientY}`;
   });
+
   const hover = useHover<HTMLDivElement>();
 
   return (
