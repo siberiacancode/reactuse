@@ -5,8 +5,8 @@ import { useState } from 'react';
 
 const Demo = () => {
   const [color, setColor] = useState('#37d2e6');
-  const radiusInput = useField({ initialValue: '10' });
-  const opacityInput = useField({ initialValue: '1' });
+  const radiusInput = useField('10');
+  const opacityInput = useField('1');
 
   const radius = radiusInput.watch();
   const opacity = opacityInput.watch();
