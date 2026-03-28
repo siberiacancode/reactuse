@@ -25,6 +25,7 @@
     "@types/mdx": "^2.0.13",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
     "comment-parser": "^1.4.5",
     "fumadocs-core": "16.0.5",
     "fumadocs-docgen": "2.0.0",

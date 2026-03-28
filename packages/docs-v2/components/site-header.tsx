@@ -5,8 +5,12 @@ import { Icons } from './icons';
 import { Separator } from './ui/separator';
 import { GitHubLink } from './github-link';
 import { ModeSwitcher } from './mode-switcher';
+import { CommandMenu } from './command-menu';
+import { source } from '@/lib/source';
 
 export function SiteHeader() {
+  const pageTree = source.pageTree;
+
   return (
     <header className='bg-background sticky top-0 z-50 w-full'>
       <div className='container-wrapper 3xl:fixed:px-0 px-6'>
@@ -31,9 +35,9 @@ export function SiteHeader() {
             ))}
           </div>
           <div className='ml-auto flex items-center gap-2 md:flex-1 md:justify-end'>
+            <CommandMenu tree={pageTree} navItems={siteConfig.navItems} />
             <Separator orientation='vertical' className='ml-2 hidden lg:block' />
             <GitHubLink />
-            <Separator orientation='vertical' className='3xl:flex hidden' />
             <Separator orientation='vertical' />
             <ModeSwitcher />
             <Separator orientation='vertical' className='mr-2' />
