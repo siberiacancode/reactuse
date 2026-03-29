@@ -7,7 +7,7 @@ description: Install and configure reactuse for TanStack Start.
 
 Install and configure reactuse for TanStack Start.
 
-### Create project
+## Create project
 
 Run the following command to create a new TanStack Start project:
 
@@ -15,14 +15,13 @@ Run the following command to create a new TanStack Start project:
 npm create @tanstack/start@latest my-app -- --tailwind
 ```
 
-### Edit tsconfig.json file
+## Edit tsconfig.json file
 
 Ensure your `tsconfig.json` includes path aliases:
 
 ```json
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -30,7 +29,7 @@ Ensure your `tsconfig.json` includes path aliases:
 }
 ```
 
-### Run the CLI
+## Run the CLI
 
 Run the `useverse` init command to setup your project:
 
@@ -40,7 +39,7 @@ npx useverse@latest init
 
 This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project.
 
-### Add hooks
+## Add hooks
 
 You can now start adding hooks to your project.
 

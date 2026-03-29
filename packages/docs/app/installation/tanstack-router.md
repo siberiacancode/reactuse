@@ -7,7 +7,7 @@ description: Install and configure reactuse for TanStack Router.
 
 Install and configure reactuse for TanStack Router.
 
-### Create project
+## Create project
 
 Start by creating a new TanStack Router project:
 
@@ -15,14 +15,13 @@ Start by creating a new TanStack Router project:
 npx create-tsrouter-app@latest my-app --template file-router --tailwind
 ```
 
-### Edit tsconfig.json file
+## Edit tsconfig.json file
 
 Ensure your `tsconfig.json` includes path aliases:
 
 ```json
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -30,7 +29,7 @@ Ensure your `tsconfig.json` includes path aliases:
 }
 ```
 
-### Run the CLI
+## Run the CLI
 
 Run the `useverse` init command to setup your project:
 
@@ -40,7 +39,7 @@ npx useverse@latest init
 
 This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project.
 
-### Add hooks
+## Add hooks
 
 You can now start adding hooks to your project.
 

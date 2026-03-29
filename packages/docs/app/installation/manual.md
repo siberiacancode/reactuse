@@ -7,7 +7,7 @@ description: Add reactuse to your project manually.
 
 Add reactuse to your project without relying on a framework-specific guide.
 
-### Install the package
+## Install the package
 
 ::: code-group
 
@@ -29,14 +29,13 @@ bun add @siberiacancode/reactuse
 
 :::
 
-### Configure path aliases
+## Configure path aliases
 
 Add `baseUrl` and `paths` to your `tsconfig.json` (or `jsconfig.json`) so imports resolve correctly:
 
 ```json
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -46,7 +45,7 @@ Add `baseUrl` and `paths` to your `tsconfig.json` (or `jsconfig.json`) so import
 
 Adjust the `@/*` path to match your project structure (e.g. `"./*"` if you have no `src` folder).
 
-### Run the CLI
+## Run the CLI
 
 Run the `useverse` init command to setup your project:
 
@@ -56,7 +55,7 @@ npx useverse@latest init
 
 This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project and configure where hooks are generated (e.g. `@/shared/hooks`).
 
-### Add hooks
+## Add hooks
 
 Add hooks to your project with the CLI:
 

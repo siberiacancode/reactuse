@@ -7,7 +7,7 @@ description: Install and configure reactuse for Vite.
 
 Install and configure reactuse for Vite.
 
-### Create project
+## Create project
 
 Start by creating a new React project using `vite`. Select the **React + TypeScript** template:
 
@@ -32,7 +32,7 @@ bun create vite@latest
 
 :::
 
-### Edit tsconfig.json file
+## Edit tsconfig.json file
 
 The current version of Vite splits TypeScript configuration into three files, two of which need to be edited.
 Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the `tsconfig.json` and
@@ -50,7 +50,6 @@ Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the
     }
   ],
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -58,7 +57,7 @@ Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the
 }
 ```
 
-### Edit tsconfig.app.json file
+## Edit tsconfig.app.json file
 
 Add the following code to the `tsconfig.app.json` file to resolve paths, for your IDE:
 
@@ -66,7 +65,7 @@ Add the following code to the `tsconfig.app.json` file to resolve paths, for you
 {
   "compilerOptions": {
     // ...
-    "baseUrl": ".",
+
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -75,7 +74,7 @@ Add the following code to the `tsconfig.app.json` file to resolve paths, for you
 }
 ```
 
-### Update vite.config.ts
+## Update vite.config.ts
 
 Add the following code to the vite.config.ts so your app can resolve paths without error:
 
@@ -116,7 +115,7 @@ export default defineConfig({
 });
 ```
 
-### Run the CLI
+## Run the CLI
 
 Run the `useverse` init command to set up your project:
 
@@ -126,7 +125,7 @@ npx useverse@latest init
 
 This creates a [`reactuse.json`](../reactuse-json.md) config file in your project.
 
-### Add hooks
+## Add hooks
 
 Add hooks with the CLI.
 

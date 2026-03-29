@@ -7,7 +7,7 @@ description: Install and configure reactuse for Astro.
 
 Install and configure reactuse for Astro.
 
-### Create project
+## Create project
 
 Start by creating a new Astro project with React integration:
 
@@ -15,14 +15,13 @@ Start by creating a new Astro project with React integration:
 npx create-astro@latest astro-app --template with-tailwindcss --install --add react --git
 ```
 
-### Edit tsconfig.json file
+## Edit tsconfig.json file
 
 Add the following to your `tsconfig.json` to resolve paths:
 
 ```json
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -30,7 +29,7 @@ Add the following to your `tsconfig.json` to resolve paths:
 }
 ```
 
-### Run the CLI
+## Run the CLI
 
 Run the `useverse` init command to setup your project:
 
@@ -40,7 +39,7 @@ npx useverse@latest init
 
 This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project.
 
-### Add hooks
+## Add hooks
 
 You can now start adding hooks to your project.
 

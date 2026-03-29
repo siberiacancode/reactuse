@@ -38,7 +38,16 @@ export default async () => {
     description:
       'Improve your react applications with our library 📦 designed for comfort and speed',
     markdown: {
-      codeTransformers: [transformerTwoslash()],
+      codeTransformers: [
+        transformerTwoslash({
+          twoslashOptions: {
+            compilerOptions: {
+              // twoslash@0.3.6 injects deprecated baseUrl internally on TS 6+
+              ignoreDeprecations: '6.0'
+            }
+          }
+        })
+      ],
       languages: ['js', 'jsx', 'ts', 'tsx']
     } as unknown as MarkdownOptions,
     vite: {

@@ -7,13 +7,13 @@ description: Install and configure reactuse for React Router.
 
 Install and configure reactuse for React Router.
 
-### Create project
+## Create project
 
 ```bash
 npx create-react-router@latest my-app
 ```
 
-### Run the CLI
+## Run the CLI
 
 Run the `useverse` init command to setup your project:
 
@@ -26,7 +26,6 @@ This will create a configuration file [`reactuse.json`](../reactuse-json.md) in 
 ```json
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
     }
@@ -34,7 +33,7 @@ This will create a configuration file [`reactuse.json`](../reactuse-json.md) in 
 }
 ```
 
-### Add hooks
+## Add hooks
 
 You can now start adding hooks to your project.
 
