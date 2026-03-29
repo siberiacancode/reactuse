@@ -2,10 +2,13 @@
 title: "useBattery"
 description: "Hook for getting information about battery status"
 ---
-import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import { DocHeader, DocContributors, DocTableApi, DocUsageExamples } from '@/components/hook-doc-page';
+import { DocDemo } from '@/components/demo';
 import hookDoc from './usebattery.props.json';
 
 <DocHeader {...hookDoc} />
+
+<Separator className="my-8" />
 
 ## Installation
 
@@ -17,9 +20,13 @@ npx useverse@latest add useBattery
 
 ## Usage
 
-```bash
-npx useverse@latest add useBattery
-```
+<DocUsageExamples {...hookDoc} />
+
+<Separator className="my-8" />
+
+## Usage
+
+<DocDemo {...hookDoc} />
 
 <Separator className="my-8" />
 

@@ -2,10 +2,13 @@
 title: "useEventSource"
 description: "Hook that provides a reactive wrapper for event source"
 ---
-import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import { DocHeader, DocContributors, DocTableApi, DocUsageExamples } from '@/components/hook-doc-page';
+import { DocDemo } from '@/components/demo';
 import hookDoc from './useeventsource.props.json';
 
 <DocHeader {...hookDoc} />
+
+<Separator className="my-8" />
 
 ## Installation
 
@@ -17,9 +20,13 @@ npx useverse@latest add useEventSource
 
 ## Usage
 
-```bash
-npx useverse@latest add useEventSource
-```
+<DocUsageExamples {...hookDoc} />
+
+<Separator className="my-8" />
+
+## Usage
+
+<DocDemo {...hookDoc} />
 
 <Separator className="my-8" />
 

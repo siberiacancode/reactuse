@@ -2,10 +2,13 @@
 title: "useOperatingSystem"
 description: "Hook that returns the operating system of the current browser"
 ---
-import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import { DocHeader, DocContributors, DocTableApi, DocUsageExamples } from '@/components/hook-doc-page';
+import { DocDemo } from '@/components/demo';
 import hookDoc from './useoperatingsystem.props.json';
 
 <DocHeader {...hookDoc} />
+
+<Separator className="my-8" />
 
 ## Installation
 
@@ -17,9 +20,13 @@ npx useverse@latest add useOperatingSystem
 
 ## Usage
 
-```bash
-npx useverse@latest add useOperatingSystem
-```
+<DocUsageExamples {...hookDoc} />
+
+<Separator className="my-8" />
+
+## Usage
+
+<DocDemo {...hookDoc} />
 
 <Separator className="my-8" />
 

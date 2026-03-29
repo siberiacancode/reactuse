@@ -2,10 +2,13 @@
 title: "useIsomorphicLayoutEffect"
 description: "Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment"
 ---
-import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import { DocHeader, DocContributors, DocTableApi, DocUsageExamples } from '@/components/hook-doc-page';
+import { DocDemo } from '@/components/demo';
 import hookDoc from './useisomorphiclayouteffect.props.json';
 
 <DocHeader {...hookDoc} />
+
+<Separator className="my-8" />
 
 ## Installation
 
@@ -17,9 +20,13 @@ npx useverse@latest add useIsomorphicLayoutEffect
 
 ## Usage
 
-```bash
-npx useverse@latest add useIsomorphicLayoutEffect
-```
+<DocUsageExamples {...hookDoc} />
+
+<Separator className="my-8" />
+
+## Usage
+
+<DocDemo {...hookDoc} />
 
 <Separator className="my-8" />
 

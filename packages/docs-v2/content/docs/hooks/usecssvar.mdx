@@ -2,10 +2,13 @@
 title: "useCssVar"
 description: "Hook that returns the value of a css variable"
 ---
-import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import { DocHeader, DocContributors, DocTableApi, DocUsageExamples } from '@/components/hook-doc-page';
+import { DocDemo } from '@/components/demo';
 import hookDoc from './usecssvar.props.json';
 
 <DocHeader {...hookDoc} />
+
+<Separator className="my-8" />
 
 ## Installation
 
@@ -17,9 +20,13 @@ npx useverse@latest add useCssVar
 
 ## Usage
 
-```bash
-npx useverse@latest add useCssVar
-```
+<DocUsageExamples {...hookDoc} />
+
+<Separator className="my-8" />
+
+## Usage
+
+<DocDemo {...hookDoc} />
 
 <Separator className="my-8" />
 

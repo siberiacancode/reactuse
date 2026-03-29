@@ -72,7 +72,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     >
       <div className='flex min-w-0 flex-1 flex-col'>
         <div className='h-(--top-spacing) shrink-0' />
-        <div className='mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300'>
+        <div className='mx-auto flex w-full max-w-[45rem] min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300'>
           <div className='flex flex-col gap-2'>
             <div className='flex flex-col gap-2'>
               <div className='flex items-center justify-between md:items-start'>
@@ -121,9 +121,6 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
             </div>
           </div>
           <div className='w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0'>
-            {/* {params.slug && params.slug[0] === 'components' && params.slug[1] && params.slug[2] && (
-              <DocsBaseSwitcher base={params.slug[1]} component={params.slug[2]} className='mb-4' />
-            )} */}
             <MDX components={mdxComponents} />
           </div>
           <div className='hidden h-16 w-full items-center gap-2 px-4 sm:flex sm:px-0'>

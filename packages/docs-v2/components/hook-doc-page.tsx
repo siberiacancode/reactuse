@@ -4,6 +4,8 @@ import { HookProps } from '@/lib/parse-hook';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { timeAgo } from '@/lib/utils';
+import { Code } from './code';
+
 
 export const DocHeader = (props: HookProps) => (
   <>
@@ -45,6 +47,9 @@ export const DocHeader = (props: HookProps) => (
   </>
 );
 
+export const DocUsageExamples = (props: HookProps) =>
+  props.examples.map((example) => <Code key={example} code={example} />);
+
 export const DocContributors = (props: HookProps) => (
   <div className='my-4 flex flex-wrap gap-4'>
     {props.contributors.map(({ name, avatar }) => (
@@ -62,38 +67,43 @@ export const DocContributors = (props: HookProps) => (
 export const DocTableApi = (props: HookProps) =>
   props.apiParameters.map((group) => (
     <div key={group.id}>
-      {group.parameters && (
-        <>
-          <h4 className='text-l my-4 font-semibold'>Parameters</h4>
-          <Table className='mb-4'>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Default</TableHead>
-                <TableHead>Note</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {group.parameters.map((parameter) => (
-                <TableRow key={parameter.name}>
-                  <TableCell>
-                    {parameter.name}
-                    {parameter.optional ? '?' : ''}
-                  </TableCell>
-                  <TableCell>{parameter.type}</TableCell>
-                  <TableCell>{parameter.default ?? '-'}</TableCell>
-                  <TableCell>{parameter.description}</TableCell>
+      <>
+        {group.parameters.length > 0 && (
+          <>
+            <h4 className='text-l my-4 font-semibold'>Parameters</h4>
+            <Table className='mb-4'>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Default</TableHead>
+                  <TableHead>Note</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          {group.returns && (
-            <div>
-              <h4 className='text-l my-4 font-semibold'>{group.returns.type}</h4>
-            </div>
-          )}
-        </>
-      )}
+              </TableHeader>
+              <TableBody>
+                {group.parameters.map((parameter) => (
+                  <TableRow key={parameter.name}>
+                    <TableCell>
+                      {parameter.name}
+                      {parameter.optional ? '?' : ''}
+                    </TableCell>
+                    <TableCell>{parameter.type}</TableCell>
+                    <TableCell>{parameter.default ?? '-'}</TableCell>
+                    <TableCell>{parameter.description}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </>
+        )}
+        {group.returns && (
+          <>
+            <h4 className='text-l my-4 font-semibold'>Return</h4>
+            <Badge className='bg-blue-50 text-blue-400 dark:bg-blue-950 dark:text-blue-300'>
+              {group.returns.type}
+            </Badge>
+          </>
+        )}
+      </>
     </div>
   ));

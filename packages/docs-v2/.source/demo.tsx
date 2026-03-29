@@ -7,7 +7,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useActiveElement": {
         name: "useActiveElement",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useActiveElement/useActiveElement.demo.tsx")
+          const mod = await import("../../core/src/hooks/useActiveElement/useActiveElement.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -15,7 +15,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useAsync": {
         name: "useAsync",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useAsync/useAsync.demo.tsx")
+          const mod = await import("../../core/src/hooks/useAsync/useAsync.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -23,7 +23,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useAsyncEffect": {
         name: "useAsyncEffect",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useAsyncEffect/useAsyncEffect.demo.tsx")
+          const mod = await import("../../core/src/hooks/useAsyncEffect/useAsyncEffect.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -31,7 +31,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useAudio": {
         name: "useAudio",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useAudio/useAudio.demo.tsx")
+          const mod = await import("../../core/src/hooks/useAudio/useAudio.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -39,7 +39,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useAutoScroll": {
         name: "useAutoScroll",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useAutoScroll/useAutoScroll.demo.tsx")
+          const mod = await import("../../core/src/hooks/useAutoScroll/useAutoScroll.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -47,7 +47,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useBatchedCallback": {
         name: "useBatchedCallback",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useBatchedCallback/useBatchedCallback.demo.tsx")
+          const mod = await import("../../core/src/hooks/useBatchedCallback/useBatchedCallback.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -55,7 +55,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useBattery": {
         name: "useBattery",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useBattery/useBattery.demo.tsx")
+          const mod = await import("../../core/src/hooks/useBattery/useBattery.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -63,7 +63,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useBluetooth": {
         name: "useBluetooth",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useBluetooth/useBluetooth.demo.tsx")
+          const mod = await import("../../core/src/hooks/useBluetooth/useBluetooth.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -71,7 +71,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useBoolean": {
         name: "useBoolean",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useBoolean/useBoolean.demo.tsx")
+          const mod = await import("../../core/src/hooks/useBoolean/useBoolean.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -79,7 +79,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useBreakpoints": {
         name: "useBreakpoints",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useBreakpoints/useBreakpoints.demo.tsx")
+          const mod = await import("../../core/src/hooks/useBreakpoints/useBreakpoints.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -87,7 +87,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useBroadcastChannel": {
         name: "useBroadcastChannel",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useBroadcastChannel/useBroadcastChannel.demo.tsx")
+          const mod = await import("../../core/src/hooks/useBroadcastChannel/useBroadcastChannel.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -95,7 +95,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useBrowserLanguage": {
         name: "useBrowserLanguage",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useBrowserLanguage/useBrowserLanguage.demo.tsx")
+          const mod = await import("../../core/src/hooks/useBrowserLanguage/useBrowserLanguage.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -103,7 +103,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useClickOutside": {
         name: "useClickOutside",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useClickOutside/useClickOutside.demo.tsx")
+          const mod = await import("../../core/src/hooks/useClickOutside/useClickOutside.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -111,7 +111,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useClipboard": {
         name: "useClipboard",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useClipboard/useClipboard.demo.tsx")
+          const mod = await import("../../core/src/hooks/useClipboard/useClipboard.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -119,7 +119,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useConst": {
         name: "useConst",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useConst/useConst.demo.tsx")
+          const mod = await import("../../core/src/hooks/useConst/useConst.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -127,7 +127,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useControllableState": {
         name: "useControllableState",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useControllableState/useControllableState.demo.tsx")
+          const mod = await import("../../core/src/hooks/useControllableState/useControllableState.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -135,7 +135,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useCookie": {
         name: "useCookie",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useCookie/useCookie.demo.tsx")
+          const mod = await import("../../core/src/hooks/useCookie/useCookie.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -143,7 +143,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useCookies": {
         name: "useCookies",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useCookies/useCookies.demo.tsx")
+          const mod = await import("../../core/src/hooks/useCookies/useCookies.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -151,7 +151,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useCopy": {
         name: "useCopy",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useCopy/useCopy.demo.tsx")
+          const mod = await import("../../core/src/hooks/useCopy/useCopy.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -159,7 +159,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useCounter": {
         name: "useCounter",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useCounter/useCounter.demo.tsx")
+          const mod = await import("../../core/src/hooks/useCounter/useCounter.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -167,7 +167,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useCssVar": {
         name: "useCssVar",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useCssVar/useCssVar.demo.tsx")
+          const mod = await import("../../core/src/hooks/useCssVar/useCssVar.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -175,7 +175,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDebounceCallback": {
         name: "useDebounceCallback",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDebounceCallback/useDebounceCallback.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDebounceCallback/useDebounceCallback.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -183,7 +183,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDebounceEffect": {
         name: "useDebounceEffect",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDebounceEffect/useDebounceEffect.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDebounceEffect/useDebounceEffect.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -191,7 +191,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDebounceState": {
         name: "useDebounceState",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDebounceState/useDebounceState.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDebounceState/useDebounceState.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -199,7 +199,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDebounceValue": {
         name: "useDebounceValue",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDebounceValue/useDebounceValue.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDebounceValue/useDebounceValue.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -207,7 +207,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDefault": {
         name: "useDefault",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDefault/useDefault.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDefault/useDefault.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -215,7 +215,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDeviceMotion": {
         name: "useDeviceMotion",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDeviceMotion/useDeviceMotion.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDeviceMotion/useDeviceMotion.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -223,7 +223,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDeviceOrientation": {
         name: "useDeviceOrientation",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDeviceOrientation/useDeviceOrientation.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDeviceOrientation/useDeviceOrientation.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -231,7 +231,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDevicePixelRatio": {
         name: "useDevicePixelRatio",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDevicePixelRatio/useDevicePixelRatio.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDevicePixelRatio/useDevicePixelRatio.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -239,7 +239,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDidUpdate": {
         name: "useDidUpdate",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDidUpdate/useDidUpdate.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDidUpdate/useDidUpdate.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -247,7 +247,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDisclosure": {
         name: "useDisclosure",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDisclosure/useDisclosure.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDisclosure/useDisclosure.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -255,7 +255,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDisplayMedia": {
         name: "useDisplayMedia",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDisplayMedia/useDisplayMedia.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDisplayMedia/useDisplayMedia.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -263,7 +263,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDocumentEvent": {
         name: "useDocumentEvent",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDocumentEvent/useDocumentEvent.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDocumentEvent/useDocumentEvent.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -271,7 +271,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDocumentTitle": {
         name: "useDocumentTitle",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDocumentTitle/useDocumentTitle.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDocumentTitle/useDocumentTitle.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -279,7 +279,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDocumentVisibility": {
         name: "useDocumentVisibility",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDocumentVisibility/useDocumentVisibility.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDocumentVisibility/useDocumentVisibility.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -287,7 +287,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDoubleClick": {
         name: "useDoubleClick",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDoubleClick/useDoubleClick.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDoubleClick/useDoubleClick.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -295,7 +295,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useDropZone": {
         name: "useDropZone",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useDropZone/useDropZone.demo.tsx")
+          const mod = await import("../../core/src/hooks/useDropZone/useDropZone.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -303,7 +303,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useEvent": {
         name: "useEvent",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useEvent/useEvent.demo.tsx")
+          const mod = await import("../../core/src/hooks/useEvent/useEvent.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -311,7 +311,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useEventListener": {
         name: "useEventListener",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useEventListener/useEventListener.demo.tsx")
+          const mod = await import("../../core/src/hooks/useEventListener/useEventListener.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -319,7 +319,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useEventSource": {
         name: "useEventSource",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useEventSource/useEventSource.demo.tsx")
+          const mod = await import("../../core/src/hooks/useEventSource/useEventSource.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -327,7 +327,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useEyeDropper": {
         name: "useEyeDropper",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useEyeDropper/useEyeDropper.demo.tsx")
+          const mod = await import("../../core/src/hooks/useEyeDropper/useEyeDropper.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -335,7 +335,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useFavicon": {
         name: "useFavicon",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useFavicon/useFavicon.demo.tsx")
+          const mod = await import("../../core/src/hooks/useFavicon/useFavicon.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -343,7 +343,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useField": {
         name: "useField",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useField/useField.demo.tsx")
+          const mod = await import("../../core/src/hooks/useField/useField.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -351,7 +351,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useFileDialog": {
         name: "useFileDialog",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useFileDialog/useFileDialog.demo.tsx")
+          const mod = await import("../../core/src/hooks/useFileDialog/useFileDialog.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -359,7 +359,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useFocus": {
         name: "useFocus",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useFocus/useFocus.demo.tsx")
+          const mod = await import("../../core/src/hooks/useFocus/useFocus.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -367,7 +367,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useFocusTrap": {
         name: "useFocusTrap",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useFocusTrap/useFocusTrap.demo.tsx")
+          const mod = await import("../../core/src/hooks/useFocusTrap/useFocusTrap.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -375,7 +375,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useFps": {
         name: "useFps",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useFps/useFps.demo.tsx")
+          const mod = await import("../../core/src/hooks/useFps/useFps.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -383,7 +383,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useFul": {
         name: "useFul",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useFul/useFul.demo.tsx")
+          const mod = await import("../../core/src/hooks/useFul/useFul.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -391,7 +391,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useFullscreen": {
         name: "useFullscreen",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useFullscreen/useFullscreen.demo.tsx")
+          const mod = await import("../../core/src/hooks/useFullscreen/useFullscreen.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -399,7 +399,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useGamepad": {
         name: "useGamepad",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useGamepad/useGamepad.demo.tsx")
+          const mod = await import("../../core/src/hooks/useGamepad/useGamepad.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -407,7 +407,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useGeolocation": {
         name: "useGeolocation",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useGeolocation/useGeolocation.demo.tsx")
+          const mod = await import("../../core/src/hooks/useGeolocation/useGeolocation.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -415,7 +415,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useHash": {
         name: "useHash",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useHash/useHash.demo.tsx")
+          const mod = await import("../../core/src/hooks/useHash/useHash.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -423,7 +423,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useHotkeys": {
         name: "useHotkeys",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useHotkeys/useHotkeys.demo.tsx")
+          const mod = await import("../../core/src/hooks/useHotkeys/useHotkeys.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -431,7 +431,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useHover": {
         name: "useHover",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useHover/useHover.demo.tsx")
+          const mod = await import("../../core/src/hooks/useHover/useHover.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -439,7 +439,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useIdle": {
         name: "useIdle",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useIdle/useIdle.demo.tsx")
+          const mod = await import("../../core/src/hooks/useIdle/useIdle.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -447,7 +447,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useImage": {
         name: "useImage",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useImage/useImage.demo.tsx")
+          const mod = await import("../../core/src/hooks/useImage/useImage.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -455,7 +455,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useInfiniteScroll": {
         name: "useInfiniteScroll",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useInfiniteScroll/useInfiniteScroll.demo.tsx")
+          const mod = await import("../../core/src/hooks/useInfiniteScroll/useInfiniteScroll.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -463,7 +463,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useIntersectionObserver": {
         name: "useIntersectionObserver",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useIntersectionObserver/useIntersectionObserver.demo.tsx")
+          const mod = await import("../../core/src/hooks/useIntersectionObserver/useIntersectionObserver.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -471,7 +471,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useInterval": {
         name: "useInterval",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useInterval/useInterval.demo.tsx")
+          const mod = await import("../../core/src/hooks/useInterval/useInterval.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -479,7 +479,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useIsFirstRender": {
         name: "useIsFirstRender",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useIsFirstRender/useIsFirstRender.demo.tsx")
+          const mod = await import("../../core/src/hooks/useIsFirstRender/useIsFirstRender.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -487,7 +487,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useIsomorphicLayoutEffect": {
         name: "useIsomorphicLayoutEffect",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useIsomorphicLayoutEffect/useIsomorphicLayoutEffect.demo.tsx")
+          const mod = await import("../../core/src/hooks/useIsomorphicLayoutEffect/useIsomorphicLayoutEffect.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -495,7 +495,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useKeyPress": {
         name: "useKeyPress",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useKeyPress/useKeyPress.demo.tsx")
+          const mod = await import("../../core/src/hooks/useKeyPress/useKeyPress.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -503,7 +503,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useKeyPressEvent": {
         name: "useKeyPressEvent",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useKeyPressEvent/useKeyPressEvent.demo.tsx")
+          const mod = await import("../../core/src/hooks/useKeyPressEvent/useKeyPressEvent.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -511,7 +511,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useKeyboard": {
         name: "useKeyboard",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useKeyboard/useKeyboard.demo.tsx")
+          const mod = await import("../../core/src/hooks/useKeyboard/useKeyboard.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -519,7 +519,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useKeysPressed": {
         name: "useKeysPressed",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useKeysPressed/useKeysPressed.demo.tsx")
+          const mod = await import("../../core/src/hooks/useKeysPressed/useKeysPressed.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -527,7 +527,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useLastChanged": {
         name: "useLastChanged",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useLastChanged/useLastChanged.demo.tsx")
+          const mod = await import("../../core/src/hooks/useLastChanged/useLastChanged.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -535,7 +535,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useLatest": {
         name: "useLatest",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useLatest/useLatest.demo.tsx")
+          const mod = await import("../../core/src/hooks/useLatest/useLatest.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -543,7 +543,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useLess": {
         name: "useLess",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useLess/useLess.demo.tsx")
+          const mod = await import("../../core/src/hooks/useLess/useLess.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -551,7 +551,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useList": {
         name: "useList",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useList/useList.demo.tsx")
+          const mod = await import("../../core/src/hooks/useList/useList.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -559,7 +559,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useLocalStorage": {
         name: "useLocalStorage",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useLocalStorage/useLocalStorage.demo.tsx")
+          const mod = await import("../../core/src/hooks/useLocalStorage/useLocalStorage.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -567,7 +567,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useLockCallback": {
         name: "useLockCallback",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useLockCallback/useLockCallback.demo.tsx")
+          const mod = await import("../../core/src/hooks/useLockCallback/useLockCallback.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -575,7 +575,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useLockScroll": {
         name: "useLockScroll",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useLockScroll/useLockScroll.demo.tsx")
+          const mod = await import("../../core/src/hooks/useLockScroll/useLockScroll.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -583,7 +583,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useLogger": {
         name: "useLogger",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useLogger/useLogger.demo.tsx")
+          const mod = await import("../../core/src/hooks/useLogger/useLogger.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -591,7 +591,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useLongPress": {
         name: "useLongPress",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useLongPress/useLongPress.demo.tsx")
+          const mod = await import("../../core/src/hooks/useLongPress/useLongPress.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -599,7 +599,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMap": {
         name: "useMap",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMap/useMap.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMap/useMap.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -607,7 +607,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMeasure": {
         name: "useMeasure",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMeasure/useMeasure.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMeasure/useMeasure.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -615,7 +615,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMediaControls": {
         name: "useMediaControls",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMediaControls/useMediaControls.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMediaControls/useMediaControls.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -623,7 +623,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMediaQuery": {
         name: "useMediaQuery",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMediaQuery/useMediaQuery.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMediaQuery/useMediaQuery.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -631,7 +631,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMemory": {
         name: "useMemory",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMemory/useMemory.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMemory/useMemory.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -639,7 +639,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMergedRef": {
         name: "useMergedRef",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMergedRef/useMergedRef.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMergedRef/useMergedRef.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -647,7 +647,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMount": {
         name: "useMount",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMount/useMount.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMount/useMount.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -655,7 +655,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMouse": {
         name: "useMouse",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMouse/useMouse.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMouse/useMouse.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -663,7 +663,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMutation": {
         name: "useMutation",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMutation/useMutation.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMutation/useMutation.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -671,7 +671,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useMutationObserver": {
         name: "useMutationObserver",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useMutationObserver/useMutationObserver.demo.tsx")
+          const mod = await import("../../core/src/hooks/useMutationObserver/useMutationObserver.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -679,7 +679,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useNetwork": {
         name: "useNetwork",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useNetwork/useNetwork.demo.tsx")
+          const mod = await import("../../core/src/hooks/useNetwork/useNetwork.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -687,7 +687,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useObject": {
         name: "useObject",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useObject/useObject.demo.tsx")
+          const mod = await import("../../core/src/hooks/useObject/useObject.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -695,7 +695,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useOffsetPagination": {
         name: "useOffsetPagination",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useOffsetPagination/useOffsetPagination.demo.tsx")
+          const mod = await import("../../core/src/hooks/useOffsetPagination/useOffsetPagination.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -703,7 +703,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useOnce": {
         name: "useOnce",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useOnce/useOnce.demo.tsx")
+          const mod = await import("../../core/src/hooks/useOnce/useOnce.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -711,7 +711,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useOnline": {
         name: "useOnline",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useOnline/useOnline.demo.tsx")
+          const mod = await import("../../core/src/hooks/useOnline/useOnline.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -719,7 +719,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useOperatingSystem": {
         name: "useOperatingSystem",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useOperatingSystem/useOperatingSystem.demo.tsx")
+          const mod = await import("../../core/src/hooks/useOperatingSystem/useOperatingSystem.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -727,7 +727,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useOptimistic": {
         name: "useOptimistic",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useOptimistic/useOptimistic.demo.tsx")
+          const mod = await import("../../core/src/hooks/useOptimistic/useOptimistic.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -735,7 +735,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useOrientation": {
         name: "useOrientation",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useOrientation/useOrientation.demo.tsx")
+          const mod = await import("../../core/src/hooks/useOrientation/useOrientation.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -743,7 +743,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useOtpCredential": {
         name: "useOtpCredential",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useOtpCredential/useOtpCredential.demo.tsx")
+          const mod = await import("../../core/src/hooks/useOtpCredential/useOtpCredential.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -751,7 +751,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePageLeave": {
         name: "usePageLeave",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePageLeave/usePageLeave.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePageLeave/usePageLeave.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -759,7 +759,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePaint": {
         name: "usePaint",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePaint/usePaint.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePaint/usePaint.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -767,7 +767,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useParallax": {
         name: "useParallax",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useParallax/useParallax.demo.tsx")
+          const mod = await import("../../core/src/hooks/useParallax/useParallax.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -775,7 +775,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePerformanceObserver": {
         name: "usePerformanceObserver",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePerformanceObserver/usePerformanceObserver.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePerformanceObserver/usePerformanceObserver.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -783,7 +783,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePermission": {
         name: "usePermission",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePermission/usePermission.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePermission/usePermission.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -791,7 +791,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePictureInPicture": {
         name: "usePictureInPicture",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePictureInPicture/usePictureInPicture.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePictureInPicture/usePictureInPicture.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -799,7 +799,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePointerLock": {
         name: "usePointerLock",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePointerLock/usePointerLock.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePointerLock/usePointerLock.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -807,7 +807,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePostMessage": {
         name: "usePostMessage",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePostMessage/usePostMessage.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePostMessage/usePostMessage.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -815,7 +815,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePreferredColorScheme": {
         name: "usePreferredColorScheme",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePreferredColorScheme/usePreferredColorScheme.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePreferredColorScheme/usePreferredColorScheme.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -823,7 +823,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePreferredContrast": {
         name: "usePreferredContrast",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePreferredContrast/usePreferredContrast.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePreferredContrast/usePreferredContrast.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -831,7 +831,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePreferredDark": {
         name: "usePreferredDark",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePreferredDark/usePreferredDark.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePreferredDark/usePreferredDark.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -839,7 +839,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePreferredLanguages": {
         name: "usePreferredLanguages",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePreferredLanguages/usePreferredLanguages.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePreferredLanguages/usePreferredLanguages.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -847,7 +847,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePreferredReducedMotion": {
         name: "usePreferredReducedMotion",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePreferredReducedMotion/usePreferredReducedMotion.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePreferredReducedMotion/usePreferredReducedMotion.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -855,7 +855,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "usePrevious": {
         name: "usePrevious",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/usePrevious/usePrevious.demo.tsx")
+          const mod = await import("../../core/src/hooks/usePrevious/usePrevious.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -863,7 +863,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useProgress": {
         name: "useProgress",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useProgress/useProgress.demo.tsx")
+          const mod = await import("../../core/src/hooks/useProgress/useProgress.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -871,7 +871,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useQuery": {
         name: "useQuery",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useQuery/useQuery.demo.tsx")
+          const mod = await import("../../core/src/hooks/useQuery/useQuery.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -879,7 +879,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useQueue": {
         name: "useQueue",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useQueue/useQueue.demo.tsx")
+          const mod = await import("../../core/src/hooks/useQueue/useQueue.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -887,7 +887,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useRaf": {
         name: "useRaf",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useRaf/useRaf.demo.tsx")
+          const mod = await import("../../core/src/hooks/useRaf/useRaf.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -895,7 +895,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useRafState": {
         name: "useRafState",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useRafState/useRafState.demo.tsx")
+          const mod = await import("../../core/src/hooks/useRafState/useRafState.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -903,7 +903,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useRefState": {
         name: "useRefState",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useRefState/useRefState.demo.tsx")
+          const mod = await import("../../core/src/hooks/useRefState/useRefState.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -911,7 +911,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useRenderCount": {
         name: "useRenderCount",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useRenderCount/useRenderCount.demo.tsx")
+          const mod = await import("../../core/src/hooks/useRenderCount/useRenderCount.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -919,7 +919,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useRenderInfo": {
         name: "useRenderInfo",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useRenderInfo/useRenderInfo.demo.tsx")
+          const mod = await import("../../core/src/hooks/useRenderInfo/useRenderInfo.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -927,7 +927,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useRerender": {
         name: "useRerender",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useRerender/useRerender.demo.tsx")
+          const mod = await import("../../core/src/hooks/useRerender/useRerender.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -935,7 +935,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useResizeObserver": {
         name: "useResizeObserver",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useResizeObserver/useResizeObserver.demo.tsx")
+          const mod = await import("../../core/src/hooks/useResizeObserver/useResizeObserver.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -943,7 +943,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useRightClick": {
         name: "useRightClick",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useRightClick/useRightClick.demo.tsx")
+          const mod = await import("../../core/src/hooks/useRightClick/useRightClick.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -951,7 +951,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useScript": {
         name: "useScript",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useScript/useScript.demo.tsx")
+          const mod = await import("../../core/src/hooks/useScript/useScript.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -959,7 +959,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useScroll": {
         name: "useScroll",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useScroll/useScroll.demo.tsx")
+          const mod = await import("../../core/src/hooks/useScroll/useScroll.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -967,7 +967,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useScrollIntoView": {
         name: "useScrollIntoView",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useScrollIntoView/useScrollIntoView.demo.tsx")
+          const mod = await import("../../core/src/hooks/useScrollIntoView/useScrollIntoView.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -975,7 +975,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useScrollTo": {
         name: "useScrollTo",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useScrollTo/useScrollTo.demo.tsx")
+          const mod = await import("../../core/src/hooks/useScrollTo/useScrollTo.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -983,7 +983,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useSessionStorage": {
         name: "useSessionStorage",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useSessionStorage/useSessionStorage.demo.tsx")
+          const mod = await import("../../core/src/hooks/useSessionStorage/useSessionStorage.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -991,7 +991,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useSet": {
         name: "useSet",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useSet/useSet.demo.tsx")
+          const mod = await import("../../core/src/hooks/useSet/useSet.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -999,7 +999,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useShallowEffect": {
         name: "useShallowEffect",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useShallowEffect/useShallowEffect.demo.tsx")
+          const mod = await import("../../core/src/hooks/useShallowEffect/useShallowEffect.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1007,7 +1007,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useShare": {
         name: "useShare",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useShare/useShare.demo.tsx")
+          const mod = await import("../../core/src/hooks/useShare/useShare.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1015,7 +1015,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useSize": {
         name: "useSize",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useSize/useSize.demo.tsx")
+          const mod = await import("../../core/src/hooks/useSize/useSize.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1023,7 +1023,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useSpeechRecognition": {
         name: "useSpeechRecognition",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useSpeechRecognition/useSpeechRecognition.demo.tsx")
+          const mod = await import("../../core/src/hooks/useSpeechRecognition/useSpeechRecognition.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1031,7 +1031,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useSpeechSynthesis": {
         name: "useSpeechSynthesis",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useSpeechSynthesis/useSpeechSynthesis.demo.tsx")
+          const mod = await import("../../core/src/hooks/useSpeechSynthesis/useSpeechSynthesis.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1039,7 +1039,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useStateHistory": {
         name: "useStateHistory",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useStateHistory/useStateHistory.demo.tsx")
+          const mod = await import("../../core/src/hooks/useStateHistory/useStateHistory.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1047,7 +1047,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useStep": {
         name: "useStep",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useStep/useStep.demo.tsx")
+          const mod = await import("../../core/src/hooks/useStep/useStep.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1055,7 +1055,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useSticky": {
         name: "useSticky",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useSticky/useSticky.demo.tsx")
+          const mod = await import("../../core/src/hooks/useSticky/useSticky.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1063,7 +1063,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useStopwatch": {
         name: "useStopwatch",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useStopwatch/useStopwatch.demo.tsx")
+          const mod = await import("../../core/src/hooks/useStopwatch/useStopwatch.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1071,7 +1071,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useStorage": {
         name: "useStorage",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useStorage/useStorage.demo.tsx")
+          const mod = await import("../../core/src/hooks/useStorage/useStorage.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1079,7 +1079,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useTextDirection": {
         name: "useTextDirection",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useTextDirection/useTextDirection.demo.tsx")
+          const mod = await import("../../core/src/hooks/useTextDirection/useTextDirection.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1087,7 +1087,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useTextSelection": {
         name: "useTextSelection",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useTextSelection/useTextSelection.demo.tsx")
+          const mod = await import("../../core/src/hooks/useTextSelection/useTextSelection.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1095,7 +1095,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useTextareaAutosize": {
         name: "useTextareaAutosize",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useTextareaAutosize/useTextareaAutosize.demo.tsx")
+          const mod = await import("../../core/src/hooks/useTextareaAutosize/useTextareaAutosize.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1103,7 +1103,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useThrottleCallback": {
         name: "useThrottleCallback",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useThrottleCallback/useThrottleCallback.demo.tsx")
+          const mod = await import("../../core/src/hooks/useThrottleCallback/useThrottleCallback.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1111,7 +1111,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useThrottleEffect": {
         name: "useThrottleEffect",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useThrottleEffect/useThrottleEffect.demo.tsx")
+          const mod = await import("../../core/src/hooks/useThrottleEffect/useThrottleEffect.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1119,7 +1119,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useThrottleState": {
         name: "useThrottleState",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useThrottleState/useThrottleState.demo.tsx")
+          const mod = await import("../../core/src/hooks/useThrottleState/useThrottleState.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1127,7 +1127,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useThrottleValue": {
         name: "useThrottleValue",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useThrottleValue/useThrottleValue.demo.tsx")
+          const mod = await import("../../core/src/hooks/useThrottleValue/useThrottleValue.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1135,7 +1135,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useTime": {
         name: "useTime",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useTime/useTime.demo.tsx")
+          const mod = await import("../../core/src/hooks/useTime/useTime.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1143,7 +1143,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useTimeout": {
         name: "useTimeout",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useTimeout/useTimeout.demo.tsx")
+          const mod = await import("../../core/src/hooks/useTimeout/useTimeout.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1151,7 +1151,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useTimer": {
         name: "useTimer",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useTimer/useTimer.demo.tsx")
+          const mod = await import("../../core/src/hooks/useTimer/useTimer.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1159,7 +1159,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useToggle": {
         name: "useToggle",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useToggle/useToggle.demo.tsx")
+          const mod = await import("../../core/src/hooks/useToggle/useToggle.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1167,7 +1167,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useUnmount": {
         name: "useUnmount",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useUnmount/useUnmount.demo.tsx")
+          const mod = await import("../../core/src/hooks/useUnmount/useUnmount.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1175,7 +1175,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useUrlSearchParam": {
         name: "useUrlSearchParam",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useUrlSearchParam/useUrlSearchParam.demo.tsx")
+          const mod = await import("../../core/src/hooks/useUrlSearchParam/useUrlSearchParam.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1183,7 +1183,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useUrlSearchParams": {
         name: "useUrlSearchParams",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useUrlSearchParams/useUrlSearchParams.demo.tsx")
+          const mod = await import("../../core/src/hooks/useUrlSearchParams/useUrlSearchParams.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1191,7 +1191,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useVibrate": {
         name: "useVibrate",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useVibrate/useVibrate.demo.tsx")
+          const mod = await import("../../core/src/hooks/useVibrate/useVibrate.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1199,7 +1199,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useVirtualKeyboard": {
         name: "useVirtualKeyboard",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useVirtualKeyboard/useVirtualKeyboard.demo.tsx")
+          const mod = await import("../../core/src/hooks/useVirtualKeyboard/useVirtualKeyboard.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1207,7 +1207,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useVisibility": {
         name: "useVisibility",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useVisibility/useVisibility.demo.tsx")
+          const mod = await import("../../core/src/hooks/useVisibility/useVisibility.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1215,7 +1215,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useWakeLock": {
         name: "useWakeLock",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useWakeLock/useWakeLock.demo.tsx")
+          const mod = await import("../../core/src/hooks/useWakeLock/useWakeLock.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1223,7 +1223,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useWebSocket": {
         name: "useWebSocket",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useWebSocket/useWebSocket.demo.tsx")
+          const mod = await import("../../core/src/hooks/useWebSocket/useWebSocket.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1231,7 +1231,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useWindowEvent": {
         name: "useWindowEvent",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useWindowEvent/useWindowEvent.demo.tsx")
+          const mod = await import("../../core/src/hooks/useWindowEvent/useWindowEvent.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1239,7 +1239,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useWindowFocus": {
         name: "useWindowFocus",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useWindowFocus/useWindowFocus.demo.tsx")
+          const mod = await import("../../core/src/hooks/useWindowFocus/useWindowFocus.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1247,7 +1247,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useWindowScroll": {
         name: "useWindowScroll",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useWindowScroll/useWindowScroll.demo.tsx")
+          const mod = await import("../../core/src/hooks/useWindowScroll/useWindowScroll.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1255,7 +1255,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useWindowSize": {
         name: "useWindowSize",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useWindowSize/useWindowSize.demo.tsx")
+          const mod = await import("../../core/src/hooks/useWindowSize/useWindowSize.demo.tsx")
           return { default: mod.default }
         }),
       },
@@ -1263,7 +1263,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {
       "useWizard": {
         name: "useWizard",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/useWizard/useWizard.demo.tsx")
+          const mod = await import("../../core/src/hooks/useWizard/useWizard.demo.tsx")
           return { default: mod.default }
         }),
       },

@@ -53,7 +53,7 @@ export const ExamplesIndex: Record<string, Record<string, any>> = {`;
       "${name}": {
         name: "${name}",
         component: React.lazy(async () => {
-          const mod = await import("../../packages/core/src/hooks/${file.name}/${file.demo}")
+          const mod = await import("../../core/src/hooks/${file.name}/${file.demo}")
           return { default: mod.default }
         }),
       },

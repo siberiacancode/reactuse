@@ -193,6 +193,9 @@ importers:
 
   packages/docs-v2:
     dependencies:
+      '@siberiacancode/reactuse':
+        specifier: '*'
+        version: 0.0.114(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tabler/icons-react':
         specifier: ^3.37.1
         version: 3.37.1(react@19.2.4)
@@ -10076,6 +10079,14 @@ snapshots:
       screenfull: 6.0.2
     optionalDependencies:
       '@types/react': 19.2.13
+
+  '@siberiacancode/reactuse@0.0.114(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+      screenfull: 6.0.2
+    optionalDependencies:
+      '@types/react': 19.2.14
 
   '@siberiacancode/vitest@2.4.1(jsdom@24.1.3)(vitest@4.0.18(@types/node@25.3.5)(jiti@2.6.1)(jsdom@24.1.3)(lightningcss@1.31.1)(msw@2.12.10(@types/node@25.3.5)(typescript@5.9.3))(terser@5.39.0)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:

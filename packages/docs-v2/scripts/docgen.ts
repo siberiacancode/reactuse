@@ -15,7 +15,8 @@ const getMDXTemplate = (name: string, props: HookProps) => `---
 title: ${JSON.stringify(name)}
 description: ${JSON.stringify(props.description ?? '')}
 ---
-import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import { DocHeader, DocContributors, DocTableApi, DocUsageExamples } from '@/components/hook-doc-page';
+import { DocDemo } from '@/components/demo';
 import hookDoc from './${name.toLowerCase()}.props.json';
 
 <DocHeader {...hookDoc} />
@@ -32,9 +33,13 @@ npx useverse@latest add ${name}
 
 ## Usage
 
-\`\`\`bash
-npx useverse@latest add ${name}
-\`\`\`
+<DocUsageExamples {...hookDoc} />
+
+<Separator className="my-8" />
+
+## Usage
+
+<DocDemo {...hookDoc} />
 
 <Separator className="my-8" />
 
