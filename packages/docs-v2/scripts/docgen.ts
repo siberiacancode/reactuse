@@ -20,6 +20,8 @@ import hookDoc from './${name.toLowerCase()}.props.json';
 
 <DocHeader {...hookDoc} />
 
+<Separator className="my-8" />
+
 ## Installation
 
 \`\`\`bash

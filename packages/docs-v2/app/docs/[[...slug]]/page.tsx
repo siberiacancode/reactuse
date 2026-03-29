@@ -8,6 +8,7 @@ import { source } from '@/lib/source';
 import { absoluteUrl } from '@/lib/utils';
 import { Button } from '@/ui/button';
 import { DocsCopyPage } from '@/components/docs-copy-page';
+import { DocsTableOfContents } from '@/components/docs-toc';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -145,6 +146,11 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
       </div>
       <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
         <div className='h-(--top-spacing) shrink-0'></div>
+        {doc.toc?.length && (
+          <div className='no-scrollbar flex flex-col gap-8 overflow-y-auto px-8'>
+            <DocsTableOfContents toc={doc.toc} />
+          </div>
+        )}
       </div>
     </div>
   );

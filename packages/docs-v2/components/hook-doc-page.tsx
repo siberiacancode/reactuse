@@ -34,6 +34,14 @@ export const DocHeader = (props: HookProps) => (
         {props.warning}
       </Callout>
     )}
+
+    {props.browserapi && (
+      <Callout className='border-blue-600 bg-blue-100 dark:border-blue-400 dark:bg-blue-900'>
+        <h4 className='text-l font-semibold'>TIP</h4>
+        This hook uses {props.browserapi} browser api to provide enhanced functionality. Make sure
+        to check for compatibility with different browsers when using this api
+      </Callout>
+    )}
   </>
 );
 
@@ -51,9 +59,8 @@ export const DocContributors = (props: HookProps) => (
   </div>
 );
 
-export const DocTableApi = (props: HookProps) => {
-  console.log('props', props);
-  return props.apiParameters.map((group) => (
+export const DocTableApi = (props: HookProps) =>
+  props.apiParameters.map((group) => (
     <div key={group.id}>
       {group.parameters && (
         <>
@@ -75,7 +82,7 @@ export const DocTableApi = (props: HookProps) => {
                     {parameter.optional ? '?' : ''}
                   </TableCell>
                   <TableCell>{parameter.type}</TableCell>
-                  <TableCell>{'TODO'}</TableCell>
+                  <TableCell>{parameter.default ?? '-'}</TableCell>
                   <TableCell>{parameter.description}</TableCell>
                 </TableRow>
               ))}
@@ -90,4 +97,3 @@ export const DocTableApi = (props: HookProps) => {
       )}
     </div>
   ));
-};
