@@ -12,12 +12,12 @@ import { getDate } from '@/utils/helpers';
  * const { seconds, minutes, hours, meridiemHours, day, month, year, timestamp } = useTime();
  */
 export const useTime = () => {
-    const [time, setTime] = useState(getDate());
-    useEffect(() => {
-        const timerId = setInterval(() => setTime(getDate()), 1000);
-        return () => {
-            clearInterval(timerId);
-        };
-    }, []);
-    return time;
+  const [time, setTime] = useState(getDate());
+  useEffect(() => {
+    const timerId = setInterval(() => setTime(getDate()), 1000);
+    return () => {
+      clearInterval(timerId);
+    };
+  }, []);
+  return time;
 };

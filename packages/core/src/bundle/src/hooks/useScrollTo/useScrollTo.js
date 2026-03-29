@@ -30,26 +30,23 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, trigger } = useScrollTo(options);
  */
-export const useScrollTo = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target ? params[1] : params[0]);
-    const { x, y, behavior = 'auto', immediately = true } = options ?? {};
-    const internalRef = useRefState();
-    const elementRef = useRef(null);
-    useIsomorphicLayoutEffect(() => {
-        if (!immediately)
-            return;
-        const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
-        elementRef.current = element;
-        element.scrollTo({ top: y, left: x, behavior });
-    }, [target && isTarget.getRawElement(target), internalRef.state]);
-    const trigger = (params) => {
-        if (!elementRef.current)
-            return;
-        const { x, y, behavior } = params ?? {};
-        elementRef.current.scrollTo({ left: x, top: y, behavior });
-    };
-    if (target)
-        return { trigger };
-    return { ref: internalRef, trigger };
-});
+export const useScrollTo = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target ? params[1] : params[0];
+  const { x, y, behavior = 'auto', immediately = true } = options ?? {};
+  const internalRef = useRefState();
+  const elementRef = useRef(null);
+  useIsomorphicLayoutEffect(() => {
+    if (!immediately) return;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
+    elementRef.current = element;
+    element.scrollTo({ top: y, left: x, behavior });
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  const trigger = (params) => {
+    if (!elementRef.current) return;
+    const { x, y, behavior } = params ?? {};
+    elementRef.current.scrollTo({ left: x, top: y, behavior });
+  };
+  if (target) return { trigger };
+  return { ref: internalRef, trigger };
+};

@@ -14,27 +14,25 @@ import { useMemo, useRef } from 'react';
  * const batched = useBatchedCallback((batch) => console.log(batch), 5);
  */
 export const useBatchedCallback = (callback, size) => {
-    const internalCallbackRef = useRef(callback);
-    const sizeRef = useRef(size);
-    const queueRef = useRef([]);
-    internalCallbackRef.current = callback;
-    sizeRef.current = size;
-    const flush = () => {
-        if (!queueRef.current.length)
-            return;
-        const batch = queueRef.current;
-        queueRef.current = [];
-        internalCallbackRef.current(batch);
+  const internalCallbackRef = useRef(callback);
+  const sizeRef = useRef(size);
+  const queueRef = useRef([]);
+  internalCallbackRef.current = callback;
+  sizeRef.current = size;
+  const flush = () => {
+    if (!queueRef.current.length) return;
+    const batch = queueRef.current;
+    queueRef.current = [];
+    internalCallbackRef.current(batch);
+  };
+  const batched = useMemo(() => {
+    const batchedCallback = (...args) => {
+      queueRef.current.push(args);
+      if (queueRef.current.length >= sizeRef.current) flush();
     };
-    const batched = useMemo(() => {
-        const batchedCallback = (...args) => {
-            queueRef.current.push(args);
-            if (queueRef.current.length >= sizeRef.current)
-                flush();
-        };
-        batchedCallback.flush = flush;
-        batchedCallback.cancel = () => (queueRef.current = []);
-        return batchedCallback;
-    }, []);
-    return batched;
+    batchedCallback.flush = flush;
+    batchedCallback.cancel = () => (queueRef.current = []);
+    return batchedCallback;
+  }, []);
+  return batched;
 };

@@ -22,33 +22,33 @@ import { useRef } from 'react';
  * @example
  * useOtpCredential({ onSuccess: (credential) => console.log(credential), onError: (error) => console.log(error) });
  */
-export const useOtpCredential = ((...params) => {
-    const supported = typeof navigator !== 'undefined' && 'OTPCredential' in navigator && !!navigator.OTPCredential;
-    const options = typeof params[0] === 'object'
-        ? params[0]
-        : {
-            onSuccess: params[0]
+export const useOtpCredential = (...params) => {
+  const supported =
+    typeof navigator !== 'undefined' && 'OTPCredential' in navigator && !!navigator.OTPCredential;
+  const options =
+    typeof params[0] === 'object'
+      ? params[0]
+      : {
+          onSuccess: params[0]
         };
-    const abortControllerRef = useRef(new AbortController());
-    const get = async () => {
-        if (!supported)
-            return;
-        abortControllerRef.current = new AbortController();
-        try {
-            const credential = await navigator.credentials.get({
-                otp: { transport: ['sms'] },
-                signal: abortControllerRef.current.signal
-            });
-            options.onSuccess?.(credential);
-            return credential;
-        }
-        catch (error) {
-            options.onError?.(error);
-        }
-    };
-    const abort = () => {
-        abortControllerRef.current.abort();
-        abortControllerRef.current = new AbortController();
-    };
-    return { supported, abort, get };
-});
+  const abortControllerRef = useRef(new AbortController());
+  const get = async () => {
+    if (!supported) return;
+    abortControllerRef.current = new AbortController();
+    try {
+      const credential = await navigator.credentials.get({
+        otp: { transport: ['sms'] },
+        signal: abortControllerRef.current.signal
+      });
+      options.onSuccess?.(credential);
+      return credential;
+    } catch (error) {
+      options.onError?.(error);
+    }
+  };
+  const abort = () => {
+    abortControllerRef.current.abort();
+    abortControllerRef.current = new AbortController();
+  };
+  return { supported, abort, get };
+};

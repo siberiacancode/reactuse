@@ -15,8 +15,8 @@ import { useEffect } from 'react';
  * const value = useFul(state);
  */
 export const useFul = (value) => {
-    useEffect(() => {
-        console.warn("Warning: You forgot to delete the 'useFul' hook.");
-    }, []);
-    return value;
+  useEffect(() => {
+    console.warn("Warning: You forgot to delete the 'useFul' hook.");
+  }, []);
+  return value;
 };

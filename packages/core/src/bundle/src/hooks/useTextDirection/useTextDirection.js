@@ -23,52 +23,47 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, value, set, remove } = useTextDirection();
  */
-export const useTextDirection = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const initialValue = (target ? params[1] : params[0]) ?? 'ltr';
-    const internalRef = useRefState();
-    const elementRef = useRef(null);
-    const getDirection = () => {
-        if (typeof window === 'undefined')
-            return initialValue;
-        const element = (target ? isTarget.getElement(target) : internalRef.current);
-        return element?.getAttribute('dir') ?? initialValue;
+export const useTextDirection = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const initialValue = (target ? params[1] : params[0]) ?? 'ltr';
+  const internalRef = useRefState();
+  const elementRef = useRef(null);
+  const getDirection = () => {
+    if (typeof window === 'undefined') return initialValue;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    return element?.getAttribute('dir') ?? initialValue;
+  };
+  const [value, setValue] = useState(getDirection());
+  const remove = () => {
+    if (!elementRef.current) return;
+    elementRef.current?.removeAttribute('dir');
+  };
+  const set = (value) => {
+    if (!elementRef.current) return;
+    setValue(value);
+    elementRef.current.setAttribute('dir', value);
+  };
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element =
+      (target ? isTarget.getElement(target) : internalRef.current) ??
+      document.querySelector('html');
+    if (!element) return;
+    elementRef.current = element;
+    const direction = getDirection();
+    element.setAttribute('dir', direction);
+    setValue(direction);
+    const observer = new MutationObserver(() => setValue(getDirection()));
+    observer.observe(element, { attributes: true });
+    return () => {
+      observer.disconnect();
     };
-    const [value, setValue] = useState(getDirection());
-    const remove = () => {
-        if (!elementRef.current)
-            return;
-        elementRef.current?.removeAttribute('dir');
-    };
-    const set = (value) => {
-        if (!elementRef.current)
-            return;
-        setValue(value);
-        elementRef.current.setAttribute('dir', value);
-    };
-    useEffect(() => {
-        if (!target && !internalRef.state)
-            return;
-        const element = (target ? isTarget.getElement(target) : internalRef.current) ??
-            document.querySelector('html');
-        if (!element)
-            return;
-        elementRef.current = element;
-        const direction = getDirection();
-        element.setAttribute('dir', direction);
-        setValue(direction);
-        const observer = new MutationObserver(() => setValue(getDirection()));
-        observer.observe(element, { attributes: true });
-        return () => {
-            observer.disconnect();
-        };
-    }, [internalRef.state, target && isTarget.getRawElement(target)]);
-    if (target)
-        return { value, set, remove };
-    return {
-        ref: internalRef,
-        value,
-        set,
-        remove
-    };
-});
+  }, [internalRef.state, target && isTarget.getRawElement(target)]);
+  if (target) return { value, set, remove };
+  return {
+    ref: internalRef,
+    value,
+    set,
+    remove
+  };
+};

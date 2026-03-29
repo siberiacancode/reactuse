@@ -23,43 +23,40 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useActiveElement.html}
  */
-export const useActiveElement = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const [value, setValue] = useState(null);
-    const internalRef = useRefState();
-    useEffect(() => {
-        const element = ((target ? isTarget.getElement(target) : internalRef.current) ??
-            window);
-        const observer = new MutationObserver((mutations) => {
-            mutations
-                .filter((mutation) => mutation.removedNodes.length)
-                .map((mutation) => Array.from(mutation.removedNodes))
-                .flat()
-                .forEach((node) => {
-                setValue((prevActiveElement) => {
-                    if (node === prevActiveElement)
-                        return document.activeElement;
-                    return prevActiveElement;
-                });
-            });
+export const useActiveElement = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const [value, setValue] = useState(null);
+  const internalRef = useRefState();
+  useEffect(() => {
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
+    const observer = new MutationObserver((mutations) => {
+      mutations
+        .filter((mutation) => mutation.removedNodes.length)
+        .map((mutation) => Array.from(mutation.removedNodes))
+        .flat()
+        .forEach((node) => {
+          setValue((prevActiveElement) => {
+            if (node === prevActiveElement) return document.activeElement;
+            return prevActiveElement;
+          });
         });
-        observer.observe(element, {
-            childList: true,
-            subtree: true
-        });
-        const onActiveElementChange = () => setValue(document?.activeElement);
-        element.addEventListener('focus', onActiveElementChange, true);
-        element.addEventListener('blur', onActiveElementChange, true);
-        return () => {
-            observer.disconnect();
-            element.removeEventListener('focus', onActiveElementChange, true);
-            element.removeEventListener('blur', onActiveElementChange, true);
-        };
-    }, [target && isTarget.getRawElement(target), internalRef.state]);
-    if (target)
-        return { value };
-    return {
-        ref: internalRef,
-        value
+    });
+    observer.observe(element, {
+      childList: true,
+      subtree: true
+    });
+    const onActiveElementChange = () => setValue(document?.activeElement);
+    element.addEventListener('focus', onActiveElementChange, true);
+    element.addEventListener('blur', onActiveElementChange, true);
+    return () => {
+      observer.disconnect();
+      element.removeEventListener('focus', onActiveElementChange, true);
+      element.removeEventListener('blur', onActiveElementChange, true);
     };
-});
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  if (target) return { value };
+  return {
+    ref: internalRef,
+    value
+  };
+};

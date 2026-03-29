@@ -28,50 +28,46 @@ export const DEFAULT_THRESHOLD_TIME = 300;
  *
  * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useDoubleClick.html}
  */
-export const useDoubleClick = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const callback = (target ? params[1] : params[0]);
-    const options = (target ? params[2] : params[1]);
-    const timeoutIdRef = useRef(undefined);
-    const clickCountRef = useRef(0);
-    const internalRef = useRefState();
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    const internalOptionsRef = useRef(options);
-    internalOptionsRef.current = options;
-    useEffect(() => {
-        if (!target && !internalRef.state)
-            return;
-        const element = target ? isTarget.getElement(target) : internalRef.current;
-        if (!element)
-            return;
-        const onClick = (event) => {
-            clickCountRef.current += 1;
-            if (clickCountRef.current === 1) {
-                timeoutIdRef.current = setTimeout(() => {
-                    if (internalOptionsRef.current?.onSingleClick)
-                        internalOptionsRef.current.onSingleClick(event);
-                    clickCountRef.current = 0;
-                }, internalOptionsRef.current?.threshold ?? DEFAULT_THRESHOLD_TIME);
-            }
-            if (clickCountRef.current === 2) {
-                clearTimeout(timeoutIdRef.current);
-                internalCallbackRef.current(event);
-                clickCountRef.current = 0;
-            }
-        };
-        element.addEventListener('mousedown', onClick);
-        element.addEventListener('touchstart', onClick);
-        return () => {
-            element.removeEventListener('mousedown', onClick);
-            element.removeEventListener('touchstart', onClick);
-            if (timeoutIdRef.current)
-                clearTimeout(timeoutIdRef.current);
-        };
-    }, [target && isTarget.getRawElement(target), internalRef.state]);
-    if (target)
-        return;
-    return {
-        ref: internalRef
+export const useDoubleClick = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const callback = target ? params[1] : params[0];
+  const options = target ? params[2] : params[1];
+  const timeoutIdRef = useRef(undefined);
+  const clickCountRef = useRef(0);
+  const internalRef = useRefState();
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
+    const onClick = (event) => {
+      clickCountRef.current += 1;
+      if (clickCountRef.current === 1) {
+        timeoutIdRef.current = setTimeout(() => {
+          if (internalOptionsRef.current?.onSingleClick)
+            internalOptionsRef.current.onSingleClick(event);
+          clickCountRef.current = 0;
+        }, internalOptionsRef.current?.threshold ?? DEFAULT_THRESHOLD_TIME);
+      }
+      if (clickCountRef.current === 2) {
+        clearTimeout(timeoutIdRef.current);
+        internalCallbackRef.current(event);
+        clickCountRef.current = 0;
+      }
     };
-});
+    element.addEventListener('mousedown', onClick);
+    element.addEventListener('touchstart', onClick);
+    return () => {
+      element.removeEventListener('mousedown', onClick);
+      element.removeEventListener('touchstart', onClick);
+      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+    };
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  if (target) return;
+  return {
+    ref: internalRef
+  };
+};

@@ -1,4 +1,4 @@
-import { jsx as _jsx } from "react/jsx-runtime";
+import { jsx as _jsx } from 'react/jsx-runtime';
 import { createContext, useContext } from 'react';
 /**
  * @name createContextHook
@@ -19,11 +19,11 @@ import { createContext, useContext } from 'react';
  * const matches = use();
  */
 export const createContextHook = (useHook) => {
-    const Context = createContext(null);
-    const Provider = ({ children, params }) => {
-        const value = useHook(...params);
-        return _jsx(Context.Provider, { value: value, children: children });
-    };
-    const use = () => useContext(Context);
-    return { Provider, use };
+  const Context = createContext(null);
+  const Provider = ({ children, params }) => {
+    const value = useHook(...params);
+    return _jsx(Context.Provider, { value: value, children: children });
+  };
+  const use = () => useContext(Context);
+  return { Provider, use };
 };

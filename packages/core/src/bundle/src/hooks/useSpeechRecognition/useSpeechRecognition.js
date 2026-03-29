@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-export const getSpeechRecognition = () => window?.SpeechRecognition ?? window?.webkitSpeechRecognition;
+export const getSpeechRecognition = () =>
+  window?.SpeechRecognition ?? window?.webkitSpeechRecognition;
 /**
  * @name useSpeechRecognition
  * @description - Hook that provides a streamlined interface for incorporating speech-to-text functionality
@@ -23,65 +24,72 @@ export const getSpeechRecognition = () => window?.SpeechRecognition ?? window?.w
  * const { supported, value, recognition, listening, error, start, stop, toggle  } = useSpeechRecognition();
  */
 export const useSpeechRecognition = (options = {}) => {
-    const supported = typeof window !== 'undefined' && !!getSpeechRecognition();
-    const { continuous = false, interimResults = false, language = 'en-US', grammars, maxAlternatives = 1, onStart, onEnd, onError, onResult } = options;
-    const [listening, setListening] = useState(false);
-    const [transcript, setTranscript] = useState('');
-    const [final, setFinal] = useState(false);
-    const [error, setError] = useState(null);
-    const [recognition] = useState(() => {
-        if (!supported)
-            return undefined;
-        const SpeechRecognition = getSpeechRecognition();
-        const speechRecognition = new SpeechRecognition();
-        speechRecognition.continuous = continuous;
-        if (grammars)
-            speechRecognition.grammars = grammars;
-        speechRecognition.interimResults = interimResults;
-        speechRecognition.lang = language;
-        speechRecognition.maxAlternatives = maxAlternatives;
-        speechRecognition.onstart = () => {
-            setListening(true);
-            setFinal(false);
-            onStart?.();
-        };
-        speechRecognition.onerror = (event) => {
-            setError(event);
-            setListening(false);
-            onError?.(event);
-        };
-        speechRecognition.onresult = (event) => {
-            const currentResult = event.results[event.resultIndex];
-            const { transcript } = currentResult[0];
-            setListening(false);
-            setTranscript(transcript);
-            setError(null);
-            onResult?.(event);
-        };
-        speechRecognition.onend = () => {
-            setListening(false);
-            onEnd?.();
-            speechRecognition.lang = language;
-        };
-        return speechRecognition;
-    });
-    useEffect(() => () => recognition?.stop(), []);
-    const start = () => recognition?.start();
-    const stop = () => recognition?.stop();
-    const toggle = (value = !listening) => {
-        if (value)
-            return start();
-        return stop();
+  const supported = typeof window !== 'undefined' && !!getSpeechRecognition();
+  const {
+    continuous = false,
+    interimResults = false,
+    language = 'en-US',
+    grammars,
+    maxAlternatives = 1,
+    onStart,
+    onEnd,
+    onError,
+    onResult
+  } = options;
+  const [listening, setListening] = useState(false);
+  const [transcript, setTranscript] = useState('');
+  const [final, setFinal] = useState(false);
+  const [error, setError] = useState(null);
+  const [recognition] = useState(() => {
+    if (!supported) return undefined;
+    const SpeechRecognition = getSpeechRecognition();
+    const speechRecognition = new SpeechRecognition();
+    speechRecognition.continuous = continuous;
+    if (grammars) speechRecognition.grammars = grammars;
+    speechRecognition.interimResults = interimResults;
+    speechRecognition.lang = language;
+    speechRecognition.maxAlternatives = maxAlternatives;
+    speechRecognition.onstart = () => {
+      setListening(true);
+      setFinal(false);
+      onStart?.();
     };
-    return {
-        supported,
-        transcript,
-        recognition,
-        final,
-        listening,
-        error,
-        start,
-        stop,
-        toggle
+    speechRecognition.onerror = (event) => {
+      setError(event);
+      setListening(false);
+      onError?.(event);
     };
+    speechRecognition.onresult = (event) => {
+      const currentResult = event.results[event.resultIndex];
+      const { transcript } = currentResult[0];
+      setListening(false);
+      setTranscript(transcript);
+      setError(null);
+      onResult?.(event);
+    };
+    speechRecognition.onend = () => {
+      setListening(false);
+      onEnd?.();
+      speechRecognition.lang = language;
+    };
+    return speechRecognition;
+  });
+  useEffect(() => () => recognition?.stop(), []);
+  const start = () => recognition?.start();
+  const stop = () => recognition?.stop();
+  const toggle = (value = !listening) => {
+    if (value) return start();
+    return stop();
+  };
+  return {
+    supported,
+    transcript,
+    recognition,
+    final,
+    listening,
+    error,
+    start,
+    stop,
+    toggle
+  };
 };

@@ -26,7 +26,9 @@ export const useWebSocket = (url, options) => {
   const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
   const explicityCloseRef = useRef(false);
   const [status, setStatus] = useState('connecting');
-  const send = (data) => webSocketRef.current?.send(data);
+  const send = (data) => {
+    webSocketRef.current?.send(data);
+  };
   const close = () => {
     explicityCloseRef.current = true;
     webSocketRef.current?.close();

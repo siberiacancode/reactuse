@@ -13,19 +13,21 @@ import { useEffect, useState } from 'react';
  * const { supported, value } = useMemory();
  */
 export const useMemory = () => {
-    const supported = typeof performance !== 'undefined' && 'memory' in performance && !!performance.memory;
-    const [value, setValue] = useState(supported
-        ? performance.memory
-        : {
-            jsHeapSizeLimit: 0,
-            totalJSHeapSize: 0,
-            usedJSHeapSize: 0
-        });
-    useEffect(() => {
-        if (!supported)
-            return;
-        const intervalId = setInterval(() => setValue(performance.memory), 1000);
-        return () => clearInterval(intervalId);
-    }, []);
-    return { supported, value };
+  const supported =
+    typeof performance !== 'undefined' && 'memory' in performance && !!performance.memory;
+  const [value, setValue] = useState(
+    supported
+      ? performance.memory
+      : {
+          jsHeapSizeLimit: 0,
+          totalJSHeapSize: 0,
+          usedJSHeapSize: 0
+        }
+  );
+  useEffect(() => {
+    if (!supported) return;
+    const intervalId = setInterval(() => setValue(performance.memory), 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+  return { supported, value };
 };

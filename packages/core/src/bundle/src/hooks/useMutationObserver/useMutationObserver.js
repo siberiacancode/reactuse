@@ -51,51 +51,48 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { observer, stop } = useMutationObserver((mutations) => console.log(mutations), ref);
  */
-export const useMutationObserver = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target
-        ? typeof params[1] === 'object'
-            ? params[1]
-            : { onChange: params[1] }
-        : typeof params[0] === 'object'
-            ? params[0]
-            : { onChange: params[0] });
-    const callback = options?.onChange;
-    const enabled = options?.enabled ?? true;
-    const [observer, setObserver] = useState();
-    const internalRef = useRefState();
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    useEffect(() => {
-        if (!enabled || (!target && !internalRef.state))
-            return;
-        const element = target ? isTarget.getElement(target) : internalRef.current;
-        if (!element)
-            return;
-        const observer = new MutationObserver((mutations, observer) => {
-            internalCallbackRef.current?.(mutations, observer);
-        });
-        setObserver(observer);
-        observer.observe(element, options);
-        return () => {
-            observer.disconnect();
-        };
-    }, [
-        target && isTarget.getRawElement(target),
-        internalRef.state,
-        options?.childList,
-        options?.attributes,
-        options?.characterData,
-        options?.subtree,
-        options?.attributeOldValue,
-        options?.characterDataOldValue,
-        options?.attributeFilter,
-        enabled
-    ]);
-    if (target)
-        return { observer };
-    return {
-        ref: internalRef,
-        observer
+export const useMutationObserver = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target
+    ? typeof params[1] === 'object'
+      ? params[1]
+      : { onChange: params[1] }
+    : typeof params[0] === 'object'
+      ? params[0]
+      : { onChange: params[0] };
+  const callback = options?.onChange;
+  const enabled = options?.enabled ?? true;
+  const [observer, setObserver] = useState();
+  const internalRef = useRefState();
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  useEffect(() => {
+    if (!enabled || (!target && !internalRef.state)) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
+    const observer = new MutationObserver((mutations, observer) => {
+      internalCallbackRef.current?.(mutations, observer);
+    });
+    setObserver(observer);
+    observer.observe(element, options);
+    return () => {
+      observer.disconnect();
     };
-});
+  }, [
+    target && isTarget.getRawElement(target),
+    internalRef.state,
+    options?.childList,
+    options?.attributes,
+    options?.characterData,
+    options?.subtree,
+    options?.attributeOldValue,
+    options?.characterDataOldValue,
+    options?.attributeFilter,
+    enabled
+  ]);
+  if (target) return { observer };
+  return {
+    ref: internalRef,
+    observer
+  };
+};

@@ -22,35 +22,33 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, value, observer } = useSize();
  */
-export const useSize = ((...params) => {
-    const target = params[0];
-    const [size, setSize] = useState({ width: 0, height: 0 });
-    const [observer, setObserver] = useState();
-    const internalRef = useRefState();
-    useIsomorphicLayoutEffect(() => {
-        const element = (target ? isTarget.getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        const { width, height } = element.getBoundingClientRect();
-        setSize({
-            width,
-            height
-        });
-        const observer = new ResizeObserver(() => {
-            const { width, height } = element.getBoundingClientRect();
-            setSize({ width, height });
-        });
-        setObserver(observer);
-        observer.observe(element);
-        return () => {
-            observer.disconnect();
-        };
-    }, [internalRef.state, target && isTarget.getRawElement(target)]);
-    if (target)
-        return { observer, value: size };
-    return {
-        observer,
-        ref: internalRef,
-        value: size
+export const useSize = (...params) => {
+  const target = params[0];
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const [observer, setObserver] = useState();
+  const internalRef = useRefState();
+  useIsomorphicLayoutEffect(() => {
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
+    const { width, height } = element.getBoundingClientRect();
+    setSize({
+      width,
+      height
+    });
+    const observer = new ResizeObserver(() => {
+      const { width, height } = element.getBoundingClientRect();
+      setSize({ width, height });
+    });
+    setObserver(observer);
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
     };
-});
+  }, [internalRef.state, target && isTarget.getRawElement(target)]);
+  if (target) return { observer, value: size };
+  return {
+    observer,
+    ref: internalRef,
+    value: size
+  };
+};

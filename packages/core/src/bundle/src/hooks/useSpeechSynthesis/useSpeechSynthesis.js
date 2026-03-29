@@ -19,108 +19,103 @@ import { useEffect, useState } from 'react';
  * const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } = useSpeechSynthesis();
  */
 export const useSpeechSynthesis = (options = {}) => {
-    const supported = typeof window !== 'undefined' && 'speechSynthesis' in window && !!window.speechSynthesis;
-    const { text = '', lang = 'en-US', pitch = 1, rate = 1, voice = null, volume = 1 } = options;
-    const [playing, setPlaying] = useState(false);
-    const [status, setStatus] = useState('init');
-    const [error, setError] = useState();
-    const [utterance, setUtterance] = useState();
-    const bindSpeechSynthesisUtterance = (speechSynthesisUtterance) => {
-        speechSynthesisUtterance.lang = lang;
-        speechSynthesisUtterance.pitch = pitch;
-        speechSynthesisUtterance.rate = rate;
-        speechSynthesisUtterance.volume = volume;
-        speechSynthesisUtterance.voice = voice;
-        speechSynthesisUtterance.onstart = () => {
-            setPlaying(true);
-            setStatus('play');
-        };
-        speechSynthesisUtterance.onpause = () => {
-            setPlaying(false);
-            setStatus('pause');
-        };
-        speechSynthesisUtterance.onresume = () => {
-            setPlaying(true);
-            setStatus('play');
-        };
-        speechSynthesisUtterance.onend = () => {
-            setPlaying(false);
-            setStatus('end');
-        };
-        speechSynthesisUtterance.onerror = (event) => {
-            setPlaying(false);
-            setError(event);
-        };
+  const supported =
+    typeof window !== 'undefined' && 'speechSynthesis' in window && !!window.speechSynthesis;
+  const { text = '', lang = 'en-US', pitch = 1, rate = 1, voice = null, volume = 1 } = options;
+  const [playing, setPlaying] = useState(false);
+  const [status, setStatus] = useState('init');
+  const [error, setError] = useState();
+  const [utterance, setUtterance] = useState();
+  const bindSpeechSynthesisUtterance = (speechSynthesisUtterance) => {
+    speechSynthesisUtterance.lang = lang;
+    speechSynthesisUtterance.pitch = pitch;
+    speechSynthesisUtterance.rate = rate;
+    speechSynthesisUtterance.volume = volume;
+    speechSynthesisUtterance.voice = voice;
+    speechSynthesisUtterance.onstart = () => {
+      setPlaying(true);
+      setStatus('play');
     };
-    useEffect(() => {
-        if (!supported)
-            return;
-        const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
-        bindSpeechSynthesisUtterance(speechSynthesisUtterance);
-        setUtterance(speechSynthesisUtterance);
-        return () => {
-            window.speechSynthesis?.cancel();
-        };
-    }, [
-        text,
-        lang,
-        pitch,
-        rate,
-        volume,
-        voice?.default,
-        voice?.lang,
-        voice?.localService,
-        voice?.name,
-        voice?.voiceURI
-    ]);
-    const speak = (text) => {
-        if (!supported)
-            return;
-        if (text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            setUtterance(utterance);
-            bindSpeechSynthesisUtterance(utterance);
-        }
-        window.speechSynthesis?.cancel();
-        if (utterance)
-            window.speechSynthesis?.speak(utterance);
-        setPlaying(true);
+    speechSynthesisUtterance.onpause = () => {
+      setPlaying(false);
+      setStatus('pause');
     };
-    const stop = () => {
-        if (!supported)
-            return;
-        window.speechSynthesis?.cancel();
-        setPlaying(false);
+    speechSynthesisUtterance.onresume = () => {
+      setPlaying(true);
+      setStatus('play');
     };
-    const toggle = (value = !playing) => {
-        if (!supported)
-            return;
-        if (value) {
-            window.speechSynthesis?.resume();
-        }
-        else {
-            window.speechSynthesis?.pause();
-        }
-        setPlaying(value);
+    speechSynthesisUtterance.onend = () => {
+      setPlaying(false);
+      setStatus('end');
     };
-    const resume = () => {
-        setPlaying(true);
-        window.speechSynthesis?.resume();
+    speechSynthesisUtterance.onerror = (event) => {
+      setPlaying(false);
+      setError(event);
     };
-    const pause = () => {
-        setPlaying(false);
-        window.speechSynthesis?.pause();
+  };
+  useEffect(() => {
+    if (!supported) return;
+    const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
+    bindSpeechSynthesisUtterance(speechSynthesisUtterance);
+    setUtterance(speechSynthesisUtterance);
+    return () => {
+      window.speechSynthesis?.cancel();
     };
-    return {
-        supported,
-        playing,
-        status,
-        utterance,
-        error,
-        stop,
-        toggle,
-        speak,
-        resume,
-        pause
-    };
+  }, [
+    text,
+    lang,
+    pitch,
+    rate,
+    volume,
+    voice?.default,
+    voice?.lang,
+    voice?.localService,
+    voice?.name,
+    voice?.voiceURI
+  ]);
+  const speak = (text) => {
+    if (!supported) return;
+    if (text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      setUtterance(utterance);
+      bindSpeechSynthesisUtterance(utterance);
+    }
+    window.speechSynthesis?.cancel();
+    if (utterance) window.speechSynthesis?.speak(utterance);
+    setPlaying(true);
+  };
+  const stop = () => {
+    if (!supported) return;
+    window.speechSynthesis?.cancel();
+    setPlaying(false);
+  };
+  const toggle = (value = !playing) => {
+    if (!supported) return;
+    if (value) {
+      window.speechSynthesis?.resume();
+    } else {
+      window.speechSynthesis?.pause();
+    }
+    setPlaying(value);
+  };
+  const resume = () => {
+    setPlaying(true);
+    window.speechSynthesis?.resume();
+  };
+  const pause = () => {
+    setPlaying(false);
+    window.speechSynthesis?.pause();
+  };
+  return {
+    supported,
+    playing,
+    status,
+    utterance,
+    error,
+    stop,
+    toggle,
+    speak,
+    resume,
+    pause
+  };
 };

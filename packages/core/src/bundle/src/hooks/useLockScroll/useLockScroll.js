@@ -24,60 +24,55 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, lock, unlock, value, toggle } = useLockScroll();
  */
-export const useLockScroll = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target ? params[1] : params[0]);
-    const enabled = options?.enabled ?? true;
-    const [locked, setLocked] = useState(enabled);
-    const internalRef = useRefState();
-    const elementRef = useRef(null);
-    useIsomorphicLayoutEffect(() => {
-        const element = (target ? isTarget.getElement(target) : internalRef.current) ?? document.body;
-        if (!(element instanceof HTMLElement))
-            return;
-        elementRef.current = element;
-        if (!enabled)
-            return;
-        const originalStyle = window.getComputedStyle(element).overflow;
-        elementRef.current.__originalOverflow = originalStyle;
-        element.style.overflow = 'hidden';
-        return () => {
-            element.style.overflow = originalStyle;
-            elementRef.current = null;
-        };
-    }, [target && isTarget.getRawElement(target), internalRef.state, enabled]);
-    const lock = () => {
-        if (!elementRef.current)
-            return;
-        const element = elementRef.current;
-        elementRef.current.__originalOverflow = window.getComputedStyle(element).overflow;
-        element.style.overflow = 'hidden';
-        setLocked(true);
+export const useLockScroll = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target ? params[1] : params[0];
+  const enabled = options?.enabled ?? true;
+  const [locked, setLocked] = useState(enabled);
+  const internalRef = useRefState();
+  const elementRef = useRef(null);
+  useIsomorphicLayoutEffect(() => {
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? document.body;
+    if (!(element instanceof HTMLElement)) return;
+    elementRef.current = element;
+    if (!enabled) return;
+    const originalStyle = window.getComputedStyle(element).overflow;
+    elementRef.current.__originalOverflow = originalStyle;
+    element.style.overflow = 'hidden';
+    return () => {
+      element.style.overflow = originalStyle;
+      elementRef.current = null;
     };
-    const unlock = () => {
-        if (!elementRef.current)
-            return;
-        const element = elementRef.current;
-        element.style.overflow = elementRef.current.__originalOverflow;
-        setLocked(false);
-    };
-    const toggle = (value = !locked) => {
-        if (value)
-            return lock();
-        return unlock();
-    };
-    if (target)
-        return {
-            value: locked,
-            lock,
-            unlock,
-            toggle
-        };
+  }, [target && isTarget.getRawElement(target), internalRef.state, enabled]);
+  const lock = () => {
+    if (!elementRef.current) return;
+    const element = elementRef.current;
+    elementRef.current.__originalOverflow = window.getComputedStyle(element).overflow;
+    element.style.overflow = 'hidden';
+    setLocked(true);
+  };
+  const unlock = () => {
+    if (!elementRef.current) return;
+    const element = elementRef.current;
+    element.style.overflow = elementRef.current.__originalOverflow;
+    setLocked(false);
+  };
+  const toggle = (value = !locked) => {
+    if (value) return lock();
+    return unlock();
+  };
+  if (target)
     return {
-        ref: internalRef,
-        value: locked,
-        lock,
-        unlock,
-        toggle
+      value: locked,
+      lock,
+      unlock,
+      toggle
     };
-});
+  return {
+    ref: internalRef,
+    value: locked,
+    lock,
+    unlock,
+    toggle
+  };
+};

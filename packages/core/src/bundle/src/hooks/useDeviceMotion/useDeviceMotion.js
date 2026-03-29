@@ -33,43 +33,42 @@ import { throttle } from '@/utils/helpers';
  * @example
  * const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion();
  */
-export const useDeviceMotion = ((...params) => {
-    const delay = typeof params[0] === 'number' ? params[0] : (params[0]?.delay ?? 1000);
-    const callback = typeof params[0] === 'function' ? params[0] : params[0]?.onChange;
-    const enabled = params[0]?.enabled ?? true;
-    const [value, setValue] = useState({
-        interval: 0,
-        rotationRate: { alpha: null, beta: null, gamma: null },
-        acceleration: { x: null, y: null, z: null },
-        accelerationIncludingGravity: { x: null, y: null, z: null }
-    });
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    useEffect(() => {
-        if (!enabled)
-            return;
-        const onDeviceMotion = throttle((event) => {
-            internalCallbackRef.current?.(event);
-            setValue({
-                interval: event.interval,
-                rotationRate: {
-                    ...value.rotationRate,
-                    ...event.rotationRate
-                },
-                acceleration: {
-                    ...value.acceleration,
-                    ...event.acceleration
-                },
-                accelerationIncludingGravity: {
-                    ...value.accelerationIncludingGravity,
-                    ...event.accelerationIncludingGravity
-                }
-            });
-        }, delay);
-        window.addEventListener('devicemotion', onDeviceMotion);
-        return () => {
-            window.removeEventListener('devicemotion', onDeviceMotion);
-        };
-    }, [delay, enabled]);
-    return value;
-});
+export const useDeviceMotion = (...params) => {
+  const delay = typeof params[0] === 'number' ? params[0] : (params[0]?.delay ?? 1000);
+  const callback = typeof params[0] === 'function' ? params[0] : params[0]?.onChange;
+  const enabled = params[0]?.enabled ?? true;
+  const [value, setValue] = useState({
+    interval: 0,
+    rotationRate: { alpha: null, beta: null, gamma: null },
+    acceleration: { x: null, y: null, z: null },
+    accelerationIncludingGravity: { x: null, y: null, z: null }
+  });
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  useEffect(() => {
+    if (!enabled) return;
+    const onDeviceMotion = throttle((event) => {
+      internalCallbackRef.current?.(event);
+      setValue({
+        interval: event.interval,
+        rotationRate: {
+          ...value.rotationRate,
+          ...event.rotationRate
+        },
+        acceleration: {
+          ...value.acceleration,
+          ...event.acceleration
+        },
+        accelerationIncludingGravity: {
+          ...value.accelerationIncludingGravity,
+          ...event.accelerationIncludingGravity
+        }
+      });
+    }, delay);
+    window.addEventListener('devicemotion', onDeviceMotion);
+    return () => {
+      window.removeEventListener('devicemotion', onDeviceMotion);
+    };
+  }, [delay, enabled]);
+  return value;
+};

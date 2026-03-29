@@ -15,7 +15,7 @@ import { useThrottleCallback } from '../useThrottleCallback/useThrottleCallback'
  * const [throttledValue, setThrottledValue] = useThrottleState(value, 500);
  */
 export const useThrottleState = (initialValue, delay) => {
-    const [throttledValue, setThrottledValue] = useState(initialValue);
-    const throttledSetState = useThrottleCallback(setThrottledValue, delay);
-    return [throttledValue, throttledSetState];
+  const [throttledValue, setThrottledValue] = useState(initialValue);
+  const throttledSetState = useThrottleCallback(setThrottledValue, delay);
+  return [throttledValue, throttledSetState];
 };

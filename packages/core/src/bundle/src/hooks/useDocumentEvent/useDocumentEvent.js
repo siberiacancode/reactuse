@@ -15,4 +15,5 @@ import { useEventListener } from '../useEventListener/useEventListener';
  * @example
  * useDocumentEvent('click', () => console.log('clicked'));
  */
-export const useDocumentEvent = (event, listener, options) => useEventListener(isTarget.wrap(document), event, listener, options);
+export const useDocumentEvent = (event, listener, options) =>
+  useEventListener(isTarget.wrap(document), event, listener, options);

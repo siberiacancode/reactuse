@@ -12,7 +12,7 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  * useAsyncEffect(async () => console.log("effect runs on updates"), deps);
  */
 export const useAsyncEffect = (сallback, deps) => {
-    useIsomorphicLayoutEffect(() => {
-        сallback();
-    }, deps);
+  useIsomorphicLayoutEffect(() => {
+    сallback();
+  }, deps);
 };

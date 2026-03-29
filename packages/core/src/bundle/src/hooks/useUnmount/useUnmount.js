@@ -12,9 +12,12 @@ import { useEffect, useRef } from 'react';
  * useUnmount(() => console.log('This effect runs on component unmount'));
  */
 export const useUnmount = (callback) => {
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    useEffect(() => () => {
-        internalCallbackRef.current();
-    }, []);
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  useEffect(
+    () => () => {
+      internalCallbackRef.current();
+    },
+    []
+  );
 };

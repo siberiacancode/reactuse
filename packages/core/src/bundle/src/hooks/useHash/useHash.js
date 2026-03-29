@@ -42,46 +42,44 @@ export const getHash = () => decodeURIComponent(window.location.hash.replace('#'
  * @example
  * const { value, set } = useHash((newHash) => console.log('callback'));
  */
-export const useHash = ((...params) => {
-    const initialValue = typeof params[0] === 'string' ? params[0] : '';
-    const options = typeof params[1] === 'object'
-        ? params[1]
-        : typeof params[1] === 'function'
-            ? { onChange: params[1] }
-            : typeof params[0] === 'object'
-                ? params[0]
-                : {};
-    const enabled = options?.enabled ?? true;
-    const mode = options?.mode ?? 'replace';
-    const [hash, setHash] = useState(() => {
-        if (typeof window === 'undefined')
-            return initialValue;
-        return getHash() || initialValue;
-    });
-    const optionsRef = useRef(options);
-    optionsRef.current = options;
-    const set = (value) => {
-        window.location.hash = value;
-        setHash(value);
-        optionsRef.current?.onChange?.(value);
+export const useHash = (...params) => {
+  const initialValue = typeof params[0] === 'string' ? params[0] : '';
+  const options =
+    typeof params[1] === 'object'
+      ? params[1]
+      : typeof params[1] === 'function'
+        ? { onChange: params[1] }
+        : typeof params[0] === 'object'
+          ? params[0]
+          : {};
+  const enabled = options?.enabled ?? true;
+  const mode = options?.mode ?? 'replace';
+  const [hash, setHash] = useState(() => {
+    if (typeof window === 'undefined') return initialValue;
+    return getHash() || initialValue;
+  });
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
+  const set = (value) => {
+    window.location.hash = value;
+    setHash(value);
+    optionsRef.current?.onChange?.(value);
+  };
+  useEffect(() => {
+    if (!enabled) return;
+    if (mode === 'replace') window.location.hash = hash;
+    const onHashChange = () => {
+      const newHash = getHash();
+      setHash(newHash);
+      optionsRef.current?.onChange?.(newHash);
     };
-    useEffect(() => {
-        if (!enabled)
-            return;
-        if (mode === 'replace')
-            window.location.hash = hash;
-        const onHashChange = () => {
-            const newHash = getHash();
-            setHash(newHash);
-            optionsRef.current?.onChange?.(newHash);
-        };
-        window.addEventListener('hashchange', onHashChange);
-        return () => {
-            window.removeEventListener('hashchange', onHashChange);
-        };
-    }, [enabled, mode]);
-    return {
-        value: hash,
-        set
+    window.addEventListener('hashchange', onHashChange);
+    return () => {
+      window.removeEventListener('hashchange', onHashChange);
     };
-});
+  }, [enabled, mode]);
+  return {
+    value: hash,
+    set
+  };
+};

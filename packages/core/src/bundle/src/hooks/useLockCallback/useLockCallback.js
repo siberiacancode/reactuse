@@ -12,18 +12,16 @@ import { useRef } from 'react';
  * const lockedCallback = useLockCallback(() => promise());
  */
 export const useLockCallback = (callback) => {
-    const lockRef = useRef(false);
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    return async (...args) => {
-        if (lockRef.current)
-            return;
-        lockRef.current = true;
-        try {
-            return await internalCallbackRef.current(...args);
-        }
-        finally {
-            lockRef.current = false;
-        }
-    };
+  const lockRef = useRef(false);
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  return async (...args) => {
+    if (lockRef.current) return;
+    lockRef.current = true;
+    try {
+      return await internalCallbackRef.current(...args);
+    } finally {
+      lockRef.current = false;
+    }
+  };
 };

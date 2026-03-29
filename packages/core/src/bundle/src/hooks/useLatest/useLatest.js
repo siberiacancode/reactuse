@@ -13,12 +13,15 @@ import { useMemo, useRef } from 'react';
  * const { value, ref } = useLatest(value);
  */
 export const useLatest = (value) => {
-    const valueRef = useRef(value);
-    valueRef.current = value;
-    return useMemo(() => ({
-        get value() {
-            return valueRef.current;
-        },
-        ref: valueRef
-    }), []);
+  const valueRef = useRef(value);
+  valueRef.current = value;
+  return useMemo(
+    () => ({
+      get value() {
+        return valueRef.current;
+      },
+      ref: valueRef
+    }),
+    []
+  );
 };

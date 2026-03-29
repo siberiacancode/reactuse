@@ -26,60 +26,54 @@ const DEFAULT_THRESHOLD_TIME = 400;
  * @example
  * const { ref, pressed } = useLongPress(() => console.log('callback'));
  */
-export const useLongPress = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const callback = (target ? params[1] : params[0]);
-    const options = (target ? params[2] : params[1]);
-    const [pressed, setPressed] = useState(false);
-    const timeoutIdRef = useRef(undefined);
-    const isPressedRef = useRef(false);
-    const internalRef = useRefState();
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    const internalOptionsRef = useRef(options);
-    internalOptionsRef.current = options;
-    useEffect(() => {
-        if (!target && !internalRef.state)
-            return;
-        const element = target ? isTarget.getElement(target) : internalRef.current;
-        if (!element)
-            return;
-        const onStart = (event) => {
-            internalOptionsRef.current?.onStart?.(event);
-            isPressedRef.current = true;
-            timeoutIdRef.current = setTimeout(() => {
-                internalCallbackRef.current(event);
-                setPressed(true);
-            }, internalOptionsRef.current?.threshold ?? DEFAULT_THRESHOLD_TIME);
-        };
-        const onCancel = (event) => {
-            setPressed((prevPressed) => {
-                if (prevPressed) {
-                    internalOptionsRef.current?.onFinish?.(event);
-                }
-                else if (isPressedRef.current) {
-                    internalOptionsRef.current?.onCancel?.(event);
-                }
-                isPressedRef.current = false;
-                if (timeoutIdRef.current)
-                    clearTimeout(timeoutIdRef.current);
-                return false;
-            });
-        };
-        element.addEventListener('mousedown', onStart);
-        window.addEventListener('mouseup', onCancel);
-        element.addEventListener('touchstart', onStart);
-        window.addEventListener('touchend', onCancel);
-        return () => {
-            element.removeEventListener('mousedown', onStart);
-            window.removeEventListener('mouseup', onCancel);
-            element.removeEventListener('touchstart', onStart);
-            window.removeEventListener('touchend', onCancel);
-            if (timeoutIdRef.current)
-                clearTimeout(timeoutIdRef.current);
-        };
-    }, [target && isTarget.getRawElement(target), internalRef.state]);
-    if (target)
-        return { pressed };
-    return { pressed, ref: internalRef };
-});
+export const useLongPress = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const callback = target ? params[1] : params[0];
+  const options = target ? params[2] : params[1];
+  const [pressed, setPressed] = useState(false);
+  const timeoutIdRef = useRef(undefined);
+  const isPressedRef = useRef(false);
+  const internalRef = useRefState();
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
+    const onStart = (event) => {
+      internalOptionsRef.current?.onStart?.(event);
+      isPressedRef.current = true;
+      timeoutIdRef.current = setTimeout(() => {
+        internalCallbackRef.current(event);
+        setPressed(true);
+      }, internalOptionsRef.current?.threshold ?? DEFAULT_THRESHOLD_TIME);
+    };
+    const onCancel = (event) => {
+      setPressed((prevPressed) => {
+        if (prevPressed) {
+          internalOptionsRef.current?.onFinish?.(event);
+        } else if (isPressedRef.current) {
+          internalOptionsRef.current?.onCancel?.(event);
+        }
+        isPressedRef.current = false;
+        if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+        return false;
+      });
+    };
+    element.addEventListener('mousedown', onStart);
+    window.addEventListener('mouseup', onCancel);
+    element.addEventListener('touchstart', onStart);
+    window.addEventListener('touchend', onCancel);
+    return () => {
+      element.removeEventListener('mousedown', onStart);
+      window.removeEventListener('mouseup', onCancel);
+      element.removeEventListener('touchstart', onStart);
+      window.removeEventListener('touchend', onCancel);
+      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+    };
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  if (target) return { pressed };
+  return { pressed, ref: internalRef };
+};

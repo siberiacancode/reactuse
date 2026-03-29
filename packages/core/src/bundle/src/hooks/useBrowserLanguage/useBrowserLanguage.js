@@ -2,8 +2,8 @@ import { useSyncExternalStore } from 'react';
 const getSnapshot = () => navigator.language;
 const getServerSnapshot = () => 'undetermined';
 const subscribe = (callback) => {
-    window.addEventListener('languagechange', callback);
-    return () => window.removeEventListener('languagechange', callback);
+  window.addEventListener('languagechange', callback);
+  return () => window.removeEventListener('languagechange', callback);
 };
 /**
  * @name useBrowserLanguage
@@ -18,4 +18,5 @@ const subscribe = (callback) => {
  * @example
  * const browserLanguage = useBrowserLanguage();
  */
-export const useBrowserLanguage = () => useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+export const useBrowserLanguage = () =>
+  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

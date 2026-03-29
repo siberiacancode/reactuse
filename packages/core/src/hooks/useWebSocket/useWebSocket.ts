@@ -69,8 +69,9 @@ export const useWebSocket = (
 
   const [status, setStatus] = useState<UseWebSocketStatus>('connecting');
 
-  const send = (data: string | ArrayBufferLike | ArrayBufferView | Blob) =>
+  const send = (data: string | Blob | BufferSource) => {
     webSocketRef.current?.send(data);
+  };
 
   const close = () => {
     explicityCloseRef.current = true;

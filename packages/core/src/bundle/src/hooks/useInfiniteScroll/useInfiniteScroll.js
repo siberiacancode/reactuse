@@ -27,51 +27,48 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));
  */
-export const useInfiniteScroll = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const callback = (target ? params[1] : params[0]);
-    const options = (target ? params[2] : params[1]);
-    const direction = options?.direction ?? 'bottom';
-    const distance = options?.distance ?? 10;
-    const [loading, setIsLoading] = useState(false);
-    const internalRef = useRefState();
-    const internalCallbackRef = useRef(callback);
-    internalCallbackRef.current = callback;
-    const internalLoadingRef = useRef(loading);
-    internalLoadingRef.current = loading;
-    useEffect(() => {
-        if (!target && !internalRef.state)
-            return;
-        const element = (target ? isTarget.getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        const onLoadMore = async (event) => {
-            if (internalLoadingRef.current)
-                return;
-            const { clientHeight, scrollHeight, scrollTop, clientWidth, scrollWidth, scrollLeft } = event.target;
-            const scrollBottom = scrollHeight - (scrollTop + clientHeight);
-            const scrollRight = scrollWidth - (scrollLeft + clientWidth);
-            const distances = {
-                bottom: scrollBottom,
-                top: scrollTop,
-                right: scrollRight,
-                left: scrollLeft
-            };
-            if (distances[direction] <= distance) {
-                setIsLoading(true);
-                await internalCallbackRef.current(event);
-                setIsLoading(false);
-            }
-        };
-        element.addEventListener('scroll', onLoadMore);
-        return () => {
-            element.removeEventListener('scroll', onLoadMore);
-        };
-    }, [target && isTarget.getRawElement(target), internalRef.state, direction, distance]);
-    if (target)
-        return { loading };
-    return {
-        ref: internalRef,
-        loading
+export const useInfiniteScroll = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const callback = target ? params[1] : params[0];
+  const options = target ? params[2] : params[1];
+  const direction = options?.direction ?? 'bottom';
+  const distance = options?.distance ?? 10;
+  const [loading, setIsLoading] = useState(false);
+  const internalRef = useRefState();
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+  const internalLoadingRef = useRef(loading);
+  internalLoadingRef.current = loading;
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
+    const onLoadMore = async (event) => {
+      if (internalLoadingRef.current) return;
+      const { clientHeight, scrollHeight, scrollTop, clientWidth, scrollWidth, scrollLeft } =
+        event.target;
+      const scrollBottom = scrollHeight - (scrollTop + clientHeight);
+      const scrollRight = scrollWidth - (scrollLeft + clientWidth);
+      const distances = {
+        bottom: scrollBottom,
+        top: scrollTop,
+        right: scrollRight,
+        left: scrollLeft
+      };
+      if (distances[direction] <= distance) {
+        setIsLoading(true);
+        await internalCallbackRef.current(event);
+        setIsLoading(false);
+      }
     };
-});
+    element.addEventListener('scroll', onLoadMore);
+    return () => {
+      element.removeEventListener('scroll', onLoadMore);
+    };
+  }, [target && isTarget.getRawElement(target), internalRef.state, direction, distance]);
+  if (target) return { loading };
+  return {
+    ref: internalRef,
+    loading
+  };
+};

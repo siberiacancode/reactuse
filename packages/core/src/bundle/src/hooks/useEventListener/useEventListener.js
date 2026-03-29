@@ -52,28 +52,26 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const ref = useEventListener('click', () => console.log('click'));
  */
-export const useEventListener = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const event = (target ? params[1] : params[0]);
-    const listener = (target ? params[2] : params[1]);
-    const options = (target ? params[3] : params[2]);
-    const enabled = options?.enabled ?? true;
-    const internalRef = useRefState();
-    const internalListenerRef = useRef(listener);
-    internalListenerRef.current = listener;
-    const internalOptionsRef = useRef(options);
-    internalOptionsRef.current = options;
-    useEffect(() => {
-        if (!enabled)
-            return;
-        const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
-        const listener = (event) => internalListenerRef.current(event);
-        element.addEventListener(event, listener, options);
-        return () => {
-            element.removeEventListener(event, listener, options);
-        };
-    }, [target && isTarget.getRawElement(target), internalRef.state, event, enabled]);
-    if (target)
-        return;
-    return internalRef;
-});
+export const useEventListener = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const event = target ? params[1] : params[0];
+  const listener = target ? params[2] : params[1];
+  const options = target ? params[3] : params[2];
+  const enabled = options?.enabled ?? true;
+  const internalRef = useRefState();
+  const internalListenerRef = useRef(listener);
+  internalListenerRef.current = listener;
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  useEffect(() => {
+    if (!enabled) return;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
+    const listener = (event) => internalListenerRef.current(event);
+    element.addEventListener(event, listener, options);
+    return () => {
+      element.removeEventListener(event, listener, options);
+    };
+  }, [target && isTarget.getRawElement(target), internalRef.state, event, enabled]);
+  if (target) return;
+  return internalRef;
+};

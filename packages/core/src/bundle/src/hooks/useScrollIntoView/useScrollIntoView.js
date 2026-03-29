@@ -30,36 +30,37 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, trigger } = useScrollIntoView<HTMLDivElement>();
  */
-export const useScrollIntoView = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target ? params[1] : params[0]);
-    const internalRef = useRefState();
-    const { behavior = 'smooth', block = 'start', inline = 'nearest', immediately = true } = options ?? {};
-    const elementRef = useRef(null);
-    useIsomorphicLayoutEffect(() => {
-        if (!immediately)
-            return;
-        if (!target && !internalRef.state)
-            return;
-        const element = (target ? isTarget.getElement(target) : internalRef.current);
-        elementRef.current = element;
-        element.scrollIntoView({
-            behavior,
-            block,
-            inline
-        });
-    }, [target && isTarget.getRawElement(target), internalRef.state]);
-    const trigger = (params) => {
-        if (!elementRef.current)
-            return;
-        const { behavior, block, inline } = params ?? {};
-        elementRef.current.scrollIntoView({
-            behavior,
-            block,
-            inline
-        });
-    };
-    if (target)
-        return { trigger };
-    return { ref: internalRef, trigger };
-});
+export const useScrollIntoView = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target ? params[1] : params[0];
+  const internalRef = useRefState();
+  const {
+    behavior = 'smooth',
+    block = 'start',
+    inline = 'nearest',
+    immediately = true
+  } = options ?? {};
+  const elementRef = useRef(null);
+  useIsomorphicLayoutEffect(() => {
+    if (!immediately) return;
+    if (!target && !internalRef.state) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    elementRef.current = element;
+    element.scrollIntoView({
+      behavior,
+      block,
+      inline
+    });
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  const trigger = (params) => {
+    if (!elementRef.current) return;
+    const { behavior, block, inline } = params ?? {};
+    elementRef.current.scrollIntoView({
+      behavior,
+      block,
+      inline
+    });
+  };
+  if (target) return { trigger };
+  return { ref: internalRef, trigger };
+};

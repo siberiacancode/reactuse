@@ -14,21 +14,23 @@ import { useState } from 'react';
  * const { opened, open, close, toggle } = useDisclosure();
  */
 export const useDisclosure = (initialValue = false, options) => {
-    const [opened, setOpened] = useState(initialValue);
-    const open = () => setOpened((opened) => {
-        if (!opened) {
-            options?.onOpen?.();
-            return true;
-        }
-        return opened;
+  const [opened, setOpened] = useState(initialValue);
+  const open = () =>
+    setOpened((opened) => {
+      if (!opened) {
+        options?.onOpen?.();
+        return true;
+      }
+      return opened;
     });
-    const close = () => setOpened((opened) => {
-        if (opened) {
-            options?.onClose?.();
-            return false;
-        }
-        return opened;
+  const close = () =>
+    setOpened((opened) => {
+      if (opened) {
+        options?.onClose?.();
+        return false;
+      }
+      return opened;
     });
-    const toggle = (value = !opened) => (value ? open() : close());
-    return { opened, open, close, toggle };
+  const toggle = (value = !opened) => (value ? open() : close());
+  return { opened, open, close, toggle };
 };

@@ -19,45 +19,48 @@ import { useRef, useState } from 'react';
  *  initialPage: 1
  * });
  */
-export const useOffsetPagination = ({ total = Number.POSITIVE_INFINITY, initialPage = 1, initialPageSize = 10, onChange = () => { } } = {}) => {
-    const [page, setPage] = useState(initialPage);
-    const [pageSize, setPageSize] = useState(initialPageSize);
-    const onChangeRef = useRef(onChange);
-    onChangeRef.current = onChange;
-    const pageCount = Math.max(1, Math.ceil(total / pageSize));
-    const isFirstPage = page === 1;
-    const isLastPage = page === pageCount;
-    const next = () => {
-        if (isLastPage)
-            return onChange({ page: pageCount, pageSize });
-        setPage((prevPage) => {
-            const page = prevPage + 1;
-            onChange({ page, pageSize });
-            return page;
-        });
-    };
-    const prev = () => {
-        if (isFirstPage)
-            return onChange({ page: 1, pageSize });
-        setPage((prevPage) => {
-            const page = prevPage - 1;
-            onChange({ page, pageSize });
-            return page;
-        });
-    };
-    const set = (page) => {
-        setPage(page);
-        onChange({ page, pageSize });
-    };
-    return {
-        page,
-        setPage: set,
-        setPageSize,
-        pageSize,
-        isFirstPage,
-        isLastPage,
-        pageCount,
-        next,
-        prev
-    };
+export const useOffsetPagination = ({
+  total = Number.POSITIVE_INFINITY,
+  initialPage = 1,
+  initialPageSize = 10,
+  onChange = () => {}
+} = {}) => {
+  const [page, setPage] = useState(initialPage);
+  const [pageSize, setPageSize] = useState(initialPageSize);
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+  const pageCount = Math.max(1, Math.ceil(total / pageSize));
+  const isFirstPage = page === 1;
+  const isLastPage = page === pageCount;
+  const next = () => {
+    if (isLastPage) return onChange({ page: pageCount, pageSize });
+    setPage((prevPage) => {
+      const page = prevPage + 1;
+      onChange({ page, pageSize });
+      return page;
+    });
+  };
+  const prev = () => {
+    if (isFirstPage) return onChange({ page: 1, pageSize });
+    setPage((prevPage) => {
+      const page = prevPage - 1;
+      onChange({ page, pageSize });
+      return page;
+    });
+  };
+  const set = (page) => {
+    setPage(page);
+    onChange({ page, pageSize });
+  };
+  return {
+    page,
+    setPage: set,
+    setPageSize,
+    pageSize,
+    isFirstPage,
+    isLastPage,
+    pageCount,
+    next,
+    prev
+  };
 };

@@ -2,10 +2,10 @@ import { useSyncExternalStore } from 'react';
 const getSnapshot = () => document.visibilityState;
 const getServerSnapshot = () => 'hidden';
 const subscribe = (callback) => {
-    document.addEventListener('visibilitychange', callback);
-    return () => {
-        document.removeEventListener('visibilitychange', callback);
-    };
+  document.addEventListener('visibilitychange', callback);
+  return () => {
+    document.removeEventListener('visibilitychange', callback);
+  };
 };
 /**
  * @name useDocumentVisibility
@@ -18,4 +18,5 @@ const subscribe = (callback) => {
  * @example
  * const visibilityState = useDocumentVisibility();
  */
-export const useDocumentVisibility = () => useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+export const useDocumentVisibility = () =>
+  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

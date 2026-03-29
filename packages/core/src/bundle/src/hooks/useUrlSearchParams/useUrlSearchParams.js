@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { createQueryString, dispatchUrlSearchParamsEvent, getUrlSearchParams, URL_SEARCH_PARAMS_EVENT } from '../useUrlSearchParam/useUrlSearchParam';
+import {
+  createQueryString,
+  dispatchUrlSearchParamsEvent,
+  getUrlSearchParams,
+  URL_SEARCH_PARAMS_EVENT
+} from '../useUrlSearchParam/useUrlSearchParam';
 /**
  * @name useUrlSearchParams
  * @description - Hook that provides reactive URLSearchParams
@@ -27,102 +32,96 @@ import { createQueryString, dispatchUrlSearchParamsEvent, getUrlSearchParams, UR
  * @example
  * const { value, set } = useUrlSearchParams({ page: 1 });
  */
-export const useUrlSearchParams = ((params) => {
-    const options = (typeof params === 'object' &&
-        params &&
-        ('serializer' in params ||
-            'deserializer' in params ||
-            'initialValue' in params ||
-            'mode' in params ||
-            'write' in params)
-        ? params
-        : undefined);
-    const initialValue = (options ? options?.initialValue : params);
-    const { mode = 'history', write: writeMode = 'replace' } = options ?? {};
-    const serializer = (value) => {
-        if (options?.serializer)
-            return options.serializer(value);
-        if (typeof value === 'string')
-            return value;
-        return JSON.stringify(value);
-    };
-    const deserializer = (value) => {
-        if (options?.deserializer)
-            return options.deserializer(value);
-        if (value === 'undefined')
-            return undefined;
-        try {
-            return JSON.parse(value);
-        }
-        catch {
-            return value;
-        }
-    };
-    const setUrlSearchParams = (mode, value, write = 'replace') => {
-        const urlSearchParams = getUrlSearchParams(mode);
-        Object.entries(value).forEach(([key, param]) => {
-            if (param === undefined) {
-                urlSearchParams.delete(key);
-            }
-            else {
-                const serializedValue = serializer ? serializer(param) : String(param);
-                urlSearchParams.set(key, serializedValue);
-            }
-        });
-        const query = createQueryString(urlSearchParams, mode);
-        if (write === 'replace')
-            window.history.replaceState({}, '', query);
-        if (write === 'push')
-            window.history.pushState({}, '', query);
-        dispatchUrlSearchParamsEvent();
-        return urlSearchParams;
-    };
-    const getParsedUrlSearchParams = (searchParams) => {
-        if (typeof searchParams === 'string') {
-            return getParsedUrlSearchParams(new URLSearchParams(searchParams));
-        }
-        if (searchParams instanceof URLSearchParams) {
-            return Array.from(searchParams.entries()).reduce((acc, [key, value]) => {
-                acc[key] = deserializer(value);
-                return acc;
-            }, {});
-        }
-        return searchParams;
-    };
-    const [value, setValue] = useState(() => {
-        if (typeof window === 'undefined')
-            return (initialValue ?? {});
-        const urlSearchParams = getUrlSearchParams(mode);
-        const value = {
-            ...(initialValue && getParsedUrlSearchParams(initialValue)),
-            ...getParsedUrlSearchParams(urlSearchParams)
-        };
-        setUrlSearchParams(mode, value, writeMode);
-        return value;
+export const useUrlSearchParams = (params) => {
+  const options =
+    typeof params === 'object' &&
+    params &&
+    ('serializer' in params ||
+      'deserializer' in params ||
+      'initialValue' in params ||
+      'mode' in params ||
+      'write' in params)
+      ? params
+      : undefined;
+  const initialValue = options ? options?.initialValue : params;
+  const { mode = 'history', write: writeMode = 'replace' } = options ?? {};
+  const serializer = (value) => {
+    if (options?.serializer) return options.serializer(value);
+    if (typeof value === 'string') return value;
+    return JSON.stringify(value);
+  };
+  const deserializer = (value) => {
+    if (options?.deserializer) return options.deserializer(value);
+    if (value === 'undefined') return undefined;
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
+  };
+  const setUrlSearchParams = (mode, value, write = 'replace') => {
+    const urlSearchParams = getUrlSearchParams(mode);
+    Object.entries(value).forEach(([key, param]) => {
+      if (param === undefined) {
+        urlSearchParams.delete(key);
+      } else {
+        const serializedValue = serializer ? serializer(param) : String(param);
+        urlSearchParams.set(key, serializedValue);
+      }
     });
-    const set = (params, options) => {
-        const searchParams = setUrlSearchParams(mode, { ...value, ...params }, options?.write ?? writeMode);
-        setValue(getParsedUrlSearchParams(searchParams));
+    const query = createQueryString(urlSearchParams, mode);
+    if (write === 'replace') window.history.replaceState({}, '', query);
+    if (write === 'push') window.history.pushState({}, '', query);
+    dispatchUrlSearchParamsEvent();
+    return urlSearchParams;
+  };
+  const getParsedUrlSearchParams = (searchParams) => {
+    if (typeof searchParams === 'string') {
+      return getParsedUrlSearchParams(new URLSearchParams(searchParams));
+    }
+    if (searchParams instanceof URLSearchParams) {
+      return Array.from(searchParams.entries()).reduce((acc, [key, value]) => {
+        acc[key] = deserializer(value);
+        return acc;
+      }, {});
+    }
+    return searchParams;
+  };
+  const [value, setValue] = useState(() => {
+    if (typeof window === 'undefined') return initialValue ?? {};
+    const urlSearchParams = getUrlSearchParams(mode);
+    const value = {
+      ...(initialValue && getParsedUrlSearchParams(initialValue)),
+      ...getParsedUrlSearchParams(urlSearchParams)
     };
-    useEffect(() => {
-        const onParamsChange = () => {
-            const searchParams = getUrlSearchParams(mode);
-            setValue(getParsedUrlSearchParams(searchParams));
-        };
-        window.addEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
-        window.addEventListener('popstate', onParamsChange);
-        if (mode !== 'history')
-            window.addEventListener('hashchange', onParamsChange);
-        return () => {
-            window.removeEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
-            window.removeEventListener('popstate', onParamsChange);
-            if (mode !== 'history')
-                window.removeEventListener('hashchange', onParamsChange);
-        };
-    }, [mode]);
-    return {
-        value,
-        set
+    setUrlSearchParams(mode, value, writeMode);
+    return value;
+  });
+  const set = (params, options) => {
+    const searchParams = setUrlSearchParams(
+      mode,
+      { ...value, ...params },
+      options?.write ?? writeMode
+    );
+    setValue(getParsedUrlSearchParams(searchParams));
+  };
+  useEffect(() => {
+    const onParamsChange = () => {
+      const searchParams = getUrlSearchParams(mode);
+      setValue(getParsedUrlSearchParams(searchParams));
     };
-});
+    window.addEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
+    window.addEventListener('popstate', onParamsChange);
+    if (mode !== 'history') window.addEventListener('hashchange', onParamsChange);
+    return () => {
+      window.removeEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
+      window.removeEventListener('popstate', onParamsChange);
+      if (mode !== 'history') window.removeEventListener('hashchange', onParamsChange);
+    };
+  }, [mode]);
+  return {
+    value,
+    set
+  };
+};
 export { createQueryString, dispatchUrlSearchParamsEvent, getUrlSearchParams };

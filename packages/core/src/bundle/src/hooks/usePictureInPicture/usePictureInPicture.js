@@ -26,69 +26,61 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, open, supported, enter, exit, toggle } = usePictureInPicture();
  */
-export const usePictureInPicture = ((...params) => {
-    const supported = typeof document !== 'undefined' &&
-        'pictureInPictureEnabled' in document &&
-        !!document.pictureInPictureEnabled;
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target ? params[1] : params[0]) ?? {};
-    const [open, setOpen] = useState(false);
-    const internalRef = useRefState();
-    const elementRef = useRef(null);
-    const onOptionsRef = useRef(options);
-    onOptionsRef.current = options;
-    const enter = async () => {
-        if (!supported)
-            return;
-        if (!elementRef.current)
-            return;
-        await elementRef.current.requestPictureInPicture();
-        setOpen(true);
-        options.onEnter?.();
+export const usePictureInPicture = (...params) => {
+  const supported =
+    typeof document !== 'undefined' &&
+    'pictureInPictureEnabled' in document &&
+    !!document.pictureInPictureEnabled;
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = (target ? params[1] : params[0]) ?? {};
+  const [open, setOpen] = useState(false);
+  const internalRef = useRefState();
+  const elementRef = useRef(null);
+  const onOptionsRef = useRef(options);
+  onOptionsRef.current = options;
+  const enter = async () => {
+    if (!supported) return;
+    if (!elementRef.current) return;
+    await elementRef.current.requestPictureInPicture();
+    setOpen(true);
+    options.onEnter?.();
+  };
+  const exit = async () => {
+    if (!supported) return;
+    await document.exitPictureInPicture();
+    setOpen(false);
+    options.onExit?.();
+  };
+  useEffect(() => {
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
+    elementRef.current = element;
+    const onEnterPictureInPicture = () => {
+      setOpen(true);
+      onOptionsRef.current.onEnter?.();
     };
-    const exit = async () => {
-        if (!supported)
-            return;
-        await document.exitPictureInPicture();
-        setOpen(false);
-        options.onExit?.();
+    const onLeavePictureInPicture = () => {
+      setOpen(false);
+      onOptionsRef.current.onExit?.();
     };
-    useEffect(() => {
-        const element = target
-            ? isTarget.getElement(target)
-            : internalRef.current;
-        if (!element)
-            return;
-        elementRef.current = element;
-        const onEnterPictureInPicture = () => {
-            setOpen(true);
-            onOptionsRef.current.onEnter?.();
-        };
-        const onLeavePictureInPicture = () => {
-            setOpen(false);
-            onOptionsRef.current.onExit?.();
-        };
-        element.addEventListener('enterpictureinpicture', onEnterPictureInPicture);
-        element.addEventListener('leavepictureinpicture', onLeavePictureInPicture);
-        return () => {
-            element.removeEventListener('enterpictureinpicture', onEnterPictureInPicture);
-            element.removeEventListener('leavepictureinpicture', onLeavePictureInPicture);
-        };
-    }, [target && isTarget.getRawElement(target), internalRef.state]);
-    const toggle = async () => {
-        if (open)
-            await exit();
-        else
-            await enter();
+    element.addEventListener('enterpictureinpicture', onEnterPictureInPicture);
+    element.addEventListener('leavepictureinpicture', onLeavePictureInPicture);
+    return () => {
+      element.removeEventListener('enterpictureinpicture', onEnterPictureInPicture);
+      element.removeEventListener('leavepictureinpicture', onLeavePictureInPicture);
     };
-    const value = {
-        open,
-        supported,
-        enter,
-        exit,
-        toggle
-    };
-    if (target)
-        return value;
-    return { ...value, ref: internalRef };
-});
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  const toggle = async () => {
+    if (open) await exit();
+    else await enter();
+  };
+  const value = {
+    open,
+    supported,
+    enter,
+    exit,
+    toggle
+  };
+  if (target) return value;
+  return { ...value, ref: internalRef };
+};

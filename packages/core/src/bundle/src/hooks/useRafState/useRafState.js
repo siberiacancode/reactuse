@@ -16,12 +16,12 @@ import { useUnmount } from '../useUnmount/useUnmount';
  * const [value, setValue] = useRafState(initialValue);
  */
 export const useRafState = (initialValue) => {
-    const rafIdRef = useRef(0);
-    const [value, setValue] = useState(initialValue);
-    const set = (value) => {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = requestAnimationFrame(() => setValue(value));
-    };
-    useUnmount(() => cancelAnimationFrame(rafIdRef.current));
-    return [value, set];
+  const rafIdRef = useRef(0);
+  const [value, setValue] = useState(initialValue);
+  const set = (value) => {
+    cancelAnimationFrame(rafIdRef.current);
+    rafIdRef.current = requestAnimationFrame(() => setValue(value));
+  };
+  useUnmount(() => cancelAnimationFrame(rafIdRef.current));
+  return [value, set];
 };

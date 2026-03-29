@@ -1,31 +1,25 @@
 import { useCallback } from 'react';
 export const assignRef = (ref, value) => {
-    if (typeof ref === 'function')
-        return ref(value);
-    if (typeof ref === 'object' && ref !== null && 'current' in ref)
-        ref.current = value;
+  if (typeof ref === 'function') return ref(value);
+  if (typeof ref === 'object' && ref !== null && 'current' in ref) ref.current = value;
 };
 export const mergeRefs = (...refs) => {
-    const cleanupMap = new Map();
-    return (node) => {
-        refs.forEach((ref) => {
-            const cleanup = assignRef(ref, node);
-            if (cleanup)
-                cleanupMap.set(ref, cleanup);
-        });
-        if (!cleanupMap.size)
-            return;
-        return () => {
-            refs.forEach((ref) => {
-                const cleanup = cleanupMap.get(ref);
-                if (cleanup && typeof cleanup === 'function')
-                    cleanup();
-                else
-                    assignRef(ref, null);
-            });
-            cleanupMap.clear();
-        };
+  const cleanupMap = new Map();
+  return (node) => {
+    refs.forEach((ref) => {
+      const cleanup = assignRef(ref, node);
+      if (cleanup) cleanupMap.set(ref, cleanup);
+    });
+    if (!cleanupMap.size) return;
+    return () => {
+      refs.forEach((ref) => {
+        const cleanup = cleanupMap.get(ref);
+        if (cleanup && typeof cleanup === 'function') cleanup();
+        else assignRef(ref, null);
+      });
+      cleanupMap.clear();
     };
+  };
 };
 /**
  * @name useMergedRef

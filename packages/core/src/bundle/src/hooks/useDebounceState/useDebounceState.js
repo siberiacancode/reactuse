@@ -15,7 +15,7 @@ import { useDebounceCallback } from '../useDebounceCallback/useDebounceCallback'
  * const [debouncedValue, setDebouncedValue] = useDebounceState(value, 500);
  */
 export const useDebounceState = (initialValue, delay) => {
-    const [debouncedValue, setDebouncedValue] = useState(initialValue);
-    const debouncedSetState = useDebounceCallback(setDebouncedValue, delay);
-    return [debouncedValue, debouncedSetState];
+  const [debouncedValue, setDebouncedValue] = useState(initialValue);
+  const debouncedSetState = useDebounceCallback(setDebouncedValue, delay);
+  return [debouncedValue, debouncedSetState];
 };

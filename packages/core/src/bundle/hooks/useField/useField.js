@@ -51,17 +51,17 @@ export const useField = (initialValue = '', options) => {
     if (params.required && !inputRef.current.value) {
       return setError(params.required);
     }
-    if (params.minLength && inputRef.current.value.length < params.minLength.value) {
-      return setError(params.minLength.message);
-    }
-    if (params.maxLength && inputRef.current.value.length > params.maxLength.value) {
-      return setError(params.maxLength.message);
-    }
     if (params.min && Number(inputRef.current.value) < params.min.value) {
       return setError(params.min.message);
     }
     if (params.max && Number(inputRef.current.value) > params.max.value) {
       return setError(params.max.message);
+    }
+    if (params.minLength && inputRef.current.value.length < params.minLength.value) {
+      return setError(params.minLength.message);
+    }
+    if (params.maxLength && inputRef.current.value.length > params.maxLength.value) {
+      return setError(params.maxLength.message);
     }
     if (params.pattern && !params.pattern.value.test(inputRef.current.value)) {
       return setError(params.pattern.message);
@@ -92,7 +92,7 @@ export const useField = (initialValue = '', options) => {
     onChange: async () => {
       if (watchingRef.current) return rerender();
       if (inputRef.current.value !== initialValue) setDirty(true);
-      if (dirty && inputRef.current.value === initialValue) setDirty(false);
+      if (inputRef.current.value === initialValue) setDirty(false);
       if (registerParams && options?.validateOnChange) await validate(registerParams);
       if (registerParams && options?.validateOnBlur) setError(undefined);
     },

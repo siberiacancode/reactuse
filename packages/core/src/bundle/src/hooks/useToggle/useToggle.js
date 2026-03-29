@@ -15,10 +15,10 @@ import { useReducer } from 'react';
  * const [value, toggle] = useToggle(['light', 'dark'] as const);
  */
 export const useToggle = (values = [false, true]) => {
-    const [[option], toggle] = useReducer((state, action) => {
-        const value = typeof action === 'function' ? action(state[0]) : action;
-        const index = Math.abs(state.indexOf(value));
-        return state.slice(index).concat(state.slice(0, index));
-    }, values);
-    return [option, toggle];
+  const [[option], toggle] = useReducer((state, action) => {
+    const value = typeof action === 'function' ? action(state[0]) : action;
+    const index = Math.abs(state.indexOf(value));
+    return state.slice(index).concat(state.slice(0, index));
+  }, values);
+  return [option, toggle];
 };

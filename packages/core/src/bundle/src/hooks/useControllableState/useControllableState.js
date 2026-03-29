@@ -15,19 +15,19 @@ import { useCallback, useRef, useState } from 'react';
  * const [value, setValue, isControlled] = useControllableState({ initialValue: 'initial' });
  */
 export function useControllableState(options) {
-    const { value, initialValue, onChange } = options;
-    const isControlled = value !== undefined;
-    const [internalState, setInternalState] = useState(initialValue);
-    const onChangeRef = useRef(onChange);
-    onChangeRef.current = onChange;
-    const currentValue = isControlled ? value : internalState;
-    const setValue = useCallback((nextValue) => {
-        const resolvedValue = typeof nextValue === 'function'
-            ? nextValue(currentValue)
-            : nextValue;
-        if (!isControlled)
-            setInternalState(resolvedValue);
-        onChangeRef.current?.(resolvedValue);
-    }, [currentValue, isControlled]);
-    return [currentValue, setValue, isControlled];
+  const { value, initialValue, onChange } = options;
+  const isControlled = value !== undefined;
+  const [internalState, setInternalState] = useState(initialValue);
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+  const currentValue = isControlled ? value : internalState;
+  const setValue = useCallback(
+    (nextValue) => {
+      const resolvedValue = typeof nextValue === 'function' ? nextValue(currentValue) : nextValue;
+      if (!isControlled) setInternalState(resolvedValue);
+      onChangeRef.current?.(resolvedValue);
+    },
+    [currentValue, isControlled]
+  );
+  return [currentValue, setValue, isControlled];
 }

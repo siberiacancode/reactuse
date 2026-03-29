@@ -39,30 +39,29 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const keyboard = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
  */
-export const useKeyboard = ((...params) => {
-    const target = isTarget(params[0]) ? params[0] : undefined;
-    const options = (target
-        ? typeof params[1] === 'object'
-            ? params[1]
-            : { onKeyDown: params[1] }
-        : typeof params[0] === 'object'
-            ? params[0]
-            : { onKeyDown: params[0] });
-    const internalRef = useRefState();
-    const internalOptionsRef = useRef(options);
-    internalOptionsRef.current = options;
-    useEffect(() => {
-        const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
-        const onKeyDown = (event) => internalOptionsRef.current?.onKeyDown?.(event);
-        const onKeyUp = (event) => internalOptionsRef.current?.onKeyUp?.(event);
-        element.addEventListener('keydown', onKeyDown);
-        element.addEventListener('keyup', onKeyUp);
-        return () => {
-            element.removeEventListener('keydown', onKeyDown);
-            element.removeEventListener('keyup', onKeyUp);
-        };
-    }, [target && isTarget.getRawElement(target), internalRef.state]);
-    if (target)
-        return;
-    return { ref: internalRef };
-});
+export const useKeyboard = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target
+    ? typeof params[1] === 'object'
+      ? params[1]
+      : { onKeyDown: params[1] }
+    : typeof params[0] === 'object'
+      ? params[0]
+      : { onKeyDown: params[0] };
+  const internalRef = useRefState();
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  useEffect(() => {
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
+    const onKeyDown = (event) => internalOptionsRef.current?.onKeyDown?.(event);
+    const onKeyUp = (event) => internalOptionsRef.current?.onKeyUp?.(event);
+    element.addEventListener('keydown', onKeyDown);
+    element.addEventListener('keyup', onKeyUp);
+    return () => {
+      element.removeEventListener('keydown', onKeyDown);
+      element.removeEventListener('keyup', onKeyUp);
+    };
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  if (target) return;
+  return { ref: internalRef };
+};

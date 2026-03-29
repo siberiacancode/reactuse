@@ -41,45 +41,42 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, value } = useHover(options);
  */
-export const useHover = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target
-        ? typeof params[1] === 'object'
-            ? params[1]
-            : { onEntry: params[1] }
-        : typeof params[0] === 'object'
-            ? params[0]
-            : { onEntry: params[0] });
-    const enabled = options?.enabled ?? true;
-    const [hovering, setHovering] = useState(false);
-    const internalRef = useRefState();
-    const internalOptionsRef = useRef(options);
-    internalOptionsRef.current = options;
-    useEffect(() => {
-        if (!enabled || (!target && !internalRef.state))
-            return;
-        const element = (target ? isTarget.getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        const onMouseEnter = (event) => {
-            internalOptionsRef.current?.onEntry?.(event);
-            setHovering(true);
-        };
-        const onMouseLeave = (event) => {
-            internalOptionsRef.current?.onLeave?.(event);
-            setHovering(false);
-        };
-        element.addEventListener('mouseenter', onMouseEnter);
-        element.addEventListener('mouseleave', onMouseLeave);
-        return () => {
-            element.removeEventListener('mouseenter', onMouseEnter);
-            element.removeEventListener('mouseleave', onMouseLeave);
-        };
-    }, [enabled, target && isTarget.getRawElement(target), internalRef.state]);
-    if (target)
-        return { value: hovering };
-    return {
-        ref: internalRef,
-        value: hovering
+export const useHover = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target
+    ? typeof params[1] === 'object'
+      ? params[1]
+      : { onEntry: params[1] }
+    : typeof params[0] === 'object'
+      ? params[0]
+      : { onEntry: params[0] };
+  const enabled = options?.enabled ?? true;
+  const [hovering, setHovering] = useState(false);
+  const internalRef = useRefState();
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  useEffect(() => {
+    if (!enabled || (!target && !internalRef.state)) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
+    const onMouseEnter = (event) => {
+      internalOptionsRef.current?.onEntry?.(event);
+      setHovering(true);
     };
-});
+    const onMouseLeave = (event) => {
+      internalOptionsRef.current?.onLeave?.(event);
+      setHovering(false);
+    };
+    element.addEventListener('mouseenter', onMouseEnter);
+    element.addEventListener('mouseleave', onMouseLeave);
+    return () => {
+      element.removeEventListener('mouseenter', onMouseEnter);
+      element.removeEventListener('mouseleave', onMouseLeave);
+    };
+  }, [enabled, target && isTarget.getRawElement(target), internalRef.state]);
+  if (target) return { value: hovering };
+  return {
+    ref: internalRef,
+    value: hovering
+  };
+};

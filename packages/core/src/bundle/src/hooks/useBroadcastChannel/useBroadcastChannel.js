@@ -15,52 +15,50 @@ import { useEffect, useRef, useState } from 'react';
  * const { supported, data, post, error } = useBroadcastChannel('channel');
  */
 export const useBroadcastChannel = (name, callback) => {
-    const supported = typeof window !== 'undefined' && 'BroadcastChannel' in window && !!window.BroadcastChannel;
-    const [closed, setClosed] = useState(false);
-    const [data, setData] = useState();
-    const [error, setError] = useState();
-    const channelRef = useRef(undefined);
-    useEffect(() => {
-        if (!supported)
-            return;
-        channelRef.current = new BroadcastChannel(name);
-        const onMessage = (event) => {
-            setData(event.data);
-            callback?.(event.data);
-        };
-        const onMessageError = (event) => setError(event);
-        const onClose = () => setClosed(true);
-        channelRef.current.addEventListener('message', onMessage);
-        channelRef.current.addEventListener('messageerror', onMessageError);
-        channelRef.current.addEventListener('close', onClose);
-        return () => {
-            if (channelRef.current) {
-                channelRef.current.removeEventListener('message', onMessage);
-                channelRef.current.removeEventListener('messageerror', onMessageError);
-                channelRef.current.removeEventListener('close', onClose);
-                channelRef.current.close();
-            }
-        };
-    }, [name]);
-    const post = (data) => {
-        console.log('post', data, channelRef.current);
-        if (!channelRef.current)
-            return;
-        channelRef.current.postMessage(data);
+  const supported =
+    typeof window !== 'undefined' && 'BroadcastChannel' in window && !!window.BroadcastChannel;
+  const [closed, setClosed] = useState(false);
+  const [data, setData] = useState();
+  const [error, setError] = useState();
+  const channelRef = useRef(undefined);
+  useEffect(() => {
+    if (!supported) return;
+    channelRef.current = new BroadcastChannel(name);
+    const onMessage = (event) => {
+      setData(event.data);
+      callback?.(event.data);
     };
-    const close = () => {
-        if (!channelRef.current)
-            return;
+    const onMessageError = (event) => setError(event);
+    const onClose = () => setClosed(true);
+    channelRef.current.addEventListener('message', onMessage);
+    channelRef.current.addEventListener('messageerror', onMessageError);
+    channelRef.current.addEventListener('close', onClose);
+    return () => {
+      if (channelRef.current) {
+        channelRef.current.removeEventListener('message', onMessage);
+        channelRef.current.removeEventListener('messageerror', onMessageError);
+        channelRef.current.removeEventListener('close', onClose);
         channelRef.current.close();
-        setClosed(true);
+      }
     };
-    return {
-        supported,
-        channel: channelRef.current,
-        data,
-        post,
-        close,
-        error,
-        closed
-    };
+  }, [name]);
+  const post = (data) => {
+    console.log('post', data, channelRef.current);
+    if (!channelRef.current) return;
+    channelRef.current.postMessage(data);
+  };
+  const close = () => {
+    if (!channelRef.current) return;
+    channelRef.current.close();
+    setClosed(true);
+  };
+  return {
+    supported,
+    channel: channelRef.current,
+    data,
+    post,
+    close,
+    error,
+    closed
+  };
 };

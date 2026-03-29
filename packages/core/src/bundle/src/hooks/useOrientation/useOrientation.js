@@ -13,36 +13,35 @@ import { useEffect, useState } from 'react';
  * const { supported, value, lock, unlock } = useOrientation();
  */
 export const useOrientation = () => {
-    const supported = typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
-    const orientation = (supported ? window.screen.orientation : {});
-    const [value, setValue] = useState({
-        angle: orientation.angle ?? 0,
-        orientationType: orientation.type
-    });
-    useEffect(() => {
-        if (!supported)
-            return;
-        const onOrientationChange = () => setValue({
-            angle: window.screen.orientation.angle,
-            orientationType: window.screen.orientation.type
-        });
-        window.addEventListener('orientationchange', onOrientationChange);
-        return () => {
-            window.removeEventListener('orientationchange', onOrientationChange);
-        };
-    }, []);
-    const lock = (type) => {
-        if (supported && typeof orientation.lock === 'function')
-            return orientation.lock(type);
+  const supported =
+    typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
+  const orientation = supported ? window.screen.orientation : {};
+  const [value, setValue] = useState({
+    angle: orientation.angle ?? 0,
+    orientationType: orientation.type
+  });
+  useEffect(() => {
+    if (!supported) return;
+    const onOrientationChange = () =>
+      setValue({
+        angle: window.screen.orientation.angle,
+        orientationType: window.screen.orientation.type
+      });
+    window.addEventListener('orientationchange', onOrientationChange);
+    return () => {
+      window.removeEventListener('orientationchange', onOrientationChange);
     };
-    const unlock = () => {
-        if (supported && typeof orientation.unlock === 'function')
-            orientation.unlock();
-    };
-    return {
-        supported,
-        value,
-        lock,
-        unlock
-    };
+  }, []);
+  const lock = (type) => {
+    if (supported && typeof orientation.lock === 'function') return orientation.lock(type);
+  };
+  const unlock = () => {
+    if (supported && typeof orientation.unlock === 'function') orientation.unlock();
+  };
+  return {
+    supported,
+    value,
+    lock,
+    unlock
+  };
 };

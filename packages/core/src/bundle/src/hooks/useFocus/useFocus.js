@@ -45,65 +45,58 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, focus, blur, focused } = useFocus();
  */
-export const useFocus = ((...params) => {
-    const target = (isTarget(params[0]) ? params[0] : undefined);
-    const options = (target
-        ? typeof params[1] === 'object'
-            ? params[1]
-            : { onFocus: params[1] }
-        : typeof params[0] === 'object'
-            ? params[0]
-            : { onFocus: params[0] });
-    const enabled = options?.enabled ?? true;
-    const initialValue = options?.initialValue ?? false;
-    const [focused, setFocused] = useState(initialValue);
-    const internalRef = useRefState();
-    const internalOptionsRef = useRef(options);
-    internalOptionsRef.current = options;
-    const elementRef = useRef(null);
-    const focus = () => {
-        if (!elementRef.current)
-            return;
-        elementRef.current.focus();
-        setFocused(true);
+export const useFocus = (...params) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = target
+    ? typeof params[1] === 'object'
+      ? params[1]
+      : { onFocus: params[1] }
+    : typeof params[0] === 'object'
+      ? params[0]
+      : { onFocus: params[0] };
+  const enabled = options?.enabled ?? true;
+  const initialValue = options?.initialValue ?? false;
+  const [focused, setFocused] = useState(initialValue);
+  const internalRef = useRefState();
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  const elementRef = useRef(null);
+  const focus = () => {
+    if (!elementRef.current) return;
+    elementRef.current.focus();
+    setFocused(true);
+  };
+  const blur = () => {
+    if (!elementRef.current) return;
+    elementRef.current.blur();
+    setFocused(false);
+  };
+  useEffect(() => {
+    if (!enabled || (!target && !internalRef.state)) return;
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
+    elementRef.current = element;
+    const onFocus = (event) => {
+      internalOptionsRef.current?.onFocus?.(event);
+      if (!focus || event.target.matches?.(':focus-visible')) setFocused(true);
     };
-    const blur = () => {
-        if (!elementRef.current)
-            return;
-        elementRef.current.blur();
-        setFocused(false);
+    const onBlur = (event) => {
+      internalOptionsRef.current?.onBlur?.(event);
+      setFocused(false);
     };
-    useEffect(() => {
-        if (!enabled || (!target && !internalRef.state))
-            return;
-        const element = (target ? isTarget.getElement(target) : internalRef.current);
-        if (!element)
-            return;
-        elementRef.current = element;
-        const onFocus = (event) => {
-            internalOptionsRef.current?.onFocus?.(event);
-            if (!focus || event.target.matches?.(':focus-visible'))
-                setFocused(true);
-        };
-        const onBlur = (event) => {
-            internalOptionsRef.current?.onBlur?.(event);
-            setFocused(false);
-        };
-        if (initialValue)
-            element.focus();
-        element.addEventListener('focus', onFocus);
-        element.addEventListener('blur', onBlur);
-        return () => {
-            element.removeEventListener('focus', onFocus);
-            element.removeEventListener('blur', onBlur);
-        };
-    }, [target && isTarget.getRawElement(target), internalRef.state, enabled]);
-    if (target)
-        return { focus, blur, focused };
-    return {
-        ref: internalRef,
-        focus,
-        blur,
-        focused
+    if (initialValue) element.focus();
+    element.addEventListener('focus', onFocus);
+    element.addEventListener('blur', onBlur);
+    return () => {
+      element.removeEventListener('focus', onFocus);
+      element.removeEventListener('blur', onBlur);
     };
-});
+  }, [target && isTarget.getRawElement(target), internalRef.state, enabled]);
+  if (target) return { focus, blur, focused };
+  return {
+    ref: internalRef,
+    focus,
+    blur,
+    focused
+  };
+};
