@@ -1,0 +1,394 @@
+{
+  "name": "useKeyboard",
+  "description": "Hook that helps to listen for keyboard events",
+  "examples": [
+    "useKeyboard(ref, (event) => console.log('key down'));",
+    "useKeyboard(ref, { onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });",
+    "const ref = useKeyboard((event) => console.log('key down'));",
+    "const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target to attach the event listeners to",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target to attach the event listeners to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target to attach the event listeners to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "KeyboardEventHandler",
+          "optional": false,
+          "description": "The callback function to be invoked on key down",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {KeyboardEventHandler} callback The callback function to be invoked on key down",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{KeyboardEventHandler}",
+                "postType": " ",
+                "description": "The callback function to be invoked on key down",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {void}",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target to attach the event listeners to",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {HookTarget} target The target to attach the event listeners to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target to attach the event listeners to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseKeyboardEventOptions",
+          "optional": true,
+          "description": "The keyboard event options",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {UseKeyboardEventOptions} [options] The keyboard event options",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseKeyboardEventOptions}",
+                "postType": " ",
+                "description": "The keyboard event options",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns {void}",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 18,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "KeyboardEventHandler",
+          "optional": false,
+          "description": "The callback function to be invoked on key down",
+          "problems": [],
+          "source": [
+            {
+              "number": 24,
+              "source": " * @param {KeyboardEventHandler} callback The callback function to be invoked on key down",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{KeyboardEventHandler}",
+                "postType": " ",
+                "description": "The callback function to be invoked on key down",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "{ ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object containing the ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 25,
+            "source": " * @returns {{ ref: StateRef<Target> }} An object containing the ref",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{{ ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object containing the ref",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 26,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseKeyboardEventOptions",
+          "optional": true,
+          "description": "The keyboard event options",
+          "problems": [],
+          "source": [
+            {
+              "number": 32,
+              "source": " * @param {UseKeyboardEventOptions} [options] The keyboard event options",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseKeyboardEventOptions}",
+                "postType": " ",
+                "description": "The keyboard event options",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "{ ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object containing the ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 33,
+            "source": " * @returns {{ ref: StateRef<Target> }} An object containing the ref",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{{ ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object containing the ref",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 34,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

@@ -1,0 +1,78 @@
+{
+  "name": "usePreferredLanguages",
+  "description": "that returns a browser preferred languages from navigator",
+  "examples": [
+    "const languages = usePreferredLanguages();"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "readonly string[]",
+        "optional": false,
+        "description": "array of strings representing the user's preferred languages",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {readonly string[]} An array of strings representing the user's preferred languages",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{readonly string[]}",
+              "postType": " ",
+              "description": "array of strings representing the user's preferred languages",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "user",
+  "browserapi": "navigator.languages",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "Dmitry Belkin",
+      "avatar": "https://gravatar.com/avatar/5c85ef0161f9d7b998e6c0c5444922fd?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

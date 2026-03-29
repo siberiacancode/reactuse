@@ -1,0 +1,188 @@
+{
+  "name": "useScript",
+  "description": "Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities",
+  "examples": [
+    "const status = useScript('https://example.com/script.js');"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "src",
+          "type": "string",
+          "optional": false,
+          "description": "The source of the script",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {string} src The source of the script",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "src",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The source of the script",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseScriptOptions",
+          "optional": true,
+          "description": "The options of the script extends from attributes script tag",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {UseScriptOptions} [options] The options of the script extends from attributes script tag",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseScriptOptions}",
+                "postType": " ",
+                "description": "The options of the script extends from attributes script tag",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.removeOnUnmount",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether to remove the script on unmount",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [options.removeOnUnmount=true] Whether to remove the script on unmount",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.removeOnUnmount=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether to remove the script on unmount",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.async",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether to load the script asynchronously",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {boolean} [options.async=true] Whether to load the script asynchronously",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.async=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether to load the script asynchronously",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseScriptStatus",
+        "optional": false,
+        "description": "status of the script",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseScriptStatus} The status of the script",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseScriptStatus}",
+              "postType": " ",
+              "description": "status of the script",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

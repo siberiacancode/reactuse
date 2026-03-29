@@ -1,0 +1,262 @@
+{
+  "name": "useCssVar",
+  "description": "Hook that returns the value of a css variable",
+  "examples": [
+    "const { ref, value, set, remove } = useCssVar('--color', 'red');",
+    "const { value, set, remove } = useCssVar(ref, '--color', 'red');"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "string",
+          "optional": false,
+          "description": "The CSS variable key",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {string} key The CSS variable key",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The CSS variable key",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "string",
+          "optional": false,
+          "description": "The initial value of the CSS variable",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string} initialValue The initial value of the CSS variable",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The initial value of the CSS variable",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseCssVarReturn & { ref: StateRef<Element> }",
+        "optional": false,
+        "description": "object containing the value of the CSS variable and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseCssVarReturn & { ref: StateRef<Element> }} The object containing the value of the CSS variable and ref",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseCssVarReturn & { ref: StateRef<Element> }}",
+              "postType": " ",
+              "description": "object containing the value of the CSS variable and ref",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {HookTarget} target The target element",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "string",
+          "optional": false,
+          "description": "The CSS variable key",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {string} key The CSS variable key",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The CSS variable key",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "string",
+          "optional": false,
+          "description": "The initial value of the CSS variable",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {string} initialValue The initial value of the CSS variable",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The initial value of the CSS variable",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseCssVarReturn",
+        "optional": false,
+        "description": "object containing the value of the CSS variable",
+        "problems": [],
+        "source": [
+          {
+            "number": 18,
+            "source": " * @returns {UseCssVarReturn} The object containing the value of the CSS variable",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseCssVarReturn}",
+              "postType": " ",
+              "description": "object containing the value of the CSS variable",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 19,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

@@ -1,0 +1,682 @@
+{
+  "name": "useDropZone",
+  "description": "Hook that provides drop zone functionality",
+  "examples": [
+    "const { overed, files } = useDropZone(ref, options);",
+    "const { overed, files } = useDropZone(ref, () => console.log('callback'));",
+    "const { ref, overed, files } = useDropZone(options);",
+    "const { ref, overed, files } = useDropZone(() => console.log('callback'));"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "Target",
+          "optional": false,
+          "description": "The target element drop zone's",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {Target} target The target element drop zone's",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{Target}",
+                "postType": " ",
+                "description": "The target element drop zone's",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.dataTypes",
+          "type": "DataTypes",
+          "optional": true,
+          "description": "The data types",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {DataTypes} [options.dataTypes] The data types",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.dataTypes]",
+                "postName": " ",
+                "type": "{DataTypes}",
+                "postType": " ",
+                "description": "The data types",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.multiple",
+          "type": "boolean",
+          "optional": true,
+          "description": "The multiple mode",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {boolean} [options.multiple] The multiple mode",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.multiple]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The multiple mode",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onDrop",
+          "type": "(files: File[] | null, event: DragEvent) => void",
+          "optional": true,
+          "description": "The on drop callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onDrop]",
+                "postName": " ",
+                "type": "{(files: File[] | null, event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The on drop callback function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onEnter",
+          "type": "(event: DragEvent) => void",
+          "optional": true,
+          "description": "The on enter callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onEnter]",
+                "postName": " ",
+                "type": "{(event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The on enter callback function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onLeave",
+          "type": "(event: DragEvent) => void",
+          "optional": true,
+          "description": "The on leave callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onLeave]",
+                "postName": " ",
+                "type": "{(event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The on leave callback function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onOver",
+          "type": "(event: DragEvent) => void",
+          "optional": true,
+          "description": "The on over callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {(event: DragEvent) => void} [options.onOver] The on over callback function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onOver]",
+                "postName": " ",
+                "type": "{(event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The on over callback function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseDropZoneReturn",
+        "optional": false,
+        "description": "object with drop zone states",
+        "problems": [],
+        "source": [
+          {
+            "number": 15,
+            "source": " * @returns {UseDropZoneReturn} The object with drop zone states",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseDropZoneReturn}",
+              "postType": " ",
+              "description": "object with drop zone states",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 16,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "Target",
+          "optional": false,
+          "description": "The target element drop zone's",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {Target} target The target element drop zone's",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{Target}",
+                "postType": " ",
+                "description": "The target element drop zone's",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(files: File[] | null, event: DragEvent) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on drop",
+          "problems": [],
+          "source": [
+            {
+              "number": 22,
+              "source": " * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(files: File[] | null, event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on drop",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseDropZoneReturn",
+        "optional": false,
+        "description": "object with drop zone states",
+        "problems": [],
+        "source": [
+          {
+            "number": 23,
+            "source": " * @returns {UseDropZoneReturn} The object with drop zone states",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseDropZoneReturn}",
+              "postType": " ",
+              "description": "object with drop zone states",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 24,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.dataTypes",
+          "type": "DataTypes",
+          "optional": true,
+          "description": "The data types",
+          "problems": [],
+          "source": [
+            {
+              "number": 29,
+              "source": " * @param {DataTypes} [options.dataTypes] The data types",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.dataTypes]",
+                "postName": " ",
+                "type": "{DataTypes}",
+                "postType": " ",
+                "description": "The data types",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.multiple",
+          "type": "boolean",
+          "optional": true,
+          "description": "The multiple mode",
+          "problems": [],
+          "source": [
+            {
+              "number": 30,
+              "source": " * @param {boolean} [options.multiple] The multiple mode",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.multiple]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The multiple mode",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onDrop",
+          "type": "(files: File[] | null, event: DragEvent) => void",
+          "optional": true,
+          "description": "The on drop callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 31,
+              "source": " * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onDrop]",
+                "postName": " ",
+                "type": "{(files: File[] | null, event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The on drop callback function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onEnter",
+          "type": "(event: DragEvent) => void",
+          "optional": true,
+          "description": "The on enter callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 32,
+              "source": " * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onEnter]",
+                "postName": " ",
+                "type": "{(event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The on enter callback function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onLeave",
+          "type": "(event: DragEvent) => void",
+          "optional": true,
+          "description": "The on leave callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 33,
+              "source": " * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onLeave]",
+                "postName": " ",
+                "type": "{(event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The on leave callback function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onOver",
+          "type": "(event: DragEvent) => void",
+          "optional": true,
+          "description": "The on over callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 34,
+              "source": " * @param {(event: DragEvent) => void} [options.onOver] The on over callback function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onOver]",
+                "postName": " ",
+                "type": "{(event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The on over callback function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseDropZoneReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object with drop zone states and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 35,
+            "source": " * @returns {UseDropZoneReturn & { ref: StateRef<Target> }} The object with drop zone states and ref",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseDropZoneReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object with drop zone states and ref",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 36,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(files: File[] | null, event: DragEvent) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on drop",
+          "problems": [],
+          "source": [
+            {
+              "number": 41,
+              "source": " * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(files: File[] | null, event: DragEvent) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on drop",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseDropZoneReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object with drop zone states and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 42,
+            "source": " * @returns {UseDropZoneReturn & { ref: StateRef<Target> }} The object with drop zone states and ref",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseDropZoneReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object with drop zone states and ref",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 43,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "VLADISLAW9",
+      "avatar": "https://gravatar.com/avatar/cf96a05801360c131eb784ebbe781f99?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

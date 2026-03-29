@@ -1,0 +1,383 @@
+{
+  "name": "useScrollTo",
+  "description": "Hook for scrolling to a specific element",
+  "examples": [
+    "const trigger = useScrollTo(ref, options);",
+    "const { ref, trigger } = useScrollTo(options);"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The target element for scrolling to",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} [target=window] The target element for scrolling to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=window]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element for scrolling to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "window"
+        },
+        {
+          "tag": "param",
+          "name": "options.immediately",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether to scroll immediately",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [options.immediately=true] Whether to scroll immediately",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.immediately=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether to scroll immediately",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.x",
+          "type": "number",
+          "optional": true,
+          "description": "The horizontal position to scroll to",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {number} [options.x] The horizontal position to scroll to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.x]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The horizontal position to scroll to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.y",
+          "type": "number",
+          "optional": true,
+          "description": "The vertical position to scroll to",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {number} [options.y] The vertical position to scroll to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.y]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The vertical position to scroll to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.behavior",
+          "type": "ScrollBehavior",
+          "optional": true,
+          "description": "The scrolling behavior",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {ScrollBehavior} [options.behavior=auto] The scrolling behavior",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.behavior=auto]",
+                "postName": " ",
+                "type": "{ScrollBehavior}",
+                "postType": " ",
+                "description": "The scrolling behavior",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "auto"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseScrollToReturn",
+        "optional": false,
+        "description": "scroll trigger function",
+        "problems": [],
+        "source": [
+          {
+            "number": 12,
+            "source": " * @returns {UseScrollToReturn} The scroll trigger function",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseScrollToReturn}",
+              "postType": " ",
+              "description": "scroll trigger function",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 13,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.immediately",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether to scroll immediately",
+          "problems": [],
+          "source": [
+            {
+              "number": 19,
+              "source": " * @param {boolean} [options.immediately=true] Whether to scroll immediately",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.immediately=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether to scroll immediately",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.x",
+          "type": "number",
+          "optional": true,
+          "description": "The horizontal position to scroll to",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {number} [options.x] The horizontal position to scroll to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.x]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The horizontal position to scroll to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.y",
+          "type": "number",
+          "optional": true,
+          "description": "The vertical position to scroll to",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {number} [options.y] The vertical position to scroll to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.y]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The vertical position to scroll to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.behavior",
+          "type": "ScrollBehavior",
+          "optional": true,
+          "description": "The scrolling behavior",
+          "problems": [],
+          "source": [
+            {
+              "number": 22,
+              "source": " * @param {ScrollBehavior} [options.behavior=auto] The scrolling behavior",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.behavior=auto]",
+                "postName": " ",
+                "type": "{ScrollBehavior}",
+                "postType": " ",
+                "description": "The scrolling behavior",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "auto"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseScrollToReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "scroll trigger function and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 23,
+            "source": " * @returns {UseScrollToReturn & { ref: StateRef<Target> }} The scroll trigger function and ref",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseScrollToReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "scroll trigger function and ref",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 24,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "zeroqs",
+      "avatar": "https://gravatar.com/avatar/cff6d9667d5e9008cbc07435b078d19e?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

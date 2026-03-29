@@ -1,0 +1,131 @@
+{
+  "name": "useAsync",
+  "description": "Hook that provides the state of an async callback",
+  "examples": [
+    "const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "() => Promise<Data>",
+          "optional": false,
+          "description": "The async callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {() => Promise<Data>} callback The async callback",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{() => Promise<Data>}",
+                "postType": " ",
+                "description": "The async callback",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "deps",
+          "type": "DependencyList",
+          "optional": true,
+          "description": "The dependencies of the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {DependencyList} [deps=[]] The dependencies of the callback",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[deps=[]]",
+                "postName": " ",
+                "type": "{DependencyList}",
+                "postType": " ",
+                "description": "The dependencies of the callback",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "[]"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseAsyncReturn<Data>",
+        "optional": false,
+        "description": "state of the async callback",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseAsyncReturn<Data>} The state of the async callback",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseAsyncReturn<Data>}",
+              "postType": " ",
+              "description": "state of the async callback",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "async",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

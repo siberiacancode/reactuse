@@ -1,23 +1,11 @@
 ---
-  title: useCssVar
-  description: Hook that returns the value of a css variable
+title: "useCssVar"
+description: "Hook that returns the value of a css variable"
 ---
+import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import hookDoc from './usecssvar.props.json';
 
-<div className="flex gap-3">
-  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-    browser
-  </Badge>
-  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
-    low
-  </Badge>
-  <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
-    test coverage
-  </Badge>
-</div>
-
-
-
-<Separator className="my-8"/>
+<DocHeader {...hookDoc} />
 
 ## Installation
 
@@ -25,33 +13,28 @@
 npx useverse@latest add useCssVar
 ```
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Usage
 
- ```tsx 
- const { ref, value, set, remove } = useCssVar('--color', 'red'); 
- ``` 
- ```tsx 
- const { value, set, remove } = useCssVar(ref, '--color', 'red'); 
- ``` 
+```bash
+npx useverse@latest add useCssVar
+```
 
-<Separator className="my-8"/>
-
-## Demo
-
-TODO
-
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Api
 
-TODO
+<DocTableApi {...hookDoc} />
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
-## Type declaration
+## Source
 
-TODO
+[Source](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useCssVar/useCssVar.ts)
+[Demo](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useCssVar/useCssVar.demo.tsx)
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
+
+## Contributors
+<DocContributors {...hookDoc} />

@@ -1,0 +1,73 @@
+{
+  "name": "useCookies",
+  "description": "Hook that manages cookie values",
+  "examples": [
+    "const { value, set, remove, getAll, clear } = useCookies();"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseCookieReturn<Value>",
+        "optional": false,
+        "description": "value and the set function",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseCookieReturn<Value>} The value and the set function",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseCookieReturn<Value>}",
+              "postType": " ",
+              "description": "value and the set function",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "state",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

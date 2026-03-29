@@ -26,6 +26,7 @@ export type HookProps = {
   warning?: string;
   deprecated?: boolean;
   contributors: Contributor[];
+  lastModified: number;
 };
 
 const git = simpleGit();
@@ -78,7 +79,7 @@ function getApiParams(apiParameters: Spec[]) {
     currentGroup.parameters.push(parameter);
   }
 
-  return groups.filter((group) => group.parameters.length > 0);
+  return groups.filter((group) => group.parameters.length > 0 || group.returns);
 }
 
 //TODO: type
@@ -128,6 +129,7 @@ export const parseHookJsdocFromFile = async (file: string): Promise<any> => {
   );
 
   return {
+    name,
     description: description?.description,
     examples: examples.map((example) => example.description),
     usage: usage?.name,

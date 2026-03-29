@@ -21,7 +21,6 @@ import {
 import { useDocsSearch } from 'fumadocs-core/search/client';
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback';
 import { usePathname, useRouter } from 'next/navigation';
-import { SortedResult } from 'fumadocs-core/search';
 import { Spinner } from './spinner';
 import { getCurrentBase, getPagesFromFolder } from '@/lib/page-tree';
 import { source } from '@/lib/source';
@@ -46,21 +45,6 @@ export const CommandMenu = (props: Props) => {
   const handleChangeSearch = useDebouncedCallback((value: string) => {
     setSearch(value);
   }, 500);
-
-  const results = useMemo(() => {
-    if (!query.data || !Array.isArray(query.data)) {
-      return [];
-    }
-
-    return query.data.filter(
-      (item, index, self) =>
-        !(item.type === 'text' && item.content.trim().split(/\s+/).length <= 1) &&
-        index === self.findIndex((t) => t.content === item.content) &&
-        item.type === 'page'
-    );
-  }, [query.data]);
-
-  console.log('query', query);
 
   const pageGroupsSection = useMemo(() => {
     return tree.children.map((group) => {
@@ -101,8 +85,6 @@ export const CommandMenu = (props: Props) => {
     router.push(href);
     setOpen(false);
   };
-
-  console.log('results', results);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

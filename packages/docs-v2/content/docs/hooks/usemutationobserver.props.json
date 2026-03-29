@@ -1,0 +1,677 @@
+{
+  "name": "useMutationObserver",
+  "description": "Hook that gives you mutation observer state",
+  "examples": [
+    "const { observer, stop } = useMutationObserver(ref, { childList: true });",
+    "const { ref, observer, stop } = useMutationObserver({ childList: true });",
+    "const { ref, observer, stop } = useMutationObserver((mutations) => console.log(mutations));",
+    "const { observer, stop } = useMutationObserver((mutations) => console.log(mutations), ref);"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {HookTarget} target The target element to observe",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to observe",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "The enabled state of the mutation observer",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The enabled state of the mutation observer",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.onChange",
+          "type": "UseMutationObserverCallback",
+          "optional": true,
+          "description": "The callback to execute when mutation is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onChange]",
+                "postName": " ",
+                "type": "{UseMutationObserverCallback}",
+                "postType": " ",
+                "description": "The callback to execute when mutation is detected",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.attributes",
+          "type": "boolean",
+          "optional": true,
+          "description": "Set to true if mutations to target's attributes are to be observed",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.attributes]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Set to true if mutations to target's attributes are to be observed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.characterData",
+          "type": "boolean",
+          "optional": true,
+          "description": "Set to true if mutations to target's data are to be observed",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.characterData]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Set to true if mutations to target's data are to be observed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.childList",
+          "type": "boolean",
+          "optional": true,
+          "description": "Set to true if mutations to target's children are to be observed",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.childList]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Set to true if mutations to target's children are to be observed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.subtree",
+          "type": "boolean",
+          "optional": true,
+          "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.subtree]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseMutationObserverReturn",
+        "optional": false,
+        "description": "object containing the mutation observer state",
+        "problems": [],
+        "source": [
+          {
+            "number": 16,
+            "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseMutationObserverReturn}",
+              "postType": " ",
+              "description": "object containing the mutation observer state",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 17,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "The enabled state of the mutation observer",
+          "problems": [],
+          "source": [
+            {
+              "number": 23,
+              "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The enabled state of the mutation observer",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.onChange",
+          "type": "UseMutationObserverCallback",
+          "optional": true,
+          "description": "The callback to execute when mutation is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 24,
+              "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onChange]",
+                "postName": " ",
+                "type": "{UseMutationObserverCallback}",
+                "postType": " ",
+                "description": "The callback to execute when mutation is detected",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.attributes",
+          "type": "boolean",
+          "optional": true,
+          "description": "Set to true if mutations to target's attributes are to be observed",
+          "problems": [],
+          "source": [
+            {
+              "number": 25,
+              "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.attributes]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Set to true if mutations to target's attributes are to be observed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.characterData",
+          "type": "boolean",
+          "optional": true,
+          "description": "Set to true if mutations to target's data are to be observed",
+          "problems": [],
+          "source": [
+            {
+              "number": 26,
+              "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.characterData]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Set to true if mutations to target's data are to be observed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.childList",
+          "type": "boolean",
+          "optional": true,
+          "description": "Set to true if mutations to target's children are to be observed",
+          "problems": [],
+          "source": [
+            {
+              "number": 27,
+              "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.childList]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Set to true if mutations to target's children are to be observed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.subtree",
+          "type": "boolean",
+          "optional": true,
+          "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
+          "problems": [],
+          "source": [
+            {
+              "number": 28,
+              "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.subtree]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "UseMutationObserverReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "React ref to attach to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 29,
+            "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{UseMutationObserverReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "React ref to attach to the target element",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 30,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "UseMutationObserverCallback",
+          "optional": false,
+          "description": "The callback to execute when mutation is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 36,
+              "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{UseMutationObserverCallback}",
+                "postType": " ",
+                "description": "The callback to execute when mutation is detected",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "UseMutationObserverReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "React ref to attach to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 37,
+            "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{UseMutationObserverReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "React ref to attach to the target element",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 38,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "UseMutationObserverCallback",
+          "optional": false,
+          "description": "The callback to execute when mutation is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 43,
+              "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{UseMutationObserverCallback}",
+                "postType": " ",
+                "description": "The callback to execute when mutation is detected",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 44,
+              "source": " * @param {HookTarget} target The target element to observe",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to observe",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseMutationObserverReturn",
+        "optional": false,
+        "description": "object containing the mutation observer state",
+        "problems": [],
+        "source": [
+          {
+            "number": 45,
+            "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseMutationObserverReturn}",
+              "postType": " ",
+              "description": "object containing the mutation observer state",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 46,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "browserapi": "MutationObserver",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

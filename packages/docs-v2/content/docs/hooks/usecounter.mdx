@@ -1,23 +1,11 @@
 ---
-  title: useCounter
-  description: Hook that manages a counter
+title: "useCounter"
+description: "Hook that manages a counter"
 ---
+import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import hookDoc from './usecounter.props.json';
 
-<div className="flex gap-3">
-  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-    state
-  </Badge>
-  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
-    low
-  </Badge>
-  <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
-    test coverage
-  </Badge>
-</div>
-
-
-
-<Separator className="my-8"/>
+<DocHeader {...hookDoc} />
 
 ## Installation
 
@@ -25,33 +13,28 @@
 npx useverse@latest add useCounter
 ```
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Usage
 
- ```tsx 
- const { count, dec, inc, reset, set } = useCounter(5); 
- ``` 
- ```tsx 
- const { count, dec, inc, reset, set } = useCounter({ initialValue: 5, min: 0, max: 10 }); 
- ``` 
+```bash
+npx useverse@latest add useCounter
+```
 
-<Separator className="my-8"/>
-
-## Demo
-
-TODO
-
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Api
 
-TODO
+<DocTableApi {...hookDoc} />
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
-## Type declaration
+## Source
 
-TODO
+[Source](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useCounter/useCounter.ts)
+[Demo](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useCounter/useCounter.demo.tsx)
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
+
+## Contributors
+<DocContributors {...hookDoc} />

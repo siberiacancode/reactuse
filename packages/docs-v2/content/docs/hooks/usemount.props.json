@@ -1,0 +1,75 @@
+{
+  "name": "useMount",
+  "description": "Hook that executes a callback when the component mounts",
+  "examples": [
+    "useMount(() => console.log('This effect runs on the initial render'));"
+  ],
+  "usage": "necessary",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "effect",
+          "type": "EffectCallback",
+          "optional": false,
+          "description": "The callback to execute",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {EffectCallback} effect The callback to execute",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "effect",
+                "postName": " ",
+                "type": "{EffectCallback}",
+                "postType": " ",
+                "description": "The callback to execute",
+                "end": "",
+                "lineEnd": ""
+              }
+            },
+            {
+              "number": 7,
+              "source": " *",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "category": "lifecycle",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

@@ -1,25 +1,11 @@
 ---
-  title: useOnce
-  description: Hook that runs an effect only once. Please do not use it in production code!
+title: "useOnce"
+description: "Hook that runs an effect only once. Please do not use it in production code!"
 ---
+import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import hookDoc from './useonce.props.json';
 
-<div className="flex gap-3">
-  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-    humor
-  </Badge>
-  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
-    low
-  </Badge>
-  <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
-    test coverage
-  </Badge>
-</div>
-
-<Callout className="border-yellow-600 bg-yellow-100 dark:border-yellow-400 dark:bg-yellow-900">
-  **Important:** $This hook will run effect only once even in strict mode. Please do not use it in production code!
-</Callout>
-
-<Separator className="my-8"/>
+<DocHeader {...hookDoc} />
 
 ## Installation
 
@@ -27,30 +13,28 @@
 npx useverse@latest add useOnce
 ```
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Usage
 
- ```tsx 
- useOnce(() => console.log('effect once')); 
- ``` 
+```bash
+npx useverse@latest add useOnce
+```
 
-<Separator className="my-8"/>
-
-## Demo
-
-TODO
-
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Api
 
-TODO
+<DocTableApi {...hookDoc} />
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
-## Type declaration
+## Source
 
-TODO
+[Source](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useOnce/useOnce.ts)
+[Demo](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useOnce/useOnce.demo.tsx)
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
+
+## Contributors
+<DocContributors {...hookDoc} />

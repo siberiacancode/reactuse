@@ -1,23 +1,11 @@
 ---
-  title: useUrlSearchParams
-  description: Hook that provides reactive URLSearchParams
+title: "useUrlSearchParams"
+description: "Hook that provides reactive URLSearchParams"
 ---
+import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import hookDoc from './useurlsearchparams.props.json';
 
-<div className="flex gap-3">
-  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-    state
-  </Badge>
-  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
-    high
-  </Badge>
-  <Badge className="bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300">
-    test coverage
-  </Badge>
-</div>
-
-
-
-<Separator className="my-8"/>
+<DocHeader {...hookDoc} />
 
 ## Installation
 
@@ -25,33 +13,28 @@
 npx useverse@latest add useUrlSearchParams
 ```
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Usage
 
- ```tsx 
- const { value, set } = useUrlSearchParams({ initialValue: { page: 1 } }); 
- ``` 
- ```tsx 
- const { value, set } = useUrlSearchParams({ page: 1 }); 
- ``` 
+```bash
+npx useverse@latest add useUrlSearchParams
+```
 
-<Separator className="my-8"/>
-
-## Demo
-
-TODO
-
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Api
 
-TODO
+<DocTableApi {...hookDoc} />
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
-## Type declaration
+## Source
 
-TODO
+[Source](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useUrlSearchParams/useUrlSearchParams.ts)
+[Demo](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useUrlSearchParams/useUrlSearchParams.demo.tsx)
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
+
+## Contributors
+<DocContributors {...hookDoc} />

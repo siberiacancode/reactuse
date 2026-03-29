@@ -1,0 +1,186 @@
+{
+  "name": "useMutation",
+  "description": "Hook that defines the logic when mutate data",
+  "examples": [
+    "const { mutate, mutateAsync, isLoading, isError, isSuccess, error, data } = useMutation((name) => Promise.resolve(name));"
+  ],
+  "usage": "high",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(body: Body) => Promise<Data>",
+          "optional": false,
+          "description": "The callback function to be invoked",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(body: Body) => Promise<Data>} callback The callback function to be invoked",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(body: Body) => Promise<Data>}",
+                "postType": " ",
+                "description": "The callback function to be invoked",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.retry",
+          "type": "boolean | number",
+          "optional": true,
+          "description": "The retry count of requests",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {boolean | number} [options.retry] The retry count of requests",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.retry]",
+                "postName": " ",
+                "type": "{boolean | number}",
+                "postType": " ",
+                "description": "The retry count of requests",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onSuccess",
+          "type": "(data: Data) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on success",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onSuccess]",
+                "postName": " ",
+                "type": "{(data: Data) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on success",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onError",
+          "type": "(error: Error) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on error",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onError]",
+                "postName": " ",
+                "type": "{(error: Error) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on error",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseMutationReturn<Data>",
+        "optional": false,
+        "description": "object with the state of the mutation",
+        "problems": [],
+        "source": [
+          {
+            "number": 12,
+            "source": " * @returns {UseMutationReturn<Data>} An object with the state of the mutation",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseMutationReturn<Data>}",
+              "postType": " ",
+              "description": "object with the state of the mutation",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 13,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "async",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1771583395000
+}

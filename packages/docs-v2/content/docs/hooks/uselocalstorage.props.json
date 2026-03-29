@@ -1,0 +1,132 @@
+{
+  "name": "useLocalStorage",
+  "description": "Hook that manages local storage value",
+  "examples": [
+    "const { value, set, remove } = useLocalStorage('key', 'value');"
+  ],
+  "usage": "high",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "string",
+          "optional": false,
+          "description": "The key of the storage",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {string} key The key of the storage",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The key of the storage",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "UseStorageInitialValue<Value>",
+          "optional": true,
+          "description": "The initial value of the storage",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {UseStorageInitialValue<Value>} [initialValue] The initial value of the storage",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue]",
+                "postName": " ",
+                "type": "{UseStorageInitialValue<Value>}",
+                "postType": " ",
+                "description": "The initial value of the storage",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseStorageOptions<Value>",
+          "optional": true,
+          "description": "The options of the storage",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {UseStorageOptions<Value>} [options] The options of the storage",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseStorageOptions<Value>}",
+                "postType": " ",
+                "description": "The options of the storage",
+                "end": "",
+                "lineEnd": ""
+              }
+            },
+            {
+              "number": 12,
+              "source": " *",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "category": "state",
+  "browserapi": "localStorage",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

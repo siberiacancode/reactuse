@@ -1,0 +1,334 @@
+{
+  "name": "useQuery",
+  "description": "Hook that defines the logic when query data",
+  "examples": [
+    "const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));"
+  ],
+  "usage": "high",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "() => Promise<Data>",
+          "optional": false,
+          "description": "The callback function to be invoked",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {() => Promise<Data>} callback The callback function to be invoked",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{() => Promise<Data>}",
+                "postType": " ",
+                "description": "The callback function to be invoked",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.keys",
+          "type": "DependencyList",
+          "optional": true,
+          "description": "The dependencies for the hook",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {DependencyList} [options.keys] The dependencies for the hook",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.keys]",
+                "postName": " ",
+                "type": "{DependencyList}",
+                "postType": " ",
+                "description": "The dependencies for the hook",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onSuccess",
+          "type": "(data: Data) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on success",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onSuccess]",
+                "postName": " ",
+                "type": "{(data: Data) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on success",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onError",
+          "type": "(error: Error) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on error",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onError]",
+                "postName": " ",
+                "type": "{(error: Error) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on error",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.select",
+          "type": "UseQueryOptionsSelect<Data>",
+          "optional": true,
+          "description": "The select function to be invoked",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {UseQueryOptionsSelect<Data>} [options.select] The select function to be invoked",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.select]",
+                "postName": " ",
+                "type": "{UseQueryOptionsSelect<Data>}",
+                "postType": " ",
+                "description": "The select function to be invoked",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.initialData",
+          "type": "Data | (() => Data)",
+          "optional": true,
+          "description": "The initial data for the hook",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {Data | (() => Data)} [options.initialData] The initial data for the hook",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.initialData]",
+                "postName": " ",
+                "type": "{Data | (() => Data)}",
+                "postType": " ",
+                "description": "The initial data for the hook",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.placeholderData",
+          "type": "Data | (() => Data)",
+          "optional": true,
+          "description": "The placeholder data for the hook",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {Data | (() => Data)} [options.placeholderData] The placeholder data for the hook",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.placeholderData]",
+                "postName": " ",
+                "type": "{Data | (() => Data)}",
+                "postType": " ",
+                "description": "The placeholder data for the hook",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.refetchInterval",
+          "type": "number",
+          "optional": true,
+          "description": "The refetch interval",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {number} [options.refetchInterval] The refetch interval",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.refetchInterval]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The refetch interval",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.retry",
+          "type": "boolean | number",
+          "optional": true,
+          "description": "The retry count of requests",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {boolean | number} [options.retry] The retry count of requests",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.retry]",
+                "postName": " ",
+                "type": "{boolean | number}",
+                "postType": " ",
+                "description": "The retry count of requests",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseQueryReturn<Data>",
+        "optional": false,
+        "description": "object with the state of the query",
+        "problems": [],
+        "source": [
+          {
+            "number": 16,
+            "source": " * @returns {UseQueryReturn<Data>} An object with the state of the query",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseQueryReturn<Data>}",
+              "postType": " ",
+              "description": "object with the state of the query",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 17,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "async",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Vitaly Statsura",
+      "avatar": "https://gravatar.com/avatar/0e3417130c13801a7af56779c7bfa931?d=retro"
+    },
+    {
+      "name": "Vitaly Statsura",
+      "avatar": "https://gravatar.com/avatar/5db8596eb9c2fa3bb48245bd1388bf49?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

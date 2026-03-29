@@ -1,0 +1,103 @@
+{
+  "name": "useQueue",
+  "description": "Hook that manages a queue",
+  "examples": [
+    "const { queue, add, remove, clear, first, last, size } = useQueue([1, 2, 3]);"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "Value[]",
+          "optional": true,
+          "description": "The initial value of the queue",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Value[]} [initialValue=[]] The initial value of the queue",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue=[]]",
+                "postName": " ",
+                "type": "{Value[]}",
+                "postType": " ",
+                "description": "The initial value of the queue",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "[]"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseQueueReturn",
+        "optional": false,
+        "description": "object containing the current queue and functions to interact with the queue",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseQueueReturn} An object containing the current queue and functions to interact with the queue",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseQueueReturn}",
+              "postType": " ",
+              "description": "object containing the current queue and functions to interact with the queue",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "state",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

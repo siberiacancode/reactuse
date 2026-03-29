@@ -1,0 +1,73 @@
+{
+  "name": "useOperatingSystem",
+  "description": "Hook that returns the operating system of the current browser",
+  "examples": [
+    "const operatingSystem = useOperatingSystem();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "OperatingSystem",
+        "optional": false,
+        "description": "operating system",
+        "problems": [],
+        "source": [
+          {
+            "number": 6,
+            "source": " * @returns {OperatingSystem} The operating system",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{OperatingSystem}",
+              "postType": " ",
+              "description": "operating system",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 7,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "user",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

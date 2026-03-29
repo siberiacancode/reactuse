@@ -1,0 +1,69 @@
+{
+  "name": "useWindowScroll",
+  "description": "Hook that manages the window scroll position",
+  "examples": [
+    "const { value, scrollTo } = useWindowScroll();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseWindowScrollReturn",
+        "optional": false,
+        "description": "object containing the current window scroll position",
+        "problems": [],
+        "source": [
+          {
+            "number": 6,
+            "source": " * @returns {UseWindowScrollReturn} An object containing the current window scroll position",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseWindowScrollReturn}",
+              "postType": " ",
+              "description": "object containing the current window scroll position",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 7,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1770651919000
+}

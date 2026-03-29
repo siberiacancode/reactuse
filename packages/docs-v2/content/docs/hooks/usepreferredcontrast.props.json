@@ -1,0 +1,69 @@
+{
+  "name": "usePreferredContrast",
+  "description": "Hook that returns the contrast preference",
+  "examples": [
+    "const contrast = usePreferredContrast();"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UsePreferredContrastReturn",
+        "optional": false,
+        "description": "contrast preference",
+        "problems": [],
+        "source": [
+          {
+            "number": 6,
+            "source": " * @returns {UsePreferredContrastReturn} The contrast preference",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UsePreferredContrastReturn}",
+              "postType": " ",
+              "description": "contrast preference",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 7,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "user",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

@@ -1,23 +1,11 @@
 ---
-  title: useResizeObserver
-  description: Hook that gives you resize observer state
+title: "useResizeObserver"
+description: "Hook that gives you resize observer state"
 ---
+import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import hookDoc from './useresizeobserver.props.json';
 
-<div className="flex gap-3">
-  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-    sensors
-  </Badge>
-  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
-    low
-  </Badge>
-  <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
-    test coverage
-  </Badge>
-</div>
-
-
-
-<Separator className="my-8"/>
+<DocHeader {...hookDoc} />
 
 ## Installation
 
@@ -25,39 +13,28 @@
 npx useverse@latest add useResizeObserver
 ```
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Usage
 
- ```tsx 
- const { entries, observer } = useResizeObserver(ref); 
- ``` 
- ```tsx 
- const { ref, entry, observer } = useResizeObserver(); 
- ``` 
- ```tsx 
- const { ref, entry, observer } = useResizeObserver((entry) => console.log(entry)); 
- ``` 
- ```tsx 
- const { entry, observer } = useResizeObserver(ref, (entry) => console.log(entry)); 
- ``` 
+```bash
+npx useverse@latest add useResizeObserver
+```
 
-<Separator className="my-8"/>
-
-## Demo
-
-TODO
-
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Api
 
-TODO
+<DocTableApi {...hookDoc} />
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
-## Type declaration
+## Source
 
-TODO
+[Source](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useResizeObserver/useResizeObserver.ts)
+[Demo](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useResizeObserver/useResizeObserver.demo.tsx)
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
+
+## Contributors
+<DocContributors {...hookDoc} />

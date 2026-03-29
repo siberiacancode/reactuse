@@ -1,0 +1,73 @@
+{
+  "name": "useRerender",
+  "description": "Hook that defines the logic to force rerender a component",
+  "examples": [
+    "const rerender = useRerender();"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseRerenderReturn",
+        "optional": false,
+        "description": "rerender function",
+        "problems": [],
+        "source": [
+          {
+            "number": 6,
+            "source": " * @returns {UseRerenderReturn} The rerender function",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseRerenderReturn}",
+              "postType": " ",
+              "description": "rerender function",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 7,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "debug",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

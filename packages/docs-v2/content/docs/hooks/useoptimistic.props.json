@@ -1,0 +1,130 @@
+{
+  "name": "useOptimistic",
+  "description": "Hook that allows get optimistic value before its update",
+  "examples": [
+    "const [optimisticValue, updateOptimistic] = useOptimistic<number>(count, (currentState, optimisticValue) => currentState + optimisticValue);"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "state",
+          "type": "State",
+          "optional": false,
+          "description": "The value to be returned initially and whenever no action is pending",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {State} state The value to be returned initially and whenever no action is pending",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "state",
+                "postName": " ",
+                "type": "{State}",
+                "postType": " ",
+                "description": "The value to be returned initially and whenever no action is pending",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "update",
+          "type": "(currentState: State, optimisticValue: State) => State",
+          "optional": false,
+          "description": "A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(currentState: State, optimisticValue: State) => State} update A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "update",
+                "postName": " ",
+                "type": "{(currentState: State, optimisticValue: State) => State}",
+                "postType": " ",
+                "description": "A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseOptimisticReturn<State>",
+        "optional": false,
+        "description": "resulting optimistic state, and the function to update it",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseOptimisticReturn<State>} The resulting optimistic state, and the function to update it",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseOptimisticReturn<State>}",
+              "postType": " ",
+              "description": "resulting optimistic state, and the function to update it",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "async",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Michael Mironychev",
+      "avatar": "https://gravatar.com/avatar/2297f45bf2e5b21ece9e04b819a0c8ac?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

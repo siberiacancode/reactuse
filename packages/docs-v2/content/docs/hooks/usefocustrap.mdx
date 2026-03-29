@@ -1,23 +1,11 @@
 ---
-  title: useFocusTrap
-  description: Hook that traps focus within a given element
+title: "useFocusTrap"
+description: "Hook that traps focus within a given element"
 ---
+import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import hookDoc from './usefocustrap.props.json';
 
-<div className="flex gap-3">
-  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-    elements
-  </Badge>
-  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
-    medium
-  </Badge>
-  <Badge className="bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300">
-    test coverage
-  </Badge>
-</div>
-
-
-
-<Separator className="my-8"/>
+<DocHeader {...hookDoc} />
 
 ## Installation
 
@@ -25,33 +13,28 @@
 npx useverse@latest add useFocusTrap
 ```
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Usage
 
- ```tsx 
- const { active, disable, toggle, enable } = useFocusTrap(ref, true); 
- ``` 
- ```tsx 
- const { ref, active, disable, toggle, enable } = useFocusTrap(true); 
- ``` 
+```bash
+npx useverse@latest add useFocusTrap
+```
 
-<Separator className="my-8"/>
-
-## Demo
-
-TODO
-
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Api
 
-TODO
+<DocTableApi {...hookDoc} />
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
-## Type declaration
+## Source
 
-TODO
+[Source](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useFocusTrap/useFocusTrap.ts)
+[Demo](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useFocusTrap/useFocusTrap.demo.tsx)
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
+
+## Contributors
+<DocContributors {...hookDoc} />

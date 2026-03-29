@@ -1,0 +1,77 @@
+{
+  "name": "useDocumentVisibility",
+  "description": "Hook that provides the current visibility state of the document",
+  "examples": [
+    "const visibilityState = useDocumentVisibility();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "DocumentVisibilityState",
+        "optional": false,
+        "description": "current visibility state of the document, which can be 'visible' or 'hidden'",
+        "problems": [],
+        "source": [
+          {
+            "number": 6,
+            "source": " * @returns {DocumentVisibilityState} The current visibility state of the document, which can be 'visible' or 'hidden'",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{DocumentVisibilityState}",
+              "postType": " ",
+              "description": "current visibility state of the document, which can be 'visible' or 'hidden'",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 7,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "wmoooid",
+      "avatar": "https://gravatar.com/avatar/53a7c217f9692b54a7da63ae40f1743b?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

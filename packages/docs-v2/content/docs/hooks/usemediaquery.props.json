@@ -1,0 +1,103 @@
+{
+  "name": "useMediaQuery",
+  "description": "Hook that manages a media query",
+  "examples": [
+    "const matches = useMediaQuery('(max-width: 768px)');"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "query",
+          "type": "string",
+          "optional": false,
+          "description": "The media query string",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string} query The media query string",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "query",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The media query string",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "boolean",
+        "optional": false,
+        "description": "boolean indicating if the media query matches",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {boolean} A boolean indicating if the media query matches",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{boolean}",
+              "postType": " ",
+              "description": "boolean indicating if the media query matches",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "browserapi": "window.matchMedia",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1755150117000
+}

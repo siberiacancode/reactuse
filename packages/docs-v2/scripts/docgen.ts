@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path, { resolve } from 'path';
 import { HookProps, isHookPath, parseHookJsdocFromFile } from '@/lib/parse-hook';
-import { mdxContent } from '@/lib/mdx-content';
+import { siteConfig } from '@/lib/config';
 
 const REPOSITORY_ROOT = resolve(__dirname, '..', '..');
 
@@ -10,6 +10,48 @@ const SOURCE_DIR = resolve(CORE_ROOT, 'src/hooks');
 
 const DOC_ROOT = resolve(REPOSITORY_ROOT, 'docs-v2');
 const OUTPUT_DIR = resolve(DOC_ROOT, 'content/docs/hooks');
+
+const getMDXTemplate = (name: string, props: HookProps) => `---
+title: ${JSON.stringify(name)}
+description: ${JSON.stringify(props.description ?? '')}
+---
+import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import hookDoc from './${name.toLowerCase()}.props.json';
+
+<DocHeader {...hookDoc} />
+
+## Installation
+
+\`\`\`bash
+npx useverse@latest add ${name}
+\`\`\`
+
+<Separator className="my-8" />
+
+## Usage
+
+\`\`\`bash
+npx useverse@latest add ${name}
+\`\`\`
+
+<Separator className="my-8" />
+
+## Api
+
+<DocTableApi {...hookDoc} />
+
+<Separator className="my-8" />
+
+## Source
+
+[Source](${siteConfig.source(name)})
+[Demo](${siteConfig.source(name, 'demo.tsx')})
+
+<Separator className="my-8" />
+
+## Contributors
+<DocContributors {...hookDoc} />
+`;
 
 const getComponentFiles = (dir: string): string[] =>
   fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -23,9 +65,14 @@ const getComponentFiles = (dir: string): string[] =>
   });
 
 const createMDXFile = (componentName: string, props: HookProps) => {
-  const outputPath = path.join(OUTPUT_DIR, `${componentName.toLowerCase()}.mdx`);
+  const base = componentName.toLowerCase();
+  const jsonPath = path.join(OUTPUT_DIR, `${base}.props.json`);
+  const mdxPath = path.join(OUTPUT_DIR, `${base}.mdx`);
+
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  fs.writeFileSync(outputPath, mdxContent(componentName, props), 'utf-8');
+  fs.writeFileSync(jsonPath, `${JSON.stringify(props, null, 2)}\n`, 'utf-8');
+
+  fs.writeFileSync(mdxPath, getMDXTemplate(componentName, props), 'utf-8');
 };
 
 const startScript = async () => {

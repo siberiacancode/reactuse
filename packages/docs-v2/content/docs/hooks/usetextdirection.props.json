@@ -1,0 +1,209 @@
+{
+  "name": "useTextDirection",
+  "description": "Hook that can get and set the direction of the element",
+  "examples": [
+    "const { value, set, remove } = useTextDirection(ref);",
+    "const { ref, value, set, remove } = useTextDirection();"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The target element to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} [target=document.querySelector('html')] The target element to observe",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=document.querySelector('html')]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to observe",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "document.querySelector('html')"
+        },
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "UseTextDirectionValue",
+          "optional": true,
+          "description": "The initial direction of the element",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue = 'ltr']",
+                "postName": " ",
+                "type": "{UseTextDirectionValue}",
+                "postType": " ",
+                "description": "The initial direction of the element",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "'ltr'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseTextDirectionReturn",
+        "optional": false,
+        "description": "object containing the current text direction of the element",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseTextDirectionReturn} An object containing the current text direction of the element",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseTextDirectionReturn}",
+              "postType": " ",
+              "description": "object containing the current text direction of the element",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "UseTextDirectionValue",
+          "optional": true,
+          "description": "The initial direction of the element",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue = 'ltr']",
+                "postName": " ",
+                "type": "{UseTextDirectionValue}",
+                "postType": " ",
+                "description": "The initial direction of the element",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "'ltr'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "{ ref: StateRef<Target> } & UseTextDirectionReturn",
+        "optional": false,
+        "description": "object containing the current text direction of the element",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns { { ref: StateRef<Target> } & UseTextDirectionReturn } An object containing the current text direction of the element",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{ { ref: StateRef<Target> } & UseTextDirectionReturn }",
+              "postType": " ",
+              "description": "object containing the current text direction of the element",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 18,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

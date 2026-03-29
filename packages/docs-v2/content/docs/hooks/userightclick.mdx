@@ -1,23 +1,11 @@
 ---
-  title: useRightClick
-  description: Hook that handles right-click events and long press on mobile devices
+title: "useRightClick"
+description: "Hook that handles right-click events and long press on mobile devices"
 ---
+import { DocHeader, DocContributors, DocTableApi } from '@/components/hook-doc-page';
+import hookDoc from './userightclick.props.json';
 
-<div className="flex gap-3">
-  <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-    elements
-  </Badge>
-  <Badge className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
-    low
-  </Badge>
-  <Badge className="bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300">
-    test coverage
-  </Badge>
-</div>
-
-
-
-<Separator className="my-8"/>
+<DocHeader {...hookDoc} />
 
 ## Installation
 
@@ -25,33 +13,28 @@
 npx useverse@latest add useRightClick
 ```
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Usage
 
- ```tsx 
- useRightClick(ref, () => console.log('clicked')); 
- ``` 
- ```tsx 
- const ref = useRightClick(() => console.log('clicked')); 
- ``` 
+```bash
+npx useverse@latest add useRightClick
+```
 
-<Separator className="my-8"/>
-
-## Demo
-
-TODO
-
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
 ## Api
 
-TODO
+<DocTableApi {...hookDoc} />
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
 
-## Type declaration
+## Source
 
-TODO
+[Source](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useRightClick/useRightClick.ts)
+[Demo](https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/useRightClick/useRightClick.demo.tsx)
 
-<Separator className="my-8"/>
+<Separator className="my-8" />
+
+## Contributors
+<DocContributors {...hookDoc} />

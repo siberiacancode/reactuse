@@ -1,0 +1,98 @@
+{
+  "name": "useConst",
+  "description": "Hook that returns the constant value",
+  "examples": [
+    "const value = useConst('value');"
+  ],
+  "usage": "high",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "(() => Value) | Value",
+          "optional": false,
+          "description": "The initial value of the constant",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {(() => Value) | Value} initialValue The initial value of the constant",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{(() => Value) | Value}",
+                "postType": " ",
+                "description": "The initial value of the constant",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "Value",
+        "optional": false,
+        "description": "constant value",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {Value} The constant value",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{Value}",
+              "postType": " ",
+              "description": "constant value",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "utilities",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

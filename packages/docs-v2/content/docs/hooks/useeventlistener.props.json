@@ -1,0 +1,646 @@
+{
+  "name": "useEventListener",
+  "description": "Hook that attaches an event listener to the specified target",
+  "examples": [
+    "useEventListener(window, 'click', () => console.log('click'));",
+    "useEventListener(document, 'click', () => console.log('click'));",
+    "useEventListener(ref, 'click', () => console.log('click'));",
+    "const ref = useEventListener('click', () => console.log('click'));"
+  ],
+  "usage": "necessary",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "Window",
+          "optional": false,
+          "description": "The window object to attach the event listener to",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {Window} target The window object to attach the event listener to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{Window}",
+                "postType": " ",
+                "description": "The window object to attach the event listener to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "event",
+          "type": "Event | Event[]",
+          "optional": false,
+          "description": "An array of event types to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {Event | Event[]} event An array of event types to listen for",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "event",
+                "postName": " ",
+                "type": "{Event | Event[]}",
+                "postType": " ",
+                "description": "An array of event types to listen for",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "handler",
+          "type": "(this: Window, event: WindowEventMap[Event]) => void",
+          "optional": false,
+          "description": "The event handler function",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {(this: Window, event: WindowEventMap[Event]) => void} handler The event handler function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "handler",
+                "postName": " ",
+                "type": "{(this: Window, event: WindowEventMap[Event]) => void}",
+                "postType": " ",
+                "description": "The event handler function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseEventListenerOptions",
+          "optional": true,
+          "description": "Options for the event listener",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {UseEventListenerOptions} [options] Options for the event listener",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseEventListenerOptions}",
+                "postType": " ",
+                "description": "Options for the event listener",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 12,
+            "source": " * @returns {void}",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 13,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "Document",
+          "optional": false,
+          "description": "The window object to attach the event listener to",
+          "problems": [],
+          "source": [
+            {
+              "number": 19,
+              "source": " * @param {Document} target The window object to attach the event listener to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{Document}",
+                "postType": " ",
+                "description": "The window object to attach the event listener to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "event",
+          "type": "Event | Event[]",
+          "optional": false,
+          "description": "An array of event types to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {Event | Event[]} event An array of event types to listen for",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "event",
+                "postName": " ",
+                "type": "{Event | Event[]}",
+                "postType": " ",
+                "description": "An array of event types to listen for",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "handler",
+          "type": "(this: Document, event: DocumentEventMap[Event]) => void",
+          "optional": false,
+          "description": "The event handler function",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {(this: Document, event: DocumentEventMap[Event]) => void} handler The event handler function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "handler",
+                "postName": " ",
+                "type": "{(this: Document, event: DocumentEventMap[Event]) => void}",
+                "postType": " ",
+                "description": "The event handler function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseEventListenerOptions",
+          "optional": true,
+          "description": "Options for the event listener",
+          "problems": [],
+          "source": [
+            {
+              "number": 22,
+              "source": " * @param {UseEventListenerOptions} [options] Options for the event listener",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseEventListenerOptions}",
+                "postType": " ",
+                "description": "Options for the event listener",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 23,
+            "source": " * @returns {void}",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 24,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to attach the event listener to",
+          "problems": [],
+          "source": [
+            {
+              "number": 31,
+              "source": " * @param {HookTarget} target The target element to attach the event listener to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to attach the event listener to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "event",
+          "type": "Event | Event[]",
+          "optional": false,
+          "description": "An array of event types to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 32,
+              "source": " * @param {Event | Event[]} event An array of event types to listen for",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "event",
+                "postName": " ",
+                "type": "{Event | Event[]}",
+                "postType": " ",
+                "description": "An array of event types to listen for",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "handler",
+          "type": "(this: Target, event: HTMLElementEventMap[Event]) => void",
+          "optional": false,
+          "description": "The event handler function",
+          "problems": [],
+          "source": [
+            {
+              "number": 33,
+              "source": " * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} handler The event handler function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "handler",
+                "postName": " ",
+                "type": "{(this: Target, event: HTMLElementEventMap[Event]) => void}",
+                "postType": " ",
+                "description": "The event handler function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseEventListenerOptions",
+          "optional": true,
+          "description": "Options for the event listener",
+          "problems": [],
+          "source": [
+            {
+              "number": 34,
+              "source": " * @param {UseEventListenerOptions} [options] Options for the event listener",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseEventListenerOptions}",
+                "postType": " ",
+                "description": "Options for the event listener",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 35,
+            "source": " * @returns {void}",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 36,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "event",
+          "type": "Event | Event[]",
+          "optional": false,
+          "description": "An array of event types to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 43,
+              "source": " * @param {Event | Event[]} event An array of event types to listen for",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "event",
+                "postName": " ",
+                "type": "{Event | Event[]}",
+                "postType": " ",
+                "description": "An array of event types to listen for",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "handler",
+          "type": "(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void",
+          "optional": false,
+          "description": "The event handler function",
+          "problems": [],
+          "source": [
+            {
+              "number": 44,
+              "source": " * @param {(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void} handler The event handler function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "handler",
+                "postName": " ",
+                "type": "{(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void}",
+                "postType": " ",
+                "description": "The event handler function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseEventListenerOptions",
+          "optional": true,
+          "description": "Options for the event listener",
+          "problems": [],
+          "source": [
+            {
+              "number": 45,
+              "source": " * @param {UseEventListenerOptions} [options] Options for the event listener",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseEventListenerOptions}",
+                "postType": " ",
+                "description": "Options for the event listener",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "UseEventListenerReturn<Target>",
+        "optional": false,
+        "description": "reference to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 46,
+            "source": " * @returns {UseEventListenerReturn<Target>} A reference to the target element",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{UseEventListenerReturn<Target>}",
+              "postType": " ",
+              "description": "reference to the target element",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 47,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

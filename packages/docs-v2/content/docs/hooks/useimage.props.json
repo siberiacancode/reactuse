@@ -1,0 +1,434 @@
+{
+  "name": "useImage",
+  "description": "Hook that load an image in the browser",
+  "examples": [
+    "const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useImage('https://example.com/image.png');"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "src",
+          "type": "string",
+          "optional": false,
+          "description": "The source of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {string} src The source of the image",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "src",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The source of the image",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.srcset",
+          "type": "string",
+          "optional": true,
+          "description": "The srcset of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {string} [options.srcset] The srcset of the image",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.srcset]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The srcset of the image",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.sizes",
+          "type": "string",
+          "optional": true,
+          "description": "The sizes of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string} [options.sizes] The sizes of the image",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.sizes]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The sizes of the image",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.alt",
+          "type": "string",
+          "optional": true,
+          "description": "The alt of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {string} [options.alt] The alt of the image",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.alt]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The alt of the image",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.class",
+          "type": "string",
+          "optional": true,
+          "description": "The class of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {string} [options.class] The class of the image",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.class]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The class of the image",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.loading",
+          "type": "HTMLImageElement['loading']",
+          "optional": true,
+          "description": "The loading of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {HTMLImageElement['loading']} [options.loading] The loading of the image",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.loading]",
+                "postName": " ",
+                "type": "{HTMLImageElement['loading']}",
+                "postType": " ",
+                "description": "The loading of the image",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.crossorigin",
+          "type": "string",
+          "optional": true,
+          "description": "The crossorigin of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {string} [options.crossorigin] The crossorigin of the image",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.crossorigin]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The crossorigin of the image",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.referrerPolicy",
+          "type": "HTMLImageElement['referrerPolicy']",
+          "optional": true,
+          "description": "The referrerPolicy of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {HTMLImageElement['referrerPolicy']} [options.referrerPolicy] The referrerPolicy of the image",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.referrerPolicy]",
+                "postName": " ",
+                "type": "{HTMLImageElement['referrerPolicy']}",
+                "postType": " ",
+                "description": "The referrerPolicy of the image",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.keys",
+          "type": "DependencyList",
+          "optional": true,
+          "description": "The dependencies for the hook",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {DependencyList} [options.keys] The dependencies for the hook",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.keys]",
+                "postName": " ",
+                "type": "{DependencyList}",
+                "postType": " ",
+                "description": "The dependencies for the hook",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onSuccess",
+          "type": "(data: Data) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on success",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onSuccess]",
+                "postName": " ",
+                "type": "{(data: Data) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on success",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onError",
+          "type": "(error: Error) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on error",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onError]",
+                "postName": " ",
+                "type": "{(error: Error) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on error",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.refetchInterval",
+          "type": "number",
+          "optional": true,
+          "description": "The refetch interval",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {number} [options.refetchInterval] The refetch interval",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.refetchInterval]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The refetch interval",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.retry",
+          "type": "boolean | number",
+          "optional": true,
+          "description": "The retry count of requests",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {boolean | number} [options.retry] The retry count of requests",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.retry]",
+                "postName": " ",
+                "type": "{boolean | number}",
+                "postType": " ",
+                "description": "The retry count of requests",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseImageReturn",
+        "optional": false,
+        "description": "object with the state of the image",
+        "problems": [],
+        "source": [
+          {
+            "number": 19,
+            "source": " * @returns {UseImageReturn} An object with the state of the image",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseImageReturn}",
+              "postType": " ",
+              "description": "object with the state of the image",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 20,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

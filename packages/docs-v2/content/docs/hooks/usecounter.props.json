@@ -1,0 +1,296 @@
+{
+  "name": "useCounter",
+  "description": "Hook that manages a counter",
+  "examples": [
+    "const { count, dec, inc, reset, set } = useCounter(5);",
+    "const { count, dec, inc, reset, set } = useCounter({ initialValue: 5, min: 0, max: 10 });"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "number",
+          "optional": true,
+          "description": "The initial number value",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {number} [initialValue=0] The initial number value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The initial number value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.min",
+          "type": "number",
+          "optional": true,
+          "description": "The min of count value",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {number} [options.min=Number.NEGATIVE_INFINITY] The min of count value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.min=Number.NEGATIVE_INFINITY]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The min of count value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "Number.NEGATIVE_INFINITY"
+        },
+        {
+          "tag": "param",
+          "name": "options.max",
+          "type": "number",
+          "optional": true,
+          "description": "The max of count value",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {number} [options.max=Number.POSITIVE_INFINITY] The max of count value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.max=Number.POSITIVE_INFINITY]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The max of count value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "Number.POSITIVE_INFINITY"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseCounterReturn",
+        "optional": false,
+        "description": "object containing the current count and functions to interact with the counter",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseCounterReturn}",
+              "postType": " ",
+              "description": "object containing the current count and functions to interact with the counter",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": "",
+            "tokens": {
+              "start": "",
+              "delimiter": "",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "params.initialValue",
+          "type": "number",
+          "optional": true,
+          "description": "The initial number value",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {number} [params.initialValue=0] The initial number value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[params.initialValue=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The initial number value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "params.min",
+          "type": "number",
+          "optional": true,
+          "description": "The min of count value",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {number} [params.min=Number.NEGATIVE_INFINITY] The min of count value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[params.min=Number.NEGATIVE_INFINITY]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The min of count value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "Number.NEGATIVE_INFINITY"
+        },
+        {
+          "tag": "param",
+          "name": "params.max",
+          "type": "number",
+          "optional": true,
+          "description": "The max of count value",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {number} [params.max=Number.POSITIVE_INFINITY] The max of count value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[params.max=Number.POSITIVE_INFINITY]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The max of count value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "Number.POSITIVE_INFINITY"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseCounterReturn",
+        "optional": false,
+        "description": "object containing the current count and functions to interact with the counter",
+        "problems": [],
+        "source": [
+          {
+            "number": 16,
+            "source": " * @returns {UseCounterReturn} An object containing the current count and functions to interact with the counter",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseCounterReturn}",
+              "postType": " ",
+              "description": "object containing the current count and functions to interact with the counter",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 17,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "state",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

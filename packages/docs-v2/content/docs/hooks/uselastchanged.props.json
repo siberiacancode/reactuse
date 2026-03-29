@@ -1,0 +1,131 @@
+{
+  "name": "useLastChanged",
+  "description": "Hook for records the timestamp of the last change",
+  "examples": [
+    "const lastChanged = useLastChanged(source);"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "source",
+          "type": "any",
+          "optional": false,
+          "description": "The source of the last change",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {any} source  The source of the last change",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "source",
+                "postName": "  ",
+                "type": "{any}",
+                "postType": " ",
+                "description": "The source of the last change",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.initialValue",
+          "type": "number | null",
+          "optional": true,
+          "description": "The initial value",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {number | null} [options.initialValue=null] The initial value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.initialValue=null]",
+                "postName": " ",
+                "type": "{number | null}",
+                "postType": " ",
+                "description": "The initial value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Return",
+        "type": "number | null",
+        "optional": false,
+        "description": "timestamp of the last change",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {number | null} Return timestamp of the last change",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Return",
+              "postName": " ",
+              "type": "{number | null}",
+              "postType": " ",
+              "description": "timestamp of the last change",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "utilities",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "VLADISLAW9",
+      "avatar": "https://gravatar.com/avatar/cf96a05801360c131eb784ebbe781f99?d=retro"
+    }
+  ],
+  "lastModified": 1755150117000
+}

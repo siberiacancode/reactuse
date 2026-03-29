@@ -1,0 +1,745 @@
+{
+  "name": "useScroll",
+  "description": "Hook that allows you to control scroll a element",
+  "examples": [
+    "const { scrolling, scrollIntoView, scrollTo} = useScroll(ref, options);",
+    "const { scrolling, scrollIntoView, scrollTo} = useScroll(ref, () => console.log('callback'));",
+    "const { ref, scrolling, scrollIntoView, scrollTo} = useScroll(options);",
+    "const { ref, scrolling, scrollIntoView, scrollTo} = useScroll(() => console.log('callback'));"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.behavior",
+          "type": "ScrollBehavior",
+          "optional": true,
+          "description": "The behavior of scrolling",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {ScrollBehavior} [options.behavior=auto] The behavior of scrolling",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.behavior=auto]",
+                "postName": " ",
+                "type": "{ScrollBehavior}",
+                "postType": " ",
+                "description": "The behavior of scrolling",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "auto"
+        },
+        {
+          "tag": "param",
+          "name": "options.offset.left",
+          "type": "number",
+          "optional": true,
+          "description": "The left offset for arrived states",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {number} [options.offset.left=0] The left offset for arrived states",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.offset.left=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The left offset for arrived states",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.offset.right",
+          "type": "number",
+          "optional": true,
+          "description": "The right offset for arrived states",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {number} [options.offset.right=0]  The right offset for arrived states",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.offset.right=0]",
+                "postName": "  ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The right offset for arrived states",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.offset.top",
+          "type": "number",
+          "optional": true,
+          "description": "The top offset for arrived states",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {number} [options.offset.top=0] The top offset for arrived states",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.offset.top=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The top offset for arrived states",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.offset.bottom",
+          "type": "number",
+          "optional": true,
+          "description": "The bottom offset for arrived states",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {number} [options.offset.bottom=0] The bottom offset for arrived states",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.offset.bottom=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The bottom offset for arrived states",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.onScroll",
+          "type": "(params: UseScrollCallbackParams, event: Event) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on scroll",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {(params: UseScrollCallbackParams, event: Event) => void} [options.onScroll] The callback function to be invoked on scroll",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onScroll]",
+                "postName": " ",
+                "type": "{(params: UseScrollCallbackParams, event: Event) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on scroll",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onStop",
+          "type": "(event: Event) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on scroll end",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {(event: Event) => void} [options.onStop] The callback function to be invoked on scroll end",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onStop]",
+                "postName": " ",
+                "type": "{(event: Event) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on scroll end",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseScrollReturn",
+        "optional": false,
+        "description": "state of scrolling",
+        "problems": [],
+        "source": [
+          {
+            "number": 15,
+            "source": " * @returns {UseScrollReturn} The state of scrolling",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseScrollReturn}",
+              "postType": " ",
+              "description": "state of scrolling",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 16,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(params: UseScrollCallbackParams, event: Event) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on scroll",
+          "problems": [],
+          "source": [
+            {
+              "number": 22,
+              "source": " * @param {(params: UseScrollCallbackParams, event: Event) => void} [callback] The callback function to be invoked on scroll",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(params: UseScrollCallbackParams, event: Event) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on scroll",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseScrollReturn",
+        "optional": false,
+        "description": "state of scrolling",
+        "problems": [],
+        "source": [
+          {
+            "number": 23,
+            "source": " * @returns {UseScrollReturn} The state of scrolling",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseScrollReturn}",
+              "postType": " ",
+              "description": "state of scrolling",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 24,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "Target",
+          "optional": true,
+          "description": "The target element to scroll",
+          "problems": [],
+          "source": [
+            {
+              "number": 30,
+              "source": " * @param {Target} [target=window] The target element to scroll",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=window]",
+                "postName": " ",
+                "type": "{Target}",
+                "postType": " ",
+                "description": "The target element to scroll",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "window"
+        },
+        {
+          "tag": "param",
+          "name": "options.behavior",
+          "type": "ScrollBehavior",
+          "optional": true,
+          "description": "The behavior of scrolling",
+          "problems": [],
+          "source": [
+            {
+              "number": 31,
+              "source": " * @param {ScrollBehavior} [options.behavior=auto] The behavior of scrolling",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.behavior=auto]",
+                "postName": " ",
+                "type": "{ScrollBehavior}",
+                "postType": " ",
+                "description": "The behavior of scrolling",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "auto"
+        },
+        {
+          "tag": "param",
+          "name": "options.offset.left",
+          "type": "number",
+          "optional": true,
+          "description": "The left offset for arrived states",
+          "problems": [],
+          "source": [
+            {
+              "number": 32,
+              "source": " * @param {number} [options.offset.left=0] The left offset for arrived states",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.offset.left=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The left offset for arrived states",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.offset.right",
+          "type": "number",
+          "optional": true,
+          "description": "The right offset for arrived states",
+          "problems": [],
+          "source": [
+            {
+              "number": 33,
+              "source": " * @param {number} [options.offset.right=0]  The right offset for arrived states",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.offset.right=0]",
+                "postName": "  ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The right offset for arrived states",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.offset.top",
+          "type": "number",
+          "optional": true,
+          "description": "The top offset for arrived states",
+          "problems": [],
+          "source": [
+            {
+              "number": 34,
+              "source": " * @param {number} [options.offset.top=0] The top offset for arrived states",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.offset.top=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The top offset for arrived states",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.offset.bottom",
+          "type": "number",
+          "optional": true,
+          "description": "The bottom offset for arrived states",
+          "problems": [],
+          "source": [
+            {
+              "number": 35,
+              "source": " * @param {number} [options.offset.bottom=0] The bottom offset for arrived states",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.offset.bottom=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The bottom offset for arrived states",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.onScroll",
+          "type": "(params: UseScrollCallbackParams, event: Event) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on scroll",
+          "problems": [],
+          "source": [
+            {
+              "number": 36,
+              "source": " * @param {(params: UseScrollCallbackParams, event: Event) => void} [options.onScroll] The callback function to be invoked on scroll",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onScroll]",
+                "postName": " ",
+                "type": "{(params: UseScrollCallbackParams, event: Event) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on scroll",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onStop",
+          "type": "(event: Event) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on scroll end",
+          "problems": [],
+          "source": [
+            {
+              "number": 37,
+              "source": " * @param {(event: Event) => void} [options.onStop] The callback function to be invoked on scroll end",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onStop]",
+                "postName": " ",
+                "type": "{(event: Event) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on scroll end",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseScrollReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "state of scrolling",
+        "problems": [],
+        "source": [
+          {
+            "number": 38,
+            "source": " * @returns {UseScrollReturn & { ref: StateRef<Target> }} The state of scrolling",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseScrollReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "state of scrolling",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 39,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "Target",
+          "optional": false,
+          "description": "The target element to scroll",
+          "problems": [],
+          "source": [
+            {
+              "number": 45,
+              "source": " * @param {Target} target The target element to scroll",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{Target}",
+                "postType": " ",
+                "description": "The target element to scroll",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(params: UseScrollCallbackParams, event: Event) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on scroll",
+          "problems": [],
+          "source": [
+            {
+              "number": 46,
+              "source": " * @param {(params: UseScrollCallbackParams, event: Event) => void} [callback] The callback function to be invoked on scroll",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(params: UseScrollCallbackParams, event: Event) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on scroll",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseScrollReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "state of scrolling",
+        "problems": [],
+        "source": [
+          {
+            "number": 47,
+            "source": " * @returns {UseScrollReturn & { ref: StateRef<Target> }} The state of scrolling",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseScrollReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "state of scrolling",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 48,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Evgen41kk",
+      "avatar": "https://gravatar.com/avatar/52223277152f7039ead30976690d1b3f?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

@@ -1,0 +1,132 @@
+{
+  "name": "useVibrate",
+  "description": "Hook that provides vibrate api",
+  "examples": [
+    "const { supported, active, vibrate, stop, pause, resume } = useVibrate(1000);"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.pattern",
+          "type": "UseVibratePattern",
+          "optional": false,
+          "description": "The pattern for vibration",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {UseVibratePattern} options.pattern The pattern for vibration",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "options.pattern",
+                "postName": " ",
+                "type": "{UseVibratePattern}",
+                "postType": " ",
+                "description": "The pattern for vibration",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.interval",
+          "type": "number",
+          "optional": true,
+          "description": "Time in milliseconds between vibrations",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {number} [options.interval=0] Time in milliseconds between vibrations",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.interval=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "Time in milliseconds between vibrations",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseVibrateReturn",
+        "optional": false,
+        "description": "object containing support indicator, start vibration and stop vibration functions",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {UseVibrateReturn} An object containing support indicator, start vibration and stop vibration functions",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseVibrateReturn}",
+              "postType": " ",
+              "description": "object containing support indicator, start vibration and stop vibration functions",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 12,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "browserapi": "navigator.vibrate",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Nurvive",
+      "avatar": "https://gravatar.com/avatar/0e3610df45bc46667dadf95fa56fa216?d=retro"
+    }
+  ],
+  "lastModified": 1755262808000
+}

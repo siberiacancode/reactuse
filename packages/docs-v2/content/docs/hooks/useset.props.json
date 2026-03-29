@@ -1,0 +1,102 @@
+{
+  "name": "useSet",
+  "description": "Hook that manages a set structure",
+  "examples": [
+    "const { value, add, remove, clear, reset, toggle, union, intersection, difference, symmetricDifference, size, has } = useSet([1, 2, 3]);"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "values",
+          "type": "Value[]",
+          "optional": true,
+          "description": "The initial array of the set",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Value[]} [values] The initial array of the set",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[values]",
+                "postName": " ",
+                "type": "{Value[]}",
+                "postType": " ",
+                "description": "The initial array of the set",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseSetReturn<Value>",
+        "optional": false,
+        "description": "object containing the current set and functions to interact with the set",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseSetReturn<Value>} An object containing the current set and functions to interact with the set",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseSetReturn<Value>}",
+              "postType": " ",
+              "description": "object containing the current set and functions to interact with the set",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "state",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

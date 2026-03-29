@@ -1,0 +1,111 @@
+{
+  "name": "useDidUpdate",
+  "description": "Hook that triggers the effect callback on updates",
+  "examples": [
+    "useDidUpdate(() => console.log(\"effect runs on updates\"), deps);"
+  ],
+  "usage": "necessary",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "effect",
+          "type": "EffectCallback",
+          "optional": false,
+          "description": "The effect callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {EffectCallback} effect The effect callback",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "effect",
+                "postName": " ",
+                "type": "{EffectCallback}",
+                "postType": " ",
+                "description": "The effect callback",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "deps",
+          "type": "DependencyList",
+          "optional": true,
+          "description": "The dependencies list for the effect",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {DependencyList} [deps] The dependencies list for the effect",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[deps]",
+                "postName": " ",
+                "type": "{DependencyList}",
+                "postType": " ",
+                "description": "The dependencies list for the effect",
+                "end": "",
+                "lineEnd": ""
+              }
+            },
+            {
+              "number": 8,
+              "source": " *",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "category": "lifecycle",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Erik",
+      "avatar": "https://gravatar.com/avatar/2f983eb0842eb75e8d805628fbae1492?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "wmoooid",
+      "avatar": "https://gravatar.com/avatar/53a7c217f9692b54a7da63ae40f1743b?d=retro"
+    }
+  ],
+  "lastModified": 1768590847000
+}

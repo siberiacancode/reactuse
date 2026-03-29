@@ -1,0 +1,126 @@
+{
+  "name": "useBatchedCallback",
+  "description": "Hook that batches calls and forwards them to a callback",
+  "examples": [
+    "const batched = useBatchedCallback((batch) => console.log(batch), 5);"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(batch: Params[]) => void",
+          "optional": false,
+          "description": "The callback that receives a batch of calls",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {(batch: Params[]) => void} callback The callback that receives a batch of calls",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(batch: Params[]) => void}",
+                "postType": " ",
+                "description": "The callback that receives a batch of calls",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "batchSize",
+          "type": "number",
+          "optional": false,
+          "description": "The maximum size of a batch before it is flushed",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {number} batchSize The maximum size of a batch before it is flushed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "batchSize",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The maximum size of a batch before it is flushed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "BatchedCallback<Params>",
+        "optional": false,
+        "description": "batched callback with flush and cancel helpers",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {BatchedCallback<Params>} The batched callback with flush and cancel helpers",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{BatchedCallback<Params>}",
+              "postType": " ",
+              "description": "batched callback with flush and cancel helpers",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "utilities",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1767877541000
+}

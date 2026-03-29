@@ -24,8 +24,3 @@ export const siteConfig = {
   source: (name: string, type = 'ts') =>
     `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/${name}/${name}.${type}`
 };
-
-export const META_THEME_COLORS = {
-  light: '#ffffff',
-  dark: '#09090b'
-};

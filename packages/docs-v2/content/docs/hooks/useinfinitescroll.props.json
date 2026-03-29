@@ -1,0 +1,330 @@
+{
+  "name": "useInfiniteScroll",
+  "description": "Hook that defines the logic for infinite scroll",
+  "examples": [
+    "const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));",
+    "const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(event: Event) => void",
+          "optional": false,
+          "description": "The callback to execute when a click outside the target is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(event: Event) => void}",
+                "postType": " ",
+                "description": "The callback to execute when a click outside the target is detected",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.distance",
+          "type": "number",
+          "optional": true,
+          "description": "The distance in pixels to trigger the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {number} [options.distance=10] The distance in pixels to trigger the callback",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.distance=10]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The distance in pixels to trigger the callback",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "10"
+        },
+        {
+          "tag": "param",
+          "name": "options.direction",
+          "type": "string",
+          "optional": true,
+          "description": "The direction to trigger the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {string} [options.direction='bottom'] The direction to trigger the callback",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.direction='bottom']",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The direction to trigger the callback",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "'bottom'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseInfiniteScrollReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object containing the ref and loading",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {UseInfiniteScrollReturn & { ref: StateRef<Target> }} An object containing the ref and loading",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseInfiniteScrollReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object containing the ref and loading",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 12,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to detect infinite scroll for",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {HookTarget} target The target element to detect infinite scroll for",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to detect infinite scroll for",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(event: Event) => void",
+          "optional": false,
+          "description": "The callback to execute when a click outside the target is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(event: Event) => void}",
+                "postType": " ",
+                "description": "The callback to execute when a click outside the target is detected",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.distance",
+          "type": "number",
+          "optional": true,
+          "description": "The distance in pixels to trigger the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 19,
+              "source": " * @param {number} [options.distance=10] The distance in pixels to trigger the callback",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.distance=10]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The distance in pixels to trigger the callback",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "10"
+        },
+        {
+          "tag": "param",
+          "name": "options.direction",
+          "type": "string",
+          "optional": true,
+          "description": "The direction to trigger the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {string} [options.direction='bottom'] The direction to trigger the callback",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.direction='bottom']",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The direction to trigger the callback",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "'bottom'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseInfiniteScrollReturn",
+        "optional": false,
+        "description": "object containing the ref and loading",
+        "problems": [],
+        "source": [
+          {
+            "number": 21,
+            "source": " * @returns {UseInfiniteScrollReturn} An object containing the ref and loading",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseInfiniteScrollReturn}",
+              "postType": " ",
+              "description": "object containing the ref and loading",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 22,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "“Ediand11”",
+      "avatar": "https://gravatar.com/avatar/cf7a63d641cd20d003e73563c8fa0e14?d=retro"
+    },
+    {
+      "name": "Nikita",
+      "avatar": "https://gravatar.com/avatar/cac51cebf1d47bc09276acf215a48514?d=retro"
+    }
+  ],
+  "lastModified": 1770651919000
+}

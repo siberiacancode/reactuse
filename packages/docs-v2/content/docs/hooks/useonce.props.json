@@ -1,0 +1,72 @@
+{
+  "name": "useOnce",
+  "description": "Hook that runs an effect only once. Please do not use it in production code!",
+  "examples": [
+    "useOnce(() => console.log('effect once'));"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "effect",
+          "type": "EffectCallback",
+          "optional": false,
+          "description": "The effect to run",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {EffectCallback} effect The effect to run",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "effect",
+                "postName": " ",
+                "type": "{EffectCallback}",
+                "postType": " ",
+                "description": "The effect to run",
+                "end": "",
+                "lineEnd": ""
+              }
+            },
+            {
+              "number": 9,
+              "source": " *",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "category": "humor",
+  "warning": "This hook will run effect only once even in strict mode. Please do not use it in production code!",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

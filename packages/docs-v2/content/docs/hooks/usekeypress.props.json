@@ -1,0 +1,271 @@
+{
+  "name": "useKeyPress",
+  "description": "Hook that listens for key press events",
+  "examples": [
+    "const isKeyPressed = useKeyPress(ref, 'a');",
+    "const { pressed, ref } = useKeyPress('a');"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The target to attach the event listeners to",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} [target=window] The target to attach the event listeners to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=window]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target to attach the event listeners to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "window"
+        },
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "UseKeyPressKey",
+          "optional": false,
+          "description": "The key or keys to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseKeyPressKey} key The key or keys to listen for",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{UseKeyPressKey}",
+                "postType": " ",
+                "description": "The key or keys to listen for",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(pressed: boolean, event: KeyboardEvent) => void",
+          "optional": true,
+          "description": "Callback function invoked when key is pressed",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(pressed: boolean, event: KeyboardEvent) => void}",
+                "postType": " ",
+                "description": "Callback function invoked when key is pressed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseKeyPressReturn",
+        "optional": false,
+        "description": "object containing the pressed state and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseKeyPressReturn} An object containing the pressed state and ref",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseKeyPressReturn}",
+              "postType": " ",
+              "description": "object containing the pressed state and ref",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "UseKeyPressKey",
+          "optional": false,
+          "description": "The key or keys to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {UseKeyPressKey} key The key or keys to listen for",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{UseKeyPressKey}",
+                "postType": " ",
+                "description": "The key or keys to listen for",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(pressed: boolean, event: KeyboardEvent) => void",
+          "optional": true,
+          "description": "Callback function invoked when key is pressed",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(pressed: boolean, event: KeyboardEvent) => void}",
+                "postType": " ",
+                "description": "Callback function invoked when key is pressed",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "{ pressed: boolean; ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object containing the pressed state and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 19,
+            "source": " * @returns {{ pressed: boolean; ref: StateRef<Target> }} An object containing the pressed state and ref",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{{ pressed: boolean; ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object containing the pressed state and ref",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 20,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "Gorilla Dev",
+      "avatar": "https://gravatar.com/avatar/ca17ccb5824fdd8626a4ec87e904597b?d=retro"
+    }
+  ],
+  "lastModified": 1770651919000
+}

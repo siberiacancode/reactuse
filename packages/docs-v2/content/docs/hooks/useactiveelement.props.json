@@ -1,0 +1,154 @@
+{
+  "name": "useActiveElement",
+  "description": "Hook that returns the active element",
+  "examples": [
+    "const activeElement = useActiveElement(ref);",
+    "const { ref, value } = useActiveElement();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The target element to observe active element changes",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} [target=window] The target element to observe active element changes",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=window]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to observe active element changes",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "window"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "ActiveElement | null",
+        "optional": false,
+        "description": "active element",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {ActiveElement | null} The active element",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{ActiveElement | null}",
+              "postType": " ",
+              "description": "active element",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "{ ref: StateRef<Element>; activeElement: ActiveElement | null }",
+        "optional": false,
+        "description": "object containing the ref and active element",
+        "problems": [],
+        "source": [
+          {
+            "number": 15,
+            "source": " * @returns {{ ref: StateRef<Element>; activeElement: ActiveElement | null }} An object containing the ref and active element",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{{ ref: StateRef<Element>; activeElement: ActiveElement | null }}",
+              "postType": " ",
+              "description": "object containing the ref and active element",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 16,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    }
+  ],
+  "lastModified": 1770651919000
+}
