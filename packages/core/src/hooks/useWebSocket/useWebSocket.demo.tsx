@@ -8,7 +8,7 @@ interface Message {
 }
 
 const Demo = () => {
-  const messageInput = useField({ initialValue: '' });
+  const messageInput = useField('');
 
   const [messages, setMessages] = useState<Message[]>([
     { text: 'Connecting to chat...', type: 'server', date: new Date() }
