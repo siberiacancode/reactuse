@@ -8,13 +8,8 @@ const App = () => {
   const age = profileContext.useSelect((state) => state.age);
   const profile = profileContext.useSelect();
 
-  const nameField = useField({
-    initialValue: DEFAULT_PROFILE.name
-  });
-
-  const ageField = useField({
-    initialValue: DEFAULT_PROFILE.age
-  });
+  const nameField = useField(DEFAULT_PROFILE.name);
+  const ageField = useField(DEFAULT_PROFILE.age);
 
   return (
     <div className='rounded-lg p-4'>
