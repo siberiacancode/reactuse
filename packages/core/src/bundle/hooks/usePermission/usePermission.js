@@ -15,12 +15,12 @@ import { useEvent } from '../useEvent/useEvent';
  *  @example
  *  const { state, supported, query } = usePermission('microphone');
  */
-export const usePermission = (permissionDescriptorName, options) => {
+export const usePermission = (name, options) => {
   const supported =
     typeof navigator !== 'undefined' && 'permissions' in navigator && !!navigator.permissions;
   const [state, setState] = useState('prompt');
   const enabled = options?.enabled ?? true;
-  const permissionDescriptor = { name: permissionDescriptorName };
+  const permissionDescriptor = { name };
   const query = useEvent(async () => {
     try {
       const permissionStatus = await navigator.permissions.query(permissionDescriptor);
@@ -38,7 +38,7 @@ export const usePermission = (permissionDescriptorName, options) => {
     return () => {
       window.removeEventListener('change', query);
     };
-  }, [permissionDescriptorName, enabled]);
+  }, [name, enabled]);
   return {
     state,
     supported,

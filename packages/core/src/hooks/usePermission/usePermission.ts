@@ -52,16 +52,13 @@ export interface UsePermissionReturn {
  *  @example
  *  const { state, supported, query } = usePermission('microphone');
  */
-export const usePermission = (
-  permissionDescriptorName: UsePermissionName,
-  options?: UsePermissionOptions
-) => {
+export const usePermission = (name: UsePermissionName, options?: UsePermissionOptions) => {
   const supported =
     typeof navigator !== 'undefined' && 'permissions' in navigator && !!navigator.permissions;
   const [state, setState] = useState<PermissionState>('prompt');
   const enabled = options?.enabled ?? true;
 
-  const permissionDescriptor = { name: permissionDescriptorName };
+  const permissionDescriptor = { name };
 
   const query = useEvent(async () => {
     try {
@@ -83,7 +80,7 @@ export const usePermission = (
     return () => {
       window.removeEventListener('change', query);
     };
-  }, [permissionDescriptorName, enabled]);
+  }, [name, enabled]);
 
   return {
     state,
