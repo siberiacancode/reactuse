@@ -11,16 +11,19 @@ export * from './useDocumentTitle/useDocumentTitle';
 export * from './useEventSource/useEventSource';
 export * from './useEyeDropper/useEyeDropper';
 export * from './useFavicon/useFavicon';
+export * from './useFileSystemAccess/useFileSystemAccess';
 export * from './useFps/useFps';
 export * from './useFullscreen/useFullscreen';
-export * from './useGamepad/useGamepad';
 
+export * from './useGamepad/useGamepad';
 export * from './useGeolocation/useGeolocation';
 export * from './useMediaControls/useMediaControls';
 export * from './useMemory/useMemory';
 export * from './useNetwork/useNetwork';
 
+export * from './useObjectUrl/useObjectUrl';
 export * from './useOnline/useOnline';
+
 export * from './useOtpCredential/useOtpCredential';
 
 export * from './usePermission/usePermission';

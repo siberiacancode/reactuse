@@ -42,7 +42,6 @@ export default async () => {
         transformerTwoslash({
           twoslashOptions: {
             compilerOptions: {
-              // twoslash@0.3.6 injects deprecated baseUrl internally on TS 6+
               ignoreDeprecations: '6.0'
             }
           }

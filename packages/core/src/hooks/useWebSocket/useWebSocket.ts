@@ -23,6 +23,7 @@ export interface UseWebSocketOptions {
   onMessage?: (event: MessageEvent, webSocket: WebSocket) => void;
 }
 
+/** The use web socket status type */
 export type UseWebSocketStatus = 'connected' | 'connecting' | 'disconnected' | 'failed';
 
 /** The use web socket return type */
