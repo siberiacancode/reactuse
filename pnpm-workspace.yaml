@@ -1,2 +1,5 @@
 packages:
   - 'packages/*'
+publicHoistPattern:
+  - eslint
+  - prettier
