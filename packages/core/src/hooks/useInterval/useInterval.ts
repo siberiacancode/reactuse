@@ -52,14 +52,15 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
   const interval =
     ((typeof params[1] === 'number'
       ? params[1]
-      : (params[1] as UseIntervalOptions & { interval?: number }).interval) as number) ?? 1000;
+      : (params[1] as (UseIntervalOptions & { interval?: number }) | undefined)
+          ?.interval) as number) ?? 1000;
   const options =
     typeof params[1] === 'object'
       ? (params[1] as (UseIntervalOptions & { interval?: number }) | undefined)
       : (params[2] as UseIntervalOptions | undefined);
   const immediately = options?.immediately ?? true;
 
-  const [active, setActive] = useState<boolean>(immediately ?? true);
+  const [active, setActive] = useState<boolean>(immediately);
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const internalCallbackRef = useRef(callback);
@@ -76,12 +77,9 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
 
   const pause = () => setActive(false);
 
-  const resume = () => {
-    if (interval <= 0) return;
-    setActive(true);
-  };
+  const resume = () => setActive(true);
 
-  const toggle = (value = !active) => setActive(value);
+  const toggle = () => setActive((prev) => !prev);
 
   return {
     active,
