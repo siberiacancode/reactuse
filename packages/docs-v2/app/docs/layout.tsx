@@ -1,15 +1,15 @@
 // import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 // import type { ReactNode } from 'react';
-// import { source } from '@/lib/source';
+// import { source } from '@docs/lib/source';
 
 // export default function Layout({ children }: { children: ReactNode }) {
 //   return <DocsLayout tree={source.pageTree}>{children}</DocsLayout>;
 // }
 
-import { source } from '@/lib/source';
-import { DocsSidebar } from '@/components/docs-sidebar';
-import { SidebarProvider } from '@/ui/sidebar';
-import { SiteHeader } from '@/components/site-header';
+import { source } from '@docs/lib/source';
+import { DocsSidebar } from '@docs/components/docs-sidebar';
+import { SidebarProvider } from '@docs/ui/sidebar';
+import { SiteHeader } from '@docs/components/site-header';
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {
   return (

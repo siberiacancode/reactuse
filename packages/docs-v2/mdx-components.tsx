@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-import { cn } from '@/lib/utils';
-import { getIconForLanguageExtension } from '@/components/icons';
-import { Kbd } from '@/ui/kbd';
-import { Badge } from '@/ui/badge';
-import { Separator } from '@/ui/separator';
+import { cn } from '@docs/lib/utils';
+import { getIconForLanguageExtension } from '@docs/components/icons';
+import { Kbd } from '@docs/ui/kbd';
+import { Badge } from '@docs/ui/badge';
+import { Separator } from '@docs/ui/separator';
 
 import Link from 'next/link';
-import { CodeBlockCommand } from '@/components/code-block-command';
-import { CopyButton } from '@/components/copy-button';
+import { CodeBlockCommand } from '@docs/components/code-block-command';
+import { CopyButton } from '@docs/components/copy-button';
 import { Callout } from './components/callout';
 import {
   Table,
@@ -19,8 +19,8 @@ import {
   TableRow,
   TableCell,
   TableCaption
-} from './components/ui/table';
-import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from './components/ui/avatar';
+} from './ui/table';
+import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from './ui/avatar';
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (

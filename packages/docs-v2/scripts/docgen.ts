@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path, { resolve } from 'path';
-import { HookProps, isHookPath, parseHookJsdocFromFile } from '@/lib/parse-hook';
-import { siteConfig } from '@/lib/config';
+import { HookProps, isHookPath, parseHookJsdocFromFile } from '@docs/lib/parse-hook';
+import { siteConfig } from '@docs/lib/config';
 
 const REPOSITORY_ROOT = resolve(__dirname, '..', '..');
 
@@ -15,8 +15,8 @@ const getMDXTemplate = (name: string, props: HookProps) => `---
 title: ${JSON.stringify(name)}
 description: ${JSON.stringify(props.description ?? '')}
 ---
-import { DocHeader, DocContributors, DocTableApi, DocUsageExamples } from '@/components/hook-doc-page';
-import { DocDemo } from '@/components/demo';
+import { DocHeader, DocContributors, DocTableApi, DocUsageExamples } from '@docs/components/hook-doc-page';
+import { DocDemo } from '@docs/components/hook-demo';
 import hookDoc from './${name.toLowerCase()}.props.json';
 
 <DocHeader {...hookDoc} />

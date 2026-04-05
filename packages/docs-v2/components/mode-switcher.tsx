@@ -4,9 +4,9 @@ import * as React from 'react';
 import Script from 'next/script';
 import { useTheme } from 'next-themes';
 
-import { Button } from '@/ui/button';
-import { Kbd } from '@/ui/kbd';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/ui/tooltip';
+import { Button } from '@docs/ui/button';
+import { Kbd } from '@docs/ui/kbd';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@docs/ui/tooltip';
 
 export const DARK_MODE_FORWARD_TYPE = 'dark-mode-forward';
 

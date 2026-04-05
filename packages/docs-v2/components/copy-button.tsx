@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { IconCheck, IconCopy } from '@tabler/icons-react';
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/ui/button';
+import { cn } from '@docs/lib/utils';
+import { Button } from '@docs/ui/button';
 
 export function copyToClipboardWithMeta(value: string) {
   navigator.clipboard.writeText(value);

@@ -3,10 +3,10 @@
 import * as React from "react"
 import { GalleryHorizontalIcon } from "lucide-react"
 
-import { trackEvent } from "@/lib/events"
-import { cn } from "@/lib/utils"
-import { useLayout } from "@/hooks/use-layout"
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { trackEvent } from "@docs/lib/events"
+import { cn } from "@docs/lib/utils"
+import { useLayout } from "@docs/hooks/use-layout"
+import { Button } from "@docs/registry/new-york-v4/ui/button"
 
 export function SiteConfig({ className }: React.ComponentProps<typeof Button>) {
   const { layout, setLayout } = useLayout()

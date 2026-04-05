@@ -1,9 +1,9 @@
 import { Callout } from './callout';
-import { Badge } from './ui/badge';
-import { HookProps } from '@/lib/parse-hook';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { timeAgo } from '@/lib/utils';
+import { Badge } from '../ui/badge';
+import { HookProps } from '@docs/lib/parse-hook';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { timeAgo } from '@docs/lib/utils';
 import { Code } from './code';
 
 

@@ -2,9 +2,9 @@
 
 import { IconCheck, IconChevronDown, IconCopy } from '@tabler/icons-react';
 
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-import { Button } from '@/ui/button';
-import { Separator } from '@/ui/separator';
+import { useCopyToClipboard } from '@docs/hooks/use-copy-to-clipboard';
+import { Button } from '@docs/ui/button';
+import { Separator } from '@docs/ui/separator';
 
 function getPromptUrl(baseURL: string, url: string) {
   return `${baseURL}?q=${encodeURIComponent(

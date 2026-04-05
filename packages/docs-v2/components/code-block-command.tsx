@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import { IconCheck, IconCopy, IconTerminal } from '@tabler/icons-react';
-import { copyToClipboardWithMeta } from '@/components/copy-button';
-import { Button } from '@/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs';
+import { copyToClipboardWithMeta } from '@docs/components/copy-button';
+import { Button } from '@docs/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@docs/ui/tabs';
 
 export function CodeBlockCommand({
   __npm__,

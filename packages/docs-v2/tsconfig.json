@@ -7,8 +7,11 @@
     "moduleResolution": "bundler",
     "paths": {
       "@core/*": ["../core*"],
-      "@/*": ["./*"],
-      "@/ui/*": ["./components/ui/*"]
+      "@docs/*": ["./*"],
+      "@siberiacancode/docs/*": ["../docs/src/*"],
+
+      "@/utils/*": ["../core/src/utils/*"],
+      "@siberiacancode/reactuse": ["../core/src"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

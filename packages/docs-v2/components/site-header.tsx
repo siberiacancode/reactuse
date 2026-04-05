@@ -1,12 +1,12 @@
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import Link from 'next/link';
-import { siteConfig } from '@/lib/config';
+import { siteConfig } from '@docs/lib/config';
 import { Icons } from './icons';
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
 import { GitHubLink } from './github-link';
 import { ModeSwitcher } from './mode-switcher';
 import { CommandMenu } from './command-menu';
-import { source } from '@/lib/source';
+import { source } from '@docs/lib/source';
 
 export function SiteHeader() {
   const pageTree = source.pageTree;

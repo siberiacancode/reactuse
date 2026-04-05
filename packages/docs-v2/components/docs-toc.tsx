@@ -3,14 +3,14 @@
 import * as React from 'react';
 import { IconMenu3 } from '@tabler/icons-react';
 
-import { cn } from '@/lib/utils';
-import { Button } from './ui/button';
+import { cn } from '@docs/lib/utils';
+import { Button } from '../ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from './ui/dropdown-menu';
+} from '../ui/dropdown-menu';
 
 function useActiveItem(itemIds: string[]) {
   const [activeId, setActiveId] = React.useState<string | null>(null);

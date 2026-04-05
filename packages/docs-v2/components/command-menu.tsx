@@ -7,9 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from './ui/dialog';
-import { Button } from './ui/button';
-import { cn } from '@/lib/utils';
+} from '../ui/dialog';
+import { Button } from '../ui/button';
+import { cn } from '@docs/lib/utils';
 import {
   Command,
   CommandEmpty,
@@ -17,13 +17,13 @@ import {
   CommandInput,
   CommandItem,
   CommandList
-} from './ui/command';
+} from '../ui/command';
 import { useDocsSearch } from 'fumadocs-core/search/client';
-import { useDebouncedCallback } from '@/hooks/use-debounced-callback';
+import { useDebouncedCallback } from '@docs/hooks/use-debounced-callback';
 import { usePathname, useRouter } from 'next/navigation';
 import { Spinner } from './spinner';
-import { getCurrentBase, getPagesFromFolder } from '@/lib/page-tree';
-import { source } from '@/lib/source';
+import { getCurrentBase, getPagesFromFolder } from '@docs/lib/page-tree';
+import { source } from '@docs/lib/source';
 
 interface Props {
   tree: typeof source.pageTree;

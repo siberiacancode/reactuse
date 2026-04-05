@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { mdxComponents } from '@/mdx-components';
+import { mdxComponents } from '@docs/mdx-components';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { findNeighbour } from 'fumadocs-core/page-tree';
 
-import { source } from '@/lib/source';
-import { absoluteUrl } from '@/lib/utils';
-import { Button } from '@/ui/button';
-import { DocsCopyPage } from '@/components/docs-copy-page';
-import { DocsTableOfContents } from '@/components/docs-toc';
+import { source } from '@docs/lib/source';
+import { absoluteUrl } from '@docs/lib/utils';
+import { Button } from '@docs/ui/button';
+import { DocsCopyPage } from '@docs/components/docs-copy-page';
+import { DocsTableOfContents } from '@docs/components/docs-toc';
 
 export const revalidate = false;
 export const dynamic = 'force-static';

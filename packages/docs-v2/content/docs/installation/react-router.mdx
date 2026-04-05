@@ -17,14 +17,14 @@ Run the `useverse` init command to setup your project:
 npx useverse@latest init
 ```
 
-This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project. Ensure your `tsconfig.json` has path aliases (React Router often uses `~/*`). If you use `@/*`, add:
+This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project. Ensure your `tsconfig.json` has path aliases (React Router often uses `~/*`). If you use `@docs/*`, add:
 
 ```json
 {
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@docs/*": ["./*"]
     }
   }
 }
@@ -66,4 +66,4 @@ const Home = () => {
 export default Home;
 ```
 
-If your `reactuse.json` uses `@/shared/hooks`, use that alias instead of `~/shared/hooks`.
+If your `reactuse.json` uses `@docs/shared/hooks`, use that alias instead of `~/shared/hooks`.

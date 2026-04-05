@@ -222,3 +222,8 @@ generated
 # Reactuse
 
 **/registry.json
+
+
+# Docgen. Generated content
+packages/docs-v2/content/docs/hooks/*
+.source

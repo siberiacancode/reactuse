@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { getPagesFromFolder, type PageTreeFolder } from '@/lib/page-tree';
+import { getPagesFromFolder, type PageTreeFolder } from '@docs/lib/page-tree';
 
 export function HooksList({
   componentsFolder,

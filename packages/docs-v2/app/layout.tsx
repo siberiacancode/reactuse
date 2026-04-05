@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
-import { ThemeProvider } from '@/components/theme-provider';
-import { TooltipProvider } from '@/ui/tooltip';
+import { ThemeProvider } from '@docs/components/theme-provider';
+import { TooltipProvider } from '@docs/ui/tooltip';
 
 import { Geist } from 'next/font/google';
-import { cn } from '@/lib/utils';
+import { cn } from '@docs/lib/utils';
 
-import '@/styles/global.css';
+import '../styles/global.css';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 

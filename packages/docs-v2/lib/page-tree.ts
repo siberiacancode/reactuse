@@ -1,4 +1,4 @@
-import type { source } from '@/lib/source';
+import type { source } from '@docs/lib/source';
 
 export type PageTreeNode = (typeof source.pageTree)['children'][number];
 export type PageTreeFolder = Extract<PageTreeNode, { type: 'folder' }>;

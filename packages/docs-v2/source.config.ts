@@ -1,5 +1,5 @@
 import { defineConfig, defineDocs } from 'fumadocs-mdx/config';
-import { transformers } from '@/lib/highlight-code';
+import { transformers } from '@docs/lib/highlight-code';
 import rehypePrettyCode from 'rehype-pretty-code';
 
 export default defineConfig({

@@ -18,13 +18,13 @@ Add `baseUrl` and `paths` to your `tsconfig.json` (or `jsconfig.json`) so import
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@docs/*": ["./src/*"]
     }
   }
 }
 ```
 
-Adjust the `@/*` path to match your project structure (e.g. `"./*"` if you have no `src` folder).
+Adjust the `@docs/*` path to match your project structure (e.g. `"./*"` if you have no `src` folder).
 
 ### Run the CLI
 
@@ -34,7 +34,7 @@ Run the `useverse` init command to setup your project:
 npx useverse@latest init
 ```
 
-This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project and configure where hooks are generated (e.g. `@/shared/hooks`).
+This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project and configure where hooks are generated (e.g. `@docs/shared/hooks`).
 
 ### Add hooks
 
@@ -47,7 +47,7 @@ npx useverse@latest add useBoolean
 Then import and use them:
 
 ```tsx showLineNumbers
-import { useBoolean } from "@/shared/hooks"
+import { useBoolean } from "@docs/shared/hooks"
 
 const App = () => {
   const [on, toggle] = useBoolean()

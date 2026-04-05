@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Image from 'next/image';
 
-// import { ComponentPreviewTabs } from '@/components/component-preview-tabs';
-// import { ComponentSource } from '@/components/component-source';
-import { ExamplesIndex } from '@/__index__';
+// import { ComponentPreviewTabs } from '@docs/components/component-preview-tabs';
+// import { ComponentSource } from '@docs/components/component-source';
+import { ExamplesIndex } from '@docs/__index__';
 
 export function getDemoComponent(name: string) {
   return ExamplesIndex?.[name]?.component;

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Link from 'next/link';
 
-import { siteConfig } from '@/lib/config';
-import { Icons } from '@/components/icons';
-import { Button } from '@/ui/button';
-import { Skeleton } from '@/ui/skeleton';
+import { siteConfig } from '@docs/lib/config';
+import { Icons } from '@docs/components/icons';
+import { Button } from '@docs/ui/button';
+import { Skeleton } from '@docs/ui/skeleton';
 
 export function GitHubLink() {
   return (

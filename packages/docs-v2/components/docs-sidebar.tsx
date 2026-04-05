@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { getCurrentBase, getPagesFromFolder } from '@/lib/page-tree';
-import type { source } from '@/lib/source';
+import { getCurrentBase, getPagesFromFolder } from '@docs/lib/page-tree';
+import type { source } from '@docs/lib/source';
 import {
   Sidebar,
   SidebarContent,
@@ -14,7 +14,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem
-} from '@/ui/sidebar';
+} from '@docs/ui/sidebar';
 
 const TOP_LEVEL_SECTIONS = [
   { name: 'Introduction', href: '/docs' },
