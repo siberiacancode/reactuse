@@ -1,0 +1,127 @@
+{
+  "name": "useThrottleEffect",
+  "description": "Hook that runs an effect at most once per delay period when dependencies change",
+  "examples": [
+    "useThrottleEffect(() => console.log('effect'), 500, [value]);"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "effect",
+          "type": "EffectCallback",
+          "optional": false,
+          "description": "The effect callback to run",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {EffectCallback} effect The effect callback to run",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "effect",
+                "postName": " ",
+                "type": "{EffectCallback}",
+                "postType": " ",
+                "description": "The effect callback to run",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "delay",
+          "type": "number",
+          "optional": false,
+          "description": "The delay in milliseconds",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {number} delay The delay in milliseconds",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "delay",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The delay in milliseconds",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "deps",
+          "type": "DependencyList",
+          "optional": false,
+          "description": "The dependencies list for the effect",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {DependencyList} deps The dependencies list for the effect",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "deps",
+                "postName": " ",
+                "type": "{DependencyList}",
+                "postType": " ",
+                "description": "The dependencies list for the effect",
+                "end": "",
+                "lineEnd": ""
+              }
+            },
+            {
+              "number": 9,
+              "source": " *",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "category": "utilities",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1768590847000
+}

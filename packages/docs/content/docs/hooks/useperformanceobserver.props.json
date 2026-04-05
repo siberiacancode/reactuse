@@ -1,0 +1,127 @@
+{
+  "name": "usePerformanceObserver",
+  "description": "Hook that allows you to observe performance entries",
+  "examples": [
+    "const { supported, entries, start, stop } = usePerformanceObserver();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UsePerformanceObserverOptions",
+          "optional": false,
+          "description": "The options for the performance observer",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UsePerformanceObserverOptions} options The options for the performance observer",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "options",
+                "postName": " ",
+                "type": "{UsePerformanceObserverOptions}",
+                "postType": " ",
+                "description": "The options for the performance observer",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "PerformanceObserverCallback",
+          "optional": false,
+          "description": "The function to handle performance entries",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {PerformanceObserverCallback} callback The function to handle performance entries",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{PerformanceObserverCallback}",
+                "postType": " ",
+                "description": "The function to handle performance entries",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "object",
+        "optional": false,
+        "description": "object containing the observer's support status and methods to start and stop the observer",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {object} An object containing the observer's support status and methods to start and stop the observer",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{object}",
+              "postType": " ",
+              "description": "object containing the observer's support status and methods to start and stop the observer",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "browserapi": "PerformanceObserver",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1755262808000
+}

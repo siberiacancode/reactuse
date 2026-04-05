@@ -1,0 +1,242 @@
+{
+  "name": "useStopwatch",
+  "description": "Hook that creates a stopwatch functionality",
+  "examples": [
+    "const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { enabled: false });",
+    "const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, enabled: false });"
+  ],
+  "usage": "high",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialTime",
+          "type": "number",
+          "optional": true,
+          "description": "The initial time of the timer",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {number} [initialTime=0] The initial time of the timer",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialTime=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The initial time of the timer",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "The enabled state of the timer",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [options.enabled=true] The enabled state of the timer",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The enabled state of the timer",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseStopwatchReturn",
+        "optional": false,
+        "description": "object containing the current time and functions to interact with the timer",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseStopwatchReturn}",
+              "postType": " ",
+              "description": "object containing the current time and functions to interact with the timer",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.initialTime",
+          "type": "number",
+          "optional": true,
+          "description": "-The initial time of the timer",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {number} [options.initialTime=0] -The initial time of the timer",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.initialTime=0]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "-The initial time of the timer",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "The enabled state of the timer",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {boolean} [options.enabled=true] The enabled state of the timer",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The enabled state of the timer",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseStopwatchReturn",
+        "optional": false,
+        "description": "object containing the current time and functions to interact with the timer",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseStopwatchReturn}",
+              "postType": " ",
+              "description": "object containing the current time and functions to interact with the timer",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 18,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "time",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "sereda",
+      "avatar": "https://gravatar.com/avatar/1e4fff5ee3cc2e7015dc6226bf3179ad?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

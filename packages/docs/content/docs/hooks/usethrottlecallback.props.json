@@ -1,0 +1,130 @@
+{
+  "name": "useThrottleCallback",
+  "description": "Hook that creates a throttled callback",
+  "examples": [
+    "const throttled = useThrottleCallback(() => console.log('callback'), 500);"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(...args: Params) => Return",
+          "optional": false,
+          "description": "The callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(...args: Params) => Return} callback The callback function",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(...args: Params) => Return}",
+                "postType": " ",
+                "description": "The callback function",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "delay",
+          "type": "number",
+          "optional": false,
+          "description": "The delay in milliseconds",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {number} delay The delay in milliseconds",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "delay",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The delay in milliseconds",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "(...args: Params) => Return",
+        "optional": false,
+        "description": "callback with throttle",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {(...args: Params) => Return} The callback with throttle",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{(...args: Params) => Return}",
+              "postType": " ",
+              "description": "callback with throttle",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "utilities",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

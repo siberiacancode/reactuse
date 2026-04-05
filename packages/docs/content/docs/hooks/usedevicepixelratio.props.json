@@ -1,0 +1,74 @@
+{
+  "name": "useDevicePixelRatio",
+  "description": "Hook that returns the device's pixel ratio",
+  "examples": [
+    "const { supported, ratio } = useDevicePixelRatio();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseDevicePixelRatioReturn",
+        "optional": false,
+        "description": "ratio and supported flag",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseDevicePixelRatioReturn} The ratio and supported flag",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseDevicePixelRatioReturn}",
+              "postType": " ",
+              "description": "ratio and supported flag",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "utilities",
+  "browserapi": "window.devicePixelRatio",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Artem Dereviago",
+      "avatar": "https://gravatar.com/avatar/8a325a7b2b80fc575dc5c92eb0301a13?d=retro"
+    }
+  ],
+  "lastModified": 1755262808000
+}

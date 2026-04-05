@@ -1,0 +1,78 @@
+{
+  "name": "useNetwork",
+  "description": "Hook to track network status",
+  "examples": [
+    "const { online, downlink, downlinkMax, effectiveType, rtt, saveData, type } = useNetwork();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseNetworkReturn",
+        "optional": false,
+        "description": "object containing the network status",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseNetworkReturn} An object containing the network status",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseNetworkReturn}",
+              "postType": " ",
+              "description": "object containing the network status",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "browserapi": "navigator.connection",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "waldymarxthf",
+      "avatar": "https://gravatar.com/avatar/762486d1c53f0bc2344106dcad837e1c?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

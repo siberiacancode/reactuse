@@ -1,0 +1,207 @@
+{
+  "name": "useLockScroll",
+  "description": "Hook that locks scroll on an element or document body",
+  "examples": [
+    "const { lock, unlock, value, toggle } = useLockScroll(ref);",
+    "const { ref, lock, unlock, value, toggle } = useLockScroll();"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The target element to lock scroll on",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} [target=document.body] The target element to lock scroll on",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=document.body]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to lock scroll on",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "document.body"
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseLockScrollOptions",
+          "optional": true,
+          "description": "The options for scroll locking",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseLockScrollOptions} [options] The options for scroll locking",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseLockScrollOptions}",
+                "postType": " ",
+                "description": "The options for scroll locking",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {void}",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseLockScrollOptions",
+          "optional": true,
+          "description": "The options for scroll locking",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {UseLockScrollOptions} [options] The options for scroll locking",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseLockScrollOptions}",
+                "postType": " ",
+                "description": "The options for scroll locking",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Ref",
+        "type": "StateRef<Target>",
+        "optional": false,
+        "description": "to attach to element, or locks body scroll by default",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns {StateRef<Target>} Ref to attach to element, or locks body scroll by default",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Ref",
+              "postName": " ",
+              "type": "{StateRef<Target>}",
+              "postType": " ",
+              "description": "to attach to element, or locks body scroll by default",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 18,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

@@ -1,0 +1,135 @@
+{
+  "name": "useDocumentTitle",
+  "description": "Hook that manages the document title and allows updating it",
+  "examples": [
+    "const { value, set } = useDocumentTitle();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "string",
+          "optional": true,
+          "description": "The initial title. If not provided, the current document title will be used",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string} [initialValue] The initial title. If not provided, the current document title will be used",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The initial title. If not provided, the current document title will be used",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.restoreOnUnmount",
+          "type": "boolean",
+          "optional": true,
+          "description": "Restore the previous title on unmount",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {boolean} [options.restoreOnUnmount] Restore the previous title on unmount",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.restoreOnUnmount]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Restore the previous title on unmount",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseDocumentTitleReturn",
+        "optional": false,
+        "description": "array containing the current title and a function to update the title",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseDocumentTitleReturn} An array containing the current title and a function to update the title",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseDocumentTitleReturn}",
+              "postType": " ",
+              "description": "array containing the current title and a function to update the title",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "browserapi": "document.title",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "Vitalij Ryndin",
+      "avatar": "https://gravatar.com/avatar/718a009ae847dbd10c543a540fa84eee?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

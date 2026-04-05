@@ -1,0 +1,102 @@
+{
+  "name": "useFavicon",
+  "description": "Hook that manages the favicon",
+  "examples": [
+    "const { href, set } = useFavicon('https://siberiacancode.github.io/reactuse/favicon.ico');"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialFavicon",
+          "type": "string",
+          "optional": true,
+          "description": "The initial favicon. If not provided, the current favicon will be used",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {string} [initialFavicon] The initial favicon. If not provided, the current favicon will be used",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialFavicon]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The initial favicon. If not provided, the current favicon will be used",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseFaviconReturn",
+        "optional": false,
+        "description": "array containing the current favicon and a function to update the favicon",
+        "problems": [],
+        "source": [
+          {
+            "number": 7,
+            "source": " * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseFaviconReturn}",
+              "postType": " ",
+              "description": "array containing the current favicon and a function to update the favicon",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 8,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1755364807000
+}

@@ -1,0 +1,154 @@
+{
+  "name": "useMouse",
+  "description": "Hook that manages a mouse position",
+  "examples": [
+    "const { x, y, clientX, clientY, elementX, elementY, elementPositionX, elementPositionY } = useMouse(ref);",
+    "const { ref, x, y, clientX, clientY, elementX, elementY, elementPositionX, elementPositionY } = useMouse();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The target element to manage the mouse position for",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} [target=window] The target element to manage the mouse position for",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=window]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to manage the mouse position for",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "window"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseMouseReturn",
+        "optional": false,
+        "description": "object with the current mouse position",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseMouseReturn} An object with the current mouse position",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseMouseReturn}",
+              "postType": " ",
+              "description": "object with the current mouse position",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseMouseReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object with the current mouse position and a ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 15,
+            "source": " * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with the current mouse position and a ref",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseMouseReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object with the current mouse position and a ref",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 16,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1768553242000
+}

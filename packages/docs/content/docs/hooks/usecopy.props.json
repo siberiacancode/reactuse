@@ -1,0 +1,100 @@
+{
+  "name": "useCopy",
+  "description": "Hook that manages copying text with status reset",
+  "examples": [
+    "const { copied, value, copy } = useCopy();"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "delay",
+          "type": "number",
+          "optional": true,
+          "description": "Delay in ms before resetting copied status",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {number} [delay=1000] Delay in ms before resetting copied status",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[delay=1000]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "Delay in ms before resetting copied status",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "1000"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseCopyReturn",
+        "optional": false,
+        "description": "object containing the copied value, status and copy function",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseCopyReturn} An object containing the copied value, status and copy function",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseCopyReturn}",
+              "postType": " ",
+              "description": "object containing the copied value, status and copy function",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "browserapi": "navigator.clipboard",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

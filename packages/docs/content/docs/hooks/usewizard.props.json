@@ -1,0 +1,130 @@
+{
+  "name": "useWizard",
+  "description": "Hook that manages a wizard",
+  "examples": [
+    "const { currentStepId, set, reset, back, next, history } = useWizard([ { id: 'step1', nodes: ['step2', 'step3'] }, { id: 'step2', nodes: ['step3'] }, { id: 'step3', nodes: [] }, ])"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "map",
+          "type": "WizardItem<WizardStepId>[]",
+          "optional": false,
+          "description": "The map of the wizard",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {WizardItem<WizardStepId>[]} map The map of the wizard",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "map",
+                "postName": " ",
+                "type": "{WizardItem<WizardStepId>[]}",
+                "postType": " ",
+                "description": "The map of the wizard",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "initialStepId",
+          "type": "WizardStepId",
+          "optional": true,
+          "description": "The initial step id",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {WizardStepId} [initialStepId] The initial step id",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialStepId]",
+                "postName": " ",
+                "type": "{WizardStepId}",
+                "postType": " ",
+                "description": "The initial step id",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseWizardReturn<WizardStepId>",
+        "optional": false,
+        "description": "object containing the current step id and functions to interact with the wizard",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseWizardReturn<WizardStepId>} An object containing the current step id and functions to interact with the wizard",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseWizardReturn<WizardStepId>}",
+              "postType": " ",
+              "description": "object containing the current step id and functions to interact with the wizard",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "state",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

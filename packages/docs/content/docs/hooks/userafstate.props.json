@@ -1,0 +1,99 @@
+{
+  "name": "useRafState",
+  "description": "Hook that returns the value and a function to set the value",
+  "examples": [
+    "const [value, setValue] = useRafState(initialValue);"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "Value",
+          "optional": false,
+          "description": "The initial value",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {Value} initialValue The initial value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The initial value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseRafStateReturn<Value>",
+        "optional": false,
+        "description": "array containing the value and a function to set the value",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseRafStateReturn<Value>} An array containing the value and a function to set the value",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseRafStateReturn<Value>}",
+              "postType": " ",
+              "description": "array containing the value and a function to set the value",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "state",
+  "browserapi": "requestAnimationFrame",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

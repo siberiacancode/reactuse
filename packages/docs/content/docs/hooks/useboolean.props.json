@@ -1,0 +1,103 @@
+{
+  "name": "useBoolean",
+  "description": "Hook provides opportunity to manage boolean state",
+  "examples": [
+    "const [on, toggle] = useBoolean()"
+  ],
+  "usage": "necessary",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "boolean",
+          "optional": true,
+          "description": "The initial boolean value",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {boolean} [initialValue=false] The initial boolean value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue=false]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The initial boolean value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseBooleanReturn",
+        "optional": false,
+        "description": "object containing the boolean state value and utility functions to manipulate the state",
+        "problems": [],
+        "source": [
+          {
+            "number": 7,
+            "source": " * @returns {UseBooleanReturn} An object containing the boolean state value and utility functions to manipulate the state",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseBooleanReturn}",
+              "postType": " ",
+              "description": "object containing the boolean state value and utility functions to manipulate the state",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 8,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "state",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

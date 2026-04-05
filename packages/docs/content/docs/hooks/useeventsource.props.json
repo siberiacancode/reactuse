@@ -1,0 +1,161 @@
+{
+  "name": "useEventSource",
+  "description": "Hook that provides a reactive wrapper for event source",
+  "examples": [
+    "const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', ['message']);"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "url",
+          "type": "string | URL",
+          "optional": false,
+          "description": "The URL of the EventSource",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string | URL} url The URL of the EventSource",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "url",
+                "postName": " ",
+                "type": "{string | URL}",
+                "postType": " ",
+                "description": "The URL of the EventSource",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "events",
+          "type": "string[]",
+          "optional": true,
+          "description": "List of events to listen to",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {string[]} [events=[]] List of events to listen to",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[events=[]]",
+                "postName": " ",
+                "type": "{string[]}",
+                "postType": " ",
+                "description": "List of events to listen to",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "[]"
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseEventSourceOptions",
+          "optional": true,
+          "description": "Configuration options",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {UseEventSourceOptions} [options={}] Configuration options",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options={}]",
+                "postName": " ",
+                "type": "{UseEventSourceOptions}",
+                "postType": " ",
+                "description": "Configuration options",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "{}"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseEventSourceReturn<Data>",
+        "optional": false,
+        "description": "EventSource state and controls",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {UseEventSourceReturn<Data>} The EventSource state and controls",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseEventSourceReturn<Data>}",
+              "postType": " ",
+              "description": "EventSource state and controls",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 12,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "browserapi": "EventSource",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "nailgilmanov",
+      "avatar": "https://gravatar.com/avatar/61c96a040bb7c821d1fb35138254ed4b?d=retro"
+    }
+  ],
+  "lastModified": 1767095034000
+}

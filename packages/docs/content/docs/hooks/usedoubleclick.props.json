@@ -1,0 +1,262 @@
+{
+  "name": "useDoubleClick",
+  "description": "Hook that defines the logic when double clicking an element",
+  "examples": [
+    "useDoubleClick(ref, () => console.log('double clicked'));",
+    "const { ref } = useDoubleClick(() => console.log('double clicked'));"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to be double clicked",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target element to be double clicked",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to be double clicked",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(event: DoubleClickEvents) => void",
+          "optional": false,
+          "description": "The callback function to be invoked on double click",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(event: DoubleClickEvents) => void} callback The callback function to be invoked on double click",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(event: DoubleClickEvents) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on double click",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseDoubleClickOptions",
+          "optional": true,
+          "description": "The options for the double click",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {UseDoubleClickOptions} [options] The options for the double click",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseDoubleClickOptions}",
+                "postType": " ",
+                "description": "The options for the double click",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "void",
+        "optional": false,
+        "description": "double clicking state",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {void} The double clicking state",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{void}",
+              "postType": " ",
+              "description": "double clicking state",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(event: DoubleClickEvents) => void",
+          "optional": false,
+          "description": "The callback function to be invoked on double click",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {(event: DoubleClickEvents) => void} callback The callback function to be invoked on double click",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(event: DoubleClickEvents) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on double click",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseDoubleClickOptions",
+          "optional": true,
+          "description": "The options for the double click",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {UseDoubleClickOptions} [options] The options for the double click",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseDoubleClickOptions}",
+                "postType": " ",
+                "description": "The options for the double click",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "{ ref: StateRef<Target> }",
+        "optional": false,
+        "description": "double clicking state",
+        "problems": [],
+        "source": [
+          {
+            "number": 19,
+            "source": " * @returns {{ ref: StateRef<Target> }} The double clicking state",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{{ ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "double clicking state",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 20,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1770651919000
+}

@@ -1,14 +1,17 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES2017",
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@siberiacancode/docs": ["*"]
+      "@core/*": ["../core*"],
+      "@docs/*": ["./*"],
+      "@siberiacancode/docs/*": ["../docs/src/*"],
+
+      "@/utils/*": ["../core/src/utils/*"],
+      "@siberiacancode/reactuse": ["../core/src"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
@@ -23,7 +26,20 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["node_modules"],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/dev/types/**/*.ts"
+  ]
 }

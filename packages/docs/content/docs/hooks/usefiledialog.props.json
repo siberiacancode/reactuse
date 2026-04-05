@@ -1,0 +1,380 @@
+{
+  "name": "useFileDialog",
+  "description": "Hook to handle file input",
+  "examples": [
+    "const { values, open, reset } = useFileDialog((value) => console.log(value));",
+    "const { values, open, reset } = useFileDialog({ accept: 'image/*' });"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(value: FileList | null) => void",
+          "optional": false,
+          "description": "The callback to execute when a file is selected",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {(value: FileList | null) => void} callback The callback to execute when a file is selected",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(value: FileList | null) => void}",
+                "postType": " ",
+                "description": "The callback to execute when a file is selected",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.multiple",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether multiple files can be selected",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [options.multiple=true] Whether multiple files can be selected",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.multiple=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether multiple files can be selected",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.accept",
+          "type": "string",
+          "optional": true,
+          "description": "The accepted file types",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {string} [options.accept='*'] The accepted file types",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.accept='*']",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The accepted file types",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "'*'"
+        },
+        {
+          "tag": "param",
+          "name": "options.reset",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether the input should be reset when the callback is called",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {boolean} [options.reset=false] Whether the input should be reset when the callback is called",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.reset=false]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether the input should be reset when the callback is called",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "false"
+        },
+        {
+          "tag": "param",
+          "name": "options.capture",
+          "type": "string",
+          "optional": true,
+          "description": "The capture value",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {string} [options.capture] The capture value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.capture]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The capture value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseFileDialogReturn",
+        "optional": false,
+        "description": "object containing the selected files",
+        "problems": [],
+        "source": [
+          {
+            "number": 12,
+            "source": " * @returns {UseFileDialogReturn} An object containing the selected files",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseFileDialogReturn}",
+              "postType": " ",
+              "description": "object containing the selected files",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 13,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.multiple",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether multiple files can be selected",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {boolean} [options.multiple=true] Whether multiple files can be selected",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.multiple=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether multiple files can be selected",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.accept",
+          "type": "string",
+          "optional": true,
+          "description": "The accepted file types",
+          "problems": [],
+          "source": [
+            {
+              "number": 19,
+              "source": " * @param {string} [options.accept='*'] The accepted file types",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.accept='*']",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The accepted file types",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "'*'"
+        },
+        {
+          "tag": "param",
+          "name": "options.reset",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether the input should be reset when the callback is called",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {boolean} [options.reset=false] Whether the input should be reset when the callback is called",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.reset=false]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether the input should be reset when the callback is called",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "false"
+        },
+        {
+          "tag": "param",
+          "name": "options.capture",
+          "type": "string",
+          "optional": true,
+          "description": "The capture value",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {string} [options.capture] The capture value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.capture]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The capture value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseFileDialogReturn",
+        "optional": false,
+        "description": "object containing the selected files",
+        "problems": [],
+        "source": [
+          {
+            "number": 22,
+            "source": " * @returns {UseFileDialogReturn} An object containing the selected files",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseFileDialogReturn}",
+              "postType": " ",
+              "description": "object containing the selected files",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 23,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1757059687000
+}

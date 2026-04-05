@@ -1,0 +1,328 @@
+{
+  "name": "useUrlSearchParams",
+  "description": "Hook that provides reactive URLSearchParams",
+  "examples": [
+    "const { value, set } = useUrlSearchParams({ initialValue: { page: 1 } });",
+    "const { value, set } = useUrlSearchParams({ page: 1 });"
+  ],
+  "usage": "high",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseUrlSearchParamsOptions<Value> & { initialValue: UseUrlSearchParamsInitialValue<Value> }",
+          "optional": false,
+          "description": "The options object with required initialValue",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseUrlSearchParamsOptions<Value> & { initialValue: UseUrlSearchParamsInitialValue<Value> }} options The options object with required initialValue",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "options",
+                "postName": " ",
+                "type": "{UseUrlSearchParamsOptions<Value> & { initialValue: UseUrlSearchParamsInitialValue<Value> }}",
+                "postType": " ",
+                "description": "The options object with required initialValue",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.initialValue",
+          "type": "UseUrlSearchParamsInitialValue<Value>",
+          "optional": true,
+          "description": "The initial value for the url params",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {UseUrlSearchParamsInitialValue<Value>} [options.initialValue] The initial value for the url params",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.initialValue]",
+                "postName": " ",
+                "type": "{UseUrlSearchParamsInitialValue<Value>}",
+                "postType": " ",
+                "description": "The initial value for the url params",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.mode",
+          "type": "UrlSearchParamsMode",
+          "optional": true,
+          "description": "The mode to use for the URL ('history' | 'hash-params' | 'hash')",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {UrlSearchParamsMode} [options.mode='history'] The mode to use for the URL ('history' | 'hash-params' | 'hash')",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.mode='history']",
+                "postName": " ",
+                "type": "{UrlSearchParamsMode}",
+                "postType": " ",
+                "description": "The mode to use for the URL ('history' | 'hash-params' | 'hash')",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "'history'"
+        },
+        {
+          "tag": "param",
+          "name": "options.write",
+          "type": "'push' | 'replace'",
+          "optional": true,
+          "description": "The mode to use for writing to the URL",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {'push' | 'replace'} [options.write='replace'] The mode to use for writing to the URL",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.write='replace']",
+                "postName": " ",
+                "type": "{'push' | 'replace'}",
+                "postType": " ",
+                "description": "The mode to use for writing to the URL",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "'replace'"
+        },
+        {
+          "tag": "param",
+          "name": "options.serializer",
+          "type": "(value: Value[keyof Value]) => string",
+          "optional": true,
+          "description": "Custom serializer function to convert value to string",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {(value: Value[keyof Value]) => string} [options.serializer] Custom serializer function to convert value to string",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.serializer]",
+                "postName": " ",
+                "type": "{(value: Value[keyof Value]) => string}",
+                "postType": " ",
+                "description": "Custom serializer function to convert value to string",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.deserializer",
+          "type": "(value: string) => Value[keyof Value]",
+          "optional": true,
+          "description": "Custom deserializer function to convert string to value",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {(value: string) => Value[keyof Value]} [options.deserializer] Custom deserializer function to convert string to value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.deserializer]",
+                "postName": " ",
+                "type": "{(value: string) => Value[keyof Value]}",
+                "postType": " ",
+                "description": "Custom deserializer function to convert string to value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseUrlSearchParamsReturn<Value>",
+        "optional": false,
+        "description": "object with value and function for change value",
+        "problems": [],
+        "source": [
+          {
+            "number": 14,
+            "source": " * @returns {UseUrlSearchParamsReturn<Value>} The object with value and function for change value",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseUrlSearchParamsReturn<Value>}",
+              "postType": " ",
+              "description": "object with value and function for change value",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 15,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "UseUrlSearchParamsInitialValue<Value>",
+          "optional": true,
+          "description": "The initial value for the url params",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {UseUrlSearchParamsInitialValue<Value>} [initialValue] The initial value for the url params",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue]",
+                "postName": " ",
+                "type": "{UseUrlSearchParamsInitialValue<Value>}",
+                "postType": " ",
+                "description": "The initial value for the url params",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseUrlSearchParamsReturn<Value>",
+        "optional": false,
+        "description": "object with value and function for change value",
+        "problems": [],
+        "source": [
+          {
+            "number": 22,
+            "source": " * @returns {UseUrlSearchParamsReturn<Value>} The object with value and function for change value",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseUrlSearchParamsReturn<Value>}",
+              "postType": " ",
+              "description": "object with value and function for change value",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 23,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "state",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "VLADISLAW9",
+      "avatar": "https://gravatar.com/avatar/cf96a05801360c131eb784ebbe781f99?d=retro"
+    }
+  ],
+  "lastModified": 1769232042000
+}

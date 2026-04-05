@@ -225,5 +225,5 @@ generated
 
 
 # Docgen. Generated content
-packages/docs-v2/content/docs/hooks/*
+packages/docs-v2/content/docs/hooks/
 .source

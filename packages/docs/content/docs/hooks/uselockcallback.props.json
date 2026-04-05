@@ -1,0 +1,98 @@
+{
+  "name": "useLockCallback",
+  "description": "Hook that prevents a callback from being executed multiple times simultaneously",
+  "examples": [
+    "const lockedCallback = useLockCallback(() => promise());"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "Function",
+          "optional": false,
+          "description": "The callback to be locked",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {Function} callback The callback to be locked",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{Function}",
+                "postType": " ",
+                "description": "The callback to be locked",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "Function",
+        "optional": false,
+        "description": "locked callback",
+        "problems": [],
+        "source": [
+          {
+            "number": 7,
+            "source": " * @returns {Function} The locked callback",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{Function}",
+              "postType": " ",
+              "description": "locked callback",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 8,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "async",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

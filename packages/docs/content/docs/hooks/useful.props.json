@@ -1,0 +1,99 @@
+{
+  "name": "useFul",
+  "description": "Hook that can be so useful",
+  "examples": [
+    "const value = useFul(state);"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "value",
+          "type": "Value",
+          "optional": true,
+          "description": "The value to be returned",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {Value} [value] The value to be returned",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[value]",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The value to be returned",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "Value",
+        "optional": false,
+        "description": "value passed to the hook",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {Value} The value passed to the hook",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{Value}",
+              "postType": " ",
+              "description": "value passed to the hook",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "humor",
+  "warning": "This hook is a joke. Please do not use it in production code!",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

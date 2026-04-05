@@ -1,0 +1,132 @@
+{
+  "name": "usePermission",
+  "description": "Hook that gives you the state of permission",
+  "examples": [
+    "const { state, supported, query } = usePermission('microphone');"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "permissionDescriptorName",
+          "type": "UsePermissionName",
+          "optional": false,
+          "description": "- The permission name",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " *  @param {UsePermissionName} permissionDescriptorName - The permission name",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "  ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "permissionDescriptorName",
+                "postName": " ",
+                "type": "{UsePermissionName}",
+                "postType": " ",
+                "description": "- The permission name",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "- Whether the permission is enabled",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " *  @param {boolean} [options.enabled=true] - Whether the permission is enabled",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "  ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "- Whether the permission is enabled",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UsePermissionReturn",
+        "optional": false,
+        "description": "object containing the state and the supported status",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " *  @returns {UsePermissionReturn} An object containing the state and the supported status",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "  ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UsePermissionReturn}",
+              "postType": " ",
+              "description": "object containing the state and the supported status",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "browserapi": "navigator.permissions",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1755262808000
+}

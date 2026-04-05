@@ -1,0 +1,127 @@
+{
+  "name": "useBroadcastChannel",
+  "description": "that provides cross-tab/window communication",
+  "examples": [
+    "const { supported, data, post, error } = useBroadcastChannel('channel');"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "description": "The name of the channel",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string} name The name of the channel",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "name",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The name of the channel",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "Function",
+          "optional": false,
+          "description": "A callback function that will be called when a message is received",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {Function} callback A callback function that will be called when a message is received",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{Function}",
+                "postType": " ",
+                "description": "A callback function that will be called when a message is received",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseBroadcastChannelReturn",
+        "optional": false,
+        "description": "object containing the channel state and controls",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseBroadcastChannelReturn} An object containing the channel state and controls",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseBroadcastChannelReturn}",
+              "postType": " ",
+              "description": "object containing the channel state and controls",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 11,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "browserapi": "BroadcastChannel",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1755262808000
+}

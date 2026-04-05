@@ -1,0 +1,136 @@
+{
+  "name": "useWindowSize",
+  "description": "Hook that manages a window size",
+  "examples": [
+    "const { width, height } = useWindowSize();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "params.initialWidth",
+          "type": "number",
+          "optional": true,
+          "description": "The initial window width",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {number} [params.initialWidth=Number.POSITIVE_INFINITY] The initial window width",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[params.initialWidth=Number.POSITIVE_INFINITY]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The initial window width",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "Number.POSITIVE_INFINITY"
+        },
+        {
+          "tag": "param",
+          "name": "params.initialHeight",
+          "type": "number",
+          "optional": true,
+          "description": "The initial window height",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {number} [params.initialHeight=Number.POSITIVE_INFINITY] The initial window height",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[params.initialHeight=Number.POSITIVE_INFINITY]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The initial window height",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "Number.POSITIVE_INFINITY"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseWindowSizeReturn",
+        "optional": false,
+        "description": "object containing the current window width and height",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseWindowSizeReturn} An object containing the current window width and height",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseWindowSizeReturn}",
+              "postType": " ",
+              "description": "object containing the current window width and height",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "gwizxs",
+      "avatar": "https://gravatar.com/avatar/70a50849877e9ad6059e4a0eff28dfd6?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1760196566000
+}

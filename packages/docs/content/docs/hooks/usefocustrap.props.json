@@ -1,0 +1,208 @@
+{
+  "name": "useFocusTrap",
+  "description": "Hook that traps focus within a given element",
+  "examples": [
+    "const { active, disable, toggle, enable } = useFocusTrap(ref, true);",
+    "const { ref, active, disable, toggle, enable } = useFocusTrap(true);"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element for focus trap",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target element for focus trap",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element for focus trap",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "active",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether focus trap is active",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [active=true] Whether focus trap is active",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[active=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether focus trap is active",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "UseFocusTrapReturn",
+        "optional": false,
+        "description": "with the focus trap state and methods",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseFocusTrapReturn} Object with the focus trap state and methods",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{UseFocusTrapReturn}",
+              "postType": " ",
+              "description": "with the focus trap state and methods",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "active",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether focus trap is active",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {boolean} [active=true] Whether focus trap is active",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[active=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether focus trap is active",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "UseFocusTrapReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "with the focus trap state and methods",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns {UseFocusTrapReturn & { ref: StateRef<Target> }} Object with the focus trap state and methods",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{UseFocusTrapReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "with the focus trap state and methods",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 18,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "elements",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "lastModified": 1770651919000
+}

@@ -1,0 +1,324 @@
+{
+  "name": "useFullscreen",
+  "description": "Hook to handle fullscreen events",
+  "examples": [
+    "const { enter, exit, toggle, value } = useFullscreen(ref);",
+    "const { ref, enter, exit, toggle, value } = useFullscreen();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element for fullscreen",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target element for fullscreen",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element for fullscreen",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.initialValue",
+          "type": "boolean",
+          "optional": true,
+          "description": "initial value of fullscreen",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [options.initialValue=false] initial value of fullscreen",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.initialValue=false]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "initial value of fullscreen",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "false"
+        },
+        {
+          "tag": "param",
+          "name": "options.onEnter",
+          "type": "() => void",
+          "optional": true,
+          "description": "on enter fullscreen",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {() => void} [options.onEnter] on enter fullscreen",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onEnter]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "on enter fullscreen",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onExit",
+          "type": "() => void",
+          "optional": true,
+          "description": "on exit fullscreen",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {() => void} [options.onExit] on exit fullscreen",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onExit]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "on exit fullscreen",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseFullScreenReturn",
+        "optional": false,
+        "description": "object with the fullscreen state and methods",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {UseFullScreenReturn} An object with the fullscreen state and methods",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseFullScreenReturn}",
+              "postType": " ",
+              "description": "object with the fullscreen state and methods",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 12,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.initialValue",
+          "type": "boolean",
+          "optional": true,
+          "description": "initial value of fullscreen",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {boolean} [options.initialValue=false] initial value of fullscreen",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.initialValue=false]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "initial value of fullscreen",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "false"
+        },
+        {
+          "tag": "param",
+          "name": "options.onEnter",
+          "type": "() => void",
+          "optional": true,
+          "description": "on enter fullscreen",
+          "problems": [],
+          "source": [
+            {
+              "number": 19,
+              "source": " * @param {() => void} [options.onEnter] on enter fullscreen",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onEnter]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "on enter fullscreen",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onExit",
+          "type": "() => void",
+          "optional": true,
+          "description": "on exit fullscreen",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {() => void} [options.onExit] on exit fullscreen",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onExit]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "on exit fullscreen",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseFullScreenReturn & { ref: RefObject<Target> }",
+        "optional": false,
+        "description": "object with the fullscreen state and methods",
+        "problems": [],
+        "source": [
+          {
+            "number": 21,
+            "source": " * @returns {UseFullScreenReturn & { ref: RefObject<Target> }} An object with the fullscreen state and methods",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseFullScreenReturn & { ref: RefObject<Target> }}",
+              "postType": " ",
+              "description": "object with the fullscreen state and methods",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 22,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "hasTests": false,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1760199703000
+}

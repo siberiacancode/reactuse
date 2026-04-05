@@ -1,0 +1,86 @@
+{
+  "name": "useBattery",
+  "description": "Hook for getting information about battery status",
+  "examples": [
+    "const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "UseBatteryStateReturn",
+        "optional": false,
+        "description": "containing battery information & Battery API support",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseBatteryStateReturn} Object containing battery information & Battery API support",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{UseBatteryStateReturn}",
+              "postType": " ",
+              "description": "containing battery information & Battery API support",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 9,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "browserapi": "navigator.getBattery",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "Nikita",
+      "avatar": "https://gravatar.com/avatar/cac51cebf1d47bc09276acf215a48514?d=retro"
+    },
+    {
+      "name": "Gorilla Dev",
+      "avatar": "https://gravatar.com/avatar/ca17ccb5824fdd8626a4ec87e904597b?d=retro"
+    }
+  ],
+  "lastModified": 1755779687000
+}

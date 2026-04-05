@@ -1,0 +1,161 @@
+{
+  "name": "useIdle",
+  "description": "Hook that defines the logic when the user is idle",
+  "examples": [
+    "const { idle, lastActive } = useIdle();"
+  ],
+  "usage": "low",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "milliseconds",
+          "type": "number",
+          "optional": true,
+          "description": "The idle time in milliseconds",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {number} [milliseconds=ONE_MINUTE] The idle time in milliseconds",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[milliseconds=ONE_MINUTE]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The idle time in milliseconds",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "ONE_MINUTE"
+        },
+        {
+          "tag": "param",
+          "name": "options.initialState",
+          "type": "boolean",
+          "optional": true,
+          "description": "The options for the hook",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {boolean} [options.initialState=false] The options for the hook",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.initialState=false]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The options for the hook",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "false"
+        },
+        {
+          "tag": "param",
+          "name": "options.events",
+          "type": "Array<keyof WindowEventMap>",
+          "optional": true,
+          "description": "",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {Array<keyof WindowEventMap>} [options.events=IDLE_EVENTS]",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.events=IDLE_EVENTS]",
+                "postName": "",
+                "type": "{Array<keyof WindowEventMap>}",
+                "postType": " ",
+                "description": "",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "IDLE_EVENTS"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseIdleReturn",
+        "optional": false,
+        "description": "object containing the idle state and the last active time",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseIdleReturn} An object containing the idle state and the last active time",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseIdleReturn}",
+              "postType": " ",
+              "description": "object containing the idle state and the last active time",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "sensors",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

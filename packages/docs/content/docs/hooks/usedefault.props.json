@@ -1,0 +1,130 @@
+{
+  "name": "useDefault",
+  "description": "Hook that returns the default value",
+  "examples": [
+    "const [value, setValue] = useDefault(initialValue, defaultValue);"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "Value",
+          "optional": false,
+          "description": "The initial value",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Value} initialValue The initial value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The initial value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "defaultValue",
+          "type": "Value",
+          "optional": false,
+          "description": "The default value",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {Value} defaultValue The default value",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "defaultValue",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The default value",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "[Value, (value: Value) => void]",
+        "optional": false,
+        "description": "array containing the current value and a function to set the value",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {[Value, (value: Value) => void]} An array containing the current value and a function to set the value",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{[Value, (value: Value) => void]}",
+              "postType": " ",
+              "description": "array containing the current value and a function to set the value",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "state",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "lastModified": 1754977987000
+}

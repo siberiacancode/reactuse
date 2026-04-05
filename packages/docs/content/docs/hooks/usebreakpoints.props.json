@@ -1,0 +1,131 @@
+{
+  "name": "useBreakpoints",
+  "description": "Hook that manages breakpoints",
+  "examples": [
+    "const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });"
+  ],
+  "usage": "medium",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "breakpoints",
+          "type": "Breakpoints<Breakpoint>",
+          "optional": false,
+          "description": "The breakpoints to use",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Breakpoints<Breakpoint>} breakpoints The breakpoints to use",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "breakpoints",
+                "postName": " ",
+                "type": "{Breakpoints<Breakpoint>}",
+                "postType": " ",
+                "description": "The breakpoints to use",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "strategy",
+          "type": "UseBreakpointsStrategy",
+          "optional": true,
+          "description": "The strategy to use for matching",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseBreakpointsStrategy} [strategy=min-width] The strategy to use for matching",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[strategy=min-width]",
+                "postName": " ",
+                "type": "{UseBreakpointsStrategy}",
+                "postType": " ",
+                "description": "The strategy to use for matching",
+                "end": "",
+                "lineEnd": ""
+              }
+            }
+          ],
+          "default": "min-width"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseBreakpointsReturn<Breakpoint>",
+        "optional": false,
+        "description": "object containing the current breakpoint",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseBreakpointsReturn<Breakpoint>} An object containing the current breakpoint",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseBreakpointsReturn<Breakpoint>}",
+              "postType": " ",
+              "description": "object containing the current breakpoint",
+              "end": "",
+              "lineEnd": ""
+            }
+          },
+          {
+            "number": 10,
+            "source": " *",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": ""
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "category": "browser",
+  "hasTests": true,
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    }
+  ],
+  "lastModified": 1766052966000
+}
