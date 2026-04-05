@@ -100,7 +100,7 @@ export const CommandMenu = (props: Props) => {
           <span className='inline-flex lg:hidden'>Search...</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className='rounded-xl border-none bg-clip-padding p-2 pb-11 ring-4 shadow-2xl ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800'>
+      <DialogContent className='rounded-xl border-none bg-clip-padding p-2 pb-11 shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800'>
         <DialogHeader className='sr-only'>
           <DialogTitle>Search documentation...</DialogTitle>
           <DialogDescription>Search for a command to run...</DialogDescription>

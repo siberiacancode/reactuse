@@ -1,13 +1,10 @@
-import { SiteHeader } from "@docs/components/site-header"
+import { SiteHeader } from '@docs/components/site-header';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      data-slot="layout"
-      className="bg-background relative z-10 flex min-h-svh flex-col"
-    >
+    <div data-slot='layout' className='bg-background relative z-10 flex min-h-svh flex-col'>
       <SiteHeader />
-      <main className="flex flex-1 flex-col">{children}</main>
+      <main className='flex flex-1 flex-col'>{children}</main>
     </div>
-  )
+  );
 }

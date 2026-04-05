@@ -6,7 +6,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { timeAgo } from '@docs/lib/utils';
 import { Code } from './code';
 
-
 export const DocHeader = (props: HookProps) => (
   <>
     <div>
