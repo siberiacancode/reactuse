@@ -1,7 +1,26 @@
 {
   "name": "@siberiacancode/docs",
   "version": "1.0.0",
-  "description": "",
+  "description": "Ultimate tool",
+  "author": {
+    "name": "SIBERIA CAN CODE 🧊",
+    "url": "https://github.com/siberiacancode"
+  },
+  "license": "MIT",
+  "homepage": "https://siberiacancode.github.io/reactuse/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siberiacancode/reactuse.git",
+    "directory": "packages/docs"
+  },
+  "bugs": "https://github.com/siberiacancode/reactuse/issues",
+  "keywords": [
+    "react",
+    "react hooks",
+    "react use",
+    "use",
+    "hooks"
+  ],
   "main": "index.js",
   "scripts": {
     "dev": "pnpm next dev --turbopack --port 4000",
@@ -15,9 +34,6 @@
     "pretty": "yarn type && yarn lint && yarn format",
     "postinstall": "fumadocs-mdx"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "packageManager": "pnpm@10.11.1",
   "dependencies": {
     "@tabler/icons-react": "^3.37.1",
