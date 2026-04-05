@@ -19,7 +19,7 @@ export interface UsePictureInPictureOptions {
 /** The use picture in picture return type */
 export interface UsePictureInPictureReturn {
   /** Whether Picture-in-Picture mode is currently active */
-  open: boolean;
+  opened: boolean;
   /** Whether Picture-in-Picture mode is supported by the browser */
   supported: boolean;
   /** Request to enter Picture-in-Picture mode */
@@ -72,7 +72,7 @@ export const usePictureInPicture = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = ((target ? params[1] : params[0]) as UsePictureInPictureOptions) ?? {};
 
-  const [open, setOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
 
   const internalRef = useRefState<HTMLVideoElement>();
   const elementRef = useRef<HTMLVideoElement>(null);
@@ -85,7 +85,7 @@ export const usePictureInPicture = ((...params: any[]) => {
     if (!elementRef.current) return;
 
     await elementRef.current.requestPictureInPicture();
-    setOpen(true);
+    setOpened(true);
 
     options.onEnter?.();
   };
@@ -94,7 +94,7 @@ export const usePictureInPicture = ((...params: any[]) => {
     if (!supported) return;
 
     await document.exitPictureInPicture();
-    setOpen(false);
+    setOpened(false);
     options.onExit?.();
   };
 
@@ -107,12 +107,12 @@ export const usePictureInPicture = ((...params: any[]) => {
     elementRef.current = element;
 
     const onEnterPictureInPicture = () => {
-      setOpen(true);
+      setOpened(true);
       onOptionsRef.current.onEnter?.();
     };
 
     const onLeavePictureInPicture = () => {
-      setOpen(false);
+      setOpened(false);
       onOptionsRef.current.onExit?.();
     };
 
@@ -126,12 +126,12 @@ export const usePictureInPicture = ((...params: any[]) => {
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   const toggle = async () => {
-    if (open) await exit();
+    if (opened) await exit();
     else await enter();
   };
 
   const value = {
-    open,
+    opened,
     supported,
     enter,
     exit,

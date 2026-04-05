@@ -33,7 +33,7 @@ export const usePictureInPicture = (...params) => {
     !!document.pictureInPictureEnabled;
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = (target ? params[1] : params[0]) ?? {};
-  const [open, setOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
   const internalRef = useRefState();
   const elementRef = useRef(null);
   const onOptionsRef = useRef(options);
@@ -42,13 +42,13 @@ export const usePictureInPicture = (...params) => {
     if (!supported) return;
     if (!elementRef.current) return;
     await elementRef.current.requestPictureInPicture();
-    setOpen(true);
+    setOpened(true);
     options.onEnter?.();
   };
   const exit = async () => {
     if (!supported) return;
     await document.exitPictureInPicture();
-    setOpen(false);
+    setOpened(false);
     options.onExit?.();
   };
   useEffect(() => {
@@ -56,11 +56,11 @@ export const usePictureInPicture = (...params) => {
     if (!element) return;
     elementRef.current = element;
     const onEnterPictureInPicture = () => {
-      setOpen(true);
+      setOpened(true);
       onOptionsRef.current.onEnter?.();
     };
     const onLeavePictureInPicture = () => {
-      setOpen(false);
+      setOpened(false);
       onOptionsRef.current.onExit?.();
     };
     element.addEventListener('enterpictureinpicture', onEnterPictureInPicture);
@@ -71,11 +71,11 @@ export const usePictureInPicture = (...params) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   const toggle = async () => {
-    if (open) await exit();
+    if (opened) await exit();
     else await enter();
   };
   const value = {
-    open,
+    opened,
     supported,
     enter,
     exit,

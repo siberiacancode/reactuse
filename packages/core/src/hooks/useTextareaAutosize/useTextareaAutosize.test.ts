@@ -8,11 +8,9 @@ import type { UseTextareaAutosizeReturn } from './useTextareaAutosize';
 
 import { useTextareaAutosize } from './useTextareaAutosize';
 
-if (typeof document !== 'undefined') {
-  const target = document.createElement('textarea');
-  target.id = 'textarea-target';
-  document.body.appendChild(target);
-}
+const textarea = document.createElement('textarea');
+textarea.id = 'textarea-target';
+document.body.appendChild(textarea);
 
 const element = document.getElementById('textarea-target') as HTMLTextAreaElement;
 
@@ -110,7 +108,10 @@ targets.forEach((target) => {
   });
 
   it('Should call callback on resize', () => {
-    Object.defineProperty(element, 'scrollHeight', { value: 100, configurable: true });
+    Object.defineProperty(element, 'scrollHeight', {
+      value: 100,
+      configurable: true
+    });
 
     const onResize = vi.fn();
     const { result } = renderHook(() => {
@@ -133,7 +134,10 @@ targets.forEach((target) => {
   });
 
   it('Should call resize on input event', () => {
-    Object.defineProperty(element, 'scrollHeight', { value: 100, configurable: true });
+    Object.defineProperty(element, 'scrollHeight', {
+      value: 100,
+      configurable: true
+    });
 
     const onResize = vi.fn();
     const { result } = renderHook(() => {
