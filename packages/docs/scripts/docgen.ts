@@ -8,7 +8,7 @@ const REPOSITORY_ROOT = resolve(__dirname, '..', '..');
 const CORE_ROOT = resolve(REPOSITORY_ROOT, 'core');
 const SOURCE_DIR = resolve(CORE_ROOT, 'src/hooks');
 
-const DOC_ROOT = resolve(REPOSITORY_ROOT, 'docs-v2');
+const DOC_ROOT = resolve(REPOSITORY_ROOT, 'docs');
 const OUTPUT_DIR = resolve(DOC_ROOT, 'content/docs/hooks');
 
 const getMDXTemplate = (name: string, props: HookProps) => `---
