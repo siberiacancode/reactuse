@@ -8,7 +8,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@siberiacancode/docs/*": ["../docs/src/*"],
+      "@siberiacancode/docs/*": ["../docs/*"],
       "@/*": ["./src/*"],
       "@/tests": ["./tests"]
     },

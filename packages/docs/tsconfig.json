@@ -6,10 +6,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@core/*": ["../core*"],
+      "@siberiacancode/docs": ["."],
       "@docs/*": ["./*"],
-      "@siberiacancode/docs/*": ["../docs/src/*"],
-
       "@/utils/*": ["../core/src/utils/*"],
       "@siberiacancode/reactuse": ["../core/src"]
     },
