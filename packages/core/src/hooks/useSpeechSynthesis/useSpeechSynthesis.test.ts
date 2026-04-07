@@ -93,7 +93,7 @@ it('Should bind options to utterance', () => {
   expect(result.current.utterance!.voice).toStrictEqual({ name: 'voice' } as SpeechSynthesisVoice);
 });
 
-it('should toggle speech synthesis', () => {
+it('Should toggle speech synthesis', () => {
   const { result } = renderHook(useSpeechSynthesis);
 
   act(result.current.toggle);
@@ -105,7 +105,7 @@ it('should toggle speech synthesis', () => {
   expect(result.current.playing).toBeFalsy();
 });
 
-it('should pause speech synthesis', () => {
+it('Should pause speech synthesis', () => {
   const { result } = renderHook(useSpeechSynthesis);
 
   act(result.current.speak);
@@ -119,7 +119,7 @@ it('should pause speech synthesis', () => {
   expect(result.current.playing).toBeFalsy();
 });
 
-it('should resume speech synthesis', () => {
+it('Should resume speech synthesis', () => {
   const { result } = renderHook(useSpeechSynthesis);
 
   act(result.current.resume);
@@ -128,7 +128,7 @@ it('should resume speech synthesis', () => {
   expect(result.current.playing).toBeTruthy();
 });
 
-it('should stop speech synthesis', () => {
+it('Should stop speech synthesis', () => {
   const { result } = renderHook(useSpeechSynthesis);
 
   act(result.current.speak);

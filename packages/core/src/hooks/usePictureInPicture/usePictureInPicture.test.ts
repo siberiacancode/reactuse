@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { afterEach, beforeEach, vi } from 'vitest';
+import { beforeEach, vi } from 'vitest';
 
 import { renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
@@ -36,10 +36,6 @@ beforeEach(() => {
     .fn()
     .mockResolvedValue(undefined) as typeof document.exitPictureInPicture;
   element.requestPictureInPicture = vi.fn().mockResolvedValue(undefined);
-});
-
-afterEach(() => {
-  vi.clearAllMocks();
 });
 
 targets.forEach((target) => {

@@ -325,6 +325,34 @@ targets.forEach((target) => {
       expect(result.current.snapshot.arrived.bottom).toBe(true);
     });
 
+    it('Should handle target changes', () => {
+      const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+      const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
+
+      const { result, rerender } = renderHook(
+        (target) => {
+          if (target)
+            return useScroll(target) as unknown as {
+              ref: StateRef<HTMLDivElement>;
+            } & UseScrollReturn;
+          return useScroll<HTMLDivElement>();
+        },
+        {
+          initialProps: target
+        }
+      );
+
+      if (!target) act(() => result.current.ref(element));
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(0);
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+    });
+
     it('Should cleanup on unmount', () => {
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 

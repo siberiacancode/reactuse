@@ -16,7 +16,7 @@ it('Should use const on server side', () => {
   expect(result.current).toBe('value');
 });
 
-it('should return the same constant value', () => {
+it('Should return the same constant value', () => {
   const { result, rerender } = renderHook(() => useConst('value'));
   expect(result.current).toBe('value');
 

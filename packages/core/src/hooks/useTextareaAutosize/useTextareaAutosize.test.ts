@@ -159,15 +159,50 @@ targets.forEach((target) => {
     expect(onResize).toHaveBeenCalledOnce();
   });
 
-  // it('Should cleanup on unmount', () => {
-  //   const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
-  //   const { result, unmount } = renderHook(useTextareaAutosize);
+  it('Should handle target changes', () => {
+    const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
-  //   act(() => result.current.ref(element));
+    const { result, rerender } = renderHook(
+      (target) => {
+        if (target)
+          return useTextareaAutosize(target) as unknown as UseTextareaAutosizeReturn & {
+            ref: StateRef<HTMLTextAreaElement>;
+          };
+        return useTextareaAutosize();
+      },
+      {
+        initialProps: target
+      }
+    );
 
-  //   unmount();
+    if (!target) act(() => result.current.ref(element));
 
-  //   expect(removeEventListenerSpy).toHaveBeenCalledWith('input', expect.any(Function));
-  //   expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
-  // });
+    expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+    expect(removeEventListenerSpy).toHaveBeenCalledTimes(0);
+
+    rerender({ current: document.getElementById('textarea-target') });
+
+    expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
+    expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('Should cleanup on unmount', () => {
+    const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
+
+    const { result, unmount } = renderHook(() => {
+      if (target)
+        return useTextareaAutosize(target) as unknown as UseTextareaAutosizeReturn & {
+          ref: StateRef<HTMLTextAreaElement>;
+        };
+      return useTextareaAutosize();
+    });
+
+    if (!target) act(() => result.current.ref(element));
+
+    unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('input', expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+  });
 });

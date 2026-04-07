@@ -123,6 +123,34 @@ targets.forEach((target) => {
       expect(result.current.snapshot.y).toBe(40);
     });
 
+    it('Should handle target changes', () => {
+      const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
+      const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+
+      const { result, rerender } = renderHook(
+        (target) => {
+          if (target)
+            return useMouse(target) as unknown as {
+              ref: StateRef<HTMLDivElement>;
+            } & UseMouseReturn;
+          return useMouse<HTMLDivElement>();
+        },
+        {
+          initialProps: target
+        }
+      );
+
+      if (!target) act(() => result.current.ref(element));
+
+      const initialAddEventListenerCalls = addEventListenerSpy.mock.calls.length;
+      const initialRemoveEventListenerCalls = removeEventListenerSpy.mock.calls.length;
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(initialAddEventListenerCalls + 2);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(initialRemoveEventListenerCalls + 2);
+    });
+
     it('Should cleanup on unmount', () => {
       const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
 

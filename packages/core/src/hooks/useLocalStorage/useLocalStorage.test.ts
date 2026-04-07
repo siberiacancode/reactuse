@@ -4,7 +4,7 @@ import { renderHookServer } from '@/tests';
 
 import { useLocalStorage } from './useLocalStorage';
 
-it('Should use session storage', () => {
+it('Should use local storage', () => {
   const { result } = renderHook(() => useLocalStorage('key', 'initialValue'));
 
   expect(result.current.value).toBe('initialValue');
@@ -12,7 +12,7 @@ it('Should use session storage', () => {
   expect(result.current.remove).toBeTypeOf('function');
 });
 
-it('should use session storage on server side', () => {
+it('Should use local storage on server side', () => {
   const { result } = renderHookServer(() => useLocalStorage('key', 'initialValue'));
 
   expect(result.current.value).toBe('initialValue');

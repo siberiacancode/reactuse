@@ -164,6 +164,34 @@ targets.forEach((target) => {
       expect(callback).toHaveBeenCalledOnce();
       expect(callback.mock.calls[0][0].key).toBe('Enter');
     });
+
+    it('Should handle target changes', () => {
+      const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+      const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
+
+      const { result, rerender } = renderHook(
+        (target) => {
+          if (target)
+            return useKeyboard(target, () => {}) as unknown as UseKeyboardReturn & {
+              ref: StateRef<HTMLDivElement>;
+            };
+          return useKeyboard<HTMLDivElement>(() => {});
+        },
+        {
+          initialProps: target
+        }
+      );
+
+      if (!target) act(() => result.current.ref(element));
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(0);
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+    });
   });
 
   it('Should cleanup on unmount', () => {
