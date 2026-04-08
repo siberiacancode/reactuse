@@ -19,11 +19,7 @@ export interface UseAutoScrollOptions {
 export interface UseAutoScroll {
   (target: HookTarget, options?: UseAutoScrollOptions): void;
 
-  <Target extends HTMLElement>(
-    options?: UseAutoScrollOptions
-  ): {
-    ref: StateRef<Target>;
-  };
+  <Target extends HTMLElement>(options?: UseAutoScrollOptions): StateRef<Target>;
 }
 
 /**
@@ -43,10 +39,10 @@ export interface UseAutoScroll {
  * @overload
  * @template Target
  * @param {boolean} [options.enabled] Whether auto-scrolling is enabled
- * @returns {{ ref: StateRef<Target> }} A React ref to attach to the list element
+ * @returns {StateRef<Target>} A React ref to attach to the list element
  *
  * @example
- * const { ref } = useAutoScroll();
+ * const ref = useAutoScroll();
  */
 export const useAutoScroll = ((...params: any[]) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -132,5 +128,5 @@ export const useAutoScroll = ((...params: any[]) => {
   }, [enabled, target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target) return;
-  return { ref: internalRef };
+  return internalRef;
 }) as UseAutoScroll;

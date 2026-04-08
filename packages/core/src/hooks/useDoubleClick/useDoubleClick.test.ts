@@ -33,26 +33,20 @@ targets.forEach((target) => {
 
     it('Should use double click', () => {
       const { result } = renderHook(() => {
-        if (target)
-          return useDoubleClick(target, vi.fn()) as unknown as {
-            ref: StateRef<HTMLDivElement>;
-          };
+        if (target) return useDoubleClick(target, vi.fn()) as unknown as StateRef<HTMLDivElement>;
         return useDoubleClick(vi.fn());
       });
 
-      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (!target) expect(result.current).toBeTypeOf('function');
       if (target) expect(result.current).toBeUndefined();
     });
 
     it('Should use double click on server side', () => {
       const { result } = renderHookServer(() => {
-        if (target)
-          return useDoubleClick(target, vi.fn()) as unknown as {
-            ref: StateRef<HTMLDivElement>;
-          };
+        if (target) return useDoubleClick(target, vi.fn()) as unknown as StateRef<HTMLDivElement>;
         return useDoubleClick(vi.fn());
       });
-      if (!target) expect(result.current.ref).toBeTypeOf('function');
+      if (!target) expect(result.current).toBeTypeOf('function');
       if (target) expect(result.current).toBeUndefined();
     });
 
@@ -61,14 +55,11 @@ targets.forEach((target) => {
       document.body.appendChild(element);
 
       const { result } = renderHook(() => {
-        if (target)
-          return useDoubleClick(target, callback) as unknown as {
-            ref: StateRef<HTMLDivElement>;
-          };
+        if (target) return useDoubleClick(target, callback) as unknown as StateRef<HTMLDivElement>;
         return useDoubleClick(callback);
       });
 
-      if (!target) act(() => result.current.ref(element));
+      if (!target) act(() => result.current(element));
 
       act(() => element.dispatchEvent(new MouseEvent('mousedown')));
 
@@ -83,14 +74,11 @@ targets.forEach((target) => {
       const callback = vi.fn();
 
       const { result } = renderHook(() => {
-        if (target)
-          return useDoubleClick(target, callback) as unknown as {
-            ref: StateRef<HTMLDivElement>;
-          };
+        if (target) return useDoubleClick(target, callback) as unknown as StateRef<HTMLDivElement>;
         return useDoubleClick(callback);
       });
 
-      if (!target) act(() => result.current.ref(element));
+      if (!target) act(() => result.current(element));
 
       act(() => element.dispatchEvent(new TouchEvent('touchstart')));
 
@@ -109,11 +97,11 @@ targets.forEach((target) => {
         if (target)
           return useDoubleClick(target, callback, {
             onSingleClick
-          }) as unknown as { ref: StateRef<HTMLDivElement> };
+          }) as unknown as StateRef<HTMLDivElement>;
         return useDoubleClick(callback, { onSingleClick });
       });
 
-      if (!target) act(() => result.current.ref(element));
+      if (!target) act(() => result.current(element));
 
       act(() => element.dispatchEvent(new MouseEvent('mousedown')));
 
@@ -131,11 +119,11 @@ targets.forEach((target) => {
         if (target)
           return useDoubleClick(target, callback, {
             threshold: 500
-          }) as unknown as { ref: StateRef<HTMLDivElement> };
+          }) as unknown as StateRef<HTMLDivElement>;
         return useDoubleClick(callback, { threshold: 500 });
       });
 
-      if (!target) act(() => result.current.ref(element));
+      if (!target) act(() => result.current(element));
 
       act(() => element.dispatchEvent(new MouseEvent('mousedown')));
 
@@ -154,9 +142,7 @@ targets.forEach((target) => {
       const { result, rerender } = renderHook(
         (target) => {
           if (target) {
-            return useDoubleClick(target, callback) as unknown as {
-              ref: StateRef<HTMLDivElement>;
-            };
+            return useDoubleClick(target, callback) as unknown as StateRef<HTMLDivElement>;
           }
           return useDoubleClick(callback);
         },
@@ -165,7 +151,7 @@ targets.forEach((target) => {
         }
       );
 
-      if (!target) act(() => result.current.ref(element));
+      if (!target) act(() => result.current(element));
 
       expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
       expect(removeEventListenerSpy).not.toHaveBeenCalled();
@@ -181,14 +167,11 @@ targets.forEach((target) => {
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
       const { result, unmount } = renderHook(() => {
-        if (target)
-          return useDoubleClick(target, callback) as unknown as {
-            ref: StateRef<HTMLDivElement>;
-          };
+        if (target) return useDoubleClick(target, callback) as unknown as StateRef<HTMLDivElement>;
         return useDoubleClick(callback);
       });
 
-      if (!target) act(() => result.current.ref(element));
+      if (!target) act(() => result.current(element));
 
       unmount();
 

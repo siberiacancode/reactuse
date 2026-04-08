@@ -26,18 +26,18 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @template Target The target element type
  * @param {KeyboardEventHandler} callback The callback function to be invoked on key down
- * @returns {{ ref: StateRef<Target> }} An object containing the ref
+ * @returns {StateRef<Target>} A ref to attach to the target element
  *
  * @example
- * const keyboard = useKeyboard((event) => console.log('key down'));
+ * const ref = useKeyboard((event) => console.log('key down'));
  *
  * @overload
  * @template Target The target element type
  * @param {UseKeyboardEventOptions} [options] The keyboard event options
- * @returns {{ ref: StateRef<Target> }} An object containing the ref
+ * @returns {StateRef<Target>} A ref to attach to the target element
  *
  * @example
- * const keyboard = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
+ * const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
  */
 export const useKeyboard = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -63,5 +63,5 @@ export const useKeyboard = (...params) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
-  return { ref: internalRef };
+  return internalRef;
 };
