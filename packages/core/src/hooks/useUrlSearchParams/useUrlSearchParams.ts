@@ -44,7 +44,6 @@ export interface UseUrlSearchParamsReturn<Value> {
 
 export interface UseUrlSearchParams {
   <Value>(
-    key: string,
     options: UseUrlSearchParamsOptions<Value> & {
       initialValue: UseUrlSearchParamsInitialValue<Value>;
     }
@@ -53,8 +52,6 @@ export interface UseUrlSearchParams {
   <Value>(options?: UseUrlSearchParamsOptions<Value>): UseUrlSearchParamsReturn<Value | undefined>;
 
   <Value>(initialValue: UseUrlSearchParamsInitialValue<Value>): UseUrlSearchParamsReturn<Value>;
-
-  <Value>(key: string): UseUrlSearchParamsReturn<Value | undefined>;
 }
 
 /**
@@ -155,7 +152,7 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
     }
 
     if (searchParams instanceof URLSearchParams) {
-      return Array.from(searchParams.entries()).reduce(
+      return [...searchParams.entries()].reduce(
         (acc, [key, value]) => {
           acc[key] = deserializer(value);
           return acc;

@@ -80,7 +80,7 @@ export const useUrlSearchParams = (params) => {
       return getParsedUrlSearchParams(new URLSearchParams(searchParams));
     }
     if (searchParams instanceof URLSearchParams) {
-      return Array.from(searchParams.entries()).reduce((acc, [key, value]) => {
+      return [...searchParams.entries()].reduce((acc, [key, value]) => {
         acc[key] = deserializer(value);
         return acc;
       }, {});
