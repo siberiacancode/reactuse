@@ -2,6 +2,7 @@ export * from './useAudio/useAudio';
 export * from './useBattery/useBattery';
 export * from './useBluetooth/useBluetooth';
 export * from './useBroadcastChannel/useBroadcastChannel';
+export * from './useBrowserLocation/useBrowserLocation';
 export * from './useClipboard/useClipboard';
 export * from './useCopy/useCopy';
 export * from './useCssVar/useCssVar';
