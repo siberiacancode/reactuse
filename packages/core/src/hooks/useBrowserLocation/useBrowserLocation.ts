@@ -69,7 +69,6 @@ export const getLocationState = (): BrowserLocationState => ({
  *
  * @example
  * const { value, push, back, forward, go } = useBrowserLocation();
- * console.log(value.pathname);
  */
 export const useBrowserLocation = (): UseBrowserLocationReturn => {
   const [value, setValue] = useState<BrowserLocationState>(() => {
