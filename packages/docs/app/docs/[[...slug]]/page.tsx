@@ -114,7 +114,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
                 </div>
               </div>
               {doc.description && (
-                <p className='text-muted-foreground text-[1.05rem] sm:text-base sm:text-balance md:max-w-[80%]'>
+                <p className='text-muted-foreground text-[1.05rem] sm:text-base sm:text-balance md:max-w-[90%]'>
                   {doc.description}
                 </p>
               )}

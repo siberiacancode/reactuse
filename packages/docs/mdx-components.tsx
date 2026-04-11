@@ -46,7 +46,7 @@ export const mdxComponents = {
           .replace(/\?/g, '')
           .toLowerCase()}
         className={cn(
-          'font-heading [&+]*:[code]:text-xl mt-10 scroll-m-28 text-xl font-medium tracking-tight first:mt-0 lg:mt-12 [&+.steps]:!mt-0 [&+.steps>h3]:!mt-4 [&+h3]:!mt-6 [&+p]:!mt-4',
+          'font-heading [&+]*:[code]:text-xl mt-8 scroll-m-28 text-xl font-medium tracking-tight first:mt-0 lg:mt-8 [&+.steps]:!mt-0 [&+.steps>h3]:!mt-4 [&+h3]:!mt-6 [&+p]:!mt-4',
           className
         )}
         {...props}
@@ -85,6 +85,9 @@ export const mdxComponents = {
   ),
   a: ({ className, ...props }: React.ComponentProps<'a'>) => (
     <a className={cn('font-medium underline underline-offset-4', className)} {...props} />
+  ),
+  p: ({ className, ...props }: React.ComponentProps<'p'>) => (
+    <p className={cn('leading-relaxed [&:not(:first-child)]:mt-6', className)} {...props} />
   ),
   strong: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <strong className={cn('font-medium', className)} {...props} />

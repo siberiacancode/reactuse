@@ -5,6 +5,7 @@ import { IconCheck, IconCopy, IconTerminal } from '@tabler/icons-react';
 import { copyToClipboardWithMeta } from '@docs/components/copy-button';
 import { Button } from '@docs/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@docs/ui/tabs';
+import { useConfig } from '@docs/hooks/use-config';
 
 export function CodeBlockCommand({
   __npm__,
@@ -17,6 +18,8 @@ export function CodeBlockCommand({
   __pnpm__?: string;
   __bun__?: string;
 }) {
+  const [config, setConfig] = useConfig();
+
   const [hasCopied, setHasCopied] = React.useState(false);
 
   React.useEffect(() => {
@@ -26,7 +29,7 @@ export function CodeBlockCommand({
     }
   }, [hasCopied]);
 
-  const packageManager = 'pnpm';
+  const packageManager = config.packageManager || 'pnpm';
   const tabs = React.useMemo(() => {
     return {
       pnpm: __pnpm__,
@@ -49,7 +52,16 @@ export function CodeBlockCommand({
 
   return (
     <div className='overflow-x-auto'>
-      <Tabs value={packageManager} className='gap-0'>
+      <Tabs
+        value={packageManager}
+        className='gap-0'
+        onValueChange={(value) => {
+          setConfig({
+            ...config,
+            packageManager: value as 'pnpm' | 'npm' | 'yarn' | 'bun'
+          });
+        }}
+      >
         <div className='border-border/50 flex items-center gap-2 border-b px-3 py-1'>
           <div className='bg-foreground flex size-4 items-center justify-center rounded-[1px] opacity-70'>
             <IconTerminal className='text-code size-3' />

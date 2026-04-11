@@ -47,6 +47,7 @@
     "fumadocs-docgen": "2.0.0",
     "fumadocs-mdx": "13.0.2",
     "fumadocs-ui": "16.0.5",
+    "jotai": "^2.19.1",
     "lru-cache": "^11.2.4",
     "lucide-react": "0.474.0",
     "md5": "^2.3.0",
