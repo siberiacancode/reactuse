@@ -11,6 +11,7 @@ import { Button } from '@docs/ui/button';
 import { Separator } from '@docs/ui/separator';
 import {
   IconCube3dSphere,
+  IconFishHook,
   IconIcons,
   IconPalette,
   IconTree,
@@ -20,7 +21,8 @@ import {
 import { type Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import simpleGit from 'simple-git';
+
+import _metadata from '../../../.source/metadata.json';
 
 const title = 'reactuse';
 
@@ -71,17 +73,27 @@ export const metadata: Metadata = {
 export default async function IndexPage() {
   const contributors = await getContributors();
 
+  const hooks = _metadata.hooks;
+
   return (
     <div className='flex flex-1 flex-col'>
-      <PageHeader>
-        <div className='relative flex items-center justify-center'>
+      <PageHeader className='relative'>
+        <Button
+          size='sm'
+          variant='secondary'
+          className='absolute top-15 left-25 hidden rounded-lg rounded-sm p-3 md:flex'
+        >
+          <IconFishHook />
+          <Link href='/docs'>{hooks.length} hooks ready to use</Link>
+        </Button>
+        <div className='relative my-2 flex items-center justify-center'>
           <div className='h-[110px] w-[110px] rounded-full bg-[linear-gradient(130deg,#006eff,#00c8ff)] filter-[blur(40px)_opacity(0.35)]' />
           <img
             className='absolute top-1/2 left-1/2 max-h-[110px] max-w-[110px] -translate-x-1/2 -translate-y-1/2'
             src={siteConfig.ogImage}
           />
         </div>
-        <PageHeaderHeading className='max-w-4xl'>
+        <PageHeaderHeading className='max-w-4xl text-xl'>
           <span className='bg-[linear-gradient(120deg,_rgb(97,218,251),_rgb(52,119,208))] bg-clip-text pr-2 leading-[1.2] text-transparent'>
             reactuse
           </span>
@@ -105,7 +117,7 @@ export default async function IndexPage() {
               <div className='bg-accent flex h-8 w-8 items-center justify-center rounded border'>
                 <Icon size={20} />
               </div>
-              <h3 className='text-lg font-semibold text-white'>{card.title}</h3>
+              <h3 className='text-lg font-semibold'>{card.title}</h3>
               <p className='text-sm text-gray-400'>{card.details}</p>
             </div>
           );
@@ -143,8 +155,8 @@ export default async function IndexPage() {
       <Separator className='mt-20 mb-10' />
 
       <div className='flex flex-col items-center'>
-        <span>Released under the MIT License.</span>
-        <span>Copyright © 2026 siberiacancode</span>
+        <span className='text-sm'>Released under the MIT License.</span>
+        <span className='text-sm'>Copyright © 2026 siberiacancode</span>
       </div>
     </div>
   );

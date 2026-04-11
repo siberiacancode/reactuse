@@ -10,6 +10,7 @@ const SOURCE_DIR = resolve(CORE_ROOT, 'src/hooks');
 
 const DOC_ROOT = resolve(REPOSITORY_ROOT, 'docs');
 const OUTPUT_DIR = resolve(DOC_ROOT, 'content/docs/hooks');
+const OUTPUT_SOURCE_DIR = resolve(DOC_ROOT, '.source');
 
 const getMDXTemplate = (name: string, props: HookProps) => `---
 title: ${JSON.stringify(name)}
@@ -82,6 +83,13 @@ const createMDXFile = (componentName: string, props: HookProps) => {
   fs.writeFileSync(mdxPath, getMDXTemplate(componentName, props), 'utf-8');
 };
 
+const saveMetadata = (meta: Record<string, any>) => {
+  const indexPath = path.join(OUTPUT_SOURCE_DIR, 'metadata.json');
+
+  fs.mkdirSync(OUTPUT_SOURCE_DIR, { recursive: true });
+  fs.writeFileSync(indexPath, `${JSON.stringify(meta, null, 2)}\n`, 'utf-8');
+};
+
 const startScript = async () => {
   if (!fs.existsSync(SOURCE_DIR)) {
     console.error(`Folder does not exist: ${SOURCE_DIR}`);
@@ -90,14 +98,19 @@ const startScript = async () => {
 
   const componentFiles = getComponentFiles(SOURCE_DIR);
 
+  const hooks = [];
+
   for (const filePath of componentFiles) {
     const componentName = path.basename(filePath, path.extname(filePath));
     const props = await parseHookJsdocFromFile(filePath);
 
     if (props && props.description) {
+      hooks.push(componentName);
       createMDXFile(componentName, props);
     }
   }
+
+  saveMetadata({ hooks });
 };
 
 startScript();

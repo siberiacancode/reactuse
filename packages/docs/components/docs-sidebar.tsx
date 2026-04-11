@@ -16,7 +16,7 @@ import {
   SidebarMenuItem
 } from '@docs/ui/sidebar';
 
-const TOP_LEVEL_SECTIONS = [
+export const TOP_LEVEL_SECTIONS = [
   { name: 'Introduction', href: '/docs' },
   {
     name: 'Installation',
