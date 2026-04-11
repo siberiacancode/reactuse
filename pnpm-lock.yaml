@@ -36,8 +36,8 @@ importers:
         specifier: ^28.2.0
         version: 28.2.0
       '@siberiacancode/fetches':
-        specifier: ^1.13.2
-        version: 1.13.2
+        specifier: ^1.14.1
+        version: 1.14.1
       chalk:
         specifier: 5.6.2
         version: 5.6.2
@@ -1456,8 +1456,8 @@ packages:
   '@siberiacancode/eslint@2.16.12':
     resolution: {integrity: sha512-jykvnHfxr3+4O/uDDJd1XE5hQ/Xd20wtwTL1tGzom+3RH9WgR89R8uwtmaK1RIICL82aY/K5whpl1mKbP1XNKA==}
 
-  '@siberiacancode/fetches@1.13.2':
-    resolution: {integrity: sha512-unY81jIYaIhASld5eajSCaJhREv3xBu9sp7AEwx47orlryAF8iTGxMx7oebopxFYXhmjhNtdTOUZddw4FeRryw==}
+  '@siberiacancode/fetches@1.14.1':
+    resolution: {integrity: sha512-JXoBRg3/MfgzUr5tMOpM83uL91lfxLtsuWyYDlRfUjHTCU7DsxNBe7net6CSJR6gi8Qgovu923zIC13KK0Xc+A==}
 
   '@siberiacancode/prettier@1.6.1':
     resolution: {integrity: sha512-HKPTpvTQjqYDj6pfFr4cY5ivx7rJRQDOV72nGGspEM8gq0yHqDnN75BvdtE7f5ay0gm+Fm6XOm82VWrCKaF0Yg==}
@@ -6317,7 +6317,7 @@ snapshots:
       - typescript
       - vitest
 
-  '@siberiacancode/fetches@1.13.2': {}
+  '@siberiacancode/fetches@1.14.1': {}
 
   '@siberiacancode/prettier@1.6.1(prettier@3.5.1)':
     dependencies:

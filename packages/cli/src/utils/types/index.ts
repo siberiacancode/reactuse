@@ -1,6 +1,8 @@
 import * as z from 'zod';
 
 export interface HookRegistry {
+  type: 'hook' | 'helper';
+  path: string;
   hooks: string[];
   name: string;
   packages: string[];
@@ -12,7 +14,7 @@ export interface Registry {
 }
 
 export const addOptionsSchema = z.object({
-  hooks: z.array(z.string()),
+  items: z.array(z.string()),
   all: z.boolean(),
   registry: z.string(),
   overwrite: z.boolean(),

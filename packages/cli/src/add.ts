@@ -15,7 +15,7 @@ import { APP_PATH, REPO_URLS } from '@/utils/constants';
 import { getConfig, getPackageManager, toCase } from '@/utils/helpers';
 import { addOptionsSchema } from '@/utils/types';
 
-type FileType = 'hook' | 'package' | 'util';
+type FileType = 'helper' | 'hook' | 'package' | 'util';
 interface FileItem {
   name: string;
   parent: string;
@@ -28,12 +28,12 @@ const resolveDependencies = (registry: Registry, hooks: string[]): Map<string, F
   const addFile = (name: string, type: FileType, parent: string) =>
     !files.has(name) && files.set(name, { type, name, parent });
 
-  const resolveDependency = (hook: string): void => {
+  const resolveDependency = (hook: string) => {
     if (files.has(hook)) return;
 
     const item = registry[hook]!;
 
-    addFile(hook, 'hook', item.name);
+    addFile(hook, item.type, item.name);
 
     item.utils.forEach((util) => addFile(util, 'util', item.name));
     item.packages.forEach((pkg) => addFile(pkg, 'package', item.name));
@@ -59,6 +59,10 @@ const updateImports = async (filePath: string, config: ConfigSchema) => {
       replacer: (_, imports) => `import {${imports}} from '${config.aliases.utils}'`
     },
     {
+      regex: /import\s+\{([^}]+)\}\s+from\s+['"](@\/hooks[^'"]*)['"]/g,
+      replacer: (_, imports) => `import {${imports}} from '${config.aliases.hooks}'`
+    },
+    {
       regex: /import\s+(?:type\s+)?\{([^}]+)\}\s+from\s+['"](\.[^'"]*)['"]/g,
       replacer: (_, imports, internalPath) =>
         `import {${imports}} from '${toCase(internalPath, config.case)}'`
@@ -74,12 +78,12 @@ const updateImports = async (filePath: string, config: ConfigSchema) => {
 };
 
 export const add = {
-  command: 'add [hooks...]',
-  describe: 'Add a hook to your project',
+  command: 'add [items...]',
+  describe: 'Add an item to your project',
   builder: (yargs: Argv) =>
     yargs
-      .positional('hooks', {
-        describe: 'List of hooks to add',
+      .positional('items', {
+        describe: 'List of items to add',
         type: 'string',
         demandOption: true,
         array: true,
@@ -89,7 +93,7 @@ export const add = {
         alias: 'a',
         type: 'boolean',
         default: false,
-        description: 'add all available hooks'
+        description: 'add all available items'
       })
       .option('cwd', {
         type: 'string',
@@ -111,7 +115,7 @@ export const add = {
 
   handler: async (argv: AddOptionsSchema) => {
     const options = addOptionsSchema.parse({
-      hooks: argv.hooks,
+      items: argv.items,
       all: argv.all,
       registry: argv.registry,
       overwrite: argv.overwrite,
@@ -119,41 +123,41 @@ export const add = {
     });
 
     const registryResponse = await fetches.get<Registry>(options.registry);
-    const registry = registryResponse.data;
+    const registry = registryResponse.data as Registry;
 
     if (!registry) {
       console.log('Registry is missing. Please check the url.');
       process.exit(1);
     }
 
-    let selectedHooks = options.all ? Object.keys(registry) : options.hooks;
-    if (!selectedHooks.length) {
-      const { hooks } = await prompts({
+    let selectedItems = options.all ? Object.keys(registry) : options.items;
+    if (!selectedItems.length) {
+      const { items } = await prompts({
         type: 'multiselect',
-        name: 'hooks',
-        message: `Which ${chalk.cyan('hooks')} would you like to add?`,
+        name: 'items',
+        message: `Which ${chalk.cyan('items')} would you like to add?`,
         hint: 'Space to select. A to toggle all. Enter to submit.',
         instructions: false,
-        choices: Object.values(registry).map((hook) => ({
-          title: hook.name,
-          value: hook.name,
+        choices: Object.values(registry).map((item) => ({
+          title: item.name,
+          value: item.name,
           selected: false
         }))
       });
-      if (hooks) selectedHooks = hooks;
+      if (items) selectedItems = items;
     }
 
     if (!options.all) {
-      for (const hook of selectedHooks) {
-        if (!registry[hook]) {
-          console.log(`Hook ${hook} not found in the registry.`);
+      for (const item of selectedItems) {
+        if (!registry[item]) {
+          console.log(`Item ${item} not found in the registry.`);
           process.exit(1);
         }
       }
     }
 
-    if (!selectedHooks.length) {
-      console.log('No hooks selected.');
+    if (!selectedItems.length) {
+      console.log('No items selected.');
       process.exit(0);
     }
 
@@ -176,52 +180,75 @@ export const add = {
       process.exit(1);
     }
 
-    const dependencies = resolveDependencies(registry, selectedHooks);
+    const dependencies = resolveDependencies(registry, selectedItems);
     const packages: string[] = [];
-    const files = Array.from(dependencies.values())
-      .map((dependency) => {
-        if (dependency.type === 'hook') {
-          const filePath = toCase(`${dependency.name}/${dependency.name}`, config.case);
-          const directoryPath = `${pathToLoadHooks}/${filePath}.${language}`;
-          const registryPath = `${
-            REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]
-          }/hooks/${dependency.name}/${dependency.name}.${language}`;
-          const indexPath = `${pathToLoadHooks}/index.${language}`;
-          return {
-            name: dependency.name,
-            directoryPath,
-            registryPath,
-            type: dependency.type,
-            indexPath,
-            filePath
-          };
-        }
+    const files = Array.from(dependencies.values(), (dependency) => {
+      if (dependency.type === 'helper') {
+        const itemPath = registry[dependency.name]!.path;
+        const extension = language === 'js' ? 'js' : itemPath.endsWith('.tsx') ? 'tsx' : 'ts';
+        const sourcePath = `helpers/${dependency.name}/${dependency.name}.${extension}`;
 
-        if (dependency.type === 'util') {
-          const filePath = toCase(`${dependency.name}`, config.case);
-          const directoryPath = `${pathToLoadUtils}/${filePath}.${language}`;
-          const registryPath = `${
-            REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]
-          }/utils/helpers/${dependency.name}.${language}`;
-          const indexPath = `${pathToLoadUtils}/index.${language}`;
-          return {
-            name: dependency.name,
-            directoryPath,
-            registryPath,
-            type: dependency.type,
-            indexPath,
-            filePath
-          };
-        }
+        const filePath = toCase(`${dependency.name}/${dependency.name}`, config.case);
+        const directoryPath = `${pathToLoadUtils}/${filePath}.${extension}`;
+        const registryPath = `${REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]}/${sourcePath}`;
+        const indexPath = `${pathToLoadUtils}/index.${language}`;
 
-        if (dependency.type === 'package') {
-          packages.push(dependency.name);
-          return undefined;
-        }
+        return {
+          name: dependency.name,
+          directoryPath,
+          registryPath,
+          type: dependency.type,
+          indexPath,
+          filePath
+        };
+      }
 
-        throw new Error(`Unknown dependency type: ${dependency.type}`);
-      })
-      .filter(Boolean);
+      if (dependency.type === 'hook') {
+        const itemPath = registry[dependency.name]!.path;
+        const extension = language === 'js' ? 'js' : itemPath.endsWith('.tsx') ? 'tsx' : 'ts';
+        const sourcePath = `hooks/${dependency.name}/${dependency.name}.${extension}`;
+
+        const filePath = toCase(`${dependency.name}/${dependency.name}`, config.case);
+        const directoryPath = `${pathToLoadHooks}/${filePath}.${extension}`;
+        const registryPath = `${
+          REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]
+        }/${sourcePath}`;
+        const indexPath = `${pathToLoadHooks}/index.${language}`;
+
+        return {
+          name: dependency.name,
+          directoryPath,
+          registryPath,
+          type: dependency.type,
+          indexPath,
+          filePath
+        };
+      }
+
+      if (dependency.type === 'util') {
+        const filePath = toCase(`${dependency.name}`, config.case);
+        const directoryPath = `${pathToLoadUtils}/${filePath}.${language}`;
+        const registryPath = `${
+          REPO_URLS[language.toUpperCase() as keyof typeof REPO_URLS]
+        }/utils/helpers/${dependency.name}.${language}`;
+        const indexPath = `${pathToLoadUtils}/index.${language}`;
+        return {
+          name: dependency.name,
+          directoryPath,
+          registryPath,
+          type: dependency.type,
+          indexPath,
+          filePath
+        };
+      }
+
+      if (dependency.type === 'package') {
+        packages.push(dependency.name);
+        return undefined;
+      }
+
+      throw new Error(`Unknown dependency type: ${dependency.type}`);
+    }).filter(Boolean);
 
     const spinner = ora('Installing files...').start();
     for (const file of files) {
@@ -276,11 +303,11 @@ export const add = {
 
     spinner.stop();
 
-    const installedHooks = files
-      .filter((file) => file!.type === 'hook')
+    const installedItems = files
+      .filter((file) => file!.type === 'hook' || file!.type === 'helper')
       .map((file) => chalk.green(file!.name))
       .join(', ');
-    console.log(`\nInstalled hooks: ${installedHooks}`);
+    console.log(`\nInstalled items: ${installedItems}`);
     console.log(chalk.bold('\n🎉 Hooks added successfully! 🎉'));
   }
 };
