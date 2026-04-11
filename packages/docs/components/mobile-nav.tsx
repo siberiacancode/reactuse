@@ -1,16 +1,16 @@
 'use client';
 
-import * as React from 'react';
-import Link, { type LinkProps } from 'next/link';
-import { useRouter } from 'next/navigation';
-
 import { type source } from '@docs/lib/source';
 import { cn } from '@docs/lib/utils';
 import { Button } from '@docs/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@docs/ui/popover';
+import Link, { type LinkProps } from 'next/link';
+import { useRouter } from 'next/navigation';
+import * as React from 'react';
+
 import { TOP_LEVEL_SECTIONS } from './docs-sidebar';
 
-export function MobileNav({
+export const MobileNav = ({
   tree,
   items,
   className
@@ -18,7 +18,7 @@ export function MobileNav({
   tree: typeof source.pageTree;
   items: { href: string; label: string }[];
   className?: string;
-}) {
+}) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -77,8 +77,8 @@ export function MobileNav({
             <div className='flex flex-col gap-3'>
               {TOP_LEVEL_SECTIONS.map(({ name, href }) => {
                 return (
-                  <MobileLink key={name} href={href} onOpenChange={setOpen}>
-                    {name}
+                  <MobileLink key=MobileNav href={href} onOpenChange={setOpen}>
+                    MobileNav
                   </MobileLink>
                 );
               })}
@@ -90,7 +90,7 @@ export function MobileNav({
   );
 }
 
-function MobileLink({
+const MobileLink = ({
   href,
   onOpenChange,
   className,
@@ -100,7 +100,7 @@ function MobileLink({
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
   className?: string;
-}) {
+}) => {
   const router = useRouter();
   return (
     <Link

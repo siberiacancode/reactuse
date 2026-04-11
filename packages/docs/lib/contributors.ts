@@ -19,9 +19,8 @@ export const getContributors = async () => {
       }
     });
 
-    const contributors = Array.from(contributorsMap.values()).sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
+    const contributors = contributorsMap.values().toSorted((a, b) =>
+      a.name.localeCompare(b.name));
 
     return contributors;
   } catch (error) {

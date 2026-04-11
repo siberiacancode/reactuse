@@ -1,17 +1,34 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "incremental": true,
+    "target": "esnext",
     "jsx": "react-jsx",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@siberiacancode/docs": ["."],
-      "@docs/*": ["./*"],
-      "@/utils/*": ["../core/src/utils/*"],
-      "@siberiacancode/reactuse": ["../core/src"]
+      "@siberiacancode/docs": [
+        "."
+      ],
+      "@docs/*": [
+        "./*"
+      ],
+      "@siberiacancode/reactuse": [
+        "../core/src"
+      ],
+      "@/*": [
+        "../core/src/*"
+      ]
     },
     "resolveJsonModule": true,
+    "types": [
+      "@types/web-bluetooth",
+      "@types/dom-speech-recognition"
+    ],
     "allowJs": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,
@@ -25,19 +42,22 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
     ]
   },
-  "exclude": ["node_modules"],
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts",
     "**/*.ts",
-    "**/*.tsx",
-    ".next/dev/types/**/*.ts"
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
   ]
 }

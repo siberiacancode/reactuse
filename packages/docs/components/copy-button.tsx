@@ -1,16 +1,15 @@
 'use client';
 
-import * as React from 'react';
-import { IconCheck, IconCopy } from '@tabler/icons-react';
-
 import { cn } from '@docs/lib/utils';
 import { Button } from '@docs/ui/button';
+import { IconCheck, IconCopy } from '@tabler/icons-react';
+import * as React from 'react';
 
 export function copyToClipboardWithMeta(value: string) {
   navigator.clipboard.writeText(value);
 }
 
-export function CopyButton({
+export const CopyButton = ({
   value,
   className,
   variant = 'ghost',
@@ -19,26 +18,26 @@ export function CopyButton({
   value: string;
   src?: string;
   tooltip?: string;
-}) {
+}) => {
   const [hasCopied, setHasCopied] = React.useState(false);
 
   React.useEffect(() => {
     if (hasCopied) {
-      const timer = setTimeout(() => setHasCopied(false), 2000);
+      const timer = setTimeout(setHasCopied, 2000, false);
       return () => clearTimeout(timer);
     }
   }, [hasCopied]);
 
   return (
     <Button
-      data-slot='copy-button'
-      data-copied={hasCopied}
-      size='icon'
-      variant={variant}
       className={cn(
         'bg-code absolute top-3 right-2 z-10 size-7 hover:opacity-100 focus-visible:opacity-100',
         className
       )}
+      data-copied={hasCopied}
+      data-slot='copy-button'
+      size='icon'
+      variant={variant}
       onClick={() => {
         copyToClipboardWithMeta(value);
         setHasCopied(true);

@@ -1,3 +1,5 @@
+import type {Metadata} from 'next';
+
 import {
   PageActions,
   PageHeader,
@@ -18,7 +20,6 @@ import {
   IconUsers,
   IconWorld
 } from '@tabler/icons-react';
-import { type Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -79,9 +80,9 @@ export default async function IndexPage() {
     <div className='flex flex-1 flex-col'>
       <PageHeader className='relative'>
         <Button
+          className='absolute top-15 left-25 hidden rounded-lg rounded-sm p-3 md:flex'
           size='sm'
           variant='secondary'
-          className='absolute top-15 left-25 hidden rounded-lg rounded-sm p-3 md:flex'
         >
           <IconFishHook />
           <Link href='/docs'>{hooks.length} hooks ready to use</Link>
@@ -101,10 +102,10 @@ export default async function IndexPage() {
         </PageHeaderHeading>
         <PageHeaderDescription>{description}</PageHeaderDescription>
         <PageActions>
-          <Button asChild size='sm' className='h-[31px] rounded-lg'>
+          <Button asChild className='h-[31px] rounded-lg' size='sm'>
             <Link href='/docs/installation'>Get Started</Link>
           </Button>
-          <Button asChild size='sm' variant='ghost' className='rounded-lg'>
+          <Button asChild className='rounded-lg' size='sm' variant='ghost'>
             <Link href='/docs/hooks/useactiveelement'>View hooks</Link>
           </Button>
         </PageActions>
@@ -126,14 +127,14 @@ export default async function IndexPage() {
       <div className='mt-20'>
         <div className='mb-10 text-center text-4xl font-bold'>Team & Contributors</div>
         <div className='flex items-center justify-center'>
-          <Link href='https://github.com/siberiacancode' target='_blank' rel='noopener noreferrer'>
+          <Link href='https://github.com/siberiacancode' rel='noopener noreferrer' target='_blank'>
             <div className='flex items-center justify-center gap-3'>
               <Image
-                width={40}
-                height={40}
                 alt='SIBERIA CAN CODE'
                 className='rounded-lg'
+                height={40}
                 src='https://avatars.githubusercontent.com/u/122668137?s=200&v=4'
+                width={40}
               />
               <div className='text-xl font-bold'>SIBERIA CAN CODE</div>
             </div>
@@ -143,7 +144,7 @@ export default async function IndexPage() {
           {contributors.map((contributor) => (
             <div key={contributor.name} className='flex items-center gap-2.5'>
               <Avatar>
-                <AvatarImage src={contributor.avatar} alt='@shadcn' />
+                <AvatarImage alt='@shadcn' src={contributor.avatar} />
                 <AvatarFallback>{contributor.name[0]}</AvatarFallback>
               </Avatar>
               <h3 className='mt-1 text-xs'>{contributor.name}</h3>

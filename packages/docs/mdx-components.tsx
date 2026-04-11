@@ -1,25 +1,14 @@
-import * as React from 'react';
-
-import { cn } from '@docs/lib/utils';
-import { getIconForLanguageExtension } from '@docs/components/icons';
-import { Kbd } from '@docs/ui/kbd';
-import { Badge } from '@docs/ui/badge';
-import { Separator } from '@docs/ui/separator';
-
-import Link from 'next/link';
 import { CodeBlockCommand } from '@docs/components/code-block-command';
 import { CopyButton } from '@docs/components/copy-button';
+import { getIconForLanguageExtension } from '@docs/components/icons';
+import { cn } from '@docs/lib/utils';
+import { Badge } from '@docs/ui/badge';
+import { Kbd } from '@docs/ui/kbd';
+import { Separator } from '@docs/ui/separator';
+import Link from 'next/link';
+import * as React from 'react';
+
 import { Callout } from './components/callout';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableFooter,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableCaption
-} from './ui/table';
 import {
   Avatar,
   AvatarBadge,
@@ -28,6 +17,16 @@ import {
   AvatarGroupCount,
   AvatarImage
 } from './ui/avatar';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow
+} from './ui/table';
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
@@ -36,23 +35,21 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  h2: ({ className, ...props }: React.ComponentProps<'h2'>) => {
-    return (
+  h2: ({ className, ...props }: React.ComponentProps<'h2'>) => (
       <h2
+        className={cn(
+          'font-heading [&+]*:[code]:text-xl mt-8 scroll-m-28 text-xl font-medium tracking-tight first:mt-0 lg:mt-8 [&+.steps]:!mt-0 [&+.steps>h3]:!mt-4 [&+h3]:!mt-6 [&+p]:!mt-4',
+          className
+        )}
         id={props.children
           ?.toString()
           .replace(/ /g, '-')
           .replace(/'/g, '')
           .replace(/\?/g, '')
           .toLowerCase()}
-        className={cn(
-          'font-heading [&+]*:[code]:text-xl mt-8 scroll-m-28 text-xl font-medium tracking-tight first:mt-0 lg:mt-8 [&+.steps]:!mt-0 [&+.steps>h3]:!mt-4 [&+h3]:!mt-6 [&+p]:!mt-4',
-          className
-        )}
         {...props}
       />
-    );
-  },
+    ),
   h3: ({ className, ...props }: React.ComponentProps<'h3'>) => (
     <h3
       className={cn(
@@ -105,7 +102,7 @@ export const mdxComponents = {
     <blockquote className={cn('mt-6 border-l-2 pl-6 italic', className)} {...props} />
   ),
   img: ({ className, alt, ...props }: React.ComponentProps<'img'>) => (
-    <img className={cn('rounded-md', className)} alt={alt} {...props} />
+    <img alt={alt} className={cn('rounded-md', className)} {...props} />
   ),
   hr: ({ ...props }: React.ComponentProps<'hr'>) => <hr className='my-4 md:my-8' {...props} />,
   table: ({ className, ...props }: React.ComponentProps<'table'>) => {
@@ -140,8 +137,7 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  pre: ({ className, children, ...props }: React.ComponentProps<'pre'>) => {
-    return (
+  pre: ({ className, children, ...props }: React.ComponentProps<'pre'>) => (
       <pre
         className={cn(
           'no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0',
@@ -151,11 +147,8 @@ export const mdxComponents = {
       >
         {children}
       </pre>
-    );
-  },
-  figure: ({ className, ...props }: React.ComponentProps<'figure'>) => {
-    return <figure className={cn(className)} {...props} />;
-  },
+    ),
+  figure: ({ className, ...props }: React.ComponentProps<'figure'>) => <figure className={cn(className)} {...props} />,
   figcaption: ({ className, children, ...props }: React.ComponentProps<'figcaption'>) => {
     const iconExtension =
       'data-language' in props && typeof props['data-language'] === 'string'
@@ -210,17 +203,17 @@ export const mdxComponents = {
     if (isNpmCommand) {
       return (
         <CodeBlockCommand
-          __npm__={__npm__}
-          __yarn__={__yarn__}
-          __pnpm__={__pnpm__}
           __bun__={__bun__}
+          __npm__={__npm__}
+          __pnpm__={__pnpm__}
+          __yarn__={__yarn__}
         />
       );
     }
 
     return (
       <>
-        {__raw__ && <CopyButton value={__raw__} src={__src__} />}
+        {__raw__ && <CopyButton src={__src__} value={__raw__} />}
         <code {...props} />
       </>
     );

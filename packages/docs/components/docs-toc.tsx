@@ -1,9 +1,9 @@
 'use client';
 
-import * as React from 'react';
-import { IconMenu3 } from '@tabler/icons-react';
-
 import { cn } from '@docs/lib/utils';
+import { IconMenu3 } from '@tabler/icons-react';
+import * as React from 'react';
+
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -47,7 +47,7 @@ function useActiveItem(itemIds: string[]) {
   return activeId;
 }
 
-export function DocsTableOfContents({
+export const DocsTableOfContents = ({
   toc,
   variant = 'list',
   className
@@ -59,7 +59,7 @@ export function DocsTableOfContents({
   }[];
   variant?: 'dropdown' | 'list';
   className?: string;
-}) {
+}) => {
   const [open, setOpen] = React.useState(false);
   const itemIds = React.useMemo(() => toc.map((item) => item.url.replace('#', '')), [toc]);
   const activeHeading = useActiveItem(itemIds);
@@ -72,20 +72,20 @@ export function DocsTableOfContents({
     return (
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant='outline' size='sm' className={cn('h-8 md:h-7', className)}>
+          <Button className={cn('h-8 md:h-7', className)} size='sm' variant='outline'>
             <IconMenu3 /> On This Page
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align='start' className='no-scrollbar max-h-[70svh]'>
           {toc.map((item) => (
             <DropdownMenuItem
-              key={item.url}
               asChild
+              key={item.url}
+              className='data-[depth=3]:pl-6 data-[depth=4]:pl-8'
+              data-depth={item.depth}
               onClick={() => {
                 setOpen(false);
               }}
-              data-depth={item.depth}
-              className='data-[depth=3]:pl-6 data-[depth=4]:pl-8'
             >
               <a href={item.url}>{item.title}</a>
             </DropdownMenuItem>
@@ -103,10 +103,10 @@ export function DocsTableOfContents({
       {toc.map((item) => (
         <a
           key={item.url}
-          href={item.url}
           className='text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-[0.8rem] no-underline transition-colors data-[active=true]:font-medium data-[depth=3]:pl-4 data-[depth=4]:pl-6'
           data-active={item.url === `#${activeHeading}`}
           data-depth={item.depth}
+          href={item.url}
         >
           {item.title}
         </a>

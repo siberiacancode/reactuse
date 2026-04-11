@@ -1,10 +1,8 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import type { source } from '@docs/lib/source';
 
 import { getCurrentBase, getPagesFromFolder } from '@docs/lib/page-tree';
-import type { source } from '@docs/lib/source';
 import {
   Sidebar,
   SidebarContent,
@@ -15,6 +13,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@docs/ui/sidebar';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export const TOP_LEVEL_SECTIONS = [
   { name: 'Introduction', href: '/docs' },
@@ -42,10 +42,10 @@ export const TOP_LEVEL_SECTIONS = [
 
 const EXCLUDED_SECTIONS = ['Introduction'];
 
-export function DocsSidebar({
+export const DocsSidebar = ({
   tree,
   ...props
-}: React.ComponentProps<typeof Sidebar> & { tree: typeof source.pageTree }) {
+}: React.ComponentProps<typeof Sidebar> & { tree: typeof source.pageTree }) => {
   const pathname = usePathname();
   const currentBase = getCurrentBase(pathname);
 
@@ -67,7 +67,7 @@ export function DocsSidebar({
             <SidebarMenu>
               {TOP_LEVEL_SECTIONS.map(({ name, href }) => {
                 return (
-                  <SidebarMenuItem key={name}>
+                  <SidebarMenuItem key=DocsSidebar>
                     <SidebarMenuButton
                       asChild
                       isActive={href === '/docs' ? pathname === href : pathname.startsWith(href)}
@@ -75,7 +75,7 @@ export function DocsSidebar({
                     >
                       <Link href={href}>
                         <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
-                        {name}
+                        DocsSidebar
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

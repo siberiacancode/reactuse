@@ -1,10 +1,7 @@
-import { Callout } from './callout';
-import { Badge } from '../ui/badge';
-import { HookProps } from '@docs/lib/parse-hook';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import type { HookProps } from '@docs/lib/parse-hook';
+import type { JSX } from 'react';
+
 import { timeAgo } from '@docs/lib/utils';
-import { Code } from './code';
 import {
   IconBug,
   IconCube,
@@ -19,11 +16,14 @@ import {
   IconTelescope,
   IconTools,
   IconUser,
-  IconWorld,
-  ReactNode
+  IconWorld
 } from '@tabler/icons-react';
-import clsx from 'clsx';
-import { JSX } from 'react';
+
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Badge } from '../ui/badge';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
+import { Callout } from './callout';
+import { Code } from './code';
 
 const categoryMap: Record<string, { icon: JSX.Element; className: string }> = {
   browser: {
@@ -145,7 +145,7 @@ export const DocContributors = (props: HookProps) => (
     {props.contributors.map(({ name, avatar }) => (
       <div key={name} className='flex gap-2'>
         <Avatar>
-          <AvatarImage src={avatar} alt='@shadcn' />
+          <AvatarImage alt='@shadcn' src={avatar} />
           <AvatarFallback>{name[0]}</AvatarFallback>
         </Avatar>
         <h3 className='mt-1 leading-7'>{name}</h3>

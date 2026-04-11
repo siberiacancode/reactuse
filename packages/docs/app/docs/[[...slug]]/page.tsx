@@ -1,14 +1,13 @@
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { mdxComponents } from '@docs/mdx-components';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
-import { findNeighbour } from 'fumadocs-core/page-tree';
-
-import { source } from '@docs/lib/source';
-import { absoluteUrl } from '@docs/lib/utils';
-import { Button } from '@docs/ui/button';
 import { DocsCopyPage } from '@docs/components/docs-copy-page';
 import { DocsTableOfContents } from '@docs/components/docs-toc';
+import { source } from '@docs/lib/source';
+import { absoluteUrl } from '@docs/lib/utils';
+import { mdxComponents } from '@docs/mdx-components';
+import { Button } from '@docs/ui/button';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import { findNeighbour } from 'fumadocs-core/page-tree';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -67,8 +66,8 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
 
   return (
     <div
-      data-slot='docs'
       className='flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full'
+      data-slot='docs'
     >
       <div className='flex min-w-0 flex-1 flex-col'>
         <div className='h-(--top-spacing) shrink-0' />
@@ -86,10 +85,10 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
                   <div className='ml-auto flex gap-2'>
                     {neighbours.previous && (
                       <Button
-                        variant='secondary'
-                        size='icon'
-                        className='extend-touch-target size-8 shadow-none md:size-7'
                         asChild
+                        className='extend-touch-target size-8 shadow-none md:size-7'
+                        size='icon'
+                        variant='secondary'
                       >
                         <Link href={neighbours.previous.url}>
                           <IconArrowLeft />
@@ -99,10 +98,10 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
                     )}
                     {neighbours.next && (
                       <Button
-                        variant='secondary'
-                        size='icon'
-                        className='extend-touch-target size-8 shadow-none md:size-7'
                         asChild
+                        className='extend-touch-target size-8 shadow-none md:size-7'
+                        size='icon'
+                        variant='secondary'
                       >
                         <Link href={neighbours.next.url}>
                           <span className='sr-only'>Next</span>
@@ -125,14 +124,14 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
           </div>
           <div className='hidden h-16 w-full items-center gap-2 px-4 sm:flex sm:px-0'>
             {neighbours.previous && (
-              <Button variant='secondary' size='sm' asChild className='shadow-none'>
+              <Button asChild className='shadow-none' size='sm' variant='secondary'>
                 <Link href={neighbours.previous.url}>
                   <IconArrowLeft /> {neighbours.previous.name}
                 </Link>
               </Button>
             )}
             {neighbours.next && (
-              <Button variant='secondary' size='sm' className='ml-auto shadow-none' asChild>
+              <Button asChild className='ml-auto shadow-none' size='sm' variant='secondary'>
                 <Link href={neighbours.next.url}>
                   {neighbours.next.name} <IconArrowRight />
                 </Link>

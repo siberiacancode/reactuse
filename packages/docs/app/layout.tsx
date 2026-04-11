@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
-import { ThemeProvider } from '@docs/components/theme-provider';
-import { TooltipProvider } from '@docs/ui/tooltip';
 
-import { Geist } from 'next/font/google';
+import { ThemeProvider } from '@docs/components/theme-provider';
 import { cn } from '@docs/lib/utils';
+import { TooltipProvider } from '@docs/ui/tooltip';
+import { Geist } from 'next/font/google';
 
 import '../styles/global.css';
 
@@ -11,7 +11,7 @@ const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang='en' suppressHydrationWarning className={cn('font-sans', geist.variable)}>
+    <html suppressHydrationWarning className={cn('font-sans', geist.variable)} lang='en'>
       <body className='mb-10 flex min-h-screen flex-col'>
         <TooltipProvider>
           <ThemeProvider>{children}</ThemeProvider>

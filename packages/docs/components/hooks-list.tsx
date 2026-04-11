@@ -1,14 +1,15 @@
+import type {PageTreeFolder} from '@docs/lib/page-tree';
+
+import { getPagesFromFolder  } from '@docs/lib/page-tree';
 import Link from 'next/link';
 
-import { getPagesFromFolder, type PageTreeFolder } from '@docs/lib/page-tree';
-
-export function HooksList({
+export const HooksList = ({
   componentsFolder,
   currentBase
 }: {
   componentsFolder: PageTreeFolder;
   currentBase: string;
-}) {
+}) => {
   const list = getPagesFromFolder(componentsFolder, currentBase);
 
   return (
@@ -16,8 +17,8 @@ export function HooksList({
       {list.map((component) => (
         <Link
           key={component.$id}
-          href={component.url}
           className='inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base'
+          href={component.url}
         >
           {component.name}
         </Link>

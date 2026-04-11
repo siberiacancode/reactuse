@@ -1,4 +1,6 @@
-import { clsx, type ClassValue } from 'clsx';
+import type {ClassValue} from 'clsx';
+
+import {  clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -11,7 +13,7 @@ export function absoluteUrl(path: string) {
 
 export const timeAgo = (timestamp: number, locale = 'en') => {
   let value;
-  const diff = Math.floor((new Date().getTime() - timestamp) / 1000);
+  const diff = Math.floor((Date.now() - timestamp) / 1000);
   const minutes = Math.floor(diff / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);

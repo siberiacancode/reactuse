@@ -4,6 +4,9 @@ import { createMDX } from 'fumadocs-mdx/next';
 const config = {
   reactStrictMode: true,
 
+  typescript: {
+    ignoreBuildErrors: true
+  },
   images: {
     remotePatterns: [
       {

@@ -70,9 +70,11 @@
   "devDependencies": {
     "@shikijs/rehype": "^4.0.2",
     "@tailwindcss/postcss": "^4",
+    "@types/dom-speech-recognition": "^0.0.7",
     "@types/node": "25.3.5",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/web-bluetooth": "^0.0.21",
     "tailwindcss": "^4.0.7",
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.9.3"

@@ -1,8 +1,10 @@
-import fs, { existsSync } from 'fs';
-import { parse, Spec } from 'comment-parser';
-import path from 'path';
-import simpleGit from 'simple-git';
+import type { Spec } from 'comment-parser';
+
+import { parse } from 'comment-parser';
 import md5 from 'md5';
+import fs, { existsSync } from 'node:fs';
+import path from 'node:path';
+import simpleGit from 'simple-git';
 
 interface ApiParameters {
   id: number;
@@ -10,24 +12,24 @@ interface ApiParameters {
   returns: Spec | null;
 }
 interface Contributor {
-  name: string;
   avatar: string;
+  name: string;
 }
 
-export type HookProps = {
-  name: string;
-  description?: string;
-  examples: string[];
-  usage?: string;
-  category: string;
-  hasTests: boolean;
+export interface HookProps {
   apiParameters: ApiParameters[];
   browserapi?: string;
-  warning?: string;
-  deprecated?: boolean;
+  category: string;
   contributors: Contributor[];
+  deprecated?: boolean;
+  description?: string;
+  examples: string[];
+  hasTests: boolean;
   lastModified: number;
-};
+  name: string;
+  usage?: string;
+  warning?: string;
+}
 
 const git = simpleGit();
 
@@ -88,7 +90,7 @@ export const parseHookJsdocFromFile = async (file: string): Promise<any> => {
   const dir = path.dirname(file);
 
   const hasTests =
-    existsSync(path.join(dir, name + '.test.ts')) || existsSync(path.join(dir, name + '.test.tsx'));
+    existsSync(path.join(dir, `${name  }.test.ts`)) || existsSync(path.join(dir, `${name  }.test.tsx`));
 
   const fileContent = fs.readFileSync(file, 'utf-8');
   const jsdoc = matchJsdoc(fileContent);
@@ -101,14 +103,12 @@ export const parseHookJsdocFromFile = async (file: string): Promise<any> => {
     file: `../core/src/hooks/${name}/${name}.ts`
   });
 
-  const contributors = Array.from(
-    new Map(
+  const contributors = Array.from(new Map(
       gitLogs.all.map((commit) => [
         commit.author_email,
         { name: commit.author_name, email: commit.author_email }
       ])
-    ).values()
-  ).map((author) => ({
+    ).values(), (author) => ({
     name: author.name,
     avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`
   }));

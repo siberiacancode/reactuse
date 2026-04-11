@@ -1,15 +1,14 @@
 'use client';
-import { useMemo, useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '../ui/dialog';
-import { Button } from '../ui/button';
+import type { source } from '@docs/lib/source';
+
+import { useDebouncedCallback } from '@docs/hooks/use-debounced-callback';
+import { getCurrentBase, getPagesFromFolder } from '@docs/lib/page-tree';
 import { cn } from '@docs/lib/utils';
+import { useDocsSearch } from 'fumadocs-core/search/client';
+import { usePathname, useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
+
+import { Button } from '../ui/button';
 import {
   Command,
   CommandEmpty,
@@ -18,16 +17,19 @@ import {
   CommandItem,
   CommandList
 } from '../ui/command';
-import { useDocsSearch } from 'fumadocs-core/search/client';
-import { useDebouncedCallback } from '@docs/hooks/use-debounced-callback';
-import { usePathname, useRouter } from 'next/navigation';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '../ui/dialog';
 import { Spinner } from './spinner';
-import { getCurrentBase, getPagesFromFolder } from '@docs/lib/page-tree';
-import { source } from '@docs/lib/source';
 
 interface Props {
-  tree: typeof source.pageTree;
   navItems: { href: string; label: string }[];
+  tree: typeof source.pageTree;
 }
 
 export const CommandMenu = (props: Props) => {
@@ -46,55 +48,55 @@ export const CommandMenu = (props: Props) => {
     setSearch(value);
   }, 500);
 
-  const pageGroupsSection = useMemo(() => {
-    return tree.children.map((group) => {
-      if (group.type !== 'folder') {
-        return null;
-      }
-
-      const pages = getPagesFromFolder(group, currentBase);
-
-      if (pages.length === 0) {
-        return null;
-      }
-
-      return (
-        <CommandGroup
-          key={group.$id}
-          heading={group.name}
-          className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'
-        >
-          {pages.map((item) => {
-            return (
-              <CommandItem
-                key={item.url}
-                value={item.name?.toString() ? `${group.name} ${item.name}` : ''}
-                className='cursor-pointer'
-                onSelect={() => handleRedirect(item.url)}
-              >
-                {item.name}
-              </CommandItem>
-            );
-          })}
-        </CommandGroup>
-      );
-    });
-  }, [tree.children, currentBase, router]);
-
   const handleRedirect = (href: string) => {
     router.push(href);
     setOpen(false);
   };
 
+  const pageGroupsSection = useMemo(
+    () =>
+      tree.children.map((group) => {
+        if (group.type !== 'folder') {
+          return null;
+        }
+
+        const pages = getPagesFromFolder(group, currentBase);
+
+        if (pages.length === 0) {
+          return null;
+        }
+
+        return (
+          <CommandGroup
+            key={group.$id}
+            className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'
+            heading={group.name}
+          >
+            {pages.map((item) => (
+              <CommandItem
+                key={item.url}
+                className='cursor-pointer'
+                value={item.name?.toString() ? `${group.name} ${item.name}` : ''}
+                onSelect={() => handleRedirect(item.url)}
+              >
+                {item.name}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        );
+      }),
+    [tree.children, currentBase, router]
+  );
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          variant='outline'
-          onClick={() => setOpen(true)}
           className={cn(
             'text-foreground dark:bg-card hover:bg-muted/50 relative h-8 w-full justify-start rounded-lg pl-3 font-normal shadow-none sm:pr-12 md:w-48 lg:w-56 xl:w-64'
           )}
+          variant='outline'
+          onClick={() => setOpen(true)}
         >
           <span className='hidden lg:inline-flex'>Search documentation...</span>
           <span className='inline-flex lg:hidden'>Search...</span>
@@ -122,15 +124,15 @@ export const CommandMenu = (props: Props) => {
               {query.isLoading ? 'Searching...' : 'No results found.'}
             </CommandEmpty>
             <CommandGroup
-              heading='Pages'
               className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'
+              heading='Pages'
             >
               {navItems.map((item) => (
                 <CommandItem
-                  className='cursor-pointer'
                   key={item.href}
-                  value={`Navigation ${item.label}`}
+                  className='cursor-pointer'
                   keywords={['nav', 'navigation', item.label.toLowerCase()]}
+                  value={`Navigation ${item.label}`}
                   onSelect={() => handleRedirect(item.href)}
                 >
                   {item.label}

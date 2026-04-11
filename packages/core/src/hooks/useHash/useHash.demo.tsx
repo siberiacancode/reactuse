@@ -1,7 +1,7 @@
 import { useHash, useMount } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const [hash, setHash] = useHash();
+  const { hash, setHash } = useHash();
 
   useMount(() => setHash('path/to/page?userId=123'));
 

@@ -1,7 +1,9 @@
-import fs from 'fs';
-import path, { resolve } from 'path';
-import { HookProps, isHookPath, parseHookJsdocFromFile } from '@docs/lib/parse-hook';
+import type { HookProps} from '@docs/lib/parse-hook';
+
 import { siteConfig } from '@docs/lib/config';
+import { isHookPath, parseHookJsdocFromFile } from '@docs/lib/parse-hook';
+import fs from 'node:fs';
+import path, { resolve } from 'node:path';
 
 const REPOSITORY_ROOT = resolve(__dirname, '..', '..');
 
