@@ -1,6 +1,7 @@
 {
   "name": "@siberiacancode/docs",
   "version": "1.0.0",
+  "packageManager": "pnpm@10.11.1",
   "description": "Ultimate tool",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -31,10 +32,9 @@
     "docgen": "bun scripts/docgen.ts ",
     "type": "tsc --noEmit",
     "lint": "eslint . --fix",
-    "pretty": "yarn type && yarn lint && yarn format",
-    "postinstall": "fumadocs-mdx"
+    "pretty": "pnpm type && pnpm lint && pnpm format",
+    "postinstall": "fumadocs-mdx && pnpm examples:build && pnpm docgen"
   },
-  "packageManager": "pnpm@10.11.1",
   "dependencies": {
     "@tabler/icons-react": "^3.37.1",
     "@tailwindcss/postcss": "^4.2.1",

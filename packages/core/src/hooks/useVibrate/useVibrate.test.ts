@@ -8,7 +8,6 @@ const mockNavigatorVibrate = vi.fn();
 
 beforeEach(() => {
   vi.useFakeTimers();
-  vi.clearAllMocks();
 
   Object.defineProperty(globalThis, 'navigator', {
     value: {

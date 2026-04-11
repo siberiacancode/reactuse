@@ -17,7 +17,7 @@ export interface UseDisclosureReturn {
   /** Function to open the modal */
   open: () => void;
   /** Function to toggle the modal */
-  toggle: () => void;
+  toggle: (value?: boolean) => void;
 }
 
 /**

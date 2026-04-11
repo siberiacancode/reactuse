@@ -21,10 +21,10 @@ export const DEFAULT_THRESHOLD_TIME = 300;
  * @template Target The target element
  * @param {(event: DoubleClickEvents) => void} callback The callback function to be invoked on double click
  * @param {UseDoubleClickOptions} [options] The options for the double click
- * @returns {{ ref: StateRef<Target> }} The double clicking state
+ * @returns {StateRef<Target>} The double clicking state
  *
  * @example
- * const { ref } = useDoubleClick(() => console.log('double clicked'));
+ * const ref = useDoubleClick(() => console.log('double clicked'));
  *
  * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useDoubleClick.html}
  */
@@ -67,7 +67,5 @@ export const useDoubleClick = (...params) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
-  return {
-    ref: internalRef
-  };
+  return internalRef;
 };

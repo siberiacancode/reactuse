@@ -35,12 +35,12 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@siberiacancode/eslint": "2.14.0",
-    "@siberiacancode/prettier": "^1.6.0",
-    "@types/node": "^25.2.2",
+    "@siberiacancode/eslint": "2.16.12",
+    "@siberiacancode/prettier": "^1.6.1",
+    "@types/node": "^25.5.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
+    "lint-staged": "^16.4.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   }
 }

@@ -10,38 +10,62 @@ import { extractDependencies } from '@/registry/utils';
 export const ROOT_PATH = path.resolve(path.resolve(), '../');
 export const DOCS_PUBLIC_PATH = path.join(ROOT_PATH, 'docs', 'app', 'public');
 export const REGISTRY_PATH = path.join(DOCS_PUBLIC_PATH, 'registry.json');
-export const CORE_HOOKS_PATH = path.join(ROOT_PATH, 'core', 'src', 'hooks');
+
+const CORE_PATHS = {
+  hook: path.join(ROOT_PATH, 'core', 'src', 'hooks'),
+  helper: path.join(ROOT_PATH, 'core', 'src', 'helpers')
+};
+
+const getFileName = (basePath: string, name: string) => {
+  if (fs.existsSync(path.join(basePath, name, `${name}.tsx`))) return `${name}.tsx`;
+  return `${name}.ts`;
+};
 
 export const registry = async () => {
-  console.log('📦 Building registry');
+  console.log('Building registry');
 
   const hooks = fs
-    .readdirSync(CORE_HOOKS_PATH)
+    .readdirSync(CORE_PATHS.hook)
     .filter(
-      (dir) => dir.startsWith('use') && fs.statSync(path.join(CORE_HOOKS_PATH, dir)).isDirectory()
+      (directory) =>
+        directory.startsWith('use') &&
+        fs.statSync(path.join(CORE_PATHS.hook, directory)).isDirectory()
     );
 
-  const registry = hooks.map((hookName) => ({
-    name: hookName,
-    hooks: [],
-    utils: [],
-    packages: []
-  }));
+  const helpers = fs
+    .readdirSync(CORE_PATHS.helper)
+    .filter((directory) => fs.statSync(path.join(CORE_PATHS.helper, directory)).isDirectory());
 
-  console.log(chalk.cyan(`\nAdd to registry ${hooks.length} hooks`));
-  const spinner = ora('Processing hooks...').start();
+  const items = [...hooks, ...helpers];
 
-  for (const hook of registry) {
-    const hookFilePath = path.join(CORE_HOOKS_PATH, hook.name, `${hook.name}.ts`);
-    if (fs.existsSync(hookFilePath)) {
-      const hookContent = fs.readFileSync(hookFilePath, 'utf-8');
-      Object.assign(hook, extractDependencies(hookContent));
+  const registry = items.map((itemName) => {
+    const type = itemName.startsWith('use') ? 'hook' : 'helper';
+    const fileName = getFileName(CORE_PATHS[type], itemName);
+
+    return {
+      type,
+      name: itemName,
+      path: `${type}s/${itemName}/${fileName}`,
+      hooks: [],
+      utils: [],
+      packages: []
+    };
+  }) as HookRegistry[];
+
+  console.log(chalk.cyan(`\nAdd to registry ${items.length} items`));
+  const spinner = ora('Processing items...').start();
+
+  for (const item of registry) {
+    const itemFilePath = path.join(CORE_PATHS[item.type], item.name, path.basename(item.path));
+    if (fs.existsSync(itemFilePath)) {
+      const itemContent = fs.readFileSync(itemFilePath, 'utf-8');
+      Object.assign(item, extractDependencies(itemContent));
     }
   }
 
   const result = registry.reduce(
-    (acc, hook) => {
-      acc[hook.name] = hook;
+    (acc, item) => {
+      acc[item.name] = item;
       return acc;
     },
     {} as Record<string, HookRegistry>
@@ -51,7 +75,7 @@ export const registry = async () => {
   fs.writeFileSync(REGISTRY_PATH, JSON.stringify(result, null, 2));
 
   spinner.stop();
-  console.log(chalk.green('Hooks registry saved'));
+  console.log(chalk.green('Items registry saved'));
 };
 
 registry();

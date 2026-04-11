@@ -27,7 +27,6 @@ beforeEach(vi.useFakeTimers);
 
 afterEach(() => {
   vi.useRealTimers();
-  vi.clearAllMocks();
 });
 
 targets.forEach((target) => {

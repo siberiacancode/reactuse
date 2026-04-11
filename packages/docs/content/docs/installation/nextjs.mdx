@@ -7,7 +7,7 @@ description: Install and configure reactuse for Next.js.
 
 Install and configure reactuse for Next.js.
 
-### Create project
+## Create project
 
 Create a new Next.js app or use an existing one:
 
@@ -31,14 +31,13 @@ bun create next-app
 
 :::
 
-### Edit tsconfig.json file
+## Edit tsconfig.json file
 
 Add `baseUrl` and `paths` so the CLI and imports resolve correctly. Use `"./*"` if the app lives in the project root, or `"./src/*"` if you use a `src` directory:
 
 ```json
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@docs/*": ["./*"]
     }
@@ -46,7 +45,7 @@ Add `baseUrl` and `paths` so the CLI and imports resolve correctly. Use `"./*"` 
 }
 ```
 
-### Run the CLI
+## Run the CLI
 
 Run the `useverse` init command to set up your project:
 
@@ -56,7 +55,7 @@ npx useverse@latest init
 
 This creates a [`reactuse.json`](../reactuse-json.md) config file in your project.
 
-### Add hooks
+## Add hooks
 
 Add hooks with the CLI:
 

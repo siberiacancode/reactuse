@@ -42,11 +42,6 @@ beforeEach(() => {
   trigger.clear();
 });
 
-afterEach(() => {
-  mockMediaQueryListAddEventListener.mockClear();
-  mockMediaQueryListRemoveEventListener.mockClear();
-});
-
 it('Should use device pixel ratio', () => {
   const { result } = renderHook(useDevicePixelRatio);
 

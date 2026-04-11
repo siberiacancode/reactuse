@@ -7,7 +7,6 @@ beforeEach(vi.useFakeTimers);
 
 afterEach(() => {
   vi.useRealTimers();
-  vi.restoreAllMocks();
 });
 
 it('Should use debounce value', () => {

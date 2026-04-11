@@ -125,7 +125,7 @@ export const useDropZone = ((...params: any[]) => {
 
   const getFiles = (event: DragEvent) => {
     if (!event.dataTransfer) return null;
-    const list = Array.from(event.dataTransfer.files);
+    const list = [...event.dataTransfer.files];
     if (options.multiple) return list;
     if (!list.length) return null;
     return [list[0]];
@@ -141,7 +141,7 @@ export const useDropZone = ((...params: any[]) => {
   };
 
   const checkValidity = (items: DataTransferItemList) => {
-    const types = Array.from(items).map((item) => item.type);
+    const types = Array.from(items, (item) => item.type);
     const dataTypesValid = checkDataTypes(types);
     const multipleFilesValid = options.multiple || items.length <= 1;
 
@@ -155,7 +155,7 @@ export const useDropZone = ((...params: any[]) => {
 
     if (!element) return;
 
-    const onEvent = (event: DragEvent, type: 'drop' | 'enter' | 'leave' | 'over') => {
+    const onEvent = (event: DragEvent) => {
       if (!event.dataTransfer) return;
 
       const isValid = checkValidity(event.dataTransfer.items);
@@ -169,7 +169,7 @@ export const useDropZone = ((...params: any[]) => {
 
       const currentFiles = getFiles(event);
 
-      if (type === 'drop') {
+      if (event.type === 'drop') {
         counterRef.current = 0;
         setOvered(false);
         setFiles(currentFiles);
@@ -177,14 +177,14 @@ export const useDropZone = ((...params: any[]) => {
         return;
       }
 
-      if (type === 'enter') {
+      if (event.type === 'dragenter') {
         counterRef.current += 1;
         setOvered(true);
         options.onEnter?.(event);
         return;
       }
 
-      if (type === 'leave') {
+      if (event.type === 'dragleave') {
         counterRef.current -= 1;
         if (counterRef.current !== 0) return;
         setOvered(false);
@@ -192,24 +192,19 @@ export const useDropZone = ((...params: any[]) => {
         return;
       }
 
-      if (type === 'over') options.onOver?.(event);
+      if (event.type === 'dragover') options.onOver?.(event);
     };
 
-    const onDrop = ((event: DragEvent) => onEvent(event, 'drop')) as EventListener;
-    const onDragOver = ((event: DragEvent) => onEvent(event, 'over')) as EventListener;
-    const onDragEnter = ((event: DragEvent) => onEvent(event, 'enter')) as EventListener;
-    const onDragLeave = ((event: DragEvent) => onEvent(event, 'leave')) as EventListener;
-
-    element.addEventListener('dragenter', onDragEnter);
-    element.addEventListener('dragover', onDragOver);
-    element.addEventListener('dragleave', onDragLeave);
-    element.addEventListener('drop', onDrop);
+    element.addEventListener('dragenter', onEvent as EventListener);
+    element.addEventListener('dragover', onEvent as EventListener);
+    element.addEventListener('dragleave', onEvent as EventListener);
+    element.addEventListener('drop', onEvent as EventListener);
 
     return () => {
-      element.removeEventListener('dragenter', onDragEnter);
-      element.removeEventListener('dragover', onDragOver);
-      element.removeEventListener('dragleave', onDragLeave);
-      element.removeEventListener('drop', onDrop);
+      element.removeEventListener('dragenter', onEvent as EventListener);
+      element.removeEventListener('dragover', onEvent as EventListener);
+      element.removeEventListener('dragleave', onEvent as EventListener);
+      element.removeEventListener('drop', onEvent as EventListener);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 

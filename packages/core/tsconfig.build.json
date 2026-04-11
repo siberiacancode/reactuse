@@ -1,18 +1,24 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "target": "esnext",
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"]
     },
+    "types": [
+      "vitest/globals",
+      "@types/web-bluetooth",
+      "@types/dom-speech-recognition"
+    ],
     "strict": true,
     "declaration": false,
     "emitDeclarationOnly": false,
     "noEmit": false,
+    "rootDir": "src",
     "outDir": "src/bundle",
     "removeComments": false,
     "sourceMap": false,

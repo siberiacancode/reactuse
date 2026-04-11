@@ -8,6 +8,9 @@ import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
+/** The use keyboard return type */
+export type UseKeyboardReturn<Target extends HTMLElement> = StateRef<Target>;
+
 /** The use keyboard event handler type */
 export type KeyboardEventHandler = (event: KeyboardEvent) => void;
 
@@ -24,17 +27,9 @@ export interface UseKeyboard {
 
   (target: HookTarget, options: UseKeyboardEventOptions): void;
 
-  <Target extends HTMLElement>(
-    callback: KeyboardEventHandler,
-    target?: never
-  ): { ref: StateRef<Target> };
+  <Target extends HTMLElement>(callback: KeyboardEventHandler, target?: never): StateRef<Target>;
 
-  <Target extends HTMLElement>(
-    options: UseKeyboardEventOptions,
-    target?: never
-  ): {
-    ref: StateRef<Target>;
-  };
+  <Target extends HTMLElement>(options: UseKeyboardEventOptions, target?: never): StateRef<Target>;
 }
 
 /**
@@ -62,7 +57,7 @@ export interface UseKeyboard {
  * @overload
  * @template Target The target element type
  * @param {KeyboardEventHandler} callback The callback function to be invoked on key down
- * @returns {{ ref: StateRef<Target> }} An object containing the ref
+ * @returns {StateRef<Target>} A ref to attach to the target element
  *
  * @example
  * const ref = useKeyboard((event) => console.log('key down'));
@@ -70,7 +65,7 @@ export interface UseKeyboard {
  * @overload
  * @template Target The target element type
  * @param {UseKeyboardEventOptions} [options] The keyboard event options
- * @returns {{ ref: StateRef<Target> }} An object containing the ref
+ * @returns {StateRef<Target>} A ref to attach to the target element
  *
  * @example
  * const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
@@ -87,15 +82,13 @@ export const useKeyboard = ((...params: any[]) => {
         : { onKeyDown: params[0] }
   ) as UseKeyboardEventOptions;
 
-  const internalRef = useRefState(window);
+  const internalRef = useRefState<HTMLElement | Window>();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
 
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-
-    const element = (target ? isTarget.getElement(target) : internalRef.current) as HTMLElement;
-    if (!element) return;
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as HTMLElement) ?? window;
 
     const onKeyDown = (event: Event) =>
       internalOptionsRef.current?.onKeyDown?.(event as KeyboardEvent);

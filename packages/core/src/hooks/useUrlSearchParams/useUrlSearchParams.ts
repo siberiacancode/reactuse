@@ -24,8 +24,6 @@ export type UseUrlSearchParamsInitialValue<Value> = (() => Value) | Value;
 
 /** The use url search params options type */
 export interface UseUrlSearchParamsOptions<Value> {
-  /* The initial value of the url search params */
-  initialValue?: UseUrlSearchParamsInitialValue<string | URLSearchParams | Value>;
   /** The mode to use for writing to the URL */
   mode?: UrlSearchParamsMode;
   /** The mode to use for writing to the URL  */
@@ -46,7 +44,6 @@ export interface UseUrlSearchParamsReturn<Value> {
 
 export interface UseUrlSearchParams {
   <Value>(
-    key: string,
     options: UseUrlSearchParamsOptions<Value> & {
       initialValue: UseUrlSearchParamsInitialValue<Value>;
     }
@@ -55,8 +52,6 @@ export interface UseUrlSearchParams {
   <Value>(options?: UseUrlSearchParamsOptions<Value>): UseUrlSearchParamsReturn<Value | undefined>;
 
   <Value>(initialValue: UseUrlSearchParamsInitialValue<Value>): UseUrlSearchParamsReturn<Value>;
-
-  <Value>(key: string): UseUrlSearchParamsReturn<Value | undefined>;
 }
 
 /**
@@ -99,7 +94,11 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
       'write' in params)
       ? params
       : undefined
-  ) as UseUrlSearchParamsOptions<Value> | undefined;
+  ) as
+    | (UseUrlSearchParamsOptions<Value> & {
+        initialValue?: UseUrlSearchParamsInitialValue<Value>;
+      })
+    | undefined;
   const initialValue = (
     options ? options?.initialValue : params
   ) as UseUrlSearchParamsInitialValue<Value>;
@@ -153,7 +152,7 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
     }
 
     if (searchParams instanceof URLSearchParams) {
-      return Array.from(searchParams.entries()).reduce(
+      return [...searchParams.entries()].reduce(
         (acc, [key, value]) => {
           acc[key] = deserializer(value);
           return acc;

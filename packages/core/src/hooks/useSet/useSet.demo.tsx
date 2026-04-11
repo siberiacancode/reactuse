@@ -1,7 +1,7 @@
 import { useField, useSet } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const scopeInput = useField({ initialValue: '' });
+  const scopeInput = useField('');
   const scopes = useSet(['@siberiacancode', '@siberiacancode-tests', '@shared']);
 
   return (
@@ -21,7 +21,7 @@ const Demo = () => {
       </div>
 
       <div className='mt-4 flex gap-2'>
-        {Array.from(scopes.value).map((scope, index) => (
+        {Array.from(scopes.value, (scope, index) => (
           <div key={index} className='cursor-pointer' onClick={() => scopes.remove(scope)}>
             <code>{scope}</code>
           </div>

@@ -30,9 +30,9 @@ const useContextMenu = () => {
     }
   );
 
-  const contextMenuRef = useClickOutside<HTMLDivElement>(() => setPosition(undefined));
+  const contextMenu = useClickOutside<HTMLDivElement>(() => setPosition(undefined));
 
-  return { triggerRef, contextMenuRef, position };
+  return { triggerRef, contextMenu, position };
 };
 
 const Demo = () => {
@@ -46,7 +46,7 @@ const Demo = () => {
       Right click me
       {!!contextMenu.position?.x && !!contextMenu.position?.y && (
         <div
-          ref={contextMenu.contextMenuRef}
+          ref={contextMenu.contextMenu.ref}
           style={{
             top: contextMenu.position.y,
             left: contextMenu.position.x

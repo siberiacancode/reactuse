@@ -3,7 +3,7 @@ import { useField, useList, useMutation } from '@siberiacancode/reactuse';
 const createUser = (name: string) => Promise.resolve({ name });
 
 const Demo = () => {
-  const nameField = useField({ initialValue: '' });
+  const nameField = useField('');
   const userList = useList([{ name: 'John' }]);
 
   const createUserMutation = useMutation(createUser);

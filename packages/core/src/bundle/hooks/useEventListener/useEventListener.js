@@ -6,28 +6,6 @@ import { useRefState } from '../useRefState/useRefState';
  * @description - Hook that attaches an event listener to the specified target
  * @category Browser
  * @usage necessary
-
- * @overload
- * @template Event Key of window event map
- * @param {Window} target The window object to attach the event listener to
- * @param {Event | Event[]} event An array of event types to listen for
- * @param {(this: Window, event: WindowEventMap[Event]) => void} handler The event handler function
- * @param {UseEventListenerOptions} [options] Options for the event listener
- * @returns {void}
- *
- * @example
- * useEventListener(window, 'click', () => console.log('click'));
- *
- * @overload
- * @template Event Key of window event map
- * @param {Document} target The window object to attach the event listener to
- * @param {Event | Event[]} event An array of event types to listen for
- * @param {(this: Document, event: DocumentEventMap[Event]) => void} handler The event handler function
- * @param {UseEventListenerOptions} [options] Options for the event listener
- * @returns {void}
- *
- * @example
- * useEventListener(document, 'click', () => console.log('click'));
  *
  * @overload
  * @template Event Key of window event map

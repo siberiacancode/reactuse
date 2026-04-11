@@ -73,7 +73,6 @@ export const useScrollTo = ((...params: any[]) => {
 
   useIsomorphicLayoutEffect(() => {
     if (!immediately) return;
-    if (!target && !internalRef.state) return;
 
     const element =
       ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;

@@ -12,7 +12,7 @@ it('Should use session storage', () => {
   expect(result.current.remove).toBeTypeOf('function');
 });
 
-it('should use session storage on server side', () => {
+it('Should use session storage on server side', () => {
   const { result } = renderHookServer(() => useSessionStorage('key', 'initialValue'));
 
   expect(result.current.value).toBe('initialValue');

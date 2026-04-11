@@ -27,6 +27,7 @@ export default eslint(
     name: 'siberiacancode/core/tests',
     files: ['**/*.test.ts'],
     rules: {
+      'react-refresh/only-export-components': 'off',
       'react/no-create-ref': 'off'
     }
   },

@@ -26,7 +26,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @template Target The target element type
  * @param {KeyboardEventHandler} callback The callback function to be invoked on key down
- * @returns {{ ref: StateRef<Target> }} An object containing the ref
+ * @returns {StateRef<Target>} A ref to attach to the target element
  *
  * @example
  * const ref = useKeyboard((event) => console.log('key down'));
@@ -34,7 +34,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @overload
  * @template Target The target element type
  * @param {UseKeyboardEventOptions} [options] The keyboard event options
- * @returns {{ ref: StateRef<Target> }} An object containing the ref
+ * @returns {StateRef<Target>} A ref to attach to the target element
  *
  * @example
  * const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
@@ -48,13 +48,11 @@ export const useKeyboard = (...params) => {
     : typeof params[0] === 'object'
       ? params[0]
       : { onKeyDown: params[0] };
-  const internalRef = useRefState(window);
+  const internalRef = useRefState();
   const internalOptionsRef = useRef(options);
   internalOptionsRef.current = options;
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-    const element = target ? isTarget.getElement(target) : internalRef.current;
-    if (!element) return;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     const onKeyDown = (event) => internalOptionsRef.current?.onKeyDown?.(event);
     const onKeyUp = (event) => internalOptionsRef.current?.onKeyUp?.(event);
     element.addEventListener('keydown', onKeyDown);

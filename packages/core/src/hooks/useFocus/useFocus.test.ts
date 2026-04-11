@@ -221,6 +221,34 @@ targets.forEach((target) => {
       expect(mockBlur).toHaveBeenCalledOnce();
     });
 
+    it('Should handle target changes', () => {
+      const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+      const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
+
+      const { result, rerender } = renderHook(
+        (target) => {
+          if (target)
+            return useFocus(target) as UseFocusReturn & {
+              ref: StateRef<HTMLDivElement>;
+            };
+          return useFocus<HTMLDivElement>();
+        },
+        {
+          initialProps: target
+        }
+      );
+
+      if (!target) act(() => result.current.ref(element));
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(0);
+
+      rerender({ current: document.getElementById('target') });
+
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+    });
+
     it('Should cleanup event listeners on unmount', () => {
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 

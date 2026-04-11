@@ -28,7 +28,7 @@ export const usePerformanceObserver = (
   const supported = typeof window !== 'undefined' && !!window.PerformanceObserver;
   const [entries, setEntries] = useState<PerformanceEntry[]>([]);
 
-  const observerRef = useRef<PerformanceObserver | null>(null);
+  const observerRef = useRef<PerformanceObserver>(undefined);
   const internalCallback = useRef<PerformanceObserverCallback | null>(callback);
   internalCallback.current = callback;
 
@@ -45,7 +45,7 @@ export const usePerformanceObserver = (
   const stop = () => {
     if (!supported) return;
     observerRef.current?.disconnect();
-    observerRef.current = null;
+    observerRef.current = undefined;
   };
 
   useEffect(() => {
@@ -57,5 +57,5 @@ export const usePerformanceObserver = (
     };
   }, []);
 
-  return { supported, entries, start, stop };
+  return { supported, entries, start, stop, observer: observerRef.current };
 };

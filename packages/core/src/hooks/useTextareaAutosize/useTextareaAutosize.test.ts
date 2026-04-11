@@ -8,11 +8,9 @@ import type { UseTextareaAutosizeReturn } from './useTextareaAutosize';
 
 import { useTextareaAutosize } from './useTextareaAutosize';
 
-if (typeof document !== 'undefined') {
-  const target = document.createElement('textarea');
-  target.id = 'textarea-target';
-  document.body.appendChild(target);
-}
+const textarea = document.createElement('textarea');
+textarea.id = 'textarea-target';
+document.body.appendChild(textarea);
 
 const element = document.getElementById('textarea-target') as HTMLTextAreaElement;
 
@@ -110,7 +108,10 @@ targets.forEach((target) => {
   });
 
   it('Should call callback on resize', () => {
-    Object.defineProperty(element, 'scrollHeight', { value: 100, configurable: true });
+    Object.defineProperty(element, 'scrollHeight', {
+      value: 100,
+      configurable: true
+    });
 
     const onResize = vi.fn();
     const { result } = renderHook(() => {
@@ -133,7 +134,10 @@ targets.forEach((target) => {
   });
 
   it('Should call resize on input event', () => {
-    Object.defineProperty(element, 'scrollHeight', { value: 100, configurable: true });
+    Object.defineProperty(element, 'scrollHeight', {
+      value: 100,
+      configurable: true
+    });
 
     const onResize = vi.fn();
     const { result } = renderHook(() => {
@@ -155,15 +159,50 @@ targets.forEach((target) => {
     expect(onResize).toHaveBeenCalledOnce();
   });
 
-  // it('Should cleanup on unmount', () => {
-  //   const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
-  //   const { result, unmount } = renderHook(useTextareaAutosize);
+  it('Should handle target changes', () => {
+    const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
 
-  //   act(() => result.current.ref(element));
+    const { result, rerender } = renderHook(
+      (target) => {
+        if (target)
+          return useTextareaAutosize(target) as unknown as UseTextareaAutosizeReturn & {
+            ref: StateRef<HTMLTextAreaElement>;
+          };
+        return useTextareaAutosize();
+      },
+      {
+        initialProps: target
+      }
+    );
 
-  //   unmount();
+    if (!target) act(() => result.current.ref(element));
 
-  //   expect(removeEventListenerSpy).toHaveBeenCalledWith('input', expect.any(Function));
-  //   expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
-  // });
+    expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+    expect(removeEventListenerSpy).toHaveBeenCalledTimes(0);
+
+    rerender({ current: document.getElementById('textarea-target') });
+
+    expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
+    expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('Should cleanup on unmount', () => {
+    const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
+
+    const { result, unmount } = renderHook(() => {
+      if (target)
+        return useTextareaAutosize(target) as unknown as UseTextareaAutosizeReturn & {
+          ref: StateRef<HTMLTextAreaElement>;
+        };
+      return useTextareaAutosize();
+    });
+
+    if (!target) act(() => result.current.ref(element));
+
+    unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('input', expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+  });
 });

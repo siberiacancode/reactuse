@@ -4,7 +4,6 @@
     "target": "esnext",
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
@@ -13,7 +12,11 @@
       "@/tests": ["./tests"]
     },
     "resolveJsonModule": true,
-    "types": ["vitest/globals", "@types/web-bluetooth", "@types/dom-speech-recognition"],
+    "types": [
+      "vitest/globals",
+      "@types/web-bluetooth",
+      "@types/dom-speech-recognition"
+    ],
     "allowJs": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,

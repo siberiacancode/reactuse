@@ -23,18 +23,18 @@ export const useBatchedCallback = <Params extends unknown[]>(
   callback: (batch: Params[]) => void,
   size: number
 ): BatchedCallback<Params> => {
-  const callbackRef = useRef(callback);
+  const internalCallbackRef = useRef(callback);
   const sizeRef = useRef(size);
   const queueRef = useRef<Params[]>([]);
 
-  callbackRef.current = callback;
+  internalCallbackRef.current = callback;
   sizeRef.current = size;
 
   const flush = () => {
     if (!queueRef.current.length) return;
     const batch = queueRef.current;
     queueRef.current = [];
-    callbackRef.current(batch);
+    internalCallbackRef.current(batch);
   };
 
   const batched = useMemo(() => {

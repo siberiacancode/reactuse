@@ -23,6 +23,7 @@ export interface UseWebSocketOptions {
   onMessage?: (event: MessageEvent, webSocket: WebSocket) => void;
 }
 
+/** The use web socket status type */
 export type UseWebSocketStatus = 'connected' | 'connecting' | 'disconnected' | 'failed';
 
 /** The use web socket return type */
@@ -69,8 +70,9 @@ export const useWebSocket = (
 
   const [status, setStatus] = useState<UseWebSocketStatus>('connecting');
 
-  const send = (data: string | ArrayBufferLike | ArrayBufferView | Blob) =>
+  const send = (data: string | Blob | BufferSource) => {
     webSocketRef.current?.send(data);
+  };
 
   const close = () => {
     explicityCloseRef.current = true;

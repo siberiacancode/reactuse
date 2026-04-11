@@ -64,7 +64,7 @@ export const useDropZone = (...params) => {
   const dataTypes = options.dataTypes;
   const getFiles = (event) => {
     if (!event.dataTransfer) return null;
-    const list = Array.from(event.dataTransfer.files);
+    const list = [...event.dataTransfer.files];
     if (options.multiple) return list;
     if (!list.length) return null;
     return [list[0]];
@@ -77,7 +77,7 @@ export const useDropZone = (...params) => {
     return types.every((type) => dataTypes.some((dataType) => type.includes(dataType)));
   };
   const checkValidity = (items) => {
-    const types = Array.from(items).map((item) => item.type);
+    const types = Array.from(items, (item) => item.type);
     const dataTypesValid = checkDataTypes(types);
     const multipleFilesValid = options.multiple || items.length <= 1;
     return dataTypesValid && multipleFilesValid;
@@ -86,7 +86,7 @@ export const useDropZone = (...params) => {
     if (!target && !internalRef.state) return;
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
-    const onEvent = (event, type) => {
+    const onEvent = (event) => {
       if (!event.dataTransfer) return;
       const isValid = checkValidity(event.dataTransfer.items);
       if (!isValid) {
@@ -96,41 +96,37 @@ export const useDropZone = (...params) => {
       event.preventDefault();
       event.dataTransfer.dropEffect = 'copy';
       const currentFiles = getFiles(event);
-      if (type === 'drop') {
+      if (event.type === 'drop') {
         counterRef.current = 0;
         setOvered(false);
         setFiles(currentFiles);
         options.onDrop?.(currentFiles, event);
         return;
       }
-      if (type === 'enter') {
+      if (event.type === 'dragenter') {
         counterRef.current += 1;
         setOvered(true);
         options.onEnter?.(event);
         return;
       }
-      if (type === 'leave') {
+      if (event.type === 'dragleave') {
         counterRef.current -= 1;
         if (counterRef.current !== 0) return;
         setOvered(false);
         options.onLeave?.(event);
         return;
       }
-      if (type === 'over') options.onOver?.(event);
+      if (event.type === 'dragover') options.onOver?.(event);
     };
-    const onDrop = (event) => onEvent(event, 'drop');
-    const onDragOver = (event) => onEvent(event, 'over');
-    const onDragEnter = (event) => onEvent(event, 'enter');
-    const onDragLeave = (event) => onEvent(event, 'leave');
-    element.addEventListener('dragenter', onDragEnter);
-    element.addEventListener('dragover', onDragOver);
-    element.addEventListener('dragleave', onDragLeave);
-    element.addEventListener('drop', onDrop);
+    element.addEventListener('dragenter', onEvent);
+    element.addEventListener('dragover', onEvent);
+    element.addEventListener('dragleave', onEvent);
+    element.addEventListener('drop', onEvent);
     return () => {
-      element.removeEventListener('dragenter', onDragEnter);
-      element.removeEventListener('dragover', onDragOver);
-      element.removeEventListener('dragleave', onDragLeave);
-      element.removeEventListener('drop', onDrop);
+      element.removeEventListener('dragenter', onEvent);
+      element.removeEventListener('dragover', onEvent);
+      element.removeEventListener('dragleave', onEvent);
+      element.removeEventListener('drop', onEvent);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return { overed, files };

@@ -16,7 +16,6 @@ Add `baseUrl` and `paths` to your `tsconfig.json` (or `jsconfig.json`) so import
 ```json
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@docs/*": ["./src/*"]
     }
@@ -26,7 +25,7 @@ Add `baseUrl` and `paths` to your `tsconfig.json` (or `jsconfig.json`) so import
 
 Adjust the `@docs/*` path to match your project structure (e.g. `"./*"` if you have no `src` folder).
 
-### Run the CLI
+## Run the CLI
 
 Run the `useverse` init command to setup your project:
 
@@ -36,7 +35,7 @@ npx useverse@latest init
 
 This will create a configuration file [`reactuse.json`](../reactuse-json.md) in your project and configure where hooks are generated (e.g. `@docs/shared/hooks`).
 
-### Add hooks
+## Add hooks
 
 Add hooks to your project with the CLI:
 

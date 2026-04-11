@@ -34,7 +34,7 @@ export interface UseKeyPressEvent {
     listener: (event: KeyboardEvent) => void,
     options?: UseKeyPressEventOptions,
     target?: never
-  ): { ref: StateRef<Target> };
+  ): StateRef<Target>;
 }
 
 /**
@@ -58,7 +58,7 @@ export interface UseKeyPressEvent {
  * @param {UseKeyPressEventKey} key The key or array of keys to listen for.
  * @param {(event: KeyboardEvent) => void} listener The callback function to be executed when the specified key or keys are pressed.
  * @param {UseKeyPressEventOptions} [options] The options for the event listener.
- * @returns {{ ref: StateRef<Target> }} An object containing the ref
+ * @returns {StateRef<Target>} A ref to attach to the target element
  *
  * @example
  * const ref = useKeyPressEvent('Enter', (event) => console.log('pressed'));

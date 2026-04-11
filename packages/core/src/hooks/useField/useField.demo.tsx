@@ -2,11 +2,8 @@ import { useField, useRenderCount } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const renderCount = useRenderCount();
-  const nameInput = useField({
-    initialValue: 'Dmtitry',
-    validateOnChange: true
-  });
-  const sexSelect = useField({ initialValue: 'Male' });
+  const nameInput = useField('Dmtitry', { validateOnChange: true });
+  const sexSelect = useField('Male');
   const aboutTextArea = useField();
   const rememberThisComputerCheckbox = useField();
 
@@ -47,8 +44,8 @@ const Demo = () => {
 
       <div>
         <input
-          type='text'
           placeholder='Name'
+          type='text'
           {...nameInput.register({
             required: 'field is required',
             minLength: {

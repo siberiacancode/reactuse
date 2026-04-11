@@ -41,7 +41,7 @@ export interface UseScrollIntoView {
  * @usage low
  *
  * @overload
- * @param {HookTarget} [target=window] The target element to scroll into view
+ * @param {HookTarget} target The target element to scroll into view
  * @param {boolean} [options.immediately=true] Whether to scroll immediately
  * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior
  * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment
@@ -79,8 +79,7 @@ export const useScrollIntoView = ((...params: any[]) => {
     if (!immediately) return;
     if (!target && !internalRef.state) return;
 
-    const element =
-      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
 
     elementRef.current = element;
 
