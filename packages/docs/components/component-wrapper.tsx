@@ -9,20 +9,20 @@ export const ComponentWrapper = ({
   children,
   ...props
 }: React.ComponentPropsWithoutRef<'div'> & { name: string }) => (
-    <ComponentErrorBoundary name={name}>
-      <div
-        className={cn('flex w-full scroll-mt-16 flex-col rounded-lg border', className)}
-        data-name={name.toLowerCase()}
-        id={name}
-        {...props}
-      >
-        <div className='border-b px-4 py-3'>
-          <div className='text-sm font-medium'>{getComponentName(name)}</div>
-        </div>
-        <div className='flex flex-1 items-center gap-2 p-4'>{children}</div>
+  <ComponentErrorBoundary name={name}>
+    <div
+      className={cn('flex w-full scroll-mt-16 flex-col rounded-lg border', className)}
+      data-name={name.toLowerCase()}
+      id={name}
+      {...props}
+    >
+      <div className='border-b px-4 py-3'>
+        <div className='text-sm font-medium'>{getComponentName(name)}</div>
       </div>
-    </ComponentErrorBoundary>
-  );
+      <div className='flex flex-1 items-center gap-2 p-4'>{children}</div>
+    </div>
+  </ComponentErrorBoundary>
+);
 
 class ComponentErrorBoundary extends React.Component<
   { children: React.ReactNode; name: string },

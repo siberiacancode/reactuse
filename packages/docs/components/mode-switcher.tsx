@@ -1,3 +1,4 @@
+/* eslint-disable react-dom/no-dangerously-set-innerhtml */
 'use client';
 
 import { Button } from '@docs/ui/button';
@@ -73,12 +74,12 @@ export const ModeSwitcher = () => {
       </TooltipContent>
     </Tooltip>
   );
-}
+};
 
 export const DarkModeScript = () => (
-    <Script
-      dangerouslySetInnerHTML={{
-        __html: `
+  <Script
+    dangerouslySetInnerHTML={{
+      __html: `
             (function() {
               // Forward D key
               document.addEventListener('keydown', function(e) {
@@ -103,8 +104,8 @@ export const DarkModeScript = () => (
 
             })();
           `
-      }}
-      id='dark-mode-listener'
-      strategy='beforeInteractive'
-    />
-  )
+    }}
+    id='dark-mode-listener'
+    strategy='beforeInteractive'
+  />
+);

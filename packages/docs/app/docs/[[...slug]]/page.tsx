@@ -1,7 +1,6 @@
 import { DocsCopyPage } from '@docs/components/docs-copy-page';
 import { DocsTableOfContents } from '@docs/components/docs-toc';
 import { source } from '@docs/lib/source';
-import { absoluteUrl } from '@docs/lib/utils';
 import { mdxComponents } from '@docs/mdx-components';
 import { Button } from '@docs/ui/button';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
@@ -49,7 +48,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
   };
 }
 
-export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
+export const Page = async (props: { params: Promise<{ slug: string[] }> }) => {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) {
@@ -80,7 +79,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
                 </h1>
                 <div className='docs-nav flex items-center gap-2'>
                   <div className='hidden sm:block'>
-                    <DocsCopyPage page={raw} url={absoluteUrl(page.url)} />
+                    <DocsCopyPage page={raw} />
                   </div>
                   <div className='ml-auto flex gap-2'>
                     {neighbours.previous && (
@@ -150,4 +149,6 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
       </div>
     </div>
   );
-}
+};
+
+export default Page;

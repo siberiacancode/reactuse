@@ -1,3 +1,5 @@
+/* eslint-disable e18e/ban-dependencies */
+/* eslint-disable no-console */
 import { promises as fs } from 'node:fs';
 import path, { resolve } from 'node:path';
 import { rimraf } from 'rimraf';
@@ -51,7 +53,7 @@ export const ExamplesIndex: Record<string, React.ComponentType> = {`;
     const name = file.name.replace(/\.tsx$/, '');
 
     index += `
-   "${name}": dynamic(() => import("../../core/src/hooks/${file.name}/${file.demo}"), {
+   "${name}": dynamic(() => import("@/hooks/${file.name}/${file.demo}"), {
       ssr: false,
     }),
   `;

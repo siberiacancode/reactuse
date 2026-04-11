@@ -65,22 +65,20 @@ export const DocsSidebar = ({
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {TOP_LEVEL_SECTIONS.map(({ name, href }) => {
-                return (
-                  <SidebarMenuItem key=DocsSidebar>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={href === '/docs' ? pathname === href : pathname.startsWith(href)}
-                      className='data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md'
-                    >
-                      <Link href={href}>
-                        <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
-                        DocsSidebar
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
+              {TOP_LEVEL_SECTIONS.map(({ name, href }) => (
+                <SidebarMenuItem key={name}>
+                  <SidebarMenuButton
+                    asChild
+                    className='data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md'
+                    isActive={href === '/docs' ? pathname === href : pathname.startsWith(href)}
+                  >
+                    <Link href={href}>
+                      <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
+                      {name}
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -97,22 +95,20 @@ export const DocsSidebar = ({
               <SidebarGroupContent>
                 {item.type === 'folder' && (
                   <SidebarMenu className='gap-0.5'>
-                    {getPagesFromFolder(item, currentBase).map((page) => {
-                      return (
-                        <SidebarMenuItem key={page.url}>
-                          <SidebarMenuButton
-                            asChild
-                            isActive={page.url === pathname}
-                            className='data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md'
-                          >
-                            <Link href={page.url}>
-                              <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
-                              {page.name}
-                            </Link>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      );
-                    })}
+                    {getPagesFromFolder(item, currentBase).map((page) => (
+                      <SidebarMenuItem key={page.url}>
+                        <SidebarMenuButton
+                          asChild
+                          className='data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md'
+                          isActive={page.url === pathname}
+                        >
+                          <Link href={page.url}>
+                            <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
+                            {page.name}
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
                   </SidebarMenu>
                 )}
               </SidebarGroupContent>
@@ -123,4 +119,4 @@ export const DocsSidebar = ({
       </SidebarContent>
     </Sidebar>
   );
-}
+};

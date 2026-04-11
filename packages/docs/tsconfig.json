@@ -3,32 +3,17 @@
     "incremental": true,
     "target": "esnext",
     "jsx": "react-jsx",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@siberiacancode/docs": [
-        "."
-      ],
-      "@docs/*": [
-        "./*"
-      ],
-      "@siberiacancode/reactuse": [
-        "../core/src"
-      ],
-      "@/*": [
-        "../core/src/*"
-      ]
+      "@siberiacancode/docs": ["."],
+      "@docs/*": ["./*"],
+      "@siberiacancode/reactuse": ["../core/src"],
+      "@/*": ["../core/src/*"]
     },
     "resolveJsonModule": true,
-    "types": [
-      "@types/web-bluetooth",
-      "@types/dom-speech-recognition"
-    ],
+    "types": ["@types/web-bluetooth", "@types/dom-speech-recognition"],
     "allowJs": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,
@@ -56,8 +41,5 @@
     "**/*.ts",
     "**/*.tsx"
   ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ]
+  "exclude": ["dist", "node_modules", "**/*.demo.*"]
 }

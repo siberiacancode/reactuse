@@ -36,20 +36,20 @@ export const mdxComponents = {
     />
   ),
   h2: ({ className, ...props }: React.ComponentProps<'h2'>) => (
-      <h2
-        className={cn(
-          'font-heading [&+]*:[code]:text-xl mt-8 scroll-m-28 text-xl font-medium tracking-tight first:mt-0 lg:mt-8 [&+.steps]:!mt-0 [&+.steps>h3]:!mt-4 [&+h3]:!mt-6 [&+p]:!mt-4',
-          className
-        )}
-        id={props.children
-          ?.toString()
-          .replace(/ /g, '-')
-          .replace(/'/g, '')
-          .replace(/\?/g, '')
-          .toLowerCase()}
-        {...props}
-      />
-    ),
+    <h2
+      className={cn(
+        'font-heading [&+]*:[code]:text-xl mt-8 scroll-m-28 text-xl font-medium tracking-tight first:mt-0 lg:mt-8 [&+.steps]:!mt-0 [&+.steps>h3]:!mt-4 [&+h3]:!mt-6 [&+p]:!mt-4',
+        className
+      )}
+      id={props.children
+        ?.toString()
+        .replace(/ /g, '-')
+        .replace(/'/g, '')
+        .replace(/\?/g, '')
+        .toLowerCase()}
+      {...props}
+    />
+  ),
   h3: ({ className, ...props }: React.ComponentProps<'h3'>) => (
     <h3
       className={cn(
@@ -138,17 +138,19 @@ export const mdxComponents = {
     />
   ),
   pre: ({ className, children, ...props }: React.ComponentProps<'pre'>) => (
-      <pre
-        className={cn(
-          'no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0',
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </pre>
-    ),
-  figure: ({ className, ...props }: React.ComponentProps<'figure'>) => <figure className={cn(className)} {...props} />,
+    <pre
+      className={cn(
+        'no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0',
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </pre>
+  ),
+  figure: ({ className, ...props }: React.ComponentProps<'figure'>) => (
+    <figure className={cn(className)} {...props} />
+  ),
   figcaption: ({ className, children, ...props }: React.ComponentProps<'figcaption'>) => {
     const iconExtension =
       'data-language' in props && typeof props['data-language'] === 'string'

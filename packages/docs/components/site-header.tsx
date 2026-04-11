@@ -16,7 +16,7 @@ export const SiteHeader = () => {
   return (
     <header className='bg-background sticky top-0 z-50 w-full'>
       <div className='container-wrapper 3xl:fixed:px-0 flex items-center justify-between px-6'>
-        <MobileNav className='flex lg:hidden' items={siteConfig.navItems} tree={pageTree} />
+        <MobileNav className='flex lg:hidden' items={siteConfig.navItems} />
         <div className='group-has-data-[slot=designer]/layout:fixed:max-w-none 3xl:fixed:container flex h-(--header-height) items-center **:data-[slot=separator]:h-4!'>
           <Button asChild className='hidden size-8 lg:flex' size='icon' variant='ghost'>
             <Link href='/'>
@@ -57,4 +57,4 @@ export const SiteHeader = () => {
       </div>
     </header>
   );
-}
+};

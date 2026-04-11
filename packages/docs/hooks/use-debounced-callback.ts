@@ -121,8 +121,3 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
 
   return lastCallback;
 }
-
-export namespace useDebouncedCallback {
-  export type Options = UseDebouncedCallbackOptions;
-  export type ReturnValue<T extends (...args: any[]) => any> = UseDebouncedCallbackReturnValue<T>;
-}

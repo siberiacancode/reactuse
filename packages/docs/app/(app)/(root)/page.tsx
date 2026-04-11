@@ -1,4 +1,4 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 
 import {
   PageActions,
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
   description
 };
 
-export default async function IndexPage() {
+export const IndexPage = async () => {
   const contributors = await getContributors();
 
   const hooks = _metadata.hooks;
@@ -161,4 +161,6 @@ export default async function IndexPage() {
       </div>
     </div>
   );
-}
+};
+
+export default IndexPage;

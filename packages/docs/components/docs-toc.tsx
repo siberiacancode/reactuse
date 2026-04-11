@@ -113,4 +113,4 @@ export const DocsTableOfContents = ({
       ))}
     </div>
   );
-}
+};

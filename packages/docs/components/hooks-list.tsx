@@ -1,6 +1,6 @@
-import type {PageTreeFolder} from '@docs/lib/page-tree';
+import type { PageTreeFolder } from '@docs/lib/page-tree';
 
-import { getPagesFromFolder  } from '@docs/lib/page-tree';
+import { getPagesFromFolder } from '@docs/lib/page-tree';
 import Link from 'next/link';
 
 export const HooksList = ({
@@ -25,4 +25,4 @@ export const HooksList = ({
       ))}
     </div>
   );
-}
+};

@@ -6,7 +6,7 @@ const git = simpleGit();
 export const getContributors = async () => {
   try {
     const log = await git.log();
-    const contributorsMap = new Map();
+    const contributorsMap = new Map<string, { name: string; email: string; avatar: string }>();
 
     log.all.forEach((commit) => {
       const { author_email, author_name } = commit;
@@ -19,8 +19,9 @@ export const getContributors = async () => {
       }
     });
 
-    const contributors = contributorsMap.values().toSorted((a, b) =>
-      a.name.localeCompare(b.name));
+    const contributors = [...contributorsMap.values()].toSorted((a, b) =>
+      a.name.localeCompare(b.name)
+    );
 
     return contributors;
   } catch (error) {

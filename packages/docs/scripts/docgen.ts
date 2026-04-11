@@ -1,4 +1,4 @@
-import type { HookProps} from '@docs/lib/parse-hook';
+import type { HookProps } from '@docs/lib/parse-hook';
 
 import { siteConfig } from '@docs/lib/config';
 import { isHookPath, parseHookJsdocFromFile } from '@docs/lib/parse-hook';
@@ -95,7 +95,7 @@ const saveMetadata = (meta: Record<string, any>) => {
 const startScript = async () => {
   if (!fs.existsSync(SOURCE_DIR)) {
     console.error(`Folder does not exist: ${SOURCE_DIR}`);
-    process.exit(1);
+    return;
   }
 
   const componentFiles = getComponentFiles(SOURCE_DIR);

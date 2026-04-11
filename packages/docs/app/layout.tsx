@@ -9,14 +9,14 @@ import '../styles/global.css';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
-export default function Layout({ children }: { children: ReactNode }) {
-  return (
-    <html suppressHydrationWarning className={cn('font-sans', geist.variable)} lang='en'>
-      <body className='mb-10 flex min-h-screen flex-col'>
-        <TooltipProvider>
-          <ThemeProvider>{children}</ThemeProvider>
-        </TooltipProvider>
-      </body>
-    </html>
-  );
-}
+export const Layout = ({ children }: { children: ReactNode }) => (
+  <html suppressHydrationWarning className={cn('font-sans', geist.variable)} lang='en'>
+    <body className='mb-10 flex min-h-screen flex-col'>
+      <TooltipProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+      </TooltipProvider>
+    </body>
+  </html>
+);
+
+export default Layout;

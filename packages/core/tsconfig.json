@@ -12,11 +12,7 @@
       "@/tests": ["./tests"]
     },
     "resolveJsonModule": true,
-    "types": [
-      "vitest/globals",
-      "@types/web-bluetooth",
-      "@types/dom-speech-recognition"
-    ],
+    "types": ["vitest/globals", "@types/web-bluetooth", "@types/dom-speech-recognition"],
     "allowJs": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,

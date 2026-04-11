@@ -12,16 +12,16 @@ export const Callout = ({
   icon?: React.ReactNode;
   variant?: 'default' | 'info' | 'warning';
 }) => (
-    <Alert
-      className={cn(
-        'bg-surface text-surface-foreground border-surface mt-6 w-auto rounded-xl md:-mx-1 **:[code]:border',
-        className
-      )}
-      data-variant={variant}
-      {...props}
-    >
-      {icon}
-      {title && <AlertTitle>{title}</AlertTitle>}
-      <AlertDescription className='text-card-foreground/80'>{children}</AlertDescription>
-    </Alert>
-  )
+  <Alert
+    className={cn(
+      'bg-surface text-surface-foreground border-surface mt-6 w-auto rounded-xl md:-mx-1 **:[code]:border',
+      className
+    )}
+    data-variant={variant}
+    {...props}
+  >
+    {icon}
+    {title && <AlertTitle>{title}</AlertTitle>}
+    <AlertDescription className='text-card-foreground/80'>{children}</AlertDescription>
+  </Alert>
+);

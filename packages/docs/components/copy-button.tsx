@@ -48,4 +48,4 @@ export const CopyButton = ({
       {hasCopied ? <IconCheck /> : <IconCopy />}
     </Button>
   );
-}
+};

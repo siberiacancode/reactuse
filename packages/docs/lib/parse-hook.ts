@@ -34,6 +34,7 @@ export interface HookProps {
 const git = simpleGit();
 
 const matchJsdoc = (file: string) => {
+  // eslint-disable-next-line regexp/no-super-linear-backtracking
   const jsdocCommentRegex = /\/\*\*\s*\n([^\\*]|(\*(?!\/)))*\*\//;
   const match = file.match(jsdocCommentRegex);
   return match ? match[0].trim() : undefined;
@@ -90,7 +91,7 @@ export const parseHookJsdocFromFile = async (file: string): Promise<any> => {
   const dir = path.dirname(file);
 
   const hasTests =
-    existsSync(path.join(dir, `${name  }.test.ts`)) || existsSync(path.join(dir, `${name  }.test.tsx`));
+    existsSync(path.join(dir, `${name}.test.ts`)) || existsSync(path.join(dir, `${name}.test.tsx`));
 
   const fileContent = fs.readFileSync(file, 'utf-8');
   const jsdoc = matchJsdoc(fileContent);
@@ -103,15 +104,18 @@ export const parseHookJsdocFromFile = async (file: string): Promise<any> => {
     file: `../core/src/hooks/${name}/${name}.ts`
   });
 
-  const contributors = Array.from(new Map(
+  const contributors = Array.from(
+    new Map(
       gitLogs.all.map((commit) => [
         commit.author_email,
         { name: commit.author_name, email: commit.author_email }
       ])
-    ).values(), (author) => ({
-    name: author.name,
-    avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`
-  }));
+    ).values(),
+    (author) => ({
+      name: author.name,
+      avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`
+    })
+  );
 
   const lastModified = new Date(gitLogs.latest?.date ?? Date.now()).getTime();
 

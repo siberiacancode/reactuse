@@ -214,4 +214,4 @@ export const getIconForLanguageExtension = (language: string) => {
     default:
       return <FileIcon />;
   }
-}
+};

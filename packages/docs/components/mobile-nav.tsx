@@ -1,21 +1,47 @@
 'use client';
 
-import { type source } from '@docs/lib/source';
+import type { LinkProps } from 'next/link';
+
 import { cn } from '@docs/lib/utils';
 import { Button } from '@docs/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@docs/ui/popover';
-import Link, { type LinkProps } from 'next/link';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import { TOP_LEVEL_SECTIONS } from './docs-sidebar';
 
+const MobileLink = ({
+  href,
+  onOpenChange,
+  className,
+  children,
+  ...props
+}: LinkProps & {
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  const router = useRouter();
+  return (
+    <Link
+      className={cn('flex items-center gap-2 text-2xl font-medium', className)}
+      href={href}
+      onClick={() => {
+        router.push(href.toString());
+        onOpenChange?.(false);
+      }}
+      {...props}
+    >
+      {children}
+    </Link>
+  );
+};
+
 export const MobileNav = ({
-  tree,
   items,
   className
 }: {
-  tree: typeof source.pageTree;
   items: { href: string; label: string }[];
   className?: string;
 }) => {
@@ -25,11 +51,11 @@ export const MobileNav = ({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant='ghost'
           className={cn(
             'extend-touch-target h-8 touch-manipulation items-center justify-start gap-2.5 !p-0 hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent dark:hover:bg-transparent',
             className
           )}
+          variant='ghost'
         >
           <div className='relative flex h-8 w-4 items-center justify-center'>
             <div className='relative size-4'>
@@ -52,10 +78,10 @@ export const MobileNav = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className='bg-background/90 no-scrollbar h-(--radix-popper-available-height) w-(--radix-popper-available-width) overflow-y-auto rounded-none border-none p-0 shadow-none backdrop-blur duration-100 data-open:animate-none!'
         align='start'
-        side='bottom'
         alignOffset={-16}
+        className='bg-background/90 no-scrollbar h-(--radix-popper-available-height) w-(--radix-popper-available-width) overflow-y-auto rounded-none border-none p-0 shadow-none backdrop-blur duration-100 data-open:animate-none!'
+        side='bottom'
         sideOffset={6}
       >
         <div className='flex flex-col gap-12 overflow-auto px-6 py-6'>
@@ -65,8 +91,8 @@ export const MobileNav = ({
               <MobileLink href='/' onOpenChange={setOpen}>
                 Home
               </MobileLink>
-              {items.map((item, index) => (
-                <MobileLink key={index} href={item.href} onOpenChange={setOpen}>
+              {items.map((item) => (
+                <MobileLink key={item.href} href={item.href} onOpenChange={setOpen}>
                   {item.label}
                 </MobileLink>
               ))}
@@ -75,44 +101,15 @@ export const MobileNav = ({
           <div className='flex flex-col gap-4'>
             <div className='text-muted-foreground text-sm font-medium'>Sections</div>
             <div className='flex flex-col gap-3'>
-              {TOP_LEVEL_SECTIONS.map(({ name, href }) => {
-                return (
-                  <MobileLink key=MobileNav href={href} onOpenChange={setOpen}>
-                    MobileNav
-                  </MobileLink>
-                );
-              })}
+              {TOP_LEVEL_SECTIONS.map(({ name, href }) => (
+                <MobileLink key={name} href={href} onOpenChange={setOpen}>
+                  MobileNav
+                </MobileLink>
+              ))}
             </div>
           </div>
         </div>
       </PopoverContent>
     </Popover>
   );
-}
-
-const MobileLink = ({
-  href,
-  onOpenChange,
-  className,
-  children,
-  ...props
-}: LinkProps & {
-  onOpenChange?: (open: boolean) => void;
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  const router = useRouter();
-  return (
-    <Link
-      href={href}
-      onClick={() => {
-        router.push(href.toString());
-        onOpenChange?.(false);
-      }}
-      className={cn('flex items-center gap-2 text-2xl font-medium', className)}
-      {...props}
-    >
-      {children}
-    </Link>
-  );
-}
+};

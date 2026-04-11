@@ -1,7 +1,7 @@
-import type {VariantProps} from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 
 import { cn } from '@docs/lib/utils';
-import { cva  } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { Slot } from 'radix-ui';
 import * as React from 'react';
 
@@ -58,6 +58,6 @@ const Button = ({
       {...props}
     />
   );
-}
+};
 
 export { Button, buttonVariants };

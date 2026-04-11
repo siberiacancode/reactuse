@@ -4,9 +4,7 @@ export const extractDependencies = (content: string) => {
   const packages = new Set<string>();
 
   const hookMatches = Array.from(
-    content.matchAll(
-      /import\s+\{([^}]+)\}\s+from\s+['"]((?:@\/hooks)|(?:[^'"]*use[^'"]*))['"]/g
-    )
+    content.matchAll(/import\s+\{([^}]+)\}\s+from\s+['"]((?:@\/hooks)|(?:[^'"]*use[^'"]*))['"]/g)
   );
   for (const match of hookMatches) {
     const imports = match[1].split(',').map((item) => item.trim());

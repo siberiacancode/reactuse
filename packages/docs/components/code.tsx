@@ -1,3 +1,4 @@
+/* eslint-disable react-dom/no-dangerously-set-innerhtml */
 import { highlightCode } from '@docs/lib/highlight-code';
 import { CodeBlock } from 'fumadocs-ui/components/codeblock';
 
