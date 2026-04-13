@@ -14,7 +14,7 @@ const StarsCount = async () => {
   const formattedCount =
     json.stargazers_count >= 1000
       ? `${Math.round(json.stargazers_count / 1000)}k`
-      : json.stargazers_count.toLocaleString();
+      : json.stargazers_count?.toLocaleString();
 
   return <span className='text-muted-foreground w-fit text-xs tabular-nums'>{formattedCount}</span>;
 };
