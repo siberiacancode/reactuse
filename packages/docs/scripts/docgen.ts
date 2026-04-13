@@ -19,7 +19,7 @@ title: ${JSON.stringify(name)}
 description: ${JSON.stringify(props.description ?? '')}
 ---
 import { DocHeader, DocContributors, DocTableApi, DocUsageExamples } from '@docs/components/hook-doc-page';
-import { DocDemo } from '@docs/components/hook-demo';
+import { HookDemo } from '@docs/components/hook-demo';
 import hookDoc from './${name.toLowerCase()}.props.json';
 
 <DocHeader {...hookDoc} />
@@ -40,9 +40,9 @@ npx useverse@latest add ${name}
 
 <Separator className="my-8" />
 
-## Usage
+## Demo
 
-<DocDemo {...hookDoc} />
+<HookDemo {...hookDoc} />
 
 <Separator className="my-8" />
 

@@ -37,6 +37,10 @@ export const TOP_LEVEL_SECTIONS = [
   {
     name: 'memoization',
     href: '/docs/memoization'
+  },
+  {
+    name: 'optimization',
+    href: '/docs/optimization'
   }
 ];
 

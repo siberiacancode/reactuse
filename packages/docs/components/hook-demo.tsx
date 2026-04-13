@@ -7,7 +7,7 @@ import { cx } from 'class-variance-authority';
 import { ExamplesIndex } from '../.source/demo';
 import { ComponentWrapper } from './component-wrapper';
 
-export const DocDemo = (props: HookProps) => {
+export const HookDemo = (props: HookProps) => {
   const Demo = ExamplesIndex[props.name];
 
   if (!Demo) {
@@ -15,7 +15,7 @@ export const DocDemo = (props: HookProps) => {
   }
 
   return (
-    <ComponentWrapper name={props.name}>
+    <ComponentWrapper className='my-4' name={props.name}>
       <div className={cx(['demo-hook-example', 'mt-4 rounded-xl bg-[var(--color-code)] p-6'])}>
         <Demo />
       </div>
