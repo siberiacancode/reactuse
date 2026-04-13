@@ -1,4 +1,3 @@
-'use client';
 import { useGamepad } from '@siberiacancode/reactuse';
 
 const Demo = () => {
