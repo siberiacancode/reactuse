@@ -30,7 +30,7 @@ Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the
   ],
   "compilerOptions": {
     "paths": {
-      "@docs/*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
   }
 }
@@ -46,7 +46,7 @@ Add the following code to the `tsconfig.app.json` file to resolve paths, for you
     // ...
 
     "paths": {
-      "@docs/*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
     // ...
   }
@@ -98,7 +98,7 @@ npx useverse@latest add useBoolean
 Then import and use the hook in your app:
 
 ```tsx showLineNumbers title="src/App.tsx"
-import { useBoolean } from '@docs/shared/hooks';
+import { useBoolean } from '@/shared/hooks';
 
 const App = () => {
   const [on, toggle] = useBoolean();

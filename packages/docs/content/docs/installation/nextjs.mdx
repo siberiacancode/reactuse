@@ -39,7 +39,7 @@ Add `baseUrl` and `paths` so the CLI and imports resolve correctly. Use `"./*"` 
 {
   "compilerOptions": {
     "paths": {
-      "@docs/*": ["./*"]
+      "@/*": ["./*"]
     }
   }
 }
@@ -68,7 +68,7 @@ Then import and use the hook (e.g. in `app/page.tsx`). Use `'use client'` when t
 ```tsx title="app/page.tsx" showLineNumbers
 'use client';
 
-import { useBoolean } from '@docs/shared/hooks';
+import { useBoolean } from '@/shared/hooks';
 
 const Home = () => {
   const [on, toggle] = useBoolean();
