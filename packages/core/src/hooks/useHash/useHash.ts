@@ -24,40 +24,48 @@ export interface UseHash {
 
   (callback?: (hash: string) => void): UseHashReturn;
 }
+
 /**
  * @name useHash
  * @description - Hook that manages the hash value
  * @category State
  * @usage low
  *
- * @param {string | UseHashOptions | ((hash: string) => void)} [arg1]
- * Initial hash value, options object, or change callback.
- *
- * @param {UseHashOptions | ((hash: string) => void)} [arg2]
- * Options object or change callback.
- *
- * @returns {[string, (value: string) => void]}
- * A tuple containing the current hash value and a function to update it.
+ * @overload
+ * @param {string} [initialValue] The initial hash value if no hash exists
+ * @param {UseHashOptions} [options] Configuration options
+ * @param {boolean} [options.enabled] The enabled state of the hook
+ * @param {'initial' | 'replace'} [options.mode] The mode of hash setting
+ * @param {(hash: string) => void} [options.onChange] Callback function called when hash changes
+ * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
  * const [value, set] = useHash("initial");
  *
- * @example
- * const [value, set] = useHash("initial", (newHash) => {
- *   console.log(newHash);
- * });
+ * @overload
+ * @param {string} [initialValue] The initial hash value if no hash exists
+ * @param {(hash: string) => void} [callback] Callback function called when hash changes
+ * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [value, set] = useHash({
- *   enabled: true,
- *   mode: "replace",
- *   onChange: (hash) => console.log(hash),
- * });
+ * const [value, set] = useHash("initial", (newHash) => console.log('callback'));
+ *
+ * @overload
+ * @param {UseHashOptions} [options] Configuration options
+ * @param {boolean} [options.enabled] The enabled state of the hook
+ * @param {'initial' | 'replace'} [options.mode] The mode of hash setting
+ * @param {(hash: string) => void} [options.onChange] Callback function called when hash changes
+ * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
  *
  * @example
- * const [value, set] = useHash((newHash) => {
- *   console.log(newHash);
- * });
+ * const [value, set] = useHash();
+ *
+ * @overload
+ * @param {(hash: string) => void} [callback] Callback function called when hash changes
+ * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value
+ *
+ * @example
+ * const [value, set] = useHash((newHash) => console.log('callback'));
  */
 export const useHash = ((...params: any[]) => {
   const initialValue = typeof params[0] === 'string' ? params[0] : '';
