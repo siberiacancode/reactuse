@@ -77,9 +77,12 @@ export const useInterval = ((...params: any[]): UseIntervalReturn => {
 
   const pause = () => setActive(false);
 
-  const resume = () => setActive(true);
+  const resume = () => {
+    if (interval <= 0) return;
+    setActive(true);
+  };
 
-  const toggle = () => setActive((prev) => !prev);
+  const toggle = (value = !active) => setActive(value);
 
   return {
     active,

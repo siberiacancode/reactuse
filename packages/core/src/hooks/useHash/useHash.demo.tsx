@@ -1,9 +1,7 @@
-import { useHash, useMount } from '@siberiacancode/reactuse';
+import { useHash } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const hash = useHash();
-
-  useMount(() => hash.set('path/to/page?userId=123'));
+  const hash = useHash('path/to/page?userId=123');
 
   return (
     <div>

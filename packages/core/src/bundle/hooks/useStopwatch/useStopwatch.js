@@ -48,18 +48,22 @@ export const useStopwatch = (...params) => {
   useEffect(() => {
     if (paused) return;
     const onInterval = () => {
-      setCount((prevCount) => prevCount + 1);
+      setCount((currentCount) => currentCount + 1);
     };
     const interval = setInterval(onInterval, 1000);
     return () => clearInterval(interval);
   }, [paused]);
   const time = getStopwatchTime(count);
+  const pause = () => setPaused(true);
+  const start = () => setPaused(false);
+  const reset = () => setCount(initialTime);
+  const toggle = (active = !paused) => setPaused(active);
   return {
     ...time,
     paused,
-    pause: () => setPaused(true),
-    start: () => setPaused(false),
-    reset: () => setCount(initialTime),
-    toggle: () => setPaused((prevPause) => !prevPause)
+    pause,
+    start,
+    reset,
+    toggle
   };
 };

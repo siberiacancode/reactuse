@@ -39,7 +39,7 @@ export interface UseStopwatchReturn {
   /** The function to start the stopwatch */
   start: () => void;
   /** The function to toggle the stopwatch */
-  toggle: () => void;
+  toggle: (active?: boolean) => void;
 }
 
 /** The use stopwatch options */
@@ -97,7 +97,7 @@ export const useStopwatch = ((...params: any[]) => {
   useEffect(() => {
     if (paused) return;
     const onInterval = () => {
-      setCount((prevCount) => prevCount + 1);
+      setCount((currentCount) => currentCount + 1);
     };
 
     const interval = setInterval(onInterval, 1000);
@@ -106,12 +106,17 @@ export const useStopwatch = ((...params: any[]) => {
 
   const time = getStopwatchTime(count);
 
+  const pause = () => setPaused(true);
+  const start = () => setPaused(false);
+  const reset = () => setCount(initialTime);
+  const toggle = (active = !paused) => setPaused(active);
+
   return {
     ...time,
     paused,
-    pause: () => setPaused(true),
-    start: () => setPaused(false),
-    reset: () => setCount(initialTime),
-    toggle: () => setPaused((prevPause) => !prevPause)
+    pause,
+    start,
+    reset,
+    toggle
   };
 }) as UseStopwatch;
