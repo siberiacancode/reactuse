@@ -1,9 +1,9 @@
 import { useHash, useMount } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const [hash, setHash] = useHash();
+  const hash = useHash();
 
-  useMount(() => setHash('path/to/page?userId=123'));
+  useMount(() => hash.set('path/to/page?userId=123'));
 
   return (
     <div>
@@ -12,7 +12,11 @@ const Demo = () => {
       <pre className='whitespace-pre-wrap'>{window.location.href}</pre>
 
       <p>
-        <input className='w-full' value={hash} onChange={(event) => setHash(event.target.value)} />
+        <input
+          className='w-full'
+          value={hash.value}
+          onChange={(event) => hash.set(event.target.value)}
+        />
       </p>
     </div>
   );
