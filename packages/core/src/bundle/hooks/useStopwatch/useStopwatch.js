@@ -22,74 +22,44 @@ const getStopwatchTime = (time) => {
  *
  * @overload
  * @param {number} [initialTime=0] The initial time of the timer
- * @param {boolean} [options.enabled=true] The enabled state of the timer
+ * @param {boolean} [options.immediately=false] Start the stopwatch immediately
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
- * const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { enabled: false });
+ * const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { immediately: false });
  *
  * @overload
- * @param {number} [options.initialTime=0] -The initial time of the timer
- * @param {boolean} [options.enabled=true] The enabled state of the timer
+ * @param {number} [options.initialTime=0] The initial time of the timer
+ * @param {boolean} [options.immediately=false] Start the stopwatch immediately
  * @returns {UseStopwatchReturn} An object containing the current time and functions to interact with the timer
  *
  * @example
- * const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, enabled: false });
+ * const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, immediately: false });
  */
 export const useStopwatch = (...params) => {
   const initialTime = (typeof params[0] === 'number' ? params[0] : params[0]?.initialTime) ?? 0;
   const options = typeof params[0] === 'number' ? params[1] : params[0];
   const immediately = options?.immediately ?? false;
-  const [time, setTime] = useState(getStopwatchTime(initialTime));
-  const [paused, setPaused] = useState(!immediately && !initialTime);
+  const [count, setCount] = useState(initialTime);
+  const [paused, setPaused] = useState(!immediately);
+  useEffect(() => {
+    setCount(initialTime);
+  }, [initialTime]);
   useEffect(() => {
     if (paused) return;
     const onInterval = () => {
-      setTime((prevTime) => {
-        const updatedCount = prevTime.count + 1;
-        if (updatedCount % 60 === 0) {
-          return {
-            ...prevTime,
-            minutes: prevTime.minutes + 1,
-            seconds: 0,
-            count: updatedCount
-          };
-        }
-        if (updatedCount % (60 * 60) === 0) {
-          return {
-            ...prevTime,
-            hours: prevTime.hours + 1,
-            minutes: 0,
-            seconds: 0,
-            count: updatedCount
-          };
-        }
-        if (updatedCount % (60 * 60 * 24) === 0) {
-          return {
-            ...prevTime,
-            days: prevTime.days + 1,
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
-            count: updatedCount
-          };
-        }
-        return {
-          ...prevTime,
-          seconds: prevTime.seconds + 1,
-          count: updatedCount
-        };
-      });
+      setCount((prevCount) => prevCount + 1);
     };
-    const interval = setInterval(() => onInterval(), 1000);
+    const interval = setInterval(onInterval, 1000);
     return () => clearInterval(interval);
   }, [paused]);
+  const time = getStopwatchTime(count);
   return {
     ...time,
     paused,
     pause: () => setPaused(true),
     start: () => setPaused(false),
-    reset: () => setTime(getStopwatchTime(initialTime)),
+    reset: () => setCount(initialTime),
     toggle: () => setPaused((prevPause) => !prevPause)
   };
 };

@@ -24,10 +24,10 @@ import { useEffect, useRef, useState } from 'react';
  */
 export const useInterval = (...params) => {
   const callback = params[0];
-  const interval = (typeof params[1] === 'number' ? params[1] : params[1].interval) ?? 1000;
+  const interval = (typeof params[1] === 'number' ? params[1] : params[1]?.interval) ?? 1000;
   const options = typeof params[1] === 'object' ? params[1] : params[2];
   const immediately = options?.immediately ?? true;
-  const [active, setActive] = useState(immediately ?? true);
+  const [active, setActive] = useState(immediately);
   const intervalIdRef = useRef(undefined);
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
@@ -39,11 +39,8 @@ export const useInterval = (...params) => {
     };
   }, [active, interval]);
   const pause = () => setActive(false);
-  const resume = () => {
-    if (interval <= 0) return;
-    setActive(true);
-  };
-  const toggle = (value = !active) => setActive(value);
+  const resume = () => setActive(true);
+  const toggle = () => setActive((prev) => !prev);
   return {
     active,
     pause,
