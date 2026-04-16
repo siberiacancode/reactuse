@@ -125,7 +125,7 @@ export const useDropZone = ((...params: any[]) => {
 
   const getFiles = (event: DragEvent) => {
     if (!event.dataTransfer) return null;
-    const list = Array.from(event.dataTransfer.files);
+    const list = [...event.dataTransfer.files];
     if (options.multiple) return list;
     if (!list.length) return null;
     return [list[0]];
@@ -141,7 +141,7 @@ export const useDropZone = ((...params: any[]) => {
   };
 
   const checkValidity = (items: DataTransferItemList) => {
-    const types = Array.from(items).map((item) => item.type);
+    const types = Array.from(items, (item) => item.type);
     const dataTypesValid = checkDataTypes(types);
     const multipleFilesValid = options.multiple || items.length <= 1;
 

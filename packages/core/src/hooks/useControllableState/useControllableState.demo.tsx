@@ -56,11 +56,11 @@ const Demo = () => {
       </Collapse>
 
       <div className='mt-4 flex flex-wrap gap-1'>
-        <button type='button' onClick={controlledCollapse.toggle}>
+        <button type='button' onClick={() => controlledCollapse.toggle()}>
           {controlledCollapse.opened ? 'Close' : 'Open'}
         </button>
 
-        <button type='button' onClick={controlledCollapse.toggle}>
+        <button type='button' onClick={() => controlledCollapse.toggle()}>
           Toggle
         </button>
       </div>

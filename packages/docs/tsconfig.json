@@ -1,15 +1,19 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "incremental": true,
     "target": "esnext",
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@siberiacancode/docs": ["."]
+      "@siberiacancode/docs": ["."],
+      "@docs/*": ["./*"],
+      "@siberiacancode/reactuse": ["../core/src"],
+      "@/*": ["../core/src/*"]
     },
     "resolveJsonModule": true,
+    "types": ["@types/web-bluetooth", "@types/dom-speech-recognition"],
     "allowJs": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,
@@ -22,7 +26,20 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "exclude": ["dist", "node_modules"]
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": ["dist", "node_modules", "**/*.demo.*"]
 }

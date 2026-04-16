@@ -1,4 +1,3 @@
-import { cn } from '@siberiacancode/docs/utils';
 import {
   useClickOutside,
   useCounter,
@@ -7,6 +6,8 @@ import {
   useMouse
 } from '@siberiacancode/reactuse';
 import { useRef } from 'react';
+
+import { cn } from '../../../../docs/lib/utils';
 
 const Demo = () => {
   const counter = useCounter();

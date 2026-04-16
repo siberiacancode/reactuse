@@ -9,11 +9,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": [
-      "vitest/globals",
-      "@types/web-bluetooth",
-      "@types/dom-speech-recognition"
-    ],
+    "types": ["vitest/globals", "@types/web-bluetooth", "@types/dom-speech-recognition"],
     "strict": true,
     "declaration": false,
     "emitDeclarationOnly": false,
