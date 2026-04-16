@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-import { cn } from '../../../../docs/lib/utils';
+import { cn } from '@siberiacancode/docs/utils';
 import { useEventListener, usePointerLock } from '@siberiacancode/reactuse';
 import { useRef } from 'react';
 

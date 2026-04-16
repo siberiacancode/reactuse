@@ -1,41 +1,26 @@
 import { eslint } from '@siberiacancode/eslint';
 
+/** @type {import('eslint').Linter.FlatConfig} */
 export default eslint(
   {
     typescript: true,
-    javascript: true,
     react: true,
     jsx: true,
     vue: true
   },
   {
-    name: 'siberiacancode/core/ignores',
-    ignores: ['**/bundle/**/*.js']
-  },
-  {
-    name: 'siberiacancode/core/hooks',
-    files: ['**/{hooks,helpers}/**/*.{ts,tsx}'],
-    rules: {
-      'react-dom/no-flush-sync': 'warn',
-      'jsdoc/no-defaults': 'off',
-      'react-hooks/rules-of-hooks': 'warn',
-      'react/no-use-context': 'off',
-      'react/no-context-provider': 'off'
-    }
-  },
-  {
-    name: 'siberiacancode/core/tests',
-    files: ['**/*.test.ts'],
+    name: 'siberiacancode/reactuse/md',
     rules: {
       'react-refresh/only-export-components': 'off',
-      'react/no-create-ref': 'off'
+      'react-hooks/rules-of-hooks': 'off',
+      'style/max-len': 'off'
     }
   },
   {
-    name: 'siberiacancode/core/demo',
-    files: ['**/*.demo.tsx'],
+    name: 'siberiacancode/reactuse/docs',
+    files: ['**/src/**/*.ts'],
     rules: {
-      'no-alert': 'off'
+      'regexp/no-super-linear-backtracking': 'off'
     }
   }
 );

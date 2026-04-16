@@ -1,4 +1,4 @@
-import { cn } from '../../../../docs/lib/utils';
+import { cn } from '@siberiacancode/docs/utils';
 import { useClickOutside, useCounter } from '@siberiacancode/reactuse';
 
 const Demo = () => {

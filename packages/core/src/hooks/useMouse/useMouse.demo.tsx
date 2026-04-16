@@ -1,7 +1,6 @@
+import { cn } from '@siberiacancode/docs/utils';
 import { useHover, useMouse } from '@siberiacancode/reactuse';
 import { useRef } from 'react';
-
-import { cn } from '../../../../docs/lib/utils';
 
 const Demo = () => {
   const modalRef = useRef<HTMLDivElement>(null);
