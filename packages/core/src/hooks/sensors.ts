@@ -27,6 +27,7 @@ export * from './useScroll/useScroll';
 export * from './useScrollIntoView/useScrollIntoView';
 export * from './useScrollTo/useScrollTo';
 export * from './useSize/useSize';
+export * from './useSwipe/useSwipe';
 export * from './useTextSelection/useTextSelection';
 export * from './useVisibility/useVisibility';
 export * from './useWindowEvent/useWindowEvent';

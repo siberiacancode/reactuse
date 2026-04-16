@@ -155,6 +155,44 @@ it('Should reset to initial time', () => {
   expect(result.current.seconds).toBe(1);
 });
 
+[
+  {
+    beforeMs: 59_000,
+    before: { days: 0, hours: 0, minutes: 0, seconds: 59 },
+    after: { days: 0, hours: 0, minutes: 1, seconds: 0 }
+  },
+  {
+    beforeMs: 3_599_000,
+    before: { days: 0, hours: 0, minutes: 59, seconds: 59 },
+    after: { days: 0, hours: 1, minutes: 0, seconds: 0 }
+  },
+  {
+    beforeMs: 86_399_000,
+    before: { days: 0, hours: 23, minutes: 59, seconds: 59 },
+    after: { days: 1, hours: 0, minutes: 0, seconds: 0 }
+  }
+].forEach(({ beforeMs, before, after }) => {
+  it(`Should correctly transition from ${beforeMs}ms to ${after.days} days ${after.hours} hours ${after.minutes} minutes ${after.seconds} seconds`, () => {
+    const { result } = renderHook(useStopwatch);
+
+    act(() => result.current.start());
+
+    act(() => vi.advanceTimersByTime(beforeMs));
+
+    expect(result.current.days).toBe(before.days);
+    expect(result.current.hours).toBe(before.hours);
+    expect(result.current.minutes).toBe(before.minutes);
+    expect(result.current.seconds).toBe(before.seconds);
+
+    act(() => vi.advanceTimersByTime(1_000));
+
+    expect(result.current.days).toBe(after.days);
+    expect(result.current.hours).toBe(after.hours);
+    expect(result.current.minutes).toBe(after.minutes);
+    expect(result.current.seconds).toBe(after.seconds);
+  });
+});
+
 it('Should cleanup interval on unmount', () => {
   const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
   const { result, unmount } = renderHook(useStopwatch);
