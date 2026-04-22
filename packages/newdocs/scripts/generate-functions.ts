@@ -142,7 +142,9 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push('---');
   result.push(`title: ${metadata.name}`);
   if (metadata.description) result.push(`description: ${metadata.description}`);
-  result.push(`category: ${metadata.category}`);
+  result.push(`category: ${metadata.category.toLowerCase()}`);
+  result.push(`usage: ${metadata.usage.toLowerCase()}`);
+  result.push(`type: ${metadata.type}`);
   result.push(`isTest: ${metadata.isTest}`);
   result.push(`isDemo: ${metadata.isDemo}`);
   result.push('---');
@@ -150,10 +152,6 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
 
   //   result.push("import { Tabs, TabsContent, TabsList, TabsTrigger } from '@docs/ui/tabs';");
   //   result.push("import { Separator } from '@docs/ui/separator';");
-
-  result.push('');
-  result.push(`<DocHeader  />`);
-  result.push('');
 
   result.push(`<Separator className="my-2" />`);
   result.push('');
