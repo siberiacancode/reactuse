@@ -1,0 +1,107 @@
+{
+  "name": "useFavicon",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import type { Dispatch, SetStateAction } from 'react';\r\n\r\nimport { useState } from 'react';\r\n\r\nimport { useMount } from '../useMount/useMount';\r\n\r\n/** The use favicon return type */\r\nexport type UseFaviconReturn = [string, Dispatch<SetStateAction<string>>];\r\n\r\n/**\r\n * @name useFavicon\r\n * @description - Hook that manages the favicon\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @param {string} [initialFavicon] The initial favicon. If not provided, the current favicon will be used\r\n * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon\r\n *\r\n * @example\r\n * const { href, set } = useFavicon('https://siberiacancode.github.io/reactuse/favicon.ico');\r\n */\r\nexport const useFavicon = (initialHref?: string) => {\r\n  const [href, setHref] = useState(\r\n    initialHref ??\r\n      (typeof document !== 'undefined'\r\n        ? document.querySelector<HTMLLinkElement>(`link[rel*=\"icon\"]`)?.href\r\n        : undefined)\r\n  );\r\n\r\n  const injectFavicon = (favicon: string) => {\r\n    const link =\r\n      document.querySelector<HTMLLinkElement>(`link[rel*=\"icon\"]`) ||\r\n      document.createElement('link');\r\n    link.rel = 'icon';\r\n    link.href = favicon;\r\n    link.type = `image/${favicon.split('.').pop()}`;\r\n    document.head.append(link);\r\n  };\r\n\r\n  const set = (favicon: string) => {\r\n    setHref(favicon);\r\n    injectFavicon(favicon);\r\n  };\r\n\r\n  useMount(() => {\r\n    if (!initialHref) return;\r\n    injectFavicon(initialHref);\r\n  });\r\n\r\n  return { href, set } as const;\r\n};\r\n",
+  "typeDeclarations": "import type { Dispatch, SetStateAction } from 'react';\n\nexport type UseFaviconReturn = [string, Dispatch<SetStateAction<string>>];",
+  "description": "Hook that manages the favicon",
+  "examples": [
+    "const { href, set } = useFavicon('https://siberiacancode.github.io/reactuse/favicon.ico');"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialFavicon",
+          "type": "string",
+          "optional": true,
+          "description": "The initial favicon. If not provided, the current favicon will be used",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {string} [initialFavicon] The initial favicon. If not provided, the current favicon will be used\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialFavicon]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The initial favicon. If not provided, the current favicon will be used",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseFaviconReturn",
+        "optional": false,
+        "description": "array containing the current favicon and a function to update the favicon",
+        "problems": [],
+        "source": [
+          {
+            "number": 7,
+            "source": " * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseFaviconReturn}",
+              "postType": " ",
+              "description": "array containing the current favicon and a function to update the favicon",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 8,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1755364807000
+}

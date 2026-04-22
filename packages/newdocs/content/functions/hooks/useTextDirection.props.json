@@ -1,0 +1,214 @@
+{
+  "name": "useTextDirection",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The use text direction value type */\r\nexport type UseTextDirectionValue = 'auto' | 'ltr' | 'rtl';\r\n\r\n/** The use text direction return type */\r\nexport interface UseTextDirectionReturn {\r\n  /** The current direction */\r\n  value: UseTextDirectionValue;\r\n  /*** The function to remove the direction */\r\n  remove: () => void;\r\n  /*** The function to set the direction */\r\n  set: (value: UseTextDirectionValue | null) => void;\r\n}\r\n\r\nexport interface UseTextDirection {\r\n  (target: HookTarget, initialValue?: UseTextDirectionValue): UseTextDirectionReturn;\r\n\r\n  <Target extends Element>(\r\n    initialValue?: UseTextDirectionValue,\r\n    target?: never\r\n  ): UseTextDirectionReturn & { ref: StateRef<Target> };\r\n}\r\n\r\n/**\r\n * @name useTextDirection\r\n * @description - Hook that can get and set the direction of the element\r\n * @category Elements\r\n * @usage medium\r\n *\r\n * @overload\r\n * @param {HookTarget} [target=document.querySelector('html')] The target element to observe\r\n * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element\r\n * @returns {UseTextDirectionReturn} An object containing the current text direction of the element\r\n *\r\n * @example\r\n * const { value, set, remove } = useTextDirection(ref);\r\n *\r\n * @overload\r\n * @template Target The target element type\r\n * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element\r\n * @returns { { ref: StateRef<Target> } & UseTextDirectionReturn } An object containing the current text direction of the element\r\n *\r\n * @example\r\n * const { ref, value, set, remove } = useTextDirection();\r\n */\r\nexport const useTextDirection = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const initialValue = ((target ? params[1] : params[0]) as UseTextDirectionValue) ?? 'ltr';\r\n\r\n  const internalRef = useRefState();\r\n  const elementRef = useRef<Element>(null);\r\n\r\n  const getDirection = () => {\r\n    if (typeof window === 'undefined') return initialValue;\r\n    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;\r\n    return (element?.getAttribute('dir') as UseTextDirectionValue) ?? initialValue;\r\n  };\r\n\r\n  const [value, setValue] = useState<UseTextDirectionValue>(getDirection());\r\n\r\n  const remove = () => {\r\n    if (!elementRef.current) return;\r\n\r\n    elementRef.current?.removeAttribute('dir');\r\n  };\r\n\r\n  const set = (value: UseTextDirectionValue) => {\r\n    if (!elementRef.current) return;\r\n\r\n    setValue(value);\r\n    elementRef.current.setAttribute('dir', value);\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (!target && !internalRef.state) return;\r\n\r\n    const element =\r\n      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ??\r\n      document.querySelector('html');\r\n    if (!element) return;\r\n\r\n    elementRef.current = element;\r\n\r\n    const direction = getDirection();\r\n    element.setAttribute('dir', direction);\r\n    setValue(direction);\r\n\r\n    const observer = new MutationObserver(() => setValue(getDirection()));\r\n\r\n    observer.observe(element, { attributes: true });\r\n\r\n    return () => {\r\n      observer.disconnect();\r\n    };\r\n  }, [internalRef.state, target && isTarget.getRawElement(target)]);\r\n\r\n  if (target) return { value, set, remove };\r\n  return {\r\n    ref: internalRef,\r\n    value,\r\n    set,\r\n    remove\r\n  };\r\n}) as UseTextDirection;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport type UseTextDirectionValue = 'auto' | 'ltr' | 'rtl';\n\nexport interface UseTextDirectionReturn {\r\n  /** The current direction */\r\n  value: UseTextDirectionValue;\r\n  /*** The function to remove the direction */\r\n  remove: () => void;\r\n  /*** The function to set the direction */\r\n  set: (value: UseTextDirectionValue | null) => void;\r\n}\n\nexport interface UseTextDirection {\r\n  (target: HookTarget, initialValue?: UseTextDirectionValue): UseTextDirectionReturn;\r\n\r\n  <Target extends Element>(\r\n    initialValue?: UseTextDirectionValue,\r\n    target?: never\r\n  ): UseTextDirectionReturn & { ref: StateRef<Target> };\r\n}",
+  "description": "Hook that can get and set the direction of the element",
+  "examples": [
+    "const { value, set, remove } = useTextDirection(ref);",
+    "const { ref, value, set, remove } = useTextDirection();"
+  ],
+  "usage": "medium",
+  "category": "elements",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The target element to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} [target=document.querySelector('html')] The target element to observe\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=document.querySelector('html')]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to observe",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "document.querySelector('html')"
+        },
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "UseTextDirectionValue",
+          "optional": true,
+          "description": "The initial direction of the element",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue = 'ltr']",
+                "postName": " ",
+                "type": "{UseTextDirectionValue}",
+                "postType": " ",
+                "description": "The initial direction of the element",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'ltr'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseTextDirectionReturn",
+        "optional": false,
+        "description": "object containing the current text direction of the element",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseTextDirectionReturn} An object containing the current text direction of the element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseTextDirectionReturn}",
+              "postType": " ",
+              "description": "object containing the current text direction of the element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "UseTextDirectionValue",
+          "optional": true,
+          "description": "The initial direction of the element",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue = 'ltr']",
+                "postName": " ",
+                "type": "{UseTextDirectionValue}",
+                "postType": " ",
+                "description": "The initial direction of the element",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'ltr'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "{ ref: StateRef<Target> } & UseTextDirectionReturn",
+        "optional": false,
+        "description": "object containing the current text direction of the element",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns { { ref: StateRef<Target> } & UseTextDirectionReturn } An object containing the current text direction of the element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{ { ref: StateRef<Target> } & UseTextDirectionReturn }",
+              "postType": " ",
+              "description": "object containing the current text direction of the element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 18,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1768553242000
+}

@@ -1,0 +1,336 @@
+{
+  "name": "useSpeechRecognition",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Artem Dereviago",
+      "avatar": "https://gravatar.com/avatar/8a325a7b2b80fc575dc5c92eb0301a13?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\n/** The use speech recognition hook options type */\r\ninterface UseSpeechRecognitionOptions {\r\n  /** If true, recognition continues even after pauses in speech. Default is false */\r\n  continuous?: SpeechRecognition['continuous'];\r\n  /** A list of grammar rules */\r\n  grammars?: SpeechRecognition['grammars'];\r\n  /** If true, interim (non-final) results are provided as the user speaks */\r\n  interimResults?: SpeechRecognition['interimResults'];\r\n  /** The language in which recognition should occur. Must be a valid BCP 47 language tag (e.g., \"en-US\", \"ru-RU\") */\r\n  language?: SpeechRecognition['lang'];\r\n  /** The maximum number of alternative transcripts returned for a given recognition result. Must be a positive integer */\r\n  maxAlternatives?: SpeechRecognition['maxAlternatives'];\r\n  /** Callback invoked when speech recognition ends */\r\n  onEnd?: () => void;\r\n  /** Callback invoked when an error occurs during recognition */\r\n  onError?: (error: SpeechRecognitionErrorEvent) => void;\r\n  /** Callback invoked when recognition produces a result */\r\n  onResult?: (event: SpeechRecognitionEvent) => void;\r\n  /** Callback invoked when speech recognition starts */\r\n  onStart?: () => void;\r\n}\r\n\r\n/** The return type of the useSpeechRecognition hook. */\r\ninterface UseSpeechRecognitionReturn {\r\n  /** The error state */\r\n  error: SpeechRecognitionErrorEvent | null;\r\n  /** The final transcript */\r\n  final: boolean;\r\n  /** Whether the hook is currently listening for speech */\r\n  listening: boolean;\r\n  /** The speech recognition instance */\r\n  recognition?: SpeechRecognition;\r\n  /** Whether the current browser supports the Web Speech API */\r\n  supported: boolean;\r\n  /** The current transcript */\r\n  transcript: string;\r\n  /** Begins speech recognition */\r\n  start: () => void;\r\n  /** Ends speech recognition, finalizing results */\r\n  stop: () => void;\r\n  /** Toggles the listening state */\r\n  toggle: (value?: boolean) => void;\r\n}\r\n\r\nexport const getSpeechRecognition = () =>\r\n  window?.SpeechRecognition ?? window?.webkitSpeechRecognition;\r\n\r\n/**\r\n * @name useSpeechRecognition\r\n * @description - Hook that provides a streamlined interface for incorporating speech-to-text functionality\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi window.SpeechRecognition https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition\r\n *\r\n * @param {boolean} [options.continuous=false] Whether recognition should continue after pauses\r\n * @param {boolean} [options.interimResults=false] Whether interim results should be provided\r\n * @param {string} [options.language=\"en-US\"] The language for recognition, as a valid BCP 47 tag\r\n * @param {number} [options.maxAlternatives=1] The maximum number of alternative transcripts to return\r\n * @param {SpeechGrammarList} [options.grammars] A list of grammar rules\r\n * @param {() => void} [options.onStart] Callback invoked when speech recognition starts\r\n * @param {() => void} [options.onEnd] Callback invoked when speech recognition ends\r\n * @param {(error: SpeechRecognitionErrorEvent) => void} [options.onError] Callback invoked when an error occurs during recognition\r\n * @param {(event: SpeechRecognitionEvent) => void} [options.onResult] Callback invoked when recognition produces a result\r\n * @returns {UseSpeechRecognitionReturn} An object containing the speech recognition functionality\r\n *\r\n * @example\r\n * const { supported, value, recognition, listening, error, start, stop, toggle  } = useSpeechRecognition();\r\n */\r\nexport const useSpeechRecognition = (\r\n  options: UseSpeechRecognitionOptions = {}\r\n): UseSpeechRecognitionReturn => {\r\n  const supported = typeof window !== 'undefined' && !!getSpeechRecognition();\r\n\r\n  const {\r\n    continuous = false,\r\n    interimResults = false,\r\n    language = 'en-US',\r\n    grammars,\r\n    maxAlternatives = 1,\r\n    onStart,\r\n    onEnd,\r\n    onError,\r\n    onResult\r\n  } = options;\r\n\r\n  const [listening, setListening] = useState(false);\r\n  const [transcript, setTranscript] = useState('');\r\n  const [final, setFinal] = useState(false);\r\n  const [error, setError] = useState<SpeechRecognitionErrorEvent | null>(null);\r\n  const [recognition] = useState<SpeechRecognition | undefined>(() => {\r\n    if (!supported) return undefined;\r\n\r\n    const SpeechRecognition = getSpeechRecognition();\r\n    const speechRecognition = new SpeechRecognition();\r\n\r\n    speechRecognition.continuous = continuous;\r\n    if (grammars) speechRecognition.grammars = grammars;\r\n    speechRecognition.interimResults = interimResults;\r\n    speechRecognition.lang = language;\r\n    speechRecognition.maxAlternatives = maxAlternatives;\r\n\r\n    speechRecognition.onstart = () => {\r\n      setListening(true);\r\n      setFinal(false);\r\n      onStart?.();\r\n    };\r\n    speechRecognition.onerror = (event) => {\r\n      setError(event);\r\n      setListening(false);\r\n      onError?.(event);\r\n    };\r\n    speechRecognition.onresult = (event) => {\r\n      const currentResult = event.results[event.resultIndex];\r\n      const { transcript } = currentResult[0];\r\n\r\n      setListening(false);\r\n      setTranscript(transcript);\r\n      setError(null);\r\n      onResult?.(event);\r\n    };\r\n    speechRecognition.onend = () => {\r\n      setListening(false);\r\n      onEnd?.();\r\n      speechRecognition.lang = language;\r\n    };\r\n\r\n    return speechRecognition;\r\n  });\r\n\r\n  useEffect(() => () => recognition?.stop(), []);\r\n\r\n  const start = () => recognition?.start();\r\n  const stop = () => recognition?.stop();\r\n\r\n  const toggle = (value = !listening) => {\r\n    if (value) return start();\r\n    return stop();\r\n  };\r\n\r\n  return {\r\n    supported,\r\n    transcript,\r\n    recognition,\r\n    final,\r\n    listening,\r\n    error,\r\n    start,\r\n    stop,\r\n    toggle\r\n  };\r\n};\r\n",
+  "typeDeclarations": "interface UseSpeechRecognitionOptions {\r\n  /** If true, recognition continues even after pauses in speech. Default is false */\r\n  continuous?: SpeechRecognition['continuous'];\r\n  /** A list of grammar rules */\r\n  grammars?: SpeechRecognition['grammars'];\r\n  /** If true, interim (non-final) results are provided as the user speaks */\r\n  interimResults?: SpeechRecognition['interimResults'];\r\n  /** The language in which recognition should occur. Must be a valid BCP 47 language tag (e.g., \"en-US\", \"ru-RU\") */\r\n  language?: SpeechRecognition['lang'];\r\n  /** The maximum number of alternative transcripts returned for a given recognition result. Must be a positive integer */\r\n  maxAlternatives?: SpeechRecognition['maxAlternatives'];\r\n  /** Callback invoked when speech recognition ends */\r\n  onEnd?: () => void;\r\n  /** Callback invoked when an error occurs during recognition */\r\n  onError?: (error: SpeechRecognitionErrorEvent) => void;\r\n  /** Callback invoked when recognition produces a result */\r\n  onResult?: (event: SpeechRecognitionEvent) => void;\r\n  /** Callback invoked when speech recognition starts */\r\n  onStart?: () => void;\r\n}\n\ninterface UseSpeechRecognitionReturn {\r\n  /** The error state */\r\n  error: SpeechRecognitionErrorEvent | null;\r\n  /** The final transcript */\r\n  final: boolean;\r\n  /** Whether the hook is currently listening for speech */\r\n  listening: boolean;\r\n  /** The speech recognition instance */\r\n  recognition?: SpeechRecognition;\r\n  /** Whether the current browser supports the Web Speech API */\r\n  supported: boolean;\r\n  /** The current transcript */\r\n  transcript: string;\r\n  /** Begins speech recognition */\r\n  start: () => void;\r\n  /** Ends speech recognition, finalizing results */\r\n  stop: () => void;\r\n  /** Toggles the listening state */\r\n  toggle: (value?: boolean) => void;\r\n}",
+  "description": "Hook that provides a streamlined interface for incorporating speech-to-text functionality",
+  "examples": [
+    "const { supported, value, recognition, listening, error, start, stop, toggle  } = useSpeechRecognition();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "window.SpeechRecognition",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.continuous",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether recognition should continue after pauses",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [options.continuous=false] Whether recognition should continue after pauses\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.continuous=false]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether recognition should continue after pauses",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "false"
+        },
+        {
+          "tag": "param",
+          "name": "options.interimResults",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether interim results should be provided",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {boolean} [options.interimResults=false] Whether interim results should be provided\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.interimResults=false]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether interim results should be provided",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "false"
+        },
+        {
+          "tag": "param",
+          "name": "options.language",
+          "type": "string",
+          "optional": true,
+          "description": "The language for recognition, as a valid BCP 47 tag",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {string} [options.language=\"en-US\"] The language for recognition, as a valid BCP 47 tag\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.language=\"en-US\"]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The language for recognition, as a valid BCP 47 tag",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "\"en-US\""
+        },
+        {
+          "tag": "param",
+          "name": "options.maxAlternatives",
+          "type": "number",
+          "optional": true,
+          "description": "The maximum number of alternative transcripts to return",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {number} [options.maxAlternatives=1] The maximum number of alternative transcripts to return\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.maxAlternatives=1]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The maximum number of alternative transcripts to return",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "tag": "param",
+          "name": "options.grammars",
+          "type": "SpeechGrammarList",
+          "optional": true,
+          "description": "A list of grammar rules",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {SpeechGrammarList} [options.grammars] A list of grammar rules\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.grammars]",
+                "postName": " ",
+                "type": "{SpeechGrammarList}",
+                "postType": " ",
+                "description": "A list of grammar rules",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onStart",
+          "type": "() => void",
+          "optional": true,
+          "description": "Callback invoked when speech recognition starts",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {() => void} [options.onStart] Callback invoked when speech recognition starts\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onStart]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "Callback invoked when speech recognition starts",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onEnd",
+          "type": "() => void",
+          "optional": true,
+          "description": "Callback invoked when speech recognition ends",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {() => void} [options.onEnd] Callback invoked when speech recognition ends\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onEnd]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "Callback invoked when speech recognition ends",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onError",
+          "type": "(error: SpeechRecognitionErrorEvent) => void",
+          "optional": true,
+          "description": "Callback invoked when an error occurs during recognition",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {(error: SpeechRecognitionErrorEvent) => void} [options.onError] Callback invoked when an error occurs during recognition\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onError]",
+                "postName": " ",
+                "type": "{(error: SpeechRecognitionErrorEvent) => void}",
+                "postType": " ",
+                "description": "Callback invoked when an error occurs during recognition",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onResult",
+          "type": "(event: SpeechRecognitionEvent) => void",
+          "optional": true,
+          "description": "Callback invoked when recognition produces a result",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {(event: SpeechRecognitionEvent) => void} [options.onResult] Callback invoked when recognition produces a result\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onResult]",
+                "postName": " ",
+                "type": "{(event: SpeechRecognitionEvent) => void}",
+                "postType": " ",
+                "description": "Callback invoked when recognition produces a result",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseSpeechRecognitionReturn",
+        "optional": false,
+        "description": "object containing the speech recognition functionality",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns {UseSpeechRecognitionReturn} An object containing the speech recognition functionality\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseSpeechRecognitionReturn}",
+              "postType": " ",
+              "description": "object containing the speech recognition functionality",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 18,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1768411966000
+}

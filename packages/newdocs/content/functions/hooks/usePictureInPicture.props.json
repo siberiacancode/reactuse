@@ -1,0 +1,268 @@
+{
+  "name": "usePictureInPicture",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The use picture in picture options type */\r\nexport interface UsePictureInPictureOptions {\r\n  /** The callback when Picture-in-Picture mode is entered */\r\n  onEnter?: () => void;\r\n  /** The callback when Picture-in-Picture mode is exited */\r\n  onExit?: () => void;\r\n}\r\n\r\n/** The use picture in picture return type */\r\nexport interface UsePictureInPictureReturn {\r\n  /** Whether Picture-in-Picture mode is currently active */\r\n  opened: boolean;\r\n  /** Whether Picture-in-Picture mode is supported by the browser */\r\n  supported: boolean;\r\n  /** Request to enter Picture-in-Picture mode */\r\n  enter: () => Promise<void>;\r\n  /** Request to exit Picture-in-Picture mode */\r\n  exit: () => Promise<void>;\r\n  /** Toggle Picture-in-Picture mode */\r\n  toggle: () => Promise<void>;\r\n}\r\n\r\nexport interface UsePictureInPicture {\r\n  (target: HookTarget, options?: UsePictureInPictureOptions): UsePictureInPictureReturn;\r\n\r\n  (options?: UsePictureInPictureOptions): UsePictureInPictureReturn & {\r\n    ref: StateRef<HTMLVideoElement>;\r\n  };\r\n}\r\n\r\n/**\r\n * @name usePictureInPicture\r\n * @description - Hook that provides Picture-in-Picture functionality for video elements\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi window.PictureInPicture https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target video element\r\n * @param {() => void} [options.onEnter] Callback when Picture-in-Picture mode is entered\r\n * @param {() => void} [options.onExit] Callback when Picture-in-Picture mode is exited\r\n * @returns {UsePictureInPictureReturn} An object containing Picture-in-Picture state and controls\r\n *\r\n * @example\r\n * const { open, supported, enter, exit, toggle } = usePictureInPicture(videoRef);\r\n *\r\n * @overload\r\n * @param {() => void} [options.onEnter] Callback when Picture-in-Picture mode is entered\r\n * @param {() => void} [options.onExit] Callback when Picture-in-Picture mode is exited\r\n * @returns {UsePictureInPictureReturn & { ref: StateRef<HTMLVideoElement> }} An object containing Picture-in-Picture state, controls and ref\r\n *\r\n * @example\r\n * const { ref, open, supported, enter, exit, toggle } = usePictureInPicture();\r\n */\r\nexport const usePictureInPicture = ((...params: any[]) => {\r\n  const supported =\r\n    typeof document !== 'undefined' &&\r\n    'pictureInPictureEnabled' in document &&\r\n    !!document.pictureInPictureEnabled;\r\n\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const options = ((target ? params[1] : params[0]) as UsePictureInPictureOptions) ?? {};\r\n\r\n  const [opened, setOpened] = useState(false);\r\n\r\n  const internalRef = useRefState<HTMLVideoElement>();\r\n  const elementRef = useRef<HTMLVideoElement>(null);\r\n  const onOptionsRef = useRef<UsePictureInPictureOptions>(options);\r\n  onOptionsRef.current = options;\r\n\r\n  const enter = async () => {\r\n    if (!supported) return;\r\n\r\n    if (!elementRef.current) return;\r\n\r\n    await elementRef.current.requestPictureInPicture();\r\n    setOpened(true);\r\n\r\n    options.onEnter?.();\r\n  };\r\n\r\n  const exit = async () => {\r\n    if (!supported) return;\r\n\r\n    await document.exitPictureInPicture();\r\n    setOpened(false);\r\n    options.onExit?.();\r\n  };\r\n\r\n  useEffect(() => {\r\n    const element = target\r\n      ? (isTarget.getElement(target) as HTMLVideoElement)\r\n      : internalRef.current;\r\n    if (!element) return;\r\n\r\n    elementRef.current = element;\r\n\r\n    const onEnterPictureInPicture = () => {\r\n      setOpened(true);\r\n      onOptionsRef.current.onEnter?.();\r\n    };\r\n\r\n    const onLeavePictureInPicture = () => {\r\n      setOpened(false);\r\n      onOptionsRef.current.onExit?.();\r\n    };\r\n\r\n    element.addEventListener('enterpictureinpicture', onEnterPictureInPicture);\r\n    element.addEventListener('leavepictureinpicture', onLeavePictureInPicture);\r\n\r\n    return () => {\r\n      element.removeEventListener('enterpictureinpicture', onEnterPictureInPicture);\r\n      element.removeEventListener('leavepictureinpicture', onLeavePictureInPicture);\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state]);\r\n\r\n  const toggle = async () => {\r\n    if (opened) await exit();\r\n    else await enter();\r\n  };\r\n\r\n  const value = {\r\n    opened,\r\n    supported,\r\n    enter,\r\n    exit,\r\n    toggle\r\n  };\r\n\r\n  if (target) return value;\r\n  return { ...value, ref: internalRef };\r\n}) as UsePictureInPicture;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface UsePictureInPictureOptions {\r\n  /** The callback when Picture-in-Picture mode is entered */\r\n  onEnter?: () => void;\r\n  /** The callback when Picture-in-Picture mode is exited */\r\n  onExit?: () => void;\r\n}\n\nexport interface UsePictureInPictureReturn {\r\n  /** Whether Picture-in-Picture mode is currently active */\r\n  opened: boolean;\r\n  /** Whether Picture-in-Picture mode is supported by the browser */\r\n  supported: boolean;\r\n  /** Request to enter Picture-in-Picture mode */\r\n  enter: () => Promise<void>;\r\n  /** Request to exit Picture-in-Picture mode */\r\n  exit: () => Promise<void>;\r\n  /** Toggle Picture-in-Picture mode */\r\n  toggle: () => Promise<void>;\r\n}\n\nexport interface UsePictureInPicture {\r\n  (target: HookTarget, options?: UsePictureInPictureOptions): UsePictureInPictureReturn;\r\n\r\n  (options?: UsePictureInPictureOptions): UsePictureInPictureReturn & {\r\n    ref: StateRef<HTMLVideoElement>;\r\n  };\r\n}",
+  "description": "Hook that provides Picture-in-Picture functionality for video elements",
+  "examples": [
+    "const { open, supported, enter, exit, toggle } = usePictureInPicture(videoRef);",
+    "const { ref, open, supported, enter, exit, toggle } = usePictureInPicture();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "window.PictureInPicture",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target video element",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {HookTarget} target The target video element\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target video element",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onEnter",
+          "type": "() => void",
+          "optional": true,
+          "description": "Callback when Picture-in-Picture mode is entered",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {() => void} [options.onEnter] Callback when Picture-in-Picture mode is entered\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onEnter]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "Callback when Picture-in-Picture mode is entered",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onExit",
+          "type": "() => void",
+          "optional": true,
+          "description": "Callback when Picture-in-Picture mode is exited",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {() => void} [options.onExit] Callback when Picture-in-Picture mode is exited\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onExit]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "Callback when Picture-in-Picture mode is exited",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UsePictureInPictureReturn",
+        "optional": false,
+        "description": "object containing Picture-in-Picture state and controls",
+        "problems": [],
+        "source": [
+          {
+            "number": 12,
+            "source": " * @returns {UsePictureInPictureReturn} An object containing Picture-in-Picture state and controls\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UsePictureInPictureReturn}",
+              "postType": " ",
+              "description": "object containing Picture-in-Picture state and controls",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 13,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.onEnter",
+          "type": "() => void",
+          "optional": true,
+          "description": "Callback when Picture-in-Picture mode is entered",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {() => void} [options.onEnter] Callback when Picture-in-Picture mode is entered\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onEnter]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "Callback when Picture-in-Picture mode is entered",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onExit",
+          "type": "() => void",
+          "optional": true,
+          "description": "Callback when Picture-in-Picture mode is exited",
+          "problems": [],
+          "source": [
+            {
+              "number": 19,
+              "source": " * @param {() => void} [options.onExit] Callback when Picture-in-Picture mode is exited\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onExit]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "Callback when Picture-in-Picture mode is exited",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UsePictureInPictureReturn & { ref: StateRef<HTMLVideoElement> }",
+        "optional": false,
+        "description": "object containing Picture-in-Picture state, controls and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 20,
+            "source": " * @returns {UsePictureInPictureReturn & { ref: StateRef<HTMLVideoElement> }} An object containing Picture-in-Picture state, controls and ref\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UsePictureInPictureReturn & { ref: StateRef<HTMLVideoElement> }}",
+              "postType": " ",
+              "description": "object containing Picture-in-Picture state, controls and ref",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 21,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1775394350000
+}

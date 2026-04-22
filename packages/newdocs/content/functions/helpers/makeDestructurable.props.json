@@ -1,0 +1,130 @@
+{
+  "name": "makeDestructurable",
+  "type": "helper",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "/**\r\n * @name makeDestructurable\r\n * @description - Makes an object also iterable for array-style destructuring\r\n * @category Helpers\r\n * @usage low\r\n *\r\n * @template Object - The object shape\r\n * @template Array - The tuple/array shape for destructuring\r\n * @param {object} obj - Object part of the returned value\r\n * @param {Array} arr - Iterable tuple/array part of the returned value\r\n * @returns {object & Array} Combined object that supports both object and array destructuring\r\n *\r\n * @example\r\n * const result = makeDestructurable({ x: 10, y: 20 }, [10, 20] as const);\r\n */\r\nexport const makeDestructurable = <\r\n  Obj extends Record<string, unknown>,\r\n  Arr extends readonly unknown[]\r\n>(\r\n  obj: Obj,\r\n  arr: Arr\r\n): Obj & Arr => {\r\n  if (typeof Symbol !== 'undefined') {\r\n    const clone = { ...obj };\r\n\r\n    Object.defineProperty(clone, Symbol.iterator, {\r\n      enumerable: false,\r\n      value() {\r\n        let index = 0;\r\n        return {\r\n          next: () => ({\r\n            value: arr[index++],\r\n            done: index > arr.length\r\n          })\r\n        };\r\n      }\r\n    });\r\n\r\n    return clone as unknown as Obj & Arr;\r\n  }\r\n\r\n  return Object.assign([...arr], obj) as unknown as Obj & Arr;\r\n};\r\n",
+  "description": "Makes an object also iterable for array-style destructuring",
+  "examples": [
+    "const result = makeDestructurable({ x: 10, y: 20 }, [10, 20] as const);"
+  ],
+  "usage": "low",
+  "category": "helpers",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "obj",
+          "type": "object",
+          "optional": false,
+          "description": "- Object part of the returned value",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {object} obj - Object part of the returned value\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "obj",
+                "postName": " ",
+                "type": "{object}",
+                "postType": " ",
+                "description": "- Object part of the returned value",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "arr",
+          "type": "Array",
+          "optional": false,
+          "description": "- Iterable tuple/array part of the returned value",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {Array} arr - Iterable tuple/array part of the returned value\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "arr",
+                "postName": " ",
+                "type": "{Array}",
+                "postType": " ",
+                "description": "- Iterable tuple/array part of the returned value",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Combined",
+        "type": "object & Array",
+        "optional": false,
+        "description": "object that supports both object and array destructuring",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {object & Array} Combined object that supports both object and array destructuring\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Combined",
+              "postName": " ",
+              "type": "{object & Array}",
+              "postType": " ",
+              "description": "object that supports both object and array destructuring",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1774777329000
+}

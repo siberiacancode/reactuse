@@ -14,45 +14,34 @@ export const SiteHeader = () => {
   const pageTree = source.pageTree;
 
   return (
-    <header className='bg-background sticky top-0 z-50 w-full'>
-      <div className='container-wrapper 3xl:fixed:px-0 flex items-center justify-between px-6'>
-        <MobileNav className='flex lg:hidden' items={siteConfig.navItems} />
-        <div className='group-has-data-[slot=designer]/layout:fixed:max-w-none 3xl:fixed:container flex h-(--header-height) items-center **:data-[slot=separator]:h-4!'>
-          <Button asChild className='hidden size-8 lg:flex' size='icon' variant='ghost'>
-            <Link href='/'>
-              <Icons.logo className='size-5' />
-              <span className='sr-only'>{siteConfig.name}</span>
-            </Link>
-          </Button>
-          <div className='hidden w-full flex-1 md:flex md:w-auto md:flex-none'>
-            {siteConfig.navItems.map((navItem) => (
-              <Button
-                asChild
-                key={navItem.href}
-                className='hidden h-[31px] rounded-lg sm:flex'
-                size='sm'
-                variant='ghost'
-              >
-                <Link href={navItem.href}>{navItem.label}</Link>
-              </Button>
-            ))}
+    <header className='bg-background sticky top-0 z-50 w-full px-12 py-2'>
+      <div className='container-wrapper 3xl:fixed:px-0 grid min-h-(--header-height) grid-cols-[auto_1fr_auto] items-center px-3 py-2 md:grid-cols-[1fr_minmax(0,34rem)_1fr]'>
+        <div className='flex items-center gap-2'>
+          <MobileNav className='flex lg:hidden' items={siteConfig.navItems} />
+          <Link className='hidden items-center gap-2 lg:inline-flex' href='/'>
+            <Icons.logo className='size-7' />
+            <span className='font-display text-[1.7rem] font-bold tracking-tight text-foreground'>
+              {siteConfig.name}
+            </span>
+          </Link>
+        </div>
+
+        <div className='hidden w-full px-2 md:block'>
+          <div className='w-full'>
+            <CommandMenu navItems={siteConfig.navItems} tree={pageTree} />
           </div>
         </div>
-        <div className='3xl:fixed:container flex h-(--header-height) items-center **:data-[slot=separator]:!h-4'>
-          <div className='flex items-center gap-2 sm:gap-0.5 md:flex-1 md:justify-end'>
-            <div className='hidden w-full flex-1 md:flex md:w-auto md:flex-none'>
-              <CommandMenu navItems={siteConfig.navItems} tree={pageTree} />
-            </div>
-            <Separator className='ml-2 hidden lg:block' orientation='vertical' />
-            <Button asChild className='h-8 shadow-none' size='sm' variant='ghost'>
-              <Link href={siteConfig.links.npm} rel='noreferrer' target='_blank'>
-                <Icons.npm />
-              </Link>
-            </Button>
-            <GitHubLink />
-            <Separator className='3xl:flex hidden' orientation='vertical' />
-            <ModeSwitcher />
-          </div>
+
+        <div className='flex items-center justify-end gap-2 sm:gap-0.5'>
+          <Separator className='hidden lg:block' orientation='vertical' />
+          <Button asChild className='h-8 shadow-none' size='sm' variant='ghost'>
+            <Link href={siteConfig.links.npm} rel='noreferrer' target='_blank'>
+              <Icons.npm />
+            </Link>
+          </Button>
+          <GitHubLink />
+          <Separator className='3xl:flex hidden' orientation='vertical' />
+          <ModeSwitcher />
         </div>
       </div>
     </header>

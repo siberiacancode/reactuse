@@ -1,0 +1,141 @@
+{
+  "name": "useRenderInfo",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "Gorilla Dev",
+      "avatar": "https://gravatar.com/avatar/ca17ccb5824fdd8626a4ec87e904597b?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useRef } from 'react';\r\n\r\n/** The use render info return type */\r\nexport interface UseRenderInfoReturn {\r\n  /** The name of the component */\r\n  component: string;\r\n  /** The number of renders */\r\n  renders: number;\r\n  /** The time since the last render */\r\n  sinceLast: number;\r\n  /** The timestamp of the render */\r\n  timestamp: number | null;\r\n}\r\n\r\n/**\r\n * @name useRenderInfo\r\n * @description - Hook for getting information about component rerender\r\n * @category Debug\r\n * @usage low\r\n *\r\n * @param {string} [name='Unknown'] Component name\r\n * @param {boolean} [log=true] Toggle logging\r\n * @returns {UseRenderInfoReturn} An object containing rerender information\r\n *\r\n * @example\r\n * const rerenderInfo = useRenderInfo('Component');\r\n */\r\nexport const useRenderInfo = (name: string = 'Unknown', log: boolean = true) => {\r\n  const renderInfoRef = useRef<UseRenderInfoReturn>({\r\n    component: name,\r\n    renders: 0,\r\n    timestamp: Date.now(),\r\n    sinceLast: 0\r\n  });\r\n  const now = Date.now();\r\n\r\n  renderInfoRef.current.renders += 1;\r\n  renderInfoRef.current.sinceLast = renderInfoRef.current.timestamp\r\n    ? now - renderInfoRef.current.timestamp\r\n    : 0;\r\n  renderInfoRef.current.timestamp = now;\r\n\r\n  if (log) {\r\n    console.group(`${name} info, render number: ${renderInfoRef.current.renders}`);\r\n    console.log(`Timestamp: ${renderInfoRef.current.timestamp}`);\r\n    console.log(`Since last render: ${renderInfoRef.current.sinceLast}`);\r\n    console.log(`Renders: ${renderInfoRef.current.renders}`);\r\n    console.dir(renderInfoRef.current);\r\n    console.groupEnd();\r\n  }\r\n\r\n  return renderInfoRef.current;\r\n};\r\n",
+  "typeDeclarations": "export interface UseRenderInfoReturn {\r\n  /** The name of the component */\r\n  component: string;\r\n  /** The number of renders */\r\n  renders: number;\r\n  /** The time since the last render */\r\n  sinceLast: number;\r\n  /** The timestamp of the render */\r\n  timestamp: number | null;\r\n}",
+  "description": "Hook for getting information about component rerender",
+  "examples": [
+    "const rerenderInfo = useRenderInfo('Component');"
+  ],
+  "usage": "low",
+  "category": "debug",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "name",
+          "type": "string",
+          "optional": true,
+          "description": "Component name",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {string} [name='Unknown'] Component name\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[name='Unknown']",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "Component name",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'Unknown'"
+        },
+        {
+          "tag": "param",
+          "name": "log",
+          "type": "boolean",
+          "optional": true,
+          "description": "Toggle logging",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {boolean} [log=true] Toggle logging\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[log=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Toggle logging",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseRenderInfoReturn",
+        "optional": false,
+        "description": "object containing rerender information",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseRenderInfoReturn} An object containing rerender information\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseRenderInfoReturn}",
+              "postType": " ",
+              "description": "object containing rerender information",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

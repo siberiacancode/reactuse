@@ -1,0 +1,439 @@
+{
+  "name": "useImage",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import type { UseQueryOptions, UseQueryReturn } from '../useQuery/useQuery';\r\n\r\nimport { useQuery } from '../useQuery/useQuery';\r\n\r\n/** The use image options */\r\nexport interface UseImageOptions {\r\n  /** The alt of the image */\r\n  alt?: string;\r\n  /** The class of the image */\r\n  class?: string;\r\n  /** The crossorigin of the image */\r\n  crossorigin?: string;\r\n  /** The loading of the image */\r\n  loading?: HTMLImageElement['loading'];\r\n  /** The referrer policy of the image */\r\n  referrerPolicy?: HTMLImageElement['referrerPolicy'];\r\n  /** The sizes of the image */\r\n  sizes?: string;\r\n  /** The srcset of the image */\r\n  srcset?: string;\r\n}\r\n\r\n/** The use image return type */\r\nexport type UseImageReturn = UseQueryReturn<HTMLImageElement>;\r\n\r\nconst loadImage = async (src: string, options: UseImageOptions = {}): Promise<HTMLImageElement> =>\r\n  new Promise((resolve, reject) => {\r\n    const img = new Image();\r\n    const { srcset, sizes, class: className, loading, crossorigin, referrerPolicy } = options;\r\n\r\n    img.src = src;\r\n    if (srcset) img.srcset = srcset;\r\n    if (sizes) img.sizes = sizes;\r\n    if (className) img.className = className;\r\n    if (loading) img.loading = loading;\r\n    if (crossorigin) img.crossOrigin = crossorigin;\r\n\r\n    if (referrerPolicy) img.referrerPolicy = referrerPolicy;\r\n\r\n    img.onload = () => resolve(img);\r\n    img.onerror = reject;\r\n  });\r\n\r\n/**\r\n * @name useImage\r\n * @description - Hook that load an image in the browser\r\n * @category Elements\r\n * @usage low\r\n *\r\n * @param {string} src The source of the image\r\n * @param {string} [options.srcset] The srcset of the image\r\n * @param {string} [options.sizes] The sizes of the image\r\n * @param {string} [options.alt] The alt of the image\r\n * @param {string} [options.class] The class of the image\r\n * @param {HTMLImageElement['loading']} [options.loading] The loading of the image\r\n * @param {string} [options.crossorigin] The crossorigin of the image\r\n * @param {HTMLImageElement['referrerPolicy']} [options.referrerPolicy] The referrerPolicy of the image\r\n * @param {DependencyList} [options.keys] The dependencies for the hook\r\n * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success\r\n * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error\r\n * @param {number} [options.refetchInterval] The refetch interval\r\n * @param {boolean | number} [options.retry] The retry count of requests\r\n * @returns {UseImageReturn} An object with the state of the image\r\n *\r\n * @example\r\n * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useImage('https://example.com/image.png');\r\n */\r\nexport const useImage = (\r\n  src: string,\r\n  options?: UseImageOptions &\r\n    Omit<\r\n      UseQueryOptions<HTMLImageElement, HTMLImageElement>,\r\n      'initialData' | 'placeholderData' | 'select'\r\n    >\r\n) =>\r\n  useQuery(\r\n    () =>\r\n      loadImage(src, {\r\n        alt: options?.alt,\r\n        class: options?.class,\r\n        crossorigin: options?.crossorigin,\r\n        loading: options?.loading,\r\n        referrerPolicy: options?.referrerPolicy,\r\n        sizes: options?.sizes,\r\n        srcset: options?.srcset\r\n      }),\r\n    {\r\n      keys: [src, ...(options?.keys ?? [])],\r\n      onSuccess: options?.onSuccess,\r\n      onError: options?.onError,\r\n      refetchInterval: options?.refetchInterval,\r\n      retry: options?.retry\r\n    }\r\n  );\r\n",
+  "typeDeclarations": "import type { UseQueryOptions, UseQueryReturn } from '../useQuery/useQuery';\n\nexport interface UseImageOptions {\r\n  /** The alt of the image */\r\n  alt?: string;\r\n  /** The class of the image */\r\n  class?: string;\r\n  /** The crossorigin of the image */\r\n  crossorigin?: string;\r\n  /** The loading of the image */\r\n  loading?: HTMLImageElement['loading'];\r\n  /** The referrer policy of the image */\r\n  referrerPolicy?: HTMLImageElement['referrerPolicy'];\r\n  /** The sizes of the image */\r\n  sizes?: string;\r\n  /** The srcset of the image */\r\n  srcset?: string;\r\n}\n\nexport type UseImageReturn = UseQueryReturn<HTMLImageElement>;",
+  "description": "Hook that load an image in the browser",
+  "examples": [
+    "const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useImage('https://example.com/image.png');"
+  ],
+  "usage": "low",
+  "category": "elements",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "src",
+          "type": "string",
+          "optional": false,
+          "description": "The source of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {string} src The source of the image\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "src",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The source of the image",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.srcset",
+          "type": "string",
+          "optional": true,
+          "description": "The srcset of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {string} [options.srcset] The srcset of the image\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.srcset]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The srcset of the image",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.sizes",
+          "type": "string",
+          "optional": true,
+          "description": "The sizes of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string} [options.sizes] The sizes of the image\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.sizes]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The sizes of the image",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.alt",
+          "type": "string",
+          "optional": true,
+          "description": "The alt of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {string} [options.alt] The alt of the image\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.alt]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The alt of the image",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.class",
+          "type": "string",
+          "optional": true,
+          "description": "The class of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {string} [options.class] The class of the image\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.class]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The class of the image",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.loading",
+          "type": "HTMLImageElement['loading']",
+          "optional": true,
+          "description": "The loading of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {HTMLImageElement['loading']} [options.loading] The loading of the image\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.loading]",
+                "postName": " ",
+                "type": "{HTMLImageElement['loading']}",
+                "postType": " ",
+                "description": "The loading of the image",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.crossorigin",
+          "type": "string",
+          "optional": true,
+          "description": "The crossorigin of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {string} [options.crossorigin] The crossorigin of the image\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.crossorigin]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The crossorigin of the image",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.referrerPolicy",
+          "type": "HTMLImageElement['referrerPolicy']",
+          "optional": true,
+          "description": "The referrerPolicy of the image",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {HTMLImageElement['referrerPolicy']} [options.referrerPolicy] The referrerPolicy of the image\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.referrerPolicy]",
+                "postName": " ",
+                "type": "{HTMLImageElement['referrerPolicy']}",
+                "postType": " ",
+                "description": "The referrerPolicy of the image",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.keys",
+          "type": "DependencyList",
+          "optional": true,
+          "description": "The dependencies for the hook",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {DependencyList} [options.keys] The dependencies for the hook\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.keys]",
+                "postName": " ",
+                "type": "{DependencyList}",
+                "postType": " ",
+                "description": "The dependencies for the hook",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onSuccess",
+          "type": "(data: Data) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on success",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onSuccess]",
+                "postName": " ",
+                "type": "{(data: Data) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on success",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onError",
+          "type": "(error: Error) => void",
+          "optional": true,
+          "description": "The callback function to be invoked on error",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onError]",
+                "postName": " ",
+                "type": "{(error: Error) => void}",
+                "postType": " ",
+                "description": "The callback function to be invoked on error",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.refetchInterval",
+          "type": "number",
+          "optional": true,
+          "description": "The refetch interval",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {number} [options.refetchInterval] The refetch interval\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.refetchInterval]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The refetch interval",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.retry",
+          "type": "boolean | number",
+          "optional": true,
+          "description": "The retry count of requests",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {boolean | number} [options.retry] The retry count of requests\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.retry]",
+                "postName": " ",
+                "type": "{boolean | number}",
+                "postType": " ",
+                "description": "The retry count of requests",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseImageReturn",
+        "optional": false,
+        "description": "object with the state of the image",
+        "problems": [],
+        "source": [
+          {
+            "number": 19,
+            "source": " * @returns {UseImageReturn} An object with the state of the image\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseImageReturn}",
+              "postType": " ",
+              "description": "object with the state of the image",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 20,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

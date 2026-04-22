@@ -1,0 +1,137 @@
+{
+  "name": "usePermission",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\nimport { useEvent } from '../useEvent/useEvent';\r\n\r\n/** The permission name */\r\nexport type UsePermissionName =\r\n  | 'accelerometer'\r\n  | 'accessibility-events'\r\n  | 'ambient-light-sensor'\r\n  | 'background-sync'\r\n  | 'camera'\r\n  | 'clipboard-read'\r\n  | 'clipboard-write'\r\n  | 'gyroscope'\r\n  | 'magnetometer'\r\n  | 'microphone'\r\n  | 'notifications'\r\n  | 'payment-handler'\r\n  | 'persistent-storage'\r\n  | 'push'\r\n  | 'speaker'\r\n  | PermissionName;\r\n\r\n/** The use permission options type */\r\nexport interface UsePermissionOptions {\r\n  /** Whether the permission is enabled */\r\n  enabled: boolean;\r\n}\r\n\r\n/** The use permission return type */\r\nexport interface UsePermissionReturn {\r\n  /** The permission state */\r\n  state: PermissionState;\r\n  /** The permission supported status */\r\n  supported: boolean;\r\n  /** The permission query function */\r\n  query: () => Promise<PermissionState>;\r\n}\r\n\r\n/**\r\n *  @name usePermission\r\n *  @description - Hook that gives you the state of permission\r\n *  @category Browser\r\n *  @usage medium\r\n *\r\n *  @browserapi navigator.permissions https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions\r\n *\r\n *  @param {UsePermissionName} permissionDescriptorName - The permission name\r\n *  @param {boolean} [options.enabled=true] - Whether the permission is enabled\r\n *  @returns {UsePermissionReturn} An object containing the state and the supported status\r\n *\r\n *  @example\r\n *  const { state, supported, query } = usePermission('microphone');\r\n */\r\nexport const usePermission = (name: UsePermissionName, options?: UsePermissionOptions) => {\r\n  const supported =\r\n    typeof navigator !== 'undefined' && 'permissions' in navigator && !!navigator.permissions;\r\n  const [state, setState] = useState<PermissionState>('prompt');\r\n  const enabled = options?.enabled ?? true;\r\n\r\n  const permissionDescriptor = { name };\r\n\r\n  const query = useEvent(async () => {\r\n    try {\r\n      const permissionStatus = await navigator.permissions.query(\r\n        permissionDescriptor as PermissionDescriptor\r\n      );\r\n      setState(permissionStatus.state);\r\n      return permissionStatus.state;\r\n    } catch {\r\n      setState('prompt');\r\n      return 'prompt';\r\n    }\r\n  });\r\n\r\n  useEffect(() => {\r\n    if (!supported || !enabled) return;\r\n    query();\r\n    window.addEventListener('change', query);\r\n    return () => {\r\n      window.removeEventListener('change', query);\r\n    };\r\n  }, [name, enabled]);\r\n\r\n  return {\r\n    state,\r\n    supported,\r\n    query\r\n  };\r\n};\r\n",
+  "typeDeclarations": "export type UsePermissionName =\r\n  | 'accelerometer'\r\n  | 'accessibility-events'\r\n  | 'ambient-light-sensor'\r\n  | 'background-sync'\r\n  | 'camera'\r\n  | 'clipboard-read'\r\n  | 'clipboard-write'\r\n  | 'gyroscope'\r\n  | 'magnetometer'\r\n  | 'microphone'\r\n  | 'notifications'\r\n  | 'payment-handler'\r\n  | 'persistent-storage'\r\n  | 'push'\r\n  | 'speaker'\r\n  | PermissionName;\n\nexport interface UsePermissionOptions {\r\n  /** Whether the permission is enabled */\r\n  enabled: boolean;\r\n}\n\nexport interface UsePermissionReturn {\r\n  /** The permission state */\r\n  state: PermissionState;\r\n  /** The permission supported status */\r\n  supported: boolean;\r\n  /** The permission query function */\r\n  query: () => Promise<PermissionState>;\r\n}",
+  "description": "Hook that gives you the state of permission",
+  "examples": [
+    "const { state, supported, query } = usePermission('microphone');"
+  ],
+  "usage": "medium",
+  "category": "browser",
+  "browserapi": "navigator.permissions",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "permissionDescriptorName",
+          "type": "UsePermissionName",
+          "optional": false,
+          "description": "- The permission name",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " *  @param {UsePermissionName} permissionDescriptorName - The permission name\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "  ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "permissionDescriptorName",
+                "postName": " ",
+                "type": "{UsePermissionName}",
+                "postType": " ",
+                "description": "- The permission name",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "- Whether the permission is enabled",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " *  @param {boolean} [options.enabled=true] - Whether the permission is enabled\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "  ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "- Whether the permission is enabled",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UsePermissionReturn",
+        "optional": false,
+        "description": "object containing the state and the supported status",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " *  @returns {UsePermissionReturn} An object containing the state and the supported status\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "  ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UsePermissionReturn}",
+              "postType": " ",
+              "description": "object containing the state and the supported status",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1775233705000
+}

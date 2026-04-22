@@ -2,23 +2,41 @@
 
 import type { HookProps } from '@docs/lib/parse-hook';
 
-import { cx } from 'class-variance-authority';
-
-import { ExamplesIndex } from '../.source/demo';
-import { ComponentWrapper } from './component-wrapper';
+import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
 
 export const HookDemo = (props: HookProps) => {
-  const Demo = ExamplesIndex[props.name];
+  const Demo = useMemo(() => {
+    if (!props.hasDemo) {
+      return null;
+    }
+
+    if (props.type === 'helper') {
+      return dynamic(
+        () =>
+          import(`@/helpers/${props.name}/${props.name}.demo.tsx`).catch(() => ({
+            default: () => null
+          })),
+        { ssr: false }
+      );
+    }
+
+    return dynamic(
+      () =>
+        import(`@/hooks/${props.name}/${props.name}.demo.tsx`).catch(() => ({
+          default: () => null
+        })),
+      { ssr: false }
+    );
+  }, [props.hasDemo, props.name, props.type]);
 
   if (!Demo) {
     return null;
   }
 
   return (
-    <ComponentWrapper className='my-4' name={props.name}>
-      <div className={cx(['demo-hook-example', 'mt-4 rounded-xl bg-[var(--color-code)] p-6'])}>
-        <Demo />
-      </div>
-    </ComponentWrapper>
+    <div className='demo-hook-example relative mb-2 rounded-lg bg-[var(--color-code)] p-6'>
+      <Demo />
+    </div>
   );
 };

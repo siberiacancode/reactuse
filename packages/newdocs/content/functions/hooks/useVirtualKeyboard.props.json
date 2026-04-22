@@ -1,0 +1,106 @@
+{
+  "name": "useVirtualKeyboard",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\ndeclare global {\r\n  interface Navigator {\r\n    virtualKeyboard?: {\r\n      boundingRect: DOMRect;\r\n      overlaysContent: boolean;\r\n      show: () => void;\r\n      hide: () => void;\r\n      addEventListener: (type: 'geometrychange', listener: EventListener) => void;\r\n      removeEventListener: (type: 'geometrychange', listener: EventListener) => void;\r\n    };\r\n  }\r\n}\r\n\r\n/** The use virtual keyboard return type */\r\nexport interface UseVirtualKeyboardReturn {\r\n  /** Whether the virtual keyboard is currently open */\r\n  opened: boolean;\r\n  /** Whether the VirtualKeyboard API is supported */\r\n  supported: boolean;\r\n  /** Change the overlays content */\r\n  changeOverlaysContent: (overlaysContent: boolean) => void;\r\n  /** Hide the virtual keyboard */\r\n  hide: () => void;\r\n  /** Show the virtual keyboard */\r\n  show: () => void;\r\n}\r\n\r\n/**\r\n * @name useVirtualKeyboard\r\n * @description - Hook that manages virtual keyboard state\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi VirtualKeyboard https://developer.mozilla.org/en-US/docs/Web/API/VirtualKeyboard\r\n *\r\n * @warning - This hook has a fallback for virtual keyboard detection. If the virtual keyboard is not supported, the methods will not work.\r\n *\r\n * @param {boolean} [initialValue=false] The initial state value for keyboard visibility\r\n * @returns {UseVirtualKeyboardReturn} An object containing keyboard state and control methods\r\n *\r\n * @example\r\n * const { opened, show, hide, supported, changeOverlaysContent } = useVirtualKeyboard();\r\n */\r\nexport const useVirtualKeyboard = (initialValue = false): UseVirtualKeyboardReturn => {\r\n  const supported =\r\n    (typeof window !== 'undefined' && 'visualViewport' in window) ||\r\n    (typeof navigator !== 'undefined' && 'virtualKeyboard' in navigator);\r\n\r\n  const [opened, setOpened] = useState(initialValue);\r\n\r\n  const hide = () => {\r\n    if (!navigator.virtualKeyboard) return;\r\n    navigator.virtualKeyboard.hide();\r\n    setOpened(false);\r\n  };\r\n\r\n  const show = () => {\r\n    if (!navigator.virtualKeyboard) return;\r\n    navigator.virtualKeyboard.show();\r\n    setOpened(true);\r\n  };\r\n\r\n  const changeOverlaysContent = (overlaysContent: boolean) => {\r\n    if (!navigator.virtualKeyboard) return;\r\n    navigator.virtualKeyboard.overlaysContent = overlaysContent;\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (!supported) return;\r\n\r\n    const onResize = () => setOpened(window.screen.height - 300 > window.visualViewport!.height);\r\n\r\n    const onGeometryChange = (event: Event) => {\r\n      const { height } = (event.target as any).boundingRect as DOMRect;\r\n      setOpened(height > 0);\r\n    };\r\n\r\n    if (navigator.virtualKeyboard) navigator.virtualKeyboard.overlaysContent = true;\r\n\r\n    navigator.virtualKeyboard &&\r\n      navigator.virtualKeyboard.addEventListener('geometrychange', onGeometryChange);\r\n    window.visualViewport && window.visualViewport.addEventListener('resize', onResize);\r\n\r\n    return () => {\r\n      navigator.virtualKeyboard &&\r\n        navigator.virtualKeyboard.removeEventListener('geometrychange', onGeometryChange);\r\n      window.visualViewport && window.visualViewport.removeEventListener('resize', onResize);\r\n    };\r\n  }, []);\r\n\r\n  return {\r\n    opened,\r\n    show,\r\n    hide,\r\n    changeOverlaysContent,\r\n    supported\r\n  };\r\n};\r\n",
+  "typeDeclarations": "interface Navigator {\r\n    virtualKeyboard?: {\r\n      boundingRect: DOMRect;\r\n      overlaysContent: boolean;\r\n      show: () => void;\r\n      hide: () => void;\r\n      addEventListener: (type: 'geometrychange', listener: EventListener) => void;\r\n      removeEventListener: (type: 'geometrychange', listener: EventListener) => void;\r\n    };\r\n  }\n\nexport interface UseVirtualKeyboardReturn {\r\n  /** Whether the virtual keyboard is currently open */\r\n  opened: boolean;\r\n  /** Whether the VirtualKeyboard API is supported */\r\n  supported: boolean;\r\n  /** Change the overlays content */\r\n  changeOverlaysContent: (overlaysContent: boolean) => void;\r\n  /** Hide the virtual keyboard */\r\n  hide: () => void;\r\n  /** Show the virtual keyboard */\r\n  show: () => void;\r\n}",
+  "description": "Hook that manages virtual keyboard state",
+  "examples": [
+    "const { opened, show, hide, supported, changeOverlaysContent } = useVirtualKeyboard();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "warning": "This hook has a fallback for virtual keyboard detection. If the virtual keyboard is not supported, the methods will not work.",
+  "browserapi": "VirtualKeyboard",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "boolean",
+          "optional": true,
+          "description": "The initial state value for keyboard visibility",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {boolean} [initialValue=false] The initial state value for keyboard visibility\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue=false]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The initial state value for keyboard visibility",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseVirtualKeyboardReturn",
+        "optional": false,
+        "description": "object containing keyboard state and control methods",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {UseVirtualKeyboardReturn} An object containing keyboard state and control methods\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseVirtualKeyboardReturn}",
+              "postType": " ",
+              "description": "object containing keyboard state and control methods",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 12,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": true,
+  "lastModified": 1755150117000
+}

@@ -1,0 +1,82 @@
+{
+  "name": "usePreferredLanguages",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "Dmitry Belkin",
+      "avatar": "https://gravatar.com/avatar/5c85ef0161f9d7b998e6c0c5444922fd?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useSyncExternalStore } from 'react';\r\n\r\nconst getSnapshot = () => window.navigator.languages;\r\nconst getServerSnapshot = () => [] as const;\r\nconst subscribe = (callback: () => void) => {\r\n  window.addEventListener('languagechange', callback);\r\n  return () => {\r\n    window.removeEventListener('languagechange', callback);\r\n  };\r\n};\r\n\r\n/**\r\n * @name usePreferredLanguages\r\n * @description Hook that returns a browser preferred languages from navigator\r\n * @category User\r\n * @usage medium\r\n *\r\n * @browserapi navigator.languages https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages\r\n *\r\n * @returns {readonly string[]} An array of strings representing the user's preferred languages\r\n *\r\n * @example\r\n * const languages = usePreferredLanguages();\r\n */\r\nexport const usePreferredLanguages = () =>\r\n  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);\r\n",
+  "description": "that returns a browser preferred languages from navigator",
+  "examples": [
+    "const languages = usePreferredLanguages();"
+  ],
+  "usage": "medium",
+  "category": "user",
+  "browserapi": "navigator.languages",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "readonly string[]",
+        "optional": false,
+        "description": "array of strings representing the user's preferred languages",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {readonly string[]} An array of strings representing the user's preferred languages\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{readonly string[]}",
+              "postType": " ",
+              "description": "array of strings representing the user's preferred languages",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

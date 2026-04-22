@@ -1,0 +1,135 @@
+{
+  "name": "useWizard",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useState } from 'react';\r\n\r\nexport interface WizardItem<WizardStepId> {\r\n  id: WizardStepId;\r\n  nodes?: WizardStepId[];\r\n}\r\n\r\n/**\r\n * @name useWizard\r\n * @description - Hook that manages a wizard\r\n * @category State\r\n * @usage medium\r\n *\r\n * @param {WizardItem<WizardStepId>[]} map The map of the wizard\r\n * @param {WizardStepId} [initialStepId] The initial step id\r\n * @returns {UseWizardReturn<WizardStepId>} An object containing the current step id and functions to interact with the wizard\r\n *\r\n * @example\r\n * const { currentStepId, set, reset, back, next, history } = useWizard([\r\n *  { id: 'step1', nodes: ['step2', 'step3'] },\r\n *  { id: 'step2', nodes: ['step3'] },\r\n *  { id: 'step3', nodes: [] },\r\n * ])\r\n */\r\nexport const useWizard = <WizardStepId extends string>(\r\n  map: WizardItem<WizardStepId>[],\r\n  initialStepId?: WizardStepId\r\n) => {\r\n  const initialId = initialStepId ?? map[0].id;\r\n  const wizardMap = new Map(map.map((wizardItem) => [wizardItem.id, wizardItem]));\r\n  const [currentStepId, setCurrentStepId] = useState(initialId);\r\n  const [history, setHistory] = useState<WizardStepId[]>([initialId]);\r\n\r\n  const set = (id: WizardStepId) => {\r\n    if (!wizardMap.get(currentStepId)?.nodes?.includes(id))\r\n      throw new Error(`Can't go to ${id} from ${currentStepId}`);\r\n\r\n    setHistory([...history, id]);\r\n    setCurrentStepId(id);\r\n  };\r\n\r\n  const back = () => {\r\n    if (history.length === 1) return;\r\n\r\n    const previousStepId = history[history.length - 2];\r\n    if (!wizardMap.get(currentStepId)?.nodes?.includes(previousStepId))\r\n      throw new Error(`Can't go to ${previousStepId} from ${currentStepId}`);\r\n\r\n    setHistory(history.slice(0, -1));\r\n    setCurrentStepId(history[history.length - 2]);\r\n  };\r\n\r\n  const reset = () => {\r\n    setCurrentStepId(initialId);\r\n    setHistory([initialId]);\r\n  };\r\n\r\n  return { currentStepId, set, reset, back, history };\r\n};\r\n",
+  "typeDeclarations": "export interface WizardItem<WizardStepId> {\r\n  id: WizardStepId;\r\n  nodes?: WizardStepId[];\r\n}",
+  "description": "Hook that manages a wizard",
+  "examples": [
+    "const { currentStepId, set, reset, back, next, history } = useWizard([ { id: 'step1', nodes: ['step2', 'step3'] }, { id: 'step2', nodes: ['step3'] }, { id: 'step3', nodes: [] }, ])"
+  ],
+  "usage": "medium",
+  "category": "state",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "map",
+          "type": "WizardItem<WizardStepId>[]",
+          "optional": false,
+          "description": "The map of the wizard",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {WizardItem<WizardStepId>[]} map The map of the wizard\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "map",
+                "postName": " ",
+                "type": "{WizardItem<WizardStepId>[]}",
+                "postType": " ",
+                "description": "The map of the wizard",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "initialStepId",
+          "type": "WizardStepId",
+          "optional": true,
+          "description": "The initial step id",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {WizardStepId} [initialStepId] The initial step id\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialStepId]",
+                "postName": " ",
+                "type": "{WizardStepId}",
+                "postType": " ",
+                "description": "The initial step id",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseWizardReturn<WizardStepId>",
+        "optional": false,
+        "description": "object containing the current step id and functions to interact with the wizard",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseWizardReturn<WizardStepId>} An object containing the current step id and functions to interact with the wizard\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseWizardReturn<WizardStepId>}",
+              "postType": " ",
+              "description": "object containing the current step id and functions to interact with the wizard",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

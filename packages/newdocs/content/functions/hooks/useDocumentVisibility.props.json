@@ -1,0 +1,81 @@
+{
+  "name": "useDocumentVisibility",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "wmoooid",
+      "avatar": "https://gravatar.com/avatar/53a7c217f9692b54a7da63ae40f1743b?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useSyncExternalStore } from 'react';\r\n\r\nconst getSnapshot = () => document.visibilityState;\r\nconst getServerSnapshot = () => 'hidden' as const;\r\nconst subscribe = (callback: () => void) => {\r\n  document.addEventListener('visibilitychange', callback);\r\n  return () => {\r\n    document.removeEventListener('visibilitychange', callback);\r\n  };\r\n};\r\n\r\n/**\r\n * @name useDocumentVisibility\r\n * @description – Hook that provides the current visibility state of the document\r\n * @category Browser\r\n * @usage low\r\n\r\n * @returns {DocumentVisibilityState} The current visibility state of the document, which can be 'visible' or 'hidden'\r\n *\r\n * @example\r\n * const visibilityState = useDocumentVisibility();\r\n */\r\nexport const useDocumentVisibility = () =>\r\n  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);\r\n",
+  "description": "Hook that provides the current visibility state of the document",
+  "examples": [
+    "const visibilityState = useDocumentVisibility();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "DocumentVisibilityState",
+        "optional": false,
+        "description": "current visibility state of the document, which can be 'visible' or 'hidden'",
+        "problems": [],
+        "source": [
+          {
+            "number": 6,
+            "source": " * @returns {DocumentVisibilityState} The current visibility state of the document, which can be 'visible' or 'hidden'\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{DocumentVisibilityState}",
+              "postType": " ",
+              "description": "current visibility state of the document, which can be 'visible' or 'hidden'",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 7,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

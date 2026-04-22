@@ -1,0 +1,135 @@
+{
+  "name": "useOptimistic",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Michael Mironychev",
+      "avatar": "https://gravatar.com/avatar/2297f45bf2e5b21ece9e04b819a0c8ac?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useRef, useState } from 'react';\r\n\r\nimport { useDidUpdate } from '../useDidUpdate/useDidUpdate';\r\n\r\nexport type UseOptimisticReturn<State> = [\r\n  State,\r\n  (optimisticValue: State, promise: Promise<any>) => void\r\n];\r\n\r\n/**\r\n * @name useOptimistic\r\n * @description - Hook that allows get optimistic value before its update\r\n * @category Async\r\n * @usage medium\r\n *\r\n * @template State The type of the state\r\n * @param {State} state The value to be returned initially and whenever no action is pending\r\n * @param {(currentState: State, optimisticValue: State) => State} update A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state\r\n * @returns {UseOptimisticReturn<State>} The resulting optimistic state, and the function to update it\r\n *\r\n * @example\r\n * const [optimisticValue, updateOptimistic] = useOptimistic<number>(count, (currentState, optimisticValue) => currentState + optimisticValue);\r\n */\r\nexport const useOptimistic = <State, OptimisticState = State>(\r\n  externalState: State,\r\n  update: (currentState: State, optimisticState: OptimisticState) => State\r\n) => {\r\n  const [state, setState] = useState<State>(externalState);\r\n  const internalUpdateRef = useRef(update);\r\n  internalUpdateRef.current = update;\r\n\r\n  const [promised, setPromised] = useState(false);\r\n\r\n  useDidUpdate(() => {\r\n    if (!promised) return;\r\n    setState(externalState);\r\n    setPromised(false);\r\n  }, [promised]);\r\n\r\n  const updateState = (optimisticValue: OptimisticState, promise: Promise<any>) => {\r\n    setState((currentState) => internalUpdateRef.current(currentState, optimisticValue));\r\n    return promise.finally(() => setPromised(true));\r\n  };\r\n\r\n  return [state, updateState] as const;\r\n};\r\n",
+  "typeDeclarations": "export type UseOptimisticReturn<State> = [\r\n  State,\r\n  (optimisticValue: State, promise: Promise<any>) => void\r\n];",
+  "description": "Hook that allows get optimistic value before its update",
+  "examples": [
+    "const [optimisticValue, updateOptimistic] = useOptimistic<number>(count, (currentState, optimisticValue) => currentState + optimisticValue);"
+  ],
+  "usage": "medium",
+  "category": "async",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "state",
+          "type": "State",
+          "optional": false,
+          "description": "The value to be returned initially and whenever no action is pending",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {State} state The value to be returned initially and whenever no action is pending\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "state",
+                "postName": " ",
+                "type": "{State}",
+                "postType": " ",
+                "description": "The value to be returned initially and whenever no action is pending",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "update",
+          "type": "(currentState: State, optimisticValue: State) => State",
+          "optional": false,
+          "description": "A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(currentState: State, optimisticValue: State) => State} update A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "update",
+                "postName": " ",
+                "type": "{(currentState: State, optimisticValue: State) => State}",
+                "postType": " ",
+                "description": "A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseOptimisticReturn<State>",
+        "optional": false,
+        "description": "resulting optimistic state, and the function to update it",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseOptimisticReturn<State>} The resulting optimistic state, and the function to update it\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseOptimisticReturn<State>}",
+              "postType": " ",
+              "description": "resulting optimistic state, and the function to update it",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

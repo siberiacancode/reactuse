@@ -1,0 +1,78 @@
+{
+  "name": "useBrowserLanguage",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useSyncExternalStore } from 'react';\r\n\r\nconst getSnapshot = () => navigator.language;\r\nconst getServerSnapshot = () => 'undetermined';\r\nconst subscribe = (callback: () => void) => {\r\n  window.addEventListener('languagechange', callback);\r\n  return () => window.removeEventListener('languagechange', callback);\r\n};\r\n\r\n/**\r\n * @name useBrowserLanguage\r\n * @description - Hook that returns the current browser language\r\n * @category User\r\n * @usage medium\r\n\r\n * @browserapi navigator.language https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language\r\n *\r\n * @returns {string} The current browser language\r\n *\r\n * @example\r\n * const browserLanguage = useBrowserLanguage();\r\n */\r\nexport const useBrowserLanguage = () =>\r\n  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);\r\n",
+  "description": "Hook that returns the current browser language",
+  "examples": [
+    "const browserLanguage = useBrowserLanguage();"
+  ],
+  "usage": "medium",
+  "category": "user",
+  "browserapi": "navigator.language",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "string",
+        "optional": false,
+        "description": "current browser language",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {string} The current browser language\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{string}",
+              "postType": " ",
+              "description": "current browser language",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

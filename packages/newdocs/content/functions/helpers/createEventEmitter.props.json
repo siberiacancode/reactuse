@@ -1,0 +1,74 @@
+{
+  "name": "createEventEmitter",
+  "type": "helper",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\n/**\r\n * @name createEventEmitter\r\n * @description - Creates a type-safe event emitter\r\n * @category Helpers\r\n * @usage low\r\n *\r\n * @template Events - The type of events and their data\r\n * @returns {EventEmitterApi<Events>} - Object containing event emitter methods and hook\r\n *\r\n * @example\r\n * const { push, subscribe, unsubscribe, useSubscribe } = createEventEmitter<{ foo: number }>();\r\n */\r\nexport const createEventEmitter = <Events extends Record<string, any> = Record<string, any>>() => {\r\n  type ListenerMap = Map<string, Set<(data: any) => void>>;\r\n  const listeners: ListenerMap = new Map();\r\n\r\n  const push = <Event extends keyof Events>(event: Event, data: Events[Event]) => {\r\n    const eventListeners = listeners.get(event as string);\r\n    eventListeners?.forEach((listener) => listener(data));\r\n  };\r\n\r\n  const unsubscribe = <Key extends keyof Events>(\r\n    event: Key,\r\n    listener: (data: Events[Key]) => void\r\n  ) => {\r\n    const eventKey = event as string;\r\n    const eventListeners = listeners.get(eventKey);\r\n    if (!eventListeners) return;\r\n    eventListeners.delete(listener);\r\n    if (!eventListeners.size) listeners.delete(eventKey);\r\n  };\r\n\r\n  const subscribe = <Key extends keyof Events>(\r\n    event: Key,\r\n    listener: (data: Events[Key]) => void\r\n  ) => {\r\n    const eventKey = event as string;\r\n    if (!listeners.has(eventKey)) listeners.set(eventKey, new Set());\r\n    const eventListeners = listeners.get(event as string)!;\r\n    eventListeners.add(listener);\r\n\r\n    return () => {\r\n      unsubscribe(event, listener);\r\n    };\r\n  };\r\n\r\n  const useSubscribe = <Event extends keyof Events>(\r\n    event: Event,\r\n    listener?: (data: Events[Event]) => void\r\n  ) => {\r\n    const [data, setData] = useState<Events[Event] | undefined>(undefined);\r\n    const listenerRef = useRef(listener);\r\n    listenerRef.current = listener;\r\n\r\n    useEffect(() => {\r\n      const onSubscribe = (data: Events[Event]) => {\r\n        setData(data);\r\n        listenerRef.current?.(data);\r\n      };\r\n\r\n      const unsubscribe = subscribe(event, onSubscribe);\r\n      return () => {\r\n        unsubscribe();\r\n      };\r\n    }, [event]);\r\n\r\n    return data;\r\n  };\r\n\r\n  return {\r\n    push,\r\n    subscribe,\r\n    unsubscribe,\r\n    useSubscribe\r\n  };\r\n};\r\n",
+  "typeDeclarations": "type ListenerMap = Map<string, Set<(data: any) => void>>;",
+  "description": "Creates a type-safe event emitter",
+  "examples": [
+    "const { push, subscribe, unsubscribe, useSubscribe } = createEventEmitter<{ foo: number }>();"
+  ],
+  "usage": "low",
+  "category": "helpers",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "-",
+        "type": "EventEmitterApi<Events>",
+        "optional": false,
+        "description": "Object containing event emitter methods and hook",
+        "problems": [],
+        "source": [
+          {
+            "number": 7,
+            "source": " * @returns {EventEmitterApi<Events>} - Object containing event emitter methods and hook\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "-",
+              "postName": " ",
+              "type": "{EventEmitterApi<Events>}",
+              "postType": " ",
+              "description": "Object containing event emitter methods and hook",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 8,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1755150117000
+}

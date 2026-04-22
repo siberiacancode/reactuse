@@ -1,0 +1,104 @@
+{
+  "name": "useRafState",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useRef, useState } from 'react';\r\n\r\nimport { useUnmount } from '../useUnmount/useUnmount';\r\n\r\n/* The use raf value params type */\r\nexport type UseRafStateReturn<Value> = [Value, (value: Value) => void];\r\n\r\n/**\r\n * @name useRafState\r\n * @description - Hook that returns the value and a function to set the value\r\n * @category State\r\n * @usage low\r\n *\r\n * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame\r\n *\r\n * @template Value The type of the value\r\n * @param {Value} initialValue The initial value\r\n * @returns {UseRafStateReturn<Value>} An array containing the value and a function to set the value\r\n *\r\n * @example\r\n * const [value, setValue] = useRafState(initialValue);\r\n */\r\nexport const useRafState = <Value>(initialValue: (() => Value) | Value) => {\r\n  const rafIdRef = useRef(0);\r\n  const [value, setValue] = useState(initialValue);\r\n\r\n  const set = (value: Value) => {\r\n    cancelAnimationFrame(rafIdRef.current);\r\n    rafIdRef.current = requestAnimationFrame(() => setValue(value));\r\n  };\r\n\r\n  useUnmount(() => cancelAnimationFrame(rafIdRef.current));\r\n\r\n  return [value, set] as const;\r\n};\r\n",
+  "typeDeclarations": "export type UseRafStateReturn<Value> = [Value, (value: Value) => void];",
+  "description": "Hook that returns the value and a function to set the value",
+  "examples": [
+    "const [value, setValue] = useRafState(initialValue);"
+  ],
+  "usage": "low",
+  "category": "state",
+  "browserapi": "requestAnimationFrame",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "Value",
+          "optional": false,
+          "description": "The initial value",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {Value} initialValue The initial value\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The initial value",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseRafStateReturn<Value>",
+        "optional": false,
+        "description": "array containing the value and a function to set the value",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseRafStateReturn<Value>} An array containing the value and a function to set the value\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseRafStateReturn<Value>}",
+              "postType": " ",
+              "description": "array containing the value and a function to set the value",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

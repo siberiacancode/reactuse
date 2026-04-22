@@ -1,0 +1,79 @@
+{
+  "name": "useMemory",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\ndeclare global {\r\n  interface Performance {\r\n    memory: {\r\n      readonly jsHeapSizeLimit: number;\r\n      readonly totalJSHeapSize: number;\r\n      readonly usedJSHeapSize: number;\r\n    };\r\n  }\r\n}\r\n\r\n/** The use memory return type */\r\nexport interface UseMemoryReturn {\r\n  /** The memory supported status */\r\n  supported: boolean;\r\n  /** The current memory usage */\r\n  value: Performance['memory'];\r\n}\r\n\r\n/**\r\n * @name useMemory\r\n * @description - Hook that gives you current memory usage\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi performance.memory https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory\r\n *\r\n * @returns {UseMemoryReturn} An object containing the current memory usage\r\n *\r\n * @example\r\n * const { supported, value } = useMemory();\r\n */\r\nexport const useMemory = (): UseMemoryReturn => {\r\n  const supported =\r\n    typeof performance !== 'undefined' && 'memory' in performance && !!performance.memory;\r\n\r\n  const [value, setValue] = useState<Performance['memory']>(\r\n    supported\r\n      ? performance.memory\r\n      : {\r\n          jsHeapSizeLimit: 0,\r\n          totalJSHeapSize: 0,\r\n          usedJSHeapSize: 0\r\n        }\r\n  );\r\n\r\n  useEffect(() => {\r\n    if (!supported) return;\r\n    const intervalId = setInterval(() => setValue(performance.memory), 1000);\r\n    return () => clearInterval(intervalId);\r\n  }, []);\r\n\r\n  return { supported, value };\r\n};\r\n",
+  "typeDeclarations": "interface Performance {\r\n    memory: {\r\n      readonly jsHeapSizeLimit: number;\r\n      readonly totalJSHeapSize: number;\r\n      readonly usedJSHeapSize: number;\r\n    };\r\n  }\n\nexport interface UseMemoryReturn {\r\n  /** The memory supported status */\r\n  supported: boolean;\r\n  /** The current memory usage */\r\n  value: Performance['memory'];\r\n}",
+  "description": "Hook that gives you current memory usage",
+  "examples": [
+    "const { supported, value } = useMemory();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "performance.memory",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseMemoryReturn",
+        "optional": false,
+        "description": "object containing the current memory usage",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseMemoryReturn} An object containing the current memory usage\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseMemoryReturn}",
+              "postType": " ",
+              "description": "object containing the current memory usage",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1755262808000
+}

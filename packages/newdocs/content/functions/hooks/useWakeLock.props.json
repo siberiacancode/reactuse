@@ -1,0 +1,108 @@
+{
+  "name": "useWakeLock",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Artem Dereviago",
+      "avatar": "https://gravatar.com/avatar/f6a2492d9d5d557e7bec475faf6932c8?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\n/** The use wake lock options type */\r\nexport interface UseWakeLockOptions {\r\n  /** Determines if the wake lock should be automatically reacquired when the document becomes visible. */\r\n  immediately?: boolean;\r\n  /** A string specifying the screen wake lock type. */\r\n  type?: WakeLockType;\r\n}\r\n\r\n/** The use wake lock return type */\r\nexport interface UseWakeLockReturn {\r\n  /** Indicates if the wake lock is currently active. */\r\n  active: boolean;\r\n  /** Indicates if the Wake Lock API is supported in the current environment. */\r\n  supported: boolean;\r\n  /** Function to release the wake lock. */\r\n  release: () => Promise<void>;\r\n  /** Function to request the wake lock. */\r\n  request: () => Promise<void>;\r\n}\r\n\r\n/**\r\n * @name useWakeLock\r\n * @description - Hook that provides a wake lock functionality\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi navigator.wakeLock https://developer.mozilla.org/en-US/docs/Web/API/WakeLock\r\n *\r\n * @param {immediately} [options] Configuration options for the hook.\r\n * @returns {UseWakeLockReturn} An object containing the wake lock state and control methods.\r\n *\r\n * @example\r\n * const { supported, active, request, release } = useWakeLock();\r\n */\r\nexport const useWakeLock = (options?: UseWakeLockOptions): UseWakeLockReturn => {\r\n  const supported =\r\n    typeof navigator !== 'undefined' && 'wakeLock' in navigator && !!navigator.wakeLock;\r\n\r\n  const [active, setActive] = useState(false);\r\n  const sentinel = useRef<WakeLockSentinel>(undefined);\r\n\r\n  const immediately = options?.immediately ?? false;\r\n  const type = options?.type ?? 'screen';\r\n\r\n  const request = async (type?: WakeLockType) => {\r\n    if (!supported) return;\r\n\r\n    sentinel.current = await navigator.wakeLock.request(type ?? options?.type);\r\n    sentinel.current.addEventListener('release', () => {\r\n      setActive(false);\r\n      sentinel.current = undefined;\r\n    });\r\n\r\n    setActive(true);\r\n  };\r\n\r\n  const release = async () => {\r\n    if (!supported || !sentinel.current) return;\r\n\r\n    await sentinel.current.release();\r\n    sentinel.current = undefined;\r\n    setActive(false);\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (!supported || !immediately || document.visibilityState !== 'visible' || type !== 'screen')\r\n      return;\r\n\r\n    const onVisibilityChange = async () => {\r\n      await release();\r\n      await request(type);\r\n    };\r\n\r\n    document.addEventListener('visibilitychange', onVisibilityChange);\r\n    return () => {\r\n      document.removeEventListener('visibilitychange', onVisibilityChange);\r\n    };\r\n  }, [type]);\r\n\r\n  return { supported, active, request, release };\r\n};\r\n",
+  "typeDeclarations": "export interface UseWakeLockOptions {\r\n  /** Determines if the wake lock should be automatically reacquired when the document becomes visible. */\r\n  immediately?: boolean;\r\n  /** A string specifying the screen wake lock type. */\r\n  type?: WakeLockType;\r\n}\n\nexport interface UseWakeLockReturn {\r\n  /** Indicates if the wake lock is currently active. */\r\n  active: boolean;\r\n  /** Indicates if the Wake Lock API is supported in the current environment. */\r\n  supported: boolean;\r\n  /** Function to release the wake lock. */\r\n  release: () => Promise<void>;\r\n  /** Function to request the wake lock. */\r\n  request: () => Promise<void>;\r\n}",
+  "description": "Hook that provides a wake lock functionality",
+  "examples": [
+    "const { supported, active, request, release } = useWakeLock();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "navigator.wakeLock",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "immediately",
+          "optional": true,
+          "description": "Configuration options for the hook.",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {immediately} [options] Configuration options for the hook.\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{immediately}",
+                "postType": " ",
+                "description": "Configuration options for the hook.",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseWakeLockReturn",
+        "optional": false,
+        "description": "object containing the wake lock state and control methods.",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseWakeLockReturn} An object containing the wake lock state and control methods.\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseWakeLockReturn}",
+              "postType": " ",
+              "description": "object containing the wake lock state and control methods.",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": true,
+  "lastModified": 1755262808000
+}

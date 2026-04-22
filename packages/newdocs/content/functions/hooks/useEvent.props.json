@@ -1,0 +1,106 @@
+{
+  "name": "useEvent",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useCallback, useRef } from 'react';\r\n\r\n/**\r\n * @name useEvent\r\n * @description - Hook that creates an event and returns a stable reference of it\r\n * @category Utilities\r\n * @usage high\r\n\r\n * @template Params The type of the params\r\n * @template Return The type of the return\r\n * @param {(...args: Params) => Return} callback The callback function\r\n * @returns {(...args: Params) => Return} The callback\r\n *\r\n * @example\r\n * const onClick = useEvent(() => console.log('clicked'));\r\n */\r\nexport const useEvent = <Params extends unknown[], Return>(\r\n  callback: (...args: Params) => Return\r\n): ((...args: Params) => Return) => {\r\n  const internalCallbackRef = useRef<typeof callback>(callback);\r\n  internalCallbackRef.current = callback;\r\n\r\n  return useCallback((...args) => {\r\n    const fn = internalCallbackRef.current;\r\n    return fn(...args);\r\n  }, []);\r\n};\r\n",
+  "description": "Hook that creates an event and returns a stable reference of it",
+  "examples": [
+    "const onClick = useEvent(() => console.log('clicked'));"
+  ],
+  "usage": "high",
+  "category": "utilities",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(...args: Params) => Return",
+          "optional": false,
+          "description": "The callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(...args: Params) => Return} callback The callback function\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(...args: Params) => Return}",
+                "postType": " ",
+                "description": "The callback function",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "(...args: Params) => Return",
+        "optional": false,
+        "description": "callback",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {(...args: Params) => Return} The callback\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{(...args: Params) => Return}",
+              "postType": " ",
+              "description": "callback",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

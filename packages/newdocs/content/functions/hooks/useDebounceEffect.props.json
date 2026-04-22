@@ -1,0 +1,132 @@
+{
+  "name": "useDebounceEffect",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import type { DependencyList, EffectCallback } from 'react';\r\n\r\nimport { useEffect, useRef } from 'react';\r\n\r\n/**\r\n * @name useDebounceEffect\r\n * @description – Hook that runs an effect after a delay when dependencies change\r\n * @category Utilities\r\n * @usage high\r\n *\r\n * @param {EffectCallback} effect The effect callback to run\r\n * @param {number} delay The delay in milliseconds\r\n * @param {DependencyList} deps The dependencies list for the effect\r\n *\r\n * @example\r\n * useDebounceEffect(() => console.log('effect'), 500, [value]);\r\n */\r\nexport const useDebounceEffect = (effect: EffectCallback, delay: number, deps?: DependencyList) => {\r\n  const mountedRef = useRef(true);\r\n  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);\r\n  const cleanupRef = useRef<ReturnType<EffectCallback>>(undefined);\r\n  const effectRef = useRef(effect);\r\n  const delayRef = useRef(delay);\r\n\r\n  effectRef.current = effect;\r\n  delayRef.current = delay;\r\n\r\n  useEffect(() => {\r\n    if (mountedRef.current) {\r\n      mountedRef.current = false;\r\n      return;\r\n    }\r\n\r\n    if (timeoutRef.current) {\r\n      clearTimeout(timeoutRef.current);\r\n      timeoutRef.current = null;\r\n    }\r\n\r\n    timeoutRef.current = setTimeout(() => {\r\n      cleanupRef.current = effectRef.current();\r\n    }, delayRef.current);\r\n\r\n    return () => {\r\n      if (timeoutRef.current) clearTimeout(timeoutRef.current);\r\n      timeoutRef.current = null;\r\n      if (typeof cleanupRef.current === 'function') cleanupRef.current();\r\n    };\r\n  }, deps);\r\n};\r\n",
+  "typeDeclarations": "import type { DependencyList, EffectCallback } from 'react';",
+  "description": "Hook that runs an effect after a delay when dependencies change",
+  "examples": [
+    "useDebounceEffect(() => console.log('effect'), 500, [value]);"
+  ],
+  "usage": "high",
+  "category": "utilities",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "effect",
+          "type": "EffectCallback",
+          "optional": false,
+          "description": "The effect callback to run",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {EffectCallback} effect The effect callback to run\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "effect",
+                "postName": " ",
+                "type": "{EffectCallback}",
+                "postType": " ",
+                "description": "The effect callback to run",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "delay",
+          "type": "number",
+          "optional": false,
+          "description": "The delay in milliseconds",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {number} delay The delay in milliseconds\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "delay",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The delay in milliseconds",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "deps",
+          "type": "DependencyList",
+          "optional": false,
+          "description": "The dependencies list for the effect",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {DependencyList} deps The dependencies list for the effect\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "deps",
+                "postName": " ",
+                "type": "{DependencyList}",
+                "postType": " ",
+                "description": "The dependencies list for the effect",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            },
+            {
+              "number": 9,
+              "source": " *\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1768590847000
+}

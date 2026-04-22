@@ -28,59 +28,62 @@ import { Code } from './code';
 const categoryMap: Record<string, { icon: JSX.Element; className: string }> = {
   browser: {
     icon: <IconWorld />,
-    className: 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   elements: {
     icon: <IconPictureInPictureOff />,
-    className: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   state: {
     icon: <IconCube />,
-    className: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   sensors: {
     icon: <IconTelescope />,
-    className: 'bg-fuchsia-50 text-fuchsia-700 dark:bg-fuchsia-950 dark:text-fuchsia-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   humor: {
     icon: <IconHorseToy />,
-    className: 'bg-pink-50 text-pink-700 dark:bg-pink-950 dark:text-pink-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   debug: {
     icon: <IconBug />,
-    className: 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   helpers: {
     icon: <IconHelpCircle />,
-    className: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   lifecycle: {
     icon: <IconRecycle />,
-    className: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   utilities: {
     icon: <IconTools />,
-    className: 'bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   async: {
     icon: <IconLoader />,
-    className: 'bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   user: {
     icon: <IconUser />,
-    className: 'bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300'
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   }
 };
 
 const usageMap: Record<string, string> = {
-  low: 'bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300',
-  medium: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
-  high: 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
-  necessary: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300'
+  low: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100',
+  medium: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100',
+  high: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100',
+  necessary: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
 };
 
 export const DocHeader = (props: HookProps) => {
-  const categoryMeta = categoryMap[props.category] ?? {};
+  const categoryKey = props.category ?? 'utilities';
+  const categoryMeta = categoryMap[categoryKey] ?? {};
+  const badgeBaseClass =
+    'border-0 px-3 py-1 text-sm font-medium shadow-none [&_svg]:size-3.5 [&_svg]:opacity-80';
 
   return (
     <>
@@ -88,18 +91,22 @@ export const DocHeader = (props: HookProps) => {
         <div className='flex gap-3'>
           <Badge
             className={
-              categoryMeta.className ??
-              'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
+              `${badgeBaseClass} ${
+                categoryMeta.className ??
+                'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+              }`
             }
           >
             {categoryMeta && categoryMeta.icon}
-            {props.category}
+            {categoryKey}
           </Badge>
           <Badge
             className={
-              props.usage
-                ? usageMap[props.usage]
-                : 'bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300'
+              `${badgeBaseClass} ${
+                props.usage
+                  ? usageMap[props.usage]
+                  : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+              }`
             }
           >
             <IconFlame />
@@ -107,9 +114,11 @@ export const DocHeader = (props: HookProps) => {
           </Badge>
           <Badge
             className={
-              props.hasTests
-                ? 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300'
-                : 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300'
+              `${badgeBaseClass} ${
+                props.hasTests
+                  ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+                  : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+              }`
             }
           >
             {props.hasTests ? <IconRosetteDiscountCheck /> : <IconRosetteDiscountCheckOff />} test
@@ -142,7 +151,7 @@ export const DocUsageExamples = (props: HookProps) =>
 
 export const DocContributors = (props: HookProps) => (
   <div className='my-4 flex flex-wrap gap-4'>
-    {props.contributors.map(({ name, avatar }) => (
+    {(props.contributors ?? []).map(({ name, avatar }) => (
       <div key={name} className='flex gap-2'>
         <Avatar>
           <AvatarImage alt='@shadcn' src={avatar} />

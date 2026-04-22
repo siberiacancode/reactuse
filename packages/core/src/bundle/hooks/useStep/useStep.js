@@ -27,7 +27,7 @@ export const useStep = (params) => {
   const initialStep = useRef(
     initial > max || initial < FIRST_STEP_VALUE ? FIRST_STEP_VALUE : initial
   );
-  const [currentStep, setCurrentStep] = useState(initial);
+  const [currentStep, setCurrentStep] = useState(initialStep.current);
   const isFirst = currentStep === FIRST_STEP_VALUE;
   const isLast = currentStep === max;
   const next = () => {
@@ -40,7 +40,7 @@ export const useStep = (params) => {
   };
   const reset = () => setCurrentStep(initialStep.current);
   const set = (value) => {
-    if (value === 'first') return setCurrentStep(initialStep.current);
+    if (value === 'first') return setCurrentStep(FIRST_STEP_VALUE);
     if (value === 'last') return setCurrentStep(max);
     if (value >= max) return setCurrentStep(max);
     if (value <= FIRST_STEP_VALUE) return setCurrentStep(FIRST_STEP_VALUE);

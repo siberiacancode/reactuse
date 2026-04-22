@@ -1,0 +1,154 @@
+{
+  "name": "useFileSystemAccess",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useRef, useState } from 'react';\r\n\r\nexport interface FileSystemAccessShowOpenFileOptions {\r\n  excludeAcceptAllOption?: boolean;\r\n  multiple?: boolean;\r\n  types?: Array<{\r\n    description?: string;\r\n    accept: Record<string, string[]>;\r\n  }>;\r\n}\r\n\r\nexport interface FileSystemAccessShowSaveFileOptions {\r\n  excludeAcceptAllOption?: boolean;\r\n  suggestedName?: string;\r\n  types?: Array<{\r\n    description?: string;\r\n    accept: Record<string, string[]>;\r\n  }>;\r\n}\r\n\r\nexport interface FileSystemFileHandle {\r\n  createWritable: () => Promise<FileSystemWritableFileStream>;\r\n  getFile: () => Promise<File>;\r\n}\r\n\r\nexport interface FileSystemWritableFileStream extends WritableStream {\r\n  write: FileSystemWritableFileStreamWrite;\r\n  seek: (position: number) => Promise<void>;\r\n  truncate: (size: number) => Promise<void>;\r\n}\r\n\r\nexport interface FileSystemWritableFileStreamWrite {\r\n  (data: string | Blob | BufferSource): Promise<void>;\r\n  (options: { type: 'write'; position: number; data: string | Blob | BufferSource }): Promise<void>;\r\n  (options: { type: 'seek'; position: number }): Promise<void>;\r\n  (options: { type: 'truncate'; size: number }): Promise<void>;\r\n}\r\n\r\ndeclare global {\r\n  interface Window {\r\n    readonly showOpenFilePicker: (\r\n      options?: FileSystemAccessShowOpenFileOptions\r\n    ) => Promise<FileSystemFileHandle[]>;\r\n    readonly showSaveFilePicker: (\r\n      options?: FileSystemAccessShowSaveFileOptions\r\n    ) => Promise<FileSystemFileHandle>;\r\n  }\r\n}\r\n\r\n/** The use file system access common options type */\r\nexport type UseFileSystemAccessCommonOptions = Pick<\r\n  FileSystemAccessShowOpenFileOptions,\r\n  'excludeAcceptAllOption' | 'types'\r\n>;\r\n\r\n/** The use file system access show save options type */\r\nexport type UseFileSystemAccessShowSaveOptions = Pick<\r\n  FileSystemAccessShowSaveFileOptions,\r\n  'suggestedName'\r\n>;\r\n\r\n/** The use file system access options type */\r\nexport type UseFileSystemAccessOptions = UseFileSystemAccessCommonOptions & {\r\n  dataType?: 'ArrayBuffer' | 'Blob' | 'Text';\r\n};\r\n\r\n/** The use file system access return type */\r\nexport interface UseFileSystemAccessReturn<Data = string | ArrayBuffer | Blob> {\r\n  /** Last read data */\r\n  data?: Data;\r\n  /** Current file */\r\n  file?: File;\r\n  /** Last modified timestamp */\r\n  lastModified: number;\r\n  /** File base name */\r\n  name: string;\r\n  /** Size in bytes */\r\n  size: number;\r\n  /** Whether the File System Access API is available */\r\n  supported: boolean;\r\n  /** MIME type */\r\n  type: string;\r\n  /** Create a new file via save picker */\r\n  create: (createOptions?: UseFileSystemAccessShowSaveOptions) => Promise<void>;\r\n  /** Open an existing file */\r\n  open: (openOptions?: UseFileSystemAccessCommonOptions) => Promise<void>;\r\n  /** Save to the current handle, or prompt with {@link saveAs} if none */\r\n  save: (saveOptions?: UseFileSystemAccessShowSaveOptions) => Promise<void>;\r\n  /** Always prompt for a file path then save */\r\n  saveAs: (saveOptions?: UseFileSystemAccessShowSaveOptions) => Promise<void>;\r\n  /** Set the data */\r\n  set: (data: Data) => void;\r\n  /** Re-read data from the current handle using `dataType` */\r\n  update: () => Promise<void>;\r\n}\r\n\r\nexport interface UseFileSystemAccess {\r\n  (): UseFileSystemAccessReturn<string | ArrayBuffer | Blob>;\r\n  (\r\n    options: UseFileSystemAccessOptions & { dataType: 'ArrayBuffer' }\r\n  ): UseFileSystemAccessReturn<ArrayBuffer>;\r\n  (options: UseFileSystemAccessOptions & { dataType: 'Blob' }): UseFileSystemAccessReturn<Blob>;\r\n  (options: UseFileSystemAccessOptions & { dataType: 'Text' }): UseFileSystemAccessReturn<string>;\r\n  (options?: UseFileSystemAccessOptions): UseFileSystemAccessReturn<string | ArrayBuffer | Blob>;\r\n}\r\n\r\n/**\r\n * @name useFileSystemAccess\r\n * @description - Hook for reading and writing local files via the File System Access API\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi File System Access API https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API\r\n *\r\n * @overload\r\n * @returns {UseFileSystemAccessReturn<string | ArrayBuffer | Blob>}\r\n *\r\n * @overload\r\n * @param {UseFileSystemAccessOptions} [options]\r\n * @returns {UseFileSystemAccessReturn}\r\n *\r\n * @example\r\n * const fileSystemAccess = useFileSystemAccess({ dataType: 'Text' });\r\n */\r\nexport const useFileSystemAccess = ((\r\n  options: UseFileSystemAccessOptions = {}\r\n): UseFileSystemAccessReturn<string | ArrayBuffer | Blob> => {\r\n  const supported =\r\n    typeof window !== 'undefined' &&\r\n    'showOpenFilePicker' in window &&\r\n    'showSaveFilePicker' in window &&\r\n    typeof window.showOpenFilePicker === 'function' &&\r\n    typeof window.showSaveFilePicker === 'function';\r\n\r\n  const dataType = options.dataType ?? 'Text';\r\n\r\n  const handleRef = useRef<FileSystemFileHandle>(undefined);\r\n\r\n  const [data, setData] = useState<string | ArrayBuffer | Blob>();\r\n  const [file, setFile] = useState<File>();\r\n\r\n  const load = async () => {\r\n    const handle = handleRef.current;\r\n    if (!handle) return;\r\n    const file = await handle.getFile();\r\n    setFile(file);\r\n\r\n    if (dataType === 'Text') return setData(await file.text());\r\n    if (dataType === 'ArrayBuffer') return setData(await file.arrayBuffer());\r\n    if (dataType === 'Blob') return setData(file);\r\n    throw new Error(`Invalid data type: ${dataType}`);\r\n  };\r\n\r\n  const open = async (params?: UseFileSystemAccessCommonOptions) => {\r\n    if (!supported) return;\r\n    const [handle] = await window.showOpenFilePicker({\r\n      ...options,\r\n      ...params\r\n    });\r\n    handleRef.current = handle;\r\n    await load();\r\n  };\r\n\r\n  const create = async (params: UseFileSystemAccessShowSaveOptions = {}) => {\r\n    if (!supported) return;\r\n    handleRef.current = await window.showSaveFilePicker({\r\n      ...options,\r\n      ...params\r\n    });\r\n    setData(undefined);\r\n    await load();\r\n  };\r\n\r\n  const saveAs = async (params?: UseFileSystemAccessShowSaveOptions) => {\r\n    if (!supported) return;\r\n\r\n    handleRef.current = await window.showSaveFilePicker({\r\n      ...options,\r\n      ...params\r\n    });\r\n\r\n    const writable = await handleRef.current.createWritable();\r\n    await writable.write(data as Blob | BufferSource);\r\n    await writable.close();\r\n\r\n    await load();\r\n  };\r\n\r\n  const save = async (params?: UseFileSystemAccessShowSaveOptions) => {\r\n    if (!supported) return;\r\n\r\n    if (!handleRef.current) return saveAs(params);\r\n\r\n    const writable = await handleRef.current.createWritable();\r\n    await writable.write(data as Blob | BufferSource);\r\n    await writable.close();\r\n\r\n    await load();\r\n  };\r\n\r\n  const update = async () => {\r\n    await load();\r\n  };\r\n\r\n  const set = (data: string | ArrayBuffer | Blob) => setData(data);\r\n\r\n  return {\r\n    supported,\r\n    data,\r\n    file,\r\n    name: file?.name ?? '',\r\n    type: file?.type ?? '',\r\n    size: file?.size ?? 0,\r\n    lastModified: file?.lastModified ?? 0,\r\n    open,\r\n    set,\r\n    create,\r\n    save,\r\n    saveAs,\r\n    update\r\n  };\r\n}) as UseFileSystemAccess;\r\n",
+  "typeDeclarations": "export interface FileSystemAccessShowOpenFileOptions {\r\n  excludeAcceptAllOption?: boolean;\r\n  multiple?: boolean;\r\n  types?: Array<{\r\n    description?: string;\r\n    accept: Record<string, string[]>;\r\n  }>;\r\n}\n\nexport interface FileSystemAccessShowSaveFileOptions {\r\n  excludeAcceptAllOption?: boolean;\r\n  suggestedName?: string;\r\n  types?: Array<{\r\n    description?: string;\r\n    accept: Record<string, string[]>;\r\n  }>;\r\n}\n\nexport interface FileSystemFileHandle {\r\n  createWritable: () => Promise<FileSystemWritableFileStream>;\r\n  getFile: () => Promise<File>;\r\n}\n\nexport interface FileSystemWritableFileStream extends WritableStream {\r\n  write: FileSystemWritableFileStreamWrite;\r\n  seek: (position: number) => Promise<void>;\r\n  truncate: (size: number) => Promise<void>;\r\n}\n\nexport interface FileSystemWritableFileStreamWrite {\r\n  (data: string | Blob | BufferSource): Promise<void>;\r\n  (options: { type: 'write'; position: number; data: string | Blob | BufferSource }): Promise<void>;\r\n  (options: { type: 'seek'; position: number }): Promise<void>;\r\n  (options: { type: 'truncate'; size: number }): Promise<void>;\r\n}\n\ninterface Window {\r\n    readonly showOpenFilePicker: (\r\n      options?: FileSystemAccessShowOpenFileOptions\r\n    ) => Promise<FileSystemFileHandle[]>;\r\n    readonly showSaveFilePicker: (\r\n      options?: FileSystemAccessShowSaveFileOptions\r\n    ) => Promise<FileSystemFileHandle>;\r\n  }\n\nexport type UseFileSystemAccessCommonOptions = Pick<\r\n  FileSystemAccessShowOpenFileOptions,\r\n  'excludeAcceptAllOption' | 'types'\r\n>;\n\nexport type UseFileSystemAccessShowSaveOptions = Pick<\r\n  FileSystemAccessShowSaveFileOptions,\r\n  'suggestedName'\r\n>;\n\nexport type UseFileSystemAccessOptions = UseFileSystemAccessCommonOptions & {\r\n  dataType?: 'ArrayBuffer' | 'Blob' | 'Text';\r\n};\n\nexport interface UseFileSystemAccessReturn<Data = string | ArrayBuffer | Blob> {\r\n  /** Last read data */\r\n  data?: Data;\r\n  /** Current file */\r\n  file?: File;\r\n  /** Last modified timestamp */\r\n  lastModified: number;\r\n  /** File base name */\r\n  name: string;\r\n  /** Size in bytes */\r\n  size: number;\r\n  /** Whether the File System Access API is available */\r\n  supported: boolean;\r\n  /** MIME type */\r\n  type: string;\r\n  /** Create a new file via save picker */\r\n  create: (createOptions?: UseFileSystemAccessShowSaveOptions) => Promise<void>;\r\n  /** Open an existing file */\r\n  open: (openOptions?: UseFileSystemAccessCommonOptions) => Promise<void>;\r\n  /** Save to the current handle, or prompt with {@link saveAs} if none */\r\n  save: (saveOptions?: UseFileSystemAccessShowSaveOptions) => Promise<void>;\r\n  /** Always prompt for a file path then save */\r\n  saveAs: (saveOptions?: UseFileSystemAccessShowSaveOptions) => Promise<void>;\r\n  /** Set the data */\r\n  set: (data: Data) => void;\r\n  /** Re-read data from the current handle using `dataType` */\r\n  update: () => Promise<void>;\r\n}\n\nexport interface UseFileSystemAccess {\r\n  (): UseFileSystemAccessReturn<string | ArrayBuffer | Blob>;\r\n  (\r\n    options: UseFileSystemAccessOptions & { dataType: 'ArrayBuffer' }\r\n  ): UseFileSystemAccessReturn<ArrayBuffer>;\r\n  (options: UseFileSystemAccessOptions & { dataType: 'Blob' }): UseFileSystemAccessReturn<Blob>;\r\n  (options: UseFileSystemAccessOptions & { dataType: 'Text' }): UseFileSystemAccessReturn<string>;\r\n  (options?: UseFileSystemAccessOptions): UseFileSystemAccessReturn<string | ArrayBuffer | Blob>;\r\n}",
+  "description": "Hook for reading and writing local files via the File System Access API",
+  "examples": [
+    "const fileSystemAccess = useFileSystemAccess({ dataType: 'Text' });"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "File",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "UseFileSystemAccessReturn<string | ArrayBuffer | Blob>",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseFileSystemAccessReturn<string | ArrayBuffer | Blob>}\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{UseFileSystemAccessReturn<string | ArrayBuffer | Blob>}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseFileSystemAccessOptions",
+          "optional": true,
+          "description": "",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {UseFileSystemAccessOptions} [options]\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": "",
+                "type": "{UseFileSystemAccessOptions}",
+                "postType": " ",
+                "description": "",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "UseFileSystemAccessReturn",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 13,
+            "source": " * @returns {UseFileSystemAccessReturn}\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{UseFileSystemAccessReturn}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 14,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1775226876000
+}

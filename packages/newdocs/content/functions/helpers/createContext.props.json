@@ -1,0 +1,131 @@
+{
+  "name": "createContext",
+  "type": "helper",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "tsx",
+  "sourceCode": "import type { JSX, ReactNode } from 'react';\r\n\r\nimport { createContext as createReactContext, useContext, useMemo, useState } from 'react';\r\n\r\n/** The create context options type */\r\nexport interface CreateContextOptions {\r\n  /** Display name for the context (useful for debugging) */\r\n  name?: string;\r\n  /** Whether to throw an error if context is used outside of Provider */\r\n  strict?: boolean;\r\n}\r\n\r\n/** The context value type */\r\nexport interface ContextValue<Value> {\r\n  /** The context value */\r\n  value: Value | undefined;\r\n  /** The context set function */\r\n  set: (value: Value) => void;\r\n}\r\n\r\n/** The provider props type */\r\nexport interface ProviderProps<Value> {\r\n  /** The children */\r\n  children?: ReactNode;\r\n  /** The initial value */\r\n  initialValue?: Value;\r\n}\r\n\r\n/** The create context return type */\r\nexport interface CreateContextReturn<Value> {\r\n  /** The context instance */\r\n  instance: React.Context<ContextValue<Value>>;\r\n  /** The provider component */\r\n  Provider: (props: ProviderProps<Value>) => JSX.Element;\r\n  /** The selector hook */\r\n  useSelect: {\r\n    <Selected>(selector: (value: Value) => Selected): Selected;\r\n    (): ContextValue<Value>;\r\n  };\r\n}\r\n\r\n/**\r\n * @name createContext\r\n * @description - Creates a typed context with additional utilities\r\n * @category Helpers\r\n * @usage high\r\n *\r\n * @template Value - The type of value that will be stored in the context\r\n * @param {Value | undefined} [defaultValue] - Default value for the context\r\n * @param {CreateContextOptions<Value>} [options] - Additional options for context creation\r\n * @returns {CreateContextReturn<Value>} Object containing context utilities and components\r\n *\r\n * @example\r\n * const { useSelect, instance, Provider } = createContext<number>(0);\r\n */\r\nexport const createContext = <Value,>(\r\n  defaultValue: Value | undefined = undefined,\r\n  options: CreateContextOptions = {}\r\n): CreateContextReturn<Value> => {\r\n  const Context = createReactContext<{\r\n    value: Value | undefined;\r\n    set: (value: Value) => void;\r\n  }>({\r\n    value: defaultValue,\r\n    set: () => {}\r\n  });\r\n\r\n  Context.displayName = options.name;\r\n\r\n  function useSelect(): ContextValue<Value>;\r\n  function useSelect<Selected>(selector: (value: Value) => Selected): Selected;\r\n  function useSelect<Selected>(selector?: (value: Value) => Selected) {\r\n    const context = useContext(Context);\r\n\r\n    if (!context && options.strict) {\r\n      throw new Error(`Context hook ${options.name} must be used inside a Provider`);\r\n    }\r\n\r\n    if (!selector) {\r\n      return context;\r\n    }\r\n\r\n    return selector(context.value as Value);\r\n  }\r\n\r\n  const Provider = ({ children, initialValue }: ProviderProps<Value>) => {\r\n    const [profile, setProfile] = useState<Value | undefined>(initialValue ?? defaultValue);\r\n\r\n    const value = useMemo(\r\n      () => ({\r\n        value: profile,\r\n        set: setProfile\r\n      }),\r\n      [profile]\r\n    );\r\n\r\n    return <Context value={value}>{children}</Context>;\r\n  };\r\n\r\n  return {\r\n    useSelect,\r\n    instance: Context,\r\n    Provider\r\n  } as const;\r\n};\r\n",
+  "typeDeclarations": "import type { JSX, ReactNode } from 'react';\n\nexport interface CreateContextOptions {\r\n  /** Display name for the context (useful for debugging) */\r\n  name?: string;\r\n  /** Whether to throw an error if context is used outside of Provider */\r\n  strict?: boolean;\r\n}\n\nexport interface ContextValue<Value> {\r\n  /** The context value */\r\n  value: Value | undefined;\r\n  /** The context set function */\r\n  set: (value: Value) => void;\r\n}\n\nexport interface ProviderProps<Value> {\r\n  /** The children */\r\n  children?: ReactNode;\r\n  /** The initial value */\r\n  initialValue?: Value;\r\n}\n\nexport interface CreateContextReturn<Value> {\r\n  /** The context instance */\r\n  instance: React.Context<ContextValue<Value>>;\r\n  /** The provider component */\r\n  Provider: (props: ProviderProps<Value>) => JSX.Element;\r\n  /** The selector hook */\r\n  useSelect: {\r\n    <Selected>(selector: (value: Value) => Selected): Selected;\r\n    (): ContextValue<Value>;\r\n  };\r\n}",
+  "description": "Creates a typed context with additional utilities",
+  "examples": [
+    "const { useSelect, instance, Provider } = createContext<number>(0);"
+  ],
+  "usage": "high",
+  "category": "helpers",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "defaultValue",
+          "type": "Value | undefined",
+          "optional": true,
+          "description": "- Default value for the context",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Value | undefined} [defaultValue] - Default value for the context\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[defaultValue]",
+                "postName": " ",
+                "type": "{Value | undefined}",
+                "postType": " ",
+                "description": "- Default value for the context",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "CreateContextOptions<Value>",
+          "optional": true,
+          "description": "- Additional options for context creation",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {CreateContextOptions<Value>} [options] - Additional options for context creation\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{CreateContextOptions<Value>}",
+                "postType": " ",
+                "description": "- Additional options for context creation",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "CreateContextReturn<Value>",
+        "optional": false,
+        "description": "containing context utilities and components",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {CreateContextReturn<Value>} Object containing context utilities and components\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{CreateContextReturn<Value>}",
+              "postType": " ",
+              "description": "containing context utilities and components",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1755150117000
+}

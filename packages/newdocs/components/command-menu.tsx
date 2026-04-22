@@ -93,7 +93,7 @@ export const CommandMenu = (props: Props) => {
       <DialogTrigger asChild>
         <Button
           className={cn(
-            'text-foreground dark:bg-card hover:bg-muted/50 relative h-8 w-full justify-start rounded-lg pl-3 font-normal shadow-none sm:pr-12 md:w-48 lg:w-56 xl:w-64'
+            'text-foreground dark:bg-card hover:bg-muted/50 relative h-8 w-full justify-start rounded-lg pl-3 font-normal shadow-none sm:pr-12'
           )}
           variant='outline'
           onClick={() => setOpen(true)}

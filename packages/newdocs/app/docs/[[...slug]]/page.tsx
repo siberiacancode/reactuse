@@ -13,7 +13,7 @@ export const dynamic = 'force-static';
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return source.generateParams();
+  return source.generateParams().filter((entry) => entry.slug?.length !== 2);
 }
 
 export async function generateMetadata(props: { params: Promise<{ slug: string[] }> }) {

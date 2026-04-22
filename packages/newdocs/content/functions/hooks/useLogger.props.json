@@ -1,0 +1,107 @@
+{
+  "name": "useLogger",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect } from 'react';\r\n\r\nimport { useDidUpdate } from '../useDidUpdate/useDidUpdate';\r\n\r\n/**\r\n * @name useLogger\r\n * @description - Hook for debugging lifecycle\r\n * @category Debug\r\n * @usage low\r\n *\r\n * @param {string} name The name or identifier for the logger\r\n * @param {unknown[]} params Additional arguments to be logged\r\n *\r\n * @example\r\n * useLogger('Component', [1, 2, 3]);\r\n */\r\nexport const useLogger = (name: string, params: unknown[]) => {\r\n  useEffect(() => {\r\n    console.log(`${name} mounted`, ...params);\r\n    return () => console.log(`${name} unmounted`);\r\n  }, []);\r\n\r\n  useDidUpdate(() => {\r\n    console.log(`${name} updated`, ...params);\r\n  }, params);\r\n};\r\n",
+  "description": "Hook for debugging lifecycle",
+  "examples": [
+    "useLogger('Component', [1, 2, 3]);"
+  ],
+  "usage": "low",
+  "category": "debug",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "description": "The name or identifier for the logger",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {string} name The name or identifier for the logger\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "name",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The name or identifier for the logger",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "params",
+          "type": "unknown[]",
+          "optional": false,
+          "description": "Additional arguments to be logged",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {unknown[]} params Additional arguments to be logged\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "params",
+                "postName": " ",
+                "type": "{unknown[]}",
+                "postType": " ",
+                "description": "Additional arguments to be logged",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            },
+            {
+              "number": 8,
+              "source": " *\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

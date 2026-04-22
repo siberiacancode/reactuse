@@ -1,0 +1,104 @@
+{
+  "name": "useShallowEffect",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import type { DependencyList, EffectCallback } from 'react';\r\n\r\nimport { useEffect, useRef } from 'react';\r\n\r\nexport const deepEqual = (a: any, b: any): boolean => {\r\n  if (a === b) return true;\r\n  if (a == null || b == null) return a === b;\r\n  if (typeof a !== typeof b) return false;\r\n  if (typeof a !== 'object') return a === b;\r\n  if (Array.isArray(a) !== Array.isArray(b)) return false;\r\n\r\n  if (Array.isArray(a))\r\n    return a.length === b.length && a.every((value, index) => deepEqual(value, b[index]));\r\n\r\n  const keysA = Object.keys(a);\r\n  const keysB = Object.keys(b);\r\n\r\n  if (keysA.length !== keysB.length) return false;\r\n\r\n  for (const key of keysA) {\r\n    if (!keysB.includes(key)) return false;\r\n    if (!deepEqual(a[key], b[key])) return false;\r\n  }\r\n\r\n  return true;\r\n};\r\n\r\n/**\r\n * @name useShallowEffect\r\n * @description - Hook that executes an effect only when dependencies change shallowly or deeply\r\n * @category Lifecycle\r\n * @usage low\r\n *\r\n * @param {EffectCallback} effect The effect callback\r\n * @param {DependencyList} [deps] The dependencies list for the effect\r\n *\r\n * @example\r\n * useShallowEffect(() => console.log(\"effect\"), [user]);\r\n */\r\nexport const useShallowEffect = (effect: EffectCallback, deps?: DependencyList) => {\r\n  const depsRef = useRef<DependencyList>(deps);\r\n\r\n  if (!depsRef.current || !deepEqual(deps, depsRef.current)) {\r\n    depsRef.current = deps;\r\n  }\r\n\r\n  useEffect(effect, depsRef.current);\r\n};\r\n",
+  "typeDeclarations": "import type { DependencyList, EffectCallback } from 'react';",
+  "description": "Hook that executes an effect only when dependencies change shallowly or deeply",
+  "examples": [
+    "useShallowEffect(() => console.log(\"effect\"), [user]);"
+  ],
+  "usage": "low",
+  "category": "lifecycle",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "effect",
+          "type": "EffectCallback",
+          "optional": false,
+          "description": "The effect callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {EffectCallback} effect The effect callback\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "effect",
+                "postName": " ",
+                "type": "{EffectCallback}",
+                "postType": " ",
+                "description": "The effect callback",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "deps",
+          "type": "DependencyList",
+          "optional": true,
+          "description": "The dependencies list for the effect",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {DependencyList} [deps] The dependencies list for the effect\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[deps]",
+                "postName": " ",
+                "type": "{DependencyList}",
+                "postType": " ",
+                "description": "The dependencies list for the effect",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            },
+            {
+              "number": 8,
+              "source": " *\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

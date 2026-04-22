@@ -1,0 +1,132 @@
+{
+  "name": "usePerformanceObserver",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\n/** The use performance observer options type */\r\nexport type UsePerformanceObserverOptions = PerformanceObserverInit & {\r\n  /** Whether to start the observer immediately */\r\n  immediate?: boolean;\r\n};\r\n\r\n/**\r\n * @name usePerformanceObserver\r\n * @description - Hook that allows you to observe performance entries\r\n * @category Sensors\r\n * @usage low\r\n *\r\n * @browserapi PerformanceObserver https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver\r\n *\r\n * @param {UsePerformanceObserverOptions} options The options for the performance observer\r\n * @param {PerformanceObserverCallback} callback The function to handle performance entries\r\n * @returns {object} An object containing the observer's support status and methods to start and stop the observer\r\n *\r\n * @example\r\n * const { supported, entries, start, stop } = usePerformanceObserver();\r\n */\r\nexport const usePerformanceObserver = (\r\n  options: UsePerformanceObserverOptions,\r\n  callback?: PerformanceObserverCallback\r\n) => {\r\n  const supported = typeof window !== 'undefined' && !!window.PerformanceObserver;\r\n  const [entries, setEntries] = useState<PerformanceEntry[]>([]);\r\n\r\n  const observerRef = useRef<PerformanceObserver>(undefined);\r\n  const internalCallback = useRef<PerformanceObserverCallback | null>(callback);\r\n  internalCallback.current = callback;\r\n\r\n  const start = () => {\r\n    if (!supported) return;\r\n    const observer = new PerformanceObserver((entryList, observer) => {\r\n      setEntries(entryList.getEntries());\r\n      internalCallback.current?.(entryList, observer);\r\n    });\r\n    observer.observe(options);\r\n    observerRef.current = observer;\r\n  };\r\n\r\n  const stop = () => {\r\n    if (!supported) return;\r\n    observerRef.current?.disconnect();\r\n    observerRef.current = undefined;\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (!supported) return;\r\n    if (options.immediate) start();\r\n\r\n    return () => {\r\n      stop();\r\n    };\r\n  }, []);\r\n\r\n  return { supported, entries, start, stop, observer: observerRef.current };\r\n};\r\n",
+  "typeDeclarations": "export type UsePerformanceObserverOptions = PerformanceObserverInit & {\r\n  /** Whether to start the observer immediately */\r\n  immediate?: boolean;\r\n};",
+  "description": "Hook that allows you to observe performance entries",
+  "examples": [
+    "const { supported, entries, start, stop } = usePerformanceObserver();"
+  ],
+  "usage": "low",
+  "category": "sensors",
+  "browserapi": "PerformanceObserver",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UsePerformanceObserverOptions",
+          "optional": false,
+          "description": "The options for the performance observer",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UsePerformanceObserverOptions} options The options for the performance observer\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "options",
+                "postName": " ",
+                "type": "{UsePerformanceObserverOptions}",
+                "postType": " ",
+                "description": "The options for the performance observer",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "PerformanceObserverCallback",
+          "optional": false,
+          "description": "The function to handle performance entries",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {PerformanceObserverCallback} callback The function to handle performance entries\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{PerformanceObserverCallback}",
+                "postType": " ",
+                "description": "The function to handle performance entries",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "object",
+        "optional": false,
+        "description": "object containing the observer's support status and methods to start and stop the observer",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {object} An object containing the observer's support status and methods to start and stop the observer\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{object}",
+              "postType": " ",
+              "description": "object containing the observer's support status and methods to start and stop the observer",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1773841927000
+}

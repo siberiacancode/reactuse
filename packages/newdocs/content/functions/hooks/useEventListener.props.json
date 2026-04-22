@@ -1,0 +1,323 @@
+{
+  "name": "useEventListener",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The use event listener options */\r\nexport type UseEventListenerOptions = {\r\n  enabled?: boolean;\r\n} & AddEventListenerOptions;\r\n\r\n/** The use event listener return type */\r\nexport type UseEventListenerReturn<Target extends Element> = StateRef<Target>;\r\n\r\nexport interface UseEventListener {\r\n  <Event extends keyof WindowEventMap = keyof WindowEventMap>(\r\n    target: HookTarget,\r\n    event: Event,\r\n    listener: (this: Window, event: WindowEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions\r\n  ): void;\r\n\r\n  <Event extends keyof DocumentEventMap = keyof DocumentEventMap>(\r\n    target: HookTarget,\r\n    event: Event,\r\n    listener: (this: Document, event: DocumentEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions\r\n  ): void;\r\n\r\n  <Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(\r\n    target: HookTarget,\r\n    event: Event,\r\n    listener: (this: Element, event: HTMLElementEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions\r\n  ): void;\r\n\r\n  <Target extends Element, Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(\r\n    event: Event,\r\n    listener: (this: Target, event: HTMLElementEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions,\r\n    target?: never\r\n  ): UseEventListenerReturn<Target>;\r\n\r\n  <\r\n    Target extends Element,\r\n    Event extends keyof MediaQueryListEventMap = keyof MediaQueryListEventMap\r\n  >(\r\n    event: Event,\r\n    listener: (this: Target, event: MediaQueryListEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions,\r\n    target?: never\r\n  ): UseEventListenerReturn<Target>;\r\n}\r\n\r\n/**\r\n * @name useEventListener\r\n * @description - Hook that attaches an event listener to the specified target\r\n * @category Browser\r\n * @usage necessary\r\n *\r\n * @overload\r\n * @template Event Key of window event map\r\n * @template Target The target element\r\n * @param {HookTarget} target The target element to attach the event listener to\r\n * @param {Event | Event[]} event An array of event types to listen for\r\n * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} handler The event handler function\r\n * @param {UseEventListenerOptions} [options] Options for the event listener\r\n * @returns {void}\r\n *\r\n * @example\r\n * useEventListener(ref, 'click', () => console.log('click'));\r\n *\r\n * @overload\r\n * @template Event Key of window event map\r\n * @template Target The target element\r\n * @param {Event | Event[]} event An array of event types to listen for\r\n * @param {(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void} handler The event handler function\r\n * @param {UseEventListenerOptions} [options] Options for the event listener\r\n * @returns {UseEventListenerReturn<Target>} A reference to the target element\r\n *\r\n * @example\r\n * const ref = useEventListener('click', () => console.log('click'));\r\n */\r\nexport const useEventListener = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const event = (target ? params[1] : params[0]) as string;\r\n  const listener = (target ? params[2] : params[1]) as (...arg: any[]) => undefined | void;\r\n  const options = (target ? params[3] : params[2]) as UseEventListenerOptions | undefined;\r\n\r\n  const enabled = options?.enabled ?? true;\r\n\r\n  const internalRef = useRefState();\r\n  const internalListenerRef = useRef(listener);\r\n  internalListenerRef.current = listener;\r\n  const internalOptionsRef = useRef(options);\r\n  internalOptionsRef.current = options;\r\n\r\n  useEffect(() => {\r\n    if (!enabled) return;\r\n\r\n    const element =\r\n      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;\r\n\r\n    const listener = (event: Event) => internalListenerRef.current(event);\r\n\r\n    element.addEventListener(event, listener, options);\r\n    return () => {\r\n      element.removeEventListener(event, listener, options);\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state, event, enabled]);\r\n\r\n  if (target) return;\r\n  return internalRef;\r\n}) as UseEventListener;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport type UseEventListenerOptions = {\r\n  enabled?: boolean;\r\n} & AddEventListenerOptions;\n\nexport type UseEventListenerReturn<Target extends Element> = StateRef<Target>;\n\nexport interface UseEventListener {\r\n  <Event extends keyof WindowEventMap = keyof WindowEventMap>(\r\n    target: HookTarget,\r\n    event: Event,\r\n    listener: (this: Window, event: WindowEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions\r\n  ): void;\r\n\r\n  <Event extends keyof DocumentEventMap = keyof DocumentEventMap>(\r\n    target: HookTarget,\r\n    event: Event,\r\n    listener: (this: Document, event: DocumentEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions\r\n  ): void;\r\n\r\n  <Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(\r\n    target: HookTarget,\r\n    event: Event,\r\n    listener: (this: Element, event: HTMLElementEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions\r\n  ): void;\r\n\r\n  <Target extends Element, Event extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(\r\n    event: Event,\r\n    listener: (this: Target, event: HTMLElementEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions,\r\n    target?: never\r\n  ): UseEventListenerReturn<Target>;\r\n\r\n  <\r\n    Target extends Element,\r\n    Event extends keyof MediaQueryListEventMap = keyof MediaQueryListEventMap\r\n  >(\r\n    event: Event,\r\n    listener: (this: Target, event: MediaQueryListEventMap[Event]) => void,\r\n    options?: UseEventListenerOptions,\r\n    target?: never\r\n  ): UseEventListenerReturn<Target>;\r\n}",
+  "description": "Hook that attaches an event listener to the specified target",
+  "examples": [
+    "useEventListener(ref, 'click', () => console.log('click'));",
+    "const ref = useEventListener('click', () => console.log('click'));"
+  ],
+  "usage": "necessary",
+  "category": "browser",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to attach the event listener to",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {HookTarget} target The target element to attach the event listener to\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to attach the event listener to",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "event",
+          "type": "Event | Event[]",
+          "optional": false,
+          "description": "An array of event types to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {Event | Event[]} event An array of event types to listen for\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "event",
+                "postName": " ",
+                "type": "{Event | Event[]}",
+                "postType": " ",
+                "description": "An array of event types to listen for",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "handler",
+          "type": "(this: Target, event: HTMLElementEventMap[Event]) => void",
+          "optional": false,
+          "description": "The event handler function",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} handler The event handler function\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "handler",
+                "postName": " ",
+                "type": "{(this: Target, event: HTMLElementEventMap[Event]) => void}",
+                "postType": " ",
+                "description": "The event handler function",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseEventListenerOptions",
+          "optional": true,
+          "description": "Options for the event listener",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {UseEventListenerOptions} [options] Options for the event listener\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseEventListenerOptions}",
+                "postType": " ",
+                "description": "Options for the event listener",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 13,
+            "source": " * @returns {void}\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 14,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "event",
+          "type": "Event | Event[]",
+          "optional": false,
+          "description": "An array of event types to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {Event | Event[]} event An array of event types to listen for\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "event",
+                "postName": " ",
+                "type": "{Event | Event[]}",
+                "postType": " ",
+                "description": "An array of event types to listen for",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "handler",
+          "type": "(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void",
+          "optional": false,
+          "description": "The event handler function",
+          "problems": [],
+          "source": [
+            {
+              "number": 22,
+              "source": " * @param {(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void} handler The event handler function\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "handler",
+                "postName": " ",
+                "type": "{(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void}",
+                "postType": " ",
+                "description": "The event handler function",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseEventListenerOptions",
+          "optional": true,
+          "description": "Options for the event listener",
+          "problems": [],
+          "source": [
+            {
+              "number": 23,
+              "source": " * @param {UseEventListenerOptions} [options] Options for the event listener\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseEventListenerOptions}",
+                "postType": " ",
+                "description": "Options for the event listener",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "UseEventListenerReturn<Target>",
+        "optional": false,
+        "description": "reference to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 24,
+            "source": " * @returns {UseEventListenerReturn<Target>} A reference to the target element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{UseEventListenerReturn<Target>}",
+              "postType": " ",
+              "description": "reference to the target element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 25,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1775226876000
+}

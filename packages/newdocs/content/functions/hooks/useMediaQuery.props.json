@@ -1,0 +1,107 @@
+{
+  "name": "useMediaQuery",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useCallback, useSyncExternalStore } from 'react';\r\n\r\nconst getServerSnapshot = () => false;\r\n\r\n/**\r\n * @name useMediaQuery\r\n * @description - Hook that manages a media query\r\n * @category Browser\r\n * @usage medium\r\n *\r\n * @browserapi window.matchMedia https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia\r\n *\r\n * @param {string} query The media query string\r\n * @returns {boolean} A boolean indicating if the media query matches\r\n *\r\n * @example\r\n * const matches = useMediaQuery('(max-width: 768px)');\r\n */\r\nexport const useMediaQuery = (query: string) => {\r\n  const subscribe = useCallback(\r\n    (callback: () => void) => {\r\n      const matchMedia = window.matchMedia(query);\r\n\r\n      matchMedia.addEventListener('change', callback);\r\n      return () => {\r\n        matchMedia.removeEventListener('change', callback);\r\n      };\r\n    },\r\n    [query]\r\n  );\r\n\r\n  const getSnapshot = () => window.matchMedia(query).matches;\r\n\r\n  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);\r\n};\r\n",
+  "description": "Hook that manages a media query",
+  "examples": [
+    "const matches = useMediaQuery('(max-width: 768px)');"
+  ],
+  "usage": "medium",
+  "category": "browser",
+  "browserapi": "window.matchMedia",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "query",
+          "type": "string",
+          "optional": false,
+          "description": "The media query string",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string} query The media query string\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "query",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The media query string",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "boolean",
+        "optional": false,
+        "description": "boolean indicating if the media query matches",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {boolean} A boolean indicating if the media query matches\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{boolean}",
+              "postType": " ",
+              "description": "boolean indicating if the media query matches",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1755150117000
+}

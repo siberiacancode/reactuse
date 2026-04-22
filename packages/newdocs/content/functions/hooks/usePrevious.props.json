@@ -1,0 +1,139 @@
+{
+  "name": "usePrevious",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useRef } from 'react';\r\n\r\nexport interface UsePreviousOptions<Value> {\r\n  equality: (a: Value, b: Value) => boolean;\r\n}\r\n\r\n/**\r\n * @name usePrevious\r\n * @description - Hook that returns the previous value\r\n * @category Utilities\r\n * @usage low\r\n *\r\n * @template Value The type of the value\r\n * @param {Value} value The value to get the previous value\r\n * @param {(a: Value, b: Value) => boolean} [options.equality] The custom equality function to determine if the value has changed\r\n * @returns {Value | undefined} The previous value\r\n *\r\n * @example\r\n * const prevValue = usePrevious(value);\r\n */\r\nexport const usePrevious = <Value>(value: Value, options?: UsePreviousOptions<Value>) => {\r\n  const currentRef = useRef<Value>(value);\r\n  const previousRef = useRef<Value>(undefined);\r\n\r\n  const equality = options?.equality ?? Object.is;\r\n\r\n  if (!equality(value, currentRef.current)) {\r\n    previousRef.current = currentRef.current;\r\n    currentRef.current = value;\r\n  }\r\n\r\n  return previousRef.current;\r\n};\r\n",
+  "typeDeclarations": "export interface UsePreviousOptions<Value> {\r\n  equality: (a: Value, b: Value) => boolean;\r\n}",
+  "description": "Hook that returns the previous value",
+  "examples": [
+    "const prevValue = usePrevious(value);"
+  ],
+  "usage": "low",
+  "category": "utilities",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "value",
+          "type": "Value",
+          "optional": false,
+          "description": "The value to get the previous value",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Value} value The value to get the previous value\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "value",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The value to get the previous value",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.equality",
+          "type": "(a: Value, b: Value) => boolean",
+          "optional": true,
+          "description": "The custom equality function to determine if the value has changed",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(a: Value, b: Value) => boolean} [options.equality] The custom equality function to determine if the value has changed\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.equality]",
+                "postName": " ",
+                "type": "{(a: Value, b: Value) => boolean}",
+                "postType": " ",
+                "description": "The custom equality function to determine if the value has changed",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "Value | undefined",
+        "optional": false,
+        "description": "previous value",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {Value | undefined} The previous value\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{Value | undefined}",
+              "postType": " ",
+              "description": "previous value",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

@@ -1,0 +1,102 @@
+{
+  "name": "useConst",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useRef } from 'react';\r\n\r\n/**\r\n * @name useConst\r\n * @description - Hook that returns the constant value\r\n * @category Utilities\r\n * @usage high\r\n\r\n * @template Value The type of the value\r\n * @param {(() => Value) | Value} initialValue The initial value of the constant\r\n * @returns {Value} The constant value\r\n *\r\n * @example\r\n * const value = useConst('value');\r\n */\r\nexport const useConst = <Value>(initialValue: (() => Value) | Value) =>\r\n  useRef<Value>(typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue)\r\n    .current;\r\n",
+  "description": "Hook that returns the constant value",
+  "examples": [
+    "const value = useConst('value');"
+  ],
+  "usage": "high",
+  "category": "utilities",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "(() => Value) | Value",
+          "optional": false,
+          "description": "The initial value of the constant",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {(() => Value) | Value} initialValue The initial value of the constant\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{(() => Value) | Value}",
+                "postType": " ",
+                "description": "The initial value of the constant",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "Value",
+        "optional": false,
+        "description": "constant value",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {Value} The constant value\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{Value}",
+              "postType": " ",
+              "description": "constant value",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

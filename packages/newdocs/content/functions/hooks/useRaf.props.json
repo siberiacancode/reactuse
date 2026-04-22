@@ -1,0 +1,161 @@
+{
+  "name": "useRaf",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\n/* The use raf params type */\r\nexport interface UseRafParams {\r\n  /** The delta between each frame in milliseconds */\r\n  delta: number;\r\n  /** The timestamp of the current frame in milliseconds */\r\n  timestamp: DOMHighResTimeStamp;\r\n}\r\n\r\n/* The use raf type */\r\nexport type UseRafCallback = (params: UseRafParams) => void;\r\n\r\n/* The use raf options type */\r\nexport interface UseRafOptions {\r\n  /** The delay between each frame in milliseconds */\r\n  delay?: number;\r\n  /** Whether the callback should be enabled */\r\n  enabled?: boolean;\r\n}\r\n\r\n/* The use raf return type */\r\nexport interface UseRafReturn {\r\n  /** Whether the callback is active */\r\n  active: boolean;\r\n  /** Function to pause the callback */\r\n  pause: () => void;\r\n  /** Function to resume the callback */\r\n  resume: () => void;\r\n}\r\n\r\n/**\r\n * @name useRaf\r\n * @description - Hook that defines the logic for raf callback\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame\r\n *\r\n * @param {UseRafCallback} callback The callback to execute\r\n * @param {number} [options.delay] The delay between each frame in milliseconds\r\n * @param {boolean} [options.enabled=true] Whether the callback should be enabled\r\n * @returns {UseRafCallbackReturn} An object of raf callback functions\r\n *\r\n * @example\r\n * useRaf(() => console.log('callback'));\r\n */\r\nexport const useRaf = (callback: UseRafCallback, options?: UseRafOptions): UseRafReturn => {\r\n  const rafIdRef = useRef<number | null>(null);\r\n  const previousFrameTimestampRef = useRef(0);\r\n  const [active, setActive] = useState(false);\r\n  const enabled = options?.enabled ?? true;\r\n\r\n  const internalCallbackRef = useRef(callback);\r\n  internalCallbackRef.current = callback;\r\n\r\n  const loop = (timestamp: DOMHighResTimeStamp) => {\r\n    const delta = timestamp - previousFrameTimestampRef.current;\r\n\r\n    if (options?.delay && delta < options?.delay) {\r\n      rafIdRef.current = window.requestAnimationFrame(loop);\r\n      return;\r\n    }\r\n\r\n    previousFrameTimestampRef.current = timestamp;\r\n    internalCallbackRef.current({ delta, timestamp });\r\n    rafIdRef.current = window.requestAnimationFrame(loop);\r\n  };\r\n\r\n  const resume = () => {\r\n    if (active) return;\r\n    setActive(true);\r\n    previousFrameTimestampRef.current = 0;\r\n    rafIdRef.current = window.requestAnimationFrame(loop);\r\n  };\r\n\r\n  function pause() {\r\n    if (!rafIdRef.current) return;\r\n\r\n    setActive(false);\r\n    window.cancelAnimationFrame(rafIdRef.current);\r\n    rafIdRef.current = null;\r\n  }\r\n\r\n  useEffect(() => {\r\n    if (!enabled) return;\r\n    resume();\r\n\r\n    return pause;\r\n  }, [enabled, options?.delay]);\r\n\r\n  return {\r\n    active,\r\n    pause,\r\n    resume\r\n  };\r\n};\r\n",
+  "typeDeclarations": "export interface UseRafParams {\r\n  /** The delta between each frame in milliseconds */\r\n  delta: number;\r\n  /** The timestamp of the current frame in milliseconds */\r\n  timestamp: DOMHighResTimeStamp;\r\n}\n\nexport type UseRafCallback = (params: UseRafParams) => void;\n\nexport interface UseRafOptions {\r\n  /** The delay between each frame in milliseconds */\r\n  delay?: number;\r\n  /** Whether the callback should be enabled */\r\n  enabled?: boolean;\r\n}\n\nexport interface UseRafReturn {\r\n  /** Whether the callback is active */\r\n  active: boolean;\r\n  /** Function to pause the callback */\r\n  pause: () => void;\r\n  /** Function to resume the callback */\r\n  resume: () => void;\r\n}",
+  "description": "Hook that defines the logic for raf callback",
+  "examples": [
+    "useRaf(() => console.log('callback'));"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "requestAnimationFrame",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "UseRafCallback",
+          "optional": false,
+          "description": "The callback to execute",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseRafCallback} callback The callback to execute\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{UseRafCallback}",
+                "postType": " ",
+                "description": "The callback to execute",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.delay",
+          "type": "number",
+          "optional": true,
+          "description": "The delay between each frame in milliseconds",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {number} [options.delay] The delay between each frame in milliseconds\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.delay]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The delay between each frame in milliseconds",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether the callback should be enabled",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {boolean} [options.enabled=true] Whether the callback should be enabled\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether the callback should be enabled",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseRafCallbackReturn",
+        "optional": false,
+        "description": "object of raf callback functions",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {UseRafCallbackReturn} An object of raf callback functions\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseRafCallbackReturn}",
+              "postType": " ",
+              "description": "object of raf callback functions",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 12,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

@@ -1,0 +1,139 @@
+{
+  "name": "useTimeout",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "triangle",
+      "avatar": "https://gravatar.com/avatar/a6312d7003ae1a265f9cad37495e7050?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport { useEvent } from '../useEvent/useEvent';\r\n\r\n/** The use timeout return type */\r\ninterface UseTimeoutReturn {\r\n  /**  Timeout is ready state value */\r\n  ready: boolean;\r\n  /** Function to clear timeout */\r\n  clear: () => void;\r\n}\r\n\r\n/**\r\n * @name useTimeout\r\n * @description - Hook that executes a callback function after a specified delay\r\n * @category Time\r\n * @usage medium\r\n *\r\n * @param {() => void} callback The function to be executed after the timeout\r\n * @param {number} delay The delay in milliseconds before the timeout executes the callback function\r\n * @returns {UseTimeoutReturn} An object with a `ready` boolean state value and a `clear` function to clear timeout\r\n *\r\n * @example\r\n * const { clear, ready } = useTimeout(() => {}, 5000);\r\n */\r\nexport function useTimeout(callback: () => void, delay: number): UseTimeoutReturn {\r\n  const [ready, setReady] = useState(false);\r\n\r\n  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>(undefined);\r\n  const internalCallback = useEvent(callback);\r\n\r\n  useEffect(() => {\r\n    timeoutIdRef.current = setTimeout(() => {\r\n      internalCallback();\r\n      setReady(true);\r\n    }, delay);\r\n\r\n    return () => {\r\n      clearTimeout(timeoutIdRef.current);\r\n    };\r\n  }, [delay]);\r\n\r\n  const clear = () => {\r\n    clearTimeout(timeoutIdRef.current);\r\n    setReady(true);\r\n  };\r\n\r\n  return { ready, clear };\r\n}\r\n",
+  "typeDeclarations": "interface UseTimeoutReturn {\r\n  /**  Timeout is ready state value */\r\n  ready: boolean;\r\n  /** Function to clear timeout */\r\n  clear: () => void;\r\n}",
+  "description": "Hook that executes a callback function after a specified delay",
+  "examples": [
+    "const { clear, ready } = useTimeout(() => {}, 5000);"
+  ],
+  "usage": "medium",
+  "category": "time",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "() => void",
+          "optional": false,
+          "description": "The function to be executed after the timeout",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {() => void} callback The function to be executed after the timeout\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "The function to be executed after the timeout",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "delay",
+          "type": "number",
+          "optional": false,
+          "description": "The delay in milliseconds before the timeout executes the callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {number} delay The delay in milliseconds before the timeout executes the callback function\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "delay",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The delay in milliseconds before the timeout executes the callback function",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseTimeoutReturn",
+        "optional": false,
+        "description": "object with a `ready` boolean state value and a `clear` function to clear timeout",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseTimeoutReturn} An object with a `ready` boolean state value and a `clear` function to clear timeout\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseTimeoutReturn}",
+              "postType": " ",
+              "description": "object with a `ready` boolean state value and a `clear` function to clear timeout",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

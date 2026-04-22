@@ -1,0 +1,135 @@
+{
+  "name": "useDebounceCallback",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useMemo, useRef } from 'react';\r\n\r\nexport type DebouncedCallback<Params extends unknown[]> = ((...args: Params) => void) & {\r\n  cancel: () => void;\r\n};\r\n\r\n/**\r\n * @name useDebounceCallback\r\n * @description - Hook that creates a debounced callback\r\n * @category Utilities\r\n * @usage high\r\n *\r\n * @template Params The type of the params\r\n * @template Return The type of the return\r\n * @param {(...args: Params) => Return} callback The callback function\r\n * @param {number} delay The delay in milliseconds\r\n * @returns {(...args: Params) => Return} The callback with debounce\r\n *\r\n * @example\r\n * const debouncedCallback = useDebounceCallback(() => console.log('callback'), 500);\r\n */\r\nexport const useDebounceCallback = <Params extends unknown[], Return>(\r\n  callback: (...args: Params) => Return,\r\n  delay: number\r\n): DebouncedCallback<Params> => {\r\n  const internalCallbackRef = useRef(callback);\r\n  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);\r\n  const delayRef = useRef(delay);\r\n\r\n  internalCallbackRef.current = callback;\r\n  delayRef.current = delay;\r\n\r\n  const debounced = useMemo(() => {\r\n    const cancel = () => {\r\n      if (!timerRef.current) return;\r\n      clearTimeout(timerRef.current);\r\n      timerRef.current = null;\r\n    };\r\n\r\n    const debouncedCallback = function (this: any, ...args: Params) {\r\n      cancel();\r\n      timerRef.current = setTimeout(() => {\r\n        internalCallbackRef.current.apply(this, args);\r\n      }, delayRef.current);\r\n    };\r\n\r\n    debouncedCallback.cancel = cancel;\r\n\r\n    return debouncedCallback;\r\n  }, []);\r\n\r\n  return debounced;\r\n};\r\n",
+  "typeDeclarations": "export type DebouncedCallback<Params extends unknown[]> = ((...args: Params) => void) & {\r\n  cancel: () => void;\r\n};",
+  "description": "Hook that creates a debounced callback",
+  "examples": [
+    "const debouncedCallback = useDebounceCallback(() => console.log('callback'), 500);"
+  ],
+  "usage": "high",
+  "category": "utilities",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(...args: Params) => Return",
+          "optional": false,
+          "description": "The callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(...args: Params) => Return} callback The callback function\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(...args: Params) => Return}",
+                "postType": " ",
+                "description": "The callback function",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "delay",
+          "type": "number",
+          "optional": false,
+          "description": "The delay in milliseconds",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {number} delay The delay in milliseconds\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "delay",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The delay in milliseconds",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "(...args: Params) => Return",
+        "optional": false,
+        "description": "callback with debounce",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {(...args: Params) => Return} The callback with debounce\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{(...args: Params) => Return}",
+              "postType": " ",
+              "description": "callback with debounce",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

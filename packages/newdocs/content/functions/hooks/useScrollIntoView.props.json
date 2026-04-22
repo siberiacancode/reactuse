@@ -1,0 +1,387 @@
+{
+  "name": "useScrollIntoView",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useRef } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The scroll into view options type */\r\nexport interface UseScrollIntoViewOptions extends ScrollIntoViewOptions {\r\n  /** Whether to immediately the scroll into view */\r\n  immediately?: boolean;\r\n}\r\n\r\n/** The scroll into view return type */\r\nexport interface UseScrollIntoViewReturn {\r\n  /** Function to scroll element into view */\r\n  trigger: (params?: {\r\n    behavior?: ScrollBehavior;\r\n    block?: ScrollLogicalPosition;\r\n    inline?: ScrollLogicalPosition;\r\n  }) => void;\r\n}\r\n\r\nexport interface UseScrollIntoView {\r\n  <Target extends Element>(\r\n    options?: UseScrollIntoViewOptions,\r\n    target?: never\r\n  ): UseScrollIntoViewReturn & { ref: StateRef<Target> };\r\n\r\n  (target?: HookTarget, options?: UseScrollIntoViewOptions): UseScrollIntoViewReturn;\r\n}\r\n\r\n/**\r\n * @name useScrollIntoView\r\n * @description - Hook that provides functionality to scroll an element into view\r\n * @category Sensors\r\n * @usage low\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target element to scroll into view\r\n * @param {boolean} [options.immediately=true] Whether to scroll immediately\r\n * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior\r\n * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment\r\n * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment\r\n * @returns {UseScrollIntoViewReturn} Object containing scroll function\r\n *\r\n * @example\r\n * const { trigger } = useScrollIntoView(ref);\r\n *\r\n * @overload\r\n * @template Target The target element\r\n * @param {boolean} [options.immediately=true] Whether to scroll immediately\r\n * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior\r\n * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment\r\n * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment\r\n * @returns {UseScrollIntoViewReturn & { ref: StateRef<Target> }} Object containing scroll function and ref\r\n *\r\n * @example\r\n * const { ref, trigger } = useScrollIntoView<HTMLDivElement>();\r\n */\r\nexport const useScrollIntoView = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const options = (target ? params[1] : params[0]) as UseScrollIntoViewOptions | undefined;\r\n\r\n  const internalRef = useRefState<Element>();\r\n  const {\r\n    behavior = 'smooth',\r\n    block = 'start',\r\n    inline = 'nearest',\r\n    immediately = true\r\n  } = options ?? {};\r\n  const elementRef = useRef<Element>(null);\r\n\r\n  useIsomorphicLayoutEffect(() => {\r\n    if (!immediately) return;\r\n    if (!target && !internalRef.state) return;\r\n\r\n    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;\r\n\r\n    elementRef.current = element;\r\n\r\n    element.scrollIntoView({\r\n      behavior,\r\n      block,\r\n      inline\r\n    });\r\n  }, [target && isTarget.getRawElement(target), internalRef.state]);\r\n\r\n  const trigger = (params?: {\r\n    behavior?: ScrollBehavior;\r\n    block?: ScrollLogicalPosition;\r\n    inline?: ScrollLogicalPosition;\r\n  }) => {\r\n    if (!elementRef.current) return;\r\n\r\n    const { behavior, block, inline } = params ?? {};\r\n\r\n    elementRef.current.scrollIntoView({\r\n      behavior,\r\n      block,\r\n      inline\r\n    });\r\n  };\r\n\r\n  if (target) return { trigger };\r\n  return { ref: internalRef, trigger };\r\n}) as UseScrollIntoView;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface UseScrollIntoViewOptions extends ScrollIntoViewOptions {\r\n  /** Whether to immediately the scroll into view */\r\n  immediately?: boolean;\r\n}\n\nexport interface UseScrollIntoViewReturn {\r\n  /** Function to scroll element into view */\r\n  trigger: (params?: {\r\n    behavior?: ScrollBehavior;\r\n    block?: ScrollLogicalPosition;\r\n    inline?: ScrollLogicalPosition;\r\n  }) => void;\r\n}\n\nexport interface UseScrollIntoView {\r\n  <Target extends Element>(\r\n    options?: UseScrollIntoViewOptions,\r\n    target?: never\r\n  ): UseScrollIntoViewReturn & { ref: StateRef<Target> };\r\n\r\n  (target?: HookTarget, options?: UseScrollIntoViewOptions): UseScrollIntoViewReturn;\r\n}",
+  "description": "Hook that provides functionality to scroll an element into view",
+  "examples": [
+    "const { trigger } = useScrollIntoView(ref);",
+    "const { ref, trigger } = useScrollIntoView<HTMLDivElement>();"
+  ],
+  "usage": "low",
+  "category": "sensors",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to scroll into view",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target element to scroll into view\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to scroll into view",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.immediately",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether to scroll immediately",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [options.immediately=true] Whether to scroll immediately\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.immediately=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether to scroll immediately",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.behavior",
+          "type": "ScrollBehavior",
+          "optional": true,
+          "description": "The scrolling behavior",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.behavior='smooth']",
+                "postName": " ",
+                "type": "{ScrollBehavior}",
+                "postType": " ",
+                "description": "The scrolling behavior",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'smooth'"
+        },
+        {
+          "tag": "param",
+          "name": "options.block",
+          "type": "ScrollLogicalPosition",
+          "optional": true,
+          "description": "The vertical alignment",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.block='start']",
+                "postName": " ",
+                "type": "{ScrollLogicalPosition}",
+                "postType": " ",
+                "description": "The vertical alignment",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'start'"
+        },
+        {
+          "tag": "param",
+          "name": "options.inline",
+          "type": "ScrollLogicalPosition",
+          "optional": true,
+          "description": "The horizontal alignment",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.inline='nearest']",
+                "postName": " ",
+                "type": "{ScrollLogicalPosition}",
+                "postType": " ",
+                "description": "The horizontal alignment",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'nearest'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "UseScrollIntoViewReturn",
+        "optional": false,
+        "description": "containing scroll function",
+        "problems": [],
+        "source": [
+          {
+            "number": 12,
+            "source": " * @returns {UseScrollIntoViewReturn} Object containing scroll function\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{UseScrollIntoViewReturn}",
+              "postType": " ",
+              "description": "containing scroll function",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 13,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.immediately",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether to scroll immediately",
+          "problems": [],
+          "source": [
+            {
+              "number": 19,
+              "source": " * @param {boolean} [options.immediately=true] Whether to scroll immediately\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.immediately=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether to scroll immediately",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.behavior",
+          "type": "ScrollBehavior",
+          "optional": true,
+          "description": "The scrolling behavior",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {ScrollBehavior} [options.behavior='smooth'] The scrolling behavior\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.behavior='smooth']",
+                "postName": " ",
+                "type": "{ScrollBehavior}",
+                "postType": " ",
+                "description": "The scrolling behavior",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'smooth'"
+        },
+        {
+          "tag": "param",
+          "name": "options.block",
+          "type": "ScrollLogicalPosition",
+          "optional": true,
+          "description": "The vertical alignment",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {ScrollLogicalPosition} [options.block='start'] The vertical alignment\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.block='start']",
+                "postName": " ",
+                "type": "{ScrollLogicalPosition}",
+                "postType": " ",
+                "description": "The vertical alignment",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'start'"
+        },
+        {
+          "tag": "param",
+          "name": "options.inline",
+          "type": "ScrollLogicalPosition",
+          "optional": true,
+          "description": "The horizontal alignment",
+          "problems": [],
+          "source": [
+            {
+              "number": 22,
+              "source": " * @param {ScrollLogicalPosition} [options.inline='nearest'] The horizontal alignment\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.inline='nearest']",
+                "postName": " ",
+                "type": "{ScrollLogicalPosition}",
+                "postType": " ",
+                "description": "The horizontal alignment",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'nearest'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "UseScrollIntoViewReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "containing scroll function and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 23,
+            "source": " * @returns {UseScrollIntoViewReturn & { ref: StateRef<Target> }} Object containing scroll function and ref\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{UseScrollIntoViewReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "containing scroll function and ref",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 24,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1773843478000
+}

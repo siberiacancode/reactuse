@@ -1,0 +1,80 @@
+{
+  "name": "useMount",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import type { EffectCallback } from 'react';\r\n\r\nimport { useEffect } from 'react';\r\n\r\n/**\r\n * @name useMount\r\n * @description - Hook that executes a callback when the component mounts\r\n * @category Lifecycle\r\n * @usage necessary\r\n *\r\n * @param {EffectCallback} effect The callback to execute\r\n *\r\n * @example\r\n * useMount(() => console.log('This effect runs on the initial render'));\r\n */\r\nexport const useMount = (effect: EffectCallback) => useEffect(effect, []);\r\n",
+  "typeDeclarations": "import type { EffectCallback } from 'react';",
+  "description": "Hook that executes a callback when the component mounts",
+  "examples": [
+    "useMount(() => console.log('This effect runs on the initial render'));"
+  ],
+  "usage": "necessary",
+  "category": "lifecycle",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "effect",
+          "type": "EffectCallback",
+          "optional": false,
+          "description": "The callback to execute",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {EffectCallback} effect The callback to execute\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "effect",
+                "postName": " ",
+                "type": "{EffectCallback}",
+                "postType": " ",
+                "description": "The callback to execute",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            },
+            {
+              "number": 7,
+              "source": " *\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

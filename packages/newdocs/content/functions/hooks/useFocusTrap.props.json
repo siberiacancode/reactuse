@@ -1,0 +1,213 @@
+{
+  "name": "useFocusTrap",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\nexport const FOCUS_SELECTOR = 'a, input, select, textarea, button, object, [tabindex]';\r\n\r\nconst getFocusableElements = (element: HTMLElement) => {\r\n  const elements = Array.from(element.querySelectorAll(FOCUS_SELECTOR));\r\n  return elements.filter((element) => {\r\n    const htmlEl = element as HTMLElement;\r\n    return htmlEl.tabIndex !== -1 && !htmlEl.hidden && htmlEl.style.display !== 'none';\r\n  }) as HTMLElement[];\r\n};\r\n\r\nconst focusElement = (element: HTMLElement) => {\r\n  const autofocusElement = element.querySelector('[data-autofocus]') as HTMLElement;\r\n  if (autofocusElement) return autofocusElement.focus();\r\n  const focusableElements = getFocusableElements(element);\r\n  if (focusableElements.length) focusableElements[0].focus();\r\n};\r\n\r\n/** The use focus trap return type */\r\nexport interface UseFocusTrapReturn {\r\n  /** Whether focus trap is active */\r\n  active: boolean;\r\n  /** Disable focus trap */\r\n  disable: () => void;\r\n  /** Enable focus trap */\r\n  enable: () => void;\r\n  /** Toggle focus trap */\r\n  toggle: () => void;\r\n}\r\n\r\nexport interface UseFocusTrap {\r\n  (target: HookTarget, active?: boolean): UseFocusTrapReturn;\r\n\r\n  <Target extends HTMLElement>(\r\n    active?: boolean,\r\n    target?: never\r\n  ): UseFocusTrapReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n}\r\n\r\n/**\r\n * @name useFocusTrap\r\n * @description - Hook that traps focus within a given element\r\n * @category Elements\r\n * @usage medium\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target element for focus trap\r\n * @param {boolean} [active=true] Whether focus trap is active\r\n * @returns {UseFocusTrapReturn} Object with the focus trap state and methods\r\n *\r\n * @example\r\n * const { active, disable, toggle, enable } = useFocusTrap(ref, true);\r\n *\r\n * @overload\r\n * @template Target The target element type\r\n * @param {boolean} [active=true] Whether focus trap is active\r\n * @returns {UseFocusTrapReturn & { ref: StateRef<Target> }} Object with the focus trap state and methods\r\n *\r\n * @example\r\n * const { ref, active, disable, toggle, enable } = useFocusTrap(true);\r\n */\r\nexport const useFocusTrap = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const initialActive = target ? params[1] : params[0];\r\n\r\n  const [active, setActive] = useState(initialActive);\r\n  const internalRef = useRefState<HTMLElement>();\r\n\r\n  const enable = () => setActive(true);\r\n  const disable = () => setActive(false);\r\n  const toggle = () => setActive((prevActive: boolean) => !prevActive);\r\n\r\n  useIsomorphicLayoutEffect(() => {\r\n    if (!active) return;\r\n\r\n    const element = target ? isTarget.getElement(target) : internalRef.current;\r\n    if (!element) return;\r\n\r\n    const htmlElement = element as HTMLElement;\r\n    focusElement(htmlElement);\r\n\r\n    const onKeyDown = (event: KeyboardEvent) => {\r\n      if (event.key !== 'Tab') return;\r\n\r\n      const [firstElement, ...restElements] = getFocusableElements(htmlElement);\r\n      if (!restElements.length) return;\r\n\r\n      const lastElement = restElements.at(-1)!;\r\n\r\n      if (event.shiftKey && document.activeElement === firstElement) {\r\n        event.preventDefault();\r\n        lastElement.focus();\r\n      }\r\n\r\n      if (document.activeElement === lastElement) {\r\n        event.preventDefault();\r\n        firstElement.focus();\r\n      }\r\n    };\r\n\r\n    document.addEventListener('keydown', onKeyDown);\r\n\r\n    return () => {\r\n      document.removeEventListener('keydown', onKeyDown);\r\n    };\r\n  }, [active, target && isTarget.getRawElement(target), internalRef.state]);\r\n\r\n  if (target) return { active, enable, disable, toggle };\r\n  return { active, enable, disable, toggle, ref: internalRef };\r\n}) as UseFocusTrap;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface UseFocusTrapReturn {\r\n  /** Whether focus trap is active */\r\n  active: boolean;\r\n  /** Disable focus trap */\r\n  disable: () => void;\r\n  /** Enable focus trap */\r\n  enable: () => void;\r\n  /** Toggle focus trap */\r\n  toggle: () => void;\r\n}\n\nexport interface UseFocusTrap {\r\n  (target: HookTarget, active?: boolean): UseFocusTrapReturn;\r\n\r\n  <Target extends HTMLElement>(\r\n    active?: boolean,\r\n    target?: never\r\n  ): UseFocusTrapReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n}",
+  "description": "Hook that traps focus within a given element",
+  "examples": [
+    "const { active, disable, toggle, enable } = useFocusTrap(ref, true);",
+    "const { ref, active, disable, toggle, enable } = useFocusTrap(true);"
+  ],
+  "usage": "medium",
+  "category": "elements",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element for focus trap",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target element for focus trap\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element for focus trap",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "active",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether focus trap is active",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [active=true] Whether focus trap is active\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[active=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether focus trap is active",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "UseFocusTrapReturn",
+        "optional": false,
+        "description": "with the focus trap state and methods",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseFocusTrapReturn} Object with the focus trap state and methods\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{UseFocusTrapReturn}",
+              "postType": " ",
+              "description": "with the focus trap state and methods",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "active",
+          "type": "boolean",
+          "optional": true,
+          "description": "Whether focus trap is active",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {boolean} [active=true] Whether focus trap is active\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[active=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Whether focus trap is active",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "UseFocusTrapReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "with the focus trap state and methods",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns {UseFocusTrapReturn & { ref: StateRef<Target> }} Object with the focus trap state and methods\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{UseFocusTrapReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "with the focus trap state and methods",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 18,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": true,
+  "lastModified": 1770651919000
+}

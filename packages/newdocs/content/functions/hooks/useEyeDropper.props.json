@@ -1,0 +1,105 @@
+{
+  "name": "useEyeDropper",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useState } from 'react';\r\n\r\nexport interface ColorSelectionOptions {\r\n  signal?: AbortSignal;\r\n}\r\n\r\nexport interface ColorSelectionResult {\r\n  sRGBHex: string;\r\n}\r\n\r\nexport interface EyeDropper {\r\n  open: (options?: ColorSelectionOptions) => Promise<ColorSelectionResult>;\r\n}\r\n\r\nexport interface EyeDropperConstructor {\r\n  new (): EyeDropper;\r\n}\r\n\r\ndeclare global {\r\n  interface Window {\r\n    readonly EyeDropper?: EyeDropperConstructor | undefined;\r\n  }\r\n}\r\n\r\n/** The color selection return type */\r\nexport interface UseEyeDropperReturn {\r\n  /** The eye dropper supported status */\r\n  supported: boolean;\r\n  /** The eye dropper value */\r\n  value?: string;\r\n  /** The eye dropper open method */\r\n  open: (colorSelectionOptions?: ColorSelectionOptions) => Promise<ColorSelectionResult>;\r\n}\r\n\r\n/**\r\n * @name useEyeDropper\r\n * @description - Hook that gives you access to the eye dropper\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi EyeDropper https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper\r\n *\r\n * @param {string} [initialValue=undefined] The initial value for the eye dropper\r\n * @returns {UseEyeDropperReturn} An object containing the supported status, the value and the open method\r\n *\r\n * @example\r\n * const { supported, value, open } = useEyeDropper();\r\n */\r\nexport const useEyeDropper = (\r\n  initialValue: string | undefined = undefined\r\n): UseEyeDropperReturn => {\r\n  const supported = typeof window !== 'undefined' && 'EyeDropper' in window && !!window.EyeDropper;\r\n  const [value, setValue] = useState(initialValue);\r\n\r\n  const open = async (colorSelectionOptions?: ColorSelectionOptions) => {\r\n    if (!window.EyeDropper) throw new Error('EyeDropper is not supported');\r\n    const eyeDropper = new window.EyeDropper();\r\n    const result = await eyeDropper.open(colorSelectionOptions);\r\n    setValue(result.sRGBHex);\r\n    return result;\r\n  };\r\n\r\n  return {\r\n    supported,\r\n    value,\r\n    open\r\n  };\r\n};\r\n",
+  "typeDeclarations": "export interface ColorSelectionOptions {\r\n  signal?: AbortSignal;\r\n}\n\nexport interface ColorSelectionResult {\r\n  sRGBHex: string;\r\n}\n\nexport interface EyeDropper {\r\n  open: (options?: ColorSelectionOptions) => Promise<ColorSelectionResult>;\r\n}\n\nexport interface EyeDropperConstructor {\r\n  new (): EyeDropper;\r\n}\n\ninterface Window {\r\n    readonly EyeDropper?: EyeDropperConstructor | undefined;\r\n  }\n\nexport interface UseEyeDropperReturn {\r\n  /** The eye dropper supported status */\r\n  supported: boolean;\r\n  /** The eye dropper value */\r\n  value?: string;\r\n  /** The eye dropper open method */\r\n  open: (colorSelectionOptions?: ColorSelectionOptions) => Promise<ColorSelectionResult>;\r\n}",
+  "description": "Hook that gives you access to the eye dropper",
+  "examples": [
+    "const { supported, value, open } = useEyeDropper();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "EyeDropper",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "string",
+          "optional": true,
+          "description": "The initial value for the eye dropper",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string} [initialValue=undefined] The initial value for the eye dropper\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue=undefined]",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The initial value for the eye dropper",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "undefined"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseEyeDropperReturn",
+        "optional": false,
+        "description": "object containing the supported status, the value and the open method",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseEyeDropperReturn} An object containing the supported status, the value and the open method\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseEyeDropperReturn}",
+              "postType": " ",
+              "description": "object containing the supported status, the value and the open method",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1755262808000
+}

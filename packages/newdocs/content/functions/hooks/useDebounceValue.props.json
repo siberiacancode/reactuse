@@ -1,0 +1,134 @@
+{
+  "name": "useDebounceValue",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport { useDebounceCallback } from '../useDebounceCallback/useDebounceCallback';\r\n\r\n/**\r\n * @name useDebounceValue\r\n * @description - Hook that creates a debounced value\r\n * @category Utilities\r\n * @usage high\r\n\r\n * @template Value The type of the value\r\n * @param {Value} value The value to be debounced\r\n * @param {number} delay The delay in milliseconds\r\n * @returns {Value} The debounced value\r\n *\r\n * @example\r\n * const debouncedValue = useDebounceValue(value, 500);\r\n */\r\nexport const useDebounceValue = <Value>(value: Value, delay: number) => {\r\n  const previousValueRef = useRef(value);\r\n  const [debouncedValue, setDebounceValue] = useState(value);\r\n\r\n  const debouncedSetState = useDebounceCallback(setDebounceValue, delay);\r\n\r\n  useEffect(() => {\r\n    if (previousValueRef.current === value) return;\r\n    debouncedSetState(value);\r\n    previousValueRef.current = value;\r\n  }, [value]);\r\n\r\n  return debouncedValue;\r\n};\r\n",
+  "description": "Hook that creates a debounced value",
+  "examples": [
+    "const debouncedValue = useDebounceValue(value, 500);"
+  ],
+  "usage": "high",
+  "category": "utilities",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "value",
+          "type": "Value",
+          "optional": false,
+          "description": "The value to be debounced",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Value} value The value to be debounced\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "value",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The value to be debounced",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "delay",
+          "type": "number",
+          "optional": false,
+          "description": "The delay in milliseconds",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {number} delay The delay in milliseconds\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "delay",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The delay in milliseconds",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "Value",
+        "optional": false,
+        "description": "debounced value",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {Value} The debounced value\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{Value}",
+              "postType": " ",
+              "description": "debounced value",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

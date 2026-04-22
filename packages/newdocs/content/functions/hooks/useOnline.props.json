@@ -1,0 +1,78 @@
+{
+  "name": "useOnline",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useSyncExternalStore } from 'react';\r\n\r\nconst getSnapshot = () => navigator.onLine;\r\nconst getServerSnapshot = () => false;\r\nconst subscribe = (callback: () => void) => {\r\n  window.addEventListener('online', callback);\r\n  window.addEventListener('offline', callback);\r\n  return () => {\r\n    window.removeEventListener('online', callback);\r\n    window.removeEventListener('offline', callback);\r\n  };\r\n};\r\n\r\n/**\r\n * @name useOnline\r\n * @description - Hook that manages if the user is online\r\n * @category Browser\r\n * @usage medium\r\n *\r\n * @browserapi navigator.onLine https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine\r\n *\r\n * @returns {boolean} A boolean indicating if the user is online\r\n *\r\n * @example\r\n * const online = useOnline();\r\n */\r\nexport const useOnline = () => useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);\r\n",
+  "description": "Hook that manages if the user is online",
+  "examples": [
+    "const online = useOnline();"
+  ],
+  "usage": "medium",
+  "category": "browser",
+  "browserapi": "navigator.onLine",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "boolean",
+        "optional": false,
+        "description": "boolean indicating if the user is online",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {boolean} A boolean indicating if the user is online\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{boolean}",
+              "postType": " ",
+              "description": "boolean indicating if the user is online",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

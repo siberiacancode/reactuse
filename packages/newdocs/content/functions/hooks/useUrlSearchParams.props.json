@@ -1,0 +1,333 @@
+{
+  "name": "useUrlSearchParams",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "VLADISLAW9",
+      "avatar": "https://gravatar.com/avatar/cf96a05801360c131eb784ebbe781f99?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\nimport {\r\n  createQueryString,\r\n  dispatchUrlSearchParamsEvent,\r\n  getUrlSearchParams,\r\n  URL_SEARCH_PARAMS_EVENT\r\n} from '../useUrlSearchParam/useUrlSearchParam';\r\n\r\n/** The url params type */\r\nexport type UrlParams = Record<string, any>;\r\n\r\n/** The url search params mod */\r\nexport type UrlSearchParamsMode = 'hash-params' | 'hash' | 'history';\r\n\r\n/** The use url search params set options type */\r\nexport interface UseUrlSearchParamsSetOptions {\r\n  /** The mode to use for writing to the URL */\r\n  write?: 'push' | 'replace';\r\n}\r\n\r\n/* The use search params initial value type */\r\nexport type UseUrlSearchParamsInitialValue<Value> = (() => Value) | Value;\r\n\r\n/** The use url search params options type */\r\nexport interface UseUrlSearchParamsOptions<Value> {\r\n  /** The mode to use for writing to the URL */\r\n  mode?: UrlSearchParamsMode;\r\n  /** The mode to use for writing to the URL  */\r\n  write?: 'push' | 'replace';\r\n  /* The deserializer function to be invoked */\r\n  deserializer?: (value: string) => Value[keyof Value];\r\n  /* The serializer function to be invoked */\r\n  serializer?: (value: Value[keyof Value]) => string;\r\n}\r\n\r\n/** The use url search params return type */\r\nexport interface UseUrlSearchParamsReturn<Value> {\r\n  /** The value of the url search params */\r\n  value: Value;\r\n  /** The set function */\r\n  set: (value: Partial<Value>, options?: UseUrlSearchParamsSetOptions) => void;\r\n}\r\n\r\nexport interface UseUrlSearchParams {\r\n  <Value>(\r\n    options: UseUrlSearchParamsOptions<Value> & {\r\n      initialValue: UseUrlSearchParamsInitialValue<Value>;\r\n    }\r\n  ): UseUrlSearchParamsReturn<Value>;\r\n\r\n  <Value>(options?: UseUrlSearchParamsOptions<Value>): UseUrlSearchParamsReturn<Value | undefined>;\r\n\r\n  <Value>(initialValue: UseUrlSearchParamsInitialValue<Value>): UseUrlSearchParamsReturn<Value>;\r\n}\r\n\r\n/**\r\n * @name useUrlSearchParams\r\n * @description - Hook that provides reactive URLSearchParams\r\n * @category State\r\n * @usage high\r\n *\r\n * @overload\r\n * @template Value The type of the url param values\r\n * @param {UseUrlSearchParamsOptions<Value> & { initialValue: UseUrlSearchParamsInitialValue<Value> }} options The options object with required initialValue\r\n * @param {UseUrlSearchParamsInitialValue<Value>} [options.initialValue] The initial value for the url params\r\n * @param {UrlSearchParamsMode} [options.mode='history'] The mode to use for the URL ('history' | 'hash-params' | 'hash')\r\n * @param {'push' | 'replace'} [options.write='replace'] The mode to use for writing to the URL\r\n * @param {(value: Value[keyof Value]) => string} [options.serializer] Custom serializer function to convert value to string\r\n * @param {(value: string) => Value[keyof Value]} [options.deserializer] Custom deserializer function to convert string to value\r\n * @returns {UseUrlSearchParamsReturn<Value>} The object with value and function for change value\r\n *\r\n * @example\r\n * const { value, set } = useUrlSearchParams({ initialValue: { page: 1 } });\r\n *\r\n * @overload\r\n * @template Value The type of the url param values\r\n * @param {UseUrlSearchParamsInitialValue<Value>} [initialValue] The initial value for the url params\r\n * @returns {UseUrlSearchParamsReturn<Value>} The object with value and function for change value\r\n *\r\n * @example\r\n * const { value, set } = useUrlSearchParams({ page: 1 });\r\n */\r\nexport const useUrlSearchParams = (<Value extends UrlParams>(\r\n  params: any\r\n): UseUrlSearchParamsReturn<Value> => {\r\n  const options = (\r\n    typeof params === 'object' &&\r\n    params &&\r\n    ('serializer' in params ||\r\n      'deserializer' in params ||\r\n      'initialValue' in params ||\r\n      'mode' in params ||\r\n      'write' in params)\r\n      ? params\r\n      : undefined\r\n  ) as\r\n    | (UseUrlSearchParamsOptions<Value> & {\r\n        initialValue?: UseUrlSearchParamsInitialValue<Value>;\r\n      })\r\n    | undefined;\r\n  const initialValue = (\r\n    options ? options?.initialValue : params\r\n  ) as UseUrlSearchParamsInitialValue<Value>;\r\n\r\n  const { mode = 'history', write: writeMode = 'replace' } = options ?? {};\r\n\r\n  const serializer = (value: Value[keyof Value]) => {\r\n    if (options?.serializer) return options.serializer(value);\r\n    if (typeof value === 'string') return value;\r\n    return JSON.stringify(value);\r\n  };\r\n\r\n  const deserializer = (value: string) => {\r\n    if (options?.deserializer) return options.deserializer(value);\r\n    if (value === 'undefined') return undefined as unknown as Value[keyof Value];\r\n\r\n    try {\r\n      return JSON.parse(value) as Value;\r\n    } catch {\r\n      return value as Value[keyof Value];\r\n    }\r\n  };\r\n\r\n  const setUrlSearchParams = <Value extends UrlParams>(\r\n    mode: UrlSearchParamsMode,\r\n    value: Partial<Value>,\r\n    write: 'push' | 'replace' = 'replace'\r\n  ) => {\r\n    const urlSearchParams = getUrlSearchParams(mode);\r\n\r\n    Object.entries(value).forEach(([key, param]) => {\r\n      if (param === undefined) {\r\n        urlSearchParams.delete(key);\r\n      } else {\r\n        const serializedValue = serializer ? serializer(param) : String(param);\r\n        urlSearchParams.set(key, serializedValue);\r\n      }\r\n    });\r\n\r\n    const query = createQueryString(urlSearchParams, mode);\r\n    if (write === 'replace') window.history.replaceState({}, '', query);\r\n    if (write === 'push') window.history.pushState({}, '', query);\r\n    dispatchUrlSearchParamsEvent();\r\n\r\n    return urlSearchParams;\r\n  };\r\n\r\n  const getParsedUrlSearchParams = (searchParams: string | UrlParams | URLSearchParams) => {\r\n    if (typeof searchParams === 'string') {\r\n      return getParsedUrlSearchParams(new URLSearchParams(searchParams));\r\n    }\r\n\r\n    if (searchParams instanceof URLSearchParams) {\r\n      return [...searchParams.entries()].reduce(\r\n        (acc, [key, value]) => {\r\n          acc[key] = deserializer(value);\r\n          return acc;\r\n        },\r\n        {} as Record<string, any>\r\n      );\r\n    }\r\n\r\n    return searchParams;\r\n  };\r\n\r\n  const [value, setValue] = useState<Value>(() => {\r\n    if (typeof window === 'undefined') return (initialValue ?? {}) as Value;\r\n\r\n    const urlSearchParams = getUrlSearchParams(mode);\r\n    const value = {\r\n      ...(initialValue && getParsedUrlSearchParams(initialValue)),\r\n      ...getParsedUrlSearchParams(urlSearchParams)\r\n    } as Value;\r\n\r\n    setUrlSearchParams(mode, value, writeMode);\r\n\r\n    return value;\r\n  });\r\n\r\n  const set = (params: Partial<Value>, options?: UseUrlSearchParamsSetOptions) => {\r\n    const searchParams = setUrlSearchParams(\r\n      mode,\r\n      { ...value, ...params },\r\n      options?.write ?? writeMode\r\n    );\r\n    setValue(getParsedUrlSearchParams(searchParams) as Value);\r\n  };\r\n\r\n  useEffect(() => {\r\n    const onParamsChange = () => {\r\n      const searchParams = getUrlSearchParams(mode);\r\n      setValue(getParsedUrlSearchParams(searchParams) as Value);\r\n    };\r\n\r\n    window.addEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);\r\n    window.addEventListener('popstate', onParamsChange);\r\n    if (mode !== 'history') window.addEventListener('hashchange', onParamsChange);\r\n\r\n    return () => {\r\n      window.removeEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);\r\n      window.removeEventListener('popstate', onParamsChange);\r\n      if (mode !== 'history') window.removeEventListener('hashchange', onParamsChange);\r\n    };\r\n  }, [mode]);\r\n\r\n  return {\r\n    value,\r\n    set\r\n  };\r\n}) as UseUrlSearchParams;\r\n\r\nexport { createQueryString, dispatchUrlSearchParamsEvent, getUrlSearchParams };\r\n",
+  "typeDeclarations": "export type UrlParams = Record<string, any>;\n\nexport type UrlSearchParamsMode = 'hash-params' | 'hash' | 'history';\n\nexport interface UseUrlSearchParamsSetOptions {\r\n  /** The mode to use for writing to the URL */\r\n  write?: 'push' | 'replace';\r\n}\n\nexport type UseUrlSearchParamsInitialValue<Value> = (() => Value) | Value;\n\nexport interface UseUrlSearchParamsOptions<Value> {\r\n  /** The mode to use for writing to the URL */\r\n  mode?: UrlSearchParamsMode;\r\n  /** The mode to use for writing to the URL  */\r\n  write?: 'push' | 'replace';\r\n  /* The deserializer function to be invoked */\r\n  deserializer?: (value: string) => Value[keyof Value];\r\n  /* The serializer function to be invoked */\r\n  serializer?: (value: Value[keyof Value]) => string;\r\n}\n\nexport interface UseUrlSearchParamsReturn<Value> {\r\n  /** The value of the url search params */\r\n  value: Value;\r\n  /** The set function */\r\n  set: (value: Partial<Value>, options?: UseUrlSearchParamsSetOptions) => void;\r\n}\n\nexport interface UseUrlSearchParams {\r\n  <Value>(\r\n    options: UseUrlSearchParamsOptions<Value> & {\r\n      initialValue: UseUrlSearchParamsInitialValue<Value>;\r\n    }\r\n  ): UseUrlSearchParamsReturn<Value>;\r\n\r\n  <Value>(options?: UseUrlSearchParamsOptions<Value>): UseUrlSearchParamsReturn<Value | undefined>;\r\n\r\n  <Value>(initialValue: UseUrlSearchParamsInitialValue<Value>): UseUrlSearchParamsReturn<Value>;\r\n}",
+  "description": "Hook that provides reactive URLSearchParams",
+  "examples": [
+    "const { value, set } = useUrlSearchParams({ initialValue: { page: 1 } });",
+    "const { value, set } = useUrlSearchParams({ page: 1 });"
+  ],
+  "usage": "high",
+  "category": "state",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseUrlSearchParamsOptions<Value> & { initialValue: UseUrlSearchParamsInitialValue<Value> }",
+          "optional": false,
+          "description": "The options object with required initialValue",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseUrlSearchParamsOptions<Value> & { initialValue: UseUrlSearchParamsInitialValue<Value> }} options The options object with required initialValue\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "options",
+                "postName": " ",
+                "type": "{UseUrlSearchParamsOptions<Value> & { initialValue: UseUrlSearchParamsInitialValue<Value> }}",
+                "postType": " ",
+                "description": "The options object with required initialValue",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.initialValue",
+          "type": "UseUrlSearchParamsInitialValue<Value>",
+          "optional": true,
+          "description": "The initial value for the url params",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {UseUrlSearchParamsInitialValue<Value>} [options.initialValue] The initial value for the url params\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.initialValue]",
+                "postName": " ",
+                "type": "{UseUrlSearchParamsInitialValue<Value>}",
+                "postType": " ",
+                "description": "The initial value for the url params",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.mode",
+          "type": "UrlSearchParamsMode",
+          "optional": true,
+          "description": "The mode to use for the URL ('history' | 'hash-params' | 'hash')",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {UrlSearchParamsMode} [options.mode='history'] The mode to use for the URL ('history' | 'hash-params' | 'hash')\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.mode='history']",
+                "postName": " ",
+                "type": "{UrlSearchParamsMode}",
+                "postType": " ",
+                "description": "The mode to use for the URL ('history' | 'hash-params' | 'hash')",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'history'"
+        },
+        {
+          "tag": "param",
+          "name": "options.write",
+          "type": "'push' | 'replace'",
+          "optional": true,
+          "description": "The mode to use for writing to the URL",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {'push' | 'replace'} [options.write='replace'] The mode to use for writing to the URL\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.write='replace']",
+                "postName": " ",
+                "type": "{'push' | 'replace'}",
+                "postType": " ",
+                "description": "The mode to use for writing to the URL",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'replace'"
+        },
+        {
+          "tag": "param",
+          "name": "options.serializer",
+          "type": "(value: Value[keyof Value]) => string",
+          "optional": true,
+          "description": "Custom serializer function to convert value to string",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {(value: Value[keyof Value]) => string} [options.serializer] Custom serializer function to convert value to string\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.serializer]",
+                "postName": " ",
+                "type": "{(value: Value[keyof Value]) => string}",
+                "postType": " ",
+                "description": "Custom serializer function to convert value to string",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.deserializer",
+          "type": "(value: string) => Value[keyof Value]",
+          "optional": true,
+          "description": "Custom deserializer function to convert string to value",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {(value: string) => Value[keyof Value]} [options.deserializer] Custom deserializer function to convert string to value\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.deserializer]",
+                "postName": " ",
+                "type": "{(value: string) => Value[keyof Value]}",
+                "postType": " ",
+                "description": "Custom deserializer function to convert string to value",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseUrlSearchParamsReturn<Value>",
+        "optional": false,
+        "description": "object with value and function for change value",
+        "problems": [],
+        "source": [
+          {
+            "number": 14,
+            "source": " * @returns {UseUrlSearchParamsReturn<Value>} The object with value and function for change value\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseUrlSearchParamsReturn<Value>}",
+              "postType": " ",
+              "description": "object with value and function for change value",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 15,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "UseUrlSearchParamsInitialValue<Value>",
+          "optional": true,
+          "description": "The initial value for the url params",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {UseUrlSearchParamsInitialValue<Value>} [initialValue] The initial value for the url params\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue]",
+                "postName": " ",
+                "type": "{UseUrlSearchParamsInitialValue<Value>}",
+                "postType": " ",
+                "description": "The initial value for the url params",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseUrlSearchParamsReturn<Value>",
+        "optional": false,
+        "description": "object with value and function for change value",
+        "problems": [],
+        "source": [
+          {
+            "number": 22,
+            "source": " * @returns {UseUrlSearchParamsReturn<Value>} The object with value and function for change value\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseUrlSearchParamsReturn<Value>}",
+              "postType": " ",
+              "description": "object with value and function for change value",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 23,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1775662851000
+}

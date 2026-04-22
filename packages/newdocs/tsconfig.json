@@ -8,11 +8,14 @@
     "moduleResolution": "bundler",
     "paths": {
       "@siberiacancode/docs": ["."],
+      "@siberiacancode/docs/*": ["./*"],
+      "@siberiacancode/docs/utils": ["./utils.ts"],
       "@docs/*": ["./*"],
       "@siberiacancode/reactuse": ["../core/src"],
       "@/*": ["../core/src/*"]
     },
     "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
     "types": ["@types/web-bluetooth", "@types/dom-speech-recognition"],
     "allowJs": true,
     "strict": true,

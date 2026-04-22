@@ -1,0 +1,132 @@
+{
+  "name": "createReactiveContext",
+  "type": "helper",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import type { Context, FC, Provider, ProviderProps, RefObject } from 'react';\r\n\r\nimport {\r\n  createContext,\r\n  createElement,\r\n  startTransition,\r\n  useContext,\r\n  useMemo,\r\n  useRef,\r\n  useState\r\n} from 'react';\r\n\r\nimport { useEvent, useIsomorphicLayoutEffect } from '@/hooks';\r\n\r\n/** The create reactive context options type */\r\nexport interface CreateReactiveContextOptions {\r\n  /** Display name for the context (useful for debugging) */\r\n  name?: string;\r\n  /** Whether to throw an error if context is used outside of Provider */\r\n  strict?: boolean;\r\n}\r\n\r\n/** The create reactive context return type */\r\nexport interface CreateReactiveContextReturn<Value> {\r\n  /** The context instance */\r\n  instance: Context<ReactiveContextValue<Value>>;\r\n  /** The Provider component for the context */\r\n  Provider: Provider<Value>;\r\n  /** A hook to select a part of the context state */\r\n  useSelector: <Selected>(selector?: (state: Value) => Selected) => Selected;\r\n}\r\n\r\ntype ContextListener<Value> = (value: Value) => void;\r\n\r\ninterface ReactiveContextValue<Value> {\r\n  /** The listeners for the context */\r\n  listeners: Set<ContextListener<Value>>;\r\n  /** The value for the context */\r\n  value: RefObject<Value>;\r\n}\r\n\r\nconst createProvider = <Value>(originalProvider: Provider<ReactiveContextValue<Value>>) => {\r\n  const Provider: FC<ProviderProps<Value>> = (props) => {\r\n    const valueRef = useRef(props.value);\r\n    const contextValue = useMemo<ReactiveContextValue<Value>>(\r\n      () => ({\r\n        value: valueRef,\r\n        listeners: new Set()\r\n      }),\r\n      []\r\n    );\r\n\r\n    useIsomorphicLayoutEffect(() => {\r\n      if (!Object.is(valueRef.current, props.value)) {\r\n        valueRef.current = props.value;\r\n\r\n        startTransition(() => {\r\n          contextValue.listeners.forEach((listener) => {\r\n            listener(valueRef.current);\r\n          });\r\n        });\r\n      }\r\n    }, [props.value]);\r\n\r\n    return createElement(originalProvider, { value: contextValue }, props.children);\r\n  };\r\n\r\n  return Provider as unknown as Provider<ReactiveContextValue<Value>>;\r\n};\r\n\r\nconst createReactiveContextSelector = <Value, Selected>(\r\n  Context: Context<ReactiveContextValue<Value>>,\r\n  selector: (state: Value) => Selected,\r\n  options: CreateReactiveContextOptions = {}\r\n) => {\r\n  const context = useContext(Context);\r\n\r\n  if (!context && options.strict) {\r\n    throw new Error(`Context hook ${options.name} must be used inside a Provider`);\r\n  }\r\n\r\n  const [value, setValue] = useState({\r\n    selected: selector(context.value.current),\r\n    value: context.value.current\r\n  });\r\n\r\n  const dispatch = useEvent((newValue: Value) => {\r\n    setValue((prevValue) => {\r\n      if (Object.is(prevValue.value, newValue)) return prevValue;\r\n\r\n      const newSelected = selector(newValue);\r\n      if (Object.is(prevValue.selected, newSelected)) return prevValue;\r\n\r\n      return { value: newValue, selected: newSelected };\r\n    });\r\n  });\r\n\r\n  useIsomorphicLayoutEffect(() => {\r\n    context.listeners.add(dispatch);\r\n    return () => {\r\n      context.listeners.delete(dispatch);\r\n    };\r\n  }, [context.listeners]);\r\n\r\n  return value.selected;\r\n};\r\n\r\n/**\r\n * @name createReactiveContext\r\n * @description - Creates a typed context selector with optimized updates for state selection\r\n * @category Helpers\r\n * @usage low\r\n *\r\n * @warning - For complex interfaces, we strongly recommend using state management solutions outside of React like createStore, reatom, effector, or zustand instead of context\r\n *\r\n * @template Value - The type of value that will be stored in the context\r\n * @param {Value | undefined} [defaultValue] - Default value for the context\r\n * @param {CreateReactiveContextOptions<Value>} [options] - Additional options for context creation\r\n * @returns {CreateReactiveContextReturn<Value>} Object containing context utilities and components\r\n *\r\n * @example\r\n * const { Provider, useSelector, instance } = createReactiveContext<number>(0);\r\n */\r\nexport const createReactiveContext = <Value extends Record<string, any>>(\r\n  defaultValue: Value | undefined = undefined,\r\n  options: CreateReactiveContextOptions = {}\r\n) => {\r\n  const Context = createContext<ReactiveContextValue<Value>>({\r\n    value: { current: defaultValue as Value },\r\n    listeners: new Set()\r\n  });\r\n\r\n  const Provider = createProvider(Context.Provider) as unknown as Provider<Value>;\r\n\r\n  Context.displayName = options.name;\r\n\r\n  function useSelector(): Value;\r\n  function useSelector<SelectedValue>(selector: (state: Value) => SelectedValue): SelectedValue;\r\n  function useSelector<SelectedValue>(selector?: (state: Value) => SelectedValue) {\r\n    return createReactiveContextSelector(\r\n      Context as unknown as Context<ReactiveContextValue<Value>>,\r\n      selector ?? ((state) => state as unknown as SelectedValue),\r\n      options\r\n    );\r\n  }\r\n\r\n  return { instance: Context, Provider, useSelector };\r\n};\r\n",
+  "typeDeclarations": "import type { Context, FC, Provider, ProviderProps, RefObject } from 'react';\n\nexport interface CreateReactiveContextOptions {\r\n  /** Display name for the context (useful for debugging) */\r\n  name?: string;\r\n  /** Whether to throw an error if context is used outside of Provider */\r\n  strict?: boolean;\r\n}\n\nexport interface CreateReactiveContextReturn<Value> {\r\n  /** The context instance */\r\n  instance: Context<ReactiveContextValue<Value>>;\r\n  /** The Provider component for the context */\r\n  Provider: Provider<Value>;\r\n  /** A hook to select a part of the context state */\r\n  useSelector: <Selected>(selector?: (state: Value) => Selected) => Selected;\r\n}\n\ntype ContextListener<Value> = (value: Value) => void;\n\ninterface ReactiveContextValue<Value> {\r\n  /** The listeners for the context */\r\n  listeners: Set<ContextListener<Value>>;\r\n  /** The value for the context */\r\n  value: RefObject<Value>;\r\n}",
+  "description": "Creates a typed context selector with optimized updates for state selection",
+  "examples": [
+    "const { Provider, useSelector, instance } = createReactiveContext<number>(0);"
+  ],
+  "usage": "low",
+  "category": "helpers",
+  "warning": "For complex interfaces, we strongly recommend using state management solutions outside of React like createStore, reatom, effector, or zustand instead of context",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "defaultValue",
+          "type": "Value | undefined",
+          "optional": true,
+          "description": "- Default value for the context",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {Value | undefined} [defaultValue] - Default value for the context\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[defaultValue]",
+                "postName": " ",
+                "type": "{Value | undefined}",
+                "postType": " ",
+                "description": "- Default value for the context",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "CreateReactiveContextOptions<Value>",
+          "optional": true,
+          "description": "- Additional options for context creation",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {CreateReactiveContextOptions<Value>} [options] - Additional options for context creation\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{CreateReactiveContextOptions<Value>}",
+                "postType": " ",
+                "description": "- Additional options for context creation",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "CreateReactiveContextReturn<Value>",
+        "optional": false,
+        "description": "containing context utilities and components",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {CreateReactiveContextReturn<Value>} Object containing context utilities and components\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{CreateReactiveContextReturn<Value>}",
+              "postType": " ",
+              "description": "containing context utilities and components",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 12,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1755150117000
+}

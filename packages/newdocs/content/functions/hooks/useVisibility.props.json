@@ -1,0 +1,516 @@
+{
+  "name": "useVisibility",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The visibility callback type */\r\nexport type UseVisibilityCallback = (\r\n  entry: IntersectionObserverEntry,\r\n  observer: IntersectionObserver\r\n) => void;\r\n\r\n/** The visibility options type */\r\nexport interface UseVisibilityOptions extends Omit<IntersectionObserverInit, 'root'> {\r\n  /** The enabled state of the intersection */\r\n  enabled?: boolean;\r\n  /** The callback to execute when intersection is detected */\r\n  onChange?: UseVisibilityCallback;\r\n  /** The root element to observe */\r\n  root?: HookTarget;\r\n}\r\n\r\n/** The intersection observer return type */\r\nexport interface UseVisibilityReturn {\r\n  /** The intersection observer entry */\r\n  entry?: IntersectionObserverEntry;\r\n  /** The intersection observer in view */\r\n  inView: boolean;\r\n  /** The intersection observer instance */\r\n  observer?: IntersectionObserver;\r\n}\r\n\r\nexport interface UseVisibility {\r\n  <Target extends Element>(\r\n    options?: UseVisibilityOptions,\r\n    target?: never\r\n  ): UseVisibilityReturn & { ref: StateRef<Target> };\r\n\r\n  (target: HookTarget, options?: UseVisibilityOptions): UseVisibilityReturn;\r\n\r\n  <Target extends Element>(\r\n    callback: UseVisibilityCallback,\r\n    target?: never\r\n  ): UseVisibilityReturn & { ref: StateRef<Target> };\r\n\r\n  (target: HookTarget, callback: UseVisibilityCallback): UseVisibilityReturn;\r\n}\r\n\r\n/**\r\n * @name useVisibility\r\n * @description - Hook that gives you visibility observer state\r\n * @category Sensors\r\n * @usage medium\r\n *\r\n * @browserapi IntersectionObserver https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target element to detect intersection\r\n * @param {boolean} [options.enabled=true] The Intersection options\r\n * @param {((entries: IntersectionEntry[], observer: Intersection) => void) | undefined} [options.onChange] The callback to execute when intersection is detected\r\n * @param {HookTarget} [options.root=document] The root element to observe\r\n * @returns {UseVisibilityReturn} An object containing the state\r\n *\r\n * @example\r\n * const { ref, entries, observer } = useVisibility();\r\n *\r\n * @overload\r\n * @template Target The target element\r\n * @param {boolean} [options.enabled=true] The Intersection options\r\n * @param {((entries: IntersectionEntry[], observer: Intersection) => void) | undefined} [options.onChange] The callback to execute when intersection is detected\r\n * @param {HookTarget} [options.root=document] The root element to observe\r\n * @returns {UseVisibilityReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r\n *\r\n * @example\r\n * const { entries, observer } = useVisibility(ref);\r\n *\r\n * @overload\r\n * @template Target The target element\r\n * @param {UseVisibilityCallback} callback The callback to execute when intersection is detected\r\n * @returns {UseVisibilityReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r\n *\r\n * @example\r\n * const { ref, entries, observer } = useVisibility(() => console.log('callback'));\r\n *\r\n * @overload\r\n * @param {UseVisibilityCallback} callback The callback to execute when intersection is detected\r\n * @param {HookTarget} target The target element to detect intersection\r\n * @returns {UseVisibilityReturn} An object containing the state\r\n *\r\n * @example\r\n * const { entries, observer } = useVisibility(ref, () => console.log('callback'));\r\n */\r\nexport const useVisibility = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n\r\n  const options = (\r\n    target\r\n      ? typeof params[1] === 'object'\r\n        ? params[1]\r\n        : { onChange: params[1] }\r\n      : typeof params[0] === 'object'\r\n        ? params[0]\r\n        : { onChange: params[0] }\r\n  ) as UseVisibilityOptions | undefined;\r\n\r\n  const callback = options?.onChange;\r\n  const enabled = options?.enabled ?? true;\r\n\r\n  const [observer, setObserver] = useState<IntersectionObserver>();\r\n  const [entry, setEntry] = useState<IntersectionObserverEntry>();\r\n  const inView = entry?.isIntersecting ?? false;\r\n\r\n  const internalRef = useRefState<Element>();\r\n  const internalCallbackRef = useRef(callback);\r\n  internalCallbackRef.current = callback;\r\n\r\n  useEffect(() => {\r\n    if (!enabled || (!target && !internalRef.state)) return;\r\n\r\n    const element = target ? isTarget.getElement(target) : internalRef.current;\r\n    if (!element) return;\r\n\r\n    const observer = new IntersectionObserver(\r\n      (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {\r\n        const firstEntry = entries[0];\r\n        if (firstEntry) {\r\n          setEntry(firstEntry);\r\n          internalCallbackRef.current?.(firstEntry, observer);\r\n        }\r\n      },\r\n      {\r\n        ...options,\r\n        root: options?.root ? (isTarget.getElement(options.root) as Document | Element) : document\r\n      }\r\n    );\r\n\r\n    setObserver(observer);\r\n    observer.observe(element as Element);\r\n\r\n    return () => {\r\n      observer.disconnect();\r\n    };\r\n  }, [\r\n    target && isTarget.getRawElement(target),\r\n    internalRef.state,\r\n    options?.rootMargin,\r\n    options?.threshold,\r\n    options?.root,\r\n    enabled\r\n  ]);\r\n\r\n  if (target) return { observer, entry, inView };\r\n  return {\r\n    observer,\r\n    ref: internalRef,\r\n    entry,\r\n    inView\r\n  };\r\n}) as UseVisibility;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport type UseVisibilityCallback = (\r\n  entry: IntersectionObserverEntry,\r\n  observer: IntersectionObserver\r\n) => void;\n\nexport interface UseVisibilityOptions extends Omit<IntersectionObserverInit, 'root'> {\r\n  /** The enabled state of the intersection */\r\n  enabled?: boolean;\r\n  /** The callback to execute when intersection is detected */\r\n  onChange?: UseVisibilityCallback;\r\n  /** The root element to observe */\r\n  root?: HookTarget;\r\n}\n\nexport interface UseVisibilityReturn {\r\n  /** The intersection observer entry */\r\n  entry?: IntersectionObserverEntry;\r\n  /** The intersection observer in view */\r\n  inView: boolean;\r\n  /** The intersection observer instance */\r\n  observer?: IntersectionObserver;\r\n}\n\nexport interface UseVisibility {\r\n  <Target extends Element>(\r\n    options?: UseVisibilityOptions,\r\n    target?: never\r\n  ): UseVisibilityReturn & { ref: StateRef<Target> };\r\n\r\n  (target: HookTarget, options?: UseVisibilityOptions): UseVisibilityReturn;\r\n\r\n  <Target extends Element>(\r\n    callback: UseVisibilityCallback,\r\n    target?: never\r\n  ): UseVisibilityReturn & { ref: StateRef<Target> };\r\n\r\n  (target: HookTarget, callback: UseVisibilityCallback): UseVisibilityReturn;\r\n}",
+  "description": "Hook that gives you visibility observer state",
+  "examples": [
+    "const { ref, entries, observer } = useVisibility();",
+    "const { entries, observer } = useVisibility(ref);",
+    "const { ref, entries, observer } = useVisibility(() => console.log('callback'));",
+    "const { entries, observer } = useVisibility(ref, () => console.log('callback'));"
+  ],
+  "usage": "medium",
+  "category": "sensors",
+  "browserapi": "IntersectionObserver",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to detect intersection",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {HookTarget} target The target element to detect intersection\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to detect intersection",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "The Intersection options",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {boolean} [options.enabled=true] The Intersection options\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The Intersection options",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.onChange",
+          "type": "((entries: IntersectionEntry[], observer: Intersection) => void) | undefined",
+          "optional": true,
+          "description": "The callback to execute when intersection is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {((entries: IntersectionEntry[], observer: Intersection) => void) | undefined} [options.onChange] The callback to execute when intersection is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onChange]",
+                "postName": " ",
+                "type": "{((entries: IntersectionEntry[], observer: Intersection) => void) | undefined}",
+                "postType": " ",
+                "description": "The callback to execute when intersection is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.root",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The root element to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {HookTarget} [options.root=document] The root element to observe\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.root=document]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The root element to observe",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "document"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseVisibilityReturn",
+        "optional": false,
+        "description": "object containing the state",
+        "problems": [],
+        "source": [
+          {
+            "number": 13,
+            "source": " * @returns {UseVisibilityReturn} An object containing the state\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseVisibilityReturn}",
+              "postType": " ",
+              "description": "object containing the state",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 14,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "The Intersection options",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {boolean} [options.enabled=true] The Intersection options\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The Intersection options",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.onChange",
+          "type": "((entries: IntersectionEntry[], observer: Intersection) => void) | undefined",
+          "optional": true,
+          "description": "The callback to execute when intersection is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {((entries: IntersectionEntry[], observer: Intersection) => void) | undefined} [options.onChange] The callback to execute when intersection is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onChange]",
+                "postName": " ",
+                "type": "{((entries: IntersectionEntry[], observer: Intersection) => void) | undefined}",
+                "postType": " ",
+                "description": "The callback to execute when intersection is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.root",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The root element to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 22,
+              "source": " * @param {HookTarget} [options.root=document] The root element to observe\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.root=document]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The root element to observe",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "document"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "UseVisibilityReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "React ref to attach to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 23,
+            "source": " * @returns {UseVisibilityReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{UseVisibilityReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "React ref to attach to the target element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 24,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "UseVisibilityCallback",
+          "optional": false,
+          "description": "The callback to execute when intersection is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 30,
+              "source": " * @param {UseVisibilityCallback} callback The callback to execute when intersection is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{UseVisibilityCallback}",
+                "postType": " ",
+                "description": "The callback to execute when intersection is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "UseVisibilityReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "React ref to attach to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 31,
+            "source": " * @returns {UseVisibilityReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{UseVisibilityReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "React ref to attach to the target element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 32,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "UseVisibilityCallback",
+          "optional": false,
+          "description": "The callback to execute when intersection is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 37,
+              "source": " * @param {UseVisibilityCallback} callback The callback to execute when intersection is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{UseVisibilityCallback}",
+                "postType": " ",
+                "description": "The callback to execute when intersection is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to detect intersection",
+          "problems": [],
+          "source": [
+            {
+              "number": 38,
+              "source": " * @param {HookTarget} target The target element to detect intersection\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to detect intersection",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseVisibilityReturn",
+        "optional": false,
+        "description": "object containing the state",
+        "problems": [],
+        "source": [
+          {
+            "number": 39,
+            "source": " * @returns {UseVisibilityReturn} An object containing the state\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseVisibilityReturn}",
+              "postType": " ",
+              "description": "object containing the state",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 40,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1768833790000
+}

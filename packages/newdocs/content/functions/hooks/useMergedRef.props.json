@@ -1,0 +1,103 @@
+{
+  "name": "useMergedRef",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import type { Ref, RefCallback } from 'react';\r\n\r\nimport { useCallback } from 'react';\r\n\r\nexport const assignRef = <Element>(\r\n  ref: Ref<Element>,\r\n  value: Element\r\n): ReturnType<RefCallback<Element>> => {\r\n  if (typeof ref === 'function') return ref(value);\r\n  if (typeof ref === 'object' && ref !== null && 'current' in ref) ref.current = value;\r\n};\r\n\r\nexport const mergeRefs = <Element>(...refs: Ref<Element>[]): RefCallback<Element> => {\r\n  const cleanupMap = new Map<Ref<Element>, Exclude<ReturnType<RefCallback<Element>>, void>>();\r\n\r\n  return (node: Element | null) => {\r\n    refs.forEach((ref) => {\r\n      const cleanup = assignRef(ref, node);\r\n      if (cleanup) cleanupMap.set(ref, cleanup);\r\n    });\r\n\r\n    if (!cleanupMap.size) return;\r\n\r\n    return () => {\r\n      refs.forEach((ref) => {\r\n        const cleanup = cleanupMap.get(ref);\r\n        if (cleanup && typeof cleanup === 'function') cleanup();\r\n        else assignRef(ref, null);\r\n      });\r\n      cleanupMap.clear();\r\n    };\r\n  };\r\n};\r\n\r\n/**\r\n * @name useMergedRef\r\n * @description - Hook that merges multiple refs into a single ref\r\n * @category State\r\n * @usage medium\r\n *\r\n * @template Element The element type\r\n * @param {...Ref<Element>[]} refs The refs to merge\r\n * @returns {RefCallback<Element>} A memoized ref callback that assigns to all provided refs\r\n *\r\n * @example\r\n * const mergedRef = useMergedRef(firstRef, secondRef);\r\n */\r\nexport const useMergedRef = <Element>(...refs: Ref<Element>[]) =>\r\n  useCallback(mergeRefs(...refs), refs);\r\n",
+  "typeDeclarations": "import type { Ref, RefCallback } from 'react';",
+  "description": "Hook that merges multiple refs into a single ref",
+  "examples": [
+    "const mergedRef = useMergedRef(firstRef, secondRef);"
+  ],
+  "usage": "medium",
+  "category": "state",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "refs",
+          "type": "...Ref<Element>[]",
+          "optional": false,
+          "description": "The refs to merge",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {...Ref<Element>[]} refs The refs to merge\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "refs",
+                "postName": " ",
+                "type": "{...Ref<Element>[]}",
+                "postType": " ",
+                "description": "The refs to merge",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "RefCallback<Element>",
+        "optional": false,
+        "description": "memoized ref callback that assigns to all provided refs",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {RefCallback<Element>} A memoized ref callback that assigns to all provided refs\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{RefCallback<Element>}",
+              "postType": " ",
+              "description": "memoized ref callback that assigns to all provided refs",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1756623419000
+}

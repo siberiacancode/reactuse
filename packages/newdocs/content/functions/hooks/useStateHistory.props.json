@@ -1,0 +1,136 @@
+{
+  "name": "useStateHistory",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Khasan",
+      "avatar": "https://gravatar.com/avatar/2fea11869c4b2fe403fbb0426a5099c0?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useReducer } from 'react';\r\n\r\n/** The use state history hook return type */\r\ninterface UseStateHistoryReturn<Value> {\r\n  /** True if a redo operation can be performed */\r\n  canRedo: boolean;\r\n  /** True if an undo operation can be performed */\r\n  canUndo: boolean;\r\n  /** All history values */\r\n  history: Value[];\r\n  /** Current index in history */\r\n  index: number;\r\n  /** Current value */\r\n  value: Value;\r\n  /** Go back specified number of steps in history (default: 1) */\r\n  back: (steps?: number) => void;\r\n  /** Go forward specified number of steps in history (default: 1) */\r\n  forward: (steps?: number) => void;\r\n  /** Redo the last change */\r\n  redo: () => void;\r\n  /** Reset history to initial state */\r\n  reset: () => void;\r\n  /** Set a new value */\r\n  set: (value: Value) => void;\r\n  /** Undo the last change */\r\n  undo: () => void;\r\n}\r\n\r\nexport type StateHistoryAction<Value> =\r\n  | { type: 'BACK'; payload: { steps: number } }\r\n  | { type: 'FORWARD'; payload: { steps: number } }\r\n  | { type: 'REDO' }\r\n  | { type: 'RESET'; payload: { initialValue: Value; capacity: number } }\r\n  | { type: 'SET'; payload: { value: Value; capacity: number } }\r\n  | { type: 'UNDO' };\r\n\r\nexport interface StateHistory<Value> {\r\n  currentIndex: number;\r\n  history: Value[];\r\n  redoStack: Value[][];\r\n  undoStack: Value[][];\r\n}\r\n\r\nexport const stateHistoryReducer = <Value>(\r\n  state: StateHistory<Value>,\r\n  action: StateHistoryAction<Value>\r\n): StateHistory<Value> => {\r\n  switch (action.type) {\r\n    case 'SET': {\r\n      const { value, capacity } = action.payload;\r\n\r\n      const newHistory = [...state.history.slice(0, state.currentIndex + 1), value];\r\n      if (newHistory.length > capacity) {\r\n        newHistory.shift();\r\n      }\r\n\r\n      const newUndoStack = [state.history, ...state.undoStack];\r\n      if (newUndoStack.length > capacity) {\r\n        newUndoStack.pop();\r\n      }\r\n\r\n      return {\r\n        history: newHistory,\r\n        currentIndex: newHistory.length - 1,\r\n        undoStack: newUndoStack,\r\n        redoStack: []\r\n      };\r\n    }\r\n\r\n    case 'UNDO': {\r\n      if (state.undoStack.length === 0) return state;\r\n\r\n      return {\r\n        history: state.undoStack[0],\r\n        currentIndex: state.undoStack[0].length - 1,\r\n        undoStack: state.undoStack.slice(1),\r\n        redoStack: [state.history, ...state.redoStack]\r\n      };\r\n    }\r\n\r\n    case 'REDO': {\r\n      if (state.redoStack.length === 0) return state;\r\n\r\n      return {\r\n        history: state.redoStack[0],\r\n        currentIndex: state.redoStack[0].length - 1,\r\n        undoStack: [state.history, ...state.undoStack],\r\n        redoStack: state.redoStack.slice(1)\r\n      };\r\n    }\r\n\r\n    case 'BACK': {\r\n      const { steps } = action.payload;\r\n      return {\r\n        ...state,\r\n        currentIndex: Math.max(0, state.currentIndex - steps)\r\n      };\r\n    }\r\n\r\n    case 'FORWARD': {\r\n      const { steps } = action.payload;\r\n      return {\r\n        ...state,\r\n        currentIndex: Math.min(state.currentIndex + steps, state.history.length - 1)\r\n      };\r\n    }\r\n\r\n    case 'RESET': {\r\n      const { initialValue, capacity } = action.payload;\r\n      if (state.history.length === 1) return state;\r\n\r\n      const newUndoStack = [state.history, ...state.undoStack];\r\n      if (newUndoStack.length > capacity) {\r\n        newUndoStack.pop();\r\n      }\r\n\r\n      return {\r\n        history: [initialValue],\r\n        currentIndex: 0,\r\n        undoStack: newUndoStack,\r\n        redoStack: []\r\n      };\r\n    }\r\n\r\n    default:\r\n      throw new Error('Unsupported action type');\r\n  }\r\n};\r\n\r\n/**\r\n * @name useStateHistory\r\n * @description - Hook that manages state with history functionality\r\n * @category State\r\n * @usage medium\r\n *\r\n * @param {Value} initialValue - The initial value to start the history with\r\n * @param {number} [capacity=10] - Maximum number of history entries and undo actions to keep\r\n * @returns {UseStateHistoryReturn<Value>} Object containing current value, history array and control methods\r\n *\r\n * @example\r\n * const { value, history, index, set, back, forward, reset, undo, redo, canUndo, canRedo } = useStateHistory(0);\r\n */\r\nexport const useStateHistory = <Value>(\r\n  initialValue: Value,\r\n  capacity = 10\r\n): UseStateHistoryReturn<Value> => {\r\n  const [state, dispatch] = useReducer(stateHistoryReducer<Value>, {\r\n    history: [initialValue],\r\n    currentIndex: 0,\r\n    undoStack: [],\r\n    redoStack: []\r\n  });\r\n\r\n  const value = state.history[state.currentIndex];\r\n  const canUndo = state.undoStack.length > 0;\r\n  const canRedo = state.redoStack.length > 0;\r\n\r\n  const set = (value: Value) =>\r\n    dispatch({\r\n      type: 'SET',\r\n      payload: { value, capacity }\r\n    });\r\n\r\n  const undo = () => dispatch({ type: 'UNDO' });\r\n\r\n  const redo = () => dispatch({ type: 'REDO' });\r\n\r\n  const back = (steps = 1) => dispatch({ type: 'BACK', payload: { steps } });\r\n\r\n  const forward = (steps = 1) => dispatch({ type: 'FORWARD', payload: { steps } });\r\n\r\n  const reset = () => dispatch({ type: 'RESET', payload: { initialValue, capacity } });\r\n\r\n  return {\r\n    history: state.history,\r\n    value,\r\n    set,\r\n    index: state.currentIndex,\r\n    back,\r\n    forward,\r\n    reset,\r\n    undo,\r\n    redo,\r\n    canUndo,\r\n    canRedo\r\n  };\r\n};\r\n",
+  "typeDeclarations": "interface UseStateHistoryReturn<Value> {\r\n  /** True if a redo operation can be performed */\r\n  canRedo: boolean;\r\n  /** True if an undo operation can be performed */\r\n  canUndo: boolean;\r\n  /** All history values */\r\n  history: Value[];\r\n  /** Current index in history */\r\n  index: number;\r\n  /** Current value */\r\n  value: Value;\r\n  /** Go back specified number of steps in history (default: 1) */\r\n  back: (steps?: number) => void;\r\n  /** Go forward specified number of steps in history (default: 1) */\r\n  forward: (steps?: number) => void;\r\n  /** Redo the last change */\r\n  redo: () => void;\r\n  /** Reset history to initial state */\r\n  reset: () => void;\r\n  /** Set a new value */\r\n  set: (value: Value) => void;\r\n  /** Undo the last change */\r\n  undo: () => void;\r\n}\n\nexport type StateHistoryAction<Value> =\r\n  | { type: 'BACK'; payload: { steps: number } }\r\n  | { type: 'FORWARD'; payload: { steps: number } }\r\n  | { type: 'REDO' }\r\n  | { type: 'RESET'; payload: { initialValue: Value; capacity: number } }\r\n  | { type: 'SET'; payload: { value: Value; capacity: number } }\r\n  | { type: 'UNDO' };\n\nexport interface StateHistory<Value> {\r\n  currentIndex: number;\r\n  history: Value[];\r\n  redoStack: Value[][];\r\n  undoStack: Value[][];\r\n}",
+  "description": "Hook that manages state with history functionality",
+  "examples": [
+    "const { value, history, index, set, back, forward, reset, undo, redo, canUndo, canRedo } = useStateHistory(0);"
+  ],
+  "usage": "medium",
+  "category": "state",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "Value",
+          "optional": false,
+          "description": "- The initial value to start the history with",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {Value} initialValue - The initial value to start the history with\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "- The initial value to start the history with",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "capacity",
+          "type": "number",
+          "optional": true,
+          "description": "- Maximum number of history entries and undo actions to keep",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {number} [capacity=10] - Maximum number of history entries and undo actions to keep\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[capacity=10]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "- Maximum number of history entries and undo actions to keep",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "UseStateHistoryReturn<Value>",
+        "optional": false,
+        "description": "containing current value, history array and control methods",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseStateHistoryReturn<Value>} Object containing current value, history array and control methods\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{UseStateHistoryReturn<Value>}",
+              "postType": " ",
+              "description": "containing current value, history array and control methods",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

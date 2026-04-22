@@ -1,0 +1,276 @@
+{
+  "name": "useKeyPress",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "Gorilla Dev",
+      "avatar": "https://gravatar.com/avatar/ca17ccb5824fdd8626a4ec87e904597b?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The key or keys to listen for */\r\nexport type UseKeyPressKey = string | string[];\r\n\r\n/** The callback function to be invoked when key is pressed */\r\nexport type UseKeyPressCallback = (pressed: boolean, event: KeyboardEvent) => void;\r\n\r\n/** The use key press return type */\r\nexport interface UseKeyPressReturn {\r\n  /** The pressed state of the key */\r\n  pressed: boolean;\r\n  /** The ref to attach to the element */\r\n  ref: StateRef<Element>;\r\n}\r\n\r\nexport interface UseKeyPress {\r\n  (\r\n    target: HookTarget | Window,\r\n    key: UseKeyPressKey,\r\n    callback?: UseKeyPressCallback\r\n  ): UseKeyPressReturn;\r\n\r\n  <Target extends Element>(\r\n    key: UseKeyPressKey,\r\n    callback?: UseKeyPressCallback,\r\n    target?: never\r\n  ): UseKeyPressReturn & { ref: StateRef<Target> };\r\n}\r\n\r\n/**\r\n * @name useKeyPress\r\n * @description - Hook that listens for key press events\r\n * @category Sensors\r\n * @usage medium\r\n *\r\n * @overload\r\n * @param {HookTarget} [target=window] The target to attach the event listeners to\r\n * @param {UseKeyPressKey} key The key or keys to listen for\r\n * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed\r\n * @returns {UseKeyPressReturn} An object containing the pressed state and ref\r\n *\r\n * @example\r\n * const isKeyPressed = useKeyPress(ref, 'a');\r\n *\r\n * @overload\r\n * @template Target The target element type\r\n * @param {UseKeyPressKey} key The key or keys to listen for\r\n * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed\r\n * @returns {{ pressed: boolean; ref: StateRef<Target> }} An object containing the pressed state and ref\r\n *\r\n * @example\r\n * const { pressed, ref } = useKeyPress('a');\r\n */\r\nexport const useKeyPress = ((...params: any[]) => {\r\n  const target = isTarget(params[0]) ? params[0] : undefined;\r\n  const key = (target ? params[1] : params[0]) as UseKeyPressKey;\r\n  const callback = (target ? params[2] : params[1]) as UseKeyPressCallback | undefined;\r\n\r\n  const [pressed, setPressed] = useState(false);\r\n  const internalRef = useRefState(window);\r\n\r\n  const keyRef = useRef(key);\r\n  keyRef.current = key;\r\n  const internalCallbackRef = useRef(callback);\r\n  internalCallbackRef.current = callback;\r\n\r\n  useEffect(() => {\r\n    if (!target && !internalRef.state) return;\r\n\r\n    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;\r\n    if (!element) return;\r\n\r\n    const onKeyDown = (event: Event) => {\r\n      const keyboardEvent = event as KeyboardEvent;\r\n      if (\r\n        Array.isArray(keyRef.current)\r\n          ? keyRef.current.includes(keyboardEvent.key)\r\n          : keyboardEvent.key === keyRef.current\r\n      ) {\r\n        setPressed(true);\r\n        internalCallbackRef.current?.(true, keyboardEvent);\r\n      }\r\n    };\r\n\r\n    const onKeyUp = (event: Event) => {\r\n      const keyboardEvent = event as KeyboardEvent;\r\n      if (\r\n        Array.isArray(keyRef.current)\r\n          ? keyRef.current.includes(keyboardEvent.key)\r\n          : keyboardEvent.key === keyRef.current\r\n      ) {\r\n        setPressed(false);\r\n        internalCallbackRef.current?.(false, keyboardEvent);\r\n      }\r\n    };\r\n\r\n    element.addEventListener('keydown', onKeyDown);\r\n    element.addEventListener('keyup', onKeyUp);\r\n\r\n    return () => {\r\n      element.removeEventListener('keydown', onKeyDown);\r\n      element.removeEventListener('keyup', onKeyUp);\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state]);\r\n\r\n  if (target) return { pressed };\r\n  return { pressed, ref: internalRef };\r\n}) as UseKeyPress;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport type UseKeyPressKey = string | string[];\n\nexport type UseKeyPressCallback = (pressed: boolean, event: KeyboardEvent) => void;\n\nexport interface UseKeyPressReturn {\r\n  /** The pressed state of the key */\r\n  pressed: boolean;\r\n  /** The ref to attach to the element */\r\n  ref: StateRef<Element>;\r\n}\n\nexport interface UseKeyPress {\r\n  (\r\n    target: HookTarget | Window,\r\n    key: UseKeyPressKey,\r\n    callback?: UseKeyPressCallback\r\n  ): UseKeyPressReturn;\r\n\r\n  <Target extends Element>(\r\n    key: UseKeyPressKey,\r\n    callback?: UseKeyPressCallback,\r\n    target?: never\r\n  ): UseKeyPressReturn & { ref: StateRef<Target> };\r\n}",
+  "description": "Hook that listens for key press events",
+  "examples": [
+    "const isKeyPressed = useKeyPress(ref, 'a');",
+    "const { pressed, ref } = useKeyPress('a');"
+  ],
+  "usage": "medium",
+  "category": "sensors",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The target to attach the event listeners to",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} [target=window] The target to attach the event listeners to\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=window]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target to attach the event listeners to",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "window"
+        },
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "UseKeyPressKey",
+          "optional": false,
+          "description": "The key or keys to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseKeyPressKey} key The key or keys to listen for\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{UseKeyPressKey}",
+                "postType": " ",
+                "description": "The key or keys to listen for",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(pressed: boolean, event: KeyboardEvent) => void",
+          "optional": true,
+          "description": "Callback function invoked when key is pressed",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(pressed: boolean, event: KeyboardEvent) => void}",
+                "postType": " ",
+                "description": "Callback function invoked when key is pressed",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseKeyPressReturn",
+        "optional": false,
+        "description": "object containing the pressed state and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseKeyPressReturn} An object containing the pressed state and ref\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseKeyPressReturn}",
+              "postType": " ",
+              "description": "object containing the pressed state and ref",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "UseKeyPressKey",
+          "optional": false,
+          "description": "The key or keys to listen for",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {UseKeyPressKey} key The key or keys to listen for\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{UseKeyPressKey}",
+                "postType": " ",
+                "description": "The key or keys to listen for",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(pressed: boolean, event: KeyboardEvent) => void",
+          "optional": true,
+          "description": "Callback function invoked when key is pressed",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(pressed: boolean, event: KeyboardEvent) => void}",
+                "postType": " ",
+                "description": "Callback function invoked when key is pressed",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "{ pressed: boolean; ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object containing the pressed state and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 19,
+            "source": " * @returns {{ pressed: boolean; ref: StateRef<Target> }} An object containing the pressed state and ref\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{{ pressed: boolean; ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object containing the pressed state and ref",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 20,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": true,
+  "lastModified": 1770651919000
+}

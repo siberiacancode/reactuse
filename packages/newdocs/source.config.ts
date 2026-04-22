@@ -26,3 +26,7 @@ export default defineConfig({
 export const docs = defineDocs({
   dir: 'content/docs'
 });
+
+export const functions = defineDocs({
+  dir: 'content/functions'
+});

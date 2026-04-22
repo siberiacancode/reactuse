@@ -1,0 +1,216 @@
+{
+  "name": "useMouse",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\nimport { useRerender } from '../useRerender/useRerender';\r\n\r\n/** The use mouse return type */\r\nexport interface UseMouseReturn {\r\n  /** The latest mouse value snapshot */\r\n  snapshot: UseMouseValue;\r\n  /** Function to enable subscriptions and rerender on next updates */\r\n  watch: () => UseMouseValue;\r\n}\r\n\r\n/** The use mouse value type */\r\nexport interface UseMouseValue {\r\n  /** The current mouse client x position */\r\n  clientX: number;\r\n  /** The current mouse client y position */\r\n  clientY: number;\r\n  /** The current element position x */\r\n  elementPositionX: number;\r\n  /** The current element position y */\r\n  elementPositionY: number;\r\n  /** The current element x position */\r\n  elementX: number;\r\n  /** The current element y position */\r\n  elementY: number;\r\n  /** The current mouse x position */\r\n  x: number;\r\n  /** The current mouse y position */\r\n  y: number;\r\n}\r\n\r\nexport type UseMouseCallback = (value: UseMouseValue, event: Event) => void;\r\n\r\nexport interface UseMouse {\r\n  (target: HookTarget, callback?: UseMouseCallback): UseMouseReturn;\r\n\r\n  <Target extends Element>(\r\n    callback?: UseMouseCallback,\r\n    target?: never\r\n  ): UseMouseReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n\r\n  (target?: Window, callback?: UseMouseCallback): UseMouseReturn;\r\n}\r\n\r\n/**\r\n * @name useMouse\r\n * @description - Hook that manages a mouse position\r\n * @category Sensors\r\n * @usage low\r\n *\r\n * @overload\r\n * @param {HookTarget} [target=window] The target element to manage the mouse position for\r\n * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates\r\n * @returns {UseMouseReturn} An object with mouse value controls\r\n *\r\n * @example\r\n * const mouse = useMouse(ref);\r\n *\r\n * @overload\r\n * @template Target The target element\r\n * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates\r\n * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with mouse value controls and a ref\r\n *\r\n * @example\r\n * const mouse = useMouse<HTMLDivElement>();\r\n */\r\nexport const useMouse = ((...params: any[]) => {\r\n  const target = isTarget(params[0]) ? params[0] : undefined;\r\n  const callback = (target ? params[1] : params[0]) as UseMouseCallback | undefined;\r\n\r\n  const snapshotRef = useRef<UseMouseValue>({\r\n    x: 0,\r\n    y: 0,\r\n    elementX: 0,\r\n    elementY: 0,\r\n    elementPositionX: 0,\r\n    elementPositionY: 0,\r\n    clientX: 0,\r\n    clientY: 0\r\n  });\r\n  const internalCallbackRef = useRef(callback);\r\n  internalCallbackRef.current = callback;\r\n  const watchingRef = useRef(false);\r\n  const rerender = useRerender();\r\n\r\n  const internalRef = useRefState<Element>();\r\n\r\n  const updateValue = (nextValue: UseMouseValue, event: Event) => {\r\n    snapshotRef.current = nextValue;\r\n    internalCallbackRef.current?.(nextValue, event);\r\n    if (watchingRef.current) rerender();\r\n  };\r\n\r\n  const watch = () => {\r\n    watchingRef.current = true;\r\n    return snapshotRef.current;\r\n  };\r\n\r\n  useEffect(() => {\r\n    const onMouseMove = (event: MouseEvent) => {\r\n      const element = (target ? isTarget.getElement(target) : internalRef.current) as\r\n        | Element\r\n        | undefined;\r\n\r\n      const updatedValue: UseMouseValue = {\r\n        x: event.pageX,\r\n        y: event.pageY,\r\n        clientX: event.clientX,\r\n        clientY: event.clientY,\r\n        elementX: event.pageX,\r\n        elementY: event.pageY,\r\n        elementPositionX: 0,\r\n        elementPositionY: 0\r\n      };\r\n\r\n      if (element) {\r\n        const { left, top } = element.getBoundingClientRect();\r\n        const elementPositionX = left + window.scrollX;\r\n        const elementPositionY = top + window.scrollY;\r\n        const elementX = event.pageX - elementPositionX;\r\n        const elementY = event.pageY - elementPositionY;\r\n\r\n        updatedValue.elementX = elementX;\r\n        updatedValue.elementY = elementY;\r\n        updatedValue.elementPositionX = elementPositionX;\r\n        updatedValue.elementPositionY = elementPositionY;\r\n      }\r\n\r\n      updateValue(updatedValue, event);\r\n    };\r\n\r\n    const onScroll = (event: Event) => {\r\n      const updatedValue: UseMouseValue = {\r\n        ...snapshotRef.current,\r\n        x: snapshotRef.current.x + window.scrollX - snapshotRef.current.elementPositionX,\r\n        y: snapshotRef.current.y + window.scrollY - snapshotRef.current.elementPositionY,\r\n        elementPositionX: window.scrollX,\r\n        elementPositionY: window.scrollY\r\n      };\r\n      updateValue(updatedValue, event);\r\n    };\r\n\r\n    document.addEventListener('scroll', onScroll, { passive: true });\r\n    document.addEventListener('mousemove', onMouseMove);\r\n    return () => {\r\n      document.removeEventListener('scroll', onScroll);\r\n      document.removeEventListener('mousemove', onMouseMove);\r\n    };\r\n  }, [internalRef.state, target && isTarget.getRawElement(target)]);\r\n\r\n  if (target) return { snapshot: snapshotRef.current, watch };\r\n  return {\r\n    ref: internalRef,\r\n    snapshot: snapshotRef.current,\r\n    watch\r\n  };\r\n}) as UseMouse;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface UseMouseReturn {\r\n  /** The latest mouse value snapshot */\r\n  snapshot: UseMouseValue;\r\n  /** Function to enable subscriptions and rerender on next updates */\r\n  watch: () => UseMouseValue;\r\n}\n\nexport interface UseMouseValue {\r\n  /** The current mouse client x position */\r\n  clientX: number;\r\n  /** The current mouse client y position */\r\n  clientY: number;\r\n  /** The current element position x */\r\n  elementPositionX: number;\r\n  /** The current element position y */\r\n  elementPositionY: number;\r\n  /** The current element x position */\r\n  elementX: number;\r\n  /** The current element y position */\r\n  elementY: number;\r\n  /** The current mouse x position */\r\n  x: number;\r\n  /** The current mouse y position */\r\n  y: number;\r\n}\n\nexport type UseMouseCallback = (value: UseMouseValue, event: Event) => void;\n\nexport interface UseMouse {\r\n  (target: HookTarget, callback?: UseMouseCallback): UseMouseReturn;\r\n\r\n  <Target extends Element>(\r\n    callback?: UseMouseCallback,\r\n    target?: never\r\n  ): UseMouseReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n\r\n  (target?: Window, callback?: UseMouseCallback): UseMouseReturn;\r\n}",
+  "description": "Hook that manages a mouse position",
+  "examples": [
+    "const mouse = useMouse(ref);",
+    "const mouse = useMouse<HTMLDivElement>();"
+  ],
+  "usage": "low",
+  "category": "sensors",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": true,
+          "description": "The target element to manage the mouse position for",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} [target=window] The target element to manage the mouse position for\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[target=window]",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to manage the mouse position for",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "window"
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(value: UseMouseValue, event: Event) => void",
+          "optional": true,
+          "description": "The callback to invoke on mouse updates",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(value: UseMouseValue, event: Event) => void}",
+                "postType": " ",
+                "description": "The callback to invoke on mouse updates",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseMouseReturn",
+        "optional": false,
+        "description": "object with mouse value controls",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseMouseReturn} An object with mouse value controls\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseMouseReturn}",
+              "postType": " ",
+              "description": "object with mouse value controls",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(value: UseMouseValue, event: Event) => void",
+          "optional": true,
+          "description": "The callback to invoke on mouse updates",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[callback]",
+                "postName": " ",
+                "type": "{(value: UseMouseValue, event: Event) => void}",
+                "postType": " ",
+                "description": "The callback to invoke on mouse updates",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseMouseReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object with mouse value controls and a ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with mouse value controls and a ref\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseMouseReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object with mouse value controls and a ref",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 18,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1773475680000
+}

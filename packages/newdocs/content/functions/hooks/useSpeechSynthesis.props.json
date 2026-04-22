@@ -1,0 +1,75 @@
+{
+  "name": "useSpeechSynthesis",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\n/** The use speech synthesis status type */\r\nexport type UseSpeechSynthesisStatus = 'end' | 'init' | 'pause' | 'play';\r\n\r\n/** The use speech synthesis options type */\r\nexport interface UseSpeechSynthesisOptions {\r\n  /** Language for SpeechSynthesis */\r\n  lang?: string;\r\n  /** Gets and sets the pitch at which the utterance will be spoken at. */\r\n  pitch?: number;\r\n  /** Gets and sets the speed at which the utterance will be spoken at. */\r\n  rate?: number;\r\n  /** The text to be spoken */\r\n  text?: string;\r\n  /** Gets and sets the voice that will be used to speak the utterance. */\r\n  voice?: SpeechSynthesisVoice | null;\r\n  /** Gets and sets the volume that the utterance will be spoken at. */\r\n  volume?: number;\r\n}\r\n\r\n/** The use speech synthesis return type */\r\nexport interface UseSpeechSynthesisReturn {\r\n  /** Any error that occurred during speech synthesis. */\r\n  error: SpeechSynthesisErrorEvent | undefined;\r\n  /** Indicates if speech is currently playing. */\r\n  playing: boolean;\r\n  /** The current status of speech synthesis. */\r\n  status: UseSpeechSynthesisStatus;\r\n  /** Indicates if the SpeechSynthesis API is supported in the current environment. */\r\n  supported: boolean;\r\n  /** The SpeechSynthesisUtterance instance. */\r\n  utterance: SpeechSynthesisUtterance | undefined;\r\n  /** Function to pause speech synthesis. */\r\n  pause: () => void;\r\n  /** Function to resume speech synthesis. */\r\n  resume: () => void;\r\n  /** Function to start speech synthesis. */\r\n  speak: () => void;\r\n  /** Function to stop speech synthesis. */\r\n  stop: () => void;\r\n  /** Function to toggle between play and pause. */\r\n  toggle: (value?: boolean) => void;\r\n}\r\n\r\n/**\r\n * @name useSpeechSynthesis\r\n * @description - Hook that provides speech synthesis functionality\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi SpeechSynthesis https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis\r\n *\r\n * @params {string} [options.text] - The text to be spoken\r\n * @params {string} [options.lang] - The language to be spoken\r\n * @params {number} [options.pitch] - The pitch to be spoken\r\n * @params {number} [options.rate] - The rate to be spoken\r\n * @params {SpeechSynthesisVoice} [options.voice] - The voice to be spoken\r\n * @params {number} [options.volume] - The volume to be spoken\r\n * @returns {UseSpeechSynthesisReturn} An object containing the speech synthesis state and control methods\r\n *\r\n * @example\r\n * const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } = useSpeechSynthesis();\r\n */\r\nexport const useSpeechSynthesis = (\r\n  options: UseSpeechSynthesisOptions = {}\r\n): UseSpeechSynthesisReturn => {\r\n  const supported =\r\n    typeof window !== 'undefined' && 'speechSynthesis' in window && !!window.speechSynthesis;\r\n\r\n  const { text = '', lang = 'en-US', pitch = 1, rate = 1, voice = null, volume = 1 } = options;\r\n\r\n  const [playing, setPlaying] = useState(false);\r\n  const [status, setStatus] = useState<UseSpeechSynthesisStatus>('init');\r\n  const [error, setError] = useState<SpeechSynthesisErrorEvent>();\r\n\r\n  const [utterance, setUtterance] = useState<SpeechSynthesisUtterance>();\r\n\r\n  const bindSpeechSynthesisUtterance = (speechSynthesisUtterance: SpeechSynthesisUtterance) => {\r\n    speechSynthesisUtterance.lang = lang;\r\n    speechSynthesisUtterance.pitch = pitch;\r\n    speechSynthesisUtterance.rate = rate;\r\n    speechSynthesisUtterance.volume = volume;\r\n    speechSynthesisUtterance.voice = voice;\r\n\r\n    speechSynthesisUtterance.onstart = () => {\r\n      setPlaying(true);\r\n      setStatus('play');\r\n    };\r\n\r\n    speechSynthesisUtterance.onpause = () => {\r\n      setPlaying(false);\r\n      setStatus('pause');\r\n    };\r\n\r\n    speechSynthesisUtterance.onresume = () => {\r\n      setPlaying(true);\r\n      setStatus('play');\r\n    };\r\n\r\n    speechSynthesisUtterance.onend = () => {\r\n      setPlaying(false);\r\n      setStatus('end');\r\n    };\r\n\r\n    speechSynthesisUtterance.onerror = (event) => {\r\n      setPlaying(false);\r\n      setError(event);\r\n    };\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (!supported) return;\r\n\r\n    const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);\r\n\r\n    bindSpeechSynthesisUtterance(speechSynthesisUtterance);\r\n    setUtterance(speechSynthesisUtterance);\r\n\r\n    return () => {\r\n      window.speechSynthesis?.cancel();\r\n    };\r\n  }, [\r\n    text,\r\n    lang,\r\n    pitch,\r\n    rate,\r\n    volume,\r\n    voice?.default,\r\n    voice?.lang,\r\n    voice?.localService,\r\n    voice?.name,\r\n    voice?.voiceURI\r\n  ]);\r\n\r\n  const speak = (text?: string) => {\r\n    if (!supported) return;\r\n\r\n    if (text) {\r\n      const utterance = new SpeechSynthesisUtterance(text);\r\n      setUtterance(utterance);\r\n      bindSpeechSynthesisUtterance(utterance);\r\n    }\r\n\r\n    window.speechSynthesis?.cancel();\r\n    if (utterance) window.speechSynthesis?.speak(utterance);\r\n    setPlaying(true);\r\n  };\r\n\r\n  const stop = () => {\r\n    if (!supported) return;\r\n\r\n    window.speechSynthesis?.cancel();\r\n    setPlaying(false);\r\n  };\r\n\r\n  const toggle = (value = !playing) => {\r\n    if (!supported) return;\r\n\r\n    if (value) {\r\n      window.speechSynthesis?.resume();\r\n    } else {\r\n      window.speechSynthesis?.pause();\r\n    }\r\n    setPlaying(value);\r\n  };\r\n\r\n  const resume = () => {\r\n    setPlaying(true);\r\n    window.speechSynthesis?.resume();\r\n  };\r\n\r\n  const pause = () => {\r\n    setPlaying(false);\r\n    window.speechSynthesis?.pause();\r\n  };\r\n\r\n  return {\r\n    supported,\r\n    playing,\r\n    status,\r\n    utterance,\r\n    error,\r\n    stop,\r\n    toggle,\r\n    speak,\r\n    resume,\r\n    pause\r\n  };\r\n};\r\n",
+  "typeDeclarations": "export type UseSpeechSynthesisStatus = 'end' | 'init' | 'pause' | 'play';\n\nexport interface UseSpeechSynthesisOptions {\r\n  /** Language for SpeechSynthesis */\r\n  lang?: string;\r\n  /** Gets and sets the pitch at which the utterance will be spoken at. */\r\n  pitch?: number;\r\n  /** Gets and sets the speed at which the utterance will be spoken at. */\r\n  rate?: number;\r\n  /** The text to be spoken */\r\n  text?: string;\r\n  /** Gets and sets the voice that will be used to speak the utterance. */\r\n  voice?: SpeechSynthesisVoice | null;\r\n  /** Gets and sets the volume that the utterance will be spoken at. */\r\n  volume?: number;\r\n}\n\nexport interface UseSpeechSynthesisReturn {\r\n  /** Any error that occurred during speech synthesis. */\r\n  error: SpeechSynthesisErrorEvent | undefined;\r\n  /** Indicates if speech is currently playing. */\r\n  playing: boolean;\r\n  /** The current status of speech synthesis. */\r\n  status: UseSpeechSynthesisStatus;\r\n  /** Indicates if the SpeechSynthesis API is supported in the current environment. */\r\n  supported: boolean;\r\n  /** The SpeechSynthesisUtterance instance. */\r\n  utterance: SpeechSynthesisUtterance | undefined;\r\n  /** Function to pause speech synthesis. */\r\n  pause: () => void;\r\n  /** Function to resume speech synthesis. */\r\n  resume: () => void;\r\n  /** Function to start speech synthesis. */\r\n  speak: () => void;\r\n  /** Function to stop speech synthesis. */\r\n  stop: () => void;\r\n  /** Function to toggle between play and pause. */\r\n  toggle: (value?: boolean) => void;\r\n}",
+  "description": "Hook that provides speech synthesis functionality",
+  "examples": [
+    "const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } = useSpeechSynthesis();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "SpeechSynthesis",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseSpeechSynthesisReturn",
+        "optional": false,
+        "description": "object containing the speech synthesis state and control methods",
+        "problems": [],
+        "source": [
+          {
+            "number": 14,
+            "source": " * @returns {UseSpeechSynthesisReturn} An object containing the speech synthesis state and control methods\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseSpeechSynthesisReturn}",
+              "postType": " ",
+              "description": "object containing the speech synthesis state and control methods",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 15,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1767164032000
+}

@@ -1,0 +1,219 @@
+{
+  "name": "usePaint",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "VladPorvin",
+      "avatar": "https://gravatar.com/avatar/3d948121def901f6eb50270339e7fd3a?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useEvent } from '../useEvent/useEvent';\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\nconst DEFAULT_BRUSH_RADIUS = 10;\r\n\r\nexport interface Point {\r\n  x: number;\r\n  y: number;\r\n}\r\n\r\nexport class Pointer implements Point {\r\n  x: number;\r\n\r\n  y: number;\r\n\r\n  constructor(x: number, y: number) {\r\n    this.x = x;\r\n    this.y = y;\r\n  }\r\n\r\n  update(point: Point) {\r\n    this.x = point.x;\r\n    this.y = point.y;\r\n  }\r\n\r\n  getDifferenceTo(point: Point) {\r\n    return new Pointer(this.x - point.x, this.y - point.y);\r\n  }\r\n\r\n  getDistanceTo(point: Point) {\r\n    const diff = this.getDifferenceTo(point);\r\n    return Math.sqrt(diff.x ** 2 + diff.y ** 2);\r\n  }\r\n\r\n  getAngleTo(point: Point) {\r\n    const diff = this.getDifferenceTo(point);\r\n    return Math.atan2(diff.y, diff.x);\r\n  }\r\n\r\n  equalsTo(point: Point) {\r\n    return this.x === point.x && this.y === point.y;\r\n  }\r\n\r\n  moveByAngle(\r\n    // The angle in radians\r\n    angle: number,\r\n    // How much the point should be moved\r\n    distance: number\r\n  ) {\r\n    // Rotate the angle based on the browser coordinate system ([0,0] in the top left)\r\n    const angleRotated = angle + Math.PI / 2;\r\n\r\n    this.x += Math.sin(angleRotated) * distance;\r\n    this.y -= Math.cos(angleRotated) * distance;\r\n\r\n    return this;\r\n  }\r\n}\r\n\r\nexport class Paint {\r\n  pointer: Pointer;\r\n\r\n  brush: Pointer;\r\n\r\n  radius: number;\r\n\r\n  smooth: boolean = false;\r\n\r\n  points: Point[] = [];\r\n\r\n  lines: { points: Point[]; color: string; radius: number; opacity: number }[] = [];\r\n\r\n  constructor({ x, y, radius, smooth }: { x: number; y: number; radius: number; smooth: boolean }) {\r\n    this.smooth = smooth;\r\n    this.pointer = new Pointer(x, y);\r\n    this.brush = new Pointer(x, y);\r\n    this.radius = radius;\r\n    this.points = [];\r\n    this.lines = [];\r\n  }\r\n\r\n  getBrushCoordinates() {\r\n    return {\r\n      x: this.brush.x,\r\n      y: this.brush.y\r\n    };\r\n  }\r\n\r\n  getPointerCoordinates() {\r\n    return {\r\n      x: this.pointer.x,\r\n      y: this.pointer.y\r\n    };\r\n  }\r\n\r\n  update(point: Point) {\r\n    if (this.pointer.equalsTo(point)) return false;\r\n    this.pointer.update(point);\r\n\r\n    if (!this.smooth) {\r\n      this.brush.update(point);\r\n      this.points.push(this.getBrushCoordinates());\r\n      return true;\r\n    }\r\n\r\n    const distance = this.pointer.getDistanceTo(this.brush);\r\n    const angle = this.pointer.getAngleTo(this.brush);\r\n    const isOutside = Math.round((distance - this.radius) * 10) / 10 > 0;\r\n\r\n    if (isOutside) {\r\n      const angleRotated = angle + Math.PI / 2;\r\n      this.brush.update({\r\n        x: this.brush.x + Math.sin(angleRotated) * (distance - this.radius),\r\n        y: this.brush.y - Math.cos(angleRotated) * (distance - this.radius)\r\n      });\r\n      this.points.push(this.getBrushCoordinates());\r\n      return true;\r\n    }\r\n\r\n    return false;\r\n  }\r\n}\r\n\r\nexport interface UsePaintOptions {\r\n  /** Brush color */\r\n  color?: string;\r\n  /** Initial lines */\r\n  initialLines?: Paint['lines'];\r\n  /** Brush opacity */\r\n  opacity?: number;\r\n  /** Brush radius */\r\n  radius?: number;\r\n  /** Smooth brush movement */\r\n  smooth?: boolean;\r\n  /** Callback when the mouse is down */\r\n  onMouseDown?: (event: MouseEvent, paint: Paint) => void;\r\n  /** Callback when the mouse is moved */\r\n  onMouseMove?: (event: MouseEvent, paint: Paint) => void;\r\n  /** Callback when the mouse is up */\r\n  onMouseUp?: (event: MouseEvent, paint: Paint) => void;\r\n}\r\n\r\nexport interface UsePaintReturn {\r\n  drawing: boolean;\r\n  lines: Paint['lines'];\r\n  clear: () => void;\r\n  draw: (points: Point[], color: string, opacity: number, radius: number) => void;\r\n  undo: () => void;\r\n}\r\n\r\nexport interface UsePaint {\r\n  (target: HookTarget, options?: UsePaintOptions): UsePaintReturn;\r\n\r\n  <Target extends HTMLCanvasElement>(\r\n    options?: UsePaintOptions,\r\n    target?: never\r\n  ): UsePaintReturn & { ref: StateRef<Target> };\r\n}\r\n\r\n/**\r\n * @name usePaint\r\n * @description - Hook that allows you to draw in a specific area\r\n * @category Elements\r\n * @usage low\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target element to be painted\r\n * @param {UsePaintOptions} [options] The options to be used\r\n * @returns {UsePaintReturn} An object containing the current pencil options and functions to interact with the paint\r\n *\r\n * @example\r\n * const drawing = usePaint(canvasRef);\r\n *\r\n * @overload\r\n * @param {UsePaintOptions} [options] The options to be used\r\n * @returns {UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint\r\n *\r\n * @example\r\n * const { ref, drawing } = usePaint();\r\n */\r\nexport const usePaint = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const options = ((target ? params[1] : params[0]) as UsePaintOptions) ?? {};\r\n\r\n  const color = options?.color ?? 'black';\r\n  const opacity = options?.opacity ?? 1;\r\n  const radius = options?.radius ?? DEFAULT_BRUSH_RADIUS;\r\n\r\n  const paintRef = useRef<Paint>(\r\n    new Paint({\r\n      x: 0,\r\n      y: 0,\r\n      radius: options?.radius ?? DEFAULT_BRUSH_RADIUS,\r\n      smooth: options?.smooth ?? false\r\n    })\r\n  );\r\n  const [drawing, setIsDrawing] = useState(false);\r\n  const internalRef = useRefState<HTMLCanvasElement>();\r\n  const contextRef = useRef<CanvasRenderingContext2D | null>(null);\r\n\r\n  const draw = (points: Point[], color: string, opacity: number, radius: number) => {\r\n    if (!contextRef.current) return;\r\n\r\n    contextRef.current.globalAlpha = opacity;\r\n    contextRef.current.strokeStyle = color;\r\n    contextRef.current.lineWidth = radius * 2;\r\n    contextRef.current.lineCap = 'round';\r\n    contextRef.current.lineJoin = 'round';\r\n\r\n    let p1 = points[0];\r\n    let p2 = points[1];\r\n\r\n    contextRef.current.beginPath();\r\n\r\n    for (let i = 1; i < points.length; i += 1) {\r\n      const midPoint = {\r\n        x: p1.x + (p2.x - p1.x) / 2,\r\n        y: p1.y + (p2.y - p1.y) / 2\r\n      };\r\n      contextRef.current.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);\r\n      p1 = points[i];\r\n      p2 = points[i + 1];\r\n    }\r\n    contextRef.current.lineTo(p1.x, p1.y);\r\n    contextRef.current.stroke();\r\n  };\r\n\r\n  const clearCanvas = () => {\r\n    if (!contextRef.current) return;\r\n    contextRef.current.clearRect(\r\n      0,\r\n      0,\r\n      contextRef.current.canvas.width,\r\n      contextRef.current.canvas.height\r\n    );\r\n  };\r\n\r\n  const onMouseMove = useEvent((event: MouseEvent) => {\r\n    if (!drawing) return;\r\n    options?.onMouseMove?.(event, paintRef.current);\r\n\r\n    const point = { x: event.offsetX, y: event.offsetY };\r\n\r\n    const isUpdated = paintRef.current.update(point);\r\n\r\n    if (!isUpdated) return;\r\n    if (!contextRef.current) return;\r\n    clearCanvas();\r\n    contextRef.current.clearRect(\r\n      0,\r\n      0,\r\n      contextRef.current.canvas.width,\r\n      contextRef.current.canvas.height\r\n    );\r\n\r\n    // const brush = paintRef.current.getBrushCoordinates();\r\n    // // Draw brush point\r\n    // contextRef.current.beginPath();\r\n    // contextRef.current.fillStyle = 'red';\r\n    // contextRef.current.arc(brush.x, brush.y, radius, 0, Math.PI * 2, true);\r\n    // contextRef.current.fill();\r\n\r\n    // // Draw the lazy radius.\r\n    // contextRef.current.beginPath();\r\n    // contextRef.current.strokeStyle = '#ccc';\r\n    // contextRef.current.arc(brush.x, brush.y, radius * 2, 0, Math.PI * 2, true);\r\n    // contextRef.current.stroke();\r\n\r\n    paintRef.current.lines.forEach(({ points, color, opacity, radius }) =>\r\n      draw(points, color, opacity, radius)\r\n    );\r\n    draw(paintRef.current.points, color, opacity, radius);\r\n  });\r\n\r\n  const onMouseDown = useEvent((event: MouseEvent) => {\r\n    if (!contextRef.current) return;\r\n\r\n    const point = { x: event.offsetX, y: event.offsetY };\r\n    paintRef.current.brush.update(point);\r\n    paintRef.current.points.push(point);\r\n    draw(paintRef.current.points, color, opacity, radius);\r\n\r\n    options?.onMouseDown?.(event, paintRef.current);\r\n    setIsDrawing(true);\r\n  });\r\n\r\n  const onMouseUp = useEvent((event: MouseEvent) => {\r\n    if (!contextRef.current) return;\r\n\r\n    if (paintRef.current.points.length) {\r\n      paintRef.current.lines.push({\r\n        points: paintRef.current.points,\r\n        color,\r\n        opacity,\r\n        radius\r\n      });\r\n      paintRef.current.points = [];\r\n    }\r\n\r\n    options?.onMouseUp?.(event, paintRef.current);\r\n    setIsDrawing(false);\r\n  });\r\n\r\n  const clear = () => {\r\n    if (!contextRef.current) return;\r\n    clearCanvas();\r\n    paintRef.current.lines = [];\r\n    paintRef.current.points = [];\r\n  };\r\n\r\n  const undo = () => {\r\n    if (!contextRef.current) return;\r\n    clearCanvas();\r\n\r\n    paintRef.current.lines.pop();\r\n    paintRef.current.lines.forEach(({ points, color, opacity, radius }) =>\r\n      draw(points, color, opacity, radius)\r\n    );\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (!target && !internalRef.state) return;\r\n\r\n    const element = (\r\n      target ? isTarget.getElement(target) : internalRef.current\r\n    ) as HTMLCanvasElement;\r\n    if (!element) return;\r\n    contextRef.current = element.getContext('2d');\r\n\r\n    if (options?.initialLines) {\r\n      paintRef.current.lines = options.initialLines;\r\n      options.initialLines.forEach(({ points, color, opacity, radius }) =>\r\n        draw(points, color, opacity, radius)\r\n      );\r\n    }\r\n\r\n    element.addEventListener('mousedown', onMouseDown);\r\n    element.addEventListener('mousemove', onMouseMove);\r\n    element.addEventListener('mouseup', onMouseUp);\r\n\r\n    return () => {\r\n      if (!element) return;\r\n      element.removeEventListener('mousedown', onMouseDown);\r\n      element.removeEventListener('mousemove', onMouseMove);\r\n      element.removeEventListener('mouseup', onMouseUp);\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state]);\r\n\r\n  if (target) return { drawing, clear, undo, draw, lines: paintRef.current.lines };\r\n  return {\r\n    ref: internalRef,\r\n    drawing,\r\n    clear,\r\n    undo,\r\n    draw,\r\n    lines: paintRef.current.lines\r\n  };\r\n}) as UsePaint;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface Point {\r\n  x: number;\r\n  y: number;\r\n}\n\nexport interface UsePaintOptions {\r\n  /** Brush color */\r\n  color?: string;\r\n  /** Initial lines */\r\n  initialLines?: Paint['lines'];\r\n  /** Brush opacity */\r\n  opacity?: number;\r\n  /** Brush radius */\r\n  radius?: number;\r\n  /** Smooth brush movement */\r\n  smooth?: boolean;\r\n  /** Callback when the mouse is down */\r\n  onMouseDown?: (event: MouseEvent, paint: Paint) => void;\r\n  /** Callback when the mouse is moved */\r\n  onMouseMove?: (event: MouseEvent, paint: Paint) => void;\r\n  /** Callback when the mouse is up */\r\n  onMouseUp?: (event: MouseEvent, paint: Paint) => void;\r\n}\n\nexport interface UsePaintReturn {\r\n  drawing: boolean;\r\n  lines: Paint['lines'];\r\n  clear: () => void;\r\n  draw: (points: Point[], color: string, opacity: number, radius: number) => void;\r\n  undo: () => void;\r\n}\n\nexport interface UsePaint {\r\n  (target: HookTarget, options?: UsePaintOptions): UsePaintReturn;\r\n\r\n  <Target extends HTMLCanvasElement>(\r\n    options?: UsePaintOptions,\r\n    target?: never\r\n  ): UsePaintReturn & { ref: StateRef<Target> };\r\n}",
+  "description": "Hook that allows you to draw in a specific area",
+  "examples": [
+    "const drawing = usePaint(canvasRef);",
+    "const { ref, drawing } = usePaint();"
+  ],
+  "usage": "low",
+  "category": "elements",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to be painted",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target element to be painted\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to be painted",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UsePaintOptions",
+          "optional": true,
+          "description": "The options to be used",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UsePaintOptions} [options] The options to be used\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UsePaintOptions}",
+                "postType": " ",
+                "description": "The options to be used",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UsePaintReturn",
+        "optional": false,
+        "description": "object containing the current pencil options and functions to interact with the paint",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UsePaintReturn} An object containing the current pencil options and functions to interact with the paint\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UsePaintReturn}",
+              "postType": " ",
+              "description": "object containing the current pencil options and functions to interact with the paint",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UsePaintOptions",
+          "optional": true,
+          "description": "The options to be used",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {UsePaintOptions} [options] The options to be used\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UsePaintOptions}",
+                "postType": " ",
+                "description": "The options to be used",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }",
+        "optional": false,
+        "description": "object containing the current pencil options and functions to interact with the paint",
+        "problems": [],
+        "source": [
+          {
+            "number": 16,
+            "source": " * @returns {UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }}",
+              "postType": " ",
+              "description": "object containing the current pencil options and functions to interact with the paint",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 17,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": true,
+  "lastModified": 1768553242000
+}

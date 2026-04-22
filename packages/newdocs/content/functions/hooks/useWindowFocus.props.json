@@ -1,0 +1,73 @@
+{
+  "name": "useWindowFocus",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\n/**\r\n * @name useWindowFocus\r\n * @description - Hook that provides the current focus state of the window\r\n * @category Elements\r\n * @usage low\r\n *\r\n * @returns {boolean} The current focus state of the window\r\n *\r\n * @example\r\n * const focused = useWindowFocus();\r\n *\r\n * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useWindowFocus.html}\r\n */\r\nexport const useWindowFocus = () => {\r\n  const [focused, setFocused] = useState(false);\r\n\r\n  useEffect(() => {\r\n    const onFocus = () => setFocused(true);\r\n    const onBlur = () => setFocused(false);\r\n\r\n    window.addEventListener('focus', onFocus);\r\n    window.addEventListener('blur', onBlur);\r\n\r\n    return () => {\r\n      window.removeEventListener('focus', onFocus);\r\n      window.removeEventListener('blur', onBlur);\r\n    };\r\n  }, []);\r\n\r\n  return focused;\r\n};\r\n",
+  "description": "Hook that provides the current focus state of the window",
+  "examples": [
+    "const focused = useWindowFocus();"
+  ],
+  "usage": "low",
+  "category": "elements",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "boolean",
+        "optional": false,
+        "description": "current focus state of the window",
+        "problems": [],
+        "source": [
+          {
+            "number": 6,
+            "source": " * @returns {boolean} The current focus state of the window\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{boolean}",
+              "postType": " ",
+              "description": "current focus state of the window",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 7,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1767164032000
+}

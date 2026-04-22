@@ -1,7 +1,7 @@
 import type { Spec } from 'comment-parser';
 
 import { parse } from 'comment-parser';
-import md5 from 'md5';
+import { createHash } from 'node:crypto';
 import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
 import simpleGit from 'simple-git';
@@ -19,14 +19,19 @@ interface Contributor {
 export interface HookProps {
   apiParameters: ApiParameters[];
   browserapi?: string;
-  category: string;
-  contributors: Contributor[];
+  category?: string;
+  contributors?: Contributor[];
   deprecated?: boolean;
   description?: string;
   examples: string[];
+  hasDemo?: boolean;
   hasTests: boolean;
   lastModified: number;
   name: string;
+  sourceExt?: 'ts' | 'tsx';
+  sourceCode?: string;
+  typeDeclarations?: string;
+  type?: 'hook' | 'helper';
   usage?: string;
   warning?: string;
 }
@@ -113,7 +118,7 @@ export const parseHookJsdocFromFile = async (file: string): Promise<any> => {
     ).values(),
     (author) => ({
       name: author.name,
-      avatar: `https://gravatar.com/avatar/${md5(author.email)}?d=retro`
+      avatar: `https://gravatar.com/avatar/${createHash('md5').update(author.email).digest('hex')}?d=retro`
     })
   );
 

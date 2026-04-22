@@ -1,0 +1,82 @@
+{
+  "name": "usePreferredColorScheme",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "pPitohu",
+      "avatar": "https://gravatar.com/avatar/44430da89a6e2b0cc5b9b1d2b898caa5?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useMediaQuery } from '../useMediaQuery/useMediaQuery';\r\n\r\n/** The use preferred color scheme return type */\r\nexport type UsePreferredColorSchemeReturn = 'dark' | 'light' | 'no-preference';\r\n\r\n/**\r\n * @name usePreferredColorScheme\r\n * @description - Hook that returns user preferred color scheme\r\n * @category User\r\n * @usage medium\r\n *\r\n * @returns {UsePreferredColorSchemeReturn} String of preferred color scheme\r\n *\r\n * @example\r\n * const colorScheme = usePreferredColorScheme();\r\n */\r\nexport const usePreferredColorScheme = (): UsePreferredColorSchemeReturn => {\r\n  const isLight = useMediaQuery('(prefers-color-scheme: light)');\r\n  const isDark = useMediaQuery('(prefers-color-scheme: dark)');\r\n\r\n  if (isLight) return 'light';\r\n  if (isDark) return 'dark';\r\n  return 'no-preference';\r\n};\r\n",
+  "typeDeclarations": "export type UsePreferredColorSchemeReturn = 'dark' | 'light' | 'no-preference';",
+  "description": "Hook that returns user preferred color scheme",
+  "examples": [
+    "const colorScheme = usePreferredColorScheme();"
+  ],
+  "usage": "medium",
+  "category": "user",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "String",
+        "type": "UsePreferredColorSchemeReturn",
+        "optional": false,
+        "description": "of preferred color scheme",
+        "problems": [],
+        "source": [
+          {
+            "number": 6,
+            "source": " * @returns {UsePreferredColorSchemeReturn} String of preferred color scheme\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "String",
+              "postName": " ",
+              "type": "{UsePreferredColorSchemeReturn}",
+              "postType": " ",
+              "description": "of preferred color scheme",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 7,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

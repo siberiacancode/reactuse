@@ -1,0 +1,280 @@
+{
+  "name": "useInterval",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Eksiart",
+      "avatar": "https://gravatar.com/avatar/86935dd8fa64a38ac464a0c7eb610a0b?d=retro"
+    },
+    {
+      "name": "khmilevoi",
+      "avatar": "https://gravatar.com/avatar/8d31b6f823890f13dd2dd1637df5e379?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\n/** The use interval options */\r\nexport interface UseIntervalOptions {\r\n  /** Start the interval immediately */\r\n  immediately?: boolean;\r\n}\r\n\r\n/** The use interval return type */\r\nexport interface UseIntervalReturn {\r\n  /** Is the interval active */\r\n  active: boolean;\r\n  /** Pause the interval */\r\n  pause: () => void;\r\n  /** Resume the interval */\r\n  resume: () => void;\r\n  /** Toggle the interval */\r\n  toggle: () => void;\r\n}\r\n\r\ninterface UseInterval {\r\n  (callback: () => void, interval?: number, options?: UseIntervalOptions): UseIntervalReturn;\r\n\r\n  (callback: () => void, options?: UseIntervalOptions & { interval?: number }): UseIntervalReturn;\r\n}\r\n\r\n/**\r\n * @name useInterval\r\n * @description - Hook that makes and interval and returns controlling functions\r\n * @category Time\r\n * @usage high\r\n *\r\n * @overload\r\n * @param {() => void} callback Any callback function\r\n * @param {number} [interval=1000] Time in milliseconds\r\n * @param {boolean} [options.immediately=true] Start the interval immediately\r\n * @returns {UseIntervalReturn}\r\n *\r\n * @example\r\n * const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), 2500);\r\n *\r\n * @overload\r\n * @param {() => void} callback Any callback function\r\n * @param {number} [options.interval=1000] Time in milliseconds\r\n * @param {boolean} [options.immediately=true] Start the interval immediately\r\n *\r\n * @example\r\n * const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), { interval: 2500 });\r\n */\r\nexport const useInterval = ((...params: any[]): UseIntervalReturn => {\r\n  const callback = params[0] as () => void;\r\n  const interval =\r\n    ((typeof params[1] === 'number'\r\n      ? params[1]\r\n      : (params[1] as (UseIntervalOptions & { interval?: number }) | undefined)\r\n          ?.interval) as number) ?? 1000;\r\n  const options =\r\n    typeof params[1] === 'object'\r\n      ? (params[1] as (UseIntervalOptions & { interval?: number }) | undefined)\r\n      : (params[2] as UseIntervalOptions | undefined);\r\n  const immediately = options?.immediately ?? true;\r\n\r\n  const [active, setActive] = useState<boolean>(immediately);\r\n\r\n  const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);\r\n  const internalCallbackRef = useRef(callback);\r\n  internalCallbackRef.current = callback;\r\n\r\n  useEffect(() => {\r\n    if (!active) return;\r\n\r\n    intervalIdRef.current = setInterval(() => internalCallbackRef.current(), interval);\r\n    return () => {\r\n      clearInterval(intervalIdRef.current);\r\n    };\r\n  }, [active, interval]);\r\n\r\n  const pause = () => setActive(false);\r\n\r\n  const resume = () => {\r\n    if (interval <= 0) return;\r\n    setActive(true);\r\n  };\r\n\r\n  const toggle = (value = !active) => setActive(value);\r\n\r\n  return {\r\n    active,\r\n    pause,\r\n    resume,\r\n    toggle\r\n  };\r\n}) as UseInterval;\r\n",
+  "typeDeclarations": "export interface UseIntervalOptions {\r\n  /** Start the interval immediately */\r\n  immediately?: boolean;\r\n}\n\nexport interface UseIntervalReturn {\r\n  /** Is the interval active */\r\n  active: boolean;\r\n  /** Pause the interval */\r\n  pause: () => void;\r\n  /** Resume the interval */\r\n  resume: () => void;\r\n  /** Toggle the interval */\r\n  toggle: () => void;\r\n}\n\ninterface UseInterval {\r\n  (callback: () => void, interval?: number, options?: UseIntervalOptions): UseIntervalReturn;\r\n\r\n  (callback: () => void, options?: UseIntervalOptions & { interval?: number }): UseIntervalReturn;\r\n}",
+  "description": "Hook that makes and interval and returns controlling functions",
+  "examples": [
+    "const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), 2500);",
+    "const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), { interval: 2500 });"
+  ],
+  "usage": "high",
+  "category": "time",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "() => void",
+          "optional": false,
+          "description": "Any callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {() => void} callback Any callback function\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "Any callback function",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "interval",
+          "type": "number",
+          "optional": true,
+          "description": "Time in milliseconds",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {number} [interval=1000] Time in milliseconds\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[interval=1000]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "Time in milliseconds",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "1000"
+        },
+        {
+          "tag": "param",
+          "name": "options.immediately",
+          "type": "boolean",
+          "optional": true,
+          "description": "Start the interval immediately",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {boolean} [options.immediately=true] Start the interval immediately\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.immediately=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Start the interval immediately",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "UseIntervalReturn",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseIntervalReturn}\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{UseIntervalReturn}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "() => void",
+          "optional": false,
+          "description": "Any callback function",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {() => void} callback Any callback function\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "Any callback function",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.interval",
+          "type": "number",
+          "optional": true,
+          "description": "Time in milliseconds",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {number} [options.interval=1000] Time in milliseconds\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.interval=1000]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "Time in milliseconds",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "1000"
+        },
+        {
+          "tag": "param",
+          "name": "options.immediately",
+          "type": "boolean",
+          "optional": true,
+          "description": "Start the interval immediately",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {boolean} [options.immediately=true] Start the interval immediately\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.immediately=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Start the interval immediately",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            },
+            {
+              "number": 19,
+              "source": " *\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": "",
+                "tag": "",
+                "postTag": "",
+                "name": "",
+                "postName": "",
+                "type": "",
+                "postType": "",
+                "description": "",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        }
+      ],
+      "returns": null
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1776172602000
+}

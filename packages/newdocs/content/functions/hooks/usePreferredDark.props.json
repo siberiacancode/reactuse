@@ -1,0 +1,22 @@
+{
+  "name": "usePreferredDark",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useMediaQuery } from '../useMediaQuery/useMediaQuery';\r\n\r\n/**\r\n * @name usePreferredDark\r\n * @description - Hook that returns if the user prefers dark mode\r\n * @category User\r\n * @usage medium\r\n *\r\n * @example\r\n * const isDark = usePreferredDark();\r\n */\r\nexport const usePreferredDark = () => useMediaQuery('(prefers-color-scheme: dark)');\r\n",
+  "description": "Hook that returns if the user prefers dark mode",
+  "examples": [
+    "const isDark = usePreferredDark();"
+  ],
+  "usage": "medium",
+  "category": "user",
+  "apiParameters": [],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

@@ -14,8 +14,9 @@
 @theme inline {
   --breakpoint-3xl: 1600px;
   --breakpoint-4xl: 2000px;
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --font-sans: var(--font-geist), 'Geist Fallback', sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback', monospace;
+  --font-display: var(--font-jetbrains), 'JetBrains Mono', monospace;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -67,6 +68,12 @@
 
 :root {
   --radius: 0.625rem;
+  --brand: oklch(0.77 0.131 225.23);
+  --brand-strong: oklch(0.6 0.148 245.49);
+  --brand-soft: oklch(0.97 0.018 225.23);
+  --brand-border: oklch(0.86 0.06 225.23);
+  --brand-hex: #61dafb;
+  --brand-strong-hex: #205dae;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -110,6 +117,12 @@
 }
 
 .dark {
+  --brand: oklch(0.8 0.118 225.23);
+  --brand-strong: oklch(0.69 0.134 245.49);
+  --brand-soft: oklch(0.24 0.025 225.23);
+  --brand-border: oklch(0.42 0.07 225.23);
+  --brand-hex: #61dafb;
+  --brand-strong-hex: #205dae;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -403,4 +416,112 @@
     font-size: var(--text-sm);
     font-family: var(--font-mono);
   }
+}
+
+@keyframes landing-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes landing-marquee-reverse {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes landing-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-25%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.landing-marquee-track {
+  width: max-content;
+  display: flex;
+  animation: landing-marquee 34s linear infinite;
+  will-change: transform;
+}
+
+.landing-marquee-track-reverse {
+  width: max-content;
+  display: flex;
+  animation: landing-marquee-reverse 38s linear infinite;
+  will-change: transform;
+}
+
+.landing-hooks-row-left {
+  width: max-content;
+  display: flex;
+  animation: landing-marquee 128s linear infinite;
+  will-change: transform;
+}
+
+.landing-hooks-row-right {
+  width: max-content;
+  display: flex;
+  animation: landing-marquee-reverse 136s linear infinite;
+  will-change: transform;
+}
+
+.landing-hooks-row-left:hover,
+.landing-hooks-row-right:hover,
+.landing-marquee-track:hover,
+.landing-marquee-track-reverse:hover {
+  animation-play-state: paused;
+}
+
+.landing-float {
+  animation: landing-float 5.5s ease-in-out infinite;
+}
+
+.landing-float-delayed {
+  animation: landing-float 6.8s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float:hover {
+  animation-play-state: paused;
 }

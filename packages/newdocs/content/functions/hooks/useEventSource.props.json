@@ -1,0 +1,166 @@
+{
+  "name": "useEventSource",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "nailgilmanov",
+      "avatar": "https://gravatar.com/avatar/61c96a040bb7c821d1fb35138254ed4b?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport { getRetry } from '@/utils/helpers';\r\n\r\n/** The use event source options type */\r\nexport interface UseEventSourceOptions<QueryData, Data> extends EventSourceInit {\r\n  /** Immediately open the connection when calling this hook */\r\n  immediately?: boolean;\r\n  /* The placeholder data for the hook */\r\n  placeholderData?: (() => Data) | Data;\r\n  /* The retry count of requests */\r\n  retry?: boolean | number;\r\n  /* The retry delay of requests */\r\n  retryDelay?: ((retry: number, event: Event) => number) | number;\r\n  /* The onError function to be invoked */\r\n  onError?: (error: Event) => void;\r\n  /* The onMessage function to be invoked */\r\n  onMessage?: (event: Event & { data?: Data }) => void;\r\n  /* The onOpen function to be invoked */\r\n  onOpen?: () => void;\r\n  /* The select function to be invoked */\r\n  select?: (data: QueryData) => Data;\r\n}\r\n\r\n/** The use event source return type */\r\ninterface UseEventSourceReturn<Data = any> {\r\n  /** The latest data received via the EventSource */\r\n  data?: Data;\r\n  /** The current error */\r\n  error?: Event;\r\n  /** The instance of the EventSource */\r\n  instance?: EventSource;\r\n  /* The connecting state of the query */\r\n  isConnecting: boolean;\r\n  /* The error state of the query */\r\n  isError: boolean;\r\n  /* The open state of the query */\r\n  opened: boolean;\r\n  /** Closes the EventSource connection gracefully */\r\n  close: () => void;\r\n  /** Reopen the EventSource connection */\r\n  open: () => void;\r\n}\r\n\r\n/**\r\n * @name useEventSource\r\n * @description - Hook that provides a reactive wrapper for event source\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi EventSource https://developer.mozilla.org/en-US/docs/Web/API/EventSource\r\n *\r\n * @param {string | URL} url The URL of the EventSource\r\n * @param {string[]} [events=[]] List of events to listen to\r\n * @param {UseEventSourceOptions} [options={}] Configuration options\r\n * @returns {UseEventSourceReturn<Data>} The EventSource state and controls\r\n *\r\n * @example\r\n * const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', ['message']);\r\n */\r\nexport const useEventSource = <QueryData = any, Data = QueryData>(\r\n  url: string | URL,\r\n  events: string[] = [],\r\n  options: UseEventSourceOptions<QueryData, Data> = {}\r\n): UseEventSourceReturn<Data> => {\r\n  const [isConnecting, setIsConnecting] = useState(false);\r\n  const [opened, setOpened] = useState(false);\r\n  const [isError, setIsError] = useState(false);\r\n\r\n  const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);\r\n  const [error, setError] = useState<Event | undefined>(undefined);\r\n  const [data, setData] = useState<Data | undefined>(options?.placeholderData);\r\n\r\n  const eventSourceRef = useRef<EventSource>(undefined);\r\n\r\n  const immediately = options.immediately ?? true;\r\n\r\n  const onEventRef = useRef((event: Event & { data?: Data }) => setData(event.data));\r\n\r\n  const close = () => {\r\n    if (!eventSourceRef.current) return;\r\n\r\n    setOpened(false);\r\n    setIsConnecting(false);\r\n    setIsError(false);\r\n\r\n    events.forEach((eventName) =>\r\n      eventSourceRef.current!.removeEventListener(eventName, onEventRef.current)\r\n    );\r\n\r\n    eventSourceRef.current.close();\r\n    eventSourceRef.current = undefined;\r\n  };\r\n\r\n  const open = () => {\r\n    close();\r\n\r\n    const eventSource = new EventSource(url, {\r\n      withCredentials: options.withCredentials ?? false\r\n    });\r\n    eventSourceRef.current = eventSource;\r\n\r\n    setIsConnecting(true);\r\n\r\n    eventSource.onopen = () => {\r\n      setOpened(true);\r\n      setIsConnecting(false);\r\n      setError(undefined);\r\n      options?.onOpen?.();\r\n    };\r\n\r\n    eventSource.onerror = (event) => {\r\n      setOpened(false);\r\n      setIsConnecting(false);\r\n      setIsError(true);\r\n      setError(event);\r\n      options?.onError?.(event);\r\n\r\n      if (retryCountRef.current > 0) {\r\n        retryCountRef.current -= 1;\r\n\r\n        const retryDelay =\r\n          typeof options?.retryDelay === 'function'\r\n            ? options?.retryDelay(retryCountRef.current, event)\r\n            : options?.retryDelay;\r\n\r\n        if (retryDelay) {\r\n          setTimeout(open, retryDelay);\r\n          return;\r\n        }\r\n\r\n        return open();\r\n      }\r\n\r\n      retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;\r\n    };\r\n\r\n    eventSource.onmessage = (event) => {\r\n      const data = options?.select ? options?.select(event.data) : event.data;\r\n      setData(data);\r\n      options?.onMessage?.(event);\r\n    };\r\n\r\n    events.forEach((eventName) => eventSource.addEventListener(eventName, onEventRef.current));\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (!immediately) return;\r\n\r\n    open();\r\n    return () => {\r\n      close();\r\n    };\r\n  }, [immediately]);\r\n\r\n  return {\r\n    instance: eventSourceRef.current,\r\n    data,\r\n    error,\r\n    isConnecting,\r\n    opened,\r\n    isError,\r\n    close,\r\n    open\r\n  };\r\n};\r\n",
+  "typeDeclarations": "export interface UseEventSourceOptions<QueryData, Data> extends EventSourceInit {\r\n  /** Immediately open the connection when calling this hook */\r\n  immediately?: boolean;\r\n  /* The placeholder data for the hook */\r\n  placeholderData?: (() => Data) | Data;\r\n  /* The retry count of requests */\r\n  retry?: boolean | number;\r\n  /* The retry delay of requests */\r\n  retryDelay?: ((retry: number, event: Event) => number) | number;\r\n  /* The onError function to be invoked */\r\n  onError?: (error: Event) => void;\r\n  /* The onMessage function to be invoked */\r\n  onMessage?: (event: Event & { data?: Data }) => void;\r\n  /* The onOpen function to be invoked */\r\n  onOpen?: () => void;\r\n  /* The select function to be invoked */\r\n  select?: (data: QueryData) => Data;\r\n}\n\ninterface UseEventSourceReturn<Data = any> {\r\n  /** The latest data received via the EventSource */\r\n  data?: Data;\r\n  /** The current error */\r\n  error?: Event;\r\n  /** The instance of the EventSource */\r\n  instance?: EventSource;\r\n  /* The connecting state of the query */\r\n  isConnecting: boolean;\r\n  /* The error state of the query */\r\n  isError: boolean;\r\n  /* The open state of the query */\r\n  opened: boolean;\r\n  /** Closes the EventSource connection gracefully */\r\n  close: () => void;\r\n  /** Reopen the EventSource connection */\r\n  open: () => void;\r\n}",
+  "description": "Hook that provides a reactive wrapper for event source",
+  "examples": [
+    "const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', ['message']);"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "EventSource",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "url",
+          "type": "string | URL",
+          "optional": false,
+          "description": "The URL of the EventSource",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string | URL} url The URL of the EventSource\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "url",
+                "postName": " ",
+                "type": "{string | URL}",
+                "postType": " ",
+                "description": "The URL of the EventSource",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "events",
+          "type": "string[]",
+          "optional": true,
+          "description": "List of events to listen to",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {string[]} [events=[]] List of events to listen to\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[events=[]]",
+                "postName": " ",
+                "type": "{string[]}",
+                "postType": " ",
+                "description": "List of events to listen to",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "[]"
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseEventSourceOptions",
+          "optional": true,
+          "description": "Configuration options",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {UseEventSourceOptions} [options={}] Configuration options\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options={}]",
+                "postName": " ",
+                "type": "{UseEventSourceOptions}",
+                "postType": " ",
+                "description": "Configuration options",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "{}"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseEventSourceReturn<Data>",
+        "optional": false,
+        "description": "EventSource state and controls",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {UseEventSourceReturn<Data>} The EventSource state and controls\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseEventSourceReturn<Data>}",
+              "postType": " ",
+              "description": "EventSource state and controls",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 12,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1767095034000
+}

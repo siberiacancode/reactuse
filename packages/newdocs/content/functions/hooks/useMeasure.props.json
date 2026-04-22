@@ -1,0 +1,154 @@
+{
+  "name": "useMeasure",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The use measure return type */\r\nexport type UseMeasureReturn = Pick<\r\n  DOMRectReadOnly,\r\n  'bottom' | 'height' | 'left' | 'right' | 'top' | 'width' | 'x' | 'y'\r\n>;\r\n\r\nexport interface UseMeasure {\r\n  (target: HookTarget): UseMeasureReturn;\r\n\r\n  <Target extends Element>(\r\n    target?: never\r\n  ): UseMeasureReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n}\r\n\r\n/**\r\n * @name useMeasure\r\n * @description - Hook to measure the size and position of an element\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @overload\r\n * @param {HookTarget} target The element to measure\r\n * @returns {UseMeasureReturn} The element's size and position\r\n *\r\n * @example\r\n * const { x, y, width, height, top, left, bottom, right } = useMeasure(ref);\r\n *\r\n * @overload\r\n * @template Target The element to measure\r\n * @returns {UseMeasureReturn & { ref: StateRef<Target> }} The element's size and position\r\n *\r\n * @example\r\n * const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();\r\n */\r\nexport const useMeasure = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n\r\n  const internalRef = useRefState<Element>();\r\n  const [rect, setRect] = useState({\r\n    x: 0,\r\n    y: 0,\r\n    width: 0,\r\n    height: 0,\r\n    top: 0,\r\n    left: 0,\r\n    bottom: 0,\r\n    right: 0\r\n  });\r\n\r\n  useEffect(() => {\r\n    if (!target && !internalRef.state) return;\r\n\r\n    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;\r\n    if (!element) return;\r\n\r\n    const resizeObserver = new ResizeObserver((entries) => {\r\n      const entry = entries[0];\r\n      if (!entry) return;\r\n\r\n      const { x, y, width, height, top, left, bottom, right } = entry.contentRect;\r\n      setRect({ x, y, width, height, top, left, bottom, right });\r\n    });\r\n\r\n    resizeObserver.observe(element);\r\n\r\n    return () => {\r\n      resizeObserver.disconnect();\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state]);\r\n\r\n  if (target) return rect;\r\n  return { ref: internalRef, ...rect };\r\n}) as UseMeasure;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport type UseMeasureReturn = Pick<\r\n  DOMRectReadOnly,\r\n  'bottom' | 'height' | 'left' | 'right' | 'top' | 'width' | 'x' | 'y'\r\n>;\n\nexport interface UseMeasure {\r\n  (target: HookTarget): UseMeasureReturn;\r\n\r\n  <Target extends Element>(\r\n    target?: never\r\n  ): UseMeasureReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n}",
+  "description": "Hook to measure the size and position of an element",
+  "examples": [
+    "const { x, y, width, height, top, left, bottom, right } = useMeasure(ref);",
+    "const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The element to measure",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The element to measure\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The element to measure",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseMeasureReturn",
+        "optional": false,
+        "description": "element's size and position",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseMeasureReturn} The element's size and position\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseMeasureReturn}",
+              "postType": " ",
+              "description": "element's size and position",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseMeasureReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "element's size and position",
+        "problems": [],
+        "source": [
+          {
+            "number": 15,
+            "source": " * @returns {UseMeasureReturn & { ref: StateRef<Target> }} The element's size and position\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseMeasureReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "element's size and position",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 16,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1768553242000
+}

@@ -1,0 +1,223 @@
+{
+  "name": "useStep",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "leendrew",
+      "avatar": "https://gravatar.com/avatar/17823099c0fd6a23f7a38e03e52ca278?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useRef, useState } from 'react';\r\n\r\n/** The use step params type */\r\nexport interface UseStepParams {\r\n  /** Initial value for step */\r\n  initial: number;\r\n  /** Maximum value for step */\r\n  max: number;\r\n}\r\n\r\n/** The use step return type */\r\nexport interface UseStepReturn {\r\n  /** Counts of steps */\r\n  counts: number;\r\n  /** Current value of step */\r\n  currentStep: number;\r\n  /** Boolean value if current step is first */\r\n  isFirst: boolean;\r\n  /** Boolean value if current step is last */\r\n  isLast: boolean;\r\n  /** Go to back step */\r\n  back: () => void;\r\n  /** Go to next step */\r\n  next: () => void;\r\n  /** Reset current step to initial value */\r\n  reset: () => void;\r\n  /** Go to custom step */\r\n  set: (value: number | 'first' | 'last') => void;\r\n}\r\n\r\nconst FIRST_STEP_VALUE = 1;\r\n\r\n/**\r\n * @name useStep\r\n * @description - Hook that create stepper\r\n * @category State\r\n * @usage medium\r\n *\r\n * @overload\r\n * @param {number} max Maximum number of steps\r\n * @returns {UseStepReturn} An object contains variables and functions to change the step\r\n *\r\n * @example\r\n * const stepper = useStep(5);\r\n *\r\n * @overload\r\n * @param {number} params.max Maximum number of steps\r\n * @param {number} params.initial Initial value for step\r\n * @returns {UseStepReturn} An object contains variables and functions to change the step\r\n *\r\n * @example\r\n * const stepper = useStep({ initial: 2, max: 5 });\r\n */\r\nexport const useStep = (params: number | UseStepParams): UseStepReturn => {\r\n  const max = typeof params === 'object' ? params.max : params;\r\n  const initial = typeof params === 'object' ? params.initial : FIRST_STEP_VALUE;\r\n\r\n  const initialStep = useRef(\r\n    initial > max || initial < FIRST_STEP_VALUE ? FIRST_STEP_VALUE : initial\r\n  );\r\n  const [currentStep, setCurrentStep] = useState(initial);\r\n\r\n  const isFirst = currentStep === FIRST_STEP_VALUE;\r\n  const isLast = currentStep === max;\r\n\r\n  const next = () => {\r\n    if (isLast) return;\r\n    setCurrentStep((prevStep) => prevStep + 1);\r\n  };\r\n\r\n  const back = () => {\r\n    if (isFirst) return;\r\n    setCurrentStep((prevStep) => prevStep - 1);\r\n  };\r\n\r\n  const reset = () => setCurrentStep(initialStep.current);\r\n\r\n  const set = (value: number | 'first' | 'last') => {\r\n    if (value === 'first') return setCurrentStep(initialStep.current);\r\n    if (value === 'last') return setCurrentStep(max);\r\n    if (value >= max) return setCurrentStep(max);\r\n    if (value <= FIRST_STEP_VALUE) return setCurrentStep(FIRST_STEP_VALUE);\r\n    setCurrentStep(value);\r\n  };\r\n\r\n  return {\r\n    counts: max,\r\n    currentStep,\r\n    isFirst,\r\n    isLast,\r\n    next,\r\n    back,\r\n    reset,\r\n    set\r\n  };\r\n};\r\n",
+  "typeDeclarations": "export interface UseStepParams {\r\n  /** Initial value for step */\r\n  initial: number;\r\n  /** Maximum value for step */\r\n  max: number;\r\n}\n\nexport interface UseStepReturn {\r\n  /** Counts of steps */\r\n  counts: number;\r\n  /** Current value of step */\r\n  currentStep: number;\r\n  /** Boolean value if current step is first */\r\n  isFirst: boolean;\r\n  /** Boolean value if current step is last */\r\n  isLast: boolean;\r\n  /** Go to back step */\r\n  back: () => void;\r\n  /** Go to next step */\r\n  next: () => void;\r\n  /** Reset current step to initial value */\r\n  reset: () => void;\r\n  /** Go to custom step */\r\n  set: (value: number | 'first' | 'last') => void;\r\n}",
+  "description": "Hook that create stepper",
+  "examples": [
+    "const stepper = useStep(5);",
+    "const stepper = useStep({ initial: 2, max: 5 });"
+  ],
+  "usage": "medium",
+  "category": "state",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "max",
+          "type": "number",
+          "optional": false,
+          "description": "Maximum number of steps",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {number} max Maximum number of steps\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "max",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "Maximum number of steps",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseStepReturn",
+        "optional": false,
+        "description": "object contains variables and functions to change the step",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseStepReturn} An object contains variables and functions to change the step\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseStepReturn}",
+              "postType": " ",
+              "description": "object contains variables and functions to change the step",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "params.max",
+          "type": "number",
+          "optional": false,
+          "description": "Maximum number of steps",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {number} params.max Maximum number of steps\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "params.max",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "Maximum number of steps",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "params.initial",
+          "type": "number",
+          "optional": false,
+          "description": "Initial value for step",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {number} params.initial Initial value for step\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "params.initial",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "Initial value for step",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseStepReturn",
+        "optional": false,
+        "description": "object contains variables and functions to change the step",
+        "problems": [],
+        "source": [
+          {
+            "number": 16,
+            "source": " * @returns {UseStepReturn} An object contains variables and functions to change the step\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseStepReturn}",
+              "postType": " ",
+              "description": "object contains variables and functions to change the step",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 17,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

@@ -1,0 +1,163 @@
+{
+  "name": "useDocumentEvent",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { isTarget } from '@/utils/helpers';\r\n\r\nimport type { UseEventListenerOptions } from '../useEventListener/useEventListener';\r\n\r\nimport { useEventListener } from '../useEventListener/useEventListener';\r\n\r\n/**\r\n * @name useDocumentEvent\r\n * @description - Hook attaches an event listener to the document object for the specified event\r\n * @category Browser\r\n * @usage low\r\n\r\n * @template Event Key of document event map.\r\n * @param {Event} event The event to listen for.\r\n * @param {(event: DocumentEventMap[Event]) => void} listener The callback function to be executed when the event is triggered\r\n * @param {UseEventListenerOptions} [options] The options for the event listener\r\n * @returns {void}\r\n *\r\n * @example\r\n * useDocumentEvent('click', () => console.log('clicked'));\r\n */\r\nexport const useDocumentEvent = <Event extends keyof DocumentEventMap>(\r\n  event: Event,\r\n  listener: (this: Document, event: DocumentEventMap[Event]) => any,\r\n  options?: UseEventListenerOptions\r\n) => useEventListener(isTarget.wrap(document), event, listener, options);\r\n",
+  "typeDeclarations": "import type { UseEventListenerOptions } from '../useEventListener/useEventListener';",
+  "description": "Hook attaches an event listener to the document object for the specified event",
+  "examples": [
+    "useDocumentEvent('click', () => console.log('clicked'));"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "event",
+          "type": "Event",
+          "optional": false,
+          "description": "The event to listen for.",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Event} event The event to listen for.\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "event",
+                "postName": " ",
+                "type": "{Event}",
+                "postType": " ",
+                "description": "The event to listen for.",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "listener",
+          "type": "(event: DocumentEventMap[Event]) => void",
+          "optional": false,
+          "description": "The callback function to be executed when the event is triggered",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(event: DocumentEventMap[Event]) => void} listener The callback function to be executed when the event is triggered\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "listener",
+                "postName": " ",
+                "type": "{(event: DocumentEventMap[Event]) => void}",
+                "postType": " ",
+                "description": "The callback function to be executed when the event is triggered",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseEventListenerOptions",
+          "optional": true,
+          "description": "The options for the event listener",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {UseEventListenerOptions} [options] The options for the event listener\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseEventListenerOptions}",
+                "postType": " ",
+                "description": "The options for the event listener",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {void}\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1760199218000
+}

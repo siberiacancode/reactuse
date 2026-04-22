@@ -1,0 +1,164 @@
+{
+  "name": "useGeolocation",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "zeroqs",
+      "avatar": "https://gravatar.com/avatar/cff6d9667d5e9008cbc07435b078d19e?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\n/** The use geolocation return type */\r\nexport interface UseGeolocationReturn {\r\n  /** The accuracy of the last position update */\r\n  accuracy: number | null;\r\n  /** The altitude of the last position update */\r\n  altitude: number | null;\r\n  /** The altitude accuracy of the last position update */\r\n  altitudeAccuracy: number | null;\r\n  /** The error of the last position update */\r\n  error: GeolocationPositionError | null;\r\n  /** The heading of the last position update */\r\n  heading: number | null;\r\n  /** The latitude of the last position update */\r\n  latitude: number | null;\r\n  /** The loading state */\r\n  loading: boolean;\r\n  /** The longitude of the last position update */\r\n  longitude: number | null;\r\n  /** The speed of the last position update */\r\n  speed: number | null;\r\n  /** The timestamp of the last position update */\r\n  timestamp: number | null;\r\n}\r\n\r\n/** The use geolocation params type */\r\nexport type UseGeolocationParams = PositionOptions;\r\n\r\n/**\r\n * @name useGeolocation\r\n * @description - Hook that returns the current geolocation\r\n * @category Browser\r\n * @usage medium\r\n *\r\n * @browserapi navigator.geolocation https://developer.mozilla.org/en-US/docs/Web/API/Navigator/geolocation\r\n *\r\n * @param {boolean} [params.enableHighAccuracy] Enable high accuracy\r\n * @param {number} [params.maximumAge] Maximum age\r\n * @param {number} [params.timeout] Timeout\r\n * @returns {UseGeolocationReturn}\r\n *\r\n * @example\r\n * const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();\r\n */\r\nexport const useGeolocation = (params?: UseGeolocationParams): UseGeolocationReturn => {\r\n  const [value, setValue] = useState<UseGeolocationReturn>({\r\n    loading: true,\r\n    error: null,\r\n    timestamp: Date.now(),\r\n    accuracy: 0,\r\n    latitude: Number.POSITIVE_INFINITY,\r\n    longitude: Number.POSITIVE_INFINITY,\r\n    altitude: null,\r\n    altitudeAccuracy: null,\r\n    heading: null,\r\n    speed: null\r\n  });\r\n\r\n  useEffect(() => {\r\n    const onEvent = ({ coords, timestamp }: GeolocationPosition) => {\r\n      setValue({\r\n        ...value,\r\n        loading: false,\r\n        timestamp,\r\n        latitude: coords.latitude,\r\n        longitude: coords.longitude,\r\n        altitude: coords.altitude,\r\n        accuracy: coords.accuracy,\r\n        altitudeAccuracy: coords.altitudeAccuracy,\r\n        heading: coords.heading,\r\n        speed: coords.speed\r\n      });\r\n    };\r\n\r\n    const onEventError = (error: GeolocationPositionError) => {\r\n      setValue({\r\n        ...value,\r\n        loading: false,\r\n        error\r\n      });\r\n    };\r\n\r\n    navigator.geolocation.getCurrentPosition(onEvent, onEventError, params);\r\n    const watchId = navigator.geolocation.watchPosition(onEvent, onEventError, params);\r\n\r\n    return () => {\r\n      navigator.geolocation.clearWatch(watchId);\r\n    };\r\n  }, [params?.enableHighAccuracy, params?.maximumAge, params?.timeout]);\r\n\r\n  return value;\r\n};\r\n",
+  "typeDeclarations": "export interface UseGeolocationReturn {\r\n  /** The accuracy of the last position update */\r\n  accuracy: number | null;\r\n  /** The altitude of the last position update */\r\n  altitude: number | null;\r\n  /** The altitude accuracy of the last position update */\r\n  altitudeAccuracy: number | null;\r\n  /** The error of the last position update */\r\n  error: GeolocationPositionError | null;\r\n  /** The heading of the last position update */\r\n  heading: number | null;\r\n  /** The latitude of the last position update */\r\n  latitude: number | null;\r\n  /** The loading state */\r\n  loading: boolean;\r\n  /** The longitude of the last position update */\r\n  longitude: number | null;\r\n  /** The speed of the last position update */\r\n  speed: number | null;\r\n  /** The timestamp of the last position update */\r\n  timestamp: number | null;\r\n}\n\nexport type UseGeolocationParams = PositionOptions;",
+  "description": "Hook that returns the current geolocation",
+  "examples": [
+    "const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();"
+  ],
+  "usage": "medium",
+  "category": "browser",
+  "browserapi": "navigator.geolocation",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "params.enableHighAccuracy",
+          "type": "boolean",
+          "optional": true,
+          "description": "Enable high accuracy",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {boolean} [params.enableHighAccuracy] Enable high accuracy\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[params.enableHighAccuracy]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "Enable high accuracy",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "params.maximumAge",
+          "type": "number",
+          "optional": true,
+          "description": "Maximum age",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {number} [params.maximumAge] Maximum age\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[params.maximumAge]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "Maximum age",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "params.timeout",
+          "type": "number",
+          "optional": true,
+          "description": "Timeout",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {number} [params.timeout] Timeout\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[params.timeout]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "Timeout",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "UseGeolocationReturn",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {UseGeolocationReturn}\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{UseGeolocationReturn}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 12,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

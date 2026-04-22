@@ -1,0 +1,166 @@
+{
+  "name": "useSize",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Alexander Lee",
+      "avatar": "https://gravatar.com/avatar/a3f89f3d6c192f21416ef1d4a4952963?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "VLADISLAW9",
+      "avatar": "https://gravatar.com/avatar/cf96a05801360c131eb784ebbe781f99?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomorphicLayoutEffect';\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The size value type */\r\nexport interface UseSizeValue {\r\n  /** The element's height */\r\n  height: number;\r\n  /** The element's width */\r\n  width: number;\r\n}\r\n\r\n/** The use size return type */\r\nexport interface UseSizeReturn {\r\n  /** The resize observer instance */\r\n  observer?: ResizeObserver;\r\n  /** The current size value */\r\n  value: UseSizeValue;\r\n}\r\n\r\nexport interface UseSize {\r\n  (target: HookTarget): UseSizeReturn;\r\n\r\n  <Target extends Element>(\r\n    target?: never\r\n  ): {\r\n    ref: StateRef<Target>;\r\n  } & UseSizeReturn;\r\n}\r\n\r\n/**\r\n * @name useSize\r\n * @description - Hook that observes and returns the width and height of element\r\n * @category Elements\r\n * @usage low\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target element to observe\r\n * @returns {UseSizeReturn} An object containing the resize observer, current width and height of the element\r\n *\r\n * @example\r\n * const { value, observer } = useSize(ref);\r\n *\r\n * @overload\r\n * @template Target The target element type\r\n * @returns { { ref: StateRef<Target> } & UseSizeReturn } An object containing the resize observer, current width and height of the element\r\n *\r\n * @example\r\n * const { ref, value, observer } = useSize();\r\n */\r\nexport const useSize = ((...params: any[]) => {\r\n  const target = params[0] as HookTarget | undefined;\r\n  const [size, setSize] = useState({ width: 0, height: 0 });\r\n  const [observer, setObserver] = useState<ResizeObserver>();\r\n  const internalRef = useRefState<Element>();\r\n\r\n  useIsomorphicLayoutEffect(() => {\r\n    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;\r\n\r\n    if (!element) return;\r\n\r\n    const { width, height } = element.getBoundingClientRect();\r\n    setSize({\r\n      width,\r\n      height\r\n    });\r\n\r\n    const observer = new ResizeObserver(() => {\r\n      const { width, height } = element.getBoundingClientRect();\r\n      setSize({ width, height });\r\n    });\r\n\r\n    setObserver(observer);\r\n    observer.observe(element);\r\n\r\n    return () => {\r\n      observer.disconnect();\r\n    };\r\n  }, [internalRef.state, target && isTarget.getRawElement(target)]);\r\n\r\n  if (target) return { observer, value: size };\r\n  return {\r\n    observer,\r\n    ref: internalRef,\r\n    value: size\r\n  };\r\n}) as UseSize;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface UseSizeValue {\r\n  /** The element's height */\r\n  height: number;\r\n  /** The element's width */\r\n  width: number;\r\n}\n\nexport interface UseSizeReturn {\r\n  /** The resize observer instance */\r\n  observer?: ResizeObserver;\r\n  /** The current size value */\r\n  value: UseSizeValue;\r\n}\n\nexport interface UseSize {\r\n  (target: HookTarget): UseSizeReturn;\r\n\r\n  <Target extends Element>(\r\n    target?: never\r\n  ): {\r\n    ref: StateRef<Target>;\r\n  } & UseSizeReturn;\r\n}",
+  "description": "Hook that observes and returns the width and height of element",
+  "examples": [
+    "const { value, observer } = useSize(ref);",
+    "const { ref, value, observer } = useSize();"
+  ],
+  "usage": "low",
+  "category": "elements",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target element to observe\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to observe",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseSizeReturn",
+        "optional": false,
+        "description": "object containing the resize observer, current width and height of the element",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseSizeReturn} An object containing the resize observer, current width and height of the element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseSizeReturn}",
+              "postType": " ",
+              "description": "object containing the resize observer, current width and height of the element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "{ ref: StateRef<Target> } & UseSizeReturn",
+        "optional": false,
+        "description": "object containing the resize observer, current width and height of the element",
+        "problems": [],
+        "source": [
+          {
+            "number": 15,
+            "source": " * @returns { { ref: StateRef<Target> } & UseSizeReturn } An object containing the resize observer, current width and height of the element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{ { ref: StateRef<Target> } & UseSizeReturn }",
+              "postType": " ",
+              "description": "object containing the resize observer, current width and height of the element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 16,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1768833790000
+}

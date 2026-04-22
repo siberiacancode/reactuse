@@ -1,0 +1,335 @@
+{
+  "name": "useInfiniteScroll",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "“Ediand11”",
+      "avatar": "https://gravatar.com/avatar/cf7a63d641cd20d003e73563c8fa0e14?d=retro"
+    },
+    {
+      "name": "Nikita",
+      "avatar": "https://gravatar.com/avatar/cac51cebf1d47bc09276acf215a48514?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The use infinite scroll options type */\r\nexport interface UseInfiniteScrollOptions {\r\n  /** The direction to trigger the callback */\r\n  direction?: 'bottom' | 'left' | 'right' | 'top';\r\n  /** The distance in pixels to trigger the callback */\r\n  distance?: number;\r\n}\r\n\r\n/** The use infinite scroll return type */\r\nexport interface UseInfiniteScrollReturn {\r\n  /** The loading state of the infinite scroll */\r\n  loading: boolean;\r\n  /** The ref to attach to the element */\r\n  ref: StateRef<Element>;\r\n}\r\n\r\nexport interface UseInfiniteScroll {\r\n  (\r\n    target: HookTarget,\r\n    callback: (event: Event) => void,\r\n    options?: UseInfiniteScrollOptions\r\n  ): UseInfiniteScrollReturn;\r\n\r\n  <Target extends Element>(\r\n    callback: (event: Event) => void,\r\n    options?: UseInfiniteScrollOptions,\r\n    target?: never\r\n  ): UseInfiniteScrollReturn & { ref: StateRef<Target> };\r\n}\r\n\r\n/**\r\n * @name useInfiniteScroll\r\n * @description - Hook that defines the logic for infinite scroll\r\n * @category Sensors\r\n * @usage medium\r\n *\r\n * @overload\r\n * @template Target The target element\r\n * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected\r\n * @param {number} [options.distance=10] The distance in pixels to trigger the callback\r\n * @param {string} [options.direction='bottom'] The direction to trigger the callback\r\n * @returns {UseInfiniteScrollReturn & { ref: StateRef<Target> }} An object containing the ref and loading\r\n *\r\n * @example\r\n * const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target element to detect infinite scroll for\r\n * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected\r\n * @param {number} [options.distance=10] The distance in pixels to trigger the callback\r\n * @param {string} [options.direction='bottom'] The direction to trigger the callback\r\n * @returns {UseInfiniteScrollReturn} An object containing the ref and loading\r\n *\r\n * @example\r\n * const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));\r\n */\r\nexport const useInfiniteScroll = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const callback = (target ? params[1] : params[0]) as (event: Event) => void;\r\n  const options = (target ? params[2] : params[1]) as UseInfiniteScrollOptions | undefined;\r\n\r\n  const direction = options?.direction ?? 'bottom';\r\n  const distance = options?.distance ?? 10;\r\n\r\n  const [loading, setIsLoading] = useState(false);\r\n\r\n  const internalRef = useRefState<Element>();\r\n  const internalCallbackRef = useRef(callback);\r\n  internalCallbackRef.current = callback;\r\n  const internalLoadingRef = useRef(loading);\r\n  internalLoadingRef.current = loading;\r\n\r\n  useEffect(() => {\r\n    if (!target && !internalRef.state) return;\r\n    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;\r\n    if (!element) return;\r\n\r\n    const onLoadMore = async (event: Event) => {\r\n      if (internalLoadingRef.current) return;\r\n\r\n      const { clientHeight, scrollHeight, scrollTop, clientWidth, scrollWidth, scrollLeft } =\r\n        event.target as Element;\r\n      const scrollBottom = scrollHeight - (scrollTop + clientHeight);\r\n      const scrollRight = scrollWidth - (scrollLeft + clientWidth);\r\n\r\n      const distances = {\r\n        bottom: scrollBottom,\r\n        top: scrollTop,\r\n        right: scrollRight,\r\n        left: scrollLeft\r\n      };\r\n\r\n      if (distances[direction] <= distance) {\r\n        setIsLoading(true);\r\n        await internalCallbackRef.current(event);\r\n        setIsLoading(false);\r\n      }\r\n    };\r\n\r\n    element.addEventListener('scroll', onLoadMore);\r\n\r\n    return () => {\r\n      element.removeEventListener('scroll', onLoadMore);\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state, direction, distance]);\r\n\r\n  if (target) return { loading };\r\n  return {\r\n    ref: internalRef,\r\n    loading\r\n  };\r\n}) as UseInfiniteScroll;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface UseInfiniteScrollOptions {\r\n  /** The direction to trigger the callback */\r\n  direction?: 'bottom' | 'left' | 'right' | 'top';\r\n  /** The distance in pixels to trigger the callback */\r\n  distance?: number;\r\n}\n\nexport interface UseInfiniteScrollReturn {\r\n  /** The loading state of the infinite scroll */\r\n  loading: boolean;\r\n  /** The ref to attach to the element */\r\n  ref: StateRef<Element>;\r\n}\n\nexport interface UseInfiniteScroll {\r\n  (\r\n    target: HookTarget,\r\n    callback: (event: Event) => void,\r\n    options?: UseInfiniteScrollOptions\r\n  ): UseInfiniteScrollReturn;\r\n\r\n  <Target extends Element>(\r\n    callback: (event: Event) => void,\r\n    options?: UseInfiniteScrollOptions,\r\n    target?: never\r\n  ): UseInfiniteScrollReturn & { ref: StateRef<Target> };\r\n}",
+  "description": "Hook that defines the logic for infinite scroll",
+  "examples": [
+    "const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));",
+    "const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));"
+  ],
+  "usage": "medium",
+  "category": "sensors",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(event: Event) => void",
+          "optional": false,
+          "description": "The callback to execute when a click outside the target is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(event: Event) => void}",
+                "postType": " ",
+                "description": "The callback to execute when a click outside the target is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.distance",
+          "type": "number",
+          "optional": true,
+          "description": "The distance in pixels to trigger the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {number} [options.distance=10] The distance in pixels to trigger the callback\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.distance=10]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The distance in pixels to trigger the callback",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "10"
+        },
+        {
+          "tag": "param",
+          "name": "options.direction",
+          "type": "string",
+          "optional": true,
+          "description": "The direction to trigger the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {string} [options.direction='bottom'] The direction to trigger the callback\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.direction='bottom']",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The direction to trigger the callback",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'bottom'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseInfiniteScrollReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "object containing the ref and loading",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {UseInfiniteScrollReturn & { ref: StateRef<Target> }} An object containing the ref and loading\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseInfiniteScrollReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "object containing the ref and loading",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 12,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to detect infinite scroll for",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {HookTarget} target The target element to detect infinite scroll for\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to detect infinite scroll for",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(event: Event) => void",
+          "optional": false,
+          "description": "The callback to execute when a click outside the target is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(event: Event) => void}",
+                "postType": " ",
+                "description": "The callback to execute when a click outside the target is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.distance",
+          "type": "number",
+          "optional": true,
+          "description": "The distance in pixels to trigger the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 19,
+              "source": " * @param {number} [options.distance=10] The distance in pixels to trigger the callback\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.distance=10]",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The distance in pixels to trigger the callback",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "10"
+        },
+        {
+          "tag": "param",
+          "name": "options.direction",
+          "type": "string",
+          "optional": true,
+          "description": "The direction to trigger the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {string} [options.direction='bottom'] The direction to trigger the callback\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.direction='bottom']",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The direction to trigger the callback",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'bottom'"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseInfiniteScrollReturn",
+        "optional": false,
+        "description": "object containing the ref and loading",
+        "problems": [],
+        "source": [
+          {
+            "number": 21,
+            "source": " * @returns {UseInfiniteScrollReturn} An object containing the ref and loading\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseInfiniteScrollReturn}",
+              "postType": " ",
+              "description": "object containing the ref and loading",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 22,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": true,
+  "lastModified": 1770651919000
+}

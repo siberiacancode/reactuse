@@ -1,0 +1,351 @@
+{
+  "name": "useTimer",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "khmilevoi",
+      "avatar": "https://gravatar.com/avatar/8d31b6f823890f13dd2dd1637df5e379?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport { useDidUpdate } from '../useDidUpdate/useDidUpdate';\r\n\r\nexport type PositiveInteger<Value extends number> = `${Value}` extends `-${any}` | `${any}.${any}`\r\n  ? never\r\n  : Value;\r\n\r\nexport const getTimeFromSeconds = (timestamp: number) => {\r\n  const roundedTimestamp = Math.ceil(timestamp);\r\n  const days = Math.floor(roundedTimestamp / (60 * 60 * 24));\r\n  const hours = Math.floor((roundedTimestamp % (60 * 60 * 24)) / (60 * 60));\r\n  const minutes = Math.floor((roundedTimestamp % (60 * 60)) / 60);\r\n  const seconds = Math.floor(roundedTimestamp % 60);\r\n\r\n  return {\r\n    seconds,\r\n    minutes,\r\n    hours,\r\n    days\r\n  };\r\n};\r\n\r\n/** The use timer options type */\r\nexport interface UseTimerOptions {\r\n  /** Whether the timer should start automatically */\r\n  immediately?: boolean;\r\n  /** The function to be executed when the timer is expired */\r\n  onExpire?: () => void;\r\n  /** The function to be executed when the timer is started */\r\n  onStart?: () => void;\r\n  /** Callback function to be executed on each tick of the timer */\r\n  onTick?: (seconds: number) => void;\r\n}\r\n\r\n/** The use timer return type */\r\nexport interface UseTimerReturn {\r\n  /** flag to indicate if timer is active or not */\r\n  active: boolean;\r\n  /** The total count of the timer */\r\n  count: number;\r\n  /** The day count of the timer */\r\n  days: number;\r\n  /** The hour count of the timer */\r\n  hours: number;\r\n  /** The minute count of the timer */\r\n  minutes: number;\r\n  /** The second count of the timer */\r\n  seconds: number;\r\n  /** The function to clear the timer */\r\n  clear: () => void;\r\n  /** The function to decrease the timer */\r\n  decrease: (seconds: PositiveInteger<number>) => void;\r\n  /** The function to increase the timer */\r\n  increase: (seconds: PositiveInteger<number>) => void;\r\n  /** The function to pause the timer */\r\n  pause: () => void;\r\n  /** The function to restart the timer */\r\n  restart: (time: PositiveInteger<number>, immediately?: boolean) => void;\r\n  /** The function to resume the timer */\r\n  resume: () => void;\r\n  /** The function to start the timer */\r\n  start: () => void;\r\n  /** The function to toggle the timer */\r\n  toggle: () => void;\r\n}\r\n\r\nexport interface UseTimer {\r\n  (): UseTimerReturn;\r\n\r\n  (seconds: PositiveInteger<number>, callback: () => void): UseTimerReturn;\r\n\r\n  (seconds: PositiveInteger<number>, options?: UseTimerOptions): UseTimerReturn;\r\n}\r\n\r\n/**\r\n * @name useTimer\r\n * @description - Hook that creates a timer functionality\r\n * @category Time\r\n * @usage medium\r\n *\r\n * @overload\r\n * @returns {UseTimerReturn} An object containing the timer properties and functions\r\n *\r\n * @example\r\n * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer();\r\n *\r\n * @overload\r\n * @param {number} seconds The seconds value that define for how long the timer will be running\r\n * @param {() => void} callback The function to be executed once countdown timer is expired\r\n * @returns {UseTimerReturn} An object containing the timer properties and functions\r\n *\r\n * @example\r\n * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000, () => console.log('ready'));\r\n *\r\n * @overload\r\n * @param {number} seconds The seconds value that define for how long the timer will be running\r\n * @param {boolean} [options.immediately=true] The flag to decide if timer should start automatically\r\n * @param {() => void} [options.onExpire] The function to be executed when the timer is expired\r\n * @param {(timestamp: number) => void} [options.onTick] The function to be executed on each tick of the timer\r\n * @returns {UseTimerReturn} An object containing the timer properties and functions\r\n *\r\n * @example\r\n * const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000);\r\n */\r\nexport const useTimer = ((...params: any[]) => {\r\n  const initialSeconds = Math.max((params[0] ?? 0) as PositiveInteger<number>, 0);\r\n  const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] }) as\r\n    | UseTimerOptions\r\n    | undefined;\r\n\r\n  const [active, setActive] = useState(initialSeconds > 0 && (options?.immediately ?? true));\r\n  const [seconds, setSeconds] = useState(initialSeconds);\r\n\r\n  const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);\r\n  const optionsRef = useRef<UseTimerOptions>(options);\r\n  optionsRef.current = options ?? {};\r\n\r\n  useDidUpdate(() => {\r\n    if (initialSeconds <= 0) {\r\n      setActive(false);\r\n      setSeconds(0);\r\n      return;\r\n    }\r\n\r\n    setActive(true);\r\n    setSeconds(initialSeconds);\r\n  }, [initialSeconds]);\r\n\r\n  useEffect(() => {\r\n    if (!active) return;\r\n\r\n    optionsRef.current?.onStart?.();\r\n    const onInterval = () => {\r\n      setSeconds((prevSeconds) => {\r\n        optionsRef.current?.onTick?.(prevSeconds);\r\n        const updatedSeconds = prevSeconds - 1;\r\n        if (updatedSeconds === 0) {\r\n          setActive(false);\r\n          optionsRef.current?.onExpire?.();\r\n        }\r\n        return updatedSeconds;\r\n      });\r\n    };\r\n\r\n    intervalIdRef.current = setInterval(onInterval, 1000);\r\n    return () => {\r\n      clearInterval(intervalIdRef.current);\r\n    };\r\n  }, [active]);\r\n\r\n  const pause = () => setActive(false);\r\n  const resume = () => {\r\n    if (seconds <= 0) return;\r\n    setActive(true);\r\n  };\r\n\r\n  const toggle = () => {\r\n    if (seconds <= 0) return;\r\n    setActive(!active);\r\n  };\r\n\r\n  const restart = (seconds: PositiveInteger<number>, immediately = true) => {\r\n    setSeconds(seconds);\r\n    if (immediately) setActive(true);\r\n  };\r\n\r\n  const start = () => {\r\n    if (initialSeconds <= 0) return;\r\n\r\n    setActive(true);\r\n    setSeconds(initialSeconds);\r\n  };\r\n\r\n  const clear = () => {\r\n    setActive(false);\r\n    setSeconds(0);\r\n  };\r\n\r\n  const increase = (seconds: PositiveInteger<number>) =>\r\n    setSeconds((prevSeconds) => prevSeconds + seconds);\r\n  const decrease = (seconds: PositiveInteger<number>) => {\r\n    setSeconds((prevSeconds) => {\r\n      const updatedSeconds = prevSeconds - seconds;\r\n      if (updatedSeconds <= 0) {\r\n        setActive(false);\r\n        return 0;\r\n      } else {\r\n        return updatedSeconds;\r\n      }\r\n    });\r\n  };\r\n\r\n  return {\r\n    ...getTimeFromSeconds(seconds),\r\n    count: seconds,\r\n    pause,\r\n    active,\r\n    resume,\r\n    toggle,\r\n    start,\r\n    restart,\r\n    clear,\r\n    increase,\r\n    decrease\r\n  };\r\n}) as UseTimer;\r\n",
+  "typeDeclarations": "export type PositiveInteger<Value extends number> = `${Value}` extends `-${any}` | `${any}.${any}`\r\n  ? never\r\n  : Value;\n\nexport interface UseTimerOptions {\r\n  /** Whether the timer should start automatically */\r\n  immediately?: boolean;\r\n  /** The function to be executed when the timer is expired */\r\n  onExpire?: () => void;\r\n  /** The function to be executed when the timer is started */\r\n  onStart?: () => void;\r\n  /** Callback function to be executed on each tick of the timer */\r\n  onTick?: (seconds: number) => void;\r\n}\n\nexport interface UseTimerReturn {\r\n  /** flag to indicate if timer is active or not */\r\n  active: boolean;\r\n  /** The total count of the timer */\r\n  count: number;\r\n  /** The day count of the timer */\r\n  days: number;\r\n  /** The hour count of the timer */\r\n  hours: number;\r\n  /** The minute count of the timer */\r\n  minutes: number;\r\n  /** The second count of the timer */\r\n  seconds: number;\r\n  /** The function to clear the timer */\r\n  clear: () => void;\r\n  /** The function to decrease the timer */\r\n  decrease: (seconds: PositiveInteger<number>) => void;\r\n  /** The function to increase the timer */\r\n  increase: (seconds: PositiveInteger<number>) => void;\r\n  /** The function to pause the timer */\r\n  pause: () => void;\r\n  /** The function to restart the timer */\r\n  restart: (time: PositiveInteger<number>, immediately?: boolean) => void;\r\n  /** The function to resume the timer */\r\n  resume: () => void;\r\n  /** The function to start the timer */\r\n  start: () => void;\r\n  /** The function to toggle the timer */\r\n  toggle: () => void;\r\n}\n\nexport interface UseTimer {\r\n  (): UseTimerReturn;\r\n\r\n  (seconds: PositiveInteger<number>, callback: () => void): UseTimerReturn;\r\n\r\n  (seconds: PositiveInteger<number>, options?: UseTimerOptions): UseTimerReturn;\r\n}",
+  "description": "Hook that creates a timer functionality",
+  "examples": [
+    "const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer();",
+    "const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000, () => console.log('ready'));",
+    "const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000);"
+  ],
+  "usage": "medium",
+  "category": "time",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseTimerReturn",
+        "optional": false,
+        "description": "object containing the timer properties and functions",
+        "problems": [],
+        "source": [
+          {
+            "number": 7,
+            "source": " * @returns {UseTimerReturn} An object containing the timer properties and functions\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseTimerReturn}",
+              "postType": " ",
+              "description": "object containing the timer properties and functions",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 8,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "seconds",
+          "type": "number",
+          "optional": false,
+          "description": "The seconds value that define for how long the timer will be running",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {number} seconds The seconds value that define for how long the timer will be running\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "seconds",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The seconds value that define for how long the timer will be running",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "() => void",
+          "optional": false,
+          "description": "The function to be executed once countdown timer is expired",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {() => void} callback The function to be executed once countdown timer is expired\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "The function to be executed once countdown timer is expired",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseTimerReturn",
+        "optional": false,
+        "description": "object containing the timer properties and functions",
+        "problems": [],
+        "source": [
+          {
+            "number": 15,
+            "source": " * @returns {UseTimerReturn} An object containing the timer properties and functions\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseTimerReturn}",
+              "postType": " ",
+              "description": "object containing the timer properties and functions",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 16,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "seconds",
+          "type": "number",
+          "optional": false,
+          "description": "The seconds value that define for how long the timer will be running",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {number} seconds The seconds value that define for how long the timer will be running\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "seconds",
+                "postName": " ",
+                "type": "{number}",
+                "postType": " ",
+                "description": "The seconds value that define for how long the timer will be running",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.immediately",
+          "type": "boolean",
+          "optional": true,
+          "description": "The flag to decide if timer should start automatically",
+          "problems": [],
+          "source": [
+            {
+              "number": 22,
+              "source": " * @param {boolean} [options.immediately=true] The flag to decide if timer should start automatically\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.immediately=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The flag to decide if timer should start automatically",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.onExpire",
+          "type": "() => void",
+          "optional": true,
+          "description": "The function to be executed when the timer is expired",
+          "problems": [],
+          "source": [
+            {
+              "number": 23,
+              "source": " * @param {() => void} [options.onExpire] The function to be executed when the timer is expired\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onExpire]",
+                "postName": " ",
+                "type": "{() => void}",
+                "postType": " ",
+                "description": "The function to be executed when the timer is expired",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onTick",
+          "type": "(timestamp: number) => void",
+          "optional": true,
+          "description": "The function to be executed on each tick of the timer",
+          "problems": [],
+          "source": [
+            {
+              "number": 24,
+              "source": " * @param {(timestamp: number) => void} [options.onTick] The function to be executed on each tick of the timer\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onTick]",
+                "postName": " ",
+                "type": "{(timestamp: number) => void}",
+                "postType": " ",
+                "description": "The function to be executed on each tick of the timer",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseTimerReturn",
+        "optional": false,
+        "description": "object containing the timer properties and functions",
+        "problems": [],
+        "source": [
+          {
+            "number": 25,
+            "source": " * @returns {UseTimerReturn} An object containing the timer properties and functions\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseTimerReturn}",
+              "postType": " ",
+              "description": "object containing the timer properties and functions",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 26,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

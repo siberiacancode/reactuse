@@ -1,0 +1,280 @@
+{
+  "name": "useWebSocket",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "Алдияр Сейлханов",
+      "avatar": "https://gravatar.com/avatar/a330c968bfc262c5ab3d9f12d8d18cca?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport { getRetry } from '@/utils/helpers';\r\n\r\nimport { useEvent } from '../useEvent/useEvent';\r\n\r\n/** The use web socket url type */\r\nexport type UseWebSocketUrl = (() => string) | string;\r\n\r\n/** The use web socket options type */\r\nexport interface UseWebSocketOptions {\r\n  /** The list of protocols to use */\r\n  protocols?: Array<'soap' | 'wasm'>;\r\n  /** The number of times to retry the connection */\r\n  retry?: boolean | number;\r\n  /** The callback function that is called when the WebSocket connection is established */\r\n  onConnected?: (webSocket: WebSocket) => void;\r\n  /** The callback function that is called when the WebSocket connection is closed */\r\n  onDisconnected?: (event: CloseEvent, webSocket: WebSocket) => void;\r\n  /** The callback function that is called when an error occurs */\r\n  onError?: (event: Event, webSocket: WebSocket) => void;\r\n  /** The callback function that is called when a message is received */\r\n  onMessage?: (event: MessageEvent, webSocket: WebSocket) => void;\r\n}\r\n\r\n/** The use web socket status type */\r\nexport type UseWebSocketStatus = 'connected' | 'connecting' | 'disconnected' | 'failed';\r\n\r\n/** The use web socket return type */\r\nexport interface UseWebSocketReturn {\r\n  /** The WebSocket client */\r\n  client?: WebSocket;\r\n  /** The close function */\r\n  close: WebSocket['close'];\r\n  /** The send function */\r\n  send: WebSocket['send'];\r\n  /** The status of the WebSocket connection */\r\n  status: UseWebSocketStatus;\r\n  /** The open function */\r\n  open: () => void;\r\n}\r\n\r\n/**\r\n * @name useWebSocket\r\n * @description - Hook that connects to a WebSocket server and handles incoming and outgoing messages\r\n * @category Browser\r\n * @usage medium\r\n *\r\n * @browserapi WebSocket https://developer.mozilla.org/en-US/docs/Web/API/WebSocket\r\n *\r\n * @param {UseWebSocketUrl} url The URL of the WebSocket server\r\n * @param {(webSocket: WebSocket) => void} [options.onConnected] The callback function that is called when the WebSocket connection is established\r\n * @param {(event: CloseEvent, webSocket: WebSocket) => void} [options.onDisconnected] The callback function that is called when the WebSocket connection is closed\r\n * @param {(event: Event, webSocket: WebSocket) => void} [options.onError] The callback function that is called when an error occurs\r\n * @param {(event: MessageEvent, webSocket: WebSocket) => void} [options.onMessage] The callback function that is called when a message is received\r\n * @param {boolean | number} [options.retry] The number of times to retry the connection\r\n * @param {Array<'soap' | 'wasm'>} [options.protocols] The list of protocols to use\r\n * @returns {UseWebSocketReturn} An object with the status, close, send, open, and ws properties\r\n *\r\n * @example\r\n * const { status, close, send, open, client } = useWebSocket('url');\r\n */\r\nexport const useWebSocket = (\r\n  url: UseWebSocketUrl,\r\n  options?: UseWebSocketOptions\r\n): UseWebSocketReturn => {\r\n  const webSocketRef = useRef<WebSocket>(undefined);\r\n  const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);\r\n  const explicityCloseRef = useRef(false);\r\n\r\n  const [status, setStatus] = useState<UseWebSocketStatus>('connecting');\r\n\r\n  const send = (data: string | Blob | BufferSource) => {\r\n    webSocketRef.current?.send(data);\r\n  };\r\n\r\n  const close = () => {\r\n    explicityCloseRef.current = true;\r\n    webSocketRef.current?.close();\r\n  };\r\n\r\n  const init = useEvent(() => {\r\n    webSocketRef.current = new WebSocket(\r\n      typeof url === 'function' ? url() : url,\r\n      options?.protocols\r\n    );\r\n    setStatus('connecting');\r\n\r\n    const webSocket = webSocketRef.current;\r\n    if (!webSocket) return;\r\n\r\n    webSocket.onopen = () => {\r\n      setStatus('connected');\r\n      options?.onConnected?.(webSocket);\r\n    };\r\n\r\n    webSocket.onerror = (event) => {\r\n      setStatus('failed');\r\n      options?.onError?.(event, webSocket);\r\n    };\r\n\r\n    webSocket.onmessage = (event) => options?.onMessage?.(event, webSocket);\r\n\r\n    webSocket.onclose = (event) => {\r\n      setStatus('disconnected');\r\n      options?.onDisconnected?.(event, webSocket);\r\n      if (explicityCloseRef.current) return;\r\n\r\n      if (retryCountRef.current > 0) {\r\n        retryCountRef.current -= 1;\r\n        return init();\r\n      }\r\n      retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;\r\n    };\r\n  });\r\n\r\n  useEffect(() => {\r\n    init();\r\n\r\n    return () => {\r\n      if (!webSocketRef.current) return;\r\n      webSocketRef.current.close();\r\n      webSocketRef.current = undefined;\r\n    };\r\n  }, [url]);\r\n\r\n  const open = () => {\r\n    explicityCloseRef.current = false;\r\n    init();\r\n  };\r\n\r\n  return { client: webSocketRef.current, close, open, send, status };\r\n};\r\n",
+  "typeDeclarations": "export type UseWebSocketUrl = (() => string) | string;\n\nexport interface UseWebSocketOptions {\r\n  /** The list of protocols to use */\r\n  protocols?: Array<'soap' | 'wasm'>;\r\n  /** The number of times to retry the connection */\r\n  retry?: boolean | number;\r\n  /** The callback function that is called when the WebSocket connection is established */\r\n  onConnected?: (webSocket: WebSocket) => void;\r\n  /** The callback function that is called when the WebSocket connection is closed */\r\n  onDisconnected?: (event: CloseEvent, webSocket: WebSocket) => void;\r\n  /** The callback function that is called when an error occurs */\r\n  onError?: (event: Event, webSocket: WebSocket) => void;\r\n  /** The callback function that is called when a message is received */\r\n  onMessage?: (event: MessageEvent, webSocket: WebSocket) => void;\r\n}\n\nexport type UseWebSocketStatus = 'connected' | 'connecting' | 'disconnected' | 'failed';\n\nexport interface UseWebSocketReturn {\r\n  /** The WebSocket client */\r\n  client?: WebSocket;\r\n  /** The close function */\r\n  close: WebSocket['close'];\r\n  /** The send function */\r\n  send: WebSocket['send'];\r\n  /** The status of the WebSocket connection */\r\n  status: UseWebSocketStatus;\r\n  /** The open function */\r\n  open: () => void;\r\n}",
+  "description": "Hook that connects to a WebSocket server and handles incoming and outgoing messages",
+  "examples": [
+    "const { status, close, send, open, client } = useWebSocket('url');"
+  ],
+  "usage": "medium",
+  "category": "browser",
+  "browserapi": "WebSocket",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "url",
+          "type": "UseWebSocketUrl",
+          "optional": false,
+          "description": "The URL of the WebSocket server",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseWebSocketUrl} url The URL of the WebSocket server\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "url",
+                "postName": " ",
+                "type": "{UseWebSocketUrl}",
+                "postType": " ",
+                "description": "The URL of the WebSocket server",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onConnected",
+          "type": "(webSocket: WebSocket) => void",
+          "optional": true,
+          "description": "The callback function that is called when the WebSocket connection is established",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {(webSocket: WebSocket) => void} [options.onConnected] The callback function that is called when the WebSocket connection is established\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onConnected]",
+                "postName": " ",
+                "type": "{(webSocket: WebSocket) => void}",
+                "postType": " ",
+                "description": "The callback function that is called when the WebSocket connection is established",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onDisconnected",
+          "type": "(event: CloseEvent, webSocket: WebSocket) => void",
+          "optional": true,
+          "description": "The callback function that is called when the WebSocket connection is closed",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {(event: CloseEvent, webSocket: WebSocket) => void} [options.onDisconnected] The callback function that is called when the WebSocket connection is closed\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onDisconnected]",
+                "postName": " ",
+                "type": "{(event: CloseEvent, webSocket: WebSocket) => void}",
+                "postType": " ",
+                "description": "The callback function that is called when the WebSocket connection is closed",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onError",
+          "type": "(event: Event, webSocket: WebSocket) => void",
+          "optional": true,
+          "description": "The callback function that is called when an error occurs",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {(event: Event, webSocket: WebSocket) => void} [options.onError] The callback function that is called when an error occurs\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onError]",
+                "postName": " ",
+                "type": "{(event: Event, webSocket: WebSocket) => void}",
+                "postType": " ",
+                "description": "The callback function that is called when an error occurs",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onMessage",
+          "type": "(event: MessageEvent, webSocket: WebSocket) => void",
+          "optional": true,
+          "description": "The callback function that is called when a message is received",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {(event: MessageEvent, webSocket: WebSocket) => void} [options.onMessage] The callback function that is called when a message is received\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onMessage]",
+                "postName": " ",
+                "type": "{(event: MessageEvent, webSocket: WebSocket) => void}",
+                "postType": " ",
+                "description": "The callback function that is called when a message is received",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.retry",
+          "type": "boolean | number",
+          "optional": true,
+          "description": "The number of times to retry the connection",
+          "problems": [],
+          "source": [
+            {
+              "number": 13,
+              "source": " * @param {boolean | number} [options.retry] The number of times to retry the connection\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.retry]",
+                "postName": " ",
+                "type": "{boolean | number}",
+                "postType": " ",
+                "description": "The number of times to retry the connection",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.protocols",
+          "type": "Array<'soap' | 'wasm'>",
+          "optional": true,
+          "description": "The list of protocols to use",
+          "problems": [],
+          "source": [
+            {
+              "number": 14,
+              "source": " * @param {Array<'soap' | 'wasm'>} [options.protocols] The list of protocols to use\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.protocols]",
+                "postName": " ",
+                "type": "{Array<'soap' | 'wasm'>}",
+                "postType": " ",
+                "description": "The list of protocols to use",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseWebSocketReturn",
+        "optional": false,
+        "description": "object with the status, close, send, open, and ws properties",
+        "problems": [],
+        "source": [
+          {
+            "number": 15,
+            "source": " * @returns {UseWebSocketReturn} An object with the status, close, send, open, and ws properties\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseWebSocketReturn}",
+              "postType": " ",
+              "description": "object with the status, close, send, open, and ws properties",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 16,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": true,
+  "lastModified": 1775226876000
+}

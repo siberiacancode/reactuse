@@ -1,4 +1,4 @@
-import md5 from 'md5';
+import { createHash } from 'node:crypto';
 import simpleGit from 'simple-git';
 
 const git = simpleGit();
@@ -14,7 +14,7 @@ export const getContributors = async () => {
         contributorsMap.set(author_name, {
           name: author_name,
           email: author_email,
-          avatar: `https://gravatar.com/avatar/${md5(author_email)}?d=retro`
+          avatar: `https://gravatar.com/avatar/${createHash('md5').update(author_email).digest('hex')}?d=retro`
         });
       }
     });

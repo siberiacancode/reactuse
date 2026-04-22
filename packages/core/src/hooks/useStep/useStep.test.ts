@@ -67,7 +67,7 @@ it('Should reset to the initial step', () => {
   act(() => result.current.set(3));
   expect(result.current.currentStep).toBe(3);
 
-  act(() => result.current.reset());
+  act(result.current.reset);
   expect(result.current.currentStep).toBe(1);
 });
 
@@ -85,7 +85,7 @@ it('Should have valid booleans', () => {
   expect(result.current.isFirst).toBeFalsy();
   expect(result.current.isLast).toBeTruthy();
 
-  act(() => result.current.reset());
+  act(result.current.reset);
   expect(result.current.isFirst).toBeTruthy();
   expect(result.current.isLast).toBeFalsy();
 });
@@ -110,6 +110,18 @@ it('Should set custom step', () => {
 });
 
 describe('Value is object', () => {
+  it('Should sanitize initial step if it is out of bounds', () => {
+    const { result } = renderHook(() => useStep({ initial: 10, max: STEPS.length }));
+
+    expect(result.current.currentStep).toBe(1);
+
+    act(result.current.next);
+    expect(result.current.currentStep).toBe(2);
+
+    act(result.current.reset);
+    expect(result.current.currentStep).toBe(1);
+  });
+
   it('Should increase the step', () => {
     const { result } = renderHook(() => useStep({ initial: 1, max: STEPS.length }));
 
@@ -148,7 +160,7 @@ describe('Value is object', () => {
     act(() => result.current.set(3));
     expect(result.current.currentStep).toBe(3);
 
-    act(() => result.current.reset());
+    act(result.current.reset);
     expect(result.current.currentStep).toBe(2);
   });
 
@@ -172,10 +184,10 @@ describe('Value is object', () => {
   });
 
   it('Should set custom step', () => {
-    const { result } = renderHook(() => useStep({ initial: 1, max: STEPS.length }));
+    const { result } = renderHook(() => useStep({ initial: 2, max: STEPS.length }));
 
-    act(() => result.current.set(2));
-    expect(result.current.currentStep).toBe(2);
+    act(() => result.current.set(3));
+    expect(result.current.currentStep).toBe(3);
 
     act(() => result.current.set('first'));
     expect(result.current.currentStep).toBe(1);

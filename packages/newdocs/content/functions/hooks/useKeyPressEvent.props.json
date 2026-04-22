@@ -1,0 +1,331 @@
+{
+  "name": "useKeyPressEvent",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "Winter010",
+      "avatar": "https://gravatar.com/avatar/94c936f8fd796d1557ba60bd2e41d03f?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The key or keys to listen for */\r\nexport type UseKeyPressEventKey = string | string[];\r\n\r\n/** The use key press event options type */\r\nexport interface UseKeyPressEventOptions {\r\n  /** Whether the event should be captured */\r\n  capture?: boolean;\r\n  /** Whether the event listener should only be triggered once */\r\n  once?: boolean;\r\n  /** Whether the event listener should be passive */\r\n  passive?: boolean;\r\n}\r\n\r\nexport interface UseKeyPressEvent {\r\n  (\r\n    target: HookTarget | Window,\r\n    key: UseKeyPressEventKey,\r\n    listener: (event: KeyboardEvent) => void,\r\n    options?: UseKeyPressEventOptions\r\n  ): void;\r\n\r\n  <Target extends Element>(\r\n    key: UseKeyPressEventKey,\r\n    listener: (event: KeyboardEvent) => void,\r\n    options?: UseKeyPressEventOptions,\r\n    target?: never\r\n  ): StateRef<Target>;\r\n}\r\n\r\n/**\r\n * @name useKeyPressEvent\r\n * @description - Hook that listens for key press events on specified targets\r\n * @category Sensors\r\n * @usage low\r\n *\r\n * @overload\r\n * @param {UseKeyPressEventKey} key The key or array of keys to listen for.\r\n * @param {HookTarget | Window} target The target to attach the event listener to.\r\n * @param {(event: KeyboardEvent) => void} listener The callback function to be executed when the specified key or keys are pressed.\r\n * @param {UseKeyPressEventOptions} [options] The options for the event listener.\r\n * @returns {void}\r\n *\r\n * @example\r\n * useKeyPressEvent(ref, 'Enter', () => console.log('pressed'));\r\n *\r\n * @overload\r\n * @template Target extends Element\r\n * @param {UseKeyPressEventKey} key The key or array of keys to listen for.\r\n * @param {(event: KeyboardEvent) => void} listener The callback function to be executed when the specified key or keys are pressed.\r\n * @param {UseKeyPressEventOptions} [options] The options for the event listener.\r\n * @returns {StateRef<Target>} A ref to attach to the target element\r\n *\r\n * @example\r\n * const ref = useKeyPressEvent('Enter', (event) => console.log('pressed'));\r\n */\r\nexport const useKeyPressEvent = ((...params: any[]) => {\r\n  const target = isTarget(params[0]) ? params[0] : undefined;\r\n  const key = (target ? params[1] : params[0]) as UseKeyPressEventKey;\r\n  const listener = (target ? params[2] : params[1]) as (event: KeyboardEvent) => void;\r\n  const options = (target ? params[3] : params[2]) as UseKeyPressEventOptions | undefined;\r\n\r\n  const internalRef = useRefState(window);\r\n\r\n  const keyRef = useRef(key);\r\n  keyRef.current = key;\r\n  const listenerRef = useRef(listener);\r\n  listenerRef.current = listener;\r\n\r\n  useEffect(() => {\r\n    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;\r\n    if (!element) return;\r\n\r\n    const onKeyDown = (event: Event) => {\r\n      const keyboardEvent = event as KeyboardEvent;\r\n      const keys = Array.isArray(keyRef.current) ? keyRef.current : [keyRef.current];\r\n      if (keys.includes(keyboardEvent.key)) {\r\n        listenerRef.current(keyboardEvent);\r\n      }\r\n    };\r\n\r\n    element.addEventListener('keydown', onKeyDown, {\r\n      capture: options?.capture,\r\n      passive: options?.passive,\r\n      once: options?.once\r\n    });\r\n\r\n    return () => {\r\n      element.removeEventListener('keydown', onKeyDown, {\r\n        capture: options?.capture\r\n      });\r\n    };\r\n  }, [\r\n    target && isTarget.getRawElement(target),\r\n    internalRef.state,\r\n    options?.capture,\r\n    options?.passive,\r\n    options?.once\r\n  ]);\r\n\r\n  if (target) return;\r\n  return internalRef;\r\n}) as UseKeyPressEvent;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport type UseKeyPressEventKey = string | string[];\n\nexport interface UseKeyPressEventOptions {\r\n  /** Whether the event should be captured */\r\n  capture?: boolean;\r\n  /** Whether the event listener should only be triggered once */\r\n  once?: boolean;\r\n  /** Whether the event listener should be passive */\r\n  passive?: boolean;\r\n}\n\nexport interface UseKeyPressEvent {\r\n  (\r\n    target: HookTarget | Window,\r\n    key: UseKeyPressEventKey,\r\n    listener: (event: KeyboardEvent) => void,\r\n    options?: UseKeyPressEventOptions\r\n  ): void;\r\n\r\n  <Target extends Element>(\r\n    key: UseKeyPressEventKey,\r\n    listener: (event: KeyboardEvent) => void,\r\n    options?: UseKeyPressEventOptions,\r\n    target?: never\r\n  ): StateRef<Target>;\r\n}",
+  "description": "Hook that listens for key press events on specified targets",
+  "examples": [
+    "useKeyPressEvent(ref, 'Enter', () => console.log('pressed'));",
+    "const ref = useKeyPressEvent('Enter', (event) => console.log('pressed'));"
+  ],
+  "usage": "low",
+  "category": "sensors",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "UseKeyPressEventKey",
+          "optional": false,
+          "description": "The key or array of keys to listen for.",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {UseKeyPressEventKey} key The key or array of keys to listen for.\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{UseKeyPressEventKey}",
+                "postType": " ",
+                "description": "The key or array of keys to listen for.",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget | Window",
+          "optional": false,
+          "description": "The target to attach the event listener to.",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {HookTarget | Window} target The target to attach the event listener to.\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget | Window}",
+                "postType": " ",
+                "description": "The target to attach the event listener to.",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "listener",
+          "type": "(event: KeyboardEvent) => void",
+          "optional": false,
+          "description": "The callback function to be executed when the specified key or keys are pressed.",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {(event: KeyboardEvent) => void} listener The callback function to be executed when the specified key or keys are pressed.\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "listener",
+                "postName": " ",
+                "type": "{(event: KeyboardEvent) => void}",
+                "postType": " ",
+                "description": "The callback function to be executed when the specified key or keys are pressed.",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseKeyPressEventOptions",
+          "optional": true,
+          "description": "The options for the event listener.",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {UseKeyPressEventOptions} [options] The options for the event listener.\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseKeyPressEventOptions}",
+                "postType": " ",
+                "description": "The options for the event listener.",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 11,
+            "source": " * @returns {void}\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 12,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "UseKeyPressEventKey",
+          "optional": false,
+          "description": "The key or array of keys to listen for.",
+          "problems": [],
+          "source": [
+            {
+              "number": 18,
+              "source": " * @param {UseKeyPressEventKey} key The key or array of keys to listen for.\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{UseKeyPressEventKey}",
+                "postType": " ",
+                "description": "The key or array of keys to listen for.",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "listener",
+          "type": "(event: KeyboardEvent) => void",
+          "optional": false,
+          "description": "The callback function to be executed when the specified key or keys are pressed.",
+          "problems": [],
+          "source": [
+            {
+              "number": 19,
+              "source": " * @param {(event: KeyboardEvent) => void} listener The callback function to be executed when the specified key or keys are pressed.\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "listener",
+                "postName": " ",
+                "type": "{(event: KeyboardEvent) => void}",
+                "postType": " ",
+                "description": "The callback function to be executed when the specified key or keys are pressed.",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options",
+          "type": "UseKeyPressEventOptions",
+          "optional": true,
+          "description": "The options for the event listener.",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {UseKeyPressEventOptions} [options] The options for the event listener.\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options]",
+                "postName": " ",
+                "type": "{UseKeyPressEventOptions}",
+                "postType": " ",
+                "description": "The options for the event listener.",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "StateRef<Target>",
+        "optional": false,
+        "description": "ref to attach to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 21,
+            "source": " * @returns {StateRef<Target>} A ref to attach to the target element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{StateRef<Target>}",
+              "postType": " ",
+              "description": "ref to attach to the target element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 22,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": true,
+  "lastModified": 1775645190000
+}

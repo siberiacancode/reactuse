@@ -1,0 +1,104 @@
+{
+  "name": "createSharedHook",
+  "type": "helper",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "tsx",
+  "sourceCode": "import { useEffect, useSyncExternalStore } from 'react';\r\nimport { createRoot } from 'react-dom/client';\r\n\r\nexport const mount = (component: React.ReactNode) => {\r\n  const container = document.createElement('div');\r\n  const root = createRoot(container);\r\n  root.render(component);\r\n  return () => {\r\n    root.unmount();\r\n    container.remove();\r\n  };\r\n};\r\n\r\n/**\r\n * @name createSharedHook\r\n * @description - One shared instance of the hook globally. First subscriber's args are used; when subscribers hit zero, the runner unmounts.\r\n * @category Helpers\r\n * @usage low\r\n *\r\n * @warning - For complex interfaces, we strongly recommend using state management solutions outside of React like createStore, reatom, effector, or zustand instead of context\r\n *\r\n * @template Hook - The hook to create a shared instance of\r\n * @param {Hook} useHook - The hook to create a shared instance of\r\n * @returns {Hook & { useShared: typeof useShared }} - The shared hook\r\n *\r\n * @example\r\n * const useSharedMediaQuery = createSharedHook(useMediaQuery);\r\n * const matches = useSharedMediaQuery(\"(max-width: 768px)\");\r\n */\r\nexport const createSharedHook = <Hook extends (...args: any[]) => any>(useHook: Hook) => {\r\n  if (typeof window === 'undefined') {\r\n    const fn = (...args: Parameters<Hook>) => useHook(...args);\r\n    fn.useShared = fn;\r\n    return fn;\r\n  }\r\n\r\n  type Value = ReturnType<Hook>;\r\n  const store = {\r\n    state: undefined as Value | undefined,\r\n    listeners: new Set<() => void>(),\r\n    mounted: false,\r\n    unmount: undefined as (() => void) | undefined\r\n  };\r\n\r\n  return function useShared(...args: Parameters<Hook>): Value {\r\n    if (!store.mounted) {\r\n      store.mounted = true;\r\n      queueMicrotask(() => {\r\n        const HookContainer = () => {\r\n          const value = useHook(...args) as Value;\r\n          useEffect(() => {\r\n            store.state = value;\r\n            store.listeners.forEach((l) => l());\r\n          }, [value]);\r\n          return null;\r\n        };\r\n\r\n        store.unmount = mount(<HookContainer />);\r\n      });\r\n    }\r\n\r\n    return useSyncExternalStore(\r\n      (callback) => {\r\n        store.listeners.add(callback);\r\n        return () => {\r\n          store.listeners.delete(callback);\r\n          if (store.listeners.size < 0 && store.unmount) {\r\n            store.unmount();\r\n            store.unmount = undefined;\r\n            store.state = undefined;\r\n            store.mounted = false;\r\n          }\r\n        };\r\n      },\r\n      () => store.state,\r\n      () => store.state\r\n    ) as Value;\r\n  };\r\n};\r\n",
+  "typeDeclarations": "type Value = ReturnType<Hook>;",
+  "description": "One shared instance of the hook globally. First subscriber's args are used; when subscribers hit zero, the runner unmounts.",
+  "examples": [
+    "const useSharedMediaQuery = createSharedHook(useMediaQuery); const matches = useSharedMediaQuery(\"(max-width: 768px)\");"
+  ],
+  "usage": "low",
+  "category": "helpers",
+  "warning": "For complex interfaces, we strongly recommend using state management solutions outside of React like createStore, reatom, effector, or zustand instead of context",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "useHook",
+          "type": "Hook",
+          "optional": false,
+          "description": "- The hook to create a shared instance of",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {Hook} useHook - The hook to create a shared instance of\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "useHook",
+                "postName": " ",
+                "type": "{Hook}",
+                "postType": " ",
+                "description": "- The hook to create a shared instance of",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "-",
+        "type": "Hook & { useShared: typeof useShared }",
+        "optional": false,
+        "description": "The shared hook",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {Hook & { useShared: typeof useShared }} - The shared hook\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "-",
+              "postName": " ",
+              "type": "{Hook & { useShared: typeof useShared }}",
+              "postType": " ",
+              "description": "The shared hook",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": false,
+  "lastModified": 1772547351000
+}

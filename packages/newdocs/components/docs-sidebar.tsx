@@ -16,6 +16,11 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+type FunctionsSidebarGroup = {
+  items: { name: string; url: string }[];
+  title: string;
+};
+
 export const TOP_LEVEL_SECTIONS = [
   { name: 'Introduction', href: '/docs' },
   {
@@ -47,25 +52,28 @@ export const TOP_LEVEL_SECTIONS = [
 const EXCLUDED_SECTIONS = ['Introduction'];
 
 export const DocsSidebar = ({
+  functionsGroups,
   tree,
   ...props
-}: React.ComponentProps<typeof Sidebar> & { tree: typeof source.pageTree }) => {
+}: React.ComponentProps<typeof Sidebar> & {
+  functionsGroups?: FunctionsSidebarGroup[];
+  tree: typeof source.pageTree;
+}) => {
   const pathname = usePathname();
   const currentBase = getCurrentBase(pathname);
+  const topSectionHrefs = new Set(TOP_LEVEL_SECTIONS.map((section) => section.href));
 
   return (
     <Sidebar
-      className='sticky top-[calc(var(--header-height)+0.6rem)] z-30 hidden h-[calc(100svh-10rem)] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(56)] lg:flex'
+      className='sticky top-[calc(var(--header-height)+0.75rem)] z-30 hidden h-[calc(100svh-var(--header-height)-0.75rem)] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(56)] lg:flex'
       collapsible='none'
       {...props}
     >
-      <div className='h-9' />
-      <div className='from-background via-background/80 to-background/50 absolute top-8 z-10 h-8 w-(--sidebar-menu-width) shrink-0 bg-gradient-to-b blur-xs' />
       <div className='via-border absolute top-12 right-2 bottom-0 hidden h-full w-px bg-gradient-to-b from-transparent to-transparent lg:flex' />
       <SidebarContent className='no-scrollbar mx-auto w-(--sidebar-menu-width) overflow-x-hidden px-2'>
-        <SidebarGroup className='pt-6'>
+        <SidebarGroup className='pt-4'>
           <SidebarGroupLabel className='text-muted-foreground font-medium'>
-            Sections
+            Getting Started
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -73,7 +81,7 @@ export const DocsSidebar = ({
                 <SidebarMenuItem key={name}>
                   <SidebarMenuButton
                     asChild
-                    className='data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md'
+                    className='data-[active=true]:bg-accent data-[active=true]:border-accent relative h-[30px] w-full overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-0 after:z-0 after:rounded-md'
                     isActive={href === '/docs' ? pathname === href : pathname.startsWith(href)}
                   >
                     <Link href={href}>
@@ -91,6 +99,15 @@ export const DocsSidebar = ({
             return null;
           }
 
+          const pages =
+            item.type === 'folder'
+              ? getPagesFromFolder(item, currentBase).filter((page) => !topSectionHrefs.has(page.url))
+              : [];
+
+          if (item.type === 'folder' && pages.length === 0) {
+            return null;
+          }
+
           return (
             <SidebarGroup key={item.$id}>
               <SidebarGroupLabel className='text-muted-foreground font-medium'>
@@ -99,11 +116,11 @@ export const DocsSidebar = ({
               <SidebarGroupContent>
                 {item.type === 'folder' && (
                   <SidebarMenu className='gap-0.5'>
-                    {getPagesFromFolder(item, currentBase).map((page) => (
+                    {pages.map((page) => (
                       <SidebarMenuItem key={page.url}>
                         <SidebarMenuButton
                           asChild
-                          className='data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md'
+                          className='data-[active=true]:bg-accent data-[active=true]:border-accent relative h-[30px] w-full overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-0 after:z-0 after:rounded-md'
                           isActive={page.url === pathname}
                         >
                           <Link href={page.url}>
@@ -119,7 +136,32 @@ export const DocsSidebar = ({
             </SidebarGroup>
           );
         })}
-        <div className='from-background via-background/80 to-background/50 sticky -bottom-1 z-10 h-16 shrink-0 bg-gradient-to-t blur-xs' />
+
+        {(functionsGroups ?? []).map((group) => (
+          <SidebarGroup key={`functions-${group.title}`}>
+            <SidebarGroupLabel className='text-muted-foreground font-medium'>
+              {group.title}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu className='gap-0.5'>
+                {group.items.map((item) => (
+                  <SidebarMenuItem key={item.url}>
+                    <SidebarMenuButton
+                      asChild
+                      className='data-[active=true]:bg-accent data-[active=true]:border-accent relative h-[30px] w-full overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-0 after:z-0 after:rounded-md'
+                      isActive={pathname === item.url}
+                    >
+                      <Link href={item.url}>
+                        <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
+                        {item.name}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
     </Sidebar>
   );

@@ -103,7 +103,7 @@ export const MobileNav = ({
             <div className='flex flex-col gap-3'>
               {TOP_LEVEL_SECTIONS.map(({ name, href }) => (
                 <MobileLink key={name} href={href} onOpenChange={setOpen}>
-                  MobileNav
+                  {name}
                 </MobileLink>
               ))}
             </div>

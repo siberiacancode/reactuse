@@ -1,0 +1,514 @@
+{
+  "name": "useResizeObserver",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The resize observer callback type */\r\nexport type UseResizeObserverCallback = (\r\n  entry: ResizeObserverEntry,\r\n  observer: ResizeObserver\r\n) => void;\r\n\r\n/** The resize observer options type */\r\nexport interface UseResizeObserverOptions extends ResizeObserverOptions {\r\n  /** The enabled state of the resize observer */\r\n  enabled?: boolean;\r\n  /** The callback to execute when resize is detected */\r\n  onChange?: UseResizeObserverCallback;\r\n}\r\n\r\n/** The resize observer return type */\r\nexport interface UseResizeObserverReturn {\r\n  /** The resize observer entries */\r\n  entry: ResizeObserverEntry;\r\n  /** The resize observer instance */\r\n  observer?: ResizeObserver;\r\n}\r\n\r\nexport interface UseResizeObserver {\r\n  <Target extends Element>(\r\n    options?: UseResizeObserverOptions,\r\n    target?: never\r\n  ): UseResizeObserverReturn & { ref: StateRef<Target> };\r\n\r\n  (target: HookTarget, options?: UseResizeObserverOptions): UseResizeObserverReturn;\r\n\r\n  <Target extends Element>(\r\n    callback: UseResizeObserverCallback,\r\n    target?: never\r\n  ): UseResizeObserverReturn & { ref: StateRef<Target> };\r\n\r\n  (target: HookTarget, callback: UseResizeObserverCallback): UseResizeObserverReturn;\r\n}\r\n\r\n/**\r\n * @name useResizeObserver\r\n * @description - Hook that gives you resize observer state\r\n * @category Sensors\r\n * @usage low\r\n *\r\n * @browserapi ResizeObserver https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target element to observe\r\n * @param {boolean} [options.enabled=true] The enabled state of the resize observer\r\n * @param {ResizeObserverBoxOptions} [options.box] The box model to observe\r\n * @param {UseResizeObserverCallback} [options.onChange] The callback to execute when resize is detected\r\n * @returns {UseResizeObserverReturn} An object containing the resize observer state\r\n *\r\n * @example\r\n * const { entries, observer } = useResizeObserver(ref);\r\n *\r\n * @overload\r\n * @template Target The target element\r\n * @param {boolean} [options.enabled=true] The enabled state of the resize observer\r\n * @param {ResizeObserverBoxOptions} [options.box] The box model to observe\r\n * @param {UseResizeObserverCallback} [options.onChange] The callback to execute when resize is detected\r\n * @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r\n *\r\n * @example\r\n * const { ref, entry, observer } = useResizeObserver();\r\n *\r\n * @overload\r\n * @template Target The target element\r\n * @param {UseResizeObserverCallback} callback The callback to execute when resize is detected\r\n * @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r\n *\r\n * @example\r\n * const { ref, entry, observer } = useResizeObserver((entry) => console.log(entry));\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target element to observe\r\n * @param {UseResizeObserverCallback} callback The callback to execute when resize is detected\r\n * @returns {UseResizeObserverReturn} An object containing the resize observer state\r\n *\r\n * @example\r\n * const { entry, observer } = useResizeObserver(ref, (entry) => console.log(entry));\r\n */\r\nexport const useResizeObserver = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n\r\n  const options = (\r\n    target\r\n      ? typeof params[1] === 'object'\r\n        ? params[1]\r\n        : { onChange: params[1] }\r\n      : typeof params[0] === 'object'\r\n        ? params[0]\r\n        : { onChange: params[0] }\r\n  ) as UseResizeObserverOptions | undefined;\r\n\r\n  const callback = options?.onChange;\r\n  const enabled = options?.enabled ?? true;\r\n\r\n  const [entry, setEntry] = useState<ResizeObserverEntry>();\r\n  const [observer, setObserver] = useState<ResizeObserver>();\r\n\r\n  const internalRef = useRefState<Element>();\r\n  const internalCallbackRef = useRef(callback);\r\n  internalCallbackRef.current = callback;\r\n\r\n  useEffect(() => {\r\n    if (!enabled || (!target && !internalRef.state)) return;\r\n\r\n    const element = target ? isTarget.getElement(target) : internalRef.current;\r\n    if (!element) return;\r\n\r\n    const observer = new ResizeObserver(([entry], observer) => {\r\n      setEntry(entry);\r\n      internalCallbackRef.current?.(entry, observer);\r\n    });\r\n\r\n    setObserver(observer);\r\n    observer.observe(element as Element, options);\r\n\r\n    return () => {\r\n      observer.disconnect();\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state, options?.box, enabled]);\r\n\r\n  if (target) return { entry, observer };\r\n  return {\r\n    ref: internalRef,\r\n    entry,\r\n    observer\r\n  };\r\n}) as UseResizeObserver;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport type UseResizeObserverCallback = (\r\n  entry: ResizeObserverEntry,\r\n  observer: ResizeObserver\r\n) => void;\n\nexport interface UseResizeObserverOptions extends ResizeObserverOptions {\r\n  /** The enabled state of the resize observer */\r\n  enabled?: boolean;\r\n  /** The callback to execute when resize is detected */\r\n  onChange?: UseResizeObserverCallback;\r\n}\n\nexport interface UseResizeObserverReturn {\r\n  /** The resize observer entries */\r\n  entry: ResizeObserverEntry;\r\n  /** The resize observer instance */\r\n  observer?: ResizeObserver;\r\n}\n\nexport interface UseResizeObserver {\r\n  <Target extends Element>(\r\n    options?: UseResizeObserverOptions,\r\n    target?: never\r\n  ): UseResizeObserverReturn & { ref: StateRef<Target> };\r\n\r\n  (target: HookTarget, options?: UseResizeObserverOptions): UseResizeObserverReturn;\r\n\r\n  <Target extends Element>(\r\n    callback: UseResizeObserverCallback,\r\n    target?: never\r\n  ): UseResizeObserverReturn & { ref: StateRef<Target> };\r\n\r\n  (target: HookTarget, callback: UseResizeObserverCallback): UseResizeObserverReturn;\r\n}",
+  "description": "Hook that gives you resize observer state",
+  "examples": [
+    "const { entries, observer } = useResizeObserver(ref);",
+    "const { ref, entry, observer } = useResizeObserver();",
+    "const { ref, entry, observer } = useResizeObserver((entry) => console.log(entry));",
+    "const { entry, observer } = useResizeObserver(ref, (entry) => console.log(entry));"
+  ],
+  "usage": "low",
+  "category": "sensors",
+  "browserapi": "ResizeObserver",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {HookTarget} target The target element to observe\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to observe",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "The enabled state of the resize observer",
+          "problems": [],
+          "source": [
+            {
+              "number": 10,
+              "source": " * @param {boolean} [options.enabled=true] The enabled state of the resize observer\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The enabled state of the resize observer",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.box",
+          "type": "ResizeObserverBoxOptions",
+          "optional": true,
+          "description": "The box model to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 11,
+              "source": " * @param {ResizeObserverBoxOptions} [options.box] The box model to observe\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.box]",
+                "postName": " ",
+                "type": "{ResizeObserverBoxOptions}",
+                "postType": " ",
+                "description": "The box model to observe",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onChange",
+          "type": "UseResizeObserverCallback",
+          "optional": true,
+          "description": "The callback to execute when resize is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 12,
+              "source": " * @param {UseResizeObserverCallback} [options.onChange] The callback to execute when resize is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onChange]",
+                "postName": " ",
+                "type": "{UseResizeObserverCallback}",
+                "postType": " ",
+                "description": "The callback to execute when resize is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseResizeObserverReturn",
+        "optional": false,
+        "description": "object containing the resize observer state",
+        "problems": [],
+        "source": [
+          {
+            "number": 13,
+            "source": " * @returns {UseResizeObserverReturn} An object containing the resize observer state\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseResizeObserverReturn}",
+              "postType": " ",
+              "description": "object containing the resize observer state",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 14,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.enabled",
+          "type": "boolean",
+          "optional": true,
+          "description": "The enabled state of the resize observer",
+          "problems": [],
+          "source": [
+            {
+              "number": 20,
+              "source": " * @param {boolean} [options.enabled=true] The enabled state of the resize observer\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.enabled=true]",
+                "postName": " ",
+                "type": "{boolean}",
+                "postType": " ",
+                "description": "The enabled state of the resize observer",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "true"
+        },
+        {
+          "tag": "param",
+          "name": "options.box",
+          "type": "ResizeObserverBoxOptions",
+          "optional": true,
+          "description": "The box model to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 21,
+              "source": " * @param {ResizeObserverBoxOptions} [options.box] The box model to observe\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.box]",
+                "postName": " ",
+                "type": "{ResizeObserverBoxOptions}",
+                "postType": " ",
+                "description": "The box model to observe",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onChange",
+          "type": "UseResizeObserverCallback",
+          "optional": true,
+          "description": "The callback to execute when resize is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 22,
+              "source": " * @param {UseResizeObserverCallback} [options.onChange] The callback to execute when resize is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onChange]",
+                "postName": " ",
+                "type": "{UseResizeObserverCallback}",
+                "postType": " ",
+                "description": "The callback to execute when resize is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "UseResizeObserverReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "React ref to attach to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 23,
+            "source": " * @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{UseResizeObserverReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "React ref to attach to the target element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 24,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "UseResizeObserverCallback",
+          "optional": false,
+          "description": "The callback to execute when resize is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 30,
+              "source": " * @param {UseResizeObserverCallback} callback The callback to execute when resize is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{UseResizeObserverCallback}",
+                "postType": " ",
+                "description": "The callback to execute when resize is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "UseResizeObserverReturn & { ref: StateRef<Target> }",
+        "optional": false,
+        "description": "React ref to attach to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 31,
+            "source": " * @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{UseResizeObserverReturn & { ref: StateRef<Target> }}",
+              "postType": " ",
+              "description": "React ref to attach to the target element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 32,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element to observe",
+          "problems": [],
+          "source": [
+            {
+              "number": 37,
+              "source": " * @param {HookTarget} target The target element to observe\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element to observe",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "UseResizeObserverCallback",
+          "optional": false,
+          "description": "The callback to execute when resize is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 38,
+              "source": " * @param {UseResizeObserverCallback} callback The callback to execute when resize is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{UseResizeObserverCallback}",
+                "postType": " ",
+                "description": "The callback to execute when resize is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseResizeObserverReturn",
+        "optional": false,
+        "description": "object containing the resize observer state",
+        "problems": [],
+        "source": [
+          {
+            "number": 39,
+            "source": " * @returns {UseResizeObserverReturn} An object containing the resize observer state\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseResizeObserverReturn}",
+              "postType": " ",
+              "description": "object containing the resize observer state",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 40,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1768553242000
+}

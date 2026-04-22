@@ -1,0 +1,91 @@
+{
+  "name": "useBattery",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "Nikita",
+      "avatar": "https://gravatar.com/avatar/cac51cebf1d47bc09276acf215a48514?d=retro"
+    },
+    {
+      "name": "Gorilla Dev",
+      "avatar": "https://gravatar.com/avatar/ca17ccb5824fdd8626a4ec87e904597b?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\nexport interface BatteryManager extends EventTarget {\r\n  charging: boolean;\r\n  chargingTime: number;\r\n  dischargingTime: number;\r\n  level: number;\r\n}\r\n\r\ndeclare global {\r\n  interface Navigator {\r\n    readonly getBattery: () => Promise<BatteryManager>;\r\n  }\r\n}\r\n\r\n/** The use battery value type */\r\nexport interface UseBatteryValue {\r\n  /** Is charging battery? */\r\n  charging: boolean;\r\n  /** Time until the battery is fully charged */\r\n  chargingTime: number;\r\n  /** Time until the battery is completely discharged */\r\n  dischargingTime: number;\r\n  /** Battery charge level from 0 to 1 */\r\n  level: number;\r\n  /** Is battery information loading? */\r\n  loading: boolean;\r\n}\r\n\r\n/** The use battery return type */\r\nexport interface UseBatteryStateReturn {\r\n  /** Whether the battery api is supported*/\r\n  supported: boolean;\r\n  /** The use battery value type  */\r\n  value: UseBatteryValue;\r\n}\r\n\r\n/**\r\n * @name useBattery\r\n * @description - Hook for getting information about battery status\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi navigator.getBattery https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery\r\n *\r\n * @returns {UseBatteryStateReturn} Object containing battery information & Battery API support\r\n *\r\n * @example\r\n * const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();\r\n */\r\nexport const useBattery = (): UseBatteryStateReturn => {\r\n  const supported =\r\n    typeof navigator !== 'undefined' &&\r\n    'getBattery' in navigator &&\r\n    typeof navigator.getBattery === 'function';\r\n\r\n  const [value, setValue] = useState<UseBatteryValue>({\r\n    loading: supported,\r\n    level: 0,\r\n    charging: false,\r\n    chargingTime: 0,\r\n    dischargingTime: 0\r\n  });\r\n\r\n  useEffect(() => {\r\n    if (!supported) return;\r\n\r\n    let battery: BatteryManager | null;\r\n\r\n    const onChange = () =>\r\n      setValue({\r\n        loading: false,\r\n        level: battery?.level ?? 0,\r\n        charging: battery?.charging ?? false,\r\n        dischargingTime: battery?.dischargingTime ?? 0,\r\n        chargingTime: battery?.chargingTime ?? 0\r\n      });\r\n\r\n    navigator.getBattery().then((batteryManager) => {\r\n      battery = batteryManager;\r\n      onChange();\r\n\r\n      battery.addEventListener('levelchange', onChange);\r\n      battery.addEventListener('chargingchange', onChange);\r\n      battery.addEventListener('chargingtimechange', onChange);\r\n      battery.addEventListener('dischargingtimechange', onChange);\r\n    });\r\n\r\n    return () => {\r\n      if (!battery) return;\r\n      battery.removeEventListener('levelchange', onChange);\r\n      battery.removeEventListener('chargingchange', onChange);\r\n      battery.removeEventListener('chargingtimechange', onChange);\r\n      battery.removeEventListener('dischargingtimechange', onChange);\r\n    };\r\n  }, []);\r\n\r\n  return { supported, value };\r\n};\r\n",
+  "typeDeclarations": "export interface BatteryManager extends EventTarget {\r\n  charging: boolean;\r\n  chargingTime: number;\r\n  dischargingTime: number;\r\n  level: number;\r\n}\n\ninterface Navigator {\r\n    readonly getBattery: () => Promise<BatteryManager>;\r\n  }\n\nexport interface UseBatteryValue {\r\n  /** Is charging battery? */\r\n  charging: boolean;\r\n  /** Time until the battery is fully charged */\r\n  chargingTime: number;\r\n  /** Time until the battery is completely discharged */\r\n  dischargingTime: number;\r\n  /** Battery charge level from 0 to 1 */\r\n  level: number;\r\n  /** Is battery information loading? */\r\n  loading: boolean;\r\n}\n\nexport interface UseBatteryStateReturn {\r\n  /** Whether the battery api is supported*/\r\n  supported: boolean;\r\n  /** The use battery value type  */\r\n  value: UseBatteryValue;\r\n}",
+  "description": "Hook for getting information about battery status",
+  "examples": [
+    "const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "browserapi": "navigator.getBattery",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [],
+      "returns": {
+        "tag": "returns",
+        "name": "Object",
+        "type": "UseBatteryStateReturn",
+        "optional": false,
+        "description": "containing battery information & Battery API support",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseBatteryStateReturn} Object containing battery information & Battery API support\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "Object",
+              "postName": " ",
+              "type": "{UseBatteryStateReturn}",
+              "postType": " ",
+              "description": "containing battery information & Battery API support",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1755779687000
+}

@@ -1,0 +1,103 @@
+{
+  "name": "useFul",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect } from 'react';\r\n\r\n/**\r\n * @name useFul\r\n * @description - Hook that can be so useful\r\n * @category Humor\r\n * @usage low\r\n *\r\n * @warning - This hook is a joke. Please do not use it in production code!\r\n *\r\n * @template Value The type of the value\r\n * @param {Value} [value] The value to be returned\r\n * @returns {Value} The value passed to the hook\r\n *\r\n * @example\r\n * const value = useFul(state);\r\n */\r\nexport const useFul = <Value>(value?: Value) => {\r\n  useEffect(() => {\r\n    console.warn(\"Warning: You forgot to delete the 'useFul' hook.\");\r\n  }, []);\r\n\r\n  return value;\r\n};\r\n",
+  "description": "Hook that can be so useful",
+  "examples": [
+    "const value = useFul(state);"
+  ],
+  "usage": "low",
+  "category": "humor",
+  "warning": "This hook is a joke. Please do not use it in production code!",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "value",
+          "type": "Value",
+          "optional": true,
+          "description": "The value to be returned",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {Value} [value] The value to be returned\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[value]",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The value to be returned",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "Value",
+        "optional": false,
+        "description": "value passed to the hook",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {Value} The value passed to the hook\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{Value}",
+              "postType": " ",
+              "description": "value passed to the hook",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

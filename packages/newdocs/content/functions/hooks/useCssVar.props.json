@@ -1,0 +1,267 @@
+{
+  "name": "useCssVar",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The css variable return type */\r\nexport interface UseCssVarReturn {\r\n  /** The value of the CSS variable */\r\n  value: string;\r\n  /** Remove the value of the CSS variable */\r\n  remove: () => void;\r\n  /** Set the value of the CSS variable */\r\n  set: (value: string) => void;\r\n}\r\n\r\nexport interface UseCssVar {\r\n  <Target extends HTMLElement>(\r\n    key: string,\r\n    initialValue?: string\r\n  ): UseCssVarReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n\r\n  (target: HookTarget, key: string, initialValue?: string): UseCssVarReturn;\r\n}\r\n\r\n/**\r\n * @name useCssVar\r\n * @description - Hook that returns the value of a css variable\r\n * @category Browser\r\n * @usage low\r\n\r\n * @overload\r\n * @param {string} key The CSS variable key\r\n * @param {string} initialValue The initial value of the CSS variable\r\n * @returns {UseCssVarReturn & { ref: StateRef<Element> }} The object containing the value of the CSS variable and ref\r\n *\r\n * @example\r\n * const { ref, value, set, remove } = useCssVar('--color', 'red');\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target element\r\n * @param {string} key The CSS variable key\r\n * @param {string} initialValue The initial value of the CSS variable\r\n * @returns {UseCssVarReturn} The object containing the value of the CSS variable\r\n *\r\n * @example\r\n * const { value, set, remove } = useCssVar(ref, '--color', 'red');\r\n */\r\nexport const useCssVar = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const key = (target ? params[1] : params[0]) as string;\r\n  const initialValue = (target ? params[2] : params[1]) as string | undefined;\r\n\r\n  const [value, setValue] = useState(initialValue ?? '');\r\n  const internalRef = useRefState<HTMLElement>();\r\n  const elementRef = useRef<HTMLElement>(null);\r\n\r\n  const set = (value: string) => {\r\n    if (!elementRef.current) return;\r\n    const element = elementRef.current;\r\n\r\n    if (!element.style) return;\r\n    element.style.setProperty(key, value);\r\n    setValue(value);\r\n  };\r\n\r\n  const remove = () => {\r\n    if (!elementRef.current) return;\r\n    const element = elementRef.current;\r\n    if (!element.style) return;\r\n\r\n    element.style.removeProperty(key);\r\n    setValue('');\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (!initialValue) return;\r\n\r\n    const element =\r\n      ((target ? isTarget.getElement(target) : internalRef.current) as HTMLElement) ??\r\n      window.document.documentElement;\r\n\r\n    if (!element.style) return;\r\n    element.style.setProperty(key, initialValue);\r\n    setValue(initialValue);\r\n  }, []);\r\n\r\n  useEffect(() => {\r\n    const element =\r\n      ((target ? isTarget.getElement(target) : internalRef.current) as HTMLElement) ??\r\n      window.document.documentElement;\r\n\r\n    elementRef.current = element;\r\n\r\n    const onChange = () => {\r\n      const value = window.getComputedStyle(element).getPropertyValue(key)?.trim();\r\n\r\n      setValue(value ?? initialValue);\r\n    };\r\n\r\n    const observer = new MutationObserver(onChange);\r\n\r\n    observer.observe(element, { attributeFilter: ['style', 'class'] });\r\n\r\n    return () => {\r\n      observer.disconnect();\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state]);\r\n\r\n  if (target) return { value, set, remove };\r\n  return { ref: internalRef, value, set, remove };\r\n}) as UseCssVar;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface UseCssVarReturn {\r\n  /** The value of the CSS variable */\r\n  value: string;\r\n  /** Remove the value of the CSS variable */\r\n  remove: () => void;\r\n  /** Set the value of the CSS variable */\r\n  set: (value: string) => void;\r\n}\n\nexport interface UseCssVar {\r\n  <Target extends HTMLElement>(\r\n    key: string,\r\n    initialValue?: string\r\n  ): UseCssVarReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n\r\n  (target: HookTarget, key: string, initialValue?: string): UseCssVarReturn;\r\n}",
+  "description": "Hook that returns the value of a css variable",
+  "examples": [
+    "const { ref, value, set, remove } = useCssVar('--color', 'red');",
+    "const { value, set, remove } = useCssVar(ref, '--color', 'red');"
+  ],
+  "usage": "low",
+  "category": "browser",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "string",
+          "optional": false,
+          "description": "The CSS variable key",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {string} key The CSS variable key\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The CSS variable key",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "string",
+          "optional": false,
+          "description": "The initial value of the CSS variable",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {string} initialValue The initial value of the CSS variable\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The initial value of the CSS variable",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseCssVarReturn & { ref: StateRef<Element> }",
+        "optional": false,
+        "description": "object containing the value of the CSS variable and ref",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {UseCssVarReturn & { ref: StateRef<Element> }} The object containing the value of the CSS variable and ref\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseCssVarReturn & { ref: StateRef<Element> }}",
+              "postType": " ",
+              "description": "object containing the value of the CSS variable and ref",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element",
+          "problems": [],
+          "source": [
+            {
+              "number": 15,
+              "source": " * @param {HookTarget} target The target element\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "key",
+          "type": "string",
+          "optional": false,
+          "description": "The CSS variable key",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {string} key The CSS variable key\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "key",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The CSS variable key",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "string",
+          "optional": false,
+          "description": "The initial value of the CSS variable",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {string} initialValue The initial value of the CSS variable\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{string}",
+                "postType": " ",
+                "description": "The initial value of the CSS variable",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseCssVarReturn",
+        "optional": false,
+        "description": "object containing the value of the CSS variable",
+        "problems": [],
+        "source": [
+          {
+            "number": 18,
+            "source": " * @returns {UseCssVarReturn} The object containing the value of the CSS variable\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseCssVarReturn}",
+              "postType": " ",
+              "description": "object containing the value of the CSS variable",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 19,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1768553242000
+}

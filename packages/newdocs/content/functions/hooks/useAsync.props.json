@@ -1,0 +1,136 @@
+{
+  "name": "useAsync",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import type { DependencyList } from 'react';\r\n\r\nimport { useEffect, useState } from 'react';\r\n\r\n/* The use query return type */\r\nexport interface UseAsyncReturn<Data> {\r\n  /* The state of the query */\r\n  data?: Data;\r\n  /* The error of the query */\r\n  error?: Error;\r\n  /* The error state of the query  */\r\n  isError: boolean;\r\n  /* The loading state of the query */\r\n  isLoading: boolean;\r\n}\r\n\r\n/**\r\n * @name useAsync\r\n * @description - Hook that provides the state of an async callback\r\n * @category Async\r\n * @usage medium\r\n *\r\n * @param {() => Promise<Data>} callback The async callback\r\n * @param {DependencyList} [deps=[]] The dependencies of the callback\r\n * @returns {UseAsyncReturn<Data>} The state of the async callback\r\n *\r\n * @example\r\n * const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);\r\n */\r\nexport const useAsync = <Data>(\r\n  callback: () => Promise<Data>,\r\n  deps: DependencyList = []\r\n): UseAsyncReturn<Data> => {\r\n  const [isLoading, setIsLoading] = useState(true);\r\n  const [isError, setIsError] = useState(false);\r\n\r\n  const [error, setError] = useState<Error | undefined>(undefined);\r\n  const [data, setData] = useState<Data | undefined>(undefined);\r\n\r\n  useEffect(() => {\r\n    setIsLoading(true);\r\n    callback()\r\n      .then((response) => {\r\n        setData(response);\r\n        setError(undefined);\r\n        setIsError(false);\r\n      })\r\n      .catch((error: Error) => {\r\n        setError(error);\r\n        setIsError(true);\r\n      })\r\n      .finally(() => {\r\n        setIsLoading(false);\r\n      });\r\n  }, deps);\r\n\r\n  return {\r\n    data,\r\n    isLoading,\r\n    isError,\r\n    error\r\n  };\r\n};\r\n",
+  "typeDeclarations": "import type { DependencyList } from 'react';\n\nexport interface UseAsyncReturn<Data> {\r\n  /* The state of the query */\r\n  data?: Data;\r\n  /* The error of the query */\r\n  error?: Error;\r\n  /* The error state of the query  */\r\n  isError: boolean;\r\n  /* The loading state of the query */\r\n  isLoading: boolean;\r\n}",
+  "description": "Hook that provides the state of an async callback",
+  "examples": [
+    "const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);"
+  ],
+  "usage": "medium",
+  "category": "async",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "() => Promise<Data>",
+          "optional": false,
+          "description": "The async callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 6,
+              "source": " * @param {() => Promise<Data>} callback The async callback\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{() => Promise<Data>}",
+                "postType": " ",
+                "description": "The async callback",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "deps",
+          "type": "DependencyList",
+          "optional": true,
+          "description": "The dependencies of the callback",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {DependencyList} [deps=[]] The dependencies of the callback\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[deps=[]]",
+                "postName": " ",
+                "type": "{DependencyList}",
+                "postType": " ",
+                "description": "The dependencies of the callback",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "[]"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseAsyncReturn<Data>",
+        "optional": false,
+        "description": "state of the async callback",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseAsyncReturn<Data>} The state of the async callback\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseAsyncReturn<Data>}",
+              "postType": " ",
+              "description": "state of the async callback",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

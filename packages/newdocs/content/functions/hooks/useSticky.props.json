@@ -1,0 +1,271 @@
+{
+  "name": "useSticky",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useState } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\n/** The use sticky return type */\r\nexport interface UseStickyReturn {\r\n  stuck: boolean;\r\n}\r\n\r\n/** The use sticky axis type */\r\nexport type UseStickyAxis = 'horizontal' | 'vertical';\r\n\r\n/** The use sticky options type */\r\nexport interface UseStickyOptions {\r\n  axis?: UseStickyAxis;\r\n  root?: HookTarget;\r\n}\r\n\r\nexport interface UseSticky {\r\n  (target: HookTarget, options?: UseStickyOptions): UseStickyReturn;\r\n\r\n  <Target extends Element>(\r\n    options?: UseStickyOptions,\r\n    target?: never\r\n  ): UseStickyReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n}\r\n\r\n/**\r\n * @name UseSticky\r\n * @description - Hook that allows you to detect that your sticky component is stuck\r\n * @category Elements\r\n * @usage low\r\n *\r\n * @overload\r\n * @param {HookTarget} target The target sticky element\r\n * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component\r\n * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component\r\n * @returns {UseStickyReturn} The state of the sticky\r\n *\r\n * @example\r\n * const { stuck } = useSticky(ref);\r\n *\r\n * @overload\r\n * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component\r\n * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component\r\n * @returns {{ ref: StateRef<Target> } & UseStickyReturn} The state of the sticky\r\n *\r\n * @example\r\n * const { stuck, ref } = useSticky();\r\n */\r\nexport const useSticky = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const options = (target ? params[1] : params[0]) as UseStickyOptions;\r\n  const axis = options?.axis ?? 'vertical';\r\n\r\n  const internalRef = useRefState<Element>();\r\n  const [stuck, setStuck] = useState(false);\r\n\r\n  useEffect(() => {\r\n    if (!target && !internalRef.state) return;\r\n\r\n    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;\r\n    if (!element) return;\r\n\r\n    const root = (options?.root ? isTarget.getElement(options.root) : document) as Element;\r\n    const elementOffsetTop =\r\n      element.getBoundingClientRect().top + root.scrollTop - root.getBoundingClientRect().top;\r\n    const elementOffsetLeft =\r\n      element.getBoundingClientRect().left + root.scrollLeft - root.getBoundingClientRect().left;\r\n\r\n    const onSticky = () => {\r\n      if (axis === 'vertical') {\r\n        const scrollTop = root.scrollTop;\r\n        setStuck(scrollTop >= elementOffsetTop);\r\n      }\r\n\r\n      if (axis === 'horizontal') {\r\n        const scrollLeft = root.scrollLeft;\r\n        setStuck(scrollLeft >= elementOffsetLeft);\r\n      }\r\n    };\r\n\r\n    root.addEventListener('scroll', onSticky);\r\n    window.addEventListener('resize', onSticky);\r\n    window.addEventListener('orientationchange', onSticky);\r\n\r\n    onSticky();\r\n\r\n    return () => {\r\n      root.removeEventListener('scroll', onSticky);\r\n      window.removeEventListener('resize', onSticky);\r\n      window.removeEventListener('orientationchange', onSticky);\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state, axis, options?.root]);\r\n\r\n  if (target) return { stuck };\r\n  return {\r\n    stuck,\r\n    ref: internalRef\r\n  };\r\n}) as UseSticky;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface UseStickyReturn {\r\n  stuck: boolean;\r\n}\n\nexport type UseStickyAxis = 'horizontal' | 'vertical';\n\nexport interface UseStickyOptions {\r\n  axis?: UseStickyAxis;\r\n  root?: HookTarget;\r\n}\n\nexport interface UseSticky {\r\n  (target: HookTarget, options?: UseStickyOptions): UseStickyReturn;\r\n\r\n  <Target extends Element>(\r\n    options?: UseStickyOptions,\r\n    target?: never\r\n  ): UseStickyReturn & {\r\n    ref: StateRef<Target>;\r\n  };\r\n}",
+  "description": "Hook that allows you to detect that your sticky component is stuck",
+  "examples": [
+    "const { stuck } = useSticky(ref);",
+    "const { stuck, ref } = useSticky();"
+  ],
+  "usage": "low",
+  "category": "elements",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target sticky element",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target sticky element\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target sticky element",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.axis",
+          "type": "UseStickyAxis",
+          "optional": true,
+          "description": "The axis of motion of the sticky component",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.axis='vertical']",
+                "postName": " ",
+                "type": "{UseStickyAxis}",
+                "postType": " ",
+                "description": "The axis of motion of the sticky component",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'vertical'"
+        },
+        {
+          "tag": "param",
+          "name": "options.root",
+          "type": "UseStickyRoot",
+          "optional": true,
+          "description": "The element that contains your sticky component",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.root=document]",
+                "postName": " ",
+                "type": "{UseStickyRoot}",
+                "postType": " ",
+                "description": "The element that contains your sticky component",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "document"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "UseStickyReturn",
+        "optional": false,
+        "description": "state of the sticky",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseStickyReturn} The state of the sticky\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{UseStickyReturn}",
+              "postType": " ",
+              "description": "state of the sticky",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.axis",
+          "type": "UseStickyAxis",
+          "optional": true,
+          "description": "The axis of motion of the sticky component",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {UseStickyAxis} [options.axis='vertical'] The axis of motion of the sticky component\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.axis='vertical']",
+                "postName": " ",
+                "type": "{UseStickyAxis}",
+                "postType": " ",
+                "description": "The axis of motion of the sticky component",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "'vertical'"
+        },
+        {
+          "tag": "param",
+          "name": "options.root",
+          "type": "UseStickyRoot",
+          "optional": true,
+          "description": "The element that contains your sticky component",
+          "problems": [],
+          "source": [
+            {
+              "number": 17,
+              "source": " * @param {UseStickyRoot} [options.root=document] The element that contains your sticky component\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.root=document]",
+                "postName": " ",
+                "type": "{UseStickyRoot}",
+                "postType": " ",
+                "description": "The element that contains your sticky component",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "document"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "The",
+        "type": "{ ref: StateRef<Target> } & UseStickyReturn",
+        "optional": false,
+        "description": "state of the sticky",
+        "problems": [],
+        "source": [
+          {
+            "number": 18,
+            "source": " * @returns {{ ref: StateRef<Target> } & UseStickyReturn} The state of the sticky\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "The",
+              "postName": " ",
+              "type": "{{ ref: StateRef<Target> } & UseStickyReturn}",
+              "postType": " ",
+              "description": "state of the sticky",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 19,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": true,
+  "lastModified": 1773052863000
+}

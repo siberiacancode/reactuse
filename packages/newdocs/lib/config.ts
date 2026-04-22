@@ -9,16 +9,8 @@ export const siteConfig = {
   },
   navItems: [
     {
-      href: '/docs',
-      label: 'Get started'
-    },
-    {
       href: '/docs/installation',
-      label: 'Installation'
-    },
-    {
-      href: '/docs/hooks/useactiveelement',
-      label: 'Hooks'
+      label: 'Get started'
     }
   ],
   source: (name: string, type = 'ts') =>

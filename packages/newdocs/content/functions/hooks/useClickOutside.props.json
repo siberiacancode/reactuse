@@ -1,0 +1,219 @@
+{
+  "name": "useClickOutside",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "yrsluv",
+      "avatar": "https://gravatar.com/avatar/48f994915a24fdc3e56810791e31598c?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useEffect, useRef } from 'react';\r\n\r\nimport type { HookTarget } from '@/utils/helpers';\r\n\r\nimport { isTarget } from '@/utils/helpers';\r\n\r\nimport type { StateRef } from '../useRefState/useRefState';\r\n\r\nimport { useRefState } from '../useRefState/useRefState';\r\n\r\nexport interface UseClickOutside {\r\n  (target: HookTarget, callback: (event: Event) => void): void;\r\n\r\n  <Target extends Element>(callback: (event: Event) => void, target?: never): StateRef<Target>;\r\n}\r\n\r\n/**\r\n * @name useClickOutside\r\n * @description - Hook to handle click events outside the specified target element(s)\r\n * @category Elements \r\n * @usage necessary\r\n\r\n * @overload\r\n * @param {HookTarget} target The target element(s) to detect outside clicks for\r\n * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected\r\n * @returns {void}\r\n *\r\n * @example\r\n * useClickOutside(ref, () => console.log('click outside'));\r\n *\r\n * @overload\r\n * @template Target The target element(s)\r\n * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected\r\n * @returns {StateRef<Target>} A ref to attach to the target element\r\n *\r\n * @example\r\n * const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));\r\n *\r\n * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useClickOutside.html}\r\n */\r\nexport const useClickOutside = ((...params: any[]) => {\r\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\r\n  const callback = (params[1] ? params[1] : params[0]) as (event: Event) => void;\r\n\r\n  const internalRef = useRefState<Element>();\r\n  const internalCallbackRef = useRef(callback);\r\n  internalCallbackRef.current = callback;\r\n\r\n  useEffect(() => {\r\n    if (!target && !internalRef.state) return;\r\n\r\n    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;\r\n\r\n    if (!element) return;\r\n\r\n    const onClick = (event: Event) => {\r\n      if (!element.contains(event.target as Node)) {\r\n        internalCallbackRef.current(event);\r\n      }\r\n    };\r\n\r\n    document.addEventListener('click', onClick);\r\n\r\n    return () => {\r\n      document.removeEventListener('click', onClick);\r\n    };\r\n  }, [target && isTarget.getRawElement(target), internalRef.state]);\r\n  if (target) return;\r\n  return internalRef;\r\n}) as UseClickOutside;\r\n",
+  "typeDeclarations": "import type { HookTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nexport interface UseClickOutside {\r\n  (target: HookTarget, callback: (event: Event) => void): void;\r\n\r\n  <Target extends Element>(callback: (event: Event) => void, target?: never): StateRef<Target>;\r\n}",
+  "description": "Hook to handle click events outside the specified target element(s)",
+  "examples": [
+    "useClickOutside(ref, () => console.log('click outside'));",
+    "const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));"
+  ],
+  "usage": "necessary",
+  "category": "elements",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "target",
+          "type": "HookTarget",
+          "optional": false,
+          "description": "The target element(s) to detect outside clicks for",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {HookTarget} target The target element(s) to detect outside clicks for\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "target",
+                "postName": " ",
+                "type": "{HookTarget}",
+                "postType": " ",
+                "description": "The target element(s) to detect outside clicks for",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(event: Event) => void",
+          "optional": false,
+          "description": "The callback to execute when a click outside the target is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(event: Event) => void}",
+                "postType": " ",
+                "description": "The callback to execute when a click outside the target is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "",
+        "type": "void",
+        "optional": false,
+        "description": "",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns {void}\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "",
+              "postName": "",
+              "type": "{void}",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "callback",
+          "type": "(event: Event) => void",
+          "optional": false,
+          "description": "The callback to execute when a click outside the target is detected",
+          "problems": [],
+          "source": [
+            {
+              "number": 16,
+              "source": " * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "callback",
+                "postName": " ",
+                "type": "{(event: Event) => void}",
+                "postType": " ",
+                "description": "The callback to execute when a click outside the target is detected",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "StateRef<Target>",
+        "optional": false,
+        "description": "ref to attach to the target element",
+        "problems": [],
+        "source": [
+          {
+            "number": 17,
+            "source": " * @returns {StateRef<Target>} A ref to attach to the target element\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{StateRef<Target>}",
+              "postType": " ",
+              "description": "ref to attach to the target element",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 18,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1775645190000
+}

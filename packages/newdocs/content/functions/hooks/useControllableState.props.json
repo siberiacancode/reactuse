@@ -1,0 +1,159 @@
+{
+  "name": "useControllableState",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useCallback, useRef, useState } from 'react';\r\n\r\n/** The use controllable state options type */\r\nexport interface UseControllableStateOptions<Value> {\r\n  /** The initial value for uncontrolled state */\r\n  initialValue?: Value;\r\n  /** The controlled value */\r\n  value?: Value;\r\n  /** The onChange callback */\r\n  onChange?: (value: Value) => void;\r\n}\r\n\r\n/** The use controllable state return type */\r\nexport type UseControllableStateReturn<Value> = [\r\n  /** Current value */\r\n  value: Value,\r\n  /** Setter function that works with both controlled and uncontrolled state */\r\n  setValue: (nextValue: ((prevValue: Value) => Value) | Value) => void,\r\n  /** Whether the state is controlled */\r\n  isControlled: boolean\r\n];\r\n\r\n/**\r\n * @name useControllableState\r\n * @description - Hook that manages both controlled and uncontrolled state patterns\r\n * @category State\r\n * @usage medium\r\n *\r\n * @template Value The type of the state value\r\n * @param {Value} [options.value] The controlled value. When provided, the component becomes controlled\r\n * @param {Value} [options.initialValue] The initial value for uncontrolled state\r\n * @param {(value: Value) => void} [options.onChange] The callback function called when the state changes\r\n * @returns {UseControllableStateReturn<Value>} A tuple containing the current value, setter function, and controlled flag\r\n *\r\n * @example\r\n * const [value, setValue, isControlled] = useControllableState({ initialValue: 'initial' });\r\n */\r\nexport function useControllableState<Value>(\r\n  options: UseControllableStateOptions<Value>\r\n): UseControllableStateReturn<Value> {\r\n  const { value, initialValue, onChange } = options;\r\n  const isControlled = value !== undefined;\r\n\r\n  const [internalState, setInternalState] = useState<Value>(initialValue as Value);\r\n\r\n  const onChangeRef = useRef(onChange);\r\n  onChangeRef.current = onChange;\r\n\r\n  const currentValue = isControlled ? value : internalState;\r\n\r\n  const setValue = useCallback(\r\n    (nextValue: ((prevValue: Value) => Value) | Value) => {\r\n      const resolvedValue =\r\n        typeof nextValue === 'function'\r\n          ? (nextValue as (prevValue: Value) => Value)(currentValue)\r\n          : nextValue;\r\n\r\n      if (!isControlled) setInternalState(resolvedValue);\r\n\r\n      onChangeRef.current?.(resolvedValue);\r\n    },\r\n    [currentValue, isControlled]\r\n  );\r\n\r\n  return [currentValue, setValue, isControlled];\r\n}\r\n",
+  "typeDeclarations": "export interface UseControllableStateOptions<Value> {\r\n  /** The initial value for uncontrolled state */\r\n  initialValue?: Value;\r\n  /** The controlled value */\r\n  value?: Value;\r\n  /** The onChange callback */\r\n  onChange?: (value: Value) => void;\r\n}\n\nexport type UseControllableStateReturn<Value> = [\r\n  /** Current value */\r\n  value: Value,\r\n  /** Setter function that works with both controlled and uncontrolled state */\r\n  setValue: (nextValue: ((prevValue: Value) => Value) | Value) => void,\r\n  /** Whether the state is controlled */\r\n  isControlled: boolean\r\n];",
+  "description": "Hook that manages both controlled and uncontrolled state patterns",
+  "examples": [
+    "const [value, setValue, isControlled] = useControllableState({ initialValue: 'initial' });"
+  ],
+  "usage": "medium",
+  "category": "state",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "options.value",
+          "type": "Value",
+          "optional": true,
+          "description": "The controlled value. When provided, the component becomes controlled",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Value} [options.value] The controlled value. When provided, the component becomes controlled\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.value]",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The controlled value. When provided, the component becomes controlled",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.initialValue",
+          "type": "Value",
+          "optional": true,
+          "description": "The initial value for uncontrolled state",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param {Value} [options.initialValue] The initial value for uncontrolled state\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.initialValue]",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The initial value for uncontrolled state",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "param",
+          "name": "options.onChange",
+          "type": "(value: Value) => void",
+          "optional": true,
+          "description": "The callback function called when the state changes",
+          "problems": [],
+          "source": [
+            {
+              "number": 9,
+              "source": " * @param {(value: Value) => void} [options.onChange] The callback function called when the state changes\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[options.onChange]",
+                "postName": " ",
+                "type": "{(value: Value) => void}",
+                "postType": " ",
+                "description": "The callback function called when the state changes",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "A",
+        "type": "UseControllableStateReturn<Value>",
+        "optional": false,
+        "description": "tuple containing the current value, setter function, and controlled flag",
+        "problems": [],
+        "source": [
+          {
+            "number": 10,
+            "source": " * @returns {UseControllableStateReturn<Value>} A tuple containing the current value, setter function, and controlled flag\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "A",
+              "postName": " ",
+              "type": "{UseControllableStateReturn<Value>}",
+              "postType": " ",
+              "description": "tuple containing the current value, setter function, and controlled flag",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 11,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1757226836000
+}

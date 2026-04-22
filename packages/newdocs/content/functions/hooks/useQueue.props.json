@@ -1,0 +1,108 @@
+{
+  "name": "useQueue",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useState } from 'react';\r\nimport { flushSync } from 'react-dom';\r\n\r\n/** The use queue return type */\r\nexport interface UseQueueReturn<Value> {\r\n  /** Get the first element of the queue */\r\n  first: Value;\r\n  /** Get the last element of the queue */\r\n  last: Value;\r\n  /** The current queue */\r\n  queue: Value[];\r\n  /** Get the size of the queue */\r\n  size: number;\r\n  /** Add an element to the queue */\r\n  add: (element: Value) => void;\r\n  /** Clear the queue */\r\n  clear: () => void;\r\n  /** Remove an element from the queue */\r\n  remove: () => Value;\r\n}\r\n\r\n/**\r\n * @name useQueue\r\n * @description - Hook that manages a queue\r\n * @category State\r\n * @usage medium\r\n *\r\n * @template Value The type of the value\r\n * @param {Value[]} [initialValue=[]] The initial value of the queue\r\n * @returns {UseQueueReturn} An object containing the current queue and functions to interact with the queue\r\n *\r\n * @example\r\n * const { queue, add, remove, clear, first, last, size } = useQueue([1, 2, 3]);\r\n */\r\nexport const useQueue = <Value>(initialValue: Value[] = []): UseQueueReturn<Value> => {\r\n  const [queue, setQueue] = useState(initialValue);\r\n\r\n  const add = (element: Value) => setQueue((queue) => [...queue, element]);\r\n  const clear = () => setQueue([]);\r\n  const remove = () => {\r\n    let removed;\r\n    flushSync(() => {\r\n      setQueue(([first, ...rest]) => {\r\n        removed = first;\r\n        return rest;\r\n      });\r\n    });\r\n\r\n    return removed as Value;\r\n  };\r\n\r\n  return {\r\n    add,\r\n    remove,\r\n    clear,\r\n    first: queue[0],\r\n    last: queue[queue.length - 1],\r\n    size: queue.length,\r\n    queue\r\n  };\r\n};\r\n",
+  "typeDeclarations": "export interface UseQueueReturn<Value> {\r\n  /** Get the first element of the queue */\r\n  first: Value;\r\n  /** Get the last element of the queue */\r\n  last: Value;\r\n  /** The current queue */\r\n  queue: Value[];\r\n  /** Get the size of the queue */\r\n  size: number;\r\n  /** Add an element to the queue */\r\n  add: (element: Value) => void;\r\n  /** Clear the queue */\r\n  clear: () => void;\r\n  /** Remove an element from the queue */\r\n  remove: () => Value;\r\n}",
+  "description": "Hook that manages a queue",
+  "examples": [
+    "const { queue, add, remove, clear, first, last, size } = useQueue([1, 2, 3]);"
+  ],
+  "usage": "medium",
+  "category": "state",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "Value[]",
+          "optional": true,
+          "description": "The initial value of the queue",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Value[]} [initialValue=[]] The initial value of the queue\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "[initialValue=[]]",
+                "postName": " ",
+                "type": "{Value[]}",
+                "postType": " ",
+                "description": "The initial value of the queue",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ],
+          "default": "[]"
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseQueueReturn",
+        "optional": false,
+        "description": "object containing the current queue and functions to interact with the queue",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseQueueReturn} An object containing the current queue and functions to interact with the queue\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseQueueReturn}",
+              "postType": " ",
+              "description": "object containing the current queue and functions to interact with the queue",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}

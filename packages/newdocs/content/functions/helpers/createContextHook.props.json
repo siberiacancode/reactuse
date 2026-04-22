@@ -1,0 +1,104 @@
+{
+  "name": "createContextHook",
+  "type": "helper",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "sourceExt": "tsx",
+  "sourceCode": "import type { ReactNode } from 'react';\r\n\r\nimport { createContext, useContext } from 'react';\r\n\r\n/**\r\n * @name createContextHook\r\n * @description - Hook that runs inside a Provider; Provider accepts params (the hook's arguments). Use when you need a scoped instance per subtree.\r\n * @category Helpers\r\n * @usage low\r\n *\r\n * @warning - For complex interfaces, we strongly recommend using state management solutions outside of React like createStore, reatom, effector, or zustand instead of context\r\n *\r\n * @param useHook - The hook to run in the Provider (e.g. useMediaQuery)\r\n * @returns { Provider, use } — Provider takes params; use() returns the value and must be used inside Provider\r\n *\r\n * @example\r\n * const { Provider, use } = createContextHook(useMediaQuery);\r\n * <Provider params={[\"(max-width: 768px)\"]}>\r\n *   <Component />\r\n * </Provider>\r\n * const matches = use();\r\n */\r\nexport const createContextHook = <Hook extends (...args: any[]) => any>(useHook: Hook) => {\r\n  type Value = ReturnType<Hook>;\r\n  const Context = createContext<Value | null>(null);\r\n\r\n  const Provider = ({ children, params }: { children: ReactNode; params: Parameters<Hook> }) => {\r\n    const value = useHook(...params) as Value;\r\n    return <Context.Provider value={value}>{children}</Context.Provider>;\r\n  };\r\n\r\n  const use = () => useContext(Context);\r\n\r\n  return { Provider, use };\r\n};\r\n",
+  "typeDeclarations": "import type { ReactNode } from 'react';\n\ntype Value = ReturnType<Hook>;",
+  "description": "Hook that runs inside a Provider; Provider accepts params (the hook's arguments). Use when you need a scoped instance per subtree.",
+  "examples": [
+    "const { Provider, use } = createContextHook(useMediaQuery); <Provider params={[\"(max-width: 768px)\"]}> <Component /> </Provider> const matches = use();"
+  ],
+  "usage": "low",
+  "category": "helpers",
+  "warning": "For complex interfaces, we strongly recommend using state management solutions outside of React like createStore, reatom, effector, or zustand instead of context",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "useHook",
+          "type": "",
+          "optional": false,
+          "description": "- The hook to run in the Provider (e.g. useMediaQuery)",
+          "problems": [],
+          "source": [
+            {
+              "number": 8,
+              "source": " * @param useHook - The hook to run in the Provider (e.g. useMediaQuery)\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "useHook",
+                "postName": " ",
+                "type": "",
+                "postType": "",
+                "description": "- The hook to run in the Provider (e.g. useMediaQuery)",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "—",
+        "type": "Provider, use",
+        "optional": false,
+        "description": "Provider takes params; use() returns the value and must be used inside Provider",
+        "problems": [],
+        "source": [
+          {
+            "number": 9,
+            "source": " * @returns { Provider, use } — Provider takes params; use() returns the value and must be used inside Provider\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "—",
+              "postName": " ",
+              "type": "{ Provider, use }",
+              "postType": " ",
+              "description": "Provider takes params; use() returns the value and must be used inside Provider",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 10,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": false,
+  "hasDemo": false,
+  "lastModified": 1772547351000
+}

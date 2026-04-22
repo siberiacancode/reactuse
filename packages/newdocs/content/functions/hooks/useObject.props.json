@@ -1,0 +1,107 @@
+{
+  "name": "useObject",
+  "type": "hook",
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "Adlet",
+      "avatar": "https://gravatar.com/avatar/69405c99db73c0600af8d78c67ce2fc2?d=retro"
+    }
+  ],
+  "sourceExt": "ts",
+  "sourceCode": "import { useState } from 'react';\r\n\r\n/** The use object return type */\r\nexport interface UseObjectReturn<Value extends object> {\r\n  /** Checks if the object is empty */\r\n  empty: boolean;\r\n  /** Gets the keys of the object */\r\n  keys: Array<keyof Value>;\r\n  /** Gets the number of properties */\r\n  size: number;\r\n  /** The current object state */\r\n  value: Value;\r\n  /** Clears all properties from the object */\r\n  clear: () => void;\r\n  /** Checks if a property exists */\r\n  has: (key: keyof Value) => boolean;\r\n  /** Removes a property from the object */\r\n  remove: (key: keyof Value) => void;\r\n  /** Resets the object to its initial value */\r\n  reset: () => void;\r\n  /** Sets a property on the object */\r\n  set: (value: Partial<Value>) => void;\r\n}\r\n\r\n/**\r\n * @name useObject\r\n * @description - Hook that provides state and helper methods to manage an object\r\n * @category State\r\n * @usage medium\r\n *\r\n * @template Value The type of the object\r\n * @param {Value} initialValue The initial object value\r\n * @returns {UseObjectReturn<Value>} An object containing the current state and functions to interact with the object\r\n *\r\n * @example\r\n * const { value, set, reset, remove, update, merge, clear, toggle, has, keys, isEmpty, size } = useObject({ name: 'John', age: 30, isActive: true });\r\n */\r\nexport function useObject<Value extends object>(initialValue: Value): UseObjectReturn<Value> {\r\n  const [value, setValue] = useState<Value>(initialValue);\r\n\r\n  const set = (value: Partial<Value>) =>\r\n    setValue((prevValue) => ({\r\n      ...prevValue,\r\n      ...value\r\n    }));\r\n\r\n  const reset = () => setValue(initialValue);\r\n\r\n  const remove = (key: keyof Value) => {\r\n    if (!(key in value)) return;\r\n\r\n    setValue((prevValue) => {\r\n      const { [key]: _, ...rest } = prevValue;\r\n      return rest as Value;\r\n    });\r\n  };\r\n\r\n  const clear = () => setValue({} as Value);\r\n\r\n  const has = (key: keyof Value) => key in value;\r\n\r\n  const keys = Object.keys(value) as Array<keyof Value>;\r\n  const empty = !Object.keys(value).length;\r\n  const size = Object.keys(value).length;\r\n\r\n  return {\r\n    value,\r\n    set,\r\n    reset,\r\n    remove,\r\n    clear,\r\n    has,\r\n    keys,\r\n    empty,\r\n    size\r\n  };\r\n}\r\n",
+  "typeDeclarations": "export interface UseObjectReturn<Value extends object> {\r\n  /** Checks if the object is empty */\r\n  empty: boolean;\r\n  /** Gets the keys of the object */\r\n  keys: Array<keyof Value>;\r\n  /** Gets the number of properties */\r\n  size: number;\r\n  /** The current object state */\r\n  value: Value;\r\n  /** Clears all properties from the object */\r\n  clear: () => void;\r\n  /** Checks if a property exists */\r\n  has: (key: keyof Value) => boolean;\r\n  /** Removes a property from the object */\r\n  remove: (key: keyof Value) => void;\r\n  /** Resets the object to its initial value */\r\n  reset: () => void;\r\n  /** Sets a property on the object */\r\n  set: (value: Partial<Value>) => void;\r\n}",
+  "description": "Hook that provides state and helper methods to manage an object",
+  "examples": [
+    "const { value, set, reset, remove, update, merge, clear, toggle, has, keys, isEmpty, size } = useObject({ name: 'John', age: 30, isActive: true });"
+  ],
+  "usage": "medium",
+  "category": "state",
+  "apiParameters": [
+    {
+      "id": 0,
+      "parameters": [
+        {
+          "tag": "param",
+          "name": "initialValue",
+          "type": "Value",
+          "optional": false,
+          "description": "The initial object value",
+          "problems": [],
+          "source": [
+            {
+              "number": 7,
+              "source": " * @param {Value} initialValue The initial object value\r",
+              "tokens": {
+                "start": " ",
+                "delimiter": "*",
+                "postDelimiter": " ",
+                "tag": "@param",
+                "postTag": " ",
+                "name": "initialValue",
+                "postName": " ",
+                "type": "{Value}",
+                "postType": " ",
+                "description": "The initial object value",
+                "end": "",
+                "lineEnd": "\r"
+              }
+            }
+          ]
+        }
+      ],
+      "returns": {
+        "tag": "returns",
+        "name": "An",
+        "type": "UseObjectReturn<Value>",
+        "optional": false,
+        "description": "object containing the current state and functions to interact with the object",
+        "problems": [],
+        "source": [
+          {
+            "number": 8,
+            "source": " * @returns {UseObjectReturn<Value>} An object containing the current state and functions to interact with the object\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": " ",
+              "tag": "@returns",
+              "postTag": " ",
+              "name": "An",
+              "postName": " ",
+              "type": "{UseObjectReturn<Value>}",
+              "postType": " ",
+              "description": "object containing the current state and functions to interact with the object",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          },
+          {
+            "number": 9,
+            "source": " *\r",
+            "tokens": {
+              "start": " ",
+              "delimiter": "*",
+              "postDelimiter": "",
+              "tag": "",
+              "postTag": "",
+              "name": "",
+              "postName": "",
+              "type": "",
+              "postType": "",
+              "description": "",
+              "end": "",
+              "lineEnd": "\r"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "hasTests": true,
+  "hasDemo": true,
+  "lastModified": 1754977987000
+}
