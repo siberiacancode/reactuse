@@ -29,7 +29,7 @@ export interface UseActiveElement {
 
 /**
  * @name useActiveElement
- * @description - Hook that returns the active element
+ * @description - Hook for tracking the active element
  * @category Elements
  * @usage low
  *
@@ -62,7 +62,7 @@ export const useActiveElement = ((...params: any[]) => {
     const observer = new MutationObserver((mutations) => {
       mutations
         .filter((mutation) => mutation.removedNodes.length)
-        .map((mutation) => Array.from(mutation.removedNodes))
+        .map((mutation) => [...mutation.removedNodes])
         .flat()
         .forEach((node) => {
           setValue((prevActiveElement) => {

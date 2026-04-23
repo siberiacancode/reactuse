@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { codeToHtml } from 'shiki';
 import simpleGit from 'simple-git';
 import ts from 'typescript';
 
@@ -15,6 +16,7 @@ interface FunctionMetadata {
     description: string;
   };
   category: string;
+  code: string;
   description: string;
   example: string;
   id: string;
@@ -136,6 +138,18 @@ export const getGitInfo = async (name: string, type: FunctionType) => {
   };
 };
 
+const createDemo = async (metadata: FunctionMetadata) => {
+  const demoPath = path.join(
+    CORE_ROOT,
+    `${metadata.type}s`,
+    metadata.name,
+    `${metadata.name}.demo.tsx`
+  );
+  const demoContent = await fs.promises.readFile(demoPath, 'utf-8');
+
+  return `'use client'\n\n${demoContent}`;
+};
+
 const createMdxTemplate = (metadata: FunctionMetadata) => {
   const result: string[] = [];
 
@@ -150,42 +164,43 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push('---');
   result.push('');
 
-  //   result.push("import { Tabs, TabsContent, TabsList, TabsTrigger } from '@docs/ui/tabs';");
-  //   result.push("import { Separator } from '@docs/ui/separator';");
-
-  result.push(`<Separator className="my-2" />`);
-  result.push('');
+  result.push(
+    `<FunctionSource variant='demo' type='${metadata.type}' file='${metadata.name}' language="tsx" />`
+  );
 
   result.push(`## Installation`);
   result.push('');
 
-  result.push(`<Tabs defaultValue="library">`);
+  result.push(`<FunctionTabs>`);
   result.push(`  <TabsList>`);
-  result.push(`    <TabsTrigger value="library">Library</TabsTrigger>`);
-  result.push(`    <TabsTrigger value="cli">CLI</TabsTrigger>`);
-  result.push(`    <TabsTrigger value="manual">Manual</TabsTrigger>`);
+  result.push(`    <TabsTrigger value='library'>Library</TabsTrigger>`);
+  result.push(`    <TabsTrigger value='cli'>CLI</TabsTrigger>`);
+  result.push(`    <TabsTrigger value='manual'>Manual</TabsTrigger>`);
   result.push(`  </TabsList>`);
-  result.push(`  <TabsContent className="space-y-3" value="library">`);
+  result.push(`  <TabsContent value='library'>`);
   result.push(`    \`\`\`tsx`);
   result.push(`    import { ${metadata.name} } from '@siberiacancode/reactuse';`);
   result.push(`    \`\`\``);
   result.push(`  </TabsContent>`);
-  result.push(`  <TabsContent className="space-y-3" value="cli">`);
+  result.push(`  <TabsContent value='cli'>`);
   result.push(`    \`\`\`bash`);
   result.push(`    npx useverse@latest add ${metadata.name}`);
   result.push(`    \`\`\``);
   result.push(`  </TabsContent>`);
-  result.push(`  <TabsContent className="space-y-3" value="manual">`);
-  result.push(`    <p className="text-muted-foreground mb-3 text-sm">`);
+  result.push(`  <TabsContent value='manual'>`);
+  result.push(`    <Steps>`);
+  result.push(`     <Step>`);
+  result.push(`      Copy and paste the following code into your project.`);
+  result.push(`    </Step>`);
   result.push(
-    `      Copy and paste the following code into your project. Update the import paths to match your project setup.`
+    `      <FunctionSource variant='code' type='${metadata.type}' file='${metadata.name}' language="ts" />`
   );
-  result.push(`    </p>`);
-  //   result.push(`    <PreviewCode lineCount={(metadata.code ?? '').split('\\n').length}>`);
-  //   result.push(`      <Code code={metadata.code} />`);
-  //   result.push(`    </PreviewCode>`);
+  result.push(`    <Step>`);
+  result.push(`      Update the import paths to match your project setup.`);
+  result.push(`    </Step>`);
+  result.push(`  </Steps>`);
   result.push(`  </TabsContent>`);
-  result.push(`</Tabs>`);
+  result.push(`</FunctionTabs>`);
 
   return result.join('\n');
 };
@@ -288,6 +303,13 @@ const init = async () => {
     await fs.promises.writeFile(
       path.join(CONTENT_ROOT, `${page.type}s`, `${page.name}.mdx`),
       mdx,
+      'utf-8'
+    );
+
+    const demo = await createDemo(page);
+    await fs.promises.writeFile(
+      path.join('generated', 'demos', `${page.type}s`, `${page.name}.demo.tsx`),
+      demo,
       'utf-8'
     );
   }

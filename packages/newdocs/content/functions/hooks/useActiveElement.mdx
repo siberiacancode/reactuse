@@ -1,6 +1,6 @@
 ---
 title: useActiveElement
-description: Hook that returns the active element
+description: Hook for tracking the active element
 category: elements
 usage: low
 type: hook
@@ -8,29 +8,34 @@ isTest: true
 isDemo: true
 ---
 
-<Separator className="my-2" />
-
+<FunctionSource variant='demo' type='hook' file='useActiveElement' language="tsx" />
 ## Installation
 
-<Tabs defaultValue="library">
+<FunctionTabs>
   <TabsList>
-    <TabsTrigger value="library">Library</TabsTrigger>
-    <TabsTrigger value="cli">CLI</TabsTrigger>
-    <TabsTrigger value="manual">Manual</TabsTrigger>
+    <TabsTrigger value='library'>Library</TabsTrigger>
+    <TabsTrigger value='cli'>CLI</TabsTrigger>
+    <TabsTrigger value='manual'>Manual</TabsTrigger>
   </TabsList>
-  <TabsContent className="space-y-3" value="library">
+  <TabsContent value='library'>
     ```tsx
     import { useActiveElement } from '@siberiacancode/reactuse';
     ```
   </TabsContent>
-  <TabsContent className="space-y-3" value="cli">
+  <TabsContent value='cli'>
     ```bash
     npx useverse@latest add useActiveElement
     ```
   </TabsContent>
-  <TabsContent className="space-y-3" value="manual">
-    <p className="text-muted-foreground mb-3 text-sm">
-      Copy and paste the following code into your project. Update the import paths to match your project setup.
-    </p>
+  <TabsContent value='manual'>
+    <Steps>
+     <Step>
+      Copy and paste the following code into your project.
+    </Step>
+      <FunctionSource variant='code' type='hook' file='useActiveElement' language="ts" />
+    <Step>
+      Update the import paths to match your project setup.
+    </Step>
+  </Steps>
   </TabsContent>
-</Tabs>
+</FunctionTabs>

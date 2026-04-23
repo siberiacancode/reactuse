@@ -11,11 +11,12 @@
       "@siberiacancode/docs/*": ["./*"],
       "@siberiacancode/docs/utils": ["./utils.ts"],
       "@docs/*": ["./*"],
-      "@/*": ["../core/src/*"]
+      "@/*": ["../core/src/*"],
+      "@siberiacancode/reactuse": ["../core/src/dist/esm/index.mjs"]
     },
     "resolveJsonModule": true,
-    "allowImportingTsExtensions": true,
     "types": ["@types/web-bluetooth", "@types/dom-speech-recognition"],
+    "allowImportingTsExtensions": true,
     "allowJs": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,

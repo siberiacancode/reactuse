@@ -5,9 +5,13 @@ import { cn } from '@docs/lib/utils';
 import { Badge } from '@docs/ui/badge';
 import { Kbd } from '@docs/ui/kbd';
 import { Separator } from '@docs/ui/separator';
+import { Step, Steps } from '@docs/ui/steps';
 import Link from 'next/link';
 import * as React from 'react';
 
+import { FunctionDemo } from './app/functions/_components/function-demo';
+import { FunctionSource } from './app/functions/_components/function-source';
+import { FunctionTabs } from './app/functions/_components/function-tabs';
 import { Callout } from './components/callout';
 import {
   Avatar,
@@ -27,18 +31,30 @@ import {
   TableHeader,
   TableRow
 } from './ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
-export const mdxComponents = {
+const CUSTOM_COMPONENTS = {
+  FunctionSource,
+  FunctionTabs,
+  FunctionDemo,
+  Steps,
+  Step
+};
+
+const HEAD_COMPONENTS = {
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
     <h1
-      className={cn('font-heading mt-2 scroll-m-28 text-3xl font-bold tracking-tight', className)}
+      className={cn(
+        'font-heading mt-2 mb-2 scroll-m-28 text-3xl font-bold tracking-tight',
+        className
+      )}
       {...props}
     />
   ),
   h2: ({ className, ...props }: React.ComponentProps<'h2'>) => (
     <h2
       className={cn(
-        'font-heading [&+]*:[code]:text-xl mt-8 scroll-m-28 text-xl font-medium tracking-tight first:mt-0 lg:mt-8 [&+.steps]:!mt-0 [&+.steps>h3]:!mt-4 [&+h3]:!mt-6 [&+p]:!mt-4',
+        'font-heading [&+]*:[code]:text-xl mt-8 mb-2 scroll-m-28 text-xl font-medium tracking-tight first:mt-0 lg:mt-8 [&+.steps]:!mt-0 [&+.steps>h3]:!mt-4 [&+h3]:!mt-6 [&+p]:!mt-4',
         className
       )}
       id={props.children
@@ -53,7 +69,7 @@ export const mdxComponents = {
   h3: ({ className, ...props }: React.ComponentProps<'h3'>) => (
     <h3
       className={cn(
-        'font-heading mt-12 scroll-m-28 text-lg font-medium tracking-tight [&+p]:!mt-4 *:[code]:text-xl',
+        'font-heading mt-12 mb-2 scroll-m-28 text-lg font-medium tracking-tight [&+p]:!mt-4 *:[code]:text-xl',
         className
       )}
       {...props}
@@ -62,7 +78,7 @@ export const mdxComponents = {
   h4: ({ className, ...props }: React.ComponentProps<'h4'>) => (
     <h4
       className={cn(
-        'font-heading mt-8 scroll-m-28 text-base font-medium tracking-tight',
+        'font-heading mt-8 mb-2 scroll-m-28 text-base font-medium tracking-tight',
         className
       )}
       {...props}
@@ -70,16 +86,21 @@ export const mdxComponents = {
   ),
   h5: ({ className, ...props }: React.ComponentProps<'h5'>) => (
     <h5
-      className={cn('mt-8 scroll-m-28 text-base font-medium tracking-tight', className)}
+      className={cn('mt-8 mb-2 scroll-m-28 text-base font-medium tracking-tight', className)}
       {...props}
     />
   ),
   h6: ({ className, ...props }: React.ComponentProps<'h6'>) => (
     <h6
-      className={cn('mt-8 scroll-m-28 text-base font-medium tracking-tight', className)}
+      className={cn('mt-8 mb-2 scroll-m-28 text-base font-medium tracking-tight', className)}
       {...props}
     />
-  ),
+  )
+};
+
+export const mdxComponents = {
+  ...HEAD_COMPONENTS,
+  ...CUSTOM_COMPONENTS,
   a: ({ className, ...props }: React.ComponentProps<'a'>) => (
     <a className={cn('font-medium underline underline-offset-4', className)} {...props} />
   ),
@@ -232,6 +253,10 @@ export const mdxComponents = {
       {...props}
     />
   ),
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
   Kbd,
   Callout,
   Badge,

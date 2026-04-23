@@ -2,7 +2,12 @@ import { functionsSource } from '@docs/lib/source';
 import { findNeighbour } from 'fumadocs-core/page-tree';
 import { notFound } from 'next/navigation';
 
+import { mdxComponents } from '../../../../mdx-components';
 import { FunctionHeader } from '../../_components/function-header';
+import { DocsTableOfContents } from '@siberiacancode/docs/components/docs-toc';
+import { Button } from '@siberiacancode/docs/ui/button';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import { Link } from 'lucide-react';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -36,18 +41,18 @@ const FunctionPage = async (props: FunctionPageProps) => {
   const neighbours = findNeighbour(functionsSource.pageTree, page.url);
   const raw = await doc.getText('raw');
 
+  const MDX = doc.body;
+
   return (
     <div
       className='flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full'
       data-slot='docs'
     >
       <div className='flex min-w-0 flex-1 flex-col'>
-        <div className='h-(--top-spacing) shrink-0' />
         <div className='mx-auto flex w-full max-w-[45rem] min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300'>
           <FunctionHeader
             category={doc.category}
             description={doc.description}
-            isDemo={doc.isDemo}
             isTest={doc.isTest}
             name={doc.title}
             next={neighbours.next?.url}
@@ -57,6 +62,34 @@ const FunctionPage = async (props: FunctionPageProps) => {
             usage={doc.usage}
           />
         </div>
+
+        <div className='mx-auto w-full max-w-[45rem] flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0'>
+          <MDX components={mdxComponents} />
+          <div className='hidden h-16 w-full items-center gap-2 px-4 sm:flex sm:px-0'>
+            {neighbours.previous && (
+              <Button asChild className='shadow-none' size='sm' variant='secondary'>
+                <Link href={neighbours.previous.url}>
+                  <IconArrowLeft /> {neighbours.previous.name}
+                </Link>
+              </Button>
+            )}
+            {neighbours.next && (
+              <Button asChild className='ml-auto shadow-none' size='sm' variant='secondary'>
+                <Link href={neighbours.next.url}>
+                  {neighbours.next.name} <IconArrowRight />
+                </Link>
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
+        <div className='h-(--top-spacing) shrink-0' />
+        {doc.toc?.length && (
+          <div className='no-scrollbar flex flex-col gap-8 overflow-y-auto px-8'>
+            <DocsTableOfContents toc={doc.toc} />
+          </div>
+        )}
       </div>
     </div>
   );
