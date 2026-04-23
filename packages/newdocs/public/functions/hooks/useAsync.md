@@ -1,14 +1,14 @@
 ---
-title: useActiveElement
-description: Hook for tracking the active element
-category: elements
-usage: low
+title: useAsync
+description: Hook that provides the state of an async callback
+category: async
+usage: medium
 type: hook
 isTest: true
 isDemo: true
 ---
 
-<FunctionSource variant='demo' type='hook' file='useActiveElement' language="tsx" />
+<FunctionSource variant='demo' type='hook' file='useAsync' language="tsx" />
 ## Installation
 
 <FunctionTabs>
@@ -19,12 +19,12 @@ isDemo: true
   </TabsList>
   <TabsContent value='library'>
     ```tsx
-    import { useActiveElement } from '@siberiacancode/reactuse';
+    import { useAsync } from '@siberiacancode/reactuse';
     ```
   </TabsContent>
   <TabsContent value='cli'>
     ```bash
-    npx useverse@latest add useActiveElement
+    npx useverse@latest add useAsync
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -32,7 +32,7 @@ isDemo: true
      <Step>
       Copy and paste the following code into your project.
     </Step>
-      <FunctionSource variant='code' type='hook' file='useActiveElement' language="ts" />
+      <FunctionSource variant='code' type='hook' file='useAsync' language="ts" />
     <Step>
       Update the import paths to match your project setup.
     </Step>
@@ -43,9 +43,7 @@ isDemo: true
 ## Usage
 
 ```tsx
-const activeElement = useActiveElement(ref);
-// or
-const { ref, value } = useActiveElement();
+const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);
 ```
 
-Last changed: 1 hour ago
+Last changed: 8 months ago

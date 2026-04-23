@@ -1,13 +1,13 @@
+import { DocsTableOfContents } from '@docs/components/docs-toc';
 import { functionsSource } from '@docs/lib/source';
+import { Button } from '@docs/ui/button';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { findNeighbour } from 'fumadocs-core/page-tree';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { mdxComponents } from '../../../../mdx-components';
 import { FunctionHeader } from '../../_components/function-header';
-import { DocsTableOfContents } from '@siberiacancode/docs/components/docs-toc';
-import { Button } from '@siberiacancode/docs/ui/button';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
-import { Link } from 'lucide-react';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -65,16 +65,16 @@ const FunctionPage = async (props: FunctionPageProps) => {
 
         <div className='mx-auto w-full max-w-[45rem] flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0'>
           <MDX components={mdxComponents} />
-          <div className='hidden h-16 w-full items-center gap-2 px-4 sm:flex sm:px-0'>
+          <div className='mt-2 hidden w-full items-center gap-2 px-4 sm:flex sm:px-0'>
             {neighbours.previous && (
-              <Button asChild className='shadow-none' size='sm' variant='secondary'>
+              <Button asChild size='sm' variant='secondary'>
                 <Link href={neighbours.previous.url}>
                   <IconArrowLeft /> {neighbours.previous.name}
                 </Link>
               </Button>
             )}
             {neighbours.next && (
-              <Button asChild className='ml-auto shadow-none' size='sm' variant='secondary'>
+              <Button asChild size='sm' variant='secondary'>
                 <Link href={neighbours.next.url}>
                   {neighbours.next.name} <IconArrowRight />
                 </Link>

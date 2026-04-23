@@ -161,14 +161,14 @@ export const FunctionHeader = ({
             <div className='hidden sm:block'>
               <div className='bg-secondary relative flex rounded-lg *:[[data-slot=button]]:focus-visible:relative *:[[data-slot=button]]:focus-visible:z-10'>
                 <ButtonGroup>
-                  <Button variant='secondary' onClick={() => copy(page)}>
+                  <Button size='sm' variant='secondary' onClick={() => copy(page)}>
                     {copied ? <IconCheck /> : <IconCopy />}
                     Copy Page
                   </Button>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button aria-label='Open actions' variant='secondary'>
+                      <Button aria-label='Open actions' size='icon-sm' variant='secondary'>
                         <IconChevronDown />
                       </Button>
                     </DropdownMenuTrigger>
@@ -206,12 +206,7 @@ export const FunctionHeader = ({
             </div>
             <div className='ml-auto flex gap-2'>
               {previous && (
-                <Button
-                  asChild
-                  className='extend-touch-target size-8 shadow-none md:size-7'
-                  size='icon'
-                  variant='secondary'
-                >
+                <Button asChild size='icon-sm' variant='secondary'>
                   <Link href={previous}>
                     <IconArrowLeft />
                     <span className='sr-only'>Previous</span>
@@ -219,12 +214,7 @@ export const FunctionHeader = ({
                 </Button>
               )}
               {next && (
-                <Button
-                  asChild
-                  className='extend-touch-target size-8 shadow-none md:size-7'
-                  size='icon'
-                  variant='secondary'
-                >
+                <Button asChild size='icon-sm' variant='secondary'>
                   <Link href={next}>
                     <span className='sr-only'>Next</span>
                     <IconArrowRight />

@@ -495,19 +495,19 @@
 }
 
 .demo-ui h1 {
-  @apply text-3xl font-semibold tracking-tight;
+  @apply text-4xl font-semibold tracking-tight;
 }
 
 .demo-ui h2 {
-  @apply text-2xl font-semibold tracking-tight;
+  @apply text-3xl font-semibold tracking-tight;
 }
 
 .demo-ui h3 {
-  @apply text-xl font-semibold tracking-tight;
+  @apply text-2xl font-semibold tracking-tight;
 }
 
 .demo-ui h4 {
-  @apply text-lg font-semibold tracking-tight;
+  @apply text-xl font-semibold tracking-tight;
 }
 
 .demo-ui h5 {
@@ -529,7 +529,7 @@
 }
 
 .demo-ui textarea {
-  @apply border-input flex field-sizing-content min-h-16 w-full rounded-lg border bg-transparent px-2.5 py-2 text-base transition-colors outline-none;
+  @apply border-input flex min-h-16 w-full rounded-lg border bg-transparent px-2.5 py-2 text-base transition-colors outline-none;
   @apply placeholder:text-muted-foreground;
   @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-3;
   @apply disabled:bg-input/50 disabled:cursor-not-allowed disabled:opacity-50;

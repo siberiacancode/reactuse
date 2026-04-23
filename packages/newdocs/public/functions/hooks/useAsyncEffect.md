@@ -1,14 +1,14 @@
 ---
-title: useActiveElement
-description: Hook for tracking the active element
-category: elements
-usage: low
+title: useAsyncEffect
+description: Hook that triggers the effect callback on updates
+category: lifecycle
+usage: medium
 type: hook
 isTest: true
 isDemo: true
 ---
 
-<FunctionSource variant='demo' type='hook' file='useActiveElement' language="tsx" />
+<FunctionSource variant='demo' type='hook' file='useAsyncEffect' language="tsx" />
 ## Installation
 
 <FunctionTabs>
@@ -19,12 +19,12 @@ isDemo: true
   </TabsList>
   <TabsContent value='library'>
     ```tsx
-    import { useActiveElement } from '@siberiacancode/reactuse';
+    import { useAsyncEffect } from '@siberiacancode/reactuse';
     ```
   </TabsContent>
   <TabsContent value='cli'>
     ```bash
-    npx useverse@latest add useActiveElement
+    npx useverse@latest add useAsyncEffect
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -32,7 +32,7 @@ isDemo: true
      <Step>
       Copy and paste the following code into your project.
     </Step>
-      <FunctionSource variant='code' type='hook' file='useActiveElement' language="ts" />
+      <FunctionSource variant='code' type='hook' file='useAsyncEffect' language="ts" />
     <Step>
       Update the import paths to match your project setup.
     </Step>
@@ -43,9 +43,7 @@ isDemo: true
 ## Usage
 
 ```tsx
-const activeElement = useActiveElement(ref);
-// or
-const { ref, value } = useActiveElement();
+useAsyncEffect(async () => console.log("effect runs on updates"), deps);
 ```
 
-Last changed: 1 hour ago
+Last changed: 7 months ago

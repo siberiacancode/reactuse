@@ -34,7 +34,7 @@ export const FunctionCode = ({ code, collapsible, title, language }: FunctionCod
             </Button>
           </CollapsibleTrigger>
           <Separator className='mx-1.5 h-4!' orientation='vertical' />
-          <Button size='icon' variant='ghost' onClick={onCopyClick}>
+          <Button size='icon-sm' variant='ghost' onClick={onCopyClick}>
             {copied ? <CheckIcon /> : <CopyIcon />}
           </Button>
         </div>

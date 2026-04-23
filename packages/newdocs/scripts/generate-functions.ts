@@ -1,142 +1,20 @@
 import { parse } from 'comment-parser';
-import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import process from 'node:process';
-import { codeToHtml } from 'shiki';
-import simpleGit from 'simple-git';
 import ts from 'typescript';
 
-type FunctionType = 'helper' | 'hook';
+import type { FunctionMetadata } from './constants';
 
-interface FunctionMetadata {
-  apiParameters: any[];
-  browserapi?: {
-    name: string;
-    description: string;
-  };
-  category: string;
-  code: string;
-  description: string;
-  example: string;
-  id: string;
-  isDemo: boolean;
-  isTest: boolean;
-  jsImplementation?: string;
-  lastModified: number;
-  name: string;
-  type: FunctionType;
-  typeDeclarations: string[];
-  usage: string;
-}
-
-const ROOT = path.resolve(process.cwd(), '..');
-const CORE_ROOT = path.join(ROOT, 'core', 'src');
-const CONTENT_ROOT = path.join(process.cwd(), 'content', 'functions');
-
-const git = simpleGit();
-
-const extractTypeInfo = (sourceFile: ts.SourceFile) => {
-  const typeDeclarations: string[] = [];
-  const typeImports: string[] = [];
-
-  const visit = (node: ts.Node) => {
-    if (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) {
-      typeDeclarations.push(node.getText(sourceFile));
-    }
-
-    if (ts.isImportDeclaration(node)) {
-      const isTypeOnly = node.importClause?.isTypeOnly;
-      const hasTypeImports =
-        node.importClause?.namedBindings &&
-        ts.isNamedImports(node.importClause.namedBindings) &&
-        node.importClause.namedBindings.elements.some((element) => element.isTypeOnly);
-
-      if (isTypeOnly || hasTypeImports) {
-        typeImports.push(node.getText(sourceFile));
-      }
-    }
-
-    ts.forEachChild(node, visit);
-  };
-  visit(sourceFile);
-
-  return [...typeImports, ...typeDeclarations].join('\n\n');
-};
-
-export const getContentFile = async (type: FunctionType, name: string) => {
-  try {
-    const basePath = path.join(CORE_ROOT, `${type}s`, name);
-
-    const files = await fs.promises.readdir(basePath);
-
-    const fileName = files.find(
-      (file) => file.includes(name) && !file.includes('.test') && !file.includes('.demo')
-    );
-
-    if (!fileName) {
-      throw new Error(`No matching file found for ${name}`);
-    }
-
-    const filePath = path.join(basePath, fileName);
-    const content = await fs.promises.readFile(filePath, 'utf-8');
-
-    return content;
-  } catch (error) {
-    console.error(`Error reading file: ${error}`);
-    throw error;
-  }
-};
-
-export const checkFileContent = async (
-  type: FunctionType,
-  name: string,
-  content: 'demo' | 'test'
-) => {
-  const files = await fs.promises.readdir(path.join(CORE_ROOT, `${type}s`, name));
-  return files.some((file) => file.includes(`${name}.${content}`));
-};
-
-export const matchJsdoc = (file: string) => {
-  const jsdocCommentRegex = /\/\*\*[ \t]*\r?\n[\s\S]*?\*\//;
-  const match = file.match(jsdocCommentRegex);
-  return match ? match[0].trim() : undefined;
-};
-
-export const getElements = async (type: FunctionType) => {
-  const sourceDir = path.join(CORE_ROOT, `${type}s`);
-  const files = await fs.promises.readdir(sourceDir, { withFileTypes: true });
-
-  return files
-    .filter((file) => file.isDirectory())
-    .map((file) => ({
-      type,
-      name: file.name
-    }));
-};
-
-export const getGitInfo = async (name: string, type: FunctionType) => {
-  const log = await git.log({
-    file: path.join(CORE_ROOT, `${type}s`, name, `${name}.ts`)
-  });
-
-  const contributorsMap = new Map(
-    log.all.map((commit) => [
-      commit.author_email,
-      { name: commit.author_name, email: commit.author_email }
-    ])
-  );
-
-  const contributors = Array.from(contributorsMap.values(), (author) => ({
-    name: author.name,
-    avatar: `https://gravatar.com/avatar/${createHash('md5').update(author.email).digest('hex')}?d=retro`
-  }));
-
-  return {
-    contributors,
-    lastCommit: log.latest!
-  };
-};
+import { CONTENT_ROOT, CORE_ROOT } from './constants';
+import {
+  checkFileContent,
+  extractTypeInfo,
+  getContentFile,
+  getElements,
+  getGitInfo,
+  getTimeAgo,
+  matchJsdoc
+} from './helpers';
 
 const createDemo = async (metadata: FunctionMetadata) => {
   const demoPath = path.join(
@@ -202,6 +80,20 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`  </TabsContent>`);
   result.push(`</FunctionTabs>`);
 
+  result.push('');
+  result.push('## Usage');
+  result.push('');
+
+  result.push(`\`\`\`tsx`);
+  metadata.examples.forEach((example, index) => {
+    result.push(example);
+    if (index !== metadata.examples.length - 1) result.push('// or');
+  });
+  result.push(`\`\`\``);
+
+  result.push('');
+
+  result.push(`Last changed: ${getTimeAgo(metadata.lastModified)}`);
   return result.join('\n');
 };
 
@@ -212,7 +104,7 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 1).map(async (element) => {
+    content.slice(0, 3).map(async (element) => {
       const content = await getContentFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);
@@ -301,7 +193,7 @@ const init = async () => {
   for (const page of pages) {
     const mdx = createMdxTemplate(page);
     await fs.promises.writeFile(
-      path.join(CONTENT_ROOT, `${page.type}s`, `${page.name}.mdx`),
+      path.join(CONTENT_ROOT, 'functions', `${page.type}s`, `${page.name}.mdx`),
       mdx,
       'utf-8'
     );

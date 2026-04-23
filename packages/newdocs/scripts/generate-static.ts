@@ -1,9 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import process from 'node:process';
 
-const CONTENT_ROOT = path.join(process.cwd(), 'content');
-const PUBLIC_ROOT = path.join(process.cwd(), 'public');
+import { CONTENT_ROOT, PUBLIC_ROOT } from './constants';
 
 export const init = async () => {
   console.log('[generate-static] Starting...');

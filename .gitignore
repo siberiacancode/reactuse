@@ -210,9 +210,6 @@ build/Release
 .cache
 gatsby-types.d.ts
 
-# Card standard
-generated
-
 # Turbo
 .turbo
 

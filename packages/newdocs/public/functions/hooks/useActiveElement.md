@@ -39,3 +39,13 @@ isDemo: true
   </Steps>
   </TabsContent>
 </FunctionTabs>
+
+## Usage
+
+```tsx
+const activeElement = useActiveElement(ref);
+// or
+const { ref, value } = useActiveElement();
+```
+
+Last changed: 1 hour ago

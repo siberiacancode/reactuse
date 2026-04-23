@@ -1,3 +1,5 @@
+'use client'
+
 import { useActiveElement } from '@siberiacancode/reactuse';
 
 const Demo = () => {

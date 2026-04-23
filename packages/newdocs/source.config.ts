@@ -1,4 +1,3 @@
-import { transformers } from '@docs/lib/highlight-code';
 import { defineConfig, defineDocs, frontmatterSchema } from 'fumadocs-mdx/config';
 import rehypePrettyCode from 'rehype-pretty-code';
 import z from 'zod';
@@ -14,8 +13,7 @@ export default defineConfig({
           theme: {
             dark: 'github-dark',
             light: 'github-light-default'
-          },
-          transformers
+          }
         }
       ]);
 
