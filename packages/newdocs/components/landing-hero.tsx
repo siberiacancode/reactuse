@@ -13,10 +13,7 @@ function NextIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill='none' viewBox='0 0 24 24'>
       <circle cx='12' cy='12' fill='currentColor' r='10' />
-      <path
-        d='M8 7.5v9h1.4v-6.3l4.7 6.3h1.9v-9h-1.4v6.12l-4.56-6.12z'
-        fill='var(--background)'
-      />
+      <path d='M8 7.5v9h1.4v-6.3l4.7 6.3h1.9v-9h-1.4v6.12l-4.56-6.12z' fill='var(--background)' />
     </svg>
   );
 }
@@ -87,7 +84,7 @@ export const LandingHero = () => {
       />
       <LandingBackdrop />
 
-      <div className='absolute top-1/4 left-1/2 h-[400px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[180px] pointer-events-none bg-[color:color-mix(in_oklab,var(--brand)_8%,transparent)] dark:bg-[color:color-mix(in_oklab,var(--brand)_5%,transparent)]' />
+      <div className='pointer-events-none absolute top-1/4 left-1/2 h-[400px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[color:color-mix(in_oklab,var(--brand)_8%,transparent)] blur-[180px] dark:bg-[color:color-mix(in_oklab,var(--brand)_5%,transparent)]' />
 
       <div className='relative mx-auto w-full max-w-6xl px-6 py-20 md:py-28 lg:py-32'>
         <motion.div
@@ -97,7 +94,7 @@ export const LandingHero = () => {
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <div className='mb-8 flex items-center gap-6'>
-            <h1 className='font-display text-7xl leading-none font-bold tracking-tighter text-foreground md:text-[10rem] lg:text-[12rem]'>
+            <h1 className='font-display text-foreground text-7xl leading-none font-bold tracking-tighter md:text-[10rem] lg:text-[12rem]'>
               reactuse
             </h1>
             <Icons.logo className='h-16 w-16 shrink-0 md:h-28 md:w-28 lg:h-36 lg:w-36' />
@@ -109,7 +106,7 @@ export const LandingHero = () => {
             initial={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <span className='font-display text-2xl tracking-tight text-foreground md:text-3xl lg:text-4xl'>
+            <span className='font-display text-foreground text-2xl tracking-tight md:text-3xl lg:text-4xl'>
               The largest
             </span>
             <span
@@ -118,14 +115,14 @@ export const LandingHero = () => {
             >
               React hooks
             </span>
-            <span className='font-display text-2xl tracking-tight text-foreground md:text-3xl lg:text-4xl'>
+            <span className='font-display text-foreground text-2xl tracking-tight md:text-3xl lg:text-4xl'>
               library
             </span>
           </motion.div>
 
           <motion.p
             animate={{ opacity: 1, y: 0 }}
-            className='mb-10 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl'
+            className='text-muted-foreground mb-10 max-w-xl text-lg leading-relaxed md:text-xl'
             initial={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
@@ -146,7 +143,7 @@ export const LandingHero = () => {
             </Link>
             <Link href={siteConfig.links.github} rel='noreferrer' target='_blank'>
               <Button
-                className='h-10 rounded-full border-border bg-transparent px-8 text-sm text-foreground transition-colors hover:bg-[color:color-mix(in_oklab,var(--brand)_8%,transparent)] hover:text-[var(--brand)]'
+                className='border-border text-foreground h-10 rounded-full bg-transparent px-8 text-sm transition-colors hover:bg-[color:color-mix(in_oklab,var(--brand)_8%,transparent)] hover:text-[var(--brand)]'
                 size='sm'
                 variant='outline'
               >
@@ -163,7 +160,7 @@ export const LandingHero = () => {
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <p className='mb-8 text-center text-sm uppercase tracking-widest text-muted-foreground'>
+          <p className='text-muted-foreground mb-8 text-center text-sm tracking-widest uppercase'>
             Works with any React framework
           </p>
           <div className='flex flex-wrap items-center justify-center gap-8 md:gap-12'>
@@ -172,7 +169,7 @@ export const LandingHero = () => {
 
               return (
                 <div
-                  className='flex items-center gap-2.5 text-muted-foreground/60 transition-colors hover:text-[var(--brand)]'
+                  className='text-muted-foreground/60 flex items-center gap-2.5 transition-colors hover:text-[var(--brand)]'
                   key={framework.name}
                 >
                   <Icon className='h-5 w-5' />

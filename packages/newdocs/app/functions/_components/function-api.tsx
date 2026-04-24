@@ -44,8 +44,7 @@ export const FunctionApi = ({ apiParameters }: FunctionApiProps) => {
 
   apiParameters.forEach((parameter, index) => {
     if (parameter.tag === 'overload') {
-      const isFirstOverload =
-        apiParameters.findIndex(({ tag }) => tag === 'overload') === index;
+      const isFirstOverload = apiParameters.findIndex(({ tag }) => tag === 'overload') === index;
 
       if (!isFirstOverload) {
         groupIndex++;

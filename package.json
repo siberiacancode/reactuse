@@ -41,7 +41,7 @@
     "husky": "^9.1.7",
     "lucide-react": "1.9.0",
     "lint-staged": "^16.4.0",
-    "prettier-plugin-tailwindcss": "^0.7.3",
+    "prettier-plugin-tailwindcss": "0.7.2",
     "typescript": "^6.0.3"
   }
 }

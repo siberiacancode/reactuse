@@ -90,36 +90,30 @@ export const DocHeader = (props: HookProps) => {
       <div>
         <div className='flex gap-3'>
           <Badge
-            className={
-              `${badgeBaseClass} ${
-                categoryMeta.className ??
-                'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
-              }`
-            }
+            className={`${badgeBaseClass} ${
+              categoryMeta.className ??
+              'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+            }`}
           >
             {categoryMeta && categoryMeta.icon}
             {categoryKey}
           </Badge>
           <Badge
-            className={
-              `${badgeBaseClass} ${
-                props.usage
-                  ? usageMap[props.usage]
-                  : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
-              }`
-            }
+            className={`${badgeBaseClass} ${
+              props.usage
+                ? usageMap[props.usage]
+                : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+            }`}
           >
             <IconFlame />
             {props.usage}
           </Badge>
           <Badge
-            className={
-              `${badgeBaseClass} ${
-                props.hasTests
-                  ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
-                  : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
-              }`
-            }
+            className={`${badgeBaseClass} ${
+              props.hasTests
+                ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+                : 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+            }`}
           >
             {props.hasTests ? <IconRosetteDiscountCheck /> : <IconRosetteDiscountCheckOff />} test
             coverage

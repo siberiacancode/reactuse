@@ -24,16 +24,19 @@ export const LandingFaq = ({ items }: LandingFaqProps) => {
         const isOpen = openItem === value;
 
         return (
-          <div className='border-b border-border' key={value}>
+          <div className='border-border border-b' key={value}>
             <button
               aria-expanded={isOpen}
-              className='flex w-full items-center justify-between gap-6 py-5 text-left text-base text-foreground transition-colors hover:text-[var(--brand)] md:text-lg'
+              className='text-foreground flex w-full items-center justify-between gap-6 py-5 text-left text-base transition-colors hover:text-[var(--brand)] md:text-lg'
               onClick={() => setOpenItem((current) => (current === value ? '' : value))}
               type='button'
             >
               <span>{faq.question}</span>
               <IconChevronDown
-                className={cn('h-4 w-4 shrink-0 transition-transform duration-200', isOpen && 'rotate-180')}
+                className={cn(
+                  'h-4 w-4 shrink-0 transition-transform duration-200',
+                  isOpen && 'rotate-180'
+                )}
               />
             </button>
             <div
@@ -43,7 +46,7 @@ export const LandingFaq = ({ items }: LandingFaqProps) => {
               )}
             >
               <div className='overflow-hidden'>
-                <div className='pb-5 text-base leading-relaxed text-muted-foreground'>
+                <div className='text-muted-foreground pb-5 text-base leading-relaxed'>
                   {faq.answer}
                 </div>
               </div>

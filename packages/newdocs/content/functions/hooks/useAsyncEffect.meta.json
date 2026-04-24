@@ -9,9 +9,7 @@
   "description": "Hook that triggers the effect callback on updates",
   "category": "Lifecycle",
   "lastModified": 1758638440000,
-  "examples": [
-    "useAsyncEffect(async () => console.log(\"effect runs on updates\"), deps);"
-  ],
+  "examples": ["useAsyncEffect(async () => console.log(\"effect runs on updates\"), deps);"],
   "apiParameters": [
     {
       "tag": "param",

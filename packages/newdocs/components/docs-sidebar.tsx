@@ -101,7 +101,9 @@ export const DocsSidebar = ({
 
           const pages =
             item.type === 'folder'
-              ? getPagesFromFolder(item, currentBase).filter((page) => !topSectionHrefs.has(page.url))
+              ? getPagesFromFolder(item, currentBase).filter(
+                  (page) => !topSectionHrefs.has(page.url)
+                )
               : [];
 
           if (item.type === 'folder' && pages.length === 0) {

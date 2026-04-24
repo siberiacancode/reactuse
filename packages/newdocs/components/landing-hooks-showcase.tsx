@@ -24,13 +24,13 @@ export const LandingHooksShowcase = ({ hooks }: LandingHooksShowcaseProps) => {
   const rows = chunk(displayHooks, 16).slice(0, 5);
 
   return (
-    <section className='border-t border-border bg-card/30'>
+    <section className='border-border bg-card/30 border-t'>
       <div className='mx-auto max-w-6xl px-6 pt-24 md:pt-32'>
         <div>
-          <h2 className='font-display text-5xl font-bold tracking-tighter text-foreground md:text-7xl lg:text-8xl'>
+          <h2 className='font-display text-foreground text-5xl font-bold tracking-tighter md:text-7xl lg:text-8xl'>
             Explore Hooks
           </h2>
-          <p className='mt-4 text-lg text-muted-foreground md:text-xl'>
+          <p className='text-muted-foreground mt-4 text-lg md:text-xl'>
             158+ production-ready hooks for every use case
           </p>
         </div>
@@ -61,7 +61,7 @@ export const LandingHooksShowcase = ({ hooks }: LandingHooksShowcaseProps) => {
 
         <div className='mx-auto flex max-w-6xl justify-start gap-4 px-6 pt-6 pb-24 md:pb-32'>
           <Link
-            className='inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-4 font-mono text-lg font-semibold text-background transition-all duration-300 hover:scale-[1.02] hover:bg-[var(--brand)] hover:text-black'
+            className='bg-foreground text-background inline-flex items-center gap-2 rounded-full px-7 py-4 font-mono text-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:bg-[var(--brand)] hover:text-black'
             href='/functions/hooks/useActiveElement'
           >
             <span>View All</span>
@@ -69,7 +69,7 @@ export const LandingHooksShowcase = ({ hooks }: LandingHooksShowcaseProps) => {
           </Link>
 
           <Link
-            className='inline-flex items-center gap-2 rounded-full border border-border bg-transparent px-7 py-4 font-mono text-lg font-semibold text-foreground transition-all duration-300 hover:scale-[1.02] hover:bg-[color:color-mix(in_oklab,var(--brand)_8%,transparent)] hover:text-[var(--brand)]'
+            className='border-border text-foreground inline-flex items-center gap-2 rounded-full border bg-transparent px-7 py-4 font-mono text-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:bg-[color:color-mix(in_oklab,var(--brand)_8%,transparent)] hover:text-[var(--brand)]'
             href='/functions/hooks/useActiveElement'
           >
             <span>+{Math.max(0, hooks.length - displayHooks.length)} more hooks</span>

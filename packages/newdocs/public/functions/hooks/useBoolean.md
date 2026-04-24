@@ -47,7 +47,7 @@ import metadata from './useBoolean.meta.json';
 ## Usage
 
 ```tsx
-const [on, toggle] = useBoolean()
+const [on, toggle] = useBoolean();
 ```
 
 ## API

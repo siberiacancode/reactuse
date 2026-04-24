@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { BREAKPOINTS_TAILWIND, useBreakpoints } from '@siberiacancode/reactuse';
 

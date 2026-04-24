@@ -9,10 +9,7 @@
   "description": "Hook that automatically scrolls a list element to the bottom",
   "category": "Elements",
   "lastModified": 1775645190000,
-  "examples": [
-    "useAutoScroll(ref);",
-    "const ref = useAutoScroll();"
-  ],
+  "examples": ["useAutoScroll(ref);", "const ref = useAutoScroll();"],
   "apiParameters": [
     {
       "tag": "overload",

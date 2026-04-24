@@ -8,14 +8,10 @@ interface LogoWordmarkProps {
   textClassName?: string;
 }
 
-export const LogoWordmark = ({
-  className,
-  iconClassName,
-  textClassName
-}: LogoWordmarkProps) => {
+export const LogoWordmark = ({ className, iconClassName, textClassName }: LogoWordmarkProps) => {
   return (
     <span className={cn('inline-flex items-end leading-none', className)}>
-      <span className={cn('font-display font-bold tracking-tight text-foreground', textClassName)}>
+      <span className={cn('font-display text-foreground font-bold tracking-tight', textClassName)}>
         react
       </span>
       <Icons.logo

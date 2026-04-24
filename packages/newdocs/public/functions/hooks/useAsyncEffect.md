@@ -47,7 +47,7 @@ import metadata from './useAsyncEffect.meta.json';
 ## Usage
 
 ```tsx
-useAsyncEffect(async () => console.log("effect runs on updates"), deps);
+useAsyncEffect(async () => console.log('effect runs on updates'), deps);
 ```
 
 ## API

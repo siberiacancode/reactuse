@@ -9,9 +9,7 @@
   "description": "Hook that batches calls and forwards them to a callback",
   "category": "Utilities",
   "lastModified": 1773475680000,
-  "examples": [
-    "const batched = useBatchedCallback((batch) => console.log(batch), 5);"
-  ],
+  "examples": ["const batched = useBatchedCallback((batch) => console.log(batch), 5);"],
   "apiParameters": [
     {
       "tag": "param",

@@ -20,7 +20,7 @@ export const SiteHeader = () => {
           <MobileNav className='flex lg:hidden' items={siteConfig.navItems} />
           <Link className='hidden items-center gap-2 lg:inline-flex' href='/'>
             <Icons.logo className='size-7' />
-            <span className='font-display text-[1.7rem] font-bold tracking-tight text-foreground'>
+            <span className='font-display text-foreground text-[1.7rem] font-bold tracking-tight'>
               {siteConfig.name}
             </span>
           </Link>

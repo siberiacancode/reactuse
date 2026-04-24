@@ -47,7 +47,7 @@ import metadata from './useAudio.meta.json';
 ## Usage
 
 ```tsx
-const audio = useAudio("/path/to/sound.mp3");
+const audio = useAudio('/path/to/sound.mp3');
 ```
 
 ## API

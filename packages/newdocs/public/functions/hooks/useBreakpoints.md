@@ -47,7 +47,12 @@ import metadata from './useBreakpoints.meta.json';
 ## Usage
 
 ```tsx
-const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });
+const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({
+  mobile: 0,
+  tablet: 640,
+  laptop: 1024,
+  desktop: 1280
+});
 ```
 
 ## API

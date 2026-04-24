@@ -5,7 +5,6 @@ description: About optimization
 
 ---
 
-
 ## Library philosophy
 
 ReactUse provides **simple, predictable utility hooks**. We do not add shared caches or cross-component optimizations by default. Optimization is a **conscious, application-level decision**, not something the library imposes on every user.

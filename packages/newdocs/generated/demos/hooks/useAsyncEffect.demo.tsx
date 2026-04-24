@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useAsyncEffect } from '@siberiacancode/reactuse';
 import { useState } from 'react';

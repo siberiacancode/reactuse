@@ -132,9 +132,7 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push('');
   result.push('## Contributors');
   result.push('');
-  result.push(
-    `<FunctionContributors contributors={metadata.contributors} />`
-  );
+  result.push(`<FunctionContributors contributors={metadata.contributors} />`);
 
   return result.join('\n');
 };

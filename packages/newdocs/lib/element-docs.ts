@@ -193,9 +193,7 @@ const getElementMeta = async (typeRaw: ElementType, slug: string): Promise<Eleme
       avatar: createAvatarUrl(author.email)
     })
   );
-  const lastModified = gitLog.latest?.date
-    ? new Date(gitLog.latest.date).getTime()
-    : stat.mtimeMs;
+  const lastModified = gitLog.latest?.date ? new Date(gitLog.latest.date).getTime() : stat.mtimeMs;
 
   return {
     name,
