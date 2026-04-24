@@ -129,9 +129,9 @@ interface FunctionHeaderProps {
   category: string;
   description?: string;
   isTest: boolean;
+  markdown: string;
   name: string;
   next?: string;
-  page: string;
   previous?: string;
   type: string;
   usage: string;
@@ -144,7 +144,7 @@ export const FunctionHeader = ({
   description,
   name,
   next,
-  page,
+  markdown,
   previous,
   isTest
 }: FunctionHeaderProps) => {
@@ -161,7 +161,7 @@ export const FunctionHeader = ({
             <div className='hidden sm:block'>
               <div className='bg-secondary relative flex rounded-lg *:[[data-slot=button]]:focus-visible:relative *:[[data-slot=button]]:focus-visible:z-10'>
                 <ButtonGroup>
-                  <Button size='sm' variant='secondary' onClick={() => copy(page)}>
+                  <Button size='sm' variant='secondary' onClick={() => copy(markdown)}>
                     {copied ? <IconCheck /> : <IconCopy />}
                     Copy Page
                   </Button>

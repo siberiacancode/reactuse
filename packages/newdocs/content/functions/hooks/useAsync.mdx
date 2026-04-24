@@ -6,9 +6,13 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
+lastModifiedTime: 1754977987000
 ---
 
+import metadata from './useAsync.meta.json';
+
 <FunctionSource variant='demo' type='hook' file='useAsync' language="tsx" />
+
 ## Installation
 
 <FunctionTabs>
@@ -46,4 +50,14 @@ isDemo: true
 const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);
 ```
 
-Last changed: 8 months ago
+## API
+
+<FunctionApi apiParameters={metadata.apiParameters} />
+
+## Type Declarations
+
+<FunctionSource variant='type-declarations' type='hook' file='useAsync' language='ts' />
+
+## Contributors
+
+<FunctionContributors contributors={metadata.contributors} />

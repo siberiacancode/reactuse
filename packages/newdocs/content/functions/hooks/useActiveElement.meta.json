@@ -1,0 +1,205 @@
+{
+  "code": "import { useEffect, useState } from 'react';\n\nimport type { HookTarget } from '@/utils/helpers';\n\nimport { isTarget } from '@/utils/helpers';\n\nimport type { StateRef } from '../useRefState/useRefState';\n\nimport { useRefState } from '../useRefState/useRefState';\n\n/** The use active element return type */\nexport interface UseActiveElementReturn<ActiveElement extends HTMLElement = HTMLElement> {\n  value: ActiveElement | null;\n}\n\nexport interface UseActiveElement {\n  (): UseActiveElementReturn;\n\n  <Target extends Element, ActiveElement extends HTMLElement = HTMLElement>(\n    target?: never\n  ): {\n    ref: StateRef<Target>;\n  } & UseActiveElementReturn<ActiveElement>;\n\n  <ActiveElement extends HTMLElement = HTMLElement>(\n    target: HookTarget\n  ): UseActiveElementReturn<ActiveElement>;\n}\n\n/**\n * @name useActiveElement\n * @description - Hook for tracking the active element\n * @category Elements\n * @usage low\n *\n * @overload\n * @param {HookTarget} [target=window] The target element to observe active element changes\n * @returns {ActiveElement | null} The active element\n *\n * @example\n * const activeElement = useActiveElement(ref);\n *\n * @overload\n * @template ActiveElement The active element type\n * @returns {{ ref: StateRef<Element>; activeElement: ActiveElement | null }} An object containing the ref and active element\n *\n * @example\n * const { ref, value } = useActiveElement();\n *\n * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useActiveElement.html}\n */\nexport const useActiveElement = ((...params: any[]) => {\n  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;\n\n  const [value, setValue] = useState<HTMLElement | null>(null);\n  const internalRef = useRefState();\n\n  useEffect(() => {\n    const element = ((target ? isTarget.getElement(target) : internalRef.current) ??\n      window) as Element;\n\n    const observer = new MutationObserver((mutations) => {\n      mutations\n        .filter((mutation) => mutation.removedNodes.length)\n        .map((mutation) => [...mutation.removedNodes])\n        .flat()\n        .forEach((node) => {\n          setValue((prevActiveElement) => {\n            if (node === prevActiveElement) return document.activeElement as HTMLElement | null;\n            return prevActiveElement;\n          });\n        });\n    });\n\n    observer.observe(element, {\n      childList: true,\n      subtree: true\n    });\n\n    const onActiveElementChange = () => setValue(document?.activeElement as HTMLElement | null);\n\n    element.addEventListener('focus', onActiveElementChange, true);\n    element.addEventListener('blur', onActiveElementChange, true);\n\n    return () => {\n      observer.disconnect();\n      element.removeEventListener('focus', onActiveElementChange, true);\n      element.removeEventListener('blur', onActiveElementChange, true);\n    };\n  }, [target && isTarget.getRawElement(target), internalRef.state]);\n\n  if (target) return { value };\n  return {\n    ref: internalRef,\n    value\n  };\n}) as UseActiveElement;\n",
+  "id": "useActiveElement",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useActiveElement",
+  "usage": "low",
+  "description": "Hook for tracking the active element",
+  "category": "Elements",
+  "lastModified": 1776957880000,
+  "examples": [
+    "const activeElement = useActiveElement(ref);",
+    "const { ref, value } = useActiveElement();"
+  ],
+  "apiParameters": [
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 6,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "target",
+      "type": "HookTarget",
+      "optional": true,
+      "description": "The target element to observe active element changes",
+      "problems": [],
+      "source": [
+        {
+          "number": 7,
+          "source": " * @param {HookTarget} [target=window] The target element to observe active element changes",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[target=window]",
+            "postName": " ",
+            "type": "{HookTarget}",
+            "postType": " ",
+            "description": "The target element to observe active element changes",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ],
+      "default": "window"
+    },
+    {
+      "tag": "returns",
+      "name": "The",
+      "type": "ActiveElement | null",
+      "optional": false,
+      "description": "active element",
+      "problems": [],
+      "source": [
+        {
+          "number": 8,
+          "source": " * @returns {ActiveElement | null} The active element",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "The",
+            "postName": " ",
+            "type": "{ActiveElement | null}",
+            "postType": " ",
+            "description": "active element",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 9,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 13,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "{ ref: StateRef<Element>; activeElement: ActiveElement | null }",
+      "optional": false,
+      "description": "object containing the ref and active element",
+      "problems": [],
+      "source": [
+        {
+          "number": 15,
+          "source": " * @returns {{ ref: StateRef<Element>; activeElement: ActiveElement | null }} An object containing the ref and active element",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{{ ref: StateRef<Element>; activeElement: ActiveElement | null }}",
+            "postType": " ",
+            "description": "object containing the ref and active element",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 16,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    }
+  ],
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    }
+  ]
+}

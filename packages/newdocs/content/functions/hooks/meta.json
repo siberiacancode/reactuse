@@ -1,3 +1,26 @@
 {
-  "title": "Hooks"
+  "title": "Hooks",
+  "pages": [
+    "---elements---",
+    "useActiveElement",
+    "useAutoScroll",
+
+    "---async---",
+    "useAsync",
+
+    "---lifecycle---",
+    "useAsyncEffect",
+
+    "---browser---",
+    "useAudio",
+    "useBattery",
+    "useBluetooth",
+    "useBreakpoints",
+
+    "---utilities---",
+    "useBatchedCallback",
+
+    "---state---",
+    "useBoolean"
+  ]
 }

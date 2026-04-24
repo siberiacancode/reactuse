@@ -1,0 +1,125 @@
+{
+  "code": "import { useMemo, useRef } from 'react';\r\n\r\nexport type BatchedCallback<Params extends unknown[]> = ((...args: Params) => void) & {\r\n  flush: () => void;\r\n  cancel: () => void;\r\n};\r\n\r\n/**\r\n * @name useBatchedCallback\r\n * @description - Hook that batches calls and forwards them to a callback\r\n * @category Utilities\r\n * @usage medium\r\n *\r\n * @template Params The type of the params\r\n * @param {(batch: Params[]) => void} callback The callback that receives a batch of calls\r\n * @param {number} batchSize The maximum size of a batch before it is flushed\r\n * @returns {BatchedCallback<Params>} The batched callback with flush and cancel helpers\r\n *\r\n * @example\r\n * const batched = useBatchedCallback((batch) => console.log(batch), 5);\r\n */\r\nexport const useBatchedCallback = <Params extends unknown[]>(\r\n  callback: (batch: Params[]) => void,\r\n  size: number\r\n): BatchedCallback<Params> => {\r\n  const internalCallbackRef = useRef(callback);\r\n  const sizeRef = useRef(size);\r\n  const queueRef = useRef<Params[]>([]);\r\n\r\n  internalCallbackRef.current = callback;\r\n  sizeRef.current = size;\r\n\r\n  const flush = () => {\r\n    if (!queueRef.current.length) return;\r\n    const batch = queueRef.current;\r\n    queueRef.current = [];\r\n    internalCallbackRef.current(batch);\r\n  };\r\n\r\n  const batched = useMemo(() => {\r\n    const batchedCallback = (...args: Params) => {\r\n      queueRef.current.push(args);\r\n      if (queueRef.current.length >= sizeRef.current) flush();\r\n    };\r\n\r\n    batchedCallback.flush = flush;\r\n    batchedCallback.cancel = () => (queueRef.current = []);\r\n\r\n    return batchedCallback as BatchedCallback<Params>;\r\n  }, []);\r\n\r\n  return batched;\r\n};\r\n",
+  "id": "useBatchedCallback",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useBatchedCallback",
+  "usage": "medium",
+  "description": "Hook that batches calls and forwards them to a callback",
+  "category": "Utilities",
+  "lastModified": 1773475680000,
+  "examples": [
+    "const batched = useBatchedCallback((batch) => console.log(batch), 5);"
+  ],
+  "apiParameters": [
+    {
+      "tag": "param",
+      "name": "callback",
+      "type": "(batch: Params[]) => void",
+      "optional": false,
+      "description": "The callback that receives a batch of calls",
+      "problems": [],
+      "source": [
+        {
+          "number": 7,
+          "source": " * @param {(batch: Params[]) => void} callback The callback that receives a batch of calls\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "callback",
+            "postName": " ",
+            "type": "{(batch: Params[]) => void}",
+            "postType": " ",
+            "description": "The callback that receives a batch of calls",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "batchSize",
+      "type": "number",
+      "optional": false,
+      "description": "The maximum size of a batch before it is flushed",
+      "problems": [],
+      "source": [
+        {
+          "number": 8,
+          "source": " * @param {number} batchSize The maximum size of a batch before it is flushed\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "batchSize",
+            "postName": " ",
+            "type": "{number}",
+            "postType": " ",
+            "description": "The maximum size of a batch before it is flushed",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "The",
+      "type": "BatchedCallback<Params>",
+      "optional": false,
+      "description": "batched callback with flush and cancel helpers",
+      "problems": [],
+      "source": [
+        {
+          "number": 9,
+          "source": " * @returns {BatchedCallback<Params>} The batched callback with flush and cancel helpers\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "The",
+            "postName": " ",
+            "type": "{BatchedCallback<Params>}",
+            "postType": " ",
+            "description": "batched callback with flush and cancel helpers",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        },
+        {
+          "number": 10,
+          "source": " *\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    }
+  ],
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ]
+}

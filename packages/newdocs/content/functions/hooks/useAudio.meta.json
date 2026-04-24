@@ -1,0 +1,315 @@
+{
+  "code": "import { useEffect, useRef, useState } from 'react';\r\n\r\n/** Type sprite map */\r\nexport interface SpriteMap {\r\n  /** [start time in seconds, end time in seconds] */\r\n  [key: string]: [number, number];\r\n}\r\n\r\n/** Type use audio options */\r\nexport interface UseAudioOptions {\r\n  /** Whether audio playback is initially enabled */\r\n  immediately?: boolean;\r\n  /** Whether to stop current playback when starting a new one */\r\n  interrupt?: boolean;\r\n  /** Initial playback speed (0.5 to 2) */\r\n  playbackRate?: number;\r\n  /** Map of named audio segments for sprite-based playback */\r\n  sprite?: SpriteMap;\r\n  /** Initial volume level (0 to 1) */\r\n  volume?: number;\r\n}\r\n\r\n/** Type use audio return type */\r\nexport interface UseAudioReturn {\r\n  /** Current playback speed (0.5 to 2) */\r\n  playbackRate: number;\r\n  /** Whether audio is currently playing */\r\n  playing: boolean;\r\n  /** Current volume level (0 to 1) */\r\n  volume: number;\r\n  /** Set playback speed (0.5 to 2) */\r\n  changePlaybackRate: (value: number) => void;\r\n  /** Pause audio playback at current position */\r\n  pause: () => void;\r\n  /** Start audio playback from the beginning or specified sprite segment */\r\n  play: (sprite?: string) => Promise<void>;\r\n  /** Set audio volume level (0 to 1) */\r\n  setVolume: (value: number) => void;\r\n  /** Stop audio playback and reset position to start */\r\n  stop: () => void;\r\n}\r\n\r\n/**\r\n * @name useAudio\r\n * @description - Hook that manages audio playback with sprite support\r\n * @category Browser\r\n * @usage low\r\n\r\n * @browserapi Audio https://developer.mozilla.org/en-US/docs/Web/API/Audio\r\n *\r\n * @template Value The type of the value\r\n * @param {string} url The URL of the audio file to play\r\n * @param {UseAudioOptions} [options] Audio configuration options\r\n * @param {number} [options.volume=1] Initial volume level (0 to 1)\r\n * @param {number} [options.playbackRate=1] Initial playback speed (0.5 to 2)\r\n * @param {boolean} [options.interrupt=false] Whether to stop current playback when starting a new one\r\n * @param {boolean} [options.soundEnabled=true] Whether audio playback is initially enabled\r\n * @param {SpriteMap} [options.sprite] Map of named audio segments for sprite-based playback\r\n * @returns {UseAudioReturn} An object containing audio controls and state\r\n *\r\n * @example\r\n * const audio = useAudio(\"/path/to/sound.mp3\");\r\n */\r\nexport const useAudio = (src: string, options: UseAudioOptions = {}): UseAudioReturn => {\r\n  const [playing, setPlaying] = useState(false);\r\n  const [volume, setCurrentVolume] = useState(options.volume ?? 1);\r\n  const [playbackRate, setPlaybackRate] = useState(options.playbackRate ?? 1);\r\n\r\n  const audioRef = useRef<HTMLAudioElement | null>(null);\r\n\r\n  useEffect(() => {\r\n    const audio = new Audio(src);\r\n\r\n    audio.volume = volume;\r\n    audio.playbackRate = playbackRate;\r\n    audioRef.current = audio;\r\n\r\n    if (options.immediately) {\r\n      try {\r\n        setPlaying(true);\r\n        audio.play();\r\n      } catch {\r\n        setPlaying(false);\r\n      }\r\n    }\r\n\r\n    const onPlay = () => setPlaying(true);\r\n    const onPause = () => setPlaying(false);\r\n    const onEnded = () => setPlaying(false);\r\n    const onVolumeChange = () => setCurrentVolume(audio.volume);\r\n    const onRateChange = () => setPlaybackRate(audio.playbackRate);\r\n\r\n    audio.addEventListener('play', onPlay);\r\n    audio.addEventListener('pause', onPause);\r\n    audio.addEventListener('ended', onEnded);\r\n    audio.addEventListener('volumechange', onVolumeChange);\r\n    audio.addEventListener('ratechange', onRateChange);\r\n\r\n    return () => {\r\n      audio.removeEventListener('play', onPlay);\r\n      audio.removeEventListener('pause', onPause);\r\n      audio.removeEventListener('ended', onEnded);\r\n      audio.removeEventListener('volumechange', onVolumeChange);\r\n      audio.removeEventListener('ratechange', onRateChange);\r\n\r\n      audio.pause();\r\n      audio.remove();\r\n    };\r\n  }, [src]);\r\n\r\n  const stop = () => {\r\n    if (!audioRef.current) return;\r\n    audioRef.current.pause();\r\n    audioRef.current.currentTime = 0;\r\n    setPlaying(false);\r\n  };\r\n\r\n  const play = async (spriteName?: string) => {\r\n    if (!audioRef.current) return;\r\n    if (options.interrupt) stop();\r\n\r\n    setPlaying(true);\r\n\r\n    if (!spriteName || !options.sprite?.[spriteName]) {\r\n      await audioRef.current.play();\r\n      return;\r\n    }\r\n\r\n    const [start, end] = options.sprite[spriteName];\r\n    audioRef.current.currentTime = start;\r\n    await audioRef.current.play();\r\n\r\n    const checkTime = () => {\r\n      if (!audioRef.current) return;\r\n      if (audioRef.current.currentTime >= end) {\r\n        stop();\r\n      }\r\n\r\n      if (!playing) return;\r\n\r\n      requestAnimationFrame(checkTime);\r\n    };\r\n\r\n    requestAnimationFrame(checkTime);\r\n  };\r\n\r\n  const pause = () => {\r\n    if (!audioRef.current) return;\r\n    audioRef.current.pause();\r\n    setPlaying(false);\r\n  };\r\n\r\n  const setVolume = (value: number) => {\r\n    if (!audioRef.current) return;\r\n    const newVolume = Math.max(0, Math.min(1, value));\r\n    audioRef.current.volume = newVolume;\r\n    setCurrentVolume(newVolume);\r\n  };\r\n\r\n  const changePlaybackRate = (value: number) => {\r\n    if (!audioRef.current) return;\r\n    const newRate = Math.max(0.5, Math.min(2, value));\r\n    audioRef.current.playbackRate = newRate;\r\n    setPlaybackRate(newRate);\r\n  };\r\n\r\n  return {\r\n    play,\r\n    pause,\r\n    stop,\r\n    playing,\r\n    setVolume,\r\n    volume,\r\n    changePlaybackRate,\r\n    playbackRate\r\n  };\r\n};\r\n",
+  "id": "useAudio",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useAudio",
+  "usage": "low",
+  "browserapi": {
+    "tag": "browserapi",
+    "name": "Audio",
+    "type": "",
+    "optional": false,
+    "description": "https://developer.mozilla.org/en-US/docs/Web/API/Audio",
+    "problems": [],
+    "source": [
+      {
+        "number": 6,
+        "source": " * @browserapi Audio https://developer.mozilla.org/en-US/docs/Web/API/Audio\r",
+        "tokens": {
+          "start": " ",
+          "delimiter": "*",
+          "postDelimiter": " ",
+          "tag": "@browserapi",
+          "postTag": " ",
+          "name": "Audio",
+          "postName": " ",
+          "type": "",
+          "postType": "",
+          "description": "https://developer.mozilla.org/en-US/docs/Web/API/Audio",
+          "end": "",
+          "lineEnd": "\r"
+        }
+      },
+      {
+        "number": 7,
+        "source": " *\r",
+        "tokens": {
+          "start": " ",
+          "delimiter": "*",
+          "postDelimiter": "",
+          "tag": "",
+          "postTag": "",
+          "name": "",
+          "postName": "",
+          "type": "",
+          "postType": "",
+          "description": "",
+          "end": "",
+          "lineEnd": "\r"
+        }
+      }
+    ]
+  },
+  "description": "Hook that manages audio playback with sprite support",
+  "category": "Browser",
+  "lastModified": 1762758339000,
+  "examples": [
+    "const audio = useAudio(\"/path/to/sound.mp3\");"
+  ],
+  "apiParameters": [
+    {
+      "tag": "param",
+      "name": "url",
+      "type": "string",
+      "optional": false,
+      "description": "The URL of the audio file to play",
+      "problems": [],
+      "source": [
+        {
+          "number": 9,
+          "source": " * @param {string} url The URL of the audio file to play\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "url",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The URL of the audio file to play",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options",
+      "type": "UseAudioOptions",
+      "optional": true,
+      "description": "Audio configuration options",
+      "problems": [],
+      "source": [
+        {
+          "number": 10,
+          "source": " * @param {UseAudioOptions} [options] Audio configuration options\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options]",
+            "postName": " ",
+            "type": "{UseAudioOptions}",
+            "postType": " ",
+            "description": "Audio configuration options",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.volume",
+      "type": "number",
+      "optional": true,
+      "description": "Initial volume level (0 to 1)",
+      "problems": [],
+      "source": [
+        {
+          "number": 11,
+          "source": " * @param {number} [options.volume=1] Initial volume level (0 to 1)\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.volume=1]",
+            "postName": " ",
+            "type": "{number}",
+            "postType": " ",
+            "description": "Initial volume level (0 to 1)",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "tag": "param",
+      "name": "options.playbackRate",
+      "type": "number",
+      "optional": true,
+      "description": "Initial playback speed (0.5 to 2)",
+      "problems": [],
+      "source": [
+        {
+          "number": 12,
+          "source": " * @param {number} [options.playbackRate=1] Initial playback speed (0.5 to 2)\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.playbackRate=1]",
+            "postName": " ",
+            "type": "{number}",
+            "postType": " ",
+            "description": "Initial playback speed (0.5 to 2)",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "tag": "param",
+      "name": "options.interrupt",
+      "type": "boolean",
+      "optional": true,
+      "description": "Whether to stop current playback when starting a new one",
+      "problems": [],
+      "source": [
+        {
+          "number": 13,
+          "source": " * @param {boolean} [options.interrupt=false] Whether to stop current playback when starting a new one\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.interrupt=false]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Whether to stop current playback when starting a new one",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ],
+      "default": "false"
+    },
+    {
+      "tag": "param",
+      "name": "options.soundEnabled",
+      "type": "boolean",
+      "optional": true,
+      "description": "Whether audio playback is initially enabled",
+      "problems": [],
+      "source": [
+        {
+          "number": 14,
+          "source": " * @param {boolean} [options.soundEnabled=true] Whether audio playback is initially enabled\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.soundEnabled=true]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Whether audio playback is initially enabled",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ],
+      "default": "true"
+    },
+    {
+      "tag": "param",
+      "name": "options.sprite",
+      "type": "SpriteMap",
+      "optional": true,
+      "description": "Map of named audio segments for sprite-based playback",
+      "problems": [],
+      "source": [
+        {
+          "number": 15,
+          "source": " * @param {SpriteMap} [options.sprite] Map of named audio segments for sprite-based playback\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.sprite]",
+            "postName": " ",
+            "type": "{SpriteMap}",
+            "postType": " ",
+            "description": "Map of named audio segments for sprite-based playback",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseAudioReturn",
+      "optional": false,
+      "description": "object containing audio controls and state",
+      "problems": [],
+      "source": [
+        {
+          "number": 16,
+          "source": " * @returns {UseAudioReturn} An object containing audio controls and state\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseAudioReturn}",
+            "postType": " ",
+            "description": "object containing audio controls and state",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        },
+        {
+          "number": 17,
+          "source": " *\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    }
+  ],
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ]
+}

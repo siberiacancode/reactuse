@@ -6,9 +6,13 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
+lastModifiedTime: 1776957880000
 ---
 
+import metadata from './useActiveElement.meta.json';
+
 <FunctionSource variant='demo' type='hook' file='useActiveElement' language="tsx" />
+
 ## Installation
 
 <FunctionTabs>
@@ -48,4 +52,14 @@ const activeElement = useActiveElement(ref);
 const { ref, value } = useActiveElement();
 ```
 
-Last changed: 1 hour ago
+## API
+
+<FunctionApi apiParameters={metadata.apiParameters} />
+
+## Type Declarations
+
+<FunctionSource variant='type-declarations' type='hook' file='useActiveElement' language='ts' />
+
+## Contributors
+
+<FunctionContributors contributors={metadata.contributors} />

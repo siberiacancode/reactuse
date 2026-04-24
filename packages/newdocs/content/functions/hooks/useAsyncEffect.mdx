@@ -6,9 +6,13 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
+lastModifiedTime: 1758638440000
 ---
 
+import metadata from './useAsyncEffect.meta.json';
+
 <FunctionSource variant='demo' type='hook' file='useAsyncEffect' language="tsx" />
+
 ## Installation
 
 <FunctionTabs>
@@ -46,4 +50,14 @@ isDemo: true
 useAsyncEffect(async () => console.log("effect runs on updates"), deps);
 ```
 
-Last changed: 7 months ago
+## API
+
+<FunctionApi apiParameters={metadata.apiParameters} />
+
+## Type Declarations
+
+<FunctionSource variant='type-declarations' type='hook' file='useAsyncEffect' language='ts' />
+
+## Contributors
+
+<FunctionContributors contributors={metadata.contributors} />

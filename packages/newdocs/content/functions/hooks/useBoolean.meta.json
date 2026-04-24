@@ -1,0 +1,102 @@
+{
+  "code": "import { useState } from 'react';\r\n\r\n/** The use boolean return type */\r\nexport type UseBooleanReturn = [\r\n  /** The current boolean state value */\r\n  value: boolean,\r\n  /** Function to toggle the boolean state */\r\n  toggle: (value?: boolean) => void\r\n];\r\n\r\n/**\r\n * @name useBoolean\r\n * @description - Hook provides opportunity to manage boolean state\r\n * @category State\r\n * @usage necessary\r\n\r\n * @param {boolean} [initialValue=false] The initial boolean value\r\n * @returns {UseBooleanReturn} An object containing the boolean state value and utility functions to manipulate the state\r\n *\r\n * @example\r\n * const [on, toggle] = useBoolean()\r\n */\r\nexport const useBoolean = (initialValue = false): UseBooleanReturn => {\r\n  const [value, setValue] = useState(initialValue);\r\n  const toggle = (value?: boolean) => setValue((prevValue) => value ?? !prevValue);\r\n\r\n  return [value, toggle];\r\n};\r\n",
+  "id": "useBoolean",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useBoolean",
+  "usage": "necessary",
+  "description": "Hook provides opportunity to manage boolean state",
+  "category": "State",
+  "lastModified": 1754977987000,
+  "examples": [
+    "const [on, toggle] = useBoolean()"
+  ],
+  "apiParameters": [
+    {
+      "tag": "param",
+      "name": "initialValue",
+      "type": "boolean",
+      "optional": true,
+      "description": "The initial boolean value",
+      "problems": [],
+      "source": [
+        {
+          "number": 6,
+          "source": " * @param {boolean} [initialValue=false] The initial boolean value\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[initialValue=false]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "The initial boolean value",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ],
+      "default": "false"
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseBooleanReturn",
+      "optional": false,
+      "description": "object containing the boolean state value and utility functions to manipulate the state",
+      "problems": [],
+      "source": [
+        {
+          "number": 7,
+          "source": " * @returns {UseBooleanReturn} An object containing the boolean state value and utility functions to manipulate the state\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseBooleanReturn}",
+            "postType": " ",
+            "description": "object containing the boolean state value and utility functions to manipulate the state",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        },
+        {
+          "number": 8,
+          "source": " *\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    }
+  ],
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    }
+  ]
+}

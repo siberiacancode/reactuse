@@ -9,6 +9,8 @@ import { Step, Steps } from '@docs/ui/steps';
 import Link from 'next/link';
 import * as React from 'react';
 
+import { FunctionApi } from './app/functions/_components/function-api';
+import { FunctionContributors } from './app/functions/_components/function-contributors';
 import { FunctionDemo } from './app/functions/_components/function-demo';
 import { FunctionSource } from './app/functions/_components/function-source';
 import { FunctionTabs } from './app/functions/_components/function-tabs';
@@ -33,15 +35,29 @@ import {
 } from './ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
-const CUSTOM_COMPONENTS = {
+export const CUSTOM_COMPONENTS = {
   FunctionSource,
   FunctionTabs,
   FunctionDemo,
+  FunctionApi,
+  FunctionContributors,
   Steps,
   Step
 };
 
-const HEAD_COMPONENTS = {
+export const TABLE_COMPONENTS = {
+  tr: ({ className, ...props }: React.ComponentProps<'tr'>) => (
+    <tr className={cn('m-0 border-b', className)} {...props} />
+  ),
+  th: ({ className, ...props }: React.ComponentProps<'th'>) => (
+    <th className={cn('px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right', className)} {...props} />
+  ),
+  td: ({ className, ...props }: React.ComponentProps<'td'>) => (
+    <td className={cn('px-4 py-2 text-left whitespace-nowrap [&[align=center]]:text-center [&[align=right]]:text-right', className)} {...props} />
+  )
+}
+
+export const HEAD_COMPONENTS = {
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
     <h1
       className={cn(
@@ -99,6 +115,7 @@ const HEAD_COMPONENTS = {
 };
 
 export const mdxComponents = {
+  ...TABLE_COMPONENTS,
   ...HEAD_COMPONENTS,
   ...CUSTOM_COMPONENTS,
   a: ({ className, ...props }: React.ComponentProps<'a'>) => (
@@ -137,27 +154,6 @@ export const mdxComponents = {
       />
     </div>;
   },
-  tr: ({ className, ...props }: React.ComponentProps<'tr'>) => (
-    <tr className={cn('m-0 border-b', className)} {...props} />
-  ),
-  th: ({ className, ...props }: React.ComponentProps<'th'>) => (
-    <th
-      className={cn(
-        'px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right',
-        className
-      )}
-      {...props}
-    />
-  ),
-  td: ({ className, ...props }: React.ComponentProps<'td'>) => (
-    <td
-      className={cn(
-        'px-4 py-2 text-left whitespace-nowrap [&[align=center]]:text-center [&[align=right]]:text-right',
-        className
-      )}
-      {...props}
-    />
-  ),
   pre: ({ className, children, ...props }: React.ComponentProps<'pre'>) => (
     <pre
       className={cn(

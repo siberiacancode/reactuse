@@ -1,6 +1,7 @@
 'use client'
 
 import { useActiveElement } from '@siberiacancode/reactuse';
+import { AtSignIcon } from 'lucide-react';
 
 const Demo = () => {
   const activeElement = useActiveElement<HTMLDivElement>();
@@ -27,14 +28,23 @@ const Demo = () => {
 
             <label className='flex flex-col gap-2'>
               Email
-              <input data-id='email' placeholder='john@example.com' type='email' />
+              <div className='relative'>
+                <AtSignIcon className='pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-50' />
+
+                <input
+                  className='pl-8!'
+                  data-id='email'
+                  placeholder='john@example.com'
+                  type='email'
+                />
+              </div>
             </label>
           </div>
 
           <div>
             <label className='flex flex-col gap-2'>
               Message
-              <textarea data-id='message' placeholder='Type your message...' rows={10} />
+              <textarea data-id='message' placeholder='Type your message...' rows={5} />
             </label>
           </div>
 
@@ -43,7 +53,7 @@ const Demo = () => {
               Cancel
             </button>
 
-            <button data-id='submit' type='submit'>
+            <button data-id='submit' type='button'>
               Submit
             </button>
           </div>

@@ -1,3 +1,5 @@
+'use client'
+
 import { useAudio } from '@siberiacancode/reactuse';
 
 const Demo = () => {

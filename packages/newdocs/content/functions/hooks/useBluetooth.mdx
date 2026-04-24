@@ -1,17 +1,17 @@
 ---
-title: useActiveElement
-description: Hook for tracking the active element
-category: elements
+title: useBluetooth
+description: Hook for getting information about bluetooth
+category: browser
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1776957880000
+lastModifiedTime: 1756134040000
 ---
 
-import metadata from './useActiveElement.meta.json';
+import metadata from './useBluetooth.meta.json';
 
-<FunctionSource variant='demo' type='hook' file='useActiveElement' language="tsx" />
+<FunctionSource variant='demo' type='hook' file='useBluetooth' language="tsx" />
 
 ## Installation
 
@@ -23,12 +23,12 @@ import metadata from './useActiveElement.meta.json';
   </TabsList>
   <TabsContent value='library'>
     ```tsx
-    import { useActiveElement } from '@siberiacancode/reactuse';
+    import { useBluetooth } from '@siberiacancode/reactuse';
     ```
   </TabsContent>
   <TabsContent value='cli'>
     ```bash
-    npx useverse@latest add useActiveElement
+    npx useverse@latest add useBluetooth
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -36,7 +36,7 @@ import metadata from './useActiveElement.meta.json';
      <Step>
       Copy and paste the following code into your project.
     </Step>
-      <FunctionSource variant='code' type='hook' file='useActiveElement' language="ts" />
+      <FunctionSource variant='code' type='hook' file='useBluetooth' language="ts" />
     <Step>
       Update the import paths to match your project setup.
     </Step>
@@ -47,9 +47,7 @@ import metadata from './useActiveElement.meta.json';
 ## Usage
 
 ```tsx
-const activeElement = useActiveElement(ref);
-// or
-const { ref, value } = useActiveElement();
+const { supported, connected, device, requestDevice, server } = useBluetooth(options);
 ```
 
 ## API
@@ -58,7 +56,7 @@ const { ref, value } = useActiveElement();
 
 ## Type Declarations
 
-<FunctionSource variant='type-declarations' type='hook' file='useActiveElement' language='ts' />
+<FunctionSource variant='type-declarations' type='hook' file='useBluetooth' language='ts' />
 
 ## Contributors
 

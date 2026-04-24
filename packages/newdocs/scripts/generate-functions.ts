@@ -1,20 +1,11 @@
 import { parse } from 'comment-parser';
 import fs from 'node:fs';
 import path from 'node:path';
-import ts from 'typescript';
 
 import type { FunctionMetadata } from './constants';
 
 import { CONTENT_ROOT, CORE_ROOT } from './constants';
-import {
-  checkFileContent,
-  extractTypeInfo,
-  getContentFile,
-  getElements,
-  getGitInfo,
-  getTimeAgo,
-  matchJsdoc
-} from './helpers';
+import { checkFileContent, getContentFile, getElements, getGitInfo, matchJsdoc } from './helpers';
 
 const createDemo = async (metadata: FunctionMetadata) => {
   const demoPath = path.join(
@@ -28,6 +19,34 @@ const createDemo = async (metadata: FunctionMetadata) => {
   return `'use client'\n\n${demoContent}`;
 };
 
+const createMetaJson = (metadata: FunctionMetadata[]) => {
+  const categories = metadata.reduce(
+    (acc, item) => {
+      const category = item.category.toLowerCase();
+      if (!acc[category]) acc[category] = [];
+      acc[category].push(item);
+      return acc;
+    },
+    {} as Record<string, FunctionMetadata[]>
+  );
+
+  const pages = Object.entries(categories)
+    .map(
+      ([category, items]) => `
+      "---${category}---",
+      ${items.map((item) => `"${item.name}"`).join(',')}`
+    )
+    .join(',\n');
+
+  const result = `{
+    "pages": [
+      ${pages}
+    ]
+  }`;
+
+  return result;
+};
+
 const createMdxTemplate = (metadata: FunctionMetadata) => {
   const result: string[] = [];
 
@@ -39,13 +58,18 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`type: ${metadata.type}`);
   result.push(`isTest: ${metadata.isTest}`);
   result.push(`isDemo: ${metadata.isDemo}`);
+  result.push(`lastModifiedTime: ${metadata.lastModified}`);
   result.push('---');
+
+  result.push('');
+  result.push(`import metadata from './${metadata.name}.meta.json';`);
   result.push('');
 
   result.push(
     `<FunctionSource variant='demo' type='${metadata.type}' file='${metadata.name}' language="tsx" />`
   );
 
+  result.push('');
   result.push(`## Installation`);
   result.push('');
 
@@ -92,8 +116,26 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`\`\`\``);
 
   result.push('');
+  result.push('## API');
+  result.push('');
 
-  result.push(`Last changed: ${getTimeAgo(metadata.lastModified)}`);
+  result.push(`<FunctionApi apiParameters={metadata.apiParameters} />`);
+
+  result.push('');
+  result.push('## Type Declarations');
+  result.push('');
+
+  result.push(
+    `<FunctionSource variant='type-declarations' type='${metadata.type}' file='${metadata.name}' language='ts' />`
+  );
+
+  result.push('');
+  result.push('## Contributors');
+  result.push('');
+  result.push(
+    `<FunctionContributors contributors={metadata.contributors} />`
+  );
+
   return result.join('\n');
 };
 
@@ -104,7 +146,7 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 3).map(async (element) => {
+    content.slice(0, 10).map(async (element) => {
       const content = await getContentFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);
@@ -134,9 +176,6 @@ const init = async () => {
         return null;
       }
 
-      const sourceFile = ts.createSourceFile('temp.ts', content, ts.ScriptTarget.Latest, true);
-      const typeDeclarations = extractTypeInfo(sourceFile);
-
       const isTest = await checkFileContent(element.type, element.name, 'test');
       const isDemo = await checkFileContent(element.type, element.name, 'demo');
 
@@ -149,9 +188,6 @@ const init = async () => {
         isDemo,
         type: element.type,
         name: element.name,
-        ...(typeDeclarations && {
-          typeDeclarations
-        }),
         usage: jsdoc.usage!.name ?? 'low',
         ...(jsdoc.warning && {
           warning: jsdoc.warning.description
@@ -198,6 +234,12 @@ const init = async () => {
       'utf-8'
     );
 
+    await fs.promises.writeFile(
+      path.join(CONTENT_ROOT, 'functions', `${page.type}s`, `${page.name}.meta.json`),
+      JSON.stringify(page, null, 2),
+      'utf-8'
+    );
+
     const demo = await createDemo(page);
     await fs.promises.writeFile(
       path.join('generated', 'demos', `${page.type}s`, `${page.name}.demo.tsx`),
@@ -205,6 +247,9 @@ const init = async () => {
       'utf-8'
     );
   }
+
+  const metaJson = createMetaJson(pages);
+  await fs.promises.writeFile(path.join(CONTENT_ROOT, 'functions', 'meta.json'), metaJson, 'utf-8');
 
   console.log('[generate-functions] Done\n');
 };

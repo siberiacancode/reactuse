@@ -7,6 +7,8 @@ import { codeToHtml } from 'shiki';
 
 import { FunctionCode } from './function-code';
 import { FunctionDemo } from './function-demo';
+import { extractTypeInfo } from '@/scripts/helpers';
+import ts from 'typescript';
 
 interface FunctionSourceProps {
   collapsible: boolean;
@@ -14,7 +16,7 @@ interface FunctionSourceProps {
   language: 'js' | 'jsx' | 'ts' | 'tsx';
   title?: string;
   type: 'helper' | 'hook';
-  variant: 'code' | 'demo';
+  variant: 'code' | 'demo' | 'type-declarations';
 }
 
 const createHtmlCode = async (code: string, language: 'js' | 'jsx' | 'ts' | 'tsx') =>
@@ -68,7 +70,7 @@ export const FunctionSource = async ({ file, language, type, ...props }: Functio
 
     return (
       <div className='flex flex-col rounded-lg border'>
-        <div className='demo-ui flex items-center justify-center px-20 py-12'>
+        <div className='demo-ui flex items-center justify-center px-18 py-10'>
           <Demo />
         </div>
         <Separator />
@@ -78,6 +80,18 @@ export const FunctionSource = async ({ file, language, type, ...props }: Functio
         </div>
       </div>
     );
+  }
+
+  if (props.variant === 'type-declarations') {
+    const code = await fs.readFile(
+      path.join(process.cwd(), '..', 'core', 'src', `${type}s`, file, `${file}.${language}`),
+      'utf-8'
+    );
+    const sourceFile = ts.createSourceFile('temp.ts', code, ts.ScriptTarget.Latest, true);
+    const typeDeclarations = extractTypeInfo(sourceFile);
+    const htmlCode = await createHtmlCode(typeDeclarations, language);
+
+    return <FunctionCode code={htmlCode} language={language} {...props} />;
   }
 
   throw new Error(`Invalid variant: ${props.variant}`);

@@ -1,13 +1,14 @@
-import { DocsTableOfContents } from '@docs/components/docs-toc';
 import { functionsSource } from '@docs/lib/source';
 import { Button } from '@docs/ui/button';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { findNeighbour } from 'fumadocs-core/page-tree';
+import { PageLastUpdate } from 'fumadocs-ui/layouts/docs/page';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { mdxComponents } from '../../../../mdx-components';
 import { FunctionHeader } from '../../_components/function-header';
+import { FunctionToc } from '../../_components/function-toc';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -40,6 +41,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
   const doc = page.data;
   const neighbours = findNeighbour(functionsSource.pageTree, page.url);
   const raw = await doc.getText('raw');
+  const lastModifiedTime = doc.lastModifiedTime;
 
   const MDX = doc.body;
 
@@ -54,9 +56,9 @@ const FunctionPage = async (props: FunctionPageProps) => {
             category={doc.category}
             description={doc.description}
             isTest={doc.isTest}
+            markdown={raw}
             name={doc.title}
             next={neighbours.next?.url}
-            page={raw}
             previous={neighbours.previous?.url}
             type={doc.type}
             usage={doc.usage}
@@ -65,6 +67,9 @@ const FunctionPage = async (props: FunctionPageProps) => {
 
         <div className='mx-auto w-full max-w-[45rem] flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0'>
           <MDX components={mdxComponents} />
+
+          <PageLastUpdate date={new Date(lastModifiedTime)} />
+
           <div className='mt-2 hidden w-full items-center gap-2 px-4 sm:flex sm:px-0'>
             {neighbours.previous && (
               <Button asChild size='sm' variant='secondary'>
@@ -87,7 +92,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
         <div className='h-(--top-spacing) shrink-0' />
         {doc.toc?.length && (
           <div className='no-scrollbar flex flex-col gap-8 overflow-y-auto px-8'>
-            <DocsTableOfContents toc={doc.toc} />
+            <FunctionToc items={doc.toc} name={doc.title} type={doc.type} />
           </div>
         )}
       </div>

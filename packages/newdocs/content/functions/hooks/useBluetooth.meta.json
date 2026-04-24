@@ -1,0 +1,208 @@
+{
+  "code": "import { useEffect, useState } from 'react';\r\n\r\n/** The use bluetooth return type */\r\nexport interface UseBluetoothReturn {\r\n  /** Indicates if bluetooth device is currently connected */\r\n  connected: boolean;\r\n  /** Describe connected bluetooth device */\r\n  device?: BluetoothDevice;\r\n  /** The GATT server for connected bluetooth device */\r\n  server?: BluetoothRemoteGATTServer;\r\n  /** Whether the bluetooth is supported*/\r\n  supported: boolean;\r\n  /** Function to request bluetooth device from the user */\r\n  requestDevice: () => Promise<void>;\r\n}\r\n\r\n/** The use bluetooth options type */\r\nexport interface UseBluetoothOptions {\r\n  /** The options to request all bluetooth devices */\r\n  acceptAllDevices?: boolean;\r\n  /** Array of filters to apply when scanning bluetooth devices */\r\n  filters?: BluetoothLEScanFilter[];\r\n  /** Array of optional services that the application can use */\r\n  optionalServices?: BluetoothServiceUUID[];\r\n}\r\n\r\n/**\r\n * @name useBluetooth\r\n * @description - Hook for getting information about bluetooth\r\n * @category Browser\r\n * @usage low\r\n *\r\n * @browserapi navigator.bluetooth https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth\r\n *\r\n * @param {boolean} [options.acceptAllDevices=false] The options to request all Bluetooth devices\r\n * @param {Array<BluetoothLEScanFilter>} [options.filters] Array of filters to apply when scanning Bluetooth devices\r\n * @param {Array<BluetoothServiceUUID>} [options.optionalServices] Array of optional services that the application can use\r\n * @returns {UseBluetoothReturn} Object containing battery information & Battery API support\r\n *\r\n * @example\r\n * const { supported, connected, device, requestDevice, server } = useBluetooth(options);\r\n */\r\nexport const useBluetooth = (options?: UseBluetoothOptions): UseBluetoothReturn => {\r\n  const supported =\r\n    typeof navigator !== 'undefined' && 'bluetooth' in navigator && !!navigator.bluetooth;\r\n  const { acceptAllDevices = false, filters, optionalServices } = options ?? {};\r\n\r\n  const [connected, setIsConnected] = useState(false);\r\n  const [device, setDevice] = useState<BluetoothDevice | undefined>(undefined);\r\n  const [server, setServer] = useState<BluetoothRemoteGATTServer | undefined>(undefined);\r\n\r\n  const requestDevice = async () => {\r\n    if (!supported) return;\r\n\r\n    const selectedDevice = await navigator.bluetooth.requestDevice({\r\n      acceptAllDevices,\r\n      optionalServices,\r\n      ...(filters && { filters, acceptAllDevices: false })\r\n    });\r\n\r\n    setDevice(selectedDevice);\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (!device?.gatt) return;\r\n\r\n    const connectToBluetoothGATTServer = async () => {\r\n      const gattServer = await device.gatt!.connect();\r\n      setServer(gattServer);\r\n      setIsConnected(gattServer.connected);\r\n    };\r\n\r\n    const reset = () => {\r\n      setServer(undefined);\r\n      setDevice(undefined);\r\n      setIsConnected(false);\r\n    };\r\n\r\n    device.addEventListener('gattserverdisconnected', reset);\r\n    connectToBluetoothGATTServer();\r\n\r\n    return () => {\r\n      device.removeEventListener('gattserverdisconnected', reset);\r\n      device.gatt?.disconnect();\r\n    };\r\n  }, [device]);\r\n\r\n  return {\r\n    supported,\r\n    connected,\r\n    device,\r\n    requestDevice,\r\n    server\r\n  };\r\n};\r\n",
+  "id": "useBluetooth",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useBluetooth",
+  "usage": "low",
+  "browserapi": {
+    "tag": "browserapi",
+    "name": "navigator.bluetooth",
+    "type": "",
+    "optional": false,
+    "description": "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth",
+    "problems": [],
+    "source": [
+      {
+        "number": 6,
+        "source": " * @browserapi navigator.bluetooth https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth\r",
+        "tokens": {
+          "start": " ",
+          "delimiter": "*",
+          "postDelimiter": " ",
+          "tag": "@browserapi",
+          "postTag": " ",
+          "name": "navigator.bluetooth",
+          "postName": " ",
+          "type": "",
+          "postType": "",
+          "description": "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth",
+          "end": "",
+          "lineEnd": "\r"
+        }
+      },
+      {
+        "number": 7,
+        "source": " *\r",
+        "tokens": {
+          "start": " ",
+          "delimiter": "*",
+          "postDelimiter": "",
+          "tag": "",
+          "postTag": "",
+          "name": "",
+          "postName": "",
+          "type": "",
+          "postType": "",
+          "description": "",
+          "end": "",
+          "lineEnd": "\r"
+        }
+      }
+    ]
+  },
+  "description": "Hook for getting information about bluetooth",
+  "category": "Browser",
+  "lastModified": 1756134040000,
+  "examples": [
+    "const { supported, connected, device, requestDevice, server } = useBluetooth(options);"
+  ],
+  "apiParameters": [
+    {
+      "tag": "param",
+      "name": "options.acceptAllDevices",
+      "type": "boolean",
+      "optional": true,
+      "description": "The options to request all Bluetooth devices",
+      "problems": [],
+      "source": [
+        {
+          "number": 8,
+          "source": " * @param {boolean} [options.acceptAllDevices=false] The options to request all Bluetooth devices\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.acceptAllDevices=false]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "The options to request all Bluetooth devices",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ],
+      "default": "false"
+    },
+    {
+      "tag": "param",
+      "name": "options.filters",
+      "type": "Array<BluetoothLEScanFilter>",
+      "optional": true,
+      "description": "Array of filters to apply when scanning Bluetooth devices",
+      "problems": [],
+      "source": [
+        {
+          "number": 9,
+          "source": " * @param {Array<BluetoothLEScanFilter>} [options.filters] Array of filters to apply when scanning Bluetooth devices\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.filters]",
+            "postName": " ",
+            "type": "{Array<BluetoothLEScanFilter>}",
+            "postType": " ",
+            "description": "Array of filters to apply when scanning Bluetooth devices",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.optionalServices",
+      "type": "Array<BluetoothServiceUUID>",
+      "optional": true,
+      "description": "Array of optional services that the application can use",
+      "problems": [],
+      "source": [
+        {
+          "number": 10,
+          "source": " * @param {Array<BluetoothServiceUUID>} [options.optionalServices] Array of optional services that the application can use\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.optionalServices]",
+            "postName": " ",
+            "type": "{Array<BluetoothServiceUUID>}",
+            "postType": " ",
+            "description": "Array of optional services that the application can use",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "Object",
+      "type": "UseBluetoothReturn",
+      "optional": false,
+      "description": "containing battery information & Battery API support",
+      "problems": [],
+      "source": [
+        {
+          "number": 11,
+          "source": " * @returns {UseBluetoothReturn} Object containing battery information & Battery API support\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "Object",
+            "postName": " ",
+            "type": "{UseBluetoothReturn}",
+            "postType": " ",
+            "description": "containing battery information & Battery API support",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        },
+        {
+          "number": 12,
+          "source": " *\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    }
+  ],
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "babin",
+      "avatar": "https://gravatar.com/avatar/64ca64f64a770dd46a20bcec70312f7e?d=retro"
+    },
+    {
+      "name": "Gorilla Dev",
+      "avatar": "https://gravatar.com/avatar/ca17ccb5824fdd8626a4ec87e904597b?d=retro"
+    }
+  ]
+}

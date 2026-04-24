@@ -50,7 +50,8 @@ export const functions = defineDocs({
       isDemo: z.boolean(),
       usage: usageSchema,
       category: categorySchema,
-      type: typeSchema
+      type: typeSchema,
+      lastModifiedTime: z.number()
     })
   }
 });
