@@ -551,6 +551,35 @@
   @apply bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 border shadow-xs;
 }
 
+.demo-ui button[data-variant='ghost'] {
+  @apply hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50;
+}
+
 .demo-ui code {
   @apply text-[var(--brand-hex)];
+}
+
+.demo-ui [data-slot='tabs'] {
+  @apply flex flex-col gap-2;
+}
+
+.demo-ui [data-slot='tabs-list'] {
+  @apply bg-muted text-muted-foreground inline-flex h-8 w-fit items-center justify-center rounded-lg p-[3px];
+}
+
+.demo-ui button[data-variant='tabs-trigger'] {
+  @apply text-foreground/60 relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap shadow-none transition-all;
+  @apply hover:text-foreground bg-transparent hover:bg-transparent;
+  @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:outline-1;
+  @apply disabled:pointer-events-none disabled:opacity-50;
+  @apply dark:text-muted-foreground dark:hover:text-foreground;
+}
+
+.demo-ui button[data-variant='tabs-trigger'][data-state='active'] {
+  @apply bg-background text-foreground shadow-sm;
+  @apply dark:border-input dark:bg-input/30 dark:text-foreground;
+}
+
+.demo-ui [data-slot='tabs-content'] {
+  @apply flex-1 text-sm outline-none;
 }

@@ -11,7 +11,7 @@ lastModifiedTime: 1755779687000
 
 import metadata from './useBattery.meta.json';
 
-<FunctionSource variant='demo' type='hook' file='useBattery' language="tsx" />
+<FunctionBanner code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
 ## Installation
 
@@ -22,12 +22,12 @@ import metadata from './useBattery.meta.json';
     <TabsTrigger value='manual'>Manual</TabsTrigger>
   </TabsList>
   <TabsContent value='library'>
-    ```tsx
-    import { useBattery } from '@siberiacancode/reactuse';
+    ```packages-install
+    npm install @siberiacancode/reactuse
     ```
   </TabsContent>
   <TabsContent value='cli'>
-    ```bash
+    ```packages-install
     npx useverse@latest add useBattery
     ```
   </TabsContent>
@@ -36,7 +36,7 @@ import metadata from './useBattery.meta.json';
      <Step>
       Copy and paste the following code into your project.
     </Step>
-      <FunctionSource variant='code' type='hook' file='useBattery' language="ts" />
+      <FunctionCode code={metadata.code} language="tsx" />
     <Step>
       Update the import paths to match your project setup.
     </Step>
@@ -50,13 +50,10 @@ import metadata from './useBattery.meta.json';
 const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();
 ```
 
-## API
-
-<FunctionApi apiParameters={metadata.apiParameters} />
-
 ## Type Declarations
 
-<FunctionSource variant='type-declarations' type='hook' file='useBattery' language='ts' />
+<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+<FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors
 

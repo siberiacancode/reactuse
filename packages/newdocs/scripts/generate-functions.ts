@@ -1,11 +1,20 @@
 import { parse } from 'comment-parser';
 import fs from 'node:fs';
 import path from 'node:path';
+import { codeToHtml } from 'shiki';
+import ts from 'typescript';
 
-import type { FunctionMetadata } from './constants';
+import type { CodeLanguage, FunctionMetadata } from '@/src/utils/constants';
 
 import { CONTENT_ROOT, CORE_ROOT } from './constants';
-import { checkFileContent, getContentFile, getElements, getGitInfo, matchJsdoc } from './helpers';
+import {
+  checkFileContent,
+  extractTypeInfo,
+  getContentFile,
+  getElements,
+  getGitInfo,
+  matchJsdoc
+} from './helpers';
 
 const createDemo = async (metadata: FunctionMetadata) => {
   const demoPath = path.join(
@@ -57,7 +66,7 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`usage: ${metadata.usage.toLowerCase()}`);
   result.push(`type: ${metadata.type}`);
   result.push(`isTest: ${metadata.isTest}`);
-  result.push(`isDemo: ${metadata.isDemo}`);
+  result.push(`isDemo: ${!!metadata.demo}`);
   result.push(`lastModifiedTime: ${metadata.lastModified}`);
   result.push('---');
 
@@ -66,7 +75,7 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push('');
 
   result.push(
-    `<FunctionSource variant='demo' type='${metadata.type}' file='${metadata.name}' language="tsx" />`
+    `<FunctionBanner code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />`
   );
 
   result.push('');
@@ -80,12 +89,12 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`    <TabsTrigger value='manual'>Manual</TabsTrigger>`);
   result.push(`  </TabsList>`);
   result.push(`  <TabsContent value='library'>`);
-  result.push(`    \`\`\`tsx`);
-  result.push(`    import { ${metadata.name} } from '@siberiacancode/reactuse';`);
+  result.push(`    \`\`\`packages-install`);
+  result.push(`    npm install @siberiacancode/reactuse`);
   result.push(`    \`\`\``);
   result.push(`  </TabsContent>`);
   result.push(`  <TabsContent value='cli'>`);
-  result.push(`    \`\`\`bash`);
+  result.push(`    \`\`\`packages-install`);
   result.push(`    npx useverse@latest add ${metadata.name}`);
   result.push(`    \`\`\``);
   result.push(`  </TabsContent>`);
@@ -94,9 +103,7 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`     <Step>`);
   result.push(`      Copy and paste the following code into your project.`);
   result.push(`    </Step>`);
-  result.push(
-    `      <FunctionSource variant='code' type='${metadata.type}' file='${metadata.name}' language="ts" />`
-  );
+  result.push(`      <FunctionCode code={metadata.code} language="tsx" />`);
   result.push(`    <Step>`);
   result.push(`      Update the import paths to match your project setup.`);
   result.push(`    </Step>`);
@@ -116,18 +123,11 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`\`\`\``);
 
   result.push('');
-  result.push('## API');
-  result.push('');
-
-  result.push(`<FunctionApi apiParameters={metadata.apiParameters} />`);
-
-  result.push('');
   result.push('## Type Declarations');
   result.push('');
 
-  result.push(
-    `<FunctionSource variant='type-declarations' type='${metadata.type}' file='${metadata.name}' language='ts' />`
-  );
+  result.push(`<FunctionCode code={metadata.typeDeclarations} language="tsx" />`);
+  result.push(`<FunctionApi apiParameters={metadata.apiParameters} />`);
 
   result.push('');
   result.push('## Contributors');
@@ -136,6 +136,29 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
 
   return result.join('\n');
 };
+
+const createHtmlCode = async (code: string, language: CodeLanguage) =>
+  await codeToHtml(code, {
+    lang: language,
+    themes: {
+      dark: 'github-dark',
+      light: 'github-light'
+    },
+    transformers: [
+      {
+        pre(node) {
+          node.properties.class =
+            'no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent';
+        },
+        code(node) {
+          node.properties['data-line-numbers'] = '';
+        },
+        line(node) {
+          node.properties['data-line'] = '';
+        }
+      }
+    ]
+  });
 
 const init = async () => {
   console.log('\n[generate-functions] Starting...');
@@ -179,8 +202,19 @@ const init = async () => {
 
       const { contributors, lastCommit } = await getGitInfo(element.name, element.type);
 
+      const sourceFile = ts.createSourceFile('temp.ts', content, ts.ScriptTarget.Latest, true);
+      const typeDeclarations = await createHtmlCode(extractTypeInfo(sourceFile), 'tsx');
+
+      const demo = await createHtmlCode(
+        await fs.promises.readFile(
+          path.join(CORE_ROOT, `${element.type}s`, element.name, `${element.name}.demo.tsx`),
+          'utf-8'
+        ),
+        'tsx'
+      );
+
       return {
-        code: content,
+        code: await createHtmlCode(content, 'tsx'),
         id: element.name,
         isTest,
         isDemo,
@@ -196,7 +230,9 @@ const init = async () => {
         lastModified: new Date(lastCommit?.date ?? new Date()).getTime(),
         examples: jsdoc.examples.map((example) => example.description),
         apiParameters: jsdoc.apiParameters ?? [],
-        contributors
+        typeDeclarations,
+        contributors,
+        demo
       };
     })
   );

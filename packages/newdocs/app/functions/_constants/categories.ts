@@ -1,10 +1,7 @@
-import type { ComponentType } from 'react';
-
 import {
   IconBug,
   IconClock,
   IconCube,
-  IconHelpCircle,
   IconHorseToy,
   IconLoader,
   IconPictureInPictureOff,

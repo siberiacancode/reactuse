@@ -11,7 +11,8 @@ export const CodeBlockCommand = ({
   __npm__,
   __yarn__,
   __pnpm__,
-  __bun__
+  __bun__,
+  children
 }: React.ComponentProps<'pre'> & {
   __npm__?: string;
   __yarn__?: string;
@@ -84,7 +85,7 @@ export const CodeBlockCommand = ({
             <TabsContent key={key} className='mt-0 px-4 py-3.5' value={key}>
               <pre>
                 <code className='relative font-mono text-sm leading-none' data-language='bash'>
-                  {value}
+                  {children}
                 </code>
               </pre>
             </TabsContent>

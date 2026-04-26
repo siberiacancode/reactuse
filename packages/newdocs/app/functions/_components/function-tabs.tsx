@@ -8,16 +8,18 @@ import { useLocalStorage } from '@siberiacancode/reactuse';
 type FunctionTabsProps = ComponentProps<typeof Tabs>;
 
 export const FunctionTabs = ({ ...props }: FunctionTabsProps) => {
-  const selectedTabStorage = useLocalStorage<'cli' | 'library' | 'manual'>(
-    'reactuse-function-tabs',
+  const selectedInstallationTabStorage = useLocalStorage<'cli' | 'library' | 'manual'>(
+    'reactuse-function-installation-tabs',
     'library'
   );
 
   return (
     <Tabs
       {...props}
-      value={selectedTabStorage.value}
-      onValueChange={(value) => selectedTabStorage.set(value as 'cli' | 'library' | 'manual')}
+      value={selectedInstallationTabStorage.value}
+      onValueChange={(value) =>
+        selectedInstallationTabStorage.set(value as 'cli' | 'library' | 'manual')
+      }
     />
   );
 };

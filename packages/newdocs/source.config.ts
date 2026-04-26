@@ -2,18 +2,22 @@ import { defineConfig, defineDocs, frontmatterSchema } from 'fumadocs-mdx/config
 import rehypePrettyCode from 'rehype-pretty-code';
 import z from 'zod';
 
+import { remarkPackageInstall, transformers } from './src/lib/markdown';
+import { categorySchema, typeSchema, usageSchema } from './src/utils/constants';
+
 export default defineConfig({
   mdxOptions: {
+    remarkPlugins: [remarkPackageInstall],
     rehypePlugins: (plugins) => {
       plugins.shift();
-
       plugins.push([
         rehypePrettyCode,
         {
           theme: {
             dark: 'github-dark',
             light: 'github-light-default'
-          }
+          },
+          transformers
         }
       ]);
 
@@ -25,22 +29,6 @@ export default defineConfig({
 export const docs = defineDocs({
   dir: 'content/docs'
 });
-
-const usageSchema = z.enum(['low', 'medium', 'high', 'necessary']);
-const categorySchema = z.enum([
-  'async',
-  'browser',
-  'time',
-  'elements',
-  'humor',
-  'state',
-  'debug',
-  'sensors',
-  'lifecycle',
-  'utilities',
-  'user'
-]);
-const typeSchema = z.enum(['hook', 'helper']);
 
 export const functions = defineDocs({
   dir: 'content/functions',

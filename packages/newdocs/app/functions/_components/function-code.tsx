@@ -10,7 +10,7 @@ import { useState } from 'react';
 interface FunctionCodeProps {
   code: string;
   collapsible: boolean;
-  language: 'js' | 'jsx' | 'ts' | 'tsx';
+  language: CodeLanguage;
   title?: string;
 }
 

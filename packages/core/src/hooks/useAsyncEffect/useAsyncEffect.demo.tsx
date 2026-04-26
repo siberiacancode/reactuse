@@ -1,69 +1,95 @@
-import { useAsyncEffect } from '@siberiacancode/reactuse';
-import { useState } from 'react';
+import { useAsyncEffect, useBoolean, useToggle } from '@siberiacancode/reactuse';
+import { Loader2Icon } from 'lucide-react';
+import { Fragment, useState } from 'react';
+
+import { cn } from '@/utils/lib';
 
 interface Pokemon {
-  abilities: string[];
-  height: number;
   id: number;
   name: string;
-  types: string[];
-  weight: number;
 }
 
-const getRandomPokemon = async () => {
-  const randomId = Math.floor(Math.random() * 150) + 1;
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
-  const data = await response.json();
+const CHAINS = {
+  bulbasaur: [1, 2, 3],
+  charmander: [4, 5, 6],
+  squirtle: [7, 8, 9]
+};
 
-  return {
-    name: data.name,
-    id: data.id,
-    height: data.height,
-    weight: data.weight,
-    types: data.types.map((type: any) => type.type.name),
-    abilities: data.abilities.map((ability: any) => ability.ability.name)
-  } as Pokemon;
+const getPokemons = async (ids: number[]) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return Promise.all(
+    ids.map((id) => fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()))
+  );
 };
 
 const Demo = () => {
-  const [pokemon, setPokemon] = useState<Pokemon>();
+  const [chain, toggleChain] = useToggle<keyof typeof CHAINS>([
+    'bulbasaur',
+    'charmander',
+    'squirtle'
+  ]);
+
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [isLoading, setIsLoading] = useBoolean(true);
 
   useAsyncEffect(async () => {
-    try {
-      const newPokemon = await getRandomPokemon();
-      setPokemon(newPokemon);
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
+    setIsLoading(true);
+    const data = await getPokemons(CHAINS[chain]);
+    setPokemons(data);
+    setIsLoading(false);
+  }, [chain]);
 
   return (
-    <>
-      <div className='flex flex-col gap-4'>
-        {pokemon && (
-          <div>
-            <h3 className='mb-1 text-2xl font-bold capitalize'>
-              {pokemon.name} #{pokemon.id}
-            </h3>
+    <section className='flex min-w-md flex-col gap-4'>
+      <div data-slot='tabs'>
+        <div className='mb-6' data-slot='tabs-list'>
+          {Object.keys(CHAINS).map((name) => (
+            <button
+              key={name}
+              data-state={cn(chain === name && 'active')}
+              data-variant='tabs-trigger'
+              type='button'
+              onClick={() => toggleChain(name as keyof typeof CHAINS)}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
 
-            <div className='flex gap-2 text-sm'>
-              {pokemon.types.map((type) => (
-                <code key={type}>{type}</code>
+        <div data-slot='tabs-content'>
+          {isLoading && (
+            <div className='flex h-36 flex-col items-center justify-center gap-2'>
+              <Loader2Icon className='size-6 animate-spin' />
+              <p>
+                Loading <code>evolution</code> chain
+              </p>
+            </div>
+          )}
+
+          {!isLoading && (
+            <div className='flex h-36 items-center justify-between gap-2'>
+              {pokemons.map((pokemon, index) => (
+                <Fragment key={pokemon.id}>
+                  <div className='flex flex-col items-center gap-2'>
+                    <div className='flex size-28 items-center justify-center'>
+                      <img
+                        alt={pokemon.name}
+                        className='h-28'
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+                      />
+                    </div>
+
+                    <p className='text-sm capitalize'>{pokemon.name}</p>
+                  </div>
+
+                  {index < pokemons.length - 1 && <div className='text-xl'>{'>'}</div>}
+                </Fragment>
               ))}
             </div>
-
-            <div className='mt-4 flex flex-col gap-1'>
-              <div>
-                height: <code>{pokemon.height / 10} m</code>
-              </div>
-              <div>
-                weight: <code>{pokemon.weight / 10} kg</code>
-              </div>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </>
+    </section>
   );
 };
 

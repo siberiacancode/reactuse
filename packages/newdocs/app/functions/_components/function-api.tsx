@@ -1,23 +1,13 @@
-interface ApiParameter {
-  default?: string;
-  description: string;
-  name: string;
-  optional?: boolean;
-  tag: (string & {}) | 'overload' | 'param' | 'returns';
-  type: string;
-}
+import type { FunctionApiParameter } from '@/src/utils/constants';
+
+import { MARKDOWN_COMPONENTS } from '@/src/components';
+import { Separator } from '@/ui/separator';
 
 interface FunctionApiProps {
-  apiParameters: ApiParameter[];
+  apiParameters: FunctionApiParameter[];
 }
 
-interface Group {
-  id: number;
-  parameters: ApiParameter[];
-  returns: ApiParameter | null;
-}
-
-const DEFAULT_TYPES = new Set([
+export const DEFAULT_TYPES = [
   'string',
   'number',
   'bigint',
@@ -34,13 +24,17 @@ const DEFAULT_TYPES = new Set([
   'weakmap',
   'error',
   'date'
-]);
+];
 
-const isDefaultType = (type: string) => DEFAULT_TYPES.has(type.toLowerCase());
+export const isDefaultType = (type: string) => DEFAULT_TYPES.includes(type);
 
 export const FunctionApi = ({ apiParameters }: FunctionApiProps) => {
   let groupIndex = 0;
-  const groups: Group[] = [{ id: groupIndex, parameters: [], returns: null }];
+  const groups: {
+    id: number;
+    parameters: FunctionApiParameter[];
+    returns: FunctionApiParameter | null;
+  }[] = [{ id: groupIndex, parameters: [], returns: null }];
 
   apiParameters.forEach((parameter, index) => {
     if (parameter.tag === 'overload') {
@@ -63,57 +57,50 @@ export const FunctionApi = ({ apiParameters }: FunctionApiProps) => {
   });
 
   return (
-    <div className='space-y-8'>
-      {groups.map((group) => (
-        <div key={group.id} className='space-y-4'>
-          {group.parameters.length > 0 && (
-            <>
-              <h3>Parameters</h3>
+    <div className='flex flex-col gap-8'>
+      {groups.map((group, index) => (
+        <div key={group.id} className='flex flex-col gap-6'>
+          {!!group.parameters.length && (
+            <div className='flex flex-col gap-2'>
+              <MARKDOWN_COMPONENTS.h3 className='mt-0'>Parameters</MARKDOWN_COMPONENTS.h3>
 
-              <div className='no-scrollbar w-full overflow-y-auto rounded-xl border'>
-                <table className='relative w-full overflow-hidden border-none text-sm [&_tbody_tr:last-child]:border-b-0'>
-                  <thead>
-                    <tr className='m-0 border-b'>
-                      <th className='px-4 py-2 text-left font-bold'>Name</th>
-                      <th className='px-4 py-2 text-left font-bold'>Type</th>
-                      <th className='px-4 py-2 text-left font-bold'>Default</th>
-                      <th className='px-4 py-2 text-left font-bold'>Note</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {group.parameters.map((parameter) => (
-                      <tr key={parameter.name} className='m-0 border-b'>
-                        <td className='px-4 py-2 text-left'>
-                          {parameter.name}
-                          {parameter.optional ? '?' : ''}
-                        </td>
-                        <td className='px-4 py-2 text-left whitespace-nowrap'>
-                          {isDefaultType(parameter.type) ? (
-                            parameter.type
-                          ) : (
-                            <a className='font-medium underline underline-offset-4' href='#'>
-                              {parameter.type}
-                            </a>
-                          )}
-                        </td>
-                        <td className='px-4 py-2 text-left'>{parameter.default ?? '-'}</td>
-                        <td className='px-4 py-2 text-left'>{parameter.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </>
-          )}
-
-          {group.returns && (
-            <div className='space-y-2'>
-              <h3>Returns</h3>
-              <p>
-                <code>{group.returns.type}</code>
-              </p>
+              <MARKDOWN_COMPONENTS.table>
+                <MARKDOWN_COMPONENTS.thead>
+                  <MARKDOWN_COMPONENTS.tr>
+                    <MARKDOWN_COMPONENTS.th>Name</MARKDOWN_COMPONENTS.th>
+                    <MARKDOWN_COMPONENTS.th>Type</MARKDOWN_COMPONENTS.th>
+                    <MARKDOWN_COMPONENTS.th>Default</MARKDOWN_COMPONENTS.th>
+                    <MARKDOWN_COMPONENTS.th>Note</MARKDOWN_COMPONENTS.th>
+                  </MARKDOWN_COMPONENTS.tr>
+                </MARKDOWN_COMPONENTS.thead>
+                <MARKDOWN_COMPONENTS.tbody>
+                  {group.parameters.map((parameter) => (
+                    <MARKDOWN_COMPONENTS.tr key={parameter.name} className='m-0 border-b'>
+                      <MARKDOWN_COMPONENTS.td>{parameter.name}</MARKDOWN_COMPONENTS.td>
+                      <MARKDOWN_COMPONENTS.td>
+                        {isDefaultType(parameter.type) ? (
+                          parameter.type
+                        ) : (
+                          <code className='text-[var(--brand-hex)]'>{parameter.type}</code>
+                        )}
+                      </MARKDOWN_COMPONENTS.td>
+                      <MARKDOWN_COMPONENTS.td>{parameter.default ?? '-'}</MARKDOWN_COMPONENTS.td>
+                      <MARKDOWN_COMPONENTS.td>{parameter.description}</MARKDOWN_COMPONENTS.td>
+                    </MARKDOWN_COMPONENTS.tr>
+                  ))}
+                </MARKDOWN_COMPONENTS.tbody>
+              </MARKDOWN_COMPONENTS.table>
             </div>
           )}
+
+          {!!group.returns && (
+            <div className='flex flex-col gap-2'>
+              <MARKDOWN_COMPONENTS.h3 className='mt-0'>Returns</MARKDOWN_COMPONENTS.h3>
+              <code className='text-sm text-[var(--brand-hex)]'>{group.returns.type}</code>
+            </div>
+          )}
+
+          {index < groups.length - 1 && <Separator className='my-1' />}
         </div>
       ))}
     </div>

@@ -7,6 +7,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
+      "@/utils/lib": ["../newdocs/src/lib"],
       "@siberiacancode/docs/*": ["../docs/*"],
       "@/*": ["./src/*"],
       "@/tests": ["./tests"]
