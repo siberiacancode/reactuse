@@ -224,7 +224,7 @@
 }
 
 @utility container {
-  @apply 3xl:max-w-screen-2xl mx-auto max-w-[1400px] px-4 lg:px-8;
+  @apply mx-auto max-w-[1400px] px-4 lg:px-8;
 }
 
 @utility no-scrollbar {
@@ -383,7 +383,7 @@
 
 :root {
   --spacing: 0.222222rem;
-  --header-height: calc(var(--spacing) * 12 + 1px);
+  --header-height: 60px;
 }
 
 @keyframes landing-marquee {

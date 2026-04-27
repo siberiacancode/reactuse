@@ -2,8 +2,8 @@ import { defineConfig, defineDocs, frontmatterSchema } from 'fumadocs-mdx/config
 import rehypePrettyCode from 'rehype-pretty-code';
 import z from 'zod';
 
+import { categorySchema, typeSchema, usageSchema } from './src/constants';
 import { remarkPackageInstall, transformers } from './src/lib/markdown';
-import { categorySchema, typeSchema, usageSchema } from './src/utils/constants';
 
 export default defineConfig({
   mdxOptions: {

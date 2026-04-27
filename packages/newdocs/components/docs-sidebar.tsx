@@ -69,8 +69,8 @@ export const DocsSidebar = ({
       collapsible='none'
       {...props}
     >
-      <div className='via-border absolute top-12 right-2 bottom-0 hidden h-full w-px bg-gradient-to-b from-transparent to-transparent lg:flex' />
-      <SidebarContent className='no-scrollbar mx-auto w-(--sidebar-menu-width) overflow-x-hidden px-2'>
+      <div className='absolute top-12 right-2 bottom-0 hidden h-full w-px bg-gradient-to-b from-transparent to-transparent lg:flex' />
+      <SidebarContent className='no-scrollbar w-(--sidebar-menu-width) overflow-x-hidden px-2'>
         <SidebarGroup className='pt-4'>
           <SidebarGroupLabel className='text-muted-foreground font-medium'>
             Getting Started

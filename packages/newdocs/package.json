@@ -24,7 +24,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm next dev --turbopack --port 4000",
-    "build": "next build",
+    "build": "next build && pnpm run sync:content",
     "start": "next start --port 4000",
     "preview": "next build && next start --port 4000",
     "lint": "eslint . --fix",
@@ -34,15 +34,18 @@
     "prebuild": "pnpm run generate:functions && pnpm run generate:static && fumadocs-mdx",
     "postinstall": "fumadocs-mdx",
     "generate:functions": "bun run scripts/generate-functions.ts",
-    "generate:static": "bun run scripts/generate-static.ts"
+    "generate:static": "bun run scripts/generate-static.ts",
+    "sync:content": "bun run scripts/sync-content.ts"
   },
   "dependencies": {
     "@react-three/fiber": "^9.6.0",
     "@react-three/postprocessing": "^3.0.4",
+    "@siberiacancode/fetches": "^1.14.1",
     "@siberiacancode/reactuse": "^0.3.19",
     "@tabler/icons-react": "^3.37.1",
     "@tailwindcss/postcss": "^4.2.1",
     "@types/mdx": "^2.0.13",
+    "algoliasearch": "^5.51.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

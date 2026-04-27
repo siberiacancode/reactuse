@@ -1,26 +1,22 @@
 {
-  "title": "Hooks",
-  "pages": [
-    "---elements---",
-    "useActiveElement",
-    "useAutoScroll",
+    "pages": [
+      
+      "---elements---",
+      "useActiveElement","useAutoScroll",
 
-    "---async---",
-    "useAsync",
+      "---async---",
+      "useAsync",
 
-    "---lifecycle---",
-    "useAsyncEffect",
+      "---lifecycle---",
+      "useAsyncEffect",
 
-    "---browser---",
-    "useAudio",
-    "useBattery",
-    "useBluetooth",
-    "useBreakpoints",
+      "---browser---",
+      "useAudio","useBattery","useBluetooth","useBreakpoints",
 
-    "---utilities---",
-    "useBatchedCallback",
+      "---utilities---",
+      "useBatchedCallback",
 
-    "---state---",
-    "useBoolean"
-  ]
-}
+      "---state---",
+      "useBoolean"
+    ]
+  }

@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
 
-import { ThemeProvider } from '@docs/components/theme-provider';
 import { cn } from '@docs/lib/utils';
-import { TooltipProvider } from '@docs/ui/tooltip';
 import { Geist, Geist_Mono, JetBrains_Mono } from 'next/font/google';
+
+import { ThemeScript } from './_scripts';
+import { Provider } from './provider';
 
 import '../styles/global.css';
 
@@ -17,10 +18,11 @@ export const Layout = ({ children }: { children: ReactNode }) => (
     className={cn('font-sans', geist.variable, geistMono.variable, jetbrainsMono.variable)}
     lang='en'
   >
+    <head>
+      <ThemeScript />
+    </head>
     <body className='mb-10 flex min-h-screen flex-col'>
-      <TooltipProvider>
-        <ThemeProvider>{children}</ThemeProvider>
-      </TooltipProvider>
+      <Provider>{children}</Provider>
     </body>
   </html>
 );

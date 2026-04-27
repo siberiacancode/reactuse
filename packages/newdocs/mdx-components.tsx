@@ -9,12 +9,12 @@ import { Step, Steps } from '@docs/ui/steps';
 import Link from 'next/link';
 import * as React from 'react';
 
-import { FunctionApi } from './app/functions/_components/function-api';
-import { FunctionBanner } from './app/functions/_components/function-banner';
-import { FunctionCode } from './app/functions/_components/function-code';
-import { FunctionContributors } from './app/functions/_components/function-contributors';
-import { FunctionDemo } from './app/functions/_components/function-demo';
-import { FunctionTabs } from './app/functions/_components/function-tabs';
+import { FunctionApi } from './app/(docs)/functions/_components/function-api';
+import { FunctionBanner } from './app/(docs)/functions/_components/function-banner';
+import { FunctionCode } from './app/(docs)/functions/_components/function-code';
+import { FunctionContributors } from './app/(docs)/functions/_components/function-contributors';
+import { FunctionDemo } from './app/(docs)/functions/_components/function-demo';
+import { FunctionTabs } from './app/(docs)/functions/_components/function-tabs';
 import { Callout } from './components/callout';
 import { MARKDOWN_COMPONENTS } from './src/components';
 import { PackageManagerTab, PackageManagerTabs } from './src/components/code-block-command';
@@ -79,17 +79,7 @@ export const mdxComponents = {
     <img alt={alt} className={cn('rounded-md', className)} {...props} />
   ),
   hr: ({ ...props }: React.ComponentProps<'hr'>) => <hr className='my-4 md:my-8' {...props} />,
-  table: ({ className, ...props }: React.ComponentProps<'table'>) => {
-    <div className='no-scrollbar my-6 w-full overflow-y-auto rounded-xl border'>
-      <table
-        className={cn(
-          'relative w-full overflow-hidden border-none text-sm [&_tbody_tr:last-child]:border-b-0',
-          className
-        )}
-        {...props}
-      />
-    </div>;
-  },
+
   pre: ({ className, children, ...props }: React.ComponentProps<'pre'>) => (
     <pre
       className={cn(

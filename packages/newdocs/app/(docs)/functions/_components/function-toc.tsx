@@ -2,13 +2,12 @@
 
 import type { ReactNode } from 'react';
 
-import { useIntersectionObserver } from '@siberiacancode/reactuse';
 import { ExternalLinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-import { LINKS } from '@/src/utils/constants';
-import { Separator } from '@/ui/separator';
+import { Separator } from '@/src/components/ui';
+import { LINKS } from '@/src/constants';
 
 interface FunctionTocItem {
   depth: number;

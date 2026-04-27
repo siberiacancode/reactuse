@@ -1,15 +1,23 @@
+import type { ReactNode } from 'react';
+
 import { DocsSidebar } from '@docs/components/docs-sidebar';
-import { SiteHeader } from '@docs/components/site-header';
 import { getFunctionsSidebarGroups } from '@docs/lib/element-docs';
 import { source } from '@docs/lib/source';
 import { SidebarProvider } from '@docs/ui/sidebar';
 
-export const FunctionsLayout = async ({ children }: { children: React.ReactNode }) => {
+import { Header } from './_components/layout';
+
+interface DocsLayoutProps {
+  children: ReactNode;
+}
+
+export const DocsLayout = async ({ children }: DocsLayoutProps) => {
   const groups = await getFunctionsSidebarGroups();
 
   return (
-    <>
-      <SiteHeader />
+    <main className='mx-auto flex w-full max-w-[1600px] flex-col'>
+      <Header />
+
       <div className='container-wrapper flex flex-1 flex-col px-2'>
         <SidebarProvider
           style={
@@ -23,8 +31,8 @@ export const FunctionsLayout = async ({ children }: { children: React.ReactNode 
           <div className='h-full w-full'>{children}</div>
         </SidebarProvider>
       </div>
-    </>
+    </main>
   );
 };
 
-export default FunctionsLayout;
+export default DocsLayout;

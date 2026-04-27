@@ -4,7 +4,9 @@ import type { source } from '@docs/lib/source';
 import { useDebouncedCallback } from '@docs/hooks/use-debounced-callback';
 import { getCurrentBase, getPagesFromFolder } from '@docs/lib/page-tree';
 import { cn } from '@docs/lib/utils';
+import { Kbd } from '@docs/ui/kbd';
 import { useDocsSearch } from 'fumadocs-core/search/client';
+import { Search } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
@@ -93,13 +95,16 @@ export const CommandMenu = (props: Props) => {
       <DialogTrigger asChild>
         <Button
           className={cn(
-            'text-foreground dark:bg-card hover:bg-muted/50 relative h-8 w-full justify-start rounded-lg pl-3 font-normal shadow-none sm:pr-12'
+            'dark:bg-card text-muted-foreground hover:text-foreground hover:bg-muted/70 border-input bg-muted/40 relative h-8 w-full justify-start rounded-lg border px-2.5 font-normal shadow-none'
           )}
           variant='outline'
           onClick={() => setOpen(true)}
         >
-          <span className='hidden lg:inline-flex'>Search documentation...</span>
-          <span className='inline-flex lg:hidden'>Search...</span>
+          <Search className='size-3.5 shrink-0' />
+          <span className='truncate text-sm'>Search docs...</span>
+          <Kbd className='bg-background text-muted-foreground ml-auto hidden h-5 min-w-fit border px-1.5 font-mono text-[10px] sm:inline-flex'>
+            ⌘K
+          </Kbd>
         </Button>
       </DialogTrigger>
       <DialogContent className='rounded-xl border-none bg-clip-padding p-2 pb-11 shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800'>

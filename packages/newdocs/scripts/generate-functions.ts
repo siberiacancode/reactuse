@@ -4,7 +4,7 @@ import path from 'node:path';
 import { codeToHtml } from 'shiki';
 import ts from 'typescript';
 
-import type { CodeLanguage, FunctionMetadata } from '@/src/utils/constants';
+import type { CodeLanguage, FunctionMetadata, FunctionType } from '@/src/constants';
 
 import { CONTENT_ROOT, CORE_ROOT } from './constants';
 import {
@@ -28,7 +28,7 @@ const createDemo = async (metadata: FunctionMetadata) => {
   return `'use client'\n\n${demoContent}`;
 };
 
-const createMetaJson = (metadata: FunctionMetadata[]) => {
+const createMetaJson = (metadata: FunctionMetadata[], type: FunctionType) => {
   const categories = metadata.reduce(
     (acc, item) => {
       const category = item.category.toLowerCase();
@@ -282,8 +282,17 @@ const init = async () => {
     );
   }
 
-  const metaJson = createMetaJson(pages);
-  await fs.promises.writeFile(path.join(CONTENT_ROOT, 'functions', 'meta.json'), metaJson, 'utf-8');
+  for (const type of ['hook', 'helper'] as const) {
+    const metaJson = createMetaJson(
+      pages.filter((page) => page.type === type),
+      type
+    );
+    await fs.promises.writeFile(
+      path.join(CONTENT_ROOT, 'functions', `${type}s`, `meta.json`),
+      metaJson,
+      'utf-8'
+    );
+  }
 
   console.log('[generate-functions] Done\n');
 };

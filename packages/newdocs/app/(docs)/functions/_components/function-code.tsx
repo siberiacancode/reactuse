@@ -7,6 +7,8 @@ import { useCopy } from '@siberiacancode/reactuse';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 import { useState } from 'react';
 
+import type { CodeLanguage } from '@/src/constants';
+
 interface FunctionCodeProps {
   code: string;
   collapsible: boolean;

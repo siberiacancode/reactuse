@@ -6,7 +6,7 @@ import { PageLastUpdate } from 'fumadocs-ui/layouts/docs/page';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { mdxComponents } from '../../../../mdx-components';
+import { mdxComponents } from '../../../../../mdx-components';
 import { FunctionHeader } from '../../_components/function-header';
 import { FunctionToc } from '../../_components/function-toc';
 

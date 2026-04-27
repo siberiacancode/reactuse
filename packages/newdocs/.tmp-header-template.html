@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReactUse Header</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <style>/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("4a7168db-639a-4754-9be1-80b683c030e0") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("8c2784ea-53d1-4e57-9134-2cfd6aa409f9") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("2d43ea8b-0f61-41ee-9c7b-91660860e0f0") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("4a7168db-639a-4754-9be1-80b683c030e0") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("8c2784ea-53d1-4e57-9134-2cfd6aa409f9") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("2d43ea8b-0f61-41ee-9c7b-91660860e0f0") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("4a7168db-639a-4754-9be1-80b683c030e0") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("8c2784ea-53d1-4e57-9134-2cfd6aa409f9") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("2d43ea8b-0f61-41ee-9c7b-91660860e0f0") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("f984a813-8a57-401c-a0a2-927fdf059aa3") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("bca2ce64-7b14-4496-b323-5d938ad9316e") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("a3cc475d-e9ae-4ae3-8fca-65e8813e2ad6") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("f984a813-8a57-401c-a0a2-927fdf059aa3") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("bca2ce64-7b14-4496-b323-5d938ad9316e") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("a3cc475d-e9ae-4ae3-8fca-65e8813e2ad6") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+  
+  
+  <script src="9b27ce13-9d3c-41a9-8fe6-77dc608c4678" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="11cc8af6-b6ab-4d92-b0c9-3ff36318d0e9" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="8fb7e311-b253-4b50-97f7-693997ba4155" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-elevated: #fafafa;
+      --border: #e4e4e7;
+      --text: #09090b;
+      --text-muted: #71717a;
+      --text-subtle: #a1a1aa;
+      --hover-bg: #f4f4f5;
+      --radius: 8px;
+      --header-h: 60px;
+    }
+    [data-theme="dark"] {
+      --bg: #09090b;
+      --bg-elevated: #0f0f11;
+      --border: #27272a;
+      --text: #fafafa;
+      --text-muted: #a1a1aa;
+      --text-subtle: #52525b;
+      --hover-bg: #18181b;
+    }
+
+    body {
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .demo-bg {
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+    }
+    .demo-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-subtle);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body data-theme="light">
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+/* ── Icons ───────────────────────────────────────────────────── */
+const IconGithub = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+  </svg>
+);
+
+const IconNpm = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z"/>
+  </svg>
+);
+
+const IconSearch = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+  </svg>
+);
+
+const IconStar = () => (
+  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+  </svg>
+);
+
+const IconChevron = ({ open }) => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+    style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.15s ease' }}>
+    <path d="m6 9 6 6 6-6"/>
+  </svg>
+);
+
+const IconSun = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+  </svg>
+);
+
+const IconMoon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+);
+
+/* ── Changelog data ──────────────────────────────────────────── */
+const CHANGELOG = [
+  { version: '0.3.8', date: 'Apr 27, 2026', desc: 'useQuery improvements, bug fixes' },
+  { version: '0.3.7', date: 'Apr 12, 2026', desc: 'Added useDisplayMedia, useDropZone' },
+  { version: '0.3.6', date: 'Mar 28, 2026', desc: 'Performance improvements, new hooks' },
+  { version: '0.3.5', date: 'Mar 10, 2026', desc: 'SSR compatibility updates' },
+  { version: '0.3.4', date: 'Feb 22, 2026', desc: 'TypeScript strict mode support' },
+];
+
+/* ── Search items ────────────────────────────────────────────── */
+const SEARCH_ITEMS = [
+  { group: 'Hooks', items: ['useAsync', 'useBoolean', 'useClipboard', 'useCounter', 'useDebounceState', 'useDidUpdate', 'useDisclosure', 'useDocumentTitle', 'useEvent', 'useEventListener', 'useLocalStorage', 'useMediaQuery', 'useMount', 'useUnmount', 'useWindowSize'] },
+  { group: 'Guides', items: ['Installation', 'Get Started', 'CLI Usage', 'Contributing'] },
+];
+
+/* ── Search modal ────────────────────────────────────────────── */
+function SearchModal({ onClose }) {
+  const [query, setQuery] = useState('');
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
+
+  const filtered = SEARCH_ITEMS.map(g => ({
+    group: g.group,
+    items: g.items.filter(i => i.toLowerCase().includes(query.toLowerCase()))
+  })).filter(g => g.items.length > 0);
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0,
+      background: 'rgba(0,0,0,0.5)',
+      backdropFilter: 'blur(4px)',
+      display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
+      paddingTop: 120, zIndex: 1000,
+    }} onClick={onClose}>
+      <div style={{
+        background: 'var(--bg)',
+        border: '1px solid var(--border)',
+        borderRadius: 12,
+        width: 560, maxWidth: 'calc(100vw - 32px)',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.12)',
+        overflow: 'hidden',
+      }} onClick={e => e.stopPropagation()}>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px' }}>
+          <span style={{ color: 'var(--text-muted)', flexShrink: 0, display: 'flex' }}><IconSearch /></span>
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            placeholder="Search documentation..."
+            style={{
+              flex: 1, border: 'none', outline: 'none',
+              background: 'transparent', color: 'var(--text)',
+              fontSize: 14, fontFamily: "'Geist', sans-serif",
+            }}
+          />
+          <kbd style={{
+            fontSize: 11, color: 'var(--text-muted)',
+            background: 'var(--hover-bg)', border: '1px solid var(--border)',
+            borderRadius: 6, padding: '2px 6px',
+            fontFamily: "'Geist Mono', monospace", cursor: 'pointer',
+          }}>Esc</kbd>
+        </div>
+
+        <div style={{ height: 1, background: 'var(--border)' }} />
+
+        <div style={{ maxHeight: 360, overflowY: 'auto' }}>
+          {filtered.length === 0 && (
+            <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)', fontSize: 13 }}>
+              No results for "{query}"
+            </div>
+          )}
+          {filtered.map(g => (
+            <div key={g.group}>
+              <div style={{
+                padding: '10px 16px 4px', fontSize: 11, fontWeight: 600,
+                color: 'var(--text-subtle)', letterSpacing: '0.07em', textTransform: 'uppercase',
+              }}>{g.group}</div>
+              {g.items.map(item => (
+                <div key={item} style={{
+                  display: 'flex', alignItems: 'center', padding: '8px 16px',
+                  cursor: 'pointer', fontSize: 14, color: 'var(--text)',
+                  transition: 'background 0.1s', borderRadius: 0,
+                }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'var(--hover-bg)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                  <span style={{ color: 'var(--text-subtle)', marginRight: 8, fontSize: 12, fontFamily: "'Geist Mono', monospace" }}>#</span>
+                  {item}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {!query && (
+          <div style={{ borderTop: '1px solid var(--border)', padding: '10px 16px', display: 'flex', justifyContent: 'flex-end' }}>
+            <span style={{ color: 'var(--text-subtle)', fontSize: 12 }}>162 hooks available</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── NavButton — shared pill style for Docs & Changelog ─────── */
+function NavButton({ children, href, onClick, active }) {
+  const [hovered, setHovered] = useState(false);
+  const base = {
+    display: 'inline-flex', alignItems: 'center', gap: 4,
+    height: 32, padding: '0 10px',
+    borderRadius: 8,
+    fontSize: 14, fontWeight: 450, letterSpacing: '-0.01em',
+    color: (hovered || active) ? 'var(--text)' : 'var(--text-muted)',
+    background: (hovered || active) ? 'var(--hover-bg)' : 'transparent',
+    border: 'none', cursor: 'pointer',
+    textDecoration: 'none',
+    fontFamily: "'Geist', sans-serif",
+    transition: 'color 0.13s, background 0.13s',
+    whiteSpace: 'nowrap',
+  };
+  if (href) return (
+    <a href={href} style={base}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}>
+      {children}
+    </a>
+  );
+  return (
+    <button style={base} onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}>
+      {children}
+    </button>
+  );
+}
+
+/* ── Ghost icon button — no border ──────────────────────────── */
+function IconBtn({ children, href, onClick, title }) {
+  const [hovered, setHovered] = useState(false);
+  const style = {
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+    width: 34, height: 34,
+    borderRadius: 8,
+    color: hovered ? 'var(--text)' : 'var(--text-muted)',
+    background: hovered ? 'var(--hover-bg)' : 'transparent',
+    border: 'none', cursor: 'pointer', textDecoration: 'none',
+    transition: 'color 0.13s, background 0.13s',
+    flexShrink: 0,
+  };
+  const events = {
+    onMouseEnter: () => setHovered(true),
+    onMouseLeave: () => setHovered(false),
+    title,
+  };
+  if (href) return <a href={href} target="_blank" rel="noopener" style={style} {...events}>{children}</a>;
+  return <button style={style} onClick={onClick} {...events}>{children}</button>;
+}
+
+/* ── GitHub badge — icon + stars, no border ─────────────────── */
+function GithubBtn({ stars }) {
+  const [hovered, setHovered] = useState(false);
+  const formatStars = (n) => n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n);
+  return (
+    <a href="https://github.com/siberiacancode/reactuse" target="_blank" rel="noopener"
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        height: 34, padding: '0 8px',
+        borderRadius: 8,
+        color: hovered ? 'var(--text)' : 'var(--text-muted)',
+        background: hovered ? 'var(--hover-bg)' : 'transparent',
+        textDecoration: 'none',
+        transition: 'color 0.13s, background 0.13s',
+        cursor: 'pointer',
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}>
+      <IconGithub size={18} />
+      {stars !== null && (
+        <span style={{
+          fontSize: 12, fontWeight: 500,
+          fontFamily: "'Geist Mono', monospace",
+          color: hovered ? 'var(--text)' : 'var(--text-muted)',
+        }}>
+          {formatStars(stars)}
+        </span>
+      )}
+    </a>
+  );
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+function Header() {
+  const [theme, setTheme] = useState('light');
+  const [changelogOpen, setChangelogOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [stars, setStars] = useState(null);
+  const changelogRef = useRef(null);
+
+  useEffect(() => {
+    fetch('https://api.github.com/repos/siberiacancode/reactuse')
+      .then(r => r.json())
+      .then(d => d.stargazers_count && setStars(d.stargazers_count))
+      .catch(() => setStars(459));
+  }, []);
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); setSearchOpen(true); }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
+  useEffect(() => {
+    if (!changelogOpen) return;
+    const handler = (e) => {
+      if (changelogRef.current && !changelogRef.current.contains(e.target)) setChangelogOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [changelogOpen]);
+
+  return (
+    <>
+      <header style={{
+        position: 'sticky', top: 0, zIndex: 50,
+        height: 'var(--header-h)',
+        background: 'var(--bg)',
+        borderBottom: '1px solid var(--border)',
+      }}>
+        <div style={{
+          maxWidth: 1280, margin: '0 auto',
+          height: '100%',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '0 20px',
+        }}>
+
+          {/* ── Left ── */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+
+            {/* Logo */}
+            <a href="https://reactuse.org" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 7,
+              textDecoration: 'none', color: 'var(--text)',
+              marginRight: 6,
+            }}>
+              {/* Logo image sized to match text cap-height ≈ 15px */}
+              <img src={window.__resources.reactuseLogo} alt="reactuse"
+                style={{ width: 15, height: 15, display: 'block', flexShrink: 0 }} />
+              <span style={{
+                fontSize: 15, fontWeight: 600, letterSpacing: '-0.03em',
+                lineHeight: '15px',
+                fontFamily: "'Geist', sans-serif",
+              }}>reactuse</span>
+            </a>
+
+            {/* Divider */}
+            <div style={{ width: 1, height: 18, background: 'var(--border)', margin: '0 6px' }} />
+
+            {/* Nav */}
+            <NavButton href="https://reactuse.org/introduction">Docs</NavButton>
+
+            <div ref={changelogRef} style={{ position: 'relative' }}>
+              <NavButton onClick={() => setChangelogOpen(v => !v)} active={changelogOpen}>
+                Changelog <IconChevron open={changelogOpen} />
+              </NavButton>
+
+              {changelogOpen && (
+                <div style={{
+                  position: 'absolute', top: 'calc(100% + 6px)', left: 0,
+                  width: 272,
+                  background: 'var(--bg)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 12,
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
+                  overflow: 'hidden',
+                  zIndex: 100,
+                }}>
+                  <div style={{
+                    padding: '10px 14px 6px',
+                    fontSize: 11, fontWeight: 600,
+                    color: 'var(--text-subtle)',
+                    letterSpacing: '0.07em', textTransform: 'uppercase',
+                  }}>Recent releases</div>
+
+                  {CHANGELOG.map((c, i) => (
+                    <a key={c.version}
+                      href={`https://github.com/siberiacancode/reactuse/releases/tag/v${c.version}`}
+                      style={{
+                        display: 'block', padding: '9px 14px',
+                        textDecoration: 'none',
+                        background: 'transparent',
+                        borderBottom: i < CHANGELOG.length - 1 ? '1px solid var(--border)' : 'none',
+                        transition: 'background 0.1s',
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--hover-bg)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
+                        <span style={{
+                          fontSize: 12, fontWeight: 600, color: 'var(--text)',
+                          fontFamily: "'Geist Mono', monospace",
+                        }}>v{c.version}</span>
+                        <span style={{ fontSize: 11, color: 'var(--text-subtle)' }}>{c.date}</span>
+                      </div>
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{c.desc}</div>
+                    </a>
+                  ))}
+
+                  <a href="https://github.com/siberiacancode/reactuse/releases"
+                    style={{
+                      display: 'block', padding: '9px 14px',
+                      borderTop: '1px solid var(--border)',
+                      fontSize: 12, color: 'var(--text-muted)',
+                      textDecoration: 'none', transition: 'color 0.13s',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
+                    View all releases →
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ── Right ── */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+
+            {/* Search */}
+            <button onClick={() => setSearchOpen(true)} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 7,
+              height: 32, padding: '0 10px',
+              background: 'var(--hover-bg)',
+              border: '1px solid var(--border)',
+              borderRadius: 8, cursor: 'pointer',
+              color: 'var(--text-muted)',
+              fontFamily: "'Geist', sans-serif",
+              marginRight: 6,
+              transition: 'border-color 0.13s, background 0.13s',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--text-subtle)'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; }}>
+              <IconSearch />
+              <span style={{ fontSize: 13, color: 'var(--text-muted)', letterSpacing: '-0.01em' }}>Search docs...</span>
+              <kbd style={{
+                fontSize: 11, color: 'var(--text-subtle)',
+                background: 'var(--bg)', border: '1px solid var(--border)',
+                borderRadius: 5, padding: '2px 5px',
+                fontFamily: "'Geist Mono', monospace",
+              }}>⌘K</kbd>
+            </button>
+
+            {/* GitHub with stars */}
+            <GithubBtn stars={stars} />
+
+            {/* npm */}
+            <IconBtn href="https://www.npmjs.com/package/@siberiacancode/reactuse" title="npm">
+              <IconNpm />
+            </IconBtn>
+
+            {/* Theme toggle */}
+            <IconBtn onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
+              title={theme === 'light' ? 'Dark mode' : 'Light mode'}>
+              {theme === 'light' ? <IconMoon /> : <IconSun />}
+            </IconBtn>
+          </div>
+        </div>
+      </header>
+
+      {/* Docs header label */}
+      <div style={{ padding: '10px 24px 0', maxWidth: 1280, margin: '0 auto', width: '100%' }}>
+        <span style={{ fontSize: 11, color: 'var(--text-subtle)', letterSpacing: '0.06em', textTransform: 'uppercase', fontWeight: 600 }}>Docs header</span>
+      </div>
+
+      <div style={{ height: 48 }} />
+
+      {/* Landing header label */}
+      <div style={{ padding: '0 24px', maxWidth: 1280, margin: '0 auto', width: '100%' }}>
+        <span style={{ fontSize: 11, color: 'var(--text-subtle)', letterSpacing: '0.06em', textTransform: 'uppercase', fontWeight: 600 }}>Landing header</span>
+      </div>
+      <LandingHeader />
+
+      <div style={{ height: 48 }} />
+
+      {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
+    </>
+  );
+}
+
+/* ── Marquee strip ───────────────────────────────────────────── */
+const HOOKS = ['useAsync','useBoolean','useClipboard','useCounter','useDebounceState','useDisclosure','useDocumentTitle','useEvent','useEventListener','useLocalStorage','useMediaQuery','useMount','useWindowSize','useBattery','useGeolocation','useHover','useIdle','useIntersectionObserver','useInterval','useKeyPress','useMouse','useNetwork','usePageLeave','usePermission','useResizeObserver','useScroll','useSet','useTimeout','useTitle','useToggle'];
+
+function MarqueeStrip() {
+  const items = [...HOOKS, ...HOOKS];
+  return (
+    <div style={{
+      borderTop: '1px solid var(--border)',
+      overflow: 'hidden',
+      height: 32,
+      display: 'flex',
+      alignItems: 'center',
+      background: 'var(--bg)',
+      maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+      WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+    }}>
+      <div style={{
+        display: 'flex', gap: 0,
+        animation: 'marquee 40s linear infinite',
+        whiteSpace: 'nowrap',
+        willChange: 'transform',
+      }}>
+        {items.map((h, i) => (
+          <span key={i} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 16,
+            padding: '0 18px',
+            fontSize: 12,
+            fontFamily: "'Geist Mono', monospace",
+            color: 'var(--text-subtle)',
+            letterSpacing: '-0.01em',
+          }}>
+            <span style={{ color: 'var(--border)', fontSize: 10 }}>◆</span>
+            {h}
+          </span>
+        ))}
+      </div>
+      <style>{`
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ── Landing Header ──────────────────────────────────────────── */
+function LandingHeader() {
+  const [announceDismissed, setAnnounceDismissed] = useState(false);
+  const [theme2, setTheme2] = useState('light');
+
+  return (
+    <div style={{ background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
+      {/* Announcement bar */}
+      {!announceDismissed && (
+        <div style={{
+          borderBottom: '1px solid var(--border)',
+          background: 'var(--bg)',
+          height: 36,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          position: 'relative',
+          gap: 8,
+        }}>
+          <a href="https://github.com/siberiacancode/reactuse/releases" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            textDecoration: 'none', color: 'var(--text)',
+            fontSize: 13,
+          }}
+            onMouseEnter={e => e.currentTarget.style.opacity = '0.7'}
+            onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
+            <span style={{
+              display: 'inline-flex', alignItems: 'center',
+              background: 'var(--text)', color: 'var(--bg)',
+              fontSize: 10, fontWeight: 700, letterSpacing: '0.04em',
+              padding: '2px 6px', borderRadius: 4,
+              fontFamily: "'Geist Mono', monospace",
+            }}>NEW</span>
+            <span style={{ color: 'var(--text-muted)' }}>
+              <span style={{ color: 'var(--text)', fontWeight: 500 }}>v0.3.8</span>
+              {' '}— useQuery improvements &amp; bug fixes
+            </span>
+            <span style={{ color: 'var(--text-subtle)', fontSize: 12 }}>→</span>
+          </a>
+          <button
+            onClick={() => setAnnounceDismissed(true)}
+            style={{
+              position: 'absolute', right: 16,
+              background: 'none', border: 'none', cursor: 'pointer',
+              color: 'var(--text-subtle)', fontSize: 16, lineHeight: 1,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              width: 24, height: 24, borderRadius: 6,
+              transition: 'color 0.13s, background 0.13s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.background = 'var(--hover-bg)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-subtle)'; e.currentTarget.style.background = 'transparent'; }}
+          >×</button>
+        </div>
+      )}
+
+      {/* Main nav row */}
+      <div style={{
+        maxWidth: 1280, margin: '0 auto',
+        height: 60,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 20px',
+      }}>
+        {/* Left */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <a href="https://reactuse.org" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 7,
+            textDecoration: 'none', color: 'var(--text)', marginRight: 6,
+          }}>
+            <img src={window.__resources.reactuseLogo} alt="reactuse"
+              style={{ width: 15, height: 15, display: 'block', flexShrink: 0 }} />
+            <span style={{
+              fontSize: 15, fontWeight: 600, letterSpacing: '-0.03em',
+              lineHeight: '15px', fontFamily: "'Geist', sans-serif",
+            }}>reactuse</span>
+          </a>
+          <div style={{ width: 1, height: 18, background: 'var(--border)', margin: '0 6px' }} />
+          <NavButton href="https://reactuse.org/introduction">Docs</NavButton>
+          <NavButton href="https://github.com/siberiacancode/reactuse/releases">Changelog</NavButton>
+        </div>
+
+        {/* Right */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <GithubBtn stars={null} />
+          <a href="https://reactuse.org/introduction"
+            style={{
+              display: 'inline-flex', alignItems: 'center',
+              height: 34, padding: '0 16px',
+              background: 'var(--text)',
+              color: 'var(--bg)',
+              borderRadius: 8,
+              fontSize: 13, fontWeight: 500,
+              textDecoration: 'none',
+              letterSpacing: '-0.01em',
+              fontFamily: "'Geist', sans-serif",
+              transition: 'opacity 0.13s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+            onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
+            Get Started
+          </a>
+          <IconBtn onClick={() => setTheme2(t => t === 'light' ? 'dark' : 'light')}
+            title="Toggle theme">
+            {theme2 === 'light' ? <IconMoon /> : <IconSun />}
+          </IconBtn>
+        </div>
+      </div>
+
+      {/* Hook marquee */}
+      <MarqueeStrip />
+    </div>
+  );
+}
+
+/* ── App ─────────────────────────────────────────────────────── */
+ReactDOM.createRoot(document.getElementById('root')).render(<Header />);
+</script>
+
+
+</body></html>
