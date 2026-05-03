@@ -19,12 +19,12 @@ const Demo = () => {
 
         <form className='flex flex-col gap-2'>
           <div className='grid gap-4 md:grid-cols-2'>
-            <label className='flex flex-col gap-2'>
+            <label className='flex flex-col gap-2 text-sm'>
               Name
               <input data-id='name' placeholder='John' type='text' />
             </label>
 
-            <label className='flex flex-col gap-2'>
+            <label className='flex flex-col gap-2 text-sm'>
               Email
               <div className='relative'>
                 <AtSignIcon className='pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-50' />
@@ -40,7 +40,7 @@ const Demo = () => {
           </div>
 
           <div>
-            <label className='flex flex-col gap-2'>
+            <label className='flex flex-col gap-2 text-sm'>
               Message
               <textarea data-id='message' placeholder='Type your message...' rows={5} />
             </label>

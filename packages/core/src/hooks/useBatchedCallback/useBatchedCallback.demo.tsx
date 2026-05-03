@@ -1,5 +1,3 @@
-'use client';
-
 import { useBatchedCallback } from '@siberiacancode/reactuse';
 import { useState } from 'react';
 

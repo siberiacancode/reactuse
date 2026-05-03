@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useAsync, useCounter } from '@siberiacancode/reactuse';
 import { ArrowLeftIcon, ArrowRightIcon, Loader2Icon } from 'lucide-react';
@@ -45,31 +45,31 @@ const Demo = () => {
         </div>
       </div>
 
-      <div className='w-full min-w-md rounded-lg border p-4'>
+      <div className='w-full min-w-xs rounded-lg border p-4 md:min-w-md'>
         {getPokemonQuery.isLoading && (
-          <div className='flex h-44 flex-col items-center justify-center gap-2'>
+          <div className='flex h-32 flex-col items-center justify-center gap-2 md:h-44'>
             <Loader2Icon className='size-5 animate-spin' />
             <p>Loading</p>
           </div>
         )}
 
         {getPokemonQuery.error && !getPokemonQuery.isLoading && (
-          <div className='flex h-44 items-center justify-center'>
+          <div className='flex h-32 items-center justify-center md:h-44'>
             <p className='text-destructive'>{getPokemonQuery.error.message}</p>
           </div>
         )}
 
         {getPokemonQuery.data && !getPokemonQuery.isLoading && !getPokemonQuery.error && (
-          <div className='flex items-center justify-center gap-10'>
-            <div className='flex size-44 items-center justify-center'>
+          <div className='flex items-center justify-center gap-6 md:gap-10'>
+            <div className='flex size-32 items-center justify-center md:size-44'>
               <img
                 alt={getPokemonQuery.data.name}
-                className='h-44'
+                className='h-32 md:h-44'
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonQuery.data.id}.png`}
               />
             </div>
 
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 text-sm md:text-base'>
               <p>
                 name: <code>{getPokemonQuery.data.name}</code>
               </p>

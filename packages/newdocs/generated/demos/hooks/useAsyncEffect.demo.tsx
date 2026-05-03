@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useAsyncEffect, useBoolean, useToggle } from '@siberiacancode/reactuse';
 import { Loader2Icon } from 'lucide-react';
@@ -42,7 +42,7 @@ const Demo = () => {
   }, [chain]);
 
   return (
-    <section className='flex min-w-md flex-col gap-4'>
+    <section className='flex min-w-xs flex-col gap-4 md:min-w-md'>
       <div data-slot='tabs'>
         <div className='mb-6' data-slot='tabs-list'>
           {Object.keys(CHAINS).map((name) => (
@@ -69,14 +69,14 @@ const Demo = () => {
           )}
 
           {!isLoading && (
-            <div className='flex h-36 items-center justify-between gap-2'>
+            <div className='flex h-36 flex-row items-center justify-between gap-2'>
               {pokemons.map((pokemon, index) => (
                 <Fragment key={pokemon.id}>
                   <div className='flex flex-col items-center gap-2'>
-                    <div className='flex size-28 items-center justify-center'>
+                    <div className='flex size-20 items-center justify-center md:size-28'>
                       <img
                         alt={pokemon.name}
-                        className='h-28'
+                        className='h-20 md:h-28'
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
                       />
                     </div>

@@ -7,7 +7,7 @@ const Demo = () => {
   const [visible, toggle] = useBoolean();
 
   return (
-    <section className='flex flex-col gap-4'>
+    <section className='flex min-w-sm flex-col gap-4'>
       <p>Toggle password visibility</p>
 
       <div className='relative'>
