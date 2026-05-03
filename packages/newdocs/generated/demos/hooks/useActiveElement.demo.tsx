@@ -11,7 +11,7 @@ const Demo = () => {
     <section>
       <div ref={activeElement.ref} className='flex flex-col gap-6'>
         <div className='flex flex-col gap-2'>
-          <h2>Contact form</h2>
+          <h3>Contact form</h3>
 
           <p>
             Focus any field, textarea, or button with your mouse or keyboard to see which element is

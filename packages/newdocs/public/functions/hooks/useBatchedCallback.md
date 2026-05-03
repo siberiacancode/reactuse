@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1773475680000
+lastModifiedTime: 1777807410000
 ---
 
 import metadata from './useBatchedCallback.meta.json';

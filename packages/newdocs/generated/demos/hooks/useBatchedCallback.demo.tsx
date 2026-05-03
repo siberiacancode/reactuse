@@ -1,3 +1,5 @@
+'use client'
+
 'use client';
 
 import { useBatchedCallback } from '@siberiacancode/reactuse';
@@ -66,7 +68,7 @@ const Demo = () => {
           <code>{totalEvents}</code> events and sent <code>{requestsSent}</code> requests.
         </p>
 
-        <button disabled={!selected.length} type='button'>
+        <button disabled={!tags.length} type='button'>
           Continue
         </button>
       </div>
