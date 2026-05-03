@@ -227,16 +227,18 @@ const createFunctionsMd = (pages: FunctionMetadata[]) => {
     .toSorted((a, b) => a.name.localeCompare(b.name))
     .map((item) => `- [${item.name}](/functions/${item.type}s/${item.name}): ${item.description}`);
 
-  return [
-    '---',
-    'title: Functions',
-    'description: A simple catalog of package functions.',
-    '---',
-    '',
-    'A quick list of available functions.',
-    '',
-    ...items
-  ].join('\n');
+  const result = [];
+  result.push('---');
+  result.push('title: Functions');
+  result.push('description: A simple catalog of package functions.');
+  result.push('---');
+  result.push('');
+  result.push('## List');
+  result.push('');
+  result.push('A quick list of available functions.');
+  result.push('');
+  result.push(...items);
+  return result.join('\n');
 };
 
 const placeFunctionsOnSecondPosition = async () => {

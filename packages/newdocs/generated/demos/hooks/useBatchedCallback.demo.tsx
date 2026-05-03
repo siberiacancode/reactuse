@@ -1,47 +1,76 @@
-'use client'
+'use client';
 
-import { useBatchedCallback, useCounter } from '@siberiacancode/reactuse';
+import { useBatchedCallback } from '@siberiacancode/reactuse';
 import { useState } from 'react';
 
+interface AnalyticsEvent {
+  action: 'deselected' | 'selected';
+  tag: string;
+}
+
+const INTERESTS = [
+  { tag: 'work', label: 'Work' },
+  { tag: 'study', label: 'Study' },
+  { tag: 'hobby', label: 'Hobby' },
+  { tag: 'business', label: 'Business' },
+  { tag: 'creative', label: 'Creative' },
+  { tag: 'team', label: 'Team' },
+  { tag: 'research', label: 'Research' },
+  { tag: 'fun', label: 'Fun' },
+  { tag: 'other', label: 'Other' }
+];
+
 const Demo = () => {
-  const [batches, setBatches] = useState<number[][]>([]);
-  const [currentBatch, setCurrentBatch] = useState<number[]>([]);
-  const counter = useCounter(0);
+  const [tags, setTags] = useState<string[]>([]);
+  const [totalEvents, setTotalEvents] = useState(0);
+  const [requestsSent, setRequestsSent] = useState(0);
 
-  const batchedNumbers = useBatchedCallback((batch: [number][]) => {
-    const numbers = batch.map(([num]) => num);
-    setBatches((currentBatches) => [...currentBatches, numbers]);
-    counter.inc(numbers.reduce((acc, number) => acc + number, 0));
-    setCurrentBatch([]);
-  }, 5);
+  const sendAnalytics = useBatchedCallback<AnalyticsEvent[]>(
+    () => setRequestsSent((current) => current + 1),
+    { size: 5, delay: 1500 }
+  );
 
-  const onAdd = () => {
-    const random = Math.floor(Math.random() * 100);
-    setCurrentBatch((currentBatch) => (currentBatch.length >= 5 ? [] : [...currentBatch, random]));
-    batchedNumbers(random);
+  const onToggle = (tag: string) => {
+    const isSelected = tags.includes(tag);
+    const action: AnalyticsEvent['action'] = isSelected ? 'deselected' : 'selected';
+
+    setTags((current) => (isSelected ? current.filter((item) => item !== tag) : [...current, tag]));
+
+    const event: AnalyticsEvent = { tag, action };
+    setTotalEvents((current) => current + 1);
+    sendAnalytics(event);
   };
 
   return (
-    <>
-      <div className='mb-4 flex flex-col gap-2'>
-        <label>Batched random numbers (flush every 5 adds)</label>
+    <section className='flex max-w-md flex-col items-center gap-4'>
+      <div className='flex flex-col gap-1 text-center'>
+        <h3>What will you use the service for?</h3>
       </div>
 
-      <div className='text-muted-foreground text-xs'>
-        Last batch: {batches.at(-1)?.join(', ') ?? '—'}
-      </div>
-      <div className='text-muted-foreground text-xs'>
-        Current batch: {currentBatch.length ? currentBatch.join(', ') : '—'}
+      <div className='mb-6 flex flex-wrap justify-center gap-2'>
+        {INTERESTS.map((interest) => (
+          <button
+            key={interest.tag}
+            data-variant={tags.includes(interest.tag) ? 'outline' : 'default'}
+            type='button'
+            onClick={() => onToggle(interest.tag)}
+          >
+            {interest.label}
+          </button>
+        ))}
       </div>
 
-      <button className='mt-4 rounded px-3 py-2 text-white' type='button' onClick={onAdd}>
-        Add random
-      </button>
-      <div className='flex gap-4 text-sm'>
-        <div>Total sum: {counter.value}</div>
-        <div>Total batches: {batches.length}</div>
+      <div className='flex flex-col gap-6 px-6 md:flex-row'>
+        <p className='text-muted-foreground text-left text-xs'>
+          We batch analytics events for economy of scale. So far we tracked{' '}
+          <code>{totalEvents}</code> events and sent <code>{requestsSent}</code> requests.
+        </p>
+
+        <button disabled={!selected.length} type='button'>
+          Continue
+        </button>
       </div>
-    </>
+    </section>
   );
 };
 

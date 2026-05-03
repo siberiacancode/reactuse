@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1755779687000
+lastModifiedTime: 1777800560000
 ---
 
 import metadata from './useBattery.meta.json';

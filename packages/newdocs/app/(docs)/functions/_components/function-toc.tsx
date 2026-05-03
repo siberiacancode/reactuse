@@ -77,7 +77,7 @@ export const FunctionToc = ({ type, name, items, hooks }: FunctionTocProps) => {
         <li>
           <a
             className='text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-md no-underline transition-colors data-[active=true]:font-medium data-[depth=3]:pl-4 data-[depth=4]:pl-6'
-            href={`${LINKS.CORE_REPOSITORY}/${type}s/${name}/${name}.ts`}
+            href={`${LINKS.DOCS_REPOSITORY}/content/functions/${type}s/${name}.mdx`}
             rel='noopener noreferrer'
             target='_blank'
           >
@@ -95,6 +95,17 @@ export const FunctionToc = ({ type, name, items, hooks }: FunctionTocProps) => {
             target='_blank'
           >
             Watch demo
+          </a>
+        </li>
+
+        <li>
+          <a
+            className='text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-md no-underline transition-colors data-[active=true]:font-medium data-[depth=3]:pl-4 data-[depth=4]:pl-6'
+            href={`${LINKS.CORE_REPOSITORY}/${type}s/${name}/${name}.ts`}
+            rel='noopener noreferrer'
+            target='_blank'
+          >
+            <div className='flex items-center gap-2'>Source</div>
           </a>
         </li>
       </ul>

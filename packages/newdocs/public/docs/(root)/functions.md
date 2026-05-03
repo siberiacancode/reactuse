@@ -3,6 +3,8 @@ title: Functions
 description: A simple catalog of package functions.
 ---
 
+## List
+
 A quick list of available functions.
 
 - [useActiveElement](/functions/hooks/useActiveElement): Hook for tracking the active element

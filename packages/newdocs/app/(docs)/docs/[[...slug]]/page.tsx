@@ -49,6 +49,8 @@ export const Page = async (props: { params: Promise<{ slug: string[] }> }) => {
 
   if (!page) redirect('/docs/introduction');
 
+  console.log('@', page);
+
   const doc = page.data;
   const MDX = doc.body;
   const isChangelog = params.slug?.[0] === 'changelog';
@@ -95,9 +97,9 @@ export const Page = async (props: { params: Promise<{ slug: string[] }> }) => {
         </div>
       </div>
       <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
-        {doc.toc?.length && (
+        {!!doc.toc.length && (
           <div className='no-scrollbar flex flex-col gap-8 overflow-y-auto px-8'>
-            <DocsToc items={doc.toc} />
+            <DocsToc items={doc.toc} path={page.data.info.path} />
           </div>
         )}
       </div>

@@ -101,7 +101,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
         </div>
       </div>
       <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
-        {doc.toc.length && (
+        {!!doc.toc.length && (
           <div className='no-scrollbar flex flex-col gap-8 overflow-y-auto'>
             <FunctionToc
               hooks={metadata.dependencies.hooks}

@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 /**
  * @name useBatchedCallback
  * @description - Hook that batches calls and forwards them to a callback
@@ -7,20 +7,31 @@ import { useMemo, useRef } from 'react';
  *
  * @template Params The type of the params
  * @param {(batch: Params[]) => void} callback The callback that receives a batch of calls
- * @param {number} batchSize The maximum size of a batch before it is flushed
+ * @param {number} options.size The batch settings with size and optional delay
+ * @param {number} [options.delay=1000] The delay (ms) after which pending calls are flushed
  * @returns {BatchedCallback<Params>} The batched callback with flush and cancel helpers
  *
  * @example
- * const batched = useBatchedCallback((batch) => console.log(batch), 5);
+ * const delayed = useBatchedCallback((batch) => console.log(batch), { size: 5, delay: 1000 });
  */
-export const useBatchedCallback = (callback, size) => {
+export function useBatchedCallback(callback, options) {
+  const { size, delay } = options;
   const internalCallbackRef = useRef(callback);
   const sizeRef = useRef(size);
+  const delayRef = useRef(delay ?? 0);
   const queueRef = useRef([]);
+  const timerRef = useRef(null);
   internalCallbackRef.current = callback;
-  sizeRef.current = size;
+  sizeRef.current = Math.max(1, size);
+  delayRef.current = Math.max(0, delay ?? 0);
+  const clearTimer = () => {
+    if (!timerRef.current) return;
+    clearTimeout(timerRef.current);
+    timerRef.current = null;
+  };
   const flush = () => {
     if (!queueRef.current.length) return;
+    clearTimer();
     const batch = queueRef.current;
     queueRef.current = [];
     internalCallbackRef.current(batch);
@@ -28,11 +39,28 @@ export const useBatchedCallback = (callback, size) => {
   const batched = useMemo(() => {
     const batchedCallback = (...args) => {
       queueRef.current.push(args);
-      if (queueRef.current.length >= sizeRef.current) flush();
+      if (queueRef.current.length >= sizeRef.current) {
+        flush();
+        return;
+      }
+      if (!delayRef.current || timerRef.current) return;
+      timerRef.current = setTimeout(() => {
+        timerRef.current = null;
+        flush();
+      }, delayRef.current);
     };
     batchedCallback.flush = flush;
-    batchedCallback.cancel = () => (queueRef.current = []);
+    batchedCallback.cancel = () => {
+      clearTimer();
+      queueRef.current = [];
+    };
     return batchedCallback;
   }, []);
+  useEffect(
+    () => () => {
+      clearTimer();
+    },
+    []
+  );
   return batched;
-};
+}

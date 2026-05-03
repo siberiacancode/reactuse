@@ -17,9 +17,10 @@ interface DocsTocItem {
 
 interface DocsTocProps {
   items: DocsTocItem[];
+  path: string;
 }
 
-export const DocsToc = ({ items }: DocsTocProps) => {
+export const DocsToc = ({ path, items }: DocsTocProps) => {
   const itemIds = useMemo(() => items.map((item) => item.url.replace('#', '')), [items]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -74,7 +75,7 @@ export const DocsToc = ({ items }: DocsTocProps) => {
         <li>
           <a
             className='text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-md no-underline transition-colors data-[active=true]:font-medium data-[depth=3]:pl-4 data-[depth=4]:pl-6'
-            href={`${LINKS.CORE_REPOSITORY}/docs/docs/${items.join('/')}.mdx`}
+            href={`${LINKS.DOCS_REPOSITORY}/content/docs/${path}`}
             rel='noopener noreferrer'
             target='_blank'
           >

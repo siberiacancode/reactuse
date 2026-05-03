@@ -47,7 +47,7 @@ import metadata from './useBatchedCallback.meta.json';
 ## Usage
 
 ```tsx
-const batched = useBatchedCallback((batch) => console.log(batch), 5);
+const delayed = useBatchedCallback((batch) => console.log(batch), { size: 5, delay: 1000 });
 ```
 
 ## Type Declarations
