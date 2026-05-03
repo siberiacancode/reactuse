@@ -1,4 +1,4 @@
-import { useObject } from './useObject';
+import { useObject } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const profileObject = useObject({
@@ -10,16 +10,16 @@ const Demo = () => {
   return (
     <div>
       <input
+        placeholder='Name'
         type='text'
         value={profileObject.value.name}
         onChange={(event) => profileObject.set({ name: event.target.value })}
-        placeholder='Name'
       />
       <input
+        placeholder='Age'
         type='number'
         value={profileObject.value.age}
         onChange={(event) => profileObject.set({ age: event.target.value })}
-        placeholder='Age'
       />
 
       <button onClick={profileObject.reset}>Reset</button>

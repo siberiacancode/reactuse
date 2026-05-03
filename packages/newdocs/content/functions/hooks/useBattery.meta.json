@@ -54,7 +54,7 @@
   },
   "description": "Hook for getting information about battery status",
   "category": "Browser",
-  "lastModified": 1755779687000,
+  "lastModified": 1777800560000,
   "examples": [
     "const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();"
   ],

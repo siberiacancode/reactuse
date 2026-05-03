@@ -1,4 +1,4 @@
-import { useProgress } from './useProgress';
+import { useProgress } from '@siberiacancode/reactuse';
 
 const Demo = () => {
   const progress = useProgress(0, {

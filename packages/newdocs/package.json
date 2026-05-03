@@ -31,7 +31,7 @@
     "format": "prettier --write .",
     "pretty": "pnpm type && pnpm lint && pnpm format",
     "predev": "pnpm run generate:functions && pnpm run generate:static && fumadocs-mdx",
-    "prebuild": "pnpm run generate:functions && pnpm run generate:static && fumadocs-mdx",
+    "prebuild": "pnpm run generate:functions && pnpm run generate:static && pnpm run generate:registry && fumadocs-mdx",
     "postinstall": "fumadocs-mdx",
     "generate:functions": "bun run scripts/generate-functions.ts",
     "generate:static": "bun run scripts/generate-static.ts",
