@@ -1,95 +1,93 @@
 'use client'
 
-import { useAsyncEffect, useBoolean, useToggle } from '@siberiacancode/reactuse';
-import { Loader2Icon } from 'lucide-react';
-import { Fragment, useState } from 'react';
-
-import { cn } from '@/utils/lib';
+import { useAsync, useCounter } from '@siberiacancode/reactuse';
+import { ArrowLeftIcon, ArrowRightIcon, Loader2Icon } from 'lucide-react';
 
 interface Pokemon {
+  base_experience: number;
+  height: number;
   id: number;
   name: string;
+  weight: number;
 }
 
-const CHAINS = {
-  bulbasaur: [1, 2, 3],
-  charmander: [4, 5, 6],
-  squirtle: [7, 8, 9]
-};
-
-const getPokemons = async (ids: number[]) => {
+const getPokemon = async (id: number) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  return Promise.all(
-    ids.map((id) => fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()))
-  );
+  if (id === 3) throw new Error('Pokemon blocked for demo');
+  return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) =>
+    res.json()
+  ) as Promise<Pokemon>;
 };
 
 const Demo = () => {
-  const [chain, toggleChain] = useToggle<keyof typeof CHAINS>([
-    'bulbasaur',
-    'charmander',
-    'squirtle'
-  ]);
-
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [isLoading, setIsLoading] = useBoolean(true);
-
-  useAsyncEffect(async () => {
-    setIsLoading(true);
-    const data = await getPokemons(CHAINS[chain]);
-    setPokemons(data);
-    setIsLoading(false);
-  }, [chain]);
+  const counter = useCounter(1);
+  const getPokemonQuery = useAsync(() => getPokemon(counter.value), [counter.value]);
 
   return (
-    <section className='flex min-w-xs flex-col gap-4 md:min-w-md'>
-      <div data-slot='tabs'>
-        <div className='mb-6' data-slot='tabs-list'>
-          {Object.keys(CHAINS).map((name) => (
-            <button
-              key={name}
-              data-state={cn(chain === name && 'active')}
-              data-variant='tabs-trigger'
-              type='button'
-              onClick={() => toggleChain(name as keyof typeof CHAINS)}
-            >
-              {name}
-            </button>
-          ))}
-        </div>
+    <section className='flex flex-col gap-4'>
+      <div className='flex items-center justify-between gap-4'>
+        <p>
+          Index: <code>{counter.value}</code>
+        </p>
 
-        <div data-slot='tabs-content'>
-          {isLoading && (
-            <div className='flex h-36 flex-col items-center justify-center gap-2'>
-              <Loader2Icon className='size-6 animate-spin' />
+        <div className='flex gap-2'>
+          <button
+            disabled={counter.value === 1 || getPokemonQuery.isLoading}
+            type='button'
+            onClick={() => counter.dec()}
+          >
+            <ArrowLeftIcon className='size-4' /> Prev
+          </button>
+
+          <button disabled={getPokemonQuery.isLoading} type='button' onClick={() => counter.inc()}>
+            Next <ArrowRightIcon className='size-4' />
+          </button>
+        </div>
+      </div>
+
+      <div className='w-full min-w-xs rounded-lg border p-4 md:min-w-md'>
+        {getPokemonQuery.isLoading && (
+          <div className='flex h-32 flex-col items-center justify-center gap-2 md:h-44'>
+            <Loader2Icon className='size-5 animate-spin' />
+            <p>Loading</p>
+          </div>
+        )}
+
+        {getPokemonQuery.error && !getPokemonQuery.isLoading && (
+          <div className='flex h-32 items-center justify-center md:h-44'>
+            <p className='text-destructive'>{getPokemonQuery.error.message}</p>
+          </div>
+        )}
+
+        {getPokemonQuery.data && !getPokemonQuery.isLoading && !getPokemonQuery.error && (
+          <div className='flex items-center justify-center gap-6 md:gap-10'>
+            <div className='flex size-32 items-center justify-center md:size-44'>
+              <img
+                alt={getPokemonQuery.data.name}
+                className='h-32 md:h-44'
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonQuery.data.id}.png`}
+              />
+            </div>
+
+            <div className='flex flex-col gap-2 text-sm md:text-base'>
               <p>
-                Loading <code>evolution</code> chain
+                name: <code>{getPokemonQuery.data.name}</code>
+              </p>
+
+              <p>
+                height: <code>{getPokemonQuery.data.height}</code>
+              </p>
+
+              <p>
+                weight: <code>{getPokemonQuery.data.weight}</code>
+              </p>
+
+              <p>
+                experience: <code>{getPokemonQuery.data.base_experience}</code>
               </p>
             </div>
-          )}
-
-          {!isLoading && (
-            <div className='flex h-36 flex-row items-center justify-between gap-2'>
-              {pokemons.map((pokemon, index) => (
-                <Fragment key={pokemon.id}>
-                  <div className='flex flex-col items-center gap-2'>
-                    <div className='flex size-20 items-center justify-center md:size-28'>
-                      <img
-                        alt={pokemon.name}
-                        className='h-20 md:h-28'
-                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
-                      />
-                    </div>
-
-                    <p className='text-sm capitalize'>{pokemon.name}</p>
-                  </div>
-
-                  {index < pokemons.length - 1 && <div className='text-xl'>{'>'}</div>}
-                </Fragment>
-              ))}
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

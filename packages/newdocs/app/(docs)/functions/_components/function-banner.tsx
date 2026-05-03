@@ -42,16 +42,16 @@ export const FunctionBanner = async ({
         <>
           <Separator />
 
-          <p className='text-muted-foreground p-4 text-sm'>
-            This hook uses <span className='text-[var(--brand-hex)]'>{browserapi.name}</span>{' '}
-            browser api to provide enhanced functionality. Make sure to check for compatibility with
-            different browsers when using this{' '}
+          <div className='text-muted-foreground p-4 text-sm'>
+            This hook uses{' '}
             <Button asChild className='p-0' variant='link'>
               <a href={browserapi.description} rel='noopener noreferrer' target='_blank'>
-                api
+                {browserapi.name}
               </a>
-            </Button>
-          </p>
+            </Button>{' '}
+            browser api to provide enhanced functionality. Make sure to check for compatibility with
+            different browsers when using this api
+          </div>
         </>
       )}
     </div>
