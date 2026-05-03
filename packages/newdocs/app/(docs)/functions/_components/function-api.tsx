@@ -1,4 +1,4 @@
-import type { FunctionApiParameter } from '@/src/utils/constants';
+import type { FunctionApiParameter } from '@/src/constants';
 
 import { MARKDOWN_COMPONENTS } from '@/src/components';
 import { Separator } from '@/ui/separator';

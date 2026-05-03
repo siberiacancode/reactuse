@@ -47,6 +47,11 @@ export interface FunctionMetadata {
   code: string;
   contributors: FunctionContributor[];
   demo: string;
+  dependencies: {
+    hooks: string[];
+    utils: string[];
+    packages: string[];
+  };
   description: string;
   examples: string[];
   id: string;

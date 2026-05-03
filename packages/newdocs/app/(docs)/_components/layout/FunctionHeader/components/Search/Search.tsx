@@ -74,20 +74,6 @@ export const Search = (props: Props) => {
             <CommandEmpty className='text-muted-foreground py-12 text-center text-sm'>
               {query.isLoading ? 'Searching...' : 'No results found.'}
             </CommandEmpty>
-            <CommandGroup className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'>
-              {Array.isArray(query.data) &&
-                query.data.map((item) => (
-                  <CommandItem
-                    key={item.id}
-                    className='cursor-pointer'
-                    keywords={['nav', 'navigation', item.content.toLowerCase()]}
-                    value={`Navigation ${item.content}`}
-                    onSelect={() => router.push(item.url)}
-                  >
-                    {item.content}
-                  </CommandItem>
-                ))}
-            </CommandGroup>
             {props.tree.map((group) => {
               if (group.type !== 'folder') return null;
               const isFunction = group.$id === 'helpers' || group.$id === 'hooks';
@@ -117,6 +103,21 @@ export const Search = (props: Props) => {
                 </CommandGroup>
               );
             })}
+
+            <CommandGroup className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'>
+              {Array.isArray(query.data) &&
+                query.data.map((item) => (
+                  <CommandItem
+                    key={item.id}
+                    className='cursor-pointer'
+                    keywords={['nav', 'navigation', item.content.toLowerCase()]}
+                    value={`Navigation ${item.content}`}
+                    onSelect={() => router.push(item.url)}
+                  >
+                    {item.content}
+                  </CommandItem>
+                ))}
+            </CommandGroup>
           </CommandList>
         </Command>
       </DialogContent>

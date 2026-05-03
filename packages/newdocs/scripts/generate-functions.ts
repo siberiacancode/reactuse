@@ -4,17 +4,22 @@ import path from 'node:path';
 import { codeToHtml } from 'shiki';
 import ts from 'typescript';
 
-import type { CodeLanguage, FunctionMetadata, FunctionType } from '@/src/constants';
+import type { CodeLanguage, FunctionMetadata } from '@/src/constants';
 
 import { CONTENT_ROOT, CORE_ROOT } from './constants';
 import {
   checkFileContent,
+  extractDependencies,
   extractTypeInfo,
   getContentFile,
   getElements,
   getGitInfo,
   matchJsdoc
 } from './helpers';
+
+const SITE_URL = 'https://reactuse.org';
+const SKILLS_URL = 'https://skills.sh/siberiacancode/agent-skills/reactuse';
+const ROOT_DOCS_META_PATH = path.join(CONTENT_ROOT, 'docs', '(root)', 'meta.json');
 
 const createDemo = async (metadata: FunctionMetadata) => {
   const demoPath = path.join(
@@ -28,7 +33,7 @@ const createDemo = async (metadata: FunctionMetadata) => {
   return `'use client'\n\n${demoContent}`;
 };
 
-const createMetaJson = (metadata: FunctionMetadata[], type: FunctionType) => {
+const createMetaJson = (metadata: FunctionMetadata[]) => {
   const categories = metadata.reduce(
     (acc, item) => {
       const category = item.category.toLowerCase();
@@ -75,7 +80,7 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push('');
 
   result.push(
-    `<FunctionBanner code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />`
+    `<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />`
   );
 
   result.push('');
@@ -160,6 +165,92 @@ const createHtmlCode = async (code: string, language: CodeLanguage) =>
     ]
   });
 
+const createLlmsTxt = (pages: FunctionMetadata[]) => {
+  const docsLinks = [
+    ['Introduction', `${SITE_URL}/docs/introduction`, 'Core project overview and philosophy.'],
+    ['Installation', `${SITE_URL}/docs/installation`, 'Install Reactuse into your project.'],
+    ['CLI', `${SITE_URL}/docs/cli`, 'Useverse CLI for adding hooks into your codebase.'],
+    ['Functions', `${SITE_URL}/functions`, 'Browse all hooks and helpers with API docs.'],
+    ['Skills', `${SITE_URL}/docs/skills`, 'AI assistant skill guide for Reactuse.'],
+    ['Reactuse Skill Registry', SKILLS_URL, 'Published Reactuse skill for coding agents.']
+  ] as const;
+
+  const grouped = pages.reduce(
+    (acc, page) => {
+      const key = `${page.type}:${page.category.toLowerCase()}`;
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(page);
+      return acc;
+    },
+    {} as Record<string, FunctionMetadata[]>
+  );
+
+  const sections = Object.entries(grouped)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, items]) => {
+      const [, category] = key.split(':');
+      const title = `${category.charAt(0).toUpperCase() + category.slice(1)}s`;
+      const lines = items
+        .sort((left, right) => left.name.localeCompare(right.name))
+        .map(
+          (item) =>
+            `- [${item.name}](${SITE_URL}/functions/${item.type}s/${item.name}): ${item.description}`
+        );
+
+      return [`### ${title}`, '', ...lines].join('\n');
+    });
+
+  const result = [];
+
+  result.push('# reactuse');
+  result.push('');
+  result.push(
+    '> reactuse is a collection of production-ready React hooks and helpers. It is TypeScript-first, SSR compatible, tree-shakable, and designed for modern React applications.'
+  );
+  result.push('');
+  result.push('## Overview');
+  result.push('');
+  result.push(
+    ...docsLinks.map(([name, url, description]) => `- [${name}](${url}): ${description}`)
+  );
+  result.push('');
+  result.push('## Functions');
+  result.push('');
+  result.push(...sections);
+  result.push('');
+
+  return result.join('\n');
+};
+
+const createFunctionsMd = (pages: FunctionMetadata[]) => {
+  const items = pages
+    .toSorted((a, b) => a.name.localeCompare(b.name))
+    .map((item) => `- [${item.name}](/functions/${item.type}s/${item.name}): ${item.description}`);
+
+  return [
+    '---',
+    'title: Functions',
+    'description: A simple catalog of package functions.',
+    '---',
+    '',
+    'A quick list of available functions.',
+    '',
+    ...items
+  ].join('\n');
+};
+
+const placeFunctionsOnSecondPosition = async () => {
+  const content = await fs.promises.readFile(ROOT_DOCS_META_PATH, 'utf-8');
+  const meta = JSON.parse(content) as { title?: string; pages?: string[] };
+
+  const currentPages = meta.pages ?? [];
+  const pagesWithoutFunctions = currentPages.filter((page) => page !== 'functions');
+  pagesWithoutFunctions.splice(1, 0, 'functions');
+  meta.pages = pagesWithoutFunctions;
+
+  await fs.promises.writeFile(ROOT_DOCS_META_PATH, `${JSON.stringify(meta, null, 2)}\n`, 'utf-8');
+};
+
 const init = async () => {
   console.log('\n[generate-functions] Starting...');
 
@@ -167,7 +258,7 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 10).map(async (element) => {
+    content.slice(0, 12).map(async (element) => {
       const content = await getContentFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);
@@ -205,13 +296,7 @@ const init = async () => {
       const sourceFile = ts.createSourceFile('temp.ts', content, ts.ScriptTarget.Latest, true);
       const typeDeclarations = await createHtmlCode(extractTypeInfo(sourceFile), 'tsx');
 
-      const demo = await createHtmlCode(
-        await fs.promises.readFile(
-          path.join(CORE_ROOT, `${element.type}s`, element.name, `${element.name}.demo.tsx`),
-          'utf-8'
-        ),
-        'tsx'
-      );
+      const dependencies = extractDependencies(content);
 
       return {
         code: await createHtmlCode(content, 'tsx'),
@@ -231,8 +316,17 @@ const init = async () => {
         examples: jsdoc.examples.map((example) => example.description),
         apiParameters: jsdoc.apiParameters ?? [],
         typeDeclarations,
+        dependencies,
         contributors,
-        demo
+        ...(isDemo && {
+          demo: await createHtmlCode(
+            await fs.promises.readFile(
+              path.join(CORE_ROOT, `${element.type}s`, element.name, `${element.name}.demo.tsx`),
+              'utf-8'
+            ),
+            'tsx'
+          )
+        })
       };
     })
   );
@@ -283,16 +377,24 @@ const init = async () => {
   }
 
   for (const type of ['hook', 'helper'] as const) {
-    const metaJson = createMetaJson(
-      pages.filter((page) => page.type === type),
-      type
-    );
+    const metaJson = createMetaJson(pages.filter((page) => page.type === type));
     await fs.promises.writeFile(
       path.join(CONTENT_ROOT, 'functions', `${type}s`, `meta.json`),
       metaJson,
       'utf-8'
     );
   }
+
+  const functionsMd = createFunctionsMd(pages);
+  await fs.promises.writeFile(
+    path.join(CONTENT_ROOT, 'docs', '(root)', 'functions.mdx'),
+    functionsMd,
+    'utf-8'
+  );
+  await placeFunctionsOnSecondPosition();
+
+  const llmsTxt = createLlmsTxt(pages);
+  await fs.promises.writeFile(path.join('public', 'llms.txt'), llmsTxt, 'utf-8');
 
   console.log('[generate-functions] Done\n');
 };

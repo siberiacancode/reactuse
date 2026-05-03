@@ -28,7 +28,7 @@ export interface UseBatteryValue {
 }
 
 /** The use battery return type */
-export interface UseBatteryStateReturn {
+export interface UseBatteryReturn {
   /** Whether the battery api is supported*/
   supported: boolean;
   /** The use battery value type  */
@@ -48,7 +48,7 @@ export interface UseBatteryStateReturn {
  * @example
  * const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();
  */
-export const useBattery = (): UseBatteryStateReturn => {
+export const useBattery = (): UseBatteryReturn => {
   const supported =
     typeof navigator !== 'undefined' &&
     'getBattery' in navigator &&

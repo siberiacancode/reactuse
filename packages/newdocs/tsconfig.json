@@ -9,9 +9,9 @@
     "paths": {
       "@/utils/lib": ["./src/lib"],
       "@/*": ["./*"],
+      "@siberiacancode/docs/utils": ["./src/lib"],
       "@siberiacancode/docs": ["."],
       "@siberiacancode/docs/*": ["./*"],
-      "@siberiacancode/docs/utils": ["./utils.ts"],
       "@docs/*": ["./*"],
       "@siberiacancode/reactuse": ["../core/src/dist/esm/index.mjs"]
     },

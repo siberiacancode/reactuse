@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 
-import { ExternalLinkIcon } from 'lucide-react';
+import { ArrowRightIcon, ExternalLinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -16,12 +16,13 @@ interface FunctionTocItem {
 }
 
 interface FunctionTocProps {
+  hooks: string[];
   items: FunctionTocItem[];
   name: string;
   type: string;
 }
 
-export const FunctionToc = ({ type, name, items }: FunctionTocProps) => {
+export const FunctionToc = ({ type, name, items, hooks }: FunctionTocProps) => {
   const itemIds = items.map((item) => item.url.replace('#', ''));
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -97,6 +98,36 @@ export const FunctionToc = ({ type, name, items }: FunctionTocProps) => {
           </a>
         </li>
       </ul>
+
+      {!!hooks.length && (
+        <div className='bg-card mt-4 flex flex-col gap-6 rounded-md p-4'>
+          <div className='flex flex-col gap-2'>
+            <p className='text-muted-foreground text-lg font-semibold'>Dependencies</p>
+            <p className='text-muted-foreground text-md'>
+              This hook depends on the following hooks:
+            </p>
+          </div>
+
+          <ul className='flex flex-col gap-2'>
+            <li>
+              <ul className='flex flex-col gap-2'>
+                {hooks.map((hook) => (
+                  <Link
+                    key={hook}
+                    className='text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-md no-underline transition-colors data-[active=true]:font-medium data-[depth=3]:pl-4 data-[depth=4]:pl-6'
+                    href={`/functions/hooks/${hook}`}
+                  >
+                    <div className='flex items-center gap-1'>
+                      {hook}
+                      <ArrowRightIcon className='size-4' />
+                    </div>
+                  </Link>
+                ))}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };

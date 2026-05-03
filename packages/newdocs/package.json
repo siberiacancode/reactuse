@@ -24,7 +24,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm next dev --turbopack --port 4000",
-    "build": "next build && pnpm run sync:content",
+    "build": "next build",
     "start": "next start --port 4000",
     "preview": "next build && next start --port 4000",
     "lint": "eslint . --fix",
@@ -35,6 +35,7 @@
     "postinstall": "fumadocs-mdx",
     "generate:functions": "bun run scripts/generate-functions.ts",
     "generate:static": "bun run scripts/generate-static.ts",
+    "generate:registry": "bun run scripts/generate-registry.ts",
     "sync:content": "bun run scripts/sync-content.ts"
   },
   "dependencies": {
@@ -91,6 +92,7 @@
     "@types/three": "^0.184.0",
     "@types/web-bluetooth": "^0.0.21",
     "md5": "^2.3.0",
+    "ora": "^9.3.0",
     "tailwindcss": "^4.0.7",
     "tsconfig-paths": "^4.2.0"
   }

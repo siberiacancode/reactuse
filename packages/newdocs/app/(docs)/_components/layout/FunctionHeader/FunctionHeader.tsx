@@ -14,11 +14,11 @@ const formatStarsCount = (count: number) => {
   return `${Math.round(count / 1000)}${count >= 1000 ? 'k' : ''}`;
 };
 
-export const Header = async () => {
+export const FunctionHeader = async () => {
   const repositoryResponse = await fetches.get<{ stargazers_count: number }>(
     'https://api.github.com/repos/siberiacancode/reactuse',
     {
-      next: { revalidate: 86400 }
+      cache: 'force-cache'
     }
   );
 
@@ -26,7 +26,7 @@ export const Header = async () => {
 
   return (
     <header className='bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 w-full backdrop-blur'>
-      <div className='container-wrapper flex h-(--header-height) items-center justify-between gap-3 px-6'>
+      <div className='container-wrapper flex h-(--header-height) items-center justify-between gap-3 px-8'>
         <Burger
           className='lg:hidden'
           items={[{ href: '/docs/installation', label: 'Get started' }]}
@@ -34,15 +34,19 @@ export const Header = async () => {
 
         <div className='hidden min-w-0 items-center justify-between gap-3 lg:flex'>
           <Link className='inline-flex items-center gap-2' href='/'>
-            <Image alt='ReactUse' height={14} src='/logo.svg' width={14} />
+            <Image alt='ReactUse' height={12} src='/logo.svg' width={12} />
 
-            <span className='text-foreground text-xl font-semibold tracking-tight'>
+            <span className='text-foreground text-lg font-semibold tracking-tight'>
               {CONFIG.NAME}
             </span>
           </Link>
 
           <Button asChild className='rounded-full' size='sm' variant='ghost'>
             <Link href='/docs/installation'>Docs</Link>
+          </Button>
+
+          <Button asChild className='rounded-full' size='sm' variant='ghost'>
+            <Link href='/docs/functions'>Functions</Link>
           </Button>
         </div>
 

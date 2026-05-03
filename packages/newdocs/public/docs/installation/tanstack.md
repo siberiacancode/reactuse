@@ -3,7 +3,7 @@ title: TanStack Start
 description: Install and configure reactuse for TanStack Start.
 ---
 
-### Create project
+## Create project
 
 Run the following command to create a new TanStack Start project:
 

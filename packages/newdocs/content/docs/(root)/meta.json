@@ -1,0 +1,15 @@
+{
+  "title": "Getting started",
+  "pages": [
+    "introduction",
+    "functions",
+    "installation",
+    "reactuse.json",
+    "cli",
+    "target",
+    "memoization",
+    "optimization",
+    "skills",
+    "llm.txt"
+  ]
+}

@@ -1,5 +1,6 @@
 export const LINKS = {
-  NPM: 'https://www.npmjs.com/package/@siberiacancode/reactuse',
+  SITE: 'https://reactuse.org/new',
+  NPM: 'https://npmx.dev/package/@siberiacancode/reactuse',
   GITHUB: 'https://github.com/siberiacancode/reactuse',
   CORE_REPOSITORY: 'https://github.com/siberiacancode/reactuse/blob/main/packages/core/src'
 };

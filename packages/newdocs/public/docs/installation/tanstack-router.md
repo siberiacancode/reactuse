@@ -3,7 +3,7 @@ title: TanStack Router
 description: Install and configure reactuse for TanStack Router.
 ---
 
-### Create project
+## Create project
 
 Start by creating a new TanStack Router project:
 

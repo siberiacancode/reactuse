@@ -1,0 +1,4 @@
+{
+  "title": "Installation",
+  "pages": ["manual", "vite", "nextjs", "tanstack", "tanstack-router", "react-router"]
+}

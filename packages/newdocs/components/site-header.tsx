@@ -39,7 +39,8 @@ const CHANGELOG_ITEMS = [
 
 export const SiteHeader = () => {
   const pageTree = source.pageTree;
-  const docsHref = siteConfig.navItems[0]?.href || '/docs/installation';
+  const docsHref = siteConfig.navItems[0]?.href || '/docs/introduction';
+  const functionsHref = siteConfig.navItems[1]?.href || '/docs/functions';
 
   return (
     <header className='bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 w-full border-b backdrop-blur'>
@@ -63,6 +64,15 @@ export const SiteHeader = () => {
             variant='ghost'
           >
             <Link href={docsHref}>Docs</Link>
+          </Button>
+
+          <Button
+            asChild
+            className='text-muted-foreground hover:text-foreground hidden h-8 px-2.5 text-sm shadow-none lg:inline-flex'
+            size='sm'
+            variant='ghost'
+          >
+            <Link href={functionsHref}>Functions</Link>
           </Button>
 
           <DropdownMenu>

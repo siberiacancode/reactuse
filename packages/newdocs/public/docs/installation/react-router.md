@@ -3,7 +3,7 @@ title: React Router
 description: Install and configure reactuse for React Router.
 ---
 
-### Create project
+## Create project
 
 ```bash
 npx create-react-router@latest my-app

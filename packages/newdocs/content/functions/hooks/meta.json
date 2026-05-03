@@ -11,12 +11,15 @@
       "useAsyncEffect",
 
       "---browser---",
-      "useAudio","useBattery","useBluetooth","useBreakpoints",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel",
 
       "---utilities---",
       "useBatchedCallback",
 
       "---state---",
-      "useBoolean"
+      "useBoolean",
+
+      "---user---",
+      "useBrowserLanguage"
     ]
   }

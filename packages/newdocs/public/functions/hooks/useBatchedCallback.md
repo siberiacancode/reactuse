@@ -11,7 +11,7 @@ lastModifiedTime: 1773475680000
 
 import metadata from './useBatchedCallback.meta.json';
 
-<FunctionBanner code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
 ## Installation
 

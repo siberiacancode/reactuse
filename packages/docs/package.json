@@ -24,6 +24,7 @@
   "scripts": {
     "dev": "vitepress dev app",
     "build": "vitepress build app",
+    "prepare:pages-artifact": "node scripts/prepare-pages-artifact.mjs",
     "preview": "vitepress preview app",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",

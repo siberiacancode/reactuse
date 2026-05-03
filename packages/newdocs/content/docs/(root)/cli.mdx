@@ -1,21 +1,17 @@
 ---
 title: CLI
-description: Use the CLI to add hooks to your project with [useverse](https://www.npmjs.com/package/useverse).
----
-
+description: Use the CLI to add hooks and helpers to your project.
 ---
 
 ## init
 
-Use the `init` command to initialize configuration and dependencies for a new project.
+Use the `init` from [useverse](https://www.npmjs.com/package/useverse) package to initialize configuration and dependencies for a new project.
 
 The `init` command installs dependencies and creates a [`reactuse.json`](./reactuse-json.md) config file.
 
 ```bash
 npx useverse@latest init
 ```
-
----
 
 ## add
 

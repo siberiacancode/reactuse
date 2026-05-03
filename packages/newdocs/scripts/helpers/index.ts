@@ -1,4 +1,5 @@
 export * from './checkFileContent';
+export * from './extractDependencies';
 export * from './extractTypeInfo';
 export * from './getContentFile';
 export * from './getElements';

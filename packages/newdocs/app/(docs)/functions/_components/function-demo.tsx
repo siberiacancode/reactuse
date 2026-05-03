@@ -27,7 +27,7 @@ export const FunctionDemo = ({ code }: FunctionDemoProps) => {
       )}
       <CollapsibleContent
         forceMount
-        className='relative overflow-hidden rounded-b-lg data-[state=closed]:max-h-32 data-[state=closed]:[content-visibility:auto] data-[state=open]:max-h-86 data-[state=open]:overflow-y-auto [&::-webkit-scrollbar]:hidden [&>figure]:mt-0 [&>figure]:md:mx-0!'
+        className='relative overflow-hidden data-[state=closed]:max-h-42 data-[state=closed]:[content-visibility:auto] data-[state=open]:max-h-92 data-[state=open]:overflow-y-auto [&::-webkit-scrollbar]:hidden [&>figure]:mt-0 [&>figure]:md:mx-0!'
       >
         <figure className='relative bg-[var(--color-code)]'>
           <div dangerouslySetInnerHTML={{ __html: code }} />

@@ -3,7 +3,7 @@ title: Vite
 description: Install and configure reactuse for Vite.
 ---
 
-### Create project
+## Create project
 
 Start by creating a new React project using `vite`. Select the **React + TypeScript** template:
 
@@ -11,7 +11,7 @@ Start by creating a new React project using `vite`. Select the **React + TypeScr
 npm create vite@latest
 ```
 
-### Edit tsconfig.json file
+## Edit tsconfig.json file
 
 The current version of Vite splits TypeScript configuration into three files, two of which need to be edited.
 Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the `tsconfig.json` and

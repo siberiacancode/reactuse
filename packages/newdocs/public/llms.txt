@@ -1,0 +1,41 @@
+# reactuse
+
+> reactuse is a collection of production-ready React hooks and helpers. It is TypeScript-first, SSR compatible, tree-shakable, and designed for modern React applications.
+
+## Overview
+
+- [Introduction](https://reactuse.org/docs/introduction): Core project overview and philosophy.
+- [Installation](https://reactuse.org/docs/installation): Install Reactuse into your project.
+- [CLI](https://reactuse.org/docs/cli): Useverse CLI for adding hooks into your codebase.
+- [Functions](https://reactuse.org/functions): Browse all hooks and helpers with API docs.
+- [Skills](https://reactuse.org/docs/skills): AI assistant skill guide for Reactuse.
+- [Reactuse Skill Registry](https://skills.sh/siberiacancode/agent-skills/reactuse): Published Reactuse skill for coding agents.
+
+## Functions
+
+### Asyncs
+
+- [useAsync](https://reactuse.org/functions/hooks/useAsync): Hook that provides the state of an async callback
+### Browsers
+
+- [useAudio](https://reactuse.org/functions/hooks/useAudio): Hook that manages audio playback with sprite support
+- [useBattery](https://reactuse.org/functions/hooks/useBattery): Hook for getting information about battery status
+- [useBluetooth](https://reactuse.org/functions/hooks/useBluetooth): Hook for getting information about bluetooth
+- [useBreakpoints](https://reactuse.org/functions/hooks/useBreakpoints): Hook that manages breakpoints
+- [useBroadcastChannel](https://reactuse.org/functions/hooks/useBroadcastChannel): that provides cross-tab/window communication
+### Elementss
+
+- [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
+- [useAutoScroll](https://reactuse.org/functions/hooks/useAutoScroll): Hook that automatically scrolls a list element to the bottom
+### Lifecycles
+
+- [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates
+### States
+
+- [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state
+### Users
+
+- [useBrowserLanguage](https://reactuse.org/functions/hooks/useBrowserLanguage): Hook that returns the current browser language
+### Utilitiess
+
+- [useBatchedCallback](https://reactuse.org/functions/hooks/useBatchedCallback): Hook that batches calls and forwards them to a callback

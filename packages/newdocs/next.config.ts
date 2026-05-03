@@ -3,6 +3,8 @@ import type { NextConfig } from 'next';
 import { createMDX } from 'fumadocs-mdx/next';
 
 const nextConfig: NextConfig = {
+  output: 'export',
+  basePath: '/new',
   pageExtensions: ['jsx', 'mdx', 'tsx'],
   typescript: {
     ignoreBuildErrors: true
@@ -14,7 +16,14 @@ const nextConfig: NextConfig = {
         hostname: 'avatars.githubusercontent.com'
       }
     ]
-  }
+  },
+  redirects: async () => [
+    {
+      source: '/docs/llm.txt',
+      destination: '/llms.txt',
+      permanent: true
+    }
+  ]
 };
 
 const withMDX = createMDX();

@@ -350,6 +350,9 @@ importers:
       md5:
         specifier: ^2.3.0
         version: 2.3.0
+      ora:
+        specifier: ^9.3.0
+        version: 9.3.0
       tailwindcss:
         specifier: ^4.0.7
         version: 4.2.1

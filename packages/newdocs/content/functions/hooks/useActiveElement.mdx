@@ -11,7 +11,7 @@ lastModifiedTime: 1776957880000
 
 import metadata from './useActiveElement.meta.json';
 
-<FunctionBanner code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
 ## Installation
 

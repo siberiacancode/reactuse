@@ -9,6 +9,8 @@ import { useState } from 'react';
 
 import type { CodeLanguage } from '@/src/constants';
 
+const MAX_ROWS = 20;
+
 interface FunctionCodeProps {
   code: string;
   collapsible: boolean;
@@ -22,7 +24,9 @@ export const FunctionCode = ({ code, collapsible, title, language }: FunctionCod
 
   const onCopyClick = () => copy(code);
 
-  if (!collapsible) {
+  const rows = code.split('\n').length;
+
+  if (!collapsible && rows > MAX_ROWS) {
     return (
       <Collapsible
         className='group/collapsible relative md:-mx-1'
@@ -65,5 +69,19 @@ export const FunctionCode = ({ code, collapsible, title, language }: FunctionCod
     );
   }
 
-  return <div dangerouslySetInnerHTML={{ __html: code }} />;
+  return (
+    <div className='relative my-6 overflow-hidden data-[state=closed]:max-h-64 data-[state=closed]:[content-visibility:auto] [&>figure]:mt-0 [&>figure]:md:mx-0!'>
+      <figure className='' data-rehype-pretty-code-figure=''>
+        {title && (
+          <figcaption
+            className='text-code-foreground [&_svg]:text-code-foreground flex items-center gap-2 [&_svg]:size-4 [&_svg]:opacity-70'
+            data-language={language}
+          >
+            {title}
+          </figcaption>
+        )}
+        <div dangerouslySetInnerHTML={{ __html: code }} />
+      </figure>
+    </div>
+  );
 };

@@ -3,13 +3,13 @@ title: Manual Installation
 description: Add reactuse to your project without relying on a framework-specific guide.
 ---
 
-### Install the package
+## Install the package
 
 ```bash
 npm install @siberiacancode/reactuse
 ```
 
-### Configure path aliases
+## Configure path aliases
 
 Add `baseUrl` and `paths` to your `tsconfig.json` (or `jsconfig.json`) so imports resolve correctly:
 

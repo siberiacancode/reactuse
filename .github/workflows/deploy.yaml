@@ -35,6 +35,9 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
@@ -44,13 +47,19 @@ jobs:
       - name: Build registry
         run: pnpm run cli:build:registry
 
-      - name: Build with vitepress
-        run: pnpm run docs:build
+      - name: Build docs (vitepress)
+        run: pnpm --dir packages/docs build
+
+      - name: Build new docs (next export)
+        run: pnpm --dir packages/newdocs build
+
+      - name: Prepare Pages artifact
+        run: pnpm --dir packages/docs prepare:pages-artifact
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: packages/docs/app/.vitepress/dist
+          path: site
 
   # Deployment job
   deploy:

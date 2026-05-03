@@ -124,7 +124,16 @@ export const LandingHeader = () => {
             size='sm'
             variant='ghost'
           >
-            <Link href='/docs/installation'>Docs</Link>
+            <Link href='/docs/introduction'>Docs</Link>
+          </Button>
+
+          <Button
+            asChild
+            className='text-muted-foreground hover:text-foreground hidden h-8 px-2.5 text-sm shadow-none md:inline-flex'
+            size='sm'
+            variant='ghost'
+          >
+            <Link href='/docs/functions'>Functions</Link>
           </Button>
 
           <Button
