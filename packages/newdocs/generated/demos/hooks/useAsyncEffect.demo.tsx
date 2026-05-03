@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useAsyncEffect, useBoolean, useToggle } from '@siberiacancode/reactuse';
 import { Loader2Icon } from 'lucide-react';

@@ -51,7 +51,7 @@ export const DocsLayout = async ({ children }: DocsLayoutProps) => {
 
   return (
     <main className='mx-auto flex w-full max-w-[1600px] flex-col'>
-      <FunctionHeader />
+      <FunctionHeader groups={sidebarGroups} />
 
       <div className='container-wrapper mt-12 flex flex-1 flex-col px-2'>
         <SidebarProvider

@@ -2,18 +2,22 @@
 
 import type { ComponentProps } from 'react';
 
-import { TOP_LEVEL_SECTIONS } from '@docs/components/docs-sidebar';
 import { cn } from '@docs/lib/utils';
 import { Button } from '@docs/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@docs/ui/popover';
 import { useDisclosure } from '@siberiacancode/reactuse';
 import Link from 'next/link';
 
-interface BurgerProps extends ComponentProps<typeof Button> {
-  items: { href: string; label: string }[];
+interface BurgerItemGroup {
+  items: { name: string; url: string }[];
+  name: string;
 }
 
-export const Burger = ({ items, className, ...props }: BurgerProps) => {
+interface BurgerProps extends ComponentProps<typeof Button> {
+  groups: BurgerItemGroup[];
+}
+
+export const Burger = ({ groups, className, ...props }: BurgerProps) => {
   const burger = useDisclosure(false);
 
   return (
@@ -61,33 +65,20 @@ export const Burger = ({ items, className, ...props }: BurgerProps) => {
               <Link className='text-2xl font-medium' href='/' onClick={burger.toggle}>
                 Home
               </Link>
-              {items.map((item) => (
-                <Link
-                  key={item.href}
-                  className='text-2xl font-medium'
-                  href={item.href}
-                  onClick={burger.toggle}
-                >
-                  {item.label}
-                </Link>
-              ))}
             </div>
           </div>
-          <div className='flex flex-col gap-4'>
-            <div className='text-muted-foreground text-sm font-medium'>Sections</div>
-            <div className='flex flex-col gap-3'>
-              {TOP_LEVEL_SECTIONS.map(({ name, href }) => (
-                <Link
-                  key={name}
-                  className='text-2xl font-medium'
-                  href={href}
-                  onClick={burger.toggle}
-                >
-                  {name}
-                </Link>
-              ))}
+          {groups.map((group) => (
+            <div key={group.name} className='flex flex-col gap-4'>
+              <div className='text-muted-foreground text-sm font-medium'>{group.name}</div>
+              <div className='flex flex-col gap-3'>
+                {group.items.map((item) => (
+                  <Link key={item.url} href={item.url} onClick={burger.toggle}>
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </PopoverContent>
     </Popover>

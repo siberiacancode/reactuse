@@ -1,3 +1,5 @@
+import type { ComponentProps } from 'react';
+
 import { Icons } from '@docs/components/icons';
 import { functionsSource, source } from '@docs/lib/source';
 import { CONFIG, LINKS } from '@docs/src/constants';
@@ -14,7 +16,16 @@ const formatStarsCount = (count: number) => {
   return `${Math.round(count / 1000)}${count >= 1000 ? 'k' : ''}`;
 };
 
-export const FunctionHeader = async () => {
+interface FunctionHeaderGroup {
+  items: { name: string; url: string }[];
+  name: string;
+}
+
+export interface FunctionHeaderProps extends ComponentProps<'header'> {
+  groups: FunctionHeaderGroup[];
+}
+
+export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) => {
   const repositoryResponse = await fetches.get<{ stargazers_count: number }>(
     'https://api.github.com/repos/siberiacancode/reactuse',
     {
@@ -25,12 +36,12 @@ export const FunctionHeader = async () => {
   const formattedCount = formatStarsCount(repositoryResponse.data.stargazers_count);
 
   return (
-    <header className='bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 w-full backdrop-blur'>
+    <header
+      className='bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 w-full backdrop-blur'
+      {...props}
+    >
       <div className='container-wrapper flex h-(--header-height) items-center justify-between gap-3 px-8'>
-        <Burger
-          className='lg:hidden'
-          items={[{ href: '/docs/installation', label: 'Get started' }]}
-        />
+        <Burger className='lg:hidden' groups={groups} />
 
         <div className='hidden min-w-0 items-center justify-between gap-3 lg:flex'>
           <Link className='inline-flex items-center gap-2' href='/'>
