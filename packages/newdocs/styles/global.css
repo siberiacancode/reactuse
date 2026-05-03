@@ -518,16 +518,6 @@
   @apply text-sm font-semibold tracking-tight;
 }
 
-.demo-ui input {
-  @apply border-input h-8 w-full min-w-0 rounded-lg border bg-transparent px-2.5 py-1 text-base transition-colors outline-none;
-  @apply file:text-foreground file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium;
-  @apply placeholder:text-muted-foreground;
-  @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-3;
-  @apply disabled:bg-input/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
-  @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20 aria-invalid:ring-3;
-  @apply dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 md:text-sm;
-}
-
 .demo-ui textarea {
   @apply border-input flex min-h-16 w-full rounded-lg border bg-transparent px-2.5 py-2 text-base transition-colors outline-none;
   @apply placeholder:text-muted-foreground;
@@ -582,4 +572,71 @@
 
 .demo-ui [data-slot='tabs-content'] {
   @apply flex-1 text-sm outline-none;
+}
+
+.demo-ui label {
+  @apply flex items-center gap-2 text-sm leading-none font-medium select-none;
+  @apply has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50;
+}
+
+.demo-ui input[type='checkbox'][role='switch'] {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18.4px;
+  flex-shrink: 0;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-color: var(--input);
+  transition: background-color 150ms ease;
+  outline: none;
+  vertical-align: middle;
+}
+
+.demo-ui input[type='checkbox'][role='switch']:focus-visible {
+  @apply border-ring ring-ring/50 ring-3;
+}
+
+.demo-ui input[type='checkbox'][role='switch']:checked {
+  background-color: var(--primary) !important;
+}
+
+.demo-ui input[type='checkbox'][role='switch']:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.demo-ui input[type='checkbox'][role='switch']::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background-color: var(--background);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transform: translateX(0);
+  transition: transform 150ms ease;
+  pointer-events: none;
+}
+
+.demo-ui input[type='checkbox'][role='switch']:checked::before {
+  transform: translateX(calc(100% - 2px));
+}
+
+.dark .demo-ui input[type='checkbox'][role='switch'] {
+  background-color: oklch(1 0 0 / 15%);
+}
+
+.dark .demo-ui input[type='checkbox'][role='switch']::before {
+  background-color: var(--foreground);
+}
+
+.dark .demo-ui input[type='checkbox'][role='switch']:checked::before {
+  background-color: var(--primary-foreground);
 }

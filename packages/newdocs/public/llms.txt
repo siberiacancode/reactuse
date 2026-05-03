@@ -23,19 +23,27 @@
 - [useBluetooth](https://reactuse.org/functions/hooks/useBluetooth): Hook for getting information about bluetooth
 - [useBreakpoints](https://reactuse.org/functions/hooks/useBreakpoints): Hook that manages breakpoints
 - [useBroadcastChannel](https://reactuse.org/functions/hooks/useBroadcastChannel): that provides cross-tab/window communication
+- [useBrowserLocation](https://reactuse.org/functions/hooks/useBrowserLocation): Hook that returns reactive browser location state with navigation controls
+- [useClipboard](https://reactuse.org/functions/hooks/useClipboard): Hook that manages a copy to clipboard
+- [useCopy](https://reactuse.org/functions/hooks/useCopy): Hook that manages copying text with status reset
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
 - [useAutoScroll](https://reactuse.org/functions/hooks/useAutoScroll): Hook that automatically scrolls a list element to the bottom
+- [useClickOutside](https://reactuse.org/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
 ### Lifecycles
 
 - [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state
+- [useControllableState](https://reactuse.org/functions/hooks/useControllableState): Hook that manages both controlled and uncontrolled state patterns
+- [useCookie](https://reactuse.org/functions/hooks/useCookie): Hook that manages cookie value
+- [useCookies](https://reactuse.org/functions/hooks/useCookies): Hook that manages cookie values
 ### Users
 
 - [useBrowserLanguage](https://reactuse.org/functions/hooks/useBrowserLanguage): Hook that returns the current browser language
 ### Utilitiess
 
 - [useBatchedCallback](https://reactuse.org/functions/hooks/useBatchedCallback): Hook that batches calls and forwards them to a callback
+- [useConst](https://reactuse.org/functions/hooks/useConst): Hook that returns the constant value

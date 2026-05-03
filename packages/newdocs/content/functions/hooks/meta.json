@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll",
+      "useActiveElement","useAutoScroll","useClickOutside",
 
       "---async---",
       "useAsync",
@@ -11,13 +11,13 @@
       "useAsyncEffect",
 
       "---browser---",
-      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy",
 
       "---utilities---",
-      "useBatchedCallback",
+      "useBatchedCallback","useConst",
 
       "---state---",
-      "useBoolean",
+      "useBoolean","useControllableState","useCookie","useCookies",
 
       "---user---",
       "useBrowserLanguage"

@@ -19,3 +19,11 @@ A quick list of available functions.
 - [useBreakpoints](/functions/hooks/useBreakpoints): Hook that manages breakpoints
 - [useBroadcastChannel](/functions/hooks/useBroadcastChannel): that provides cross-tab/window communication
 - [useBrowserLanguage](/functions/hooks/useBrowserLanguage): Hook that returns the current browser language
+- [useBrowserLocation](/functions/hooks/useBrowserLocation): Hook that returns reactive browser location state with navigation controls
+- [useClickOutside](/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
+- [useClipboard](/functions/hooks/useClipboard): Hook that manages a copy to clipboard
+- [useConst](/functions/hooks/useConst): Hook that returns the constant value
+- [useControllableState](/functions/hooks/useControllableState): Hook that manages both controlled and uncontrolled state patterns
+- [useCookie](/functions/hooks/useCookie): Hook that manages cookie value
+- [useCookies](/functions/hooks/useCookies): Hook that manages cookie values
+- [useCopy](/functions/hooks/useCopy): Hook that manages copying text with status reset
