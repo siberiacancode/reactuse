@@ -49,8 +49,6 @@ export const Page = async (props: { params: Promise<{ slug: string[] }> }) => {
 
   if (!page) redirect('/docs/introduction');
 
-  console.log('@', page);
-
   const doc = page.data;
   const MDX = doc.body;
   const isChangelog = params.slug?.[0] === 'changelog';

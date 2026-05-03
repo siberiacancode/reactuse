@@ -260,7 +260,7 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 20).map(async (element) => {
+    content.slice(0, 15).map(async (element) => {
       const content = await getContentFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);

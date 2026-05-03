@@ -11,13 +11,13 @@
       "useAsyncEffect",
 
       "---browser---",
-      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard",
 
       "---utilities---",
-      "useBatchedCallback","useConst",
+      "useBatchedCallback",
 
       "---state---",
-      "useBoolean","useControllableState","useCookie","useCookies",
+      "useBoolean",
 
       "---user---",
       "useBrowserLanguage"
