@@ -1,5 +1,6 @@
-import { cn } from '@siberiacancode/docs/utils';
 import { useToggle } from '@siberiacancode/reactuse';
+
+import { cn } from '@/utils/lib';
 
 const Demo = () => {
   const [value, toggle] = useToggle(['blue', 'orange', 'black', 'teal', 'purple'] as const);

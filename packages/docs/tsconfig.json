@@ -7,7 +7,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@siberiacancode/docs": ["."]
+      "@/utils/lib": ["../newdocs/src/lib"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
