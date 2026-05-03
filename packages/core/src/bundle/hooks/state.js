@@ -14,6 +14,7 @@ export * from './useList/useList';
 export * from './useLocalStorage/useLocalStorage';
 export * from './useMap/useMap';
 export * from './useMergedRef/useMergedRef';
+export * from './useObject/useObject';
 export * from './useOffsetPagination/useOffsetPagination';
 export * from './useQuery/useQuery';
 export * from './useQueue/useQueue';

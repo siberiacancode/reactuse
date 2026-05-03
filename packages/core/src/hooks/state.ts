@@ -16,12 +16,13 @@ export * from './useList/useList';
 export * from './useLocalStorage/useLocalStorage';
 export * from './useMap/useMap';
 export * from './useMergedRef/useMergedRef';
+export * from './useObject/useObject';
 export * from './useOffsetPagination/useOffsetPagination';
 export * from './useQuery/useQuery';
 export * from './useQueue/useQueue';
 export * from './useRafState/useRafState';
-export * from './useRefState/useRefState';
 
+export * from './useRefState/useRefState';
 export * from './useSessionStorage/useSessionStorage';
 export * from './useSet/useSet';
 export * from './useStateHistory/useStateHistory';
