@@ -35,8 +35,7 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
     >
       <div className='from-background/75 via-background/25 pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b to-transparent' />
       <div className='from-background/75 via-background/25 pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t to-transparent' />
-      <div className='absolute top-12 right-2 bottom-0 hidden h-full w-px bg-gradient-to-b from-transparent to-transparent lg:flex' />
-      <SidebarContent className='no-scrollbar w-(--sidebar-menu-width) overflow-x-hidden px-2'>
+      <SidebarContent className='no-scrollbar w-(--sidebar-menu-width) overflow-x-hidden px-2 pb-48'>
         {groups.map((group, index) => (
           <SidebarGroup key={index}>
             <SidebarGroupLabel className='text-muted-foreground font-medium capitalize'>

@@ -16,14 +16,7 @@ const nextConfig: NextConfig = {
         hostname: 'avatars.githubusercontent.com'
       }
     ]
-  },
-  redirects: async () => [
-    {
-      source: '/docs/llm.txt',
-      destination: '/llms.txt',
-      permanent: true
-    }
-  ]
+  }
 };
 
 const withMDX = createMDX();

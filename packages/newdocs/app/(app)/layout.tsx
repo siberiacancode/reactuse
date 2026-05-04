@@ -1,8 +1,15 @@
-import { LandingHeader } from '@docs/components/landing-header';
+import type { ReactNode } from 'react';
 
-export const AppLayout = ({ children }: { children: React.ReactNode }) => (
+import { LandingHeader } from './_components';
+
+interface AppLayoutProps {
+  children: ReactNode;
+}
+
+export const AppLayout = ({ children }: AppLayoutProps) => (
   <div className='bg-background relative z-10 flex min-h-svh flex-col' data-slot='layout'>
     <LandingHeader />
+
     <main className='flex flex-1 flex-col'>{children}</main>
   </div>
 );

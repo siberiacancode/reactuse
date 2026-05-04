@@ -42,10 +42,19 @@ export const DocsLayout = async ({ children }: DocsLayoutProps) => {
   const sidebarGroups = ([...source.pageTree.children, ...functionsSidebarGroups] as Folder[]).map(
     (group) => ({
       name: group.name?.toString() ?? 'unknown',
-      items: (group.children as Item[]).map((child) => ({
-        name: child.name?.toString() ?? 'unknown',
-        url: child.url
-      }))
+      items: (group.children as Item[]).map((child) => {
+        const name = child.name?.toString() ?? 'unknown';
+        if (name === 'llms.txt') {
+          return {
+            name: 'llms.txt',
+            url: '/llms.txt'
+          };
+        }
+        return {
+          name: child.name?.toString() ?? 'unknown',
+          url: child.url
+        };
+      })
     })
   );
 

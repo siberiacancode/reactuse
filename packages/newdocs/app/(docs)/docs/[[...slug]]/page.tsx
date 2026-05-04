@@ -4,7 +4,7 @@ import { Button } from '@docs/ui/button';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { findNeighbour } from 'fumadocs-core/page-tree';
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 import { DocHeader } from '../_components/doc-header';
 import { DocsToc } from '../_components/docs-toc';
@@ -43,20 +43,19 @@ export const generateMetadata = async (props: { params: Promise<{ slug: string[]
   };
 };
 
-export const Page = async (props: { params: Promise<{ slug: string[] }> }) => {
+export const DocsPage = async (props: { params: Promise<{ slug: string[] }> }) => {
   const params = await props.params;
   const page = source.getPage(params.slug);
 
-  if (!page) redirect('/docs/introduction');
+  if (!page) notFound();
 
   const doc = page.data;
+  const neighbours = findNeighbour(source.pageTree, page.url);
+  const raw = await doc.getText('raw');
+
+  if (page.path.includes('llms.txt')) notFound();
+
   const MDX = doc.body;
-  const isChangelog = params.slug?.[0] === 'changelog';
-  const neighbours = isChangelog
-    ? { previous: null, next: null }
-    : findNeighbour(source.pageTree, page.url);
-  const raw = await page.data.getText('raw');
-  const slug = params.slug ?? ['introduction'];
 
   return (
     <div
@@ -69,8 +68,8 @@ export const Page = async (props: { params: Promise<{ slug: string[] }> }) => {
             description={doc.description}
             markdown={raw}
             next={neighbours.next?.url}
+            path={page.data.info.path}
             previous={neighbours.previous?.url}
-            slug={slug}
             title={doc.title}
           />
         </div>
@@ -105,4 +104,4 @@ export const Page = async (props: { params: Promise<{ slug: string[] }> }) => {
   );
 };
 
-export default Page;
+export default DocsPage;

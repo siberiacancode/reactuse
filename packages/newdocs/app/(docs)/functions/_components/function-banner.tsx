@@ -42,7 +42,7 @@ export const FunctionBanner = async ({
         <>
           <Separator />
 
-          <div className='text-muted-foreground p-4 text-sm'>
+          <div className='text-muted-foreground px-6 py-4 text-sm leading-relaxed'>
             This hook uses{' '}
             <Button asChild className='p-0' variant='link'>
               <a href={browserapi.description} rel='noopener noreferrer' target='_blank'>

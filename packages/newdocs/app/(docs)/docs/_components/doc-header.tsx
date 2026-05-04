@@ -28,8 +28,8 @@ interface DocHeaderProps {
   description?: string;
   markdown: string;
   next?: string;
+  path: string;
   previous?: string;
-  slug: string[];
   title: string;
 }
 
@@ -38,7 +38,7 @@ export const DocHeader = ({
   markdown,
   next,
   previous,
-  slug,
+  path,
   title
 }: DocHeaderProps) => {
   const { copy, copied } = useCopy();
@@ -65,7 +65,7 @@ export const DocHeader = ({
                   <DropdownMenuContent align='end' className='w-56 min-w-56'>
                     <DropdownMenuItem asChild>
                       <a
-                        href={`/docs/${slug.join('/')}.md`}
+                        href={`/new/docs/${path.replace('.mdx', '.md')}`}
                         rel='noopener noreferrer'
                         target='_blank'
                       >
@@ -77,7 +77,10 @@ export const DocHeader = ({
                     {Object.entries(PROMPT_LINKS).map(([key, value]) => (
                       <DropdownMenuItem asChild key={key}>
                         <a
-                          href={getPromptUrl(value.url, `${LINKS.SITE}/docs/${slug.join('/')}.md`)}
+                          href={getPromptUrl(
+                            value.url,
+                            `${LINKS.SITE}/docs/${path.replace('.mdx', '.md')}`
+                          )}
                           rel='noopener noreferrer'
                           target='_blank'
                         >
