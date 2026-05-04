@@ -21,8 +21,8 @@ const Demo = () => {
       <div className='flex flex-col items-center gap-2'>
         <h3>Share with friends</h3>
         <p className='text-muted-foreground text-center text-sm'>
-          Spread the word about reactuse. Click the button below to copy the link to your clipboard
-          and share it with anyone.
+          Spread the word about <code>reactuse</code>. Click the button below to copy the link to
+          your clipboard and share it with anyone.
         </p>
       </div>
 
