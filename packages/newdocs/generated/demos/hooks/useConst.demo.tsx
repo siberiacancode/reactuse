@@ -1,3 +1,5 @@
+'use client'
+
 import { useConst } from '@siberiacancode/reactuse';
 import { HeartIcon } from 'lucide-react';
 import { useState } from 'react';

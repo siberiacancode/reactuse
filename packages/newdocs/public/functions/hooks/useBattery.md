@@ -53,6 +53,9 @@ const { supported, loading, charging, chargingTime, dischargingTime, level } = u
 ## Type Declarations
 
 <FunctionCode code={metadata.typeDeclarations} language="tsx" />
+
+## API
+
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors

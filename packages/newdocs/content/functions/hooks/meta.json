@@ -14,7 +14,7 @@
       "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard",
 
       "---utilities---",
-      "useBatchedCallback",
+      "useBatchedCallback","useConst",
 
       "---state---",
       "useBoolean",

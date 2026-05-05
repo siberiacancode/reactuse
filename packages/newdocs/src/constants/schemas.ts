@@ -60,6 +60,7 @@ export interface FunctionMetadata {
   lastModified: number;
   name: string;
   type: FunctionType;
+  typeDeclarations: string;
   usage: string;
   warning?: string;
 }

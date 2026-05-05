@@ -1,15 +1,15 @@
 ---
-title: useClickOutside
-description: Hook to handle click events outside the specified target element(s)
-category: elements
-usage: necessary
+title: useConst
+description: Hook that returns the constant value
+category: utilities
+usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1775645190000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useClickOutside.meta.json';
+import metadata from './useConst.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useClickOutside.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useClickOutside
+    npx useverse@latest add useConst
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,14 +47,8 @@ import metadata from './useClickOutside.meta.json';
 ## Usage
 
 ```tsx
-useClickOutside(ref, () => console.log('click outside'));
-// or
-const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
+const value = useConst('value');
 ```
-
-## Type Declarations
-
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
 
 ## API
 

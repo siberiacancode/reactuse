@@ -53,6 +53,9 @@ const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps])
 ## Type Declarations
 
 <FunctionCode code={metadata.typeDeclarations} language="tsx" />
+
+## API
+
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors

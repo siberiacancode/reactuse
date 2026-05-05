@@ -645,3 +645,31 @@
 .dark .demo-ui input[type='checkbox'][role='switch']:checked::before {
   background-color: var(--primary-foreground);
 }
+
+.demo-ui [data-slot='avatar'] {
+  @apply relative flex size-8 shrink-0 overflow-hidden rounded-full select-none;
+}
+
+.demo-ui [data-slot='avatar'][data-size='sm'] {
+  @apply size-6;
+}
+
+.demo-ui [data-slot='avatar'][data-size='lg'] {
+  @apply size-10;
+}
+
+.demo-ui [data-slot='avatar-image'] {
+  @apply aspect-square size-full;
+}
+
+.demo-ui [data-slot='avatar-fallback'] {
+  @apply bg-muted text-muted-foreground flex size-full items-center justify-center rounded-full text-sm font-medium;
+}
+
+.demo-ui [data-slot='avatar'][data-size='sm'] [data-slot='avatar-fallback'] {
+  @apply text-xs;
+}
+
+.demo-ui [data-slot='avatar'][data-size='lg'] [data-slot='avatar-fallback'] {
+  @apply text-base;
+}

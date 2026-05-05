@@ -55,6 +55,9 @@ const { ref, value } = useActiveElement();
 ## Type Declarations
 
 <FunctionCode code={metadata.typeDeclarations} language="tsx" />
+
+## API
+
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors

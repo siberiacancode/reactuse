@@ -53,6 +53,9 @@ useAsyncEffect(async () => console.log("effect runs on updates"), deps);
 ## Type Declarations
 
 <FunctionCode code={metadata.typeDeclarations} language="tsx" />
+
+## API
+
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors

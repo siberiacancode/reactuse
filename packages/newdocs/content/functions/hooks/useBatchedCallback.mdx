@@ -53,6 +53,9 @@ const delayed = useBatchedCallback((batch) => console.log(batch), { size: 5, del
 ## Type Declarations
 
 <FunctionCode code={metadata.typeDeclarations} language="tsx" />
+
+## API
+
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors

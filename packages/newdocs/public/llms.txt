@@ -42,3 +42,4 @@
 ### Utilitiess
 
 - [useBatchedCallback](https://reactuse.org/functions/hooks/useBatchedCallback): Hook that batches calls and forwards them to a callback
+- [useConst](https://reactuse.org/functions/hooks/useConst): Hook that returns the constant value

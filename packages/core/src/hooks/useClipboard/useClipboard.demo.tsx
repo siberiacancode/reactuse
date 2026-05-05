@@ -9,6 +9,7 @@ const Demo = () => {
   const [copied, setCopied] = useState(false);
 
   const onShare = () => {
+    if (copied) return;
     clipboard.copy(SHARE_URL);
     setCopied(true);
     setTimeout(() => {

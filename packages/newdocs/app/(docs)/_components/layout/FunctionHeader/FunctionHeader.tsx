@@ -40,7 +40,7 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
       className='bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 w-full backdrop-blur'
       {...props}
     >
-      <div className='container-wrapper flex h-(--header-height) items-center justify-between gap-3 px-8'>
+      <div className='container-wrapper flex h-(--header-height) items-center justify-between gap-3 px-5'>
         <Burger className='lg:hidden' groups={groups} />
 
         <div className='hidden min-w-0 items-center justify-between gap-3 lg:flex'>

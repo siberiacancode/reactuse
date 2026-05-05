@@ -53,6 +53,9 @@ const audio = useAudio("/path/to/sound.mp3");
 ## Type Declarations
 
 <FunctionCode code={metadata.typeDeclarations} language="tsx" />
+
+## API
+
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors

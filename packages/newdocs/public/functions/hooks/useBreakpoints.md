@@ -53,6 +53,9 @@ const { greater, smaller, between, current, active, ...breakpoints } = useBreakp
 ## Type Declarations
 
 <FunctionCode code={metadata.typeDeclarations} language="tsx" />
+
+## API
+
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors

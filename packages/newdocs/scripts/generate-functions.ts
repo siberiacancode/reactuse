@@ -127,12 +127,19 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   });
   result.push(`\`\`\``);
 
-  result.push('');
-  result.push('## Type Declarations');
-  result.push('');
+  if (metadata.typeDeclarations) {
+    result.push('');
+    result.push('## Type Declarations');
+    result.push('');
+    result.push(`<FunctionCode code={metadata.typeDeclarations} language="tsx" />`);
+  }
 
-  result.push(`<FunctionCode code={metadata.typeDeclarations} language="tsx" />`);
-  result.push(`<FunctionApi apiParameters={metadata.apiParameters} />`);
+  if (metadata.apiParameters.length) {
+    result.push('');
+    result.push('## API');
+    result.push('');
+    result.push(`<FunctionApi apiParameters={metadata.apiParameters} />`);
+  }
 
   result.push('');
   result.push('## Contributors');
@@ -260,7 +267,7 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 15).map(async (element) => {
+    content.slice(0, 16).map(async (element) => {
       const content = await getContentFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);
@@ -296,7 +303,7 @@ const init = async () => {
       const { contributors, lastCommit } = await getGitInfo(element.name, element.type);
 
       const sourceFile = ts.createSourceFile('temp.ts', content, ts.ScriptTarget.Latest, true);
-      const typeDeclarations = await createHtmlCode(extractTypeInfo(sourceFile), 'tsx');
+      const typeDeclarations = extractTypeInfo(sourceFile);
 
       const dependencies = extractDependencies(content);
 
@@ -317,7 +324,9 @@ const init = async () => {
         lastModified: new Date(lastCommit?.date ?? new Date()).getTime(),
         examples: jsdoc.examples.map((example) => example.description),
         apiParameters: jsdoc.apiParameters ?? [],
-        typeDeclarations,
+        ...(typeDeclarations && {
+          typeDeclarations: await createHtmlCode(typeDeclarations, 'tsx')
+        }),
         dependencies,
         contributors,
         ...(isDemo && {

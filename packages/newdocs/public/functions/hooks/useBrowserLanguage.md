@@ -50,9 +50,8 @@ import metadata from './useBrowserLanguage.meta.json';
 const browserLanguage = useBrowserLanguage();
 ```
 
-## Type Declarations
+## API
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors

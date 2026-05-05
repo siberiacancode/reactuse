@@ -22,3 +22,4 @@ A quick list of available functions.
 - [useBrowserLocation](/functions/hooks/useBrowserLocation): Hook that returns reactive browser location state with navigation controls
 - [useClickOutside](/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
 - [useClipboard](/functions/hooks/useClipboard): Hook that manages a copy to clipboard
+- [useConst](/functions/hooks/useConst): Hook that returns the constant value

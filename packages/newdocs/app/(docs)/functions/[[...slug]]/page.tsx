@@ -63,7 +63,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
       data-slot='docs'
     >
       <div className='mx-auto flex max-w-[50rem] min-w-0 flex-1 flex-col'>
-        <div className='mb-6 flex w-full min-w-0 flex-col gap-6 px-4 text-neutral-800 md:px-0 dark:text-neutral-300'>
+        <div className='mb-6 flex w-full min-w-0 flex-col gap-6 text-neutral-800 md:px-0 dark:text-neutral-300'>
           <FunctionHeader
             category={doc.category}
             description={doc.description}

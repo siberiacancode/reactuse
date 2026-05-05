@@ -55,6 +55,9 @@ const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
 ## Type Declarations
 
 <FunctionCode code={metadata.typeDeclarations} language="tsx" />
+
+## API
+
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors
