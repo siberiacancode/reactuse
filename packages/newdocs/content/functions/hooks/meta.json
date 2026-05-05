@@ -17,7 +17,7 @@
       "useBatchedCallback","useConst",
 
       "---state---",
-      "useBoolean",
+      "useBoolean","useControllableState","useCookie",
 
       "---user---",
       "useBrowserLanguage"

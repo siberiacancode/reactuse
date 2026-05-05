@@ -1,3 +1,5 @@
+'use client'
+
 import { useCookie } from '@siberiacancode/reactuse';
 import { BellIcon, ChevronDownIcon } from 'lucide-react';
 

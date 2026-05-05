@@ -58,8 +58,8 @@ const Demo = () => {
         ))}
       </div>
 
-      <div className='flex flex-col gap-6 px-6 md:flex-row'>
-        <p className='text-muted-foreground text-center text-left text-xs'>
+      <div className='flex flex-col gap-6 px-3 md:flex-row'>
+        <p className='text-muted-foreground text-center text-xs'>
           We batch analytics events for economy of scale. So far we tracked{' '}
           <code>{totalEvents}</code> events and sent <code>{requestsSent}</code> requests.
         </p>

@@ -23,3 +23,5 @@ A quick list of available functions.
 - [useClickOutside](/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
 - [useClipboard](/functions/hooks/useClipboard): Hook that manages a copy to clipboard
 - [useConst](/functions/hooks/useConst): Hook that returns the constant value
+- [useControllableState](/functions/hooks/useControllableState): Hook that manages both controlled and uncontrolled state patterns
+- [useCookie](/functions/hooks/useCookie): Hook that manages cookie value

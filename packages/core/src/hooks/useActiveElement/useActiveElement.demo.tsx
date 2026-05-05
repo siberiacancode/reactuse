@@ -7,11 +7,11 @@ const Demo = () => {
 
   return (
     <section>
-      <div ref={activeElement.ref} className='flex flex-col gap-6'>
+      <div ref={activeElement.ref} className='flex max-w-md flex-col gap-6'>
         <div className='flex flex-col gap-2'>
           <h3>Contact form</h3>
 
-          <p>
+          <p className='text-muted-foreground text-xs'>
             Focus any field, textarea, or button with your mouse or keyboard to see which element is
             currently active inside this form: <code>{activeElementId}</code>
           </p>

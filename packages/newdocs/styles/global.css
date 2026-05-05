@@ -673,3 +673,18 @@
 .demo-ui [data-slot='avatar'][data-size='lg'] [data-slot='avatar-fallback'] {
   @apply text-base;
 }
+
+.demo-ui select {
+  @apply border-input bg-background text-foreground flex h-8 w-fit cursor-pointer items-center justify-between gap-1.5 rounded-lg border py-1 pr-8 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none;
+  @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-3;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20 aria-invalid:ring-3;
+  @apply dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.demo-ui select option {
+  @apply bg-popover text-popover-foreground;
+}
