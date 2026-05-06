@@ -23,7 +23,7 @@ export interface BrowserLocationState {
   /** URL search string */
   search?: string;
   /** URL search parameters */
-  searchParams?: URLSearchParams;
+  searchParams: URLSearchParams;
   /** Browser history state */
   state?: unknown;
 }
@@ -75,7 +75,10 @@ export const getLocationState = (): BrowserLocationState => ({
  */
 export const useBrowserLocation = (): UseBrowserLocationReturn => {
   const [value, setValue] = useState<BrowserLocationState>(() => {
-    if (typeof window === 'undefined') return {};
+    if (typeof window === 'undefined')
+      return {
+        searchParams: new URLSearchParams()
+      };
     return getLocationState();
   });
 

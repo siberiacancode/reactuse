@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
 import type { SubmitEvent } from 'react';
 
 import { useAutoScroll, useEventListener, useField } from '@siberiacancode/reactuse';
-import { ArrowDownIcon, SendIcon, X } from 'lucide-react';
+import { ArrowDownIcon, SendIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/utils/lib';

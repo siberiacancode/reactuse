@@ -22,7 +22,8 @@ it('Should use browser location', () => {
     protocol: window.location.protocol,
     search: window.location.search,
     length: window.history.length,
-    state: window.history.state
+    state: window.history.state,
+    searchParams: new URLSearchParams()
   });
   expect(result.current.push).toBeTypeOf('function');
   expect(result.current.replace).toBeTypeOf('function');
@@ -34,7 +35,9 @@ it('Should use browser location', () => {
 it('Should use browser location on server side', () => {
   const { result } = renderHookServer(useBrowserLocation);
 
-  expect(result.current.value).toMatchObject({});
+  expect(result.current.value).toMatchObject({
+    searchParams: new URLSearchParams()
+  });
   expect(result.current.push).toBeTypeOf('function');
   expect(result.current.replace).toBeTypeOf('function');
   expect(result.current.back).toBeTypeOf('function');

@@ -29,7 +29,10 @@ export const getLocationState = () => ({
  */
 export const useBrowserLocation = () => {
   const [value, setValue] = useState(() => {
-    if (typeof window === 'undefined') return {};
+    if (typeof window === 'undefined')
+      return {
+        searchParams: new URLSearchParams()
+      };
     return getLocationState();
   });
   useEffect(() => {
