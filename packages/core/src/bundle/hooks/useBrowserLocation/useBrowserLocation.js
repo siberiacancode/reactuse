@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 export const getLocationState = () => ({
+  searchParams: new URLSearchParams(window.location.search),
   state: window.history.state,
   length: window.history.length,
   hash: window.location.hash,

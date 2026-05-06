@@ -688,3 +688,32 @@
 .demo-ui select option {
   @apply bg-popover text-popover-foreground;
 }
+
+.demo-ui [data-slot='dropdown-menu-content'] {
+  @apply bg-popover text-popover-foreground ring-foreground/10 z-50 min-w-32 overflow-hidden rounded-lg p-1 shadow-md ring-1;
+}
+
+.demo-ui [data-slot='dropdown-menu-item'] {
+  @apply hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm outline-hidden transition-colors select-none;
+}
+
+.demo-ui [data-slot='dropdown-menu-item'][data-variant='destructive'] {
+  @apply text-destructive hover:bg-destructive/10 hover:text-destructive;
+  @apply dark:hover:bg-destructive/20;
+}
+
+.demo-ui [data-slot='dropdown-menu-item'] svg {
+  @apply pointer-events-none size-4 shrink-0;
+}
+
+.demo-ui [data-slot='dropdown-menu-label'] {
+  @apply text-muted-foreground px-2 py-1.5 text-xs font-medium;
+}
+
+.demo-ui [data-slot='dropdown-menu-separator'] {
+  @apply bg-border -mx-1 my-1 h-px;
+}
+
+.demo-ui [data-slot='dropdown-menu-shortcut'] {
+  @apply text-muted-foreground ml-auto text-xs tracking-widest;
+}

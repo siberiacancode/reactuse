@@ -22,6 +22,8 @@ export interface BrowserLocationState {
   protocol?: string;
   /** URL search string */
   search?: string;
+  /** URL search parameters */
+  searchParams?: URLSearchParams;
   /** Browser history state */
   state?: unknown;
 }
@@ -43,6 +45,7 @@ export interface UseBrowserLocationReturn {
 }
 
 export const getLocationState = (): BrowserLocationState => ({
+  searchParams: new URLSearchParams(window.location.search),
   state: window.history.state,
   length: window.history.length,
   hash: window.location.hash,
