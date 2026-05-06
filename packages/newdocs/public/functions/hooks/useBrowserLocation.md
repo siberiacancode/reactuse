@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1778072113000
+lastModifiedTime: 1778075431000
 ---
 
 import metadata from './useBrowserLocation.meta.json';

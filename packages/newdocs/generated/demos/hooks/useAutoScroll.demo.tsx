@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import type { SubmitEvent } from 'react';
 
@@ -10,10 +10,20 @@ import { cn } from '@/utils/lib';
 
 interface Message {
   author: 'reactuse' | 'siberiacancode';
+  avatar?: string;
   id: number;
   text: string;
   time: string;
 }
+
+const POKEMON_IDS = [1, 4, 7];
+
+const random = <T,>(items: T[]): T => items[Math.floor(Math.random() * items.length)];
+
+const getPokemonAvatar = (id: number) =>
+  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+const getRandomPokemonAvatar = () => getPokemonAvatar(random(POKEMON_IDS));
 
 const REACTUSE_REPLIES = [
   'Hey! How is the new release going?',
@@ -25,16 +35,47 @@ const REACTUSE_REPLIES = [
   'Did you see the new docs?',
   'TypeScript types are fully covered.',
   'Working on a fresh demo right now.',
-  'Star us on GitHub if you like it ⭐'
+  'Star us on GitHub if you like it ⭐',
+  'Got any feedback on the API?',
+  'How do you like the new docs theme?',
+  'Have you tried useDisclosure yet?',
+  'I love how composable React hooks are',
+  'BRB, grabbing some snacks 🍪',
+  'Anyone else excited for the next release?'
 ];
 
 const formatTime = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-const random = <T,>(items: T[]): T => items[Math.floor(Math.random() * items.length)];
-
 const INITIAL_MESSAGES: Message[] = [
-  { id: 1, author: 'reactuse', text: 'Hey siberiacancode 👋', time: formatTime() },
-  { id: 2, author: 'siberiacancode', text: 'Hey! What’s up?', time: formatTime() }
+  {
+    id: 1,
+    author: 'reactuse',
+    text: 'Hey siberiacancode 👋',
+    time: formatTime(),
+    avatar: getRandomPokemonAvatar()
+  },
+  { id: 2, author: 'siberiacancode', text: 'Hey! What’s up?', time: formatTime() },
+  {
+    id: 3,
+    author: 'reactuse',
+    text: 'Just shipped useAutoScroll today',
+    time: formatTime(),
+    avatar: getRandomPokemonAvatar()
+  },
+  {
+    id: 4,
+    author: 'siberiacancode',
+    text: 'Nice! Does it pause on manual scroll?',
+    time: formatTime()
+  },
+  {
+    id: 5,
+    author: 'reactuse',
+    text: 'Yep, it just works ✨',
+    time: formatTime(),
+    avatar: getRandomPokemonAvatar()
+  },
+  { id: 6, author: 'siberiacancode', text: 'Let me try it out', time: formatTime() }
 ];
 
 const SCROLL_THRESHOLD = 20;
@@ -74,7 +115,8 @@ const Demo = () => {
               id: idRef.current++,
               author: 'reactuse' as const,
               text: random(REACTUSE_REPLIES),
-              time: formatTime()
+              time: formatTime(),
+              avatar: getRandomPokemonAvatar()
             }
           ].slice(-MAX_MESSAGES)
         );
@@ -127,8 +169,8 @@ const Demo = () => {
   };
 
   return (
-    <section className='flex w-md min-w-xs flex-col items-center p-4'>
-      <div className='flex w-full flex-col gap-3 rounded-2xl border p-4'>
+    <section className='flex w-md min-w-xs flex-col items-center'>
+      <div className='flex w-full flex-col gap-3 rounded-2xl border px-4 pb-4'>
         <div className='relative'>
           <div
             ref={autoScrollRef}
@@ -141,13 +183,20 @@ const Demo = () => {
                   key={message.id}
                   className={cn('flex items-end gap-2', isMe && 'flex-row-reverse')}
                 >
-                  <div
-                    className={`flex size-7 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold text-white ${
-                      isMe ? 'bg-gradient-to-br from-neutral-700 to-neutral-900' : 'bg-neutral-700'
-                    }`}
-                  >
-                    {isMe ? 'SC' : 'RU'}
-                  </div>
+                  {isMe && (
+                    <div className='flex size-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-neutral-700 to-neutral-900 text-[10px] font-semibold text-white'>
+                      SC
+                    </div>
+                  )}
+                  {!isMe && (
+                    <div className='size-7 shrink-0 overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-800'>
+                      <img
+                        alt='reactuse'
+                        className='size-full translate-x-1 translate-y-1.5 scale-130 object-cover object-top'
+                        src={message.avatar}
+                      />
+                    </div>
+                  )}
 
                   <div
                     className={cn(
@@ -159,9 +208,10 @@ const Demo = () => {
                   >
                     <span>{message.text}</span>
                     <span
-                      className={`absolute right-3 bottom-1 text-[9px] opacity-60 ${
+                      className={cn(
+                        'absolute right-3 bottom-1 text-[9px] opacity-60',
                         isMe ? 'text-primary-foreground' : 'text-muted-foreground'
-                      }`}
+                      )}
                     >
                       {message.time}
                     </span>

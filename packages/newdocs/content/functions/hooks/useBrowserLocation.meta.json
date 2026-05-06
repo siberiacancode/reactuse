@@ -36,7 +36,7 @@
   },
   "description": "Hook that returns reactive browser location state with navigation controls",
   "category": "Browser",
-  "lastModified": 1778072113000,
+  "lastModified": 1778075431000,
   "examples": [
     "const { value, push, back, forward, go } = useBrowserLocation();"
   ],
