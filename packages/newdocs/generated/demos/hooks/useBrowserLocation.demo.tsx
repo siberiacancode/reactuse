@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useBrowserLocation } from '@siberiacancode/reactuse';
 import {
@@ -57,13 +57,7 @@ const Demo = () => {
   const onCompletePayment = () => updateSearch({ step: 2, method: selectedMethod, email });
 
   return (
-    <section className='flex min-w-md flex-col gap-5 p-4'>
-      <div className='flex items-center justify-between text-xs'>
-        <span className='text-muted-foreground'>
-          Step <strong>{step}</strong> of <strong>2</strong>
-        </span>
-      </div>
-
+    <section className='flex min-w-sm flex-col gap-5 p-4 md:min-w-md'>
       {step === 1 && (
         <>
           <div className='flex flex-col gap-1'>
@@ -72,7 +66,7 @@ const Demo = () => {
           </div>
 
           <div className='flex flex-col gap-2'>
-            {paymentMethods.map((method) => {
+            {PAYMENT_METHODS.map((method) => {
               const Icon = method.icon;
               const isSelected = selectedMethod === method.id;
 
@@ -121,13 +115,13 @@ const Demo = () => {
       )}
 
       {step === 2 && (
-        <div className='flex flex-col justify-start'>
-          <div className='flex flex-col gap-3 py-4 text-start'>
+        <div className='flex flex-col items-center justify-center'>
+          <div className='flex flex-col items-center gap-3 py-4'>
             <div className='flex size-14 items-center justify-center rounded-full bg-green-500/10 text-green-500'>
               <CheckIcon className='size-8' />
             </div>
 
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col items-center gap-1'>
               <h4>Payment successful</h4>
               <p className='text-muted-foreground text-sm'>
                 Receipt sent to <code>{email}</code>
