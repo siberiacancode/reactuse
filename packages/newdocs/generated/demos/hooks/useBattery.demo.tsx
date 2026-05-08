@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useBattery } from '@siberiacancode/reactuse';
 import {
@@ -40,7 +40,8 @@ const Demo = () => {
   if (battery.value.loading) {
     return (
       <section className='flex justify-center'>
-        <div className='flex h-96 w-76 items-center justify-center rounded-4xl border'>
+        <div className='relative flex h-[520px] w-76 items-center justify-center rounded-4xl border pt-12'>
+          <div className='bg-border absolute top-3 left-1/2 h-5 w-18 -translate-x-1/2 rounded-full' />
           <Loader2Icon className='size-5 animate-spin' />
         </div>
       </section>
@@ -53,39 +54,28 @@ const Demo = () => {
 
   return (
     <section className='flex justify-center'>
-      <div className='flex w-76 flex-col gap-7 rounded-4xl border px-6 pt-4 pb-8'>
-        <div className='mb-2 flex items-center justify-between'>
-          <div className='w-12' />
+      <div className='relative flex h-[430px] w-70 flex-col gap-7 rounded-4xl border px-6 pt-10 pb-8'>
+        <div className='bg-border absolute top-3 left-1/2 h-5 w-18 -translate-x-1/2 rounded-full' />
 
-          <div className='bg-muted h-1 w-16 rounded-full' />
+        <div className='flex h-full flex-col gap-6 pt-6'>
+          <div className='flex flex-col items-center gap-2'>
+            <Icon className={cn('ml-2 size-30', lowBattery ? 'text-red-500' : 'text-foreground')} />
 
-          <div
-            className={cn(
-              'flex items-center justify-end gap-1 text-xs',
-              lowBattery ? 'text-red-500' : 'text-foreground'
-            )}
-          >
-            <span>{level}%</span>
-            <Icon className='size-5' />
+            <div className='flex flex-col items-center gap-1'>
+              <div className='text-5xl font-semibold tracking-tight'>{level}%</div>
+              <span className='text-muted-foreground text-xs tracking-wider uppercase'>
+                {battery.value.charging ? 'Charging' : 'Battery'}
+              </span>
+            </div>
           </div>
-        </div>
 
-        <div className='flex flex-col gap-6'>
-          <div className='flex flex-col gap-2'>
-            <h2>Feedback</h2>
-
-            <p className='text-xs'>
+          <div className='mt-auto flex flex-col gap-2'>
+            <p className='text-muted-foreground text-center text-xs'>
               Battery has a lot of information, you can use it to get the battery level, charging
               status <code>{battery.value.charging ? 'charging' : 'discharging'}</code>, discharging
               time <code>{battery.value.dischargingTime}</code> and more.
             </p>
           </div>
-
-          <form className='flex flex-col gap-4'>
-            <textarea placeholder='Tell us what can be improved...' rows={4} />
-
-            <button type='button'>Send feedback</button>
-          </form>
         </div>
       </div>
     </section>
