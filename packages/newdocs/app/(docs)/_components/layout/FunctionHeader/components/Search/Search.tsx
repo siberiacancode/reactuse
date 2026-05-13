@@ -51,7 +51,7 @@ export const Search = (props: Props) => {
             'dark:bg-card text-muted-foreground hover:text-foreground hover:bg-muted/70 border-input bg-muted/40 relative h-8 justify-start rounded-lg border px-2.5 font-normal shadow-none md:w-42 lg:w-62'
           )}
           variant='outline'
-          onClick={dialog.toggle}
+          onClick={() => dialog.toggle()}
         >
           <span className='truncate text-sm'>Search docs...</span>
         </Button>
@@ -96,7 +96,9 @@ export const Search = (props: Props) => {
                         <div>
                           {!isFunction && <ArrowRightIcon />}
                           {isFunction && <CircleDashedIcon />}
-                          <Link href={item.url}>{item.name!.toString()}</Link>
+                          <Link href={item.url} onClick={() => dialog.close()}>
+                            {item.name!.toString()}
+                          </Link>
                         </div>
                       </CommandItem>
                     ))}
