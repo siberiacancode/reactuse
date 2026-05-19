@@ -9,7 +9,9 @@
   "description": "Hook that returns the constant value",
   "category": "Utilities",
   "lastModified": 1754977987000,
-  "examples": ["const value = useConst('value');"],
+  "examples": [
+    "const value = useConst('value');"
+  ],
   "apiParameters": [
     {
       "tag": "param",

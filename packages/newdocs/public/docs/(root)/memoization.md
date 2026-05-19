@@ -24,8 +24,8 @@ React is designed so that component re-renders are a natural and efficient part 
 Memoization is a tool that should be in the hands of the application developer, not the library.
 
 ```tsx
-import { useCounter } from '@siberiacancode/reactuse';
 import { useCallback, useMemo } from 'react';
+import { useCounter } from '@siberiacancode/reactuse';
 
 export const Component = () => {
   const counter = useCounter(0);

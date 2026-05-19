@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useBoolean } from '@siberiacancode/reactuse';
 import { Eye, EyeOff } from 'lucide-react';

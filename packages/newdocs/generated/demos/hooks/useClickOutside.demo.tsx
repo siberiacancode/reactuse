@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useClickOutside, useDisclosure } from '@siberiacancode/reactuse';
 import { CreditCardIcon, LogOutIcon, SettingsIcon, UserIcon } from 'lucide-react';

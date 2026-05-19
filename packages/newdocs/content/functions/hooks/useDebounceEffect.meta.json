@@ -9,7 +9,9 @@
   "description": "Hook that runs an effect after a delay when dependencies change",
   "category": "Utilities",
   "lastModified": 1768590847000,
-  "examples": ["useDebounceEffect(() => console.log('effect'), 500, [value]);"],
+  "examples": [
+    "useDebounceEffect(() => console.log('effect'), 500, [value]);"
+  ],
   "apiParameters": [
     {
       "tag": "param",

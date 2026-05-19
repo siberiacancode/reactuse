@@ -5,7 +5,6 @@ import { LandingHero } from '@docs/components/landing-hero';
 import { LandingHooksShowcase } from '@docs/components/landing-hooks-showcase';
 import { siteConfig } from '@docs/lib/config';
 import { getContributors } from '@docs/lib/contributors';
-import { getElementNames } from '@docs/lib/element-docs';
 import { Button } from '@docs/ui/button';
 import { IconBrandGithub, IconHeartFilled } from '@tabler/icons-react';
 import Link from 'next/link';
@@ -135,7 +134,7 @@ export const metadata: Metadata = {
 };
 
 const HomePage = async () => {
-  const [contributors, hooks] = await Promise.all([getContributors(), getElementNames('hooks')]);
+  const [contributors, hooks] = await Promise.all([getContributors(), []]);
 
   const allHooks = hooks.length > 0 ? hooks : featuredHooks;
 

@@ -62,8 +62,8 @@ npm install -D @types/node
 ```
 
 ```typescript title="vite.config.ts" showLineNumbers {1,2,8-13}
-import react from '@vitejs/plugin-react';
 import path from 'node:path';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 // https://vite.dev/config/

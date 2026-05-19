@@ -55,7 +55,9 @@
   "description": "Hook that returns the current browser language",
   "category": "User",
   "lastModified": 1754977987000,
-  "examples": ["const browserLanguage = useBrowserLanguage();"],
+  "examples": [
+    "const browserLanguage = useBrowserLanguage();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",

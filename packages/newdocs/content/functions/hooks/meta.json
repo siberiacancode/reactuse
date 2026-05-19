@@ -1,41 +1,25 @@
 {
-  "pages": [
-    "---elements---",
-    "useActiveElement",
-    "useAutoScroll",
-    "useClickOutside",
+    "pages": [
+      
+      "---elements---",
+      "useActiveElement","useAutoScroll","useClickOutside",
 
-    "---async---",
-    "useAsync",
+      "---async---",
+      "useAsync",
 
-    "---lifecycle---",
-    "useAsyncEffect",
+      "---lifecycle---",
+      "useAsyncEffect",
 
-    "---browser---",
-    "useAudio",
-    "useBattery",
-    "useBluetooth",
-    "useBreakpoints",
-    "useBroadcastChannel",
-    "useBrowserLocation",
-    "useClipboard",
-    "useCopy",
-    "useCssVar",
+      "---browser---",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar",
 
-    "---utilities---",
-    "useBatchedCallback",
-    "useConst",
-    "useDebounceCallback",
-    "useDebounceEffect",
+      "---utilities---",
+      "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect",
 
-    "---state---",
-    "useBoolean",
-    "useControllableState",
-    "useCookie",
-    "useCookies",
-    "useCounter",
+      "---state---",
+      "useBoolean","useControllableState","useCookie","useCookies","useCounter",
 
-    "---user---",
-    "useBrowserLanguage"
-  ]
-}
+      "---user---",
+      "useBrowserLanguage"
+    ]
+  }

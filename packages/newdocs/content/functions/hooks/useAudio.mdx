@@ -11,13 +11,7 @@ lastModifiedTime: 1762758339000
 
 import metadata from './useAudio.meta.json';
 
-<FunctionBanner
-  browserapi={metadata.browserapi}
-  code={metadata.demo}
-  type={metadata.type}
-  name={metadata.name}
-  language='tsx'
-/>
+<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
 ## Installation
 
@@ -28,27 +22,37 @@ import metadata from './useAudio.meta.json';
     <TabsTrigger value='manual'>Manual</TabsTrigger>
   </TabsList>
   <TabsContent value='library'>
-    ```packages-install npm install @siberiacancode/reactuse ```
+    ```packages-install
+    npm install @siberiacancode/reactuse
+    ```
   </TabsContent>
-  <TabsContent value='cli'>```packages-install npx useverse@latest add useAudio ```</TabsContent>
+  <TabsContent value='cli'>
+    ```packages-install
+    npx useverse@latest add useAudio
+    ```
+  </TabsContent>
   <TabsContent value='manual'>
     <Steps>
-      <Step>Copy and paste the following code into your project.</Step>
-      <FunctionCode code={metadata.code} language='tsx' />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
+     <Step>
+      Copy and paste the following code into your project.
+    </Step>
+      <FunctionCode code={metadata.code} language="tsx" />
+    <Step>
+      Update the import paths to match your project setup.
+    </Step>
+  </Steps>
   </TabsContent>
 </FunctionTabs>
 
 ## Usage
 
 ```tsx
-const audio = useAudio('/path/to/sound.mp3');
+const audio = useAudio("/path/to/sound.mp3");
 ```
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language='tsx' />
+<FunctionCode code={metadata.typeDeclarations} language="tsx" />
 
 ## API
 

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useBroadcastChannel } from '@siberiacancode/reactuse';
 import { MinusIcon, PlusIcon, ShoppingCartIcon, Trash2Icon } from 'lucide-react';
@@ -13,8 +13,14 @@ const PRODUCTS = [
   { id: 4, name: 'Webcam HD', price: 89.99, emoji: '📷' }
 ];
 
-interface CartItem { id: number; qty: number }
-interface CartMessage { cart: CartItem[]; type: 'sync'; }
+interface CartItem {
+  id: number;
+  qty: number;
+}
+interface CartMessage {
+  cart: CartItem[];
+  type: 'sync';
+}
 
 const Demo = () => {
   const [cart, setCart] = useState<CartItem[]>(() => {
