@@ -1,3 +1,5 @@
+'use client'
+
 import { useCounter } from '@siberiacancode/reactuse';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 
@@ -21,24 +23,22 @@ const Demo = () => {
       <div className='flex items-center gap-6'>
         <button
           className={cn(counter.value <= 1 && 'opacity-25')}
-          data-size='icon'
           data-variant='ghost'
           type='button'
           onClick={() => counter.dec()}
         >
-          <MinusIcon strokeWidth={1.5} />
+          <MinusIcon size={22} strokeWidth={1.5} />
         </button>
 
         <span className='w-26 text-center text-7xl font-light tabular-nums'>{counter.value}</span>
 
         <button
           className={cn(counter.value >= 10 && 'opacity-25')}
-          data-size='icon'
           data-variant='ghost'
           type='button'
           onClick={() => counter.inc()}
         >
-          <PlusIcon strokeWidth={1.5} />
+          <PlusIcon size={22} strokeWidth={1.5} />
         </button>
       </div>
 

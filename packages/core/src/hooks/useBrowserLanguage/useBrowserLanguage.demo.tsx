@@ -69,7 +69,7 @@ const Demo = () => {
   );
 
   return (
-    <section className='flex min-w-md flex-col items-center p-4'>
+    <section className='flex flex-col items-center p-4 md:min-w-md'>
       <div className='flex w-full max-w-md flex-col gap-5 p-6'>
         <div className='flex flex-col gap-2'>
           <div>

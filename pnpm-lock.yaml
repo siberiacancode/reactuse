@@ -214,9 +214,6 @@ importers:
       '@tabler/icons-react':
         specifier: ^3.37.1
         version: 3.37.1(react@19.2.4)
-      '@tailwindcss/postcss':
-        specifier: ^4.2.1
-        version: 4.2.1
       '@types/mdx':
         specifier: ^2.0.13
         version: 2.0.13
@@ -329,6 +326,9 @@ importers:
       '@shikijs/rehype':
         specifier: ^4.0.2
         version: 4.0.2
+      '@tailwindcss/postcss':
+        specifier: ^4
+        version: 4.2.1
       '@types/dom-speech-recognition':
         specifier: ^0.0.7
         version: 0.0.7

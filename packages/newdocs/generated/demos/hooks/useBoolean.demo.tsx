@@ -14,6 +14,7 @@ const Demo = () => {
         <input
           className='pr-10'
           data-id='password'
+          defaultValue='mysecretpassword'
           placeholder='Enter your password'
           type={visible ? 'text' : 'password'}
         />

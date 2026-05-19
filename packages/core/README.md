@@ -16,7 +16,7 @@ React Use delivers **production-ready hooks** that solve real-world problems. Bu
 
 ## Documentation
 
-Visit https://siberiacancode.github.io/reactuse to view the full documentation.
+Visit https://reactuse.org to view the full documentation.
 
 ## Getting Started
 

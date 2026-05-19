@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useBattery } from '@siberiacancode/reactuse';
 import {
@@ -17,6 +17,14 @@ const getBatteryIcon = (level: number) => {
   if (level > 40) return BatteryMediumIcon;
   if (level > 15) return BatteryLowIcon;
   return BatteryWarningIcon;
+};
+
+const formatTime = (seconds: number) => {
+  if (!isFinite(seconds) || seconds <= 0) return '—';
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m`;
 };
 
 const Demo = () => {
@@ -69,12 +77,19 @@ const Demo = () => {
             </div>
           </div>
 
-          <div className='mt-auto flex flex-col gap-2'>
-            <p className='text-muted-foreground text-center text-xs'>
-              Battery has a lot of information, you can use it to get the battery level, charging
-              status <code>{battery.value.charging ? 'charging' : 'discharging'}</code>, discharging
-              time <code>{battery.value.dischargingTime}</code> and more.
-            </p>
+          <div className='mt-auto flex flex-col gap-2 border-t pt-4'>
+            <div className='flex items-center justify-between text-xs'>
+              <span className='text-muted-foreground'>Status</span>
+              <span className='font-medium'>{battery.value.charging ? 'Charging' : 'Discharging'}</span>
+            </div>
+            <div className='flex items-center justify-between text-xs'>
+              <span className='text-muted-foreground'>Charge time</span>
+              <span className='font-medium'>{formatTime(battery.value.chargingTime ?? Infinity)}</span>
+            </div>
+            <div className='flex items-center justify-between text-xs'>
+              <span className='text-muted-foreground'>Time left</span>
+              <span className='font-medium'>{formatTime(battery.value.dischargingTime ?? Infinity)}</span>
+            </div>
           </div>
         </div>
       </div>

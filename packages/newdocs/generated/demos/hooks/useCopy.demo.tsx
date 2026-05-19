@@ -1,3 +1,5 @@
+'use client'
+
 import { useCopy } from '@siberiacancode/reactuse';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 import { useState } from 'react';
