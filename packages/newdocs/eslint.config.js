@@ -9,9 +9,16 @@ export default eslint(
   },
   {
     name: 'siberiacancode/reactuse/docs',
-    files: ['**/src/**/*.ts'],
+    files: ['**/*.ts'],
     rules: {
       'regexp/no-super-linear-backtracking': 'off'
+    }
+  },
+  {
+    name: 'siberiacancode/docs/rewrites',
+    files: ['**/*.{ts,tsx,md}'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off'
     }
   }
 );

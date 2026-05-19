@@ -1,16 +1,17 @@
-import { Fragment, type ComponentProps } from 'react';
+import type {ComponentProps} from 'react';
 
 import { Icons } from '@docs/components/icons';
 import fetches from '@siberiacancode/fetches';
 import Image from 'next/image';
 import Link from 'next/link';
+import {  Fragment } from 'react';
 
+import { getElements } from '@/scripts/helpers';
 import { Button } from '@/src/components/ui';
 import { CONFIG, LINKS } from '@/src/constants';
 import { Badge } from '@/ui/badge';
 
 import { ThemeButton } from './ThemeButton/ThemeButton';
-import { getElements } from '@/scripts/helpers';
 
 const LATEST_RELEASE = {
   href: 'https://github.com/siberiacancode/reactuse/releases/tag/v0.3.8',

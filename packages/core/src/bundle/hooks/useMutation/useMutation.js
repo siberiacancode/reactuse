@@ -46,20 +46,14 @@ export const useMutation = (callback, options) => {
             : requestOptions?.retryDelay;
         if (typeof retry === 'boolean' && retry) {
           if (retryDelay) {
-            setTimeout(
-              () => request(body, { ...requestOptions, attempt: attempt + 1 }),
-              retryDelay
-            );
+            setTimeout(request, retryDelay, body, { ...requestOptions, attempt: attempt + 1 });
             return;
           }
           return request(body, { ...requestOptions, attempt: attempt + 1 });
         }
         if (retry && retry > attempt) {
           if (retryDelay) {
-            setTimeout(
-              () => request(body, { ...requestOptions, attempt: attempt + 1 }),
-              retryDelay
-            );
+            setTimeout(request, retryDelay, body, { ...requestOptions, attempt: attempt + 1 });
             return;
           }
           return request(body, { ...requestOptions, attempt: attempt + 1 });

@@ -3,10 +3,10 @@
 import { Button } from '@docs/ui/button';
 import { useState } from 'react';
 
-type ViewCodeProps = {
+interface ViewCodeProps {
   children: React.ReactNode;
   lineCount?: number;
-};
+}
 
 export const ViewCode = ({ children, lineCount = 0 }: ViewCodeProps) => {
   const [isExpanded, setIsExpanded] = useState(false);

@@ -9,9 +9,7 @@
   "description": "Hook that manages cookie values",
   "category": "State",
   "lastModified": 1754977987000,
-  "examples": [
-    "const { value, set, remove, getAll, clear } = useCookies();"
-  ],
+  "examples": ["const { value, set, remove, getAll, clear } = useCookies();"],
   "apiParameters": [
     {
       "tag": "overload",

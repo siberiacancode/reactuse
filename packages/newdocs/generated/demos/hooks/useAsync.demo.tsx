@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useAsync, useCounter } from '@siberiacancode/reactuse';
 import { ArrowLeftIcon, ArrowRightIcon, Loader2Icon } from 'lucide-react';
@@ -22,13 +22,12 @@ const getPokemon = async (id: number) => {
 const Demo = () => {
   const counter = useCounter(1);
   const getPokemonQuery = useAsync(() => getPokemon(counter.value), [counter.value]);
+  const formattedIndex = String(counter.value).padStart(3, '0');
 
   return (
     <section className='flex flex-col gap-4'>
       <div className='flex items-center justify-between gap-4'>
-        <p>
-          Index: <code>{counter.value}</code>
-        </p>
+        <p className='font-mono font-bold'>{formattedIndex}</p>
 
         <div className='flex gap-2'>
           <button

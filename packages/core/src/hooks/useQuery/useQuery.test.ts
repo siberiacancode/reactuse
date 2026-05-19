@@ -97,7 +97,7 @@ it('Should abort request', async () => {
   const fetchWithAbort = ({ signal }: { signal: AbortSignal }) =>
     new Promise((resolve, reject) => {
       signal.addEventListener('abort', () => reject(new Error('aborted')));
-      setTimeout(() => resolve('data'), 0);
+      setTimeout(resolve, 0, 'data');
     });
 
   const { result } = renderHook(() => useQuery(({ signal }) => fetchWithAbort({ signal })));

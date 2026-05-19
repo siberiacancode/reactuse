@@ -1,9 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
-import 'core-js/proposals/set-methods-v2';
 
 import { renderHookServer } from '@/tests';
 
 import { useSet } from './useSet';
+
+import 'core-js/proposals/set-methods-v2';
 
 it('Should use set', () => {
   const { result } = renderHook(() => useSet([1, 2, 3]));

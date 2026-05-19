@@ -1,7 +1,5 @@
-import Link from 'next/link';
-
-import { Button } from '@docs/ui/button';
 import { IconArrowRight } from '@tabler/icons-react';
+import Link from 'next/link';
 
 interface LandingHooksShowcaseProps {
   hooks: string[];
@@ -42,13 +40,13 @@ export const LandingHooksShowcase = ({ hooks }: LandingHooksShowcaseProps) => {
             const rowClass = index % 2 === 0 ? 'landing-hooks-row-left' : 'landing-hooks-row-right';
 
             return (
-              <div className='overflow-hidden' key={`row-${index}`}>
+              <div key={`row-${index}`} className='overflow-hidden'>
                 <div className={rowClass}>
                   {duplicate(row).map((hook, hookIndex) => (
                     <Link
+                      key={`${hook}-${hookIndex}`}
                       className='mx-2 inline-flex items-center rounded-full border border-black/10 bg-white px-7 py-4 font-mono text-lg font-semibold text-black shadow-[0_1px_0_rgba(0,0,0,0.05)] transition-transform duration-300 hover:scale-[1.02] dark:border-white/10 dark:bg-white dark:text-black'
                       href={`/functions/hooks/${hook}`}
-                      key={`${hook}-${hookIndex}`}
                     >
                       {hook}
                     </Link>

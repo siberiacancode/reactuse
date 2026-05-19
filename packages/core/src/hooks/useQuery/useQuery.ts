@@ -136,7 +136,7 @@ export const useQuery = <QueryData, Data = QueryData>(
               : options?.retryDelay;
 
           if (retryDelay) {
-            setTimeout(() => request(action), retryDelay);
+            setTimeout(request, retryDelay, action);
             return;
           }
 
@@ -173,11 +173,12 @@ export const useQuery = <QueryData, Data = QueryData>(
     request(alreadyRequested.current ? 'refetch' : 'init');
   }, [enabled, ...keys]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       clearInterval(intervalIdRef.current);
-    };
-  }, [enabled, options?.refetchInterval, options?.retry, ...keys]);
+    },
+    [enabled, options?.refetchInterval, options?.retry, ...keys]
+  );
 
   const refetch = () => request('refetch');
 

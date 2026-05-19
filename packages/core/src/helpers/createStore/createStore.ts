@@ -49,7 +49,7 @@ export const createStore = <Value>(createState: StoreCreator<Value> | Value): St
       state = (
         typeof nextState !== 'object' || nextState === null || Array.isArray(nextState)
           ? nextState
-          : Object.assign({}, state, nextState)
+          : { ...state, ...nextState }
       ) as Value;
 
       listeners.forEach((listener) => listener(state, prevState));

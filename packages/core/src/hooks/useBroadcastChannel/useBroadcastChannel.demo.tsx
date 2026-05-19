@@ -11,8 +11,14 @@ const PRODUCTS = [
   { id: 4, name: 'Webcam HD', price: 89.99, emoji: '📷' }
 ];
 
-type CartItem = { id: number; qty: number };
-type CartMessage = { type: 'sync'; cart: CartItem[] };
+interface CartItem {
+  id: number;
+  qty: number;
+}
+interface CartMessage {
+  cart: CartItem[];
+  type: 'sync';
+}
 
 const Demo = () => {
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -35,7 +41,7 @@ const Demo = () => {
 
   const onAdd = (id: number) => {
     const cartItem = cart.find((item) => item.id === id);
-    const newCart = !!cartItem
+    const newCart = cartItem
       ? cart.map((item) => (item.id === id ? { ...item, qty: item.qty + 1 } : item))
       : [...cart, { id, qty: 1 }];
     syncCart(newCart);
@@ -106,16 +112,16 @@ const Demo = () => {
                 {!!cartItem && (
                   <div className='flex items-center justify-between px-1'>
                     <button
-                      type='button'
                       className='text-muted-foreground hover:text-foreground bg-transparent'
+                      type='button'
                       onClick={() => onDecrease(product.id)}
                     >
                       <MinusIcon className='size-3' />
                     </button>
                     <span className='w-4 text-center text-xs font-semibold'>{cartItem.qty}</span>
                     <button
-                      type='button'
                       className='text-muted-foreground hover:text-foreground bg-transparent'
+                      type='button'
                       onClick={() => onAdd(product.id)}
                     >
                       <PlusIcon className='size-3' />
@@ -125,8 +131,8 @@ const Demo = () => {
 
                 {!cartItem && (
                   <button
-                    type='button'
                     className='bg-primary text-primary-foreground flex items-center justify-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium'
+                    type='button'
                     onClick={() => onAdd(product.id)}
                   >
                     <PlusIcon className='size-3' />
@@ -157,8 +163,8 @@ const Demo = () => {
                         </p>
                       </div>
                       <button
-                        type='button'
                         className='text-muted-foreground hover:text-foreground mt-0.5 shrink-0 bg-transparent'
+                        type='button'
                         onClick={() => onRemove(item.id)}
                       >
                         <Trash2Icon className='size-3' />

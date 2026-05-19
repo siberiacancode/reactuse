@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useBreakpoints } from '@siberiacancode/reactuse';
 
@@ -43,14 +43,14 @@ const Demo = () => {
               {PRODUCTS.slice(0, 3).map((product) => (
                 <div
                   key={product.name}
-                  className='flex items-center gap-3 rounded-2xl border px-3 py-2'
+                  className='bg-muted flex items-center gap-3 rounded-2xl border px-3 py-2'
                 >
                   <span className='text-2xl'>{product.emoji}</span>
                   <div className='flex-1'>
                     <p className='text-sm font-medium'>{product.name}</p>
                     <p className='text-muted-foreground text-xs'>{product.price}</p>
                   </div>
-                  <button type='button' className='rounded-lg px-2 py-1 text-xs'>
+                  <button className='rounded-lg px-2 py-1 text-xs' type='button'>
                     Add
                   </button>
                 </div>
@@ -75,13 +75,16 @@ const Demo = () => {
 
           <div className='grid grid-cols-2 gap-2'>
             {PRODUCTS.slice(0, 4).map((product) => (
-              <div key={product.name} className='flex flex-col gap-1.5 rounded-2xl border p-3'>
+              <div
+                key={product.name}
+                className='bg-muted flex flex-col gap-1.5 rounded-2xl border p-3'
+              >
                 <span className='text-3xl'>{product.emoji}</span>
                 <div>
                   <p className='text-sm font-medium'>{product.name}</p>
                   <p className='text-muted-foreground text-xs'>{product.price}</p>
                 </div>
-                <button type='button' className='rounded-lg py-1 text-xs font-medium'>
+                <button className='rounded-lg py-1 text-xs font-medium' type='button'>
                   Add
                 </button>
               </div>
@@ -106,13 +109,16 @@ const Demo = () => {
 
             <div className='mt-5 grid grid-cols-3 gap-2'>
               {PRODUCTS.map((product) => (
-                <div key={product.name} className='flex flex-col gap-1.5 rounded-xl border p-2.5'>
+                <div
+                  key={product.name}
+                  className='bg-muted flex flex-col gap-1.5 rounded-xl border p-2.5'
+                >
                   <span className='text-2xl'>{product.emoji}</span>
                   <div>
                     <p className='text-xs font-medium'>{product.name}</p>
                     <p className='text-muted-foreground text-[10px]'>{product.price}</p>
                   </div>
-                  <button type='button' className='rounded-lg py-0.5 text-[10px] font-medium'>
+                  <button className='rounded-lg py-0.5 text-[10px] font-medium' type='button'>
                     Add
                   </button>
                 </div>

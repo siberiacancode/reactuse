@@ -54,8 +54,8 @@ const Demo = () => {
       <div>
         Credit of images to{' '}
         <a
-          href='https://codepen.io/jaromvogel'
           className='text-blue-500 hover:underline'
+          href='https://codepen.io/jaromvogel'
           target='__blank'
         >
           Jarom Vogel

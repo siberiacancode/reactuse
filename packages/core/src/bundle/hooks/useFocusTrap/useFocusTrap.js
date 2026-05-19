@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
 import { useRefState } from '../useRefState/useRefState';
 export const FOCUS_SELECTOR = 'a, input, select, textarea, button, object, [tabindex]';
 const getFocusableElements = (element) => {
-  const elements = Array.from(element.querySelectorAll(FOCUS_SELECTOR));
+  const elements = [...element.querySelectorAll(FOCUS_SELECTOR)];
   return elements.filter((element) => {
     const htmlEl = element;
     return htmlEl.tabIndex !== -1 && !htmlEl.hidden && htmlEl.style.display !== 'none';

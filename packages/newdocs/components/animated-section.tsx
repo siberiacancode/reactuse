@@ -1,7 +1,7 @@
 'use client';
 
-import * as React from 'react';
 import { motion, useInView } from 'motion/react';
+import * as React from 'react';
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ interface AnimatedSectionProps {
   delay?: number;
 }
 
-export function AnimatedSection({ children, className, delay = 0 }: AnimatedSectionProps) {
+export const AnimatedSection = ({ children, className, delay = 0 }: AnimatedSectionProps) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 

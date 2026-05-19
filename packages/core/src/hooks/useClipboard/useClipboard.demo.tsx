@@ -13,7 +13,7 @@ const Demo = () => {
     if (showToast) return;
     clipboard.copy(SHARE_URL);
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 1500);
+    setTimeout(setShowToast, 1500, false);
   };
 
   return (

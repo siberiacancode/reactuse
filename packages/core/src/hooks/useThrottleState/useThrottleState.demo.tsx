@@ -10,9 +10,9 @@ const Demo = () => {
         <input
           className='w-full'
           defaultValue={throttledValue}
+          placeholder='Enter value to see throttle effect'
           type='text'
           onChange={(event) => setThrottledValue(event.target.value)}
-          placeholder='Enter value to see throttle effect'
         />
       </div>
       <div className='flex flex-col gap-1'>

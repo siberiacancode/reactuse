@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useBattery } from '@siberiacancode/reactuse';
 import {
@@ -20,7 +20,7 @@ const getBatteryIcon = (level: number) => {
 };
 
 const formatTime = (seconds: number) => {
-  if (!isFinite(seconds) || seconds <= 0) return '—';
+  if (!Number.isFinite(seconds) || seconds <= 0) return '—';
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   if (h > 0) return `${h}h ${m}m`;
@@ -80,15 +80,21 @@ const Demo = () => {
           <div className='mt-auto flex flex-col gap-2 border-t pt-4'>
             <div className='flex items-center justify-between text-xs'>
               <span className='text-muted-foreground'>Status</span>
-              <span className='font-medium'>{battery.value.charging ? 'Charging' : 'Discharging'}</span>
+              <span className='font-medium'>
+                {battery.value.charging ? 'Charging' : 'Discharging'}
+              </span>
             </div>
             <div className='flex items-center justify-between text-xs'>
               <span className='text-muted-foreground'>Charge time</span>
-              <span className='font-medium'>{formatTime(battery.value.chargingTime ?? Infinity)}</span>
+              <span className='font-medium'>
+                {formatTime(battery.value.chargingTime ?? Infinity)}
+              </span>
             </div>
             <div className='flex items-center justify-between text-xs'>
               <span className='text-muted-foreground'>Time left</span>
-              <span className='font-medium'>{formatTime(battery.value.dischargingTime ?? Infinity)}</span>
+              <span className='font-medium'>
+                {formatTime(battery.value.dischargingTime ?? Infinity)}
+              </span>
             </div>
           </div>
         </div>

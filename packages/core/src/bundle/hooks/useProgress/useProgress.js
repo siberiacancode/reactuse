@@ -37,7 +37,7 @@ export const useProgress = (initialValue = 0, options = {}) => {
   const done = () => {
     setValue(1);
     setInternalActive(false);
-    setTimeout(() => setActive(false), delay);
+    setTimeout(setActive, delay, false);
   };
   const inc = (amount = resolveAutoIncrement(value, rate)) =>
     setValue((currentValue) => clamp(currentValue + amount, initialValue, maximum));

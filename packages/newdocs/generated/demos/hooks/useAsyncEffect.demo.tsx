@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useAsyncEffect, useBoolean, useToggle } from '@siberiacancode/reactuse';
 import { Loader2Icon } from 'lucide-react';
@@ -58,7 +58,7 @@ const Demo = () => {
           ))}
         </div>
 
-        <div data-slot='tabs-content'>
+        <div data-slot='tabs-content rounded-lg border'>
           {isLoading && (
             <div className='flex h-36 flex-col items-center justify-center gap-2'>
               <Loader2Icon className='size-6 animate-spin' />

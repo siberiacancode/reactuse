@@ -15,7 +15,7 @@ const Demo = () => {
         <div>
           <p>
             You have selected: <b>{fileDialog.value.length} files</b>
-            {Array.from(fileDialog.value).map((file) => (
+            {Array.from(fileDialog.value, (file) => (
               <li key={file.name}>
                 <code>{file.name}</code>
               </li>

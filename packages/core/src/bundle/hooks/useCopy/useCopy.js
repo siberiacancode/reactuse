@@ -21,7 +21,7 @@ export const useCopy = (delay = 1000) => {
     await copy(text);
     setValue(text);
     setCopied(true);
-    setTimeout(() => setCopied(false), delay);
+    setTimeout(setCopied, delay, false);
   };
   return { value, copied, copy: copyToClipboard };
 };

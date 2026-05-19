@@ -23,10 +23,10 @@ const Demo = () => {
       <div className='space-y-4'>
         <div>
           <video
+            controls
             ref={pictureInPicture.ref}
             className='w-full max-w-[600px] rounded-lg'
             src='https://upload.wikimedia.org/wikipedia/commons/f/f1/Sintel_movie_4K.webm'
-            controls
           />
         </div>
 

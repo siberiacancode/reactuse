@@ -49,3 +49,5 @@
 
 - [useBatchedCallback](https://reactuse.org/functions/hooks/useBatchedCallback): Hook that batches calls and forwards them to a callback
 - [useConst](https://reactuse.org/functions/hooks/useConst): Hook that returns the constant value
+- [useDebounceCallback](https://reactuse.org/functions/hooks/useDebounceCallback): Hook that creates a debounced callback
+- [useDebounceEffect](https://reactuse.org/functions/hooks/useDebounceEffect): Hook that runs an effect after a delay when dependencies change

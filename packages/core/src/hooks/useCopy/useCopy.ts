@@ -40,7 +40,7 @@ export const useCopy = (delay: number = 1000): UseCopyReturn => {
     await copy(text);
     setValue(text);
     setCopied(true);
-    setTimeout(() => setCopied(false), delay);
+    setTimeout(setCopied, delay, false);
   };
 
   return { value, copied, copy: copyToClipboard };

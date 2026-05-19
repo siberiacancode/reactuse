@@ -16,10 +16,10 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-type FunctionsSidebarGroup = {
+interface FunctionsSidebarGroup {
   items: { name: string; url: string }[];
   title: string;
-};
+}
 
 export const TOP_LEVEL_SECTIONS = [
   { name: 'Introduction', href: '/docs' },

@@ -30,11 +30,11 @@ const Demo = () => {
       </div>
 
       <video
+        autoPlay
         muted
         playsInline
         ref={displayMedia.ref}
         className='w-full max-w-2xl rounded border'
-        autoPlay
       />
     </div>
   );

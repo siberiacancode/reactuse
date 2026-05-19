@@ -81,7 +81,7 @@ export const CodeBlockCommand = ({
           </TabsList>
         </div>
         <div className='no-scrollbar overflow-x-auto'>
-          {Object.entries(tabs).map(([key, value]) => (
+          {Object.entries(tabs).map(([key]) => (
             <TabsContent key={key} className='mt-0 px-4 py-3.5' value={key}>
               <pre>
                 <code className='relative font-mono text-sm leading-none' data-language='bash'>

@@ -26,7 +26,7 @@ export const createStore = (createState) => {
       state =
         typeof nextState !== 'object' || nextState === null || Array.isArray(nextState)
           ? nextState
-          : Object.assign({}, state, nextState);
+          : { ...state, ...nextState };
       listeners.forEach((listener) => listener(state, prevState));
     }
   };

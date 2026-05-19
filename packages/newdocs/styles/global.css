@@ -555,6 +555,10 @@
   @apply hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50;
 }
 
+.demo-ui button[data-variant='link'] {
+  @apply text-primary h-auto p-0 underline-offset-4 hover:underline;
+}
+
 .demo-ui code {
   @apply text-[var(--brand-hex)];
 }
@@ -716,4 +720,48 @@
 
 .demo-ui [data-slot='dropdown-menu-shortcut'] {
   @apply text-muted-foreground ml-auto text-xs tracking-widest;
+}
+
+.demo-ui input[type='range'] {
+  @apply h-1.5 w-full cursor-pointer appearance-none rounded-full bg-transparent outline-none;
+  background-color: var(--muted);
+}
+
+.demo-ui input[type='range']::-webkit-slider-runnable-track {
+  @apply h-1.5 rounded-full;
+  background-color: var(--muted);
+}
+
+.demo-ui input[type='range']::-moz-range-track {
+  @apply h-1.5 rounded-full;
+  background-color: var(--muted);
+}
+
+.demo-ui input[type='range']::-webkit-slider-thumb {
+  @apply size-4 cursor-pointer rounded-full border shadow-sm transition-all;
+  appearance: none;
+  -webkit-appearance: none;
+  border-color: var(--primary);
+  background-color: var(--background);
+  margin-top: -5px;
+}
+
+.demo-ui input[type='range']::-moz-range-thumb {
+  @apply size-4 cursor-pointer rounded-full border shadow-sm transition-all;
+  border-color: var(--primary);
+  background-color: var(--background);
+}
+
+.demo-ui input[type='range']:hover::-webkit-slider-thumb,
+.demo-ui input[type='range']:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring) 50%, transparent);
+}
+
+.demo-ui input[type='range']:hover::-moz-range-thumb,
+.demo-ui input[type='range']:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring) 50%, transparent);
+}
+
+.demo-ui input[type='range']:disabled {
+  @apply pointer-events-none opacity-50;
 }

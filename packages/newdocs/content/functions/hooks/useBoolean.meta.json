@@ -9,9 +9,7 @@
   "description": "Hook provides opportunity to manage boolean state",
   "category": "State",
   "lastModified": 1754977987000,
-  "examples": [
-    "const [on, toggle] = useBoolean()"
-  ],
+  "examples": ["const [on, toggle] = useBoolean()"],
   "apiParameters": [
     {
       "tag": "param",

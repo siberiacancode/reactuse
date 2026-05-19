@@ -10,9 +10,9 @@ const Demo = () => {
         <input
           className='w-full'
           defaultValue={debouncedValue}
+          placeholder='Enter value to see debounce effect'
           type='text'
           onChange={(event) => setDebouncedValue(event.target.value)}
-          placeholder='Enter value to see debounce effect'
         />
       </div>
       <div className='flex flex-col gap-1'>

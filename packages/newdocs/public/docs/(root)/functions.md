@@ -29,3 +29,5 @@ A quick list of available functions.
 - [useCopy](/functions/hooks/useCopy): Hook that manages copying text with status reset
 - [useCounter](/functions/hooks/useCounter): Hook that manages a counter
 - [useCssVar](/functions/hooks/useCssVar): Hook that returns the value of a css variable
+- [useDebounceCallback](/functions/hooks/useDebounceCallback): Hook that creates a debounced callback
+- [useDebounceEffect](/functions/hooks/useDebounceEffect): Hook that runs an effect after a delay when dependencies change

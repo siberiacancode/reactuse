@@ -6,7 +6,6 @@ export interface Connection extends EventTarget {
   readonly effectiveType: '2g' | '3g' | '4g' | 'slow-2g';
   readonly rtt: number;
   readonly saveData: boolean;
-  onChange: (event: Event) => void;
   readonly type:
     | 'bluetooth'
     | 'cellular'
@@ -17,6 +16,7 @@ export interface Connection extends EventTarget {
     | 'unknown'
     | 'wifi'
     | 'wimax';
+  onChange: (event: Event) => void;
 }
 
 declare global {

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useCookies } from '@siberiacancode/reactuse';
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';
@@ -6,10 +6,10 @@ import { CheckIcon, ChevronDownIcon } from 'lucide-react';
 import { cn } from '@/utils/lib';
 
 interface ProfileCookies {
-  notifications: boolean;
   marketing: boolean;
-  theme: 'system' | 'light' | 'dark';
+  notifications: boolean;
   terms: boolean;
+  theme: 'dark' | 'light' | 'system';
 }
 
 const DEFAULT_SETTINGS: ProfileCookies = {
@@ -103,11 +103,11 @@ const Demo = () => {
         onClick={() => cookies.set('terms', !terms)}
       >
         <div
-          aria-checked={terms}
           className={cn(
             'relative mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-[4px] border transition-colors',
             terms ? 'bg-primary border-primary text-primary-foreground' : 'border-input'
           )}
+          aria-checked={terms}
           role='checkbox'
         >
           {terms && <CheckIcon className='size-3' strokeWidth={3} />}

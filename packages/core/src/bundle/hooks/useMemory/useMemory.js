@@ -26,8 +26,10 @@ export const useMemory = () => {
   );
   useEffect(() => {
     if (!supported) return;
-    const intervalId = setInterval(() => setValue(performance.memory), 1000);
+    const intervalId = setInterval(() => {
+      setValue(performance.memory);
+    }, 1000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [supported]);
   return { supported, value };
 };

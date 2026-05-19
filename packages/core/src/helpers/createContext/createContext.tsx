@@ -30,13 +30,13 @@ export interface ProviderProps<Value> {
 export interface CreateContextReturn<Value> {
   /** The context instance */
   instance: React.Context<ContextValue<Value>>;
-  /** The provider component */
-  Provider: (props: ProviderProps<Value>) => JSX.Element;
   /** The selector hook */
   useSelect: {
     <Selected>(selector: (value: Value) => Selected): Selected;
     (): ContextValue<Value>;
   };
+  /** The provider component */
+  Provider: (props: ProviderProps<Value>) => JSX.Element;
 }
 
 /**

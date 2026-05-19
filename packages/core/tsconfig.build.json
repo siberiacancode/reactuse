@@ -4,6 +4,7 @@
     "target": "esnext",
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "rootDir": "src",
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
@@ -14,7 +15,6 @@
     "declaration": false,
     "emitDeclarationOnly": false,
     "noEmit": false,
-    "rootDir": "src",
     "outDir": "src/bundle",
     "removeComments": false,
     "sourceMap": false,

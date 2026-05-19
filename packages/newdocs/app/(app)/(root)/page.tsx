@@ -134,7 +134,7 @@ export const metadata: Metadata = {
   description
 };
 
-export default async function HomePage() {
+const HomePage = async () => {
   const [contributors, hooks] = await Promise.all([getContributors(), getElementNames('hooks')]);
 
   const allHooks = hooks.length > 0 ? hooks : featuredHooks;
@@ -147,7 +147,7 @@ export default async function HomePage() {
         <div className='border-border bg-card/30 relative overflow-hidden border-y py-6'>
           <div className='animate-marquee flex whitespace-nowrap'>
             {[...stats, ...stats, ...stats, ...stats].map((stat, index) => (
-              <div className='mx-12 flex items-center gap-3' key={`${stat.label}-${index}`}>
+              <div key={`${stat.label}-${index}`} className='mx-12 flex items-center gap-3'>
                 <span className='font-display text-foreground text-3xl font-bold md:text-4xl'>
                   {stat.value}
                 </span>
@@ -168,8 +168,8 @@ export default async function HomePage() {
             <div className='mt-12 flex flex-col gap-0 md:mt-16'>
               {advantages.map((advantage) => (
                 <div
-                  className='group border-border/40 flex items-start gap-6 border-b py-5 transition-colors last:border-0 hover:border-[color:color-mix(in_oklab,var(--brand)_30%,transparent)] md:gap-8'
                   key={advantage.title}
+                  className='group border-border/40 flex items-start gap-6 border-b py-5 transition-colors last:border-0 hover:border-[color:color-mix(in_oklab,var(--brand)_30%,transparent)] md:gap-8'
                 >
                   <span className='font-display text-muted-foreground/40 pt-1 text-3xl leading-none transition-colors group-hover:text-[var(--brand)] md:text-4xl'>
                     {advantage.number}
@@ -268,22 +268,22 @@ export default async function HomePage() {
             <div className='flex flex-wrap gap-2'>
               {contributors.slice(0, 64).map((contributor) => (
                 <Link
+                  key={contributor.name}
                   className='group relative'
                   href={`https://github.com/${contributor.name}`}
-                  key={contributor.name}
                   rel='noreferrer'
                   target='_blank'
                   title={contributor.name}
                 >
                   <img
-                    alt={contributor.name}
-                    className='border-border bg-card h-10 w-10 rounded-full border transition-all hover:z-10 hover:scale-110'
-                    src={contributor.avatar}
                     style={
                       {
                         ['--tw-border-opacity' as string]: '1'
                       } as React.CSSProperties
                     }
+                    alt={contributor.name}
+                    className='border-border bg-card h-10 w-10 rounded-full border transition-all hover:z-10 hover:scale-110'
+                    src={contributor.avatar}
                   />
                 </Link>
               ))}
@@ -370,4 +370,6 @@ export default async function HomePage() {
       </footer>
     </div>
   );
-}
+};
+
+export default HomePage;

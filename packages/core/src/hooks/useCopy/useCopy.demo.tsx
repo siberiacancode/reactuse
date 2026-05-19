@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { cn } from '@/utils/lib';
 
-type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
+type PackageManager = 'bun' | 'npm' | 'pnpm' | 'yarn';
 
 const COMMANDS: Record<PackageManager, string> = {
   pnpm: 'pnpm add @siberiacancode/reactuse',

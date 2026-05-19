@@ -69,7 +69,7 @@ export const useQuery = (callback, options) => {
               ? options?.retryDelay(retryCountRef.current, error)
               : options?.retryDelay;
           if (retryDelay) {
-            setTimeout(() => request(action), retryDelay);
+            setTimeout(request, retryDelay, action);
             return;
           }
           return request(action);
@@ -102,11 +102,12 @@ export const useQuery = (callback, options) => {
     if (!enabled) return;
     request(alreadyRequested.current ? 'refetch' : 'init');
   }, [enabled, ...keys]);
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       clearInterval(intervalIdRef.current);
-    };
-  }, [enabled, options?.refetchInterval, options?.retry, ...keys]);
+    },
+    [enabled, options?.refetchInterval, options?.retry, ...keys]
+  );
   const refetch = () => request('refetch');
   return {
     abort,

@@ -1,15 +1,15 @@
 ---
-title: createContextHook
-description: Hook that runs inside a Provider; Provider accepts params (the hook's arguments). Use when you need a scoped instance per subtree.
-category: helpers
-usage: low
-type: helper
-isTest: false
-isDemo: false
-lastModifiedTime: 1777793589555
+title: useDebounceCallback
+description: Hook that creates a debounced callback
+category: utilities
+usage: high
+type: hook
+isTest: true
+isDemo: true
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './createContextHook.meta.json';
+import metadata from './useDebounceCallback.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './createContextHook.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add createContextHook
+    npx useverse@latest add useDebounceCallback
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,12 +47,15 @@ import metadata from './createContextHook.meta.json';
 ## Usage
 
 ```tsx
-const { Provider, use } = createContextHook(useMediaQuery); <Provider params={["(max-width: 768px)"]}> <Component /> </Provider> const matches = use();
+const debouncedCallback = useDebounceCallback(() => console.log('callback'), 500);
 ```
 
 ## Type Declarations
 
 <FunctionCode code={metadata.typeDeclarations} language="tsx" />
+
+## API
+
 <FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors

@@ -1,11 +1,11 @@
 import * as z from 'zod';
 
 export interface HookRegistry {
-  type: 'hook' | 'helper';
-  path: string;
   hooks: string[];
   name: string;
   packages: string[];
+  path: string;
+  type: 'helper' | 'hook';
   utils: string[];
 }
 

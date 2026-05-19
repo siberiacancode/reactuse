@@ -10,9 +10,9 @@ const Demo = () => {
         <p>Text input:</p>
         <input
           className='w-fit'
+          placeholder='Text param'
           value={textSearchParam.value}
           onChange={(event) => textSearchParam.set(event.target.value)}
-          placeholder='Text param'
         />
       </div>
 

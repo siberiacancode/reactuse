@@ -10,9 +10,9 @@ const Demo = () => {
       </button>
 
       <div ref={focusTrap.ref} className='flex flex-col'>
-        <input type='text' placeholder='First input' />
-        <input type='text' placeholder='Second input' />
-        <input type='text' placeholder='Third input' />
+        <input placeholder='First input' type='text' />
+        <input placeholder='Second input' type='text' />
+        <input placeholder='Third input' type='text' />
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
 'use client';
 
-import * as React from 'react';
-
 import { cn } from '@docs/lib/utils';
 import { IconChevronDown } from '@tabler/icons-react';
+import * as React from 'react';
 
 interface FaqItem {
   answer: string;
@@ -24,12 +23,12 @@ export const LandingFaq = ({ items }: LandingFaqProps) => {
         const isOpen = openItem === value;
 
         return (
-          <div className='border-border border-b' key={value}>
+          <div key={value} className='border-border border-b'>
             <button
               aria-expanded={isOpen}
               className='text-foreground flex w-full items-center justify-between gap-6 py-5 text-left text-base transition-colors hover:text-[var(--brand)] md:text-lg'
-              onClick={() => setOpenItem((current) => (current === value ? '' : value))}
               type='button'
+              onClick={() => setOpenItem((current) => (current === value ? '' : value))}
             >
               <span>{faq.question}</span>
               <IconChevronDown

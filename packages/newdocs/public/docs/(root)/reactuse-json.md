@@ -27,7 +27,7 @@ Setting this option to `false` allows hooks to be added as JavaScript with the `
 
 ```json title="reactuse.json"
 {
-  "ts": true | false
+  "ts": true // false || true
 }
 ```
 
@@ -77,6 +77,6 @@ There are two options:
 
 ```json title="reactuse.json"
 {
-  "case": "camel" | "kebab"
+  "case": "camel" // or "camel" || "kebab"
 }
 ```

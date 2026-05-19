@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useBluetooth } from '@siberiacancode/reactuse';
 import {
@@ -122,7 +122,7 @@ const Demo = () => {
           )}
           <div
             className={cn(
-              'flex size-16 items-center justify-center rounded-full bg-muted',
+              'bg-muted flex size-16 items-center justify-center rounded-full',
               connected && 'bg-blue-500/10 text-blue-500',
               !connected && hasDevice && 'text-foreground',
               !connected && !hasDevice && 'text-muted-foreground'
@@ -166,9 +166,9 @@ const Demo = () => {
         {error && <p className='text-muted-foreground text-center text-xs'>{error}</p>}
 
         <button
-          type='button'
           className='w-full rounded-xl py-2 text-sm font-medium'
           disabled={scanning}
+          type='button'
           onClick={onScan}
         >
           {hasDevice && 'Scan again'}

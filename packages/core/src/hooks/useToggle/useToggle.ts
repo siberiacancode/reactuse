@@ -25,7 +25,7 @@ export const useToggle = <Value = boolean>(values: readonly Value[] = [false, tr
     const value =
       typeof action === 'function' ? (action as (prevState: Value) => Value)(state[0]) : action;
     const index = Math.abs(state.indexOf(value));
-    return state.slice(index).concat(state.slice(0, index));
+    return [...state.slice(index), ...state.slice(0, index)];
   }, values as Value[]);
 
   return [option, toggle as (value?: SetStateAction<Value>) => void] as const;

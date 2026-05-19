@@ -13,7 +13,7 @@ const Demo = () => {
     <>
       <div className='flex gap-2'>
         <input placeholder='Name' {...nameInput.register()} />
-        <input type='number' placeholder='Age' {...ageInput.register()} />
+        <input placeholder='Age' type='number' {...ageInput.register()} />
 
         <button
           type='button'
@@ -28,7 +28,7 @@ const Demo = () => {
       </div>
 
       <div className='mt-4 flex flex-col gap-2'>
-        {Array.from(users.value).map(([name, age], index) => (
+        {Array.from(users.value, ([name, age], index) => (
           <div key={index}>
             {name}: <code>{age}</code>
           </div>
