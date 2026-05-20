@@ -31,3 +31,5 @@ A quick list of available functions.
 - [useCssVar](/functions/hooks/useCssVar): Hook that returns the value of a css variable
 - [useDebounceCallback](/functions/hooks/useDebounceCallback): Hook that creates a debounced callback
 - [useDebounceEffect](/functions/hooks/useDebounceEffect): Hook that runs an effect after a delay when dependencies change
+- [useDebounceState](/functions/hooks/useDebounceState): Hook that creates a debounced state
+- [useDebounceValue](/functions/hooks/useDebounceValue): Hook that creates a debounced value

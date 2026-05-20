@@ -30,6 +30,6 @@ export const useMemory = () => {
       setValue(performance.memory);
     }, 1000);
     return () => clearInterval(intervalId);
-  }, [supported]);
+  }, []);
   return { supported, value };
 };

@@ -14,7 +14,7 @@
       "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar",
 
       "---utilities---",
-      "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect",
+      "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue",
 
       "---state---",
       "useBoolean","useControllableState","useCookie","useCookies","useCounter",

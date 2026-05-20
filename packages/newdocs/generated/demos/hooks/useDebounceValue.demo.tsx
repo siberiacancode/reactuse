@@ -1,3 +1,5 @@
+'use client'
+
 import { useDebounceValue, useField } from '@siberiacancode/reactuse';
 import { SearchIcon, StarIcon } from 'lucide-react';
 import { useMemo } from 'react';
