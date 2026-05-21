@@ -23,6 +23,6 @@
       "useBrowserLanguage",
 
       "---sensors---",
-      "useDeviceMotion"
+      "useDeviceMotion","useDeviceOrientation"
     ]
   }
