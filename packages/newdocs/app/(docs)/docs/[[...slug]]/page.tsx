@@ -95,7 +95,7 @@ export const DocsPage = async (props: { params: Promise<{ slug: string[] }> }) =
       </div>
       <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
         {!!doc.toc.length && (
-          <div className='no-scrollbar flex flex-col gap-8 overflow-y-auto px-8'>
+          <div className='no-scrollbar flex flex-col gap-8 overflow-hidden px-8'>
             <DocsToc items={doc.toc} path={page.data.info.path} />
           </div>
         )}

@@ -1,3 +1,5 @@
+'use client'
+
 import { useDefault } from '@siberiacancode/reactuse';
 import { ChevronDownIcon, RotateCcwIcon } from 'lucide-react';
 

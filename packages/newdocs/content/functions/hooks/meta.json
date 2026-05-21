@@ -17,9 +17,12 @@
       "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue",
 
       "---state---",
-      "useBoolean","useControllableState","useCookie","useCookies","useCounter",
+      "useBoolean","useControllableState","useCookie","useCookies","useCounter","useDefault",
 
       "---user---",
-      "useBrowserLanguage"
+      "useBrowserLanguage",
+
+      "---sensors---",
+      "useDeviceMotion"
     ]
   }

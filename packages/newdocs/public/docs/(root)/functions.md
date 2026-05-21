@@ -33,3 +33,5 @@ A quick list of available functions.
 - [useDebounceEffect](/functions/hooks/useDebounceEffect): Hook that runs an effect after a delay when dependencies change
 - [useDebounceState](/functions/hooks/useDebounceState): Hook that creates a debounced state
 - [useDebounceValue](/functions/hooks/useDebounceValue): Hook that creates a debounced value
+- [useDefault](/functions/hooks/useDefault): Hook that returns the default value
+- [useDeviceMotion](/functions/hooks/useDeviceMotion): Hook that work with device motion
