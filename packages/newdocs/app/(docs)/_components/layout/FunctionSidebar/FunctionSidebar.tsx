@@ -29,13 +29,13 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
 
   return (
     <Sidebar
-      className='sticky top-[calc(var(--header-height)+0.75rem)] z-30 hidden h-[calc(100svh-var(--header-height)-0.75rem)] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(56)] lg:flex'
+      className='sticky top-[calc(var(--header-height)+4rem)] z-30 hidden h-[80svh] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(56)] lg:flex'
       collapsible='none'
       {...props}
     >
       <div className='from-background/75 via-background/25 pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b to-transparent' />
       <div className='from-background/75 via-background/25 pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t to-transparent' />
-      <SidebarContent className='no-scrollbar w-(--sidebar-menu-width) overflow-hidden px-2 pb-48'>
+      <SidebarContent className='no-scrollbar h-full w-(--sidebar-menu-width) overflow-y-auto overscroll-contain px-2 pb-22'>
         {groups.map((group, index) => (
           <SidebarGroup key={index}>
             <SidebarGroupLabel className='text-muted-foreground font-medium capitalize'>

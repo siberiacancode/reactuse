@@ -47,11 +47,9 @@ import metadata from './useDeviceMotion.meta.json';
 ## Usage
 
 ```tsx
-const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion(500, (event) => console.log(event));
+const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion((event) => console.log(event)).watch();
 // or
-const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion((event) => console.log(event));
-// or
-const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion();
+const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion().watch();
 ```
 
 ## Type Declarations

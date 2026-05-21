@@ -1,8 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { throttle } from '@/utils/helpers';
+import { useRerender } from '../useRerender/useRerender';
 
 export interface UseDeviceMotionReturn {
+  snapshot: UseDeviceMotionValue;
+  watch: () => UseDeviceMotionValue;
+}
+
+export interface UseDeviceMotionValue {
   acceleration: DeviceMotionEventAcceleration;
   accelerationIncludingGravity: DeviceMotionEventAcceleration;
   interval: DeviceMotionEvent['interval'];
@@ -10,8 +15,6 @@ export interface UseDeviceMotionReturn {
 }
 
 export interface UseDeviceMotionOptions {
-  /** The delay in milliseconds */
-  delay?: number;
   /** Whether to enable the hook */
   enabled?: boolean;
   /** The callback function to be invoked */
@@ -19,7 +22,7 @@ export interface UseDeviceMotionOptions {
 }
 
 export interface UseDeviceMotion {
-  (callback?: (event: DeviceMotionEvent) => void, delay?: number): UseDeviceMotionReturn;
+  (callback?: (event: DeviceMotionEvent) => void): UseDeviceMotionReturn;
 
   (options?: UseDeviceMotionOptions): UseDeviceMotionReturn;
 }
@@ -33,73 +36,80 @@ export interface UseDeviceMotion {
  * @browserapi DeviceMotionEvent https://developer.mozilla.org/en-US/docs/Web/API/Window/DeviceMotionEvent
  *
  * @overload
- * @param {number} [delay=1000] The delay in milliseconds
  * @param {(event: DeviceMotionEvent) => void} [callback] The callback function to be invoked
- * @returns {UseDeviceMotionReturn} The device motion data and interval
+ * @returns {UseDeviceMotionReturn} Device motion controls with snapshot/watch API
  *
  * @example
- * const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion(500, (event) => console.log(event));
- *
- * @overload
- * @param {(event: DeviceMotionEvent) => void} [callback] The callback function to be invoked
- * @returns {UseDeviceMotionReturn} The device motion data and interval
- *
- * @example
- * const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion((event) => console.log(event));
+ * const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion((event) => console.log(event)).watch();
  *
  * @overload
  * @param {UseDeviceMotionOptions} [options] Configuration options
- * @param {number} [options.delay] The delay in milliseconds
  * @param {boolean} [options.enabled] Whether to enable the hook
  * @param {(event: DeviceMotionEvent) => void} [options.onChange] The callback function to be invoked
- * @returns {UseDeviceMotionReturn} The device motion data and interval
+ * @returns {UseDeviceMotionReturn} Device motion controls with snapshot/watch API
  *
  * @example
- * const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion();
+ * const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion().watch();
  */
 export const useDeviceMotion = ((...params: any[]) => {
-  const delay = typeof params[0] === 'number' ? params[0] : (params[0]?.delay ?? 1000);
   const callback = typeof params[0] === 'function' ? params[0] : params[0]?.onChange;
-  const enabled = params[0]?.enabled ?? true;
+  const enabled = typeof params[0] === 'object' ? (params[0]?.enabled ?? true) : true;
 
-  const [value, setValue] = useState<UseDeviceMotionReturn>({
+  const snapshotRef = useRef<UseDeviceMotionValue>({
     interval: 0,
     rotationRate: { alpha: null, beta: null, gamma: null },
     acceleration: { x: null, y: null, z: null },
     accelerationIncludingGravity: { x: null, y: null, z: null }
   });
+
   const internalCallbackRef = useRef(callback);
+  const watchingRef = useRef(false);
+  const rerender = useRerender();
+
   internalCallbackRef.current = callback;
+
+  const watch = () => {
+    watchingRef.current = true;
+    return snapshotRef.current;
+  };
+
+  const updateValue = (value: UseDeviceMotionValue) => {
+    snapshotRef.current = value;
+    if (watchingRef.current) rerender();
+  };
 
   useEffect(() => {
     if (!enabled) return;
 
-    const onDeviceMotion = throttle<[DeviceMotionEvent]>((event) => {
+    const onDeviceMotion = (event: DeviceMotionEvent) => {
       internalCallbackRef.current?.(event);
 
-      setValue({
+      updateValue({
         interval: event.interval,
         rotationRate: {
-          ...value.rotationRate,
+          ...snapshotRef.current.rotationRate,
           ...event.rotationRate
         },
         acceleration: {
-          ...value.acceleration,
+          ...snapshotRef.current.acceleration,
           ...event.acceleration
         },
         accelerationIncludingGravity: {
-          ...value.accelerationIncludingGravity,
+          ...snapshotRef.current.accelerationIncludingGravity,
           ...event.accelerationIncludingGravity
         }
       });
-    }, delay);
+    };
 
     window.addEventListener('devicemotion', onDeviceMotion);
 
     return () => {
       window.removeEventListener('devicemotion', onDeviceMotion);
     };
-  }, [delay, enabled]);
+  }, [enabled]);
 
-  return value;
+  return {
+    snapshot: snapshotRef.current,
+    watch
+  };
 }) as UseDeviceMotion;

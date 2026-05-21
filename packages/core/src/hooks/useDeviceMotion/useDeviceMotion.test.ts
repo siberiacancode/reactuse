@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useDeviceMotion } from './useDeviceMotion';
 
 const DEVICE_MOTION_EVENT_INIT: DeviceMotionEventInit = {
@@ -41,26 +43,46 @@ globalThis.DeviceMotionEvent = MockDeviceMotionEvent as any;
 it('Should use device motion', () => {
   const { result } = renderHook(useDeviceMotion);
 
-  expect(result.current.interval).toBe(0);
-  expect(result.current.rotationRate).toEqual({
+  expect(result.current.watch).toBeTypeOf('function');
+  expect(result.current.snapshot.interval).toBe(0);
+  expect(result.current.snapshot.rotationRate).toEqual({
     alpha: null,
     beta: null,
     gamma: null
   });
-  expect(result.current.acceleration).toEqual({ x: null, y: null, z: null });
-  expect(result.current.accelerationIncludingGravity).toEqual({
+  expect(result.current.snapshot.acceleration).toEqual({ x: null, y: null, z: null });
+  expect(result.current.snapshot.accelerationIncludingGravity).toEqual({
     x: null,
     y: null,
     z: null
   });
 });
 
-it('Should handle device motion event', () => {
+it('Should use device motion on server side', () => {
+  const { result } = renderHookServer(useDeviceMotion);
+
+  expect(result.current.watch).toBeTypeOf('function');
+  expect(result.current.snapshot.interval).toBe(0);
+  expect(result.current.snapshot.rotationRate).toEqual({
+    alpha: null,
+    beta: null,
+    gamma: null
+  });
+  expect(result.current.snapshot.acceleration).toEqual({ x: null, y: null, z: null });
+  expect(result.current.snapshot.accelerationIncludingGravity).toEqual({
+    x: null,
+    y: null,
+    z: null
+  });
+});
+
+it('Should return reactive value on watch', () => {
   const { result } = renderHook(useDeviceMotion);
 
+  act(() => result.current.watch());
   act(() => window.dispatchEvent(new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT)));
 
-  expect(result.current).toEqual({
+  expect(result.current.snapshot).toEqual({
     interval: DEVICE_MOTION_EVENT_INIT.interval,
     rotationRate: DEVICE_MOTION_EVENT_INIT.rotationRate,
     acceleration: DEVICE_MOTION_EVENT_INIT.acceleration,
@@ -71,10 +93,11 @@ it('Should handle device motion event', () => {
 it('Should call callback when motion detected', () => {
   const onChange = vi.fn();
   renderHook(() => useDeviceMotion({ onChange }));
+  const event = new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT);
 
-  act(() => window.dispatchEvent(new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT)));
+  act(() => window.dispatchEvent(event));
 
-  expect(onChange).toBeCalledWith(new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT));
+  expect(onChange).toHaveBeenCalledWith(event);
 });
 
 it('Should be listen enabled param', () => {
@@ -84,45 +107,21 @@ it('Should be listen enabled param', () => {
     initialProps: { enabled: false }
   });
 
-  expect(addEventListenerSpy).not.toBeCalledWith('devicemotion', expect.any(Function));
+  expect(addEventListenerSpy).not.toHaveBeenCalledWith('devicemotion', expect.any(Function));
 
   rerender({ enabled: true });
 
-  expect(addEventListenerSpy).toBeCalledWith('devicemotion', expect.any(Function));
+  expect(addEventListenerSpy).toHaveBeenCalledWith('devicemotion', expect.any(Function));
 });
 
-it('Should throttle events by delay', () => {
-  vi.useFakeTimers();
+it('Should handle events without throttling', () => {
   const onChange = vi.fn();
   renderHook(() => useDeviceMotion({ onChange }));
 
   act(() => window.dispatchEvent(new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT)));
-
-  expect(onChange).toHaveBeenCalledOnce();
-
   act(() => window.dispatchEvent(new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT)));
 
-  act(() => vi.advanceTimersByTime(1000));
-
   expect(onChange).toBeCalledTimes(2);
-
-  vi.useRealTimers();
-});
-
-it('Should update with new delay', () => {
-  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
-  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
-
-  const { rerender } = renderHook((delay: number) => useDeviceMotion({ delay }), {
-    initialProps: 1000
-  });
-
-  expect(addEventListenerSpy).toHaveBeenCalledOnce();
-
-  rerender(500);
-
-  expect(removeEventListenerSpy).toHaveBeenCalledOnce();
-  expect(addEventListenerSpy).toBeCalledTimes(2);
 });
 
 it('Should handle enabled changes', () => {
@@ -146,9 +145,9 @@ it('Should handle enabled changes', () => {
   expect(removeEventListenerSpy).toHaveBeenCalledOnce();
 });
 
-it('Should handle delay and callback', () => {
+it('Should handle callback', () => {
   const callback = vi.fn();
-  renderHook(() => useDeviceMotion(callback, 1000));
+  renderHook(() => useDeviceMotion(callback));
 
   act(() => window.dispatchEvent(new DeviceMotionEvent('devicemotion', DEVICE_MOTION_EVENT_INIT)));
 

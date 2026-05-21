@@ -1,33 +1,35 @@
 'use client'
 
 import { useDeviceMotion } from '@siberiacancode/reactuse';
-import { SmartphoneIcon } from 'lucide-react';
+import { MoveHorizontalIcon, MoveVerticalIcon } from 'lucide-react';
 
 const CIRCLE_SIZE = 200;
-const BUBBLE_SIZE = 36;
+const BUBBLE_SIZE = 24;
 const MAX_OFFSET = CIRCLE_SIZE / 2 - BUBBLE_SIZE / 2 - 8;
 const GRAVITY = 9.8;
-const LEVEL_THRESHOLD = 0.5;
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 const Demo = () => {
-  const motion = useDeviceMotion({ delay: 100 });
+  const deviceMotion = useDeviceMotion();
+  const value = deviceMotion.watch();
 
-  const x = motion.accelerationIncludingGravity.x;
-  const y = motion.accelerationIncludingGravity.y;
+  const x = value.accelerationIncludingGravity.x;
+  const y = value.accelerationIncludingGravity.y;
 
-  if (x === null || y === null) {
+  if (!x || !y) {
     return (
-      <section className='flex w-full max-w-sm flex-col items-center p-4'>
-        <div className='bg-muted/40 flex flex-col items-center gap-3 rounded-2xl p-8 text-center'>
-          <SmartphoneIcon className='text-muted-foreground size-10' />
-          <p className='text-sm font-medium'>Device motion not supported</p>
-          <p className='text-muted-foreground text-xs'>
-            Open this page on a mobile device to use the spirit level.
-          </p>
-        </div>
-      </section>
+      <p>
+        Api not supported, make sure to check for compatibility with different browsers when using
+        this{' '}
+        <a
+          href='https://developer.mozilla.org/en-US/docs/Web/API/Window/DeviceMotionEvent'
+          rel='noreferrer'
+          target='_blank'
+        >
+          api
+        </a>
+      </p>
     );
   }
 
@@ -37,56 +39,61 @@ const Demo = () => {
   const tiltX = ((-x / GRAVITY) * 90).toFixed(1);
   const tiltY = ((y / GRAVITY) * 90).toFixed(1);
 
-  const isLevel = Math.abs(x) < LEVEL_THRESHOLD && Math.abs(y) < LEVEL_THRESHOLD;
-
   return (
-    <section className='flex w-full max-w-sm flex-col items-center gap-5 p-4'>
-      <div className='flex flex-col items-center gap-1 text-center'>
-        <h3>Spirit level</h3>
-        <p className='text-muted-foreground text-sm'>
-          Tilt your device — the bubble follows gravity.
-        </p>
-      </div>
+    <section className='flex flex-col items-center p-4'>
+      <div className='relative' style={{ width: CIRCLE_SIZE, height: CIRCLE_SIZE }}>
+        <svg height={CIRCLE_SIZE} viewBox={`0 0 ${CIRCLE_SIZE} ${CIRCLE_SIZE}`} width={CIRCLE_SIZE}>
+          <circle
+            className='text-border'
+            cx={CIRCLE_SIZE / 2}
+            cy={CIRCLE_SIZE / 2}
+            fill='transparent'
+            r={CIRCLE_SIZE / 2 - 1}
+            stroke='currentColor'
+            strokeWidth='2'
+          />
 
-      <div
-        className='border-border bg-muted/30 relative rounded-full border-2'
-        style={{ width: CIRCLE_SIZE, height: CIRCLE_SIZE }}
-      >
-        <div className='bg-border absolute top-1/2 left-0 h-px w-full -translate-y-1/2' />
-        <div className='bg-border absolute top-0 left-1/2 h-full w-px -translate-x-1/2' />
+          <line
+            className='text-border'
+            stroke='currentColor'
+            strokeLinecap='round'
+            strokeWidth='1'
+            x1='20'
+            x2={CIRCLE_SIZE - 20}
+            y1={CIRCLE_SIZE / 2}
+            y2={CIRCLE_SIZE / 2}
+          />
+          <line
+            className='text-border'
+            stroke='currentColor'
+            strokeLinecap='round'
+            strokeWidth='1'
+            x1={CIRCLE_SIZE / 2}
+            x2={CIRCLE_SIZE / 2}
+            y1='20'
+            y2={CIRCLE_SIZE - 20}
+          />
 
-        <div
-          style={{
-            width: BUBBLE_SIZE,
-            height: BUBBLE_SIZE,
-            marginLeft: -BUBBLE_SIZE / 2,
-            marginTop: -BUBBLE_SIZE / 2
-          }}
-          className='border-foreground/40 absolute top-1/2 left-1/2 rounded-full border-2'
-        />
+          <circle
+            className='text-border'
+            cx={CIRCLE_SIZE / 2 + offsetX}
+            cy={CIRCLE_SIZE / 2 + offsetY}
+            fill='white'
+            r={BUBBLE_SIZE / 2}
+            stroke='currentColor'
+            strokeWidth='1'
+            style={{ transition: 'all 100ms ease-out' }}
+          />
+        </svg>
 
-        <div
-          style={{
-            width: BUBBLE_SIZE,
-            height: BUBBLE_SIZE,
-            marginLeft: -BUBBLE_SIZE / 2,
-            marginTop: -BUBBLE_SIZE / 2,
-            backgroundColor: isLevel ? 'oklch(0.65 0.15 160)' : 'oklch(0.55 0.18 250)',
-            transform: `translate(${offsetX}px, ${offsetY}px)`,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
-          }}
-          className='absolute top-1/2 left-1/2 rounded-full transition-transform duration-100 ease-out'
-        />
-      </div>
-
-      <div className='flex gap-6 text-sm'>
-        <div className='flex flex-col items-center'>
-          <span className='text-muted-foreground text-xs'>Tilt X</span>
-          <code>{tiltX}°</code>
+        <div className='absolute top-1.5 left-1/2 flex -translate-x-1/2 items-center gap-1 text-[10px] text-neutral-400'>
+          <MoveVerticalIcon className='size-3' />
+          {tiltY}°
         </div>
-        <div className='flex flex-col items-center'>
-          <span className='text-muted-foreground text-xs'>Tilt Y</span>
-          <code>{tiltY}°</code>
+
+        <div className='absolute top-1/2 right-1.5 flex -translate-y-1/2 items-center gap-1 text-[10px] text-neutral-400'>
+          <MoveHorizontalIcon className='size-3' />
+          {tiltX}°
         </div>
       </div>
     </section>
