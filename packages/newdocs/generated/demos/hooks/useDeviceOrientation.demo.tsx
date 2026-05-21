@@ -1,3 +1,5 @@
+'use client';
+
 import { useDeviceOrientation } from '@siberiacancode/reactuse';
 import { SmartphoneIcon } from 'lucide-react';
 
@@ -90,29 +92,28 @@ const Demo = () => {
               })}
             </g>
 
-            {hasData &&
-              labels.map(({ text, angle, isNorth }) => {
-                const rad = ((angle - 90) * Math.PI) / 180;
-                const x = cx + Math.cos(rad) * labelR;
-                const y = cy + Math.sin(rad) * labelR;
-                return (
-                  <text
-                    key={text}
-                    className={
-                      isNorth ? 'fill-primary text-base font-semibold' : 'fill-foreground text-sm'
-                    }
-                    dominantBaseline='central'
-                    textAnchor='middle'
-                    x={x}
-                    y={y}
-                  >
-                    {text}
-                  </text>
-                );
-              })}
+            {labels.map(({ text, angle, isNorth }) => {
+              const rad = ((angle - 90) * Math.PI) / 180;
+              const x = cx + Math.cos(rad) * labelR;
+              const y = cy + Math.sin(rad) * labelR;
+              return (
+                <text
+                  key={text}
+                  className={
+                    isNorth ? 'fill-primary text-base font-semibold' : 'fill-foreground text-sm'
+                  }
+                  dominantBaseline='central'
+                  textAnchor='middle'
+                  x={x}
+                  y={y}
+                >
+                  {text}
+                </text>
+              );
+            })}
           </g>
 
-          {hasData && <circle className='fill-foreground' cx={cx} cy={cy} r='2.5' />}
+          <circle className='fill-foreground' cx={cx} cy={cy} r='2.5' />
         </svg>
 
         {!hasData && (

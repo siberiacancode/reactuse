@@ -35,3 +35,4 @@ A quick list of available functions.
 - [useDebounceValue](/functions/hooks/useDebounceValue): Hook that creates a debounced value
 - [useDefault](/functions/hooks/useDefault): Hook that returns the default value
 - [useDeviceMotion](/functions/hooks/useDeviceMotion): Hook that work with device motion
+- [useDeviceOrientation](/functions/hooks/useDeviceOrientation): Hook that provides the current device orientation

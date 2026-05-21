@@ -1,15 +1,15 @@
 ---
-title: useDeviceMotion
-description: Hook that work with device motion
+title: useDeviceOrientation
+description: Hook that provides the current device orientation
 category: sensors
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779370064000
+lastModifiedTime: 1755262808000
 ---
 
-import metadata from './useDeviceMotion.meta.json';
+import metadata from './useDeviceOrientation.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useDeviceMotion.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useDeviceMotion
+    npx useverse@latest add useDeviceOrientation
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './useDeviceMotion.meta.json';
 ## Usage
 
 ```tsx
-const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion((event) => console.log(event)).watch();
-// or
-const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion().watch();
+const { supported, value } = useDeviceOrientation();
 ```
 
 ## Type Declarations

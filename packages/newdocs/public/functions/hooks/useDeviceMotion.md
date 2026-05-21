@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1759122403000
+lastModifiedTime: 1779370064000
 ---
 
 import metadata from './useDeviceMotion.meta.json';

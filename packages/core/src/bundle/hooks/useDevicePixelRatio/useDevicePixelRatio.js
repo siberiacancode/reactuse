@@ -10,22 +10,22 @@ import { useEffect, useState } from 'react';
  * @returns {UseDevicePixelRatioReturn} The ratio and supported flag
  *
  * @example
- * const { supported, ratio } = useDevicePixelRatio();
+ * const { supported, value } = useDevicePixelRatio();
  */
 export const useDevicePixelRatio = () => {
   const supported =
     typeof window !== 'undefined' &&
     typeof window.matchMedia === 'function' &&
     typeof window.devicePixelRatio === 'number';
-  const [ratio, setRatio] = useState(supported ? window.devicePixelRatio : 1);
+  const [value, setValue] = useState(supported ? window.devicePixelRatio : 1);
   useEffect(() => {
     if (!supported) return;
-    const onChange = () => setRatio(window.devicePixelRatio);
+    const onChange = () => setValue(window.devicePixelRatio);
     const media = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
     media.addEventListener('change', onChange);
     return () => {
       media.removeEventListener('change', onChange);
     };
-  }, [ratio]);
-  return { supported, ratio };
+  }, [value]);
+  return { supported, value };
 };

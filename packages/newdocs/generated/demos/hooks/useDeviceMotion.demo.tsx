@@ -1,12 +1,13 @@
-'use client'
+'use client';
 
 import { useDeviceMotion } from '@siberiacancode/reactuse';
-import { MoveHorizontalIcon, MoveVerticalIcon } from 'lucide-react';
+import { SmartphoneIcon } from 'lucide-react';
 
-const CIRCLE_SIZE = 200;
-const BUBBLE_SIZE = 24;
-const MAX_OFFSET = CIRCLE_SIZE / 2 - BUBBLE_SIZE / 2 - 8;
+const CIRCLE_SIZE = 240;
+const BUBBLE_SIZE = 22;
+const MAX_OFFSET = CIRCLE_SIZE / 2 - BUBBLE_SIZE / 2 - 12;
 const GRAVITY = 9.8;
+const LEVEL_THRESHOLD = 2;
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
@@ -16,86 +17,80 @@ const Demo = () => {
 
   const x = value.accelerationIncludingGravity.x;
   const y = value.accelerationIncludingGravity.y;
+  const hasData = !!x && !!y;
 
-  if (!x || !y) {
-    return (
-      <p>
-        Api not supported, make sure to check for compatibility with different browsers when using
-        this{' '}
-        <a
-          href='https://developer.mozilla.org/en-US/docs/Web/API/Window/DeviceMotionEvent'
-          rel='noreferrer'
-          target='_blank'
-        >
-          api
-        </a>
-      </p>
-    );
-  }
+  const offsetX = hasData ? clamp((-x / GRAVITY) * MAX_OFFSET, -MAX_OFFSET, MAX_OFFSET) : 0;
+  const offsetY = hasData ? clamp((y / GRAVITY) * MAX_OFFSET, -MAX_OFFSET, MAX_OFFSET) : 0;
 
-  const offsetX = clamp((-x / GRAVITY) * MAX_OFFSET, -MAX_OFFSET, MAX_OFFSET);
-  const offsetY = clamp((y / GRAVITY) * MAX_OFFSET, -MAX_OFFSET, MAX_OFFSET);
+  const tiltX = hasData ? (-x / GRAVITY) * 90 : 0;
+  const tiltY = hasData ? (y / GRAVITY) * 90 : 0;
 
-  const tiltX = ((-x / GRAVITY) * 90).toFixed(1);
-  const tiltY = ((y / GRAVITY) * 90).toFixed(1);
+  const isLevel = hasData && Math.abs(tiltX) < LEVEL_THRESHOLD && Math.abs(tiltY) < LEVEL_THRESHOLD;
+
+  const cx = CIRCLE_SIZE / 2;
+  const cy = CIRCLE_SIZE / 2;
+  const r = cx - 8;
+
+  const formatTilt = (v: number) => {
+    const sign = v < 0 ? '-' : '';
+    return `${sign}${Math.abs(v).toFixed(1)}°`;
+  };
 
   return (
-    <section className='flex flex-col items-center p-4'>
+    <section className='flex flex-col items-center gap-6 p-4'>
       <div className='relative' style={{ width: CIRCLE_SIZE, height: CIRCLE_SIZE }}>
         <svg height={CIRCLE_SIZE} viewBox={`0 0 ${CIRCLE_SIZE} ${CIRCLE_SIZE}`} width={CIRCLE_SIZE}>
+          <g className='text-border' stroke='currentColor' strokeLinecap='round' strokeWidth='1'>
+            <line x1={cx} x2={cx} y1={0} y2={CIRCLE_SIZE} />
+            <line x1={0} x2={CIRCLE_SIZE} y1={cy} y2={cy} />
+          </g>
+
           <circle
             className='text-border'
-            cx={CIRCLE_SIZE / 2}
-            cy={CIRCLE_SIZE / 2}
+            cx={cx}
+            cy={cy}
             fill='transparent'
-            r={CIRCLE_SIZE / 2 - 1}
+            r={r}
             stroke='currentColor'
-            strokeWidth='2'
+            strokeWidth='1.5'
           />
 
-          <line
-            className='text-border'
-            stroke='currentColor'
-            strokeLinecap='round'
-            strokeWidth='1'
-            x1='20'
-            x2={CIRCLE_SIZE - 20}
-            y1={CIRCLE_SIZE / 2}
-            y2={CIRCLE_SIZE / 2}
-          />
-          <line
-            className='text-border'
-            stroke='currentColor'
-            strokeLinecap='round'
-            strokeWidth='1'
-            x1={CIRCLE_SIZE / 2}
-            x2={CIRCLE_SIZE / 2}
-            y1='20'
-            y2={CIRCLE_SIZE - 20}
-          />
-
-          <circle
-            className='text-border'
-            cx={CIRCLE_SIZE / 2 + offsetX}
-            cy={CIRCLE_SIZE / 2 + offsetY}
-            fill='white'
-            r={BUBBLE_SIZE / 2}
-            stroke='currentColor'
-            strokeWidth='1'
-            style={{ transition: 'all 100ms ease-out' }}
-          />
+          {hasData && (
+            <circle
+              className={isLevel ? 'fill-green-500' : 'fill-foreground'}
+              cx={cx + offsetX}
+              cy={cy + offsetY}
+              r={BUBBLE_SIZE / 2}
+              style={{ transition: 'all 120ms ease-out, fill 200ms ease-out' }}
+            />
+          )}
         </svg>
 
-        <div className='absolute top-1.5 left-1/2 flex -translate-x-1/2 items-center gap-1 text-[10px] text-neutral-400'>
-          <MoveVerticalIcon className='size-3' />
-          {tiltY}°
-        </div>
+        {isLevel && (
+          <div className='pointer-events-none absolute inset-x-0 -bottom-8 text-center'>
+            <span className='font-mono text-xs font-semibold tracking-[0.2em] text-green-500'>
+              LEVEL
+            </span>
+          </div>
+        )}
 
-        <div className='absolute top-1/2 right-1.5 flex -translate-y-1/2 items-center gap-1 text-[10px] text-neutral-400'>
-          <MoveHorizontalIcon className='size-3' />
-          {tiltX}°
-        </div>
+        {!hasData && (
+          <div className='absolute inset-0 flex flex-col items-center justify-center gap-2 px-10 text-center'>
+            <SmartphoneIcon className='text-muted-foreground size-8' />
+            <p className='text-muted-foreground text-xs'>
+              Open on a mobile device to see the bubble move.
+            </p>
+          </div>
+        )}
       </div>
+
+      {hasData && (
+        <div className='text-foreground flex items-center gap-3 pt-4 font-mono text-sm tracking-wider tabular-nums'>
+          <span>X {formatTilt(tiltX)}</span>
+          <span className='text-muted-foreground'>·</span>
+          <span>Y {formatTilt(tiltY)}</span>
+        </div>
+      )}
     </section>
   );
 };
