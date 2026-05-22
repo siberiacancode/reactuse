@@ -54,7 +54,7 @@
   },
   "description": "Hook that work with device motion",
   "category": "Sensors",
-  "lastModified": 1779370064000,
+  "lastModified": 1779453143000,
   "examples": [
     "const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion((event) => console.log(event)).watch();",
     "const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion().watch();"

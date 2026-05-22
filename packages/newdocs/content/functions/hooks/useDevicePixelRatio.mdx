@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1755262808000
+lastModifiedTime: 1779453143000
 ---
 
 import metadata from './useDevicePixelRatio.meta.json';

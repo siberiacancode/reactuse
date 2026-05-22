@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1779453143000
 ---
 
 import metadata from './useDocumentVisibility.meta.json';

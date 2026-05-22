@@ -1,7 +1,5 @@
 'use client'
 
-'use client';
-
 import { useDocumentVisibility, useInterval } from '@siberiacancode/reactuse';
 import { PauseIcon, PlayIcon, RotateCcwIcon } from 'lucide-react';
 import { useState } from 'react';

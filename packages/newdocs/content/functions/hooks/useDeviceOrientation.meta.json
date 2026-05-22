@@ -54,7 +54,7 @@
   },
   "description": "Hook that provides the current device orientation",
   "category": "Sensors",
-  "lastModified": 1755262808000,
+  "lastModified": 1779453143000,
   "examples": [
     "const { supported, value } = useDeviceOrientation();"
   ],
