@@ -45,14 +45,14 @@ beforeEach(() => {
 it('Should use device pixel ratio', () => {
   const { result } = renderHook(useDevicePixelRatio);
 
-  expect(result.current.ratio).toEqual(window.devicePixelRatio);
+  expect(result.current.value).toEqual(window.devicePixelRatio);
   expect(result.current.supported).toBeTruthy();
 });
 
 it('Should use device pixel ratio on server side', () => {
   const { result } = renderHookServer(useDevicePixelRatio);
 
-  expect(result.current.ratio).toEqual(1);
+  expect(result.current.value).toEqual(1);
   expect(result.current.supported).toBeFalsy();
 });
 
@@ -62,7 +62,7 @@ it('Should use device pixel ratio for unsupported', () => {
   });
   const { result } = renderHook(useDevicePixelRatio);
 
-  expect(result.current.ratio).toEqual(1);
+  expect(result.current.value).toEqual(1);
   expect(result.current.supported).toBeFalsy();
 });
 
@@ -72,13 +72,13 @@ it('Should correct return for unsupported devicePixelRatio', () => {
   });
   const { result } = renderHook(useDevicePixelRatio);
 
-  expect(result.current.ratio).toEqual(1);
+  expect(result.current.value).toEqual(1);
   expect(result.current.supported).toBeFalsy();
 });
 
 it('Should handle media query change', () => {
   const { result } = renderHook(useDevicePixelRatio);
-  expect(result.current.ratio).toEqual(1);
+  expect(result.current.value).toEqual(1);
 
   Object.assign(globalThis.window, {
     devicePixelRatio: 3
@@ -91,7 +91,7 @@ it('Should handle media query change', () => {
 
   expect(mockMediaQueryListAddEventListener).toHaveBeenCalledTimes(2);
   expect(mockMediaQueryListRemoveEventListener).toHaveBeenCalledOnce();
-  expect(result.current.ratio).toEqual(3);
+  expect(result.current.value).toEqual(3);
 });
 
 it('Should cleanup on unmount', () => {

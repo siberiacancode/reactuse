@@ -1,3 +1,5 @@
+'use client'
+
 'use client';
 
 import { useDocumentVisibility, useInterval } from '@siberiacancode/reactuse';

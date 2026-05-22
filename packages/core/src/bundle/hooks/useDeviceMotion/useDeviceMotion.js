@@ -6,7 +6,7 @@ import { useRerender } from '../useRerender/useRerender';
  * @category Sensors
  * @usage low
  *
- * @browserapi DeviceMotionEvent https://developer.mozilla.org/en-US/docs/Web/API/Window/DeviceMotionEvent
+ * @browserapi DeviceMotionEvent https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent/DeviceMotionEvent
  *
  * @overload
  * @param {(event: DeviceMotionEvent) => void} [callback] The callback function to be invoked

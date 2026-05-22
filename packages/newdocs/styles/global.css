@@ -547,6 +547,10 @@
   @apply bg-primary text-primary-foreground hover:bg-primary/90;
 }
 
+.demo-ui button[data-variant='secondary'] {
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground;
+}
+
 .demo-ui button[data-variant='outline'] {
   @apply bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 border shadow-xs;
 }
@@ -557,6 +561,10 @@
 
 .demo-ui button[data-variant='link'] {
   @apply text-primary h-auto p-0 underline-offset-4 hover:underline;
+}
+
+.demo-ui button[data-variant='destructive'] {
+  @apply bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40;
 }
 
 .demo-ui code {

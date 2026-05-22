@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
  * @category Sensors
  * @usage low
  *
- * @browserapi DeviceOrientationEvent https://developer.mozilla.org/en-US/docs/Web/API/Window/DeviceOrientationEvent
+ * @browserapi DeviceOrientationEvent https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent/DeviceOrientationEvent
  *
  * @returns {UseDeviceOrientationReturn} The current device orientation
  *

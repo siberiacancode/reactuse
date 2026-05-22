@@ -1,3 +1,5 @@
+'use client'
+
 import { useDidUpdate } from '@siberiacancode/reactuse';
 import { CheckIcon, LoaderIcon } from 'lucide-react';
 import { useState } from 'react';

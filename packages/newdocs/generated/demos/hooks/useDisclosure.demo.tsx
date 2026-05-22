@@ -1,3 +1,5 @@
+'use client'
+
 import { useClickOutside, useDisclosure } from '@siberiacancode/reactuse';
 import {
   CopyIcon,

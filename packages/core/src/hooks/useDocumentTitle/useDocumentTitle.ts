@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 /** The use document title options type */
 export interface UseDocumentTitleOptions {
   /** Restore the previous title on unmount */
-  restoreOnUnmount?: boolean;
+  restore?: boolean;
 }
 
 /** The use document title return type */
@@ -33,8 +33,10 @@ export function useDocumentTitle(
   initialValue?: string,
   options?: UseDocumentTitleOptions
 ): UseDocumentTitleReturn {
-  const prevValueRef = useRef(document.title);
-  const [value, setValue] = useState(initialValue ?? document.title);
+  const prevValueRef = useRef(typeof document !== 'undefined' ? document.title : '');
+  const [value, setValue] = useState(
+    initialValue ?? (typeof document !== 'undefined' ? document.title : '')
+  );
 
   const set = (value: string) => {
     const updatedValue = value.trim();
@@ -66,7 +68,7 @@ export function useDocumentTitle(
   }, []);
 
   useEffect(() => {
-    if (options?.restoreOnUnmount) {
+    if (options?.restore) {
       return () => {
         document.title = prevValueRef.current;
       };

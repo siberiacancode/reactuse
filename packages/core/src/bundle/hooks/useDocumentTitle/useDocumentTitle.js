@@ -15,8 +15,10 @@ import { useEffect, useRef, useState } from 'react';
  * const { value, set } = useDocumentTitle();
  */
 export function useDocumentTitle(initialValue, options) {
-  const prevValueRef = useRef(document.title);
-  const [value, setValue] = useState(initialValue ?? document.title);
+  const prevValueRef = useRef(typeof document !== 'undefined' ? document.title : '');
+  const [value, setValue] = useState(
+    initialValue ?? (typeof document !== 'undefined' ? document.title : '')
+  );
   const set = (value) => {
     const updatedValue = value.trim();
     if (updatedValue.length > 0) document.title = updatedValue;
@@ -42,7 +44,7 @@ export function useDocumentTitle(initialValue, options) {
     };
   }, []);
   useEffect(() => {
-    if (options?.restoreOnUnmount) {
+    if (options?.restore) {
       return () => {
         document.title = prevValueRef.current;
       };

@@ -1,3 +1,5 @@
+'use client'
+
 import { useDisplayMedia } from '@siberiacancode/reactuse';
 import { MonitorUpIcon, PhoneOffIcon } from 'lucide-react';
 

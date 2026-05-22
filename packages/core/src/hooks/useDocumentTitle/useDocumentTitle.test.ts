@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 
 import { useDocumentTitle } from './useDocumentTitle';
 
@@ -35,6 +35,14 @@ it('Should use document title', () => {
   expect(set).toBeTypeOf('function');
 });
 
+it('Should use document title on server side', () => {
+  const { result } = renderHookServer(useDocumentTitle);
+  const { value, set } = result.current;
+
+  expect(value).toBe('');
+  expect(set).toBeTypeOf('function');
+});
+
 it('Should be set initial title', () => {
   const { result } = renderHook(() => useDocumentTitle('title'));
 
@@ -60,9 +68,7 @@ it('Should observe title changes', async () => {
 });
 
 it('Should be restore initial title when unmount', () => {
-  const { result, unmount } = renderHook(() =>
-    useDocumentTitle('title', { restoreOnUnmount: true })
-  );
+  const { result, unmount } = renderHook(() => useDocumentTitle('title', { restore: true }));
 
   act(() => result.current.set('new title'));
   waitFor(() => expect(result.current.value).toBe('new title'));

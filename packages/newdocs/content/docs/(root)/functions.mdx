@@ -36,3 +36,10 @@ A quick list of available functions.
 - [useDefault](/functions/hooks/useDefault): Hook that returns the default value
 - [useDeviceMotion](/functions/hooks/useDeviceMotion): Hook that work with device motion
 - [useDeviceOrientation](/functions/hooks/useDeviceOrientation): Hook that provides the current device orientation
+- [useDevicePixelRatio](/functions/hooks/useDevicePixelRatio): Hook that returns the device's pixel ratio
+- [useDidUpdate](/functions/hooks/useDidUpdate): Hook that triggers the effect callback on updates
+- [useDisclosure](/functions/hooks/useDisclosure): Hook that allows you to open and close a modal
+- [useDisplayMedia](/functions/hooks/useDisplayMedia): Hook that provides screen sharing functionality
+- [useDocumentEvent](/functions/hooks/useDocumentEvent): Hook attaches an event listener to the document object for the specified event
+- [useDocumentTitle](/functions/hooks/useDocumentTitle): Hook that manages the document title and allows updating it
+- [useDocumentVisibility](/functions/hooks/useDocumentVisibility): Hook that provides the current visibility state of the document

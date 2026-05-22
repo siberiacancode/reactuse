@@ -43,6 +43,18 @@ it('Should update visibility state on visibilitychange event', () => {
   expect(result.current).toBe('visible');
 });
 
+it('Should call callback when visibility state changes', () => {
+  const mockDocumentVisibility = vi.spyOn(document, 'visibilityState', 'get');
+  const callback = vi.fn();
+  renderHook(() => useDocumentVisibility(callback));
+  expect(callback).not.toHaveBeenCalled();
+
+  mockDocumentVisibility.mockReturnValue('visible');
+  act(() => document.dispatchEvent(new Event('visibilitychange')));
+  expect(callback).toHaveBeenCalledOnce();
+  expect(callback).toHaveBeenCalledWith('visible');
+});
+
 it('Should cleanup on unmount', () => {
   const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
   const { unmount } = renderHook(useDocumentVisibility);

@@ -1,3 +1,5 @@
+'use client'
+
 import { useDevicePixelRatio } from '@siberiacancode/reactuse';
 
 const getDisplayLabel = (ratio: number) => {
