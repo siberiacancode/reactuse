@@ -1,6 +1,6 @@
 ---
 title: useBroadcastChannel
-description: that provides cross-tab/window communication
+description: Hook that provides cross-tab/window communication
 category: browser
 usage: low
 type: hook

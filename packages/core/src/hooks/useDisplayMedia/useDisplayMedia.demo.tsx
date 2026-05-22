@@ -1,5 +1,6 @@
 import { useDisplayMedia } from '@siberiacancode/reactuse';
-import { MonitorUpIcon, PhoneOffIcon } from 'lucide-react';
+import { MicIcon, MicOffIcon, MonitorUpIcon, PhoneOffIcon } from 'lucide-react';
+import { useState } from 'react';
 
 import { cn } from '@/utils/lib';
 
@@ -19,6 +20,7 @@ const PARTICIPANTS = [
 
 const Demo = () => {
   const displayMedia = useDisplayMedia();
+  const [muted, setMuted] = useState(false);
 
   if (!displayMedia.supported) {
     return (
@@ -39,20 +41,7 @@ const Demo = () => {
   return (
     <section className='flex w-[500px] flex-col gap-3 p-4'>
       <div className='border-border flex flex-col overflow-hidden rounded-xl border bg-neutral-950'>
-        <div className='flex items-center justify-between px-3 py-2'>
-          <div className='flex items-center gap-2 text-xs font-medium text-white'>
-            <span className='size-1.5 animate-pulse rounded-full bg-red-500' />
-            14:23
-          </div>
-          {displayMedia.sharing && (
-            <div className='flex items-center gap-1.5 rounded-full bg-red-600/90 px-2 py-0.5 text-[10px] font-semibold text-white'>
-              <span className='size-1 animate-pulse rounded-full bg-white' />
-              SHARING
-            </div>
-          )}
-        </div>
-
-        <div className='flex aspect-[24/9] items-center justify-center bg-black'>
+        <div className='relative flex aspect-[24/9] items-center justify-center bg-black'>
           <video
             autoPlay
             muted
@@ -87,22 +76,39 @@ const Demo = () => {
               ))}
             </div>
           )}
+
+          {displayMedia.sharing && (
+            <div className='absolute top-3 left-3 flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-[10px] font-semibold text-neutral-900 shadow-sm'>
+              SHARING
+            </div>
+          )}
         </div>
 
-        <div className='flex items-center justify-center gap-2 p-3'>
+        <div className='flex items-center justify-between gap-2 p-3'>
           <button
-            aria-label={displayMedia.sharing ? 'Stop sharing' : 'Share screen'}
-            data-variant={displayMedia.sharing ? 'destructive' : 'secondary'}
+            aria-label={muted ? 'Unmute' : 'Mute'}
+            data-variant={muted ? 'destructive' : 'secondary'}
             type='button'
-            onClick={displayMedia.sharing ? displayMedia.stop : displayMedia.start}
+            onClick={() => setMuted((value) => !value)}
           >
-            <MonitorUpIcon className='size-4' />
+            {muted ? <MicOffIcon className='size-4' /> : <MicIcon className='size-4' />}
           </button>
 
-          <button data-variant='destructive' type='button'>
-            <PhoneOffIcon className='size-4' />
-            End
-          </button>
+          <div className='flex items-center gap-2'>
+            <button
+              aria-label={displayMedia.sharing ? 'Stop sharing' : 'Share screen'}
+              data-variant={displayMedia.sharing ? 'destructive' : 'secondary'}
+              type='button'
+              onClick={displayMedia.sharing ? displayMedia.stop : displayMedia.start}
+            >
+              <MonitorUpIcon className='size-4' />
+            </button>
+
+            <button data-variant='destructive' type='button'>
+              <PhoneOffIcon className='size-4' />
+              End
+            </button>
+          </div>
         </div>
       </div>
     </section>

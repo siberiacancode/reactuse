@@ -20,7 +20,7 @@ export interface UseBroadcastChannelReturn<Data = unknown> {
 
 /**
  * @name useBroadcastChannel
- * @description Hook that provides cross-tab/window communication
+ * @description - Hook that provides cross-tab/window communication
  * @category Browser
  * @usage low
  *

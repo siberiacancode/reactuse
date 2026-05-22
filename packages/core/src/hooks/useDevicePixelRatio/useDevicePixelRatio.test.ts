@@ -94,6 +94,20 @@ it('Should handle media query change', () => {
   expect(result.current.value).toEqual(3);
 });
 
+it('Should call callback on device pixel ratio change', () => {
+  const callback = vi.fn();
+  renderHook(() => useDevicePixelRatio(callback));
+
+  Object.assign(globalThis.window, {
+    devicePixelRatio: 2
+  });
+
+  act(() => trigger.callback(`(resolution: 1dppx)`));
+
+  expect(callback).toHaveBeenCalledOnce();
+  expect(callback).toHaveBeenCalledWith(2);
+});
+
 it('Should cleanup on unmount', () => {
   const { unmount } = renderHook(useDevicePixelRatio);
 

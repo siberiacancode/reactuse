@@ -17,7 +17,7 @@ A quick list of available functions.
 - [useBluetooth](/functions/hooks/useBluetooth): Hook for getting information about bluetooth
 - [useBoolean](/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state
 - [useBreakpoints](/functions/hooks/useBreakpoints): Hook that manages breakpoints
-- [useBroadcastChannel](/functions/hooks/useBroadcastChannel): that provides cross-tab/window communication
+- [useBroadcastChannel](/functions/hooks/useBroadcastChannel): Hook that provides cross-tab/window communication
 - [useBrowserLanguage](/functions/hooks/useBrowserLanguage): Hook that returns the current browser language
 - [useBrowserLocation](/functions/hooks/useBrowserLocation): Hook that returns reactive browser location state with navigation controls
 - [useClickOutside](/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)

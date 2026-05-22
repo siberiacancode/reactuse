@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+/** The use device pixel ratio callback type */
+export type UseDevicePixelRatioCallback = (value: number) => void;
 
 /** The use device pixel ratio return type */
 export interface UseDevicePixelRatioReturn {
@@ -16,12 +19,15 @@ export interface UseDevicePixelRatioReturn {
  *
  * @browserapi window.devicePixelRatio https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio
  *
+ * @param {(value: number) => void} [callback] The callback to execute when the device pixel ratio changes
  * @returns {UseDevicePixelRatioReturn} The ratio and supported flag
  *
  * @example
  * const { supported, value } = useDevicePixelRatio();
  */
-export const useDevicePixelRatio = (): UseDevicePixelRatioReturn => {
+export const useDevicePixelRatio = (
+  callback?: UseDevicePixelRatioCallback
+): UseDevicePixelRatioReturn => {
   const supported =
     typeof window !== 'undefined' &&
     typeof window.matchMedia === 'function' &&
@@ -29,17 +35,24 @@ export const useDevicePixelRatio = (): UseDevicePixelRatioReturn => {
 
   const [value, setValue] = useState(supported ? window.devicePixelRatio : 1);
 
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
+
   useEffect(() => {
     if (!supported) return;
 
-    const onChange = () => setValue(window.devicePixelRatio);
+    const onChange = () => {
+      const nextValue = window.devicePixelRatio;
+      setValue(nextValue);
+      internalCallbackRef.current?.(nextValue);
+    };
 
     const media = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
     media.addEventListener('change', onChange);
     return () => {
       media.removeEventListener('change', onChange);
     };
-  }, [value]);
+  }, [supported, value]);
 
   return { supported, value };
 };

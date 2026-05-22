@@ -22,7 +22,7 @@
 - [useBattery](https://reactuse.org/functions/hooks/useBattery): Hook for getting information about battery status
 - [useBluetooth](https://reactuse.org/functions/hooks/useBluetooth): Hook for getting information about bluetooth
 - [useBreakpoints](https://reactuse.org/functions/hooks/useBreakpoints): Hook that manages breakpoints
-- [useBroadcastChannel](https://reactuse.org/functions/hooks/useBroadcastChannel): that provides cross-tab/window communication
+- [useBroadcastChannel](https://reactuse.org/functions/hooks/useBroadcastChannel): Hook that provides cross-tab/window communication
 - [useBrowserLocation](https://reactuse.org/functions/hooks/useBrowserLocation): Hook that returns reactive browser location state with navigation controls
 - [useClipboard](https://reactuse.org/functions/hooks/useClipboard): Hook that manages a copy to clipboard
 - [useCopy](https://reactuse.org/functions/hooks/useCopy): Hook that manages copying text with status reset

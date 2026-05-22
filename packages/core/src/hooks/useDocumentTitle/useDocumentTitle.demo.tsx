@@ -36,7 +36,7 @@ const ARTICLES = [
 
 const Demo = () => {
   const [activeId, setActiveId] = useState(ARTICLES[0].id);
-  const documentTitle = useDocumentTitle();
+  const documentTitle = useDocumentTitle(ARTICLES[0].title);
 
   const article = ARTICLES.find((item) => item.id === activeId) ?? ARTICLES[0];
 

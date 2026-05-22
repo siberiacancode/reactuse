@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 /**
  * @name useBroadcastChannel
- * @description Hook that provides cross-tab/window communication
+ * @description - Hook that provides cross-tab/window communication
  * @category Browser
  * @usage low
  *
