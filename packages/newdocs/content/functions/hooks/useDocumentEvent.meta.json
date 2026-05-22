@@ -8,7 +8,7 @@
   "usage": "low",
   "description": "Hook attaches an event listener to the document object for the specified event",
   "category": "Browser",
-  "lastModified": 1760199218000,
+  "lastModified": 1779456202000,
   "examples": [
     "useDocumentEvent('click', () => console.log('clicked'));"
   ],
