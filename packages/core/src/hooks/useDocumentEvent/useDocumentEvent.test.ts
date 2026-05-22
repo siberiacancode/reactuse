@@ -1,6 +1,8 @@
 import { renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
+
 import { useDocumentEvent } from './useDocumentEvent';
 
 it('Should use document event', () => {
@@ -9,5 +11,14 @@ it('Should use document event', () => {
 
   document.dispatchEvent(new Event('click'));
 
-  expect(listener).toHaveBeenCalled();
+  expect(listener).toHaveBeenCalledOnce();
+});
+
+it('Should use document event on server side', () => {
+  const listener = vi.fn();
+  renderHookServer(() => useDocumentEvent('click', listener));
+
+  document.dispatchEvent(new Event('click'));
+
+  expect(listener).not.toHaveBeenCalledOnce();
 });

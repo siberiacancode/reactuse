@@ -2,7 +2,7 @@ import type { RefObject } from 'react';
 
 export const targetSymbol = Symbol('target');
 
-export type Target = (() => Element) | string | Document | Element | Window;
+export type Target = (() => Document | Element | Window) | string | Document | Element | Window;
 interface BrowserTarget {
   type: symbol;
   value: Target;

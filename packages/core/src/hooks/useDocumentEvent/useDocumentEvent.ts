@@ -23,4 +23,10 @@ export const useDocumentEvent = <Event extends keyof DocumentEventMap>(
   event: Event,
   listener: (this: Document, event: DocumentEventMap[Event]) => any,
   options?: UseEventListenerOptions
-) => useEventListener(isTarget.wrap(document), event, listener, options);
+) =>
+  useEventListener(
+    isTarget.wrap(() => document),
+    event,
+    listener,
+    options
+  );

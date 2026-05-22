@@ -1,6 +1,8 @@
 import { renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
+
 import { useWindowEvent } from './useWindowEvent';
 
 it('Should use window event', () => {
@@ -9,5 +11,14 @@ it('Should use window event', () => {
 
   window.dispatchEvent(new Event('click'));
 
-  expect(listener).toHaveBeenCalled();
+  expect(listener).toHaveBeenCalledOnce();
+});
+
+it('Should use window event on server side', () => {
+  const listener = vi.fn();
+  renderHookServer(() => useWindowEvent('click', listener));
+
+  window.dispatchEvent(new Event('click'));
+
+  expect(listener).not.toHaveBeenCalledOnce();
 });
