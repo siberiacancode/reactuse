@@ -38,24 +38,26 @@ const Demo = () => {
   };
 
   return (
-    <section className='flex flex-col items-center gap-2 p-8'>
-      <span className='text-foreground font-mono text-6xl font-semibold tabular-nums'>
-        🍅{formatTime(secondsLeft)}
-      </span>
+    <section className='flex flex-col items-center gap-3 p-8'>
+      <div className='flex items-center gap-4'>
+        <span className='text-3xl'>🍅</span>
 
-      <p className='text-muted-foreground mb-4 text-xs'>
-        Pauses automatically when you switch tabs
-      </p>
+        <span className='text-foreground font-mono text-3xl font-semibold tabular-nums'>
+          {formatTime(secondsLeft)}
+        </span>
 
-      <div className='flex items-center gap-2'>
-        <button data-variant='secondary' type='button' onClick={onReset}>
-          <RotateCcwIcon className='size-4' />
-        </button>
-        <button data-variant='default' type='button' onClick={onToggle}>
-          {ticking ? <PauseIcon className='size-4' /> : <PlayIcon className='size-4' />}
-          {ticking ? 'Pause' : finished ? 'Done' : 'Start'}
-        </button>
+        <div className='flex items-center gap-2'>
+          <button data-variant='secondary' type='button' onClick={onReset}>
+            <RotateCcwIcon className='size-4' />
+          </button>
+          <button data-variant='default' type='button' onClick={onToggle}>
+            {ticking ? <PauseIcon className='size-4' /> : <PlayIcon className='size-4' />}
+            {ticking ? 'Pause' : finished ? 'Done' : 'Start'}
+          </button>
+        </div>
       </div>
+
+      <p className='text-muted-foreground text-xs'>Pauses automatically when you switch tabs</p>
     </section>
   );
 };

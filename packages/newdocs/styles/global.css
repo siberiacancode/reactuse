@@ -541,6 +541,17 @@
   @apply focus-visible:border-ring focus-visible:ring-ring/50 inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50;
   @apply h-9 px-4 py-2;
 }
+.demo-ui button {
+  @apply focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:ring-3 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:ring-3;
+}
+
+.demo-ui button > svg {
+  @apply pointer-events-none shrink-0;
+}
+
+.demo-ui button > svg:not([class*='size-']) {
+  @apply size-4;
+}
 
 .demo-ui button:not([data-variant]),
 .demo-ui button[data-variant='default'] {
@@ -565,6 +576,51 @@
 
 .demo-ui button[data-variant='destructive'] {
   @apply bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40;
+}
+
+.demo-ui button:not([data-size]),
+.demo-ui button[data-size='default'] {
+  @apply h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2;
+}
+
+.demo-ui button[data-size='xs'] {
+  @apply h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5;
+}
+
+.demo-ui button[data-size='xs'] > svg:not([class*='size-']) {
+  @apply size-3;
+}
+
+.demo-ui button[data-size='sm'] {
+  @apply h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5;
+}
+
+.demo-ui button[data-size='sm'] > svg:not([class*='size-']) {
+  @apply size-3.5;
+}
+
+.demo-ui button[data-size='lg'] {
+  @apply h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2;
+}
+
+.demo-ui button[data-size='icon'] {
+  @apply size-8;
+}
+
+.demo-ui button[data-size='icon-xs'] {
+  @apply size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg;
+}
+
+.demo-ui button[data-size='icon-xs'] > svg:not([class*='size-']) {
+  @apply size-3;
+}
+
+.demo-ui button[data-size='icon-sm'] {
+  @apply size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg;
+}
+
+.demo-ui button[data-size='icon-lg'] {
+  @apply size-9;
 }
 
 .demo-ui code {

@@ -43,3 +43,7 @@ A quick list of available functions.
 - [useDocumentEvent](/functions/hooks/useDocumentEvent): Hook attaches an event listener to the document object for the specified event
 - [useDocumentTitle](/functions/hooks/useDocumentTitle): Hook that manages the document title and allows updating it
 - [useDocumentVisibility](/functions/hooks/useDocumentVisibility): Hook that provides the current visibility state of the document
+- [useDoubleClick](/functions/hooks/useDoubleClick): Hook that defines the logic when double clicking an element
+- [useDropZone](/functions/hooks/useDropZone): Hook that provides drop zone functionality
+- [useEvent](/functions/hooks/useEvent): Hook that creates an event and returns a stable reference of it
+- [useEventListener](/functions/hooks/useEventListener): Hook that attaches an event listener to the specified target

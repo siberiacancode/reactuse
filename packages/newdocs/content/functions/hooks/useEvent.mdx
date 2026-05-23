@@ -1,15 +1,15 @@
 ---
-title: useBroadcastChannel
-description: Hook that provides cross-tab/window communication
-category: browser
-usage: low
+title: useEvent
+description: Hook that creates an event and returns a stable reference of it
+category: utilities
+usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779458191000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useBroadcastChannel.meta.json';
+import metadata from './useEvent.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useBroadcastChannel.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useBroadcastChannel
+    npx useverse@latest add useEvent
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,12 +47,8 @@ import metadata from './useBroadcastChannel.meta.json';
 ## Usage
 
 ```tsx
-const { supported, data, post, error } = useBroadcastChannel('channel');
+const onClick = useEvent(() => console.log('clicked'));
 ```
-
-## Type Declarations
-
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
 
 ## API
 

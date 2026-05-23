@@ -1,3 +1,5 @@
+'use client';
+
 import { useDropZone } from '@siberiacancode/reactuse';
 import { ImageIcon, UploadCloudIcon, XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
@@ -6,9 +8,9 @@ import { cn } from '@/utils/lib';
 
 interface FilePreview {
   name: string;
-  preview: string;
   size: number;
   type: string;
+  preview: string;
 }
 
 const formatSize = (bytes: number) => {

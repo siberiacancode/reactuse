@@ -31,11 +31,14 @@
 - [useDocumentEvent](https://reactuse.org/functions/hooks/useDocumentEvent): Hook attaches an event listener to the document object for the specified event
 - [useDocumentTitle](https://reactuse.org/functions/hooks/useDocumentTitle): Hook that manages the document title and allows updating it
 - [useDocumentVisibility](https://reactuse.org/functions/hooks/useDocumentVisibility): Hook that provides the current visibility state of the document
+- [useEventListener](https://reactuse.org/functions/hooks/useEventListener): Hook that attaches an event listener to the specified target
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
 - [useAutoScroll](https://reactuse.org/functions/hooks/useAutoScroll): Hook that automatically scrolls a list element to the bottom
 - [useClickOutside](https://reactuse.org/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
+- [useDoubleClick](https://reactuse.org/functions/hooks/useDoubleClick): Hook that defines the logic when double clicking an element
+- [useDropZone](https://reactuse.org/functions/hooks/useDropZone): Hook that provides drop zone functionality
 ### Lifecycles
 
 - [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates
@@ -65,3 +68,4 @@
 - [useDebounceState](https://reactuse.org/functions/hooks/useDebounceState): Hook that creates a debounced state
 - [useDebounceValue](https://reactuse.org/functions/hooks/useDebounceValue): Hook that creates a debounced value
 - [useDevicePixelRatio](https://reactuse.org/functions/hooks/useDevicePixelRatio): Hook that returns the device's pixel ratio
+- [useEvent](https://reactuse.org/functions/hooks/useEvent): Hook that creates an event and returns a stable reference of it

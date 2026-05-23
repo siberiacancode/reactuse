@@ -34,12 +34,12 @@ const Demo = () => {
       {pops.map((pop) => (
         <span
           key={pop.id}
-          className='pointer-events-none fixed z-50 text-2xl'
           style={{
             left: pop.x,
             top: pop.y,
             animation: 'yummy-cookie-pop 800ms ease-out forwards'
           }}
+          className='pointer-events-none fixed z-50 text-2xl'
         >
           +1
         </span>

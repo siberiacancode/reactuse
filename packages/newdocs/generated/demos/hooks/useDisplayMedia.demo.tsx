@@ -81,10 +81,6 @@ const Demo = () => {
 
           {displayMedia.sharing && (
             <div className='absolute top-3 left-3 flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-[10px] font-semibold text-neutral-900 shadow-sm'>
-              <span className='relative flex size-1.5'>
-                <span className='absolute inline-flex size-full animate-ping rounded-full bg-red-500 opacity-75' />
-                <span className='relative inline-flex size-1.5 rounded-full bg-red-500' />
-              </span>
               SHARING
             </div>
           )}

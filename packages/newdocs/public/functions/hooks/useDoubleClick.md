@@ -1,15 +1,15 @@
 ---
-title: useBroadcastChannel
-description: Hook that provides cross-tab/window communication
-category: browser
-usage: low
+title: useDoubleClick
+description: Hook that defines the logic when double clicking an element
+category: elements
+usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779458191000
+lastModifiedTime: 1775645190000
 ---
 
-import metadata from './useBroadcastChannel.meta.json';
+import metadata from './useDoubleClick.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useBroadcastChannel.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useBroadcastChannel
+    npx useverse@latest add useDoubleClick
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,9 @@ import metadata from './useBroadcastChannel.meta.json';
 ## Usage
 
 ```tsx
-const { supported, data, post, error } = useBroadcastChannel('channel');
+useDoubleClick(ref, () => console.log('double clicked'));
+// or
+const ref = useDoubleClick(() => console.log('double clicked'));
 ```
 
 ## Type Declarations

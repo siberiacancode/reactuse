@@ -1,3 +1,5 @@
+'use client'
+
 import { useEvent } from '@siberiacancode/reactuse';
 import { ArchiveIcon, ArchiveRestoreIcon, StarIcon } from 'lucide-react';
 import { memo, useState } from 'react';

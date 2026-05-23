@@ -1,15 +1,15 @@
 ---
-title: useBroadcastChannel
-description: Hook that provides cross-tab/window communication
+title: useEventListener
+description: Hook that attaches an event listener to the specified target
 category: browser
-usage: low
+usage: necessary
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779458191000
+lastModifiedTime: 1775226876000
 ---
 
-import metadata from './useBroadcastChannel.meta.json';
+import metadata from './useEventListener.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useBroadcastChannel.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useBroadcastChannel
+    npx useverse@latest add useEventListener
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,9 @@ import metadata from './useBroadcastChannel.meta.json';
 ## Usage
 
 ```tsx
-const { supported, data, post, error } = useBroadcastChannel('channel');
+useEventListener(ref, 'click', () => console.log('click'));
+// or
+const ref = useEventListener('click', () => console.log('click'));
 ```
 
 ## Type Declarations
