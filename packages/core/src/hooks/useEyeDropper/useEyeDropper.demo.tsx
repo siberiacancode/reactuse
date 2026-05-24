@@ -8,14 +8,14 @@ const Demo = () => {
   if (!eyeDropper.supported)
     return (
       <p>
-        Api not supported, make sure to check for compatibility with different browsers when using
+        API not supported, make sure to check for compatibility with different browsers when using
         this{' '}
         <a
           href='https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper'
           rel='noreferrer'
           target='_blank'
         >
-          api
+          API
         </a>
       </p>
     );
@@ -35,7 +35,7 @@ const Demo = () => {
 
       <div className='border-border bg-card flex w-[280px] items-center gap-3 rounded-xl border p-2.5 shadow-sm'>
         <div
-          className={'border-border size-10 shrink-0 rounded-lg border'}
+          className='border-border size-10 shrink-0 rounded-lg border'
           style={{ backgroundColor: color ?? 'transparent' }}
         />
 

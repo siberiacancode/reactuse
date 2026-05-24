@@ -69,14 +69,14 @@ const Demo = () => {
   if (!broadcastChannel.supported) {
     return (
       <p>
-        Api not supported, make sure to check for compatibility with different browsers when using
+        API not supported, make sure to check for compatibility with different browsers when using
         this{' '}
         <a
           href='https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel'
           rel='noreferrer'
           target='_blank'
         >
-          api
+          API
         </a>
       </p>
     );
@@ -159,7 +159,7 @@ const Demo = () => {
                           {product.emoji} {product.name}
                         </p>
                         <p className='text-muted-foreground text-[10px]'>
-                          ×{item.qty} · ${(product.price * item.qty).toFixed(2)}
+                          x{item.qty} | ${(product.price * item.qty).toFixed(2)}
                         </p>
                       </div>
                       <button

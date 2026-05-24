@@ -18,7 +18,7 @@ const getBatteryIcon = (level: number) => {
 };
 
 const formatTime = (seconds: number) => {
-  if (!Number.isFinite(seconds) || seconds <= 0) return '—';
+  if (!Number.isFinite(seconds) || seconds <= 0) return '--';
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   if (h > 0) return `${h}h ${m}m`;
@@ -31,14 +31,14 @@ const Demo = () => {
   if (!battery.supported)
     return (
       <p>
-        Api not supported, make sure to check for compatibility with different browsers when using
+        API not supported, make sure to check for compatibility with different browsers when using
         this{' '}
         <a
           href='https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery'
           rel='noreferrer'
           target='_blank'
         >
-          api
+          API
         </a>
       </p>
     );

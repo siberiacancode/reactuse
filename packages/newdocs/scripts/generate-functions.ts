@@ -87,7 +87,7 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`## Installation`);
   result.push('');
 
-  result.push(`<FunctionTabs>`);
+  result.push(`<FunctionTabs className='space-y-2'>`);
   result.push(`  <TabsList>`);
   result.push(`    <TabsTrigger value='library'>Library</TabsTrigger>`);
   result.push(`    <TabsTrigger value='cli'>CLI</TabsTrigger>`);
@@ -267,7 +267,7 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 42).map(async (element) => {
+    content.slice(0, 44).map(async (element) => {
       const content = await getContentFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);

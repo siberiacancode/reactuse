@@ -27,14 +27,14 @@ const Demo = () => {
   if (!displayMedia.supported) {
     return (
       <p>
-        Api not supported, make sure to check for compatibility with different browsers when using
+        API not supported, make sure to check for compatibility with different browsers when using
         this{' '}
         <a
           href='https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia'
           rel='noreferrer'
           target='_blank'
         >
-          api
+          API
         </a>
       </p>
     );

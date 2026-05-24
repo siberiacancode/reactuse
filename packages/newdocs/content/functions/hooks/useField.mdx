@@ -1,15 +1,15 @@
 ---
-title: useBreakpoints
-description: Hook that manages breakpoints
-category: browser
+title: useField
+description: Hook to manage a form field
+category: state
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1766052966000
+lastModifiedTime: 1774541599000
 ---
 
-import metadata from './useBreakpoints.meta.json';
+import metadata from './useField.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useBreakpoints.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useBreakpoints
+    npx useverse@latest add useField
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useBreakpoints.meta.json';
 ## Usage
 
 ```tsx
-const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });
+const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();
 ```
 
 ## Type Declarations

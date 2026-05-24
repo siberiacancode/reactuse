@@ -124,7 +124,7 @@ const Demo = () => {
         {board.map(
           (cell, index) =>
             cell === 'X' && (
-              <g key={`x-${index}`} className='text-[var(--brand-hex'>
+              <g key={`x-${index}`} className='text-[var(--brand-hex)]'>
                 <line
                   stroke='currentColor'
                   strokeLinecap='round'

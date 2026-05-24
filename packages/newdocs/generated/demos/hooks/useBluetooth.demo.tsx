@@ -96,14 +96,14 @@ const Demo = () => {
   if (!bluetooth.supported)
     return (
       <p>
-        Api not supported, make sure to check for compatibility with different browsers when using
+        API not supported, make sure to check for compatibility with different browsers when using
         this{' '}
         <a
           href='https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth'
           rel='noreferrer'
           target='_blank'
         >
-          api
+          API
         </a>
       </p>
     );
@@ -148,7 +148,7 @@ const Demo = () => {
               </div>
               <div className='min-w-0 flex-1'>
                 <p className='truncate text-sm font-medium'>{device?.name ?? 'Unknown device'}</p>
-                <p className='text-muted-foreground text-[10px]'>{device?.id.slice(0, 12)}…</p>
+                <p className='text-muted-foreground text-[10px]'>{device?.id.slice(0, 12)}...</p>
               </div>
               <span
                 className={cn(

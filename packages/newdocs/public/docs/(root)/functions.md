@@ -49,3 +49,5 @@ A quick list of available functions.
 - [useEventListener](/functions/hooks/useEventListener): Hook that attaches an event listener to the specified target
 - [useEventSource](/functions/hooks/useEventSource): Hook that provides a reactive wrapper for event source
 - [useEyeDropper](/functions/hooks/useEyeDropper): Hook that gives you access to the eye dropper
+- [useFavicon](/functions/hooks/useFavicon): Hook that manages the favicon
+- [useField](/functions/hooks/useField): Hook to manage a form field

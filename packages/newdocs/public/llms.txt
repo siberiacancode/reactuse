@@ -34,6 +34,7 @@
 - [useEventListener](https://reactuse.org/functions/hooks/useEventListener): Hook that attaches an event listener to the specified target
 - [useEventSource](https://reactuse.org/functions/hooks/useEventSource): Hook that provides a reactive wrapper for event source
 - [useEyeDropper](https://reactuse.org/functions/hooks/useEyeDropper): Hook that gives you access to the eye dropper
+- [useFavicon](https://reactuse.org/functions/hooks/useFavicon): Hook that manages the favicon
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
@@ -58,6 +59,7 @@
 - [useCounter](https://reactuse.org/functions/hooks/useCounter): Hook that manages a counter
 - [useDefault](https://reactuse.org/functions/hooks/useDefault): Hook that returns the default value
 - [useDisclosure](https://reactuse.org/functions/hooks/useDisclosure): Hook that allows you to open and close a modal
+- [useField](https://reactuse.org/functions/hooks/useField): Hook to manage a form field
 ### Users
 
 - [useBrowserLanguage](https://reactuse.org/functions/hooks/useBrowserLanguage): Hook that returns the current browser language

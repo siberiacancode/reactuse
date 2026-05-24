@@ -15,7 +15,7 @@ import metadata from './useEyeDropper.meta.json';
 
 ## Installation
 
-<FunctionTabs>
+<FunctionTabs className='space-y-2'>
   <TabsList>
     <TabsTrigger value='library'>Library</TabsTrigger>
     <TabsTrigger value='cli'>CLI</TabsTrigger>

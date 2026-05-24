@@ -15,14 +15,14 @@ const Demo = () => {
   if (!devicePixelRatio.supported) {
     return (
       <p>
-        Api not supported, make sure to check for compatibility with different browsers when using
+        API not supported, make sure to check for compatibility with different browsers when using
         this{' '}
         <a
           href='https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio'
           rel='noreferrer'
           target='_blank'
         >
-          api
+          API
         </a>
       </p>
     );
@@ -46,7 +46,7 @@ const Demo = () => {
 
         <div className='relative flex flex-col items-center gap-1'>
           <span className='text-foreground font-mono text-5xl font-semibold tabular-nums'>
-            {devicePixelRatio.value.toFixed(2)}×
+            {devicePixelRatio.value.toFixed(2)}x
           </span>
           <span className='text-muted-foreground font-mono text-[10px] tracking-[0.15em] uppercase'>
             {getDisplayLabel(devicePixelRatio.value)}
