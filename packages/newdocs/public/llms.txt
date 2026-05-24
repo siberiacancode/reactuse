@@ -32,6 +32,8 @@
 - [useDocumentTitle](https://reactuse.org/functions/hooks/useDocumentTitle): Hook that manages the document title and allows updating it
 - [useDocumentVisibility](https://reactuse.org/functions/hooks/useDocumentVisibility): Hook that provides the current visibility state of the document
 - [useEventListener](https://reactuse.org/functions/hooks/useEventListener): Hook that attaches an event listener to the specified target
+- [useEventSource](https://reactuse.org/functions/hooks/useEventSource): Hook that provides a reactive wrapper for event source
+- [useEyeDropper](https://reactuse.org/functions/hooks/useEyeDropper): Hook that gives you access to the eye dropper
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element

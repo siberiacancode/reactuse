@@ -1,3 +1,5 @@
+'use client'
+
 import type { SubmitEvent } from 'react';
 
 import { useAutoScroll, useEventSource, useField } from '@siberiacancode/reactuse';

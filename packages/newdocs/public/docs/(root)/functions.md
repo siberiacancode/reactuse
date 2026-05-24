@@ -47,3 +47,5 @@ A quick list of available functions.
 - [useDropZone](/functions/hooks/useDropZone): Hook that provides drop zone functionality
 - [useEvent](/functions/hooks/useEvent): Hook that creates an event and returns a stable reference of it
 - [useEventListener](/functions/hooks/useEventListener): Hook that attaches an event listener to the specified target
+- [useEventSource](/functions/hooks/useEventSource): Hook that provides a reactive wrapper for event source
+- [useEyeDropper](/functions/hooks/useEyeDropper): Hook that gives you access to the eye dropper

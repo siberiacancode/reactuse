@@ -241,7 +241,7 @@ const Demo = () => {
             {...messageField.register()}
           />
           <button
-            className='absolute top-1/2 right-1 h-8! -translate-y-1/2 p-2!'
+            className='absolute top-1/2 right-1 h-8! -translate-y-1/2 rounded-full! p-2!'
             disabled={!message}
             type='submit'
           >

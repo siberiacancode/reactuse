@@ -1,3 +1,5 @@
+'use client'
+
 import { useCopy, useEyeDropper } from '@siberiacancode/reactuse';
 import { CheckIcon, CopyIcon, PipetteIcon } from 'lucide-react';
 
