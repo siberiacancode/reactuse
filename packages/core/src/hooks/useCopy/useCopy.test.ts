@@ -1,6 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
+
 import { useCopy } from './useCopy';
 
 const mockNavigatorClipboardWriteText = vi.fn();
@@ -24,6 +26,14 @@ afterEach(vi.useRealTimers);
 
 it('Should use copy', () => {
   const { result } = renderHook(useCopy);
+
+  expect(result.current.copied).toBeFalsy();
+  expect(result.current.value).toBeUndefined();
+  expect(result.current.copy).toBeTypeOf('function');
+});
+
+it('Should use copy on server side', () => {
+  const { result } = renderHookServer(useCopy);
 
   expect(result.current.copied).toBeFalsy();
   expect(result.current.value).toBeUndefined();

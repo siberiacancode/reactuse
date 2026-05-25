@@ -30,7 +30,7 @@ export const FunctionBanner = async ({
 
   return (
     <div className='flex flex-col overflow-hidden rounded-2xl border'>
-      <div className='demo-ui flex min-h-[350px] items-center justify-center px-18 py-12'>
+      <div className='demo-ui flex min-h-[350px] items-center justify-center px-12 py-8 md:px-18 md:py-12'>
         <Demo />
       </div>
 

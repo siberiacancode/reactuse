@@ -159,6 +159,8 @@ export const useCookie = (<Value>(key: string, params?: any) => {
 
   if (typeof document === 'undefined')
     return {
+      set: () => {},
+      remove: () => {},
       value: typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue
     } as UseCookieReturn<Value>;
 

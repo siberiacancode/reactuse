@@ -173,7 +173,7 @@ const Demo = () => {
   });
 
   return (
-    <section className='demo-ui flex w-full max-w-md flex-col gap-3 p-4'>
+    <section className='flex w-full max-w-md flex-col gap-3 p-4'>
       <h2 className='text-foreground px-1 text-sm font-semibold'>Inbox</h2>
 
       <div data-slot='tabs'>

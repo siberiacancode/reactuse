@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useScript } from './useScript';
 
 const src = 'script.js';
@@ -11,6 +13,11 @@ afterEach(() => {
 
 it('Should use script', () => {
   const { result } = renderHook(() => useScript(src));
+  expect(typeof result.current).toBe('string');
+});
+
+it('Should use script on server side', () => {
+  const { result } = renderHookServer(() => useScript(src));
   expect(typeof result.current).toBe('string');
 });
 

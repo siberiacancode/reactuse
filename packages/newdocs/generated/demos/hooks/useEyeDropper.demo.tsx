@@ -25,7 +25,7 @@ const Demo = () => {
   const color = eyeDropper.value;
 
   return (
-    <section className='demo-ui flex flex-col items-center gap-3 p-4'>
+    <section className='flex flex-col items-center gap-3 p-4'>
       <div className='border-border bg-card flex aspect-square w-[280px] items-center justify-center overflow-hidden rounded-2xl border shadow-sm'>
         <img
           alt='Pick a color from this image'

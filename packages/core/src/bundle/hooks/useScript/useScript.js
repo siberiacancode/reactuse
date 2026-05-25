@@ -16,7 +16,9 @@ export const SCRIPT_STATUS_ATTRIBUTE_NAME = 'script-status';
  * const status = useScript('https://example.com/script.js');
  */
 export const useScript = (src, options = {}) => {
+  const isServer = typeof document === 'undefined';
   const [status, setStatus] = useState(() => {
+    if (isServer) return 'loading';
     const script = document.querySelector(`script[src="${src}"]`);
     const scriptStatus = script?.getAttribute(SCRIPT_STATUS_ATTRIBUTE_NAME);
     if (scriptStatus) return scriptStatus;
@@ -25,6 +27,7 @@ export const useScript = (src, options = {}) => {
   });
   const { removeOnUnmount = true, async = true } = options;
   useEffect(() => {
+    if (isServer) return;
     const existedScript = document.querySelector(`script[src="${src}"]`);
     const scriptStatus = existedScript?.getAttribute(SCRIPT_STATUS_ATTRIBUTE_NAME);
     if (scriptStatus) return setStatus(scriptStatus);

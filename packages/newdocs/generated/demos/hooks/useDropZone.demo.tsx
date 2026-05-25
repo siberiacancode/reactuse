@@ -1,8 +1,8 @@
 'use client'
 
-import { useDropZone } from '@siberiacancode/reactuse';
+import { useDropZone, useFileDialog } from '@siberiacancode/reactuse';
 import { ImageIcon, UploadCloudIcon, XIcon } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { cn } from '@/utils/lib';
 
@@ -21,7 +21,6 @@ const formatSize = (bytes: number) => {
 
 const Demo = () => {
   const [file, setFile] = useState<FilePreview | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const readFile = (source: File) => {
     const reader = new FileReader();
@@ -41,13 +40,19 @@ const Demo = () => {
     readFile(files[0]);
   };
 
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = event.target.files?.[0];
-    if (selected) readFile(selected);
-    event.target.value = '';
-  };
+  const fileDialog = useFileDialog(
+    (files) => {
+      if (!files?.length) return;
+      readFile(files[0]);
+    },
+    {
+      accept: 'image/*',
+      multiple: false,
+      reset: true
+    }
+  );
 
-  const onPick = () => inputRef.current?.click();
+  const onPick = () => fileDialog.open();
   const onRemove = () => setFile(null);
 
   const dropZone = useDropZone<HTMLDivElement>({
@@ -57,14 +62,6 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-md flex-col p-4'>
-      <input
-        ref={inputRef}
-        accept='image/*'
-        className='hidden'
-        type='file'
-        onChange={onInputChange}
-      />
-
       {!file && (
         <div
           ref={dropZone.ref}

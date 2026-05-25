@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useShallowEffect } from './useShallowEffect';
 
 it('Should use shallow effect', () => {
@@ -8,6 +10,14 @@ it('Should use shallow effect', () => {
   renderHook(() => useShallowEffect(effect, []));
 
   expect(effect).toHaveBeenCalledOnce();
+});
+
+it('Should use shallow effect on server side', () => {
+  const effect = vi.fn();
+
+  renderHookServer(() => useShallowEffect(effect, []));
+
+  expect(effect).not.toHaveBeenCalled();
 });
 
 it('Should not run effect when deps are shallow equal', () => {

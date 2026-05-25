@@ -1,5 +1,7 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useLogger } from './useLogger';
 
 it('Should use logger', () => {
@@ -9,6 +11,14 @@ it('Should use logger', () => {
 
   expect(mockConsoleLog).toHaveBeenCalledWith('Component mounted', 1, 2, 3);
   expect(mockConsoleLog).toHaveBeenCalledOnce();
+});
+
+it('Should use logger on server side', () => {
+  const mockConsoleLog = vi.spyOn(console, 'log');
+
+  renderHookServer(() => useLogger('Component', [1, 2, 3]));
+
+  expect(mockConsoleLog).not.toHaveBeenCalled();
 });
 
 it('Should log unmount', () => {

@@ -33,7 +33,7 @@ const DEFAULT_OPTIONS = {
  */
 export const useFileDialog = (...params) => {
   const callback = typeof params[0] === 'function' ? params[0] : undefined;
-  const options = callback ? params[0] : params[1];
+  const options = callback ? params[1] : params[0];
   const [value, setValue] = useState(null);
   const inputRef = useRef(null);
   const internalCallbackRef = useRef(callback);

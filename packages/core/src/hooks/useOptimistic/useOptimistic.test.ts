@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useOptimistic } from './useOptimistic';
 
 beforeEach(vi.useFakeTimers);
@@ -7,6 +9,17 @@ afterEach(vi.useRealTimers);
 
 it('Should use optimistic', () => {
   const { result } = renderHook(() =>
+    useOptimistic(0, (current, optimistic: number) => current + optimistic)
+  );
+
+  const [, update] = result.current;
+
+  expect(result.current[0]).toBe(0);
+  expect(update).toBeTypeOf('function');
+});
+
+it('Should use optimistic on server side', () => {
+  const { result } = renderHookServer(() =>
     useOptimistic(0, (current, optimistic: number) => current + optimistic)
   );
 

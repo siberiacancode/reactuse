@@ -32,7 +32,7 @@ const Demo = () => {
   });
 
   return (
-    <section className='demo-ui flex w-full max-w-2xl flex-col p-4'>
+    <section className='flex w-full max-w-2xl flex-col p-4'>
       <div
         ref={containerRef}
         className='border-border bg-card relative h-[320px] w-full cursor-crosshair overflow-hidden rounded-xl border shadow-sm select-none'

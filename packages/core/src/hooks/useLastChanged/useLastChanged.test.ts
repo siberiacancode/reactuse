@@ -1,9 +1,17 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useLastChanged } from './useLastChanged';
 
 it('Should use last changed', () => {
-  const { result } = renderHook(useLastChanged);
+  const { result } = renderHook(() => useLastChanged('value'));
+
+  expect(result.current).toBeNull();
+});
+
+it('Should use last changed on server side', () => {
+  const { result } = renderHookServer(() => useLastChanged('value'));
 
   expect(result.current).toBeNull();
 });

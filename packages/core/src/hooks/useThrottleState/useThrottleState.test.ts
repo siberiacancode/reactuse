@@ -1,6 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
+
 import { useThrottleState } from './useThrottleState';
 
 beforeEach(vi.useFakeTimers);
@@ -11,6 +13,13 @@ afterEach(() => {
 
 it('Should use throttle state', () => {
   const { result } = renderHook(() => useThrottleState('value', 200));
+
+  expect(result.current[0]).toBe('value');
+  expect(result.current[1]).toBeTypeOf('function');
+});
+
+it('Should use throttle state on server side', () => {
+  const { result } = renderHookServer(() => useThrottleState('value', 200));
 
   expect(result.current[0]).toBe('value');
   expect(result.current[1]).toBeTypeOf('function');

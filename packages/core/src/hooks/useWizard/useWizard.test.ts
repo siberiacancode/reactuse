@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useWizard } from './useWizard';
 
 const WIZARD_MAP = [
@@ -10,6 +12,16 @@ const WIZARD_MAP = [
 
 it('Should use wizard', () => {
   const { result } = renderHook(() => useWizard(WIZARD_MAP));
+
+  expect(result.current.currentStepId).toBe('1');
+  expect(result.current.history).toEqual(['1']);
+  expect(result.current.set).toBeTypeOf('function');
+  expect(result.current.back).toBeTypeOf('function');
+  expect(result.current.reset).toBeTypeOf('function');
+});
+
+it('Should use wizard on server side', () => {
+  const { result } = renderHookServer(() => useWizard(WIZARD_MAP));
 
   expect(result.current.currentStepId).toBe('1');
   expect(result.current.history).toEqual(['1']);

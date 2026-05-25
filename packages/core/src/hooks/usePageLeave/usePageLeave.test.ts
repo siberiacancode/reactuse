@@ -1,10 +1,20 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { usePageLeave } from './usePageLeave';
 
 it('Should use page leave', () => {
   const callback = vi.fn();
   const { result } = renderHook(() => usePageLeave(callback));
+
+  expect(typeof result.current).toBe('boolean');
+});
+
+it('Should use page leave on server side', () => {
+  const callback = vi.fn();
+  const { result } = renderHookServer(() => usePageLeave(callback));
+
   expect(typeof result.current).toBe('boolean');
 });
 

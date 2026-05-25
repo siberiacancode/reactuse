@@ -1,10 +1,17 @@
 import { renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
+
 import { useFps } from './useFps';
 
 it('Should use fps', () => {
   const { result } = renderHook(useFps);
+  expect(result.current).toBe(0);
+});
+
+it('Should use fps on server side', () => {
+  const { result } = renderHookServer(useFps);
   expect(result.current).toBe(0);
 });
 

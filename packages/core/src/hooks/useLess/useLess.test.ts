@@ -1,9 +1,17 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useLess } from './useLess';
 
 it('Should use less', () => {
   const { result } = renderHook(() => useLess('value'));
+
+  expect(result.current).toBe('value');
+});
+
+it('Should use less on server side', () => {
+  const { result } = renderHookServer(() => useLess('value'));
 
   expect(result.current).toBe('value');
 });

@@ -42,6 +42,7 @@
 - [useClickOutside](https://reactuse.org/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
 - [useDoubleClick](https://reactuse.org/functions/hooks/useDoubleClick): Hook that defines the logic when double clicking an element
 - [useDropZone](https://reactuse.org/functions/hooks/useDropZone): Hook that provides drop zone functionality
+- [useFileDialog](https://reactuse.org/functions/hooks/useFileDialog): Hook to handle file input
 ### Lifecycles
 
 - [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates

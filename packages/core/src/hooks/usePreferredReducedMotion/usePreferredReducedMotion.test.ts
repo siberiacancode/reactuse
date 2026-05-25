@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { createTrigger } from '@/tests';
+import { createTrigger, renderHookServer } from '@/tests';
 
 import { usePreferredReducedMotion } from './usePreferredReducedMotion';
 
@@ -37,6 +37,12 @@ afterEach(() => {
 
 it('Should use preferred reduced motion', () => {
   const { result } = renderHook(usePreferredReducedMotion);
+
+  expect(result.current).toBe('no-preference');
+});
+
+it('Should use preferred reduced motion on server side', () => {
+  const { result } = renderHookServer(usePreferredReducedMotion);
 
   expect(result.current).toBe('no-preference');
 });

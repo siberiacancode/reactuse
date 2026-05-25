@@ -1,9 +1,17 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useRenderCount } from './useRenderCount';
 
 it('Should use render count', () => {
   const { result } = renderHook(useRenderCount);
+
+  expect(result.current).toBe(0);
+});
+
+it('Should use render count on server side', () => {
+  const { result } = renderHookServer(useRenderCount);
 
   expect(result.current).toBe(0);
 });

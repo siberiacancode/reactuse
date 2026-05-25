@@ -15,7 +15,7 @@ const Demo = () => {
   const favicon = useFavicon(FAVICONS[0].url);
 
   return (
-    <section className='demo-ui flex w-full max-w-md flex-col gap-3 p-4'>
+    <section className='flex w-full max-w-md flex-col gap-3 p-4'>
       <div className='flex flex-col gap-1'>
         <h2 className='text-foreground text-sm font-semibold'>Choose tab icon</h2>
         <p className='text-muted-foreground text-xs'>

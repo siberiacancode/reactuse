@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { getTimeFromSeconds, useTimer } from './useTimer';
 
 beforeEach(() => {
@@ -68,6 +70,25 @@ describe('getTimeFromSeconds', () => {
 
 it('Should use timer', () => {
   const { result } = renderHook(() => useTimer(65));
+
+  expect(result.current.seconds).toBe(5);
+  expect(result.current.minutes).toBe(1);
+  expect(result.current.hours).toBe(0);
+  expect(result.current.days).toBe(0);
+  expect(result.current.count).toBe(65);
+  expect(result.current.active).toBeTruthy();
+  expect(result.current.restart).toBeTypeOf('function');
+  expect(result.current.start).toBeTypeOf('function');
+  expect(result.current.pause).toBeTypeOf('function');
+  expect(result.current.resume).toBeTypeOf('function');
+  expect(result.current.toggle).toBeTypeOf('function');
+  expect(result.current.clear).toBeTypeOf('function');
+  expect(result.current.increase).toBeTypeOf('function');
+  expect(result.current.decrease).toBeTypeOf('function');
+});
+
+it('Should use timer on server side', () => {
+  const { result } = renderHookServer(() => useTimer(65));
 
   expect(result.current.seconds).toBe(5);
   expect(result.current.minutes).toBe(1);

@@ -1,9 +1,18 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useRefState } from './useRefState';
 
 it('Should initialize with the given initial value', () => {
   const { result } = renderHook(() => useRefState(0));
+
+  expect(result.current.current).toBe(0);
+  expect(result.current).toBeTypeOf('function');
+});
+
+it('Should use ref state on server side', () => {
+  const { result } = renderHookServer(() => useRefState(0));
 
   expect(result.current.current).toBe(0);
   expect(result.current).toBeTypeOf('function');

@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone",
+      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog",
 
       "---async---",
       "useAsync",

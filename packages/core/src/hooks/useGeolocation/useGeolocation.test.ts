@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react';
 
 import { useGeolocation } from '@/hooks/useGeolocation/useGeolocation';
+import { renderHookServer } from '@/tests';
 
 const mockNavigatorGeolocation = {
   getCurrentPosition: vi.fn(),
@@ -16,6 +17,23 @@ beforeEach(() => {
 
 it('Should use geolocation', () => {
   const { result } = renderHook(useGeolocation);
+
+  expect(result.current).toEqual({
+    loading: true,
+    error: null,
+    timestamp: expect.any(Number),
+    accuracy: 0,
+    latitude: Number.POSITIVE_INFINITY,
+    longitude: Number.POSITIVE_INFINITY,
+    altitude: null,
+    altitudeAccuracy: null,
+    heading: null,
+    speed: null
+  });
+});
+
+it('Should use geolocation on server side', () => {
+  const { result } = renderHookServer(useGeolocation);
 
   expect(result.current).toEqual({
     loading: true,

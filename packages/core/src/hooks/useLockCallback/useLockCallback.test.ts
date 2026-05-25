@@ -1,6 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
+
 import { useLockCallback } from './useLockCallback';
 
 beforeEach(() => {
@@ -13,6 +15,11 @@ afterEach(() => {
 
 it('Should lock callback', () => {
   const { result } = renderHook(() => useLockCallback(vi.fn()));
+  expect(result.current).toBeTypeOf('function');
+});
+
+it('Should lock callback on server side', () => {
+  const { result } = renderHookServer(() => useLockCallback(vi.fn()));
   expect(result.current).toBeTypeOf('function');
 });
 

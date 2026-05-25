@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { COOKIE_EVENT } from '../useCookie/useCookie';
 import { clearCookies, useCookies } from './useCookies';
 
@@ -7,6 +9,16 @@ beforeEach(() => clearCookies());
 
 it('Should use cookies', () => {
   const { result } = renderHook(() => useCookies());
+
+  expect(result.current.value).toEqual({});
+  expect(result.current.set).toBeTypeOf('function');
+  expect(result.current.remove).toBeTypeOf('function');
+  expect(result.current.getAll).toBeTypeOf('function');
+  expect(result.current.clear).toBeTypeOf('function');
+});
+
+it('Should use cookies on server side', () => {
+  const { result } = renderHookServer(() => useCookies());
 
   expect(result.current.value).toEqual({});
   expect(result.current.set).toBeTypeOf('function');

@@ -1,3 +1,5 @@
+'use client'
+
 import { useClickOutside, useDisclosure, useField, useFileDialog } from '@siberiacancode/reactuse';
 import {
   FileImageIcon,

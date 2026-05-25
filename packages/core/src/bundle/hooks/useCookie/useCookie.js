@@ -69,6 +69,8 @@ export const useCookie = (key, params) => {
   const initialValue = options ? options?.initialValue : params;
   if (typeof document === 'undefined')
     return {
+      set: () => {},
+      remove: () => {},
       value: typeof initialValue === 'function' ? initialValue() : initialValue
     };
   const serializer = (value) => {

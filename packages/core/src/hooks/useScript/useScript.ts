@@ -28,7 +28,10 @@ export interface UseScriptOptions extends ComponentProps<'script'> {
  * const status = useScript('https://example.com/script.js');
  */
 export const useScript = (src: string, options: UseScriptOptions = {}) => {
+  const isServer = typeof document === 'undefined';
   const [status, setStatus] = useState<UseScriptStatus>(() => {
+    if (isServer) return 'loading';
+
     const script = document.querySelector(`script[src="${src}"]`) as HTMLScriptElement;
     const scriptStatus = script?.getAttribute(SCRIPT_STATUS_ATTRIBUTE_NAME) as UseScriptStatus;
     if (scriptStatus) return scriptStatus;
@@ -39,6 +42,8 @@ export const useScript = (src: string, options: UseScriptOptions = {}) => {
   const { removeOnUnmount = true, async = true } = options;
 
   useEffect(() => {
+    if (isServer) return;
+
     const existedScript = document.querySelector(`script[src="${src}"]`) as HTMLScriptElement;
     const scriptStatus = existedScript?.getAttribute(
       SCRIPT_STATUS_ATTRIBUTE_NAME

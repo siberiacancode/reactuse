@@ -26,7 +26,7 @@ const Demo = () => {
   };
 
   return (
-    <section className='demo-ui flex w-full max-w-md flex-col gap-1 p-4'>
+    <section className='flex w-full max-w-md flex-col gap-1 p-4'>
       <div className='mb-3 flex flex-col gap-1'>
         <h2 className='text-foreground text-sm font-semibold'>Account settings</h2>
         <p className='text-muted-foreground text-xs'>Update your public profile and preferences.</p>

@@ -100,7 +100,7 @@ const Demo = () => {
   };
 
   return (
-    <section className='demo-ui flex flex-col items-center gap-3 p-4'>
+    <section className='flex flex-col items-center gap-3 p-4'>
       <div className='border-border bg-card relative w-full max-w-md overflow-hidden rounded-xl border shadow-sm'>
         <div className='relative aspect-[4/3] overflow-hidden bg-neutral-900 select-none'>
           <div

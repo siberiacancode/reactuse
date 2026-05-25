@@ -1,9 +1,16 @@
 import { renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useOperatingSystem } from './useOperatingSystem';
 
 it('Should use operating system', () => {
   const { result } = renderHook(useOperatingSystem);
+  expect(typeof result.current).toBe('string');
+});
+
+it('Should use operating system on server side', () => {
+  const { result } = renderHookServer(useOperatingSystem);
   expect(typeof result.current).toBe('string');
 });
 

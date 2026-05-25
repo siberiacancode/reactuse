@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
+import { renderHookServer } from '@/tests';
+
 import { useIdle } from './useIdle';
 
 beforeEach(() => {
@@ -8,6 +10,13 @@ beforeEach(() => {
 
 it('Should use idle', () => {
   const { result } = renderHook(useIdle);
+
+  expect(result.current.idle).toBeFalsy();
+  expect(result.current.lastActive).toBeLessThanOrEqual(Date.now());
+});
+
+it('Should use idle on server side', () => {
+  const { result } = renderHookServer(useIdle);
 
   expect(result.current.idle).toBeFalsy();
   expect(result.current.lastActive).toBeLessThanOrEqual(Date.now());
