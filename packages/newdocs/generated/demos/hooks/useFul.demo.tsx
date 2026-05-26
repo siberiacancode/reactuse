@@ -1,3 +1,5 @@
+'use client'
+
 import { useFul } from '@siberiacancode/reactuse';
 
 const Demo = () => {

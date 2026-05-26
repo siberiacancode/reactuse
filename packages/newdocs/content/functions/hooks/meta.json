@@ -11,7 +11,7 @@
       "useAsyncEffect","useDidUpdate",
 
       "---browser---",
-      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen",
 
       "---utilities---",
       "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent",
@@ -23,6 +23,9 @@
       "useBrowserLanguage",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation"
+      "useDeviceMotion","useDeviceOrientation",
+
+      "---humor---",
+      "useFul"
     ]
   }

@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779190580000
+lastModifiedTime: 1779803241000
 ---
 
 import metadata from './useFocusTrap.meta.json';

@@ -15,8 +15,7 @@ import { FunctionCode } from './app/(docs)/functions/_components/function-code';
 import { FunctionContributors } from './app/(docs)/functions/_components/function-contributors';
 import { FunctionDemo } from './app/(docs)/functions/_components/function-demo';
 import { FunctionTabs } from './app/(docs)/functions/_components/function-tabs';
-import { Callout } from './components/callout';
-import { MARKDOWN_COMPONENTS } from './src/components';
+import { Callout, MARKDOWN_COMPONENTS } from './src/components';
 import { PackageManagerTab, PackageManagerTabs } from './src/components/code-block-command';
 import {
   Avatar,

@@ -8,7 +8,7 @@
   "usage": "medium",
   "description": "Hook that traps focus within a given element",
   "category": "Elements",
-  "lastModified": 1779190580000,
+  "lastModified": 1779803241000,
   "examples": [
     "const { active, disable, toggle, enable } = useFocusTrap(ref, true);",
     "const { ref, active, disable, toggle, enable } = useFocusTrap(true);"

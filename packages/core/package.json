@@ -1,6 +1,6 @@
 {
   "name": "@siberiacancode/reactuse",
-  "version": "0.3.28",
+  "version": "0.3.29",
   "description": "The ultimate collection of react hooks",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -66,9 +66,6 @@
     "@types/react": {
       "optional": true
     }
-  },
-  "dependencies": {
-    "screenfull": "^6.0.2"
   },
   "devDependencies": {
     "@siberiacancode/vitest": "^2.4.1",

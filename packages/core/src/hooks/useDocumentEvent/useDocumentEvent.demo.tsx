@@ -9,9 +9,7 @@ const Demo = () => {
   useDocumentEvent('click', (event) => {
     const target = event.target;
 
-    if (!(target instanceof Element) || !target.closest('[data-cookie-target]')) {
-      return;
-    }
+    if (!(target instanceof Element) || !target.closest('[data-cookie-target]')) return;
 
     cookies.inc();
 

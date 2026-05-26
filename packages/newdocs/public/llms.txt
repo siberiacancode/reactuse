@@ -37,6 +37,7 @@
 - [useFavicon](https://reactuse.org/functions/hooks/useFavicon): Hook that manages the favicon
 - [useFileSystemAccess](https://reactuse.org/functions/hooks/useFileSystemAccess): Hook for reading and writing local files via the File System Access API
 - [useFps](https://reactuse.org/functions/hooks/useFps): Hook that measures frames per second
+- [useFullscreen](https://reactuse.org/functions/hooks/useFullscreen): Hook to handle fullscreen events
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
@@ -47,6 +48,9 @@
 - [useFileDialog](https://reactuse.org/functions/hooks/useFileDialog): Hook to handle file input
 - [useFocus](https://reactuse.org/functions/hooks/useFocus): Hook that allows you to focus on a specific element
 - [useFocusTrap](https://reactuse.org/functions/hooks/useFocusTrap): Hook that traps focus within a given element
+### Humors
+
+- [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful
 ### Lifecycles
 
 - [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates

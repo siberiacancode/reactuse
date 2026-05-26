@@ -56,3 +56,5 @@ A quick list of available functions.
 - [useFocus](/functions/hooks/useFocus): Hook that allows you to focus on a specific element
 - [useFocusTrap](/functions/hooks/useFocusTrap): Hook that traps focus within a given element
 - [useFps](/functions/hooks/useFps): Hook that measures frames per second
+- [useFul](/functions/hooks/useFul): Hook that can be so useful
+- [useFullscreen](/functions/hooks/useFullscreen): Hook to handle fullscreen events

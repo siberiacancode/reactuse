@@ -11,9 +11,7 @@ const Demo = () => {
   useDocumentEvent('click', (event) => {
     const target = event.target;
 
-    if (!(target instanceof Element) || !target.closest('[data-cookie-target]')) {
-      return;
-    }
+    if (!(target instanceof Element) || !target.closest('[data-cookie-target]')) return;
 
     cookies.inc();
 
@@ -28,7 +26,10 @@ const Demo = () => {
 
   return (
     <section className='flex flex-col items-center gap-4 p-8 select-none'>
-      <span data-cookie-target className='cursor-pointer text-7xl transition-transform duration-100 active:scale-95'>
+      <span
+        data-cookie-target
+        className='cursor-pointer text-7xl transition-transform duration-100 active:scale-95'
+      >
         🍪
       </span>
 

@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import screenfull from 'screenfull';
+import { useEffect, useRef, useState } from 'react';
 import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
@@ -7,6 +6,8 @@ import { useRefState } from '../useRefState/useRefState';
  * @description - Hook to handle fullscreen events
  * @category Browser
  * @usage low
+ *
+ * @browserapi Fullscreen API https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
  *
  * @overload
  * @param {HookTarget} target The target element for fullscreen
@@ -33,53 +34,37 @@ export const useFullscreen = (...params) => {
   const options = target ? params[1] : params[0];
   const [value, setValue] = useState(options?.initialValue ?? false);
   const internalRef = useRefState();
-  const onChange = () => {
-    if (!screenfull.isEnabled) return;
-    if (screenfull.isFullscreen) {
-      options?.onEnter?.();
-    } else {
-      screenfull.off('change', onChange);
-      options?.onExit?.();
-    }
-    setValue(screenfull.isFullscreen);
-  };
+  const elementRef = useRef(null);
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
   const enter = () => {
-    const element = target ? isTarget.getElement(target) : internalRef.current;
+    const element = elementRef.current;
     if (!element) return;
-    if (screenfull.isEnabled) {
-      try {
-        screenfull.request(element);
-        screenfull.on('change', onChange);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    element.requestFullscreen();
   };
   const exit = () => {
-    if (screenfull.isEnabled) screenfull.exit();
+    if (!document.fullscreenElement) return;
+    document.exitFullscreen();
   };
   const toggle = () => {
     if (value) return exit();
     enter();
   };
-  useEffect(
-    () => () => {
-      if (screenfull.isEnabled) screenfull.off('change', onChange);
-    },
-    []
-  );
-  if (target)
-    return {
-      enter,
-      exit,
-      toggle,
-      value
+  useEffect(() => {
+    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!element) return;
+    elementRef.current = element;
+    const onChange = () => {
+      const active = document.fullscreenElement === elementRef.current;
+      setValue((currentValue) => {
+        if (!currentValue && active) optionsRef.current?.onEnter?.();
+        if (currentValue && !active) optionsRef.current?.onExit?.();
+        return active;
+      });
     };
-  return {
-    ref: internalRef,
-    enter,
-    exit,
-    toggle,
-    value
-  };
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  if (target) return { enter, exit, toggle, value };
+  return { ref: internalRef, enter, exit, toggle, value };
 };

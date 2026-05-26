@@ -1,16 +1,20 @@
 ---
-title: useFocusTrap
-description: Hook that traps focus within a given element
-category: elements
-usage: medium
+title: useFul
+description: Hook that can be so useful
+category: humor
+usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779803241000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useFocusTrap.meta.json';
+import metadata from './useFul.meta.json';
 
+
+<Callout title='Warning' variant='warning' className='my-5'>
+  {metadata.warning}
+</Callout>
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
 ## Installation
@@ -28,7 +32,7 @@ import metadata from './useFocusTrap.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useFocusTrap
+    npx useverse@latest add useFul
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,14 +51,8 @@ import metadata from './useFocusTrap.meta.json';
 ## Usage
 
 ```tsx
-const { active, disable, toggle, enable } = useFocusTrap(ref, true);
-// or
-const { ref, active, disable, toggle, enable } = useFocusTrap(true);
+const value = useFul(state);
 ```
-
-## Type Declarations
-
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
 
 ## API
 

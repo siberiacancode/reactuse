@@ -79,6 +79,13 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`import metadata from './${metadata.name}.meta.json';`);
   result.push('');
 
+  if (metadata.warning) {
+    result.push('');
+    result.push(`<Callout title='Warning' variant='warning' className='my-5'>`);
+    result.push(`  {metadata.warning}`);
+    result.push(`</Callout>`);
+  }
+
   result.push(
     `<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />`
   );
@@ -267,7 +274,7 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 49).map(async (element) => {
+    content.slice(0, 51).map(async (element) => {
       const content = await getContentFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);

@@ -1,15 +1,15 @@
 ---
-title: useFocusTrap
-description: Hook that traps focus within a given element
-category: elements
-usage: medium
+title: useFullscreen
+description: Hook to handle fullscreen events
+category: browser
+usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779803241000
+lastModifiedTime: 1760199703000
 ---
 
-import metadata from './useFocusTrap.meta.json';
+import metadata from './useFullscreen.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useFocusTrap.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useFocusTrap
+    npx useverse@latest add useFullscreen
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,9 @@ import metadata from './useFocusTrap.meta.json';
 ## Usage
 
 ```tsx
-const { active, disable, toggle, enable } = useFocusTrap(ref, true);
+const { enter, exit, toggle, value } = useFullscreen(ref);
 // or
-const { ref, active, disable, toggle, enable } = useFocusTrap(true);
+const { ref, enter, exit, toggle, value } = useFullscreen();
 ```
 
 ## Type Declarations
