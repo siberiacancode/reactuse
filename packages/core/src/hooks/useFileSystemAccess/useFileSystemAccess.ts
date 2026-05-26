@@ -81,17 +81,17 @@ export interface UseFileSystemAccessReturn<Data = string | ArrayBuffer | Blob> {
   /** MIME type */
   type: string;
   /** Create a new file via save picker */
-  create: (createOptions?: UseFileSystemAccessShowSaveOptions) => Promise<void>;
+  create: (createOptions?: UseFileSystemAccessShowSaveOptions) => Promise<Data>;
   /** Open an existing file */
-  open: (openOptions?: UseFileSystemAccessCommonOptions) => Promise<void>;
+  open: (openOptions?: UseFileSystemAccessCommonOptions) => Promise<Data>;
   /** Save to the current handle, or prompt with {@link saveAs} if none */
-  save: (saveOptions?: UseFileSystemAccessShowSaveOptions) => Promise<void>;
+  save: (saveOptions?: UseFileSystemAccessShowSaveOptions) => Promise<Data>;
   /** Always prompt for a file path then save */
-  saveAs: (saveOptions?: UseFileSystemAccessShowSaveOptions) => Promise<void>;
+  saveAs: (saveOptions?: UseFileSystemAccessShowSaveOptions) => Promise<Data>;
   /** Set the data */
   set: (data: Data) => void;
   /** Re-read data from the current handle using `dataType` */
-  update: () => Promise<void>;
+  update: () => Promise<Data>;
 }
 
 export interface UseFileSystemAccess {
@@ -141,39 +141,40 @@ export const useFileSystemAccess = ((
 
   const load = async () => {
     const handle = handleRef.current;
-    if (!handle) return;
+    if (!handle) throw new Error('No file handle');
     const file = await handle.getFile();
     setFile(file);
 
-    if (dataType === 'Text') return setData(await file.text());
-    if (dataType === 'ArrayBuffer') return setData(await file.arrayBuffer());
-    if (dataType === 'Blob') return setData(file);
-    throw new Error(`Invalid data type: ${dataType}`);
+    const actionMap = {
+      Text: () => file.text(),
+      ArrayBuffer: () => file.arrayBuffer(),
+      Blob: () => file
+    };
+
+    const data = await actionMap[dataType]();
+    setData(data);
+    return data;
   };
 
   const open = async (params?: UseFileSystemAccessCommonOptions) => {
-    if (!supported) return;
     const [handle] = await window.showOpenFilePicker({
       ...options,
       ...params
     });
     handleRef.current = handle;
-    await load();
+    return load();
   };
 
   const create = async (params: UseFileSystemAccessShowSaveOptions = {}) => {
-    if (!supported) return;
     handleRef.current = await window.showSaveFilePicker({
       ...options,
       ...params
     });
     setData(undefined);
-    await load();
+    return load();
   };
 
   const saveAs = async (params?: UseFileSystemAccessShowSaveOptions) => {
-    if (!supported) return;
-
     handleRef.current = await window.showSaveFilePicker({
       ...options,
       ...params
@@ -183,24 +184,20 @@ export const useFileSystemAccess = ((
     await writable.write(data as Blob | BufferSource);
     await writable.close();
 
-    await load();
+    return load();
   };
 
   const save = async (params?: UseFileSystemAccessShowSaveOptions) => {
-    if (!supported) return;
-
     if (!handleRef.current) return saveAs(params);
 
     const writable = await handleRef.current.createWritable();
     await writable.write(data as Blob | BufferSource);
     await writable.close();
 
-    await load();
+    return load();
   };
 
-  const update = async () => {
-    await load();
-  };
+  const update = load;
 
   const set = (data: string | ArrayBuffer | Blob) => setData(data);
 

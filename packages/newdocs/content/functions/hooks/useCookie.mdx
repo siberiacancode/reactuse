@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1779722441000
 ---
 
 import metadata from './useCookie.meta.json';

@@ -52,3 +52,7 @@ A quick list of available functions.
 - [useFavicon](/functions/hooks/useFavicon): Hook that manages the favicon
 - [useField](/functions/hooks/useField): Hook to manage a form field
 - [useFileDialog](/functions/hooks/useFileDialog): Hook to handle file input
+- [useFileSystemAccess](/functions/hooks/useFileSystemAccess): Hook for reading and writing local files via the File System Access API
+- [useFocus](/functions/hooks/useFocus): Hook that allows you to focus on a specific element
+- [useFocusTrap](/functions/hooks/useFocusTrap): Hook that traps focus within a given element
+- [useFps](/functions/hooks/useFps): Hook that measures frames per second

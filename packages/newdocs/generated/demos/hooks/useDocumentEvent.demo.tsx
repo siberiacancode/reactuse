@@ -9,6 +9,12 @@ const Demo = () => {
   const [popId, setPopId] = useState(0);
 
   useDocumentEvent('click', (event) => {
+    const target = event.target;
+
+    if (!(target instanceof Element) || !target.closest('[data-cookie-target]')) {
+      return;
+    }
+
     cookies.inc();
 
     const id = popId;
@@ -22,7 +28,9 @@ const Demo = () => {
 
   return (
     <section className='flex flex-col items-center gap-4 p-8 select-none'>
-      <span className='text-7xl transition-transform duration-100 active:scale-95'>🍪</span>
+      <span data-cookie-target className='cursor-pointer text-7xl transition-transform duration-100 active:scale-95'>
+        🍪
+      </span>
 
       <div className='flex flex-col items-center gap-1'>
         <span className='text-foreground font-mono text-5xl font-semibold tabular-nums'>

@@ -1,0 +1,673 @@
+{
+  "code": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useEffect, useRef, useState } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { HookTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { isTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { StateRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useRefState } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/** The use focus options type */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The enabled state of the focus hook */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The initial focus state of the target */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The on blur callback */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  onBlur</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The on focus callback */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  onFocus</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/** The use focus return type */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The boolean state value of the target */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  focused</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Blur the target */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  blur</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Focus the target */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  focus</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocus</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/**</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@name</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useFocus</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@description</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> - Hook that allows you to focus on a specific element</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@category</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Elements</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@usage</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> medium</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {HookTarget}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target element to focus</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {(event: FocusEvent) => void}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [callback]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback function to be invoked on focus</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseFocusReturn}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object with focus state and methods</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { focus, blur, focused } = useFocus(ref, () => console.log('focused'));</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {HookTarget}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target element to focus</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">true]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The enabled state of the focus hook</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">false]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The initial focus state of the target</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {(event: FocusEvent) => void}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onFocus]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback function to be invoked on focus</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {(event: FocusEvent) => void}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onBlur]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback function to be invoked on blur</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseFocusReturn}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object with focus state and methods</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { focus, blur, focused } = useFocus(ref);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@template</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target element</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {(event: FocusEvent) => void}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [callback]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback function to be invoked on focus</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseFocusReturn &#x26; { ref: StateRef&#x3C;Target> }}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object with focus state, methods and ref</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { ref, focus, blur, focused } = useFocus(() => console.log('focused'));</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@template</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target element</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">true]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The enabled state of the focus hook</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">false]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The initial focus state of the target</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {(event: FocusEvent) => void}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onFocus]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback function to be invoked on focus</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {(event: FocusEvent) => void}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onBlur]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback function to be invoked on blur</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseFocusReturn &#x26; { ref: StateRef&#x3C;Target> }}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object with focus state, methods and ref</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { ref, focus, blur, focused } = useFocus();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> useFocus</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> ((</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">...</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">params</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> any</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">isTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> undefined</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> undefined</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">      ?</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> typeof</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">===</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'object'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        ?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        :</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { onFocus: params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] }</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">      :</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> typeof</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">===</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'object'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        ?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        :</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { onFocus: params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] }</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  ) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusOptions</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> undefined</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> options?.enabled </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">??</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> true</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> options?.initialValue </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">??</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> false</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">focused</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">setFocused</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(initialValue);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> internalRef</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRefState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> internalOptionsRef</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(options);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  internalOptionsRef.current </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> options;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> elementRef</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">HTMLElement</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> null</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">null</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> focus</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">elementRef.current) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    elementRef.current.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">focus</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    setFocused</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">true</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> blur</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">elementRef.current) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    elementRef.current.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">blur</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    setFocused</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">false</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  useEffect</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">enabled </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">||</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> !</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">internalRef.state)) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> element</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> isTarget.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">getElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(target) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> internalRef.current) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">element) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    elementRef.current </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> element;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onFocus</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      internalOptionsRef.current?.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">onFocus</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">?.(event);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">      if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">focus </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">||</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (event.target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">).</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">matches</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">?.(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">':focus-visible'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)) </span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">setFocused</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">true</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onBlur</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      internalOptionsRef.current?.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">onBlur</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">?.(event);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">      setFocused</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">false</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (initialValue) element.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">focus</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    element.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">addEventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'focus'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, onFocus);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    element.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">addEventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'blur'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, onBlur);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      element.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">removeEventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'focus'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, onFocus);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      element.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">removeEventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'blur'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, onBlur);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  }, [target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> isTarget.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">getRawElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(target), internalRef.state, enabled]);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (target) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { focus, blur, focused };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    ref: internalRef,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    focus,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    blur,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    focused</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocus</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>",
+  "id": "useFocus",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useFocus",
+  "usage": "medium",
+  "description": "Hook that allows you to focus on a specific element",
+  "category": "Elements",
+  "lastModified": 1768553242000,
+  "examples": [
+    "const { focus, blur, focused } = useFocus(ref, () => console.log('focused'));",
+    "const { focus, blur, focused } = useFocus(ref);",
+    "const { ref, focus, blur, focused } = useFocus(() => console.log('focused'));",
+    "const { ref, focus, blur, focused } = useFocus();"
+  ],
+  "apiParameters": [
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 6,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "target",
+      "type": "HookTarget",
+      "optional": false,
+      "description": "The target element to focus",
+      "problems": [],
+      "source": [
+        {
+          "number": 7,
+          "source": " * @param {HookTarget} target The target element to focus",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "target",
+            "postName": " ",
+            "type": "{HookTarget}",
+            "postType": " ",
+            "description": "The target element to focus",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "callback",
+      "type": "(event: FocusEvent) => void",
+      "optional": true,
+      "description": "The callback function to be invoked on focus",
+      "problems": [],
+      "source": [
+        {
+          "number": 8,
+          "source": " * @param {(event: FocusEvent) => void} [callback] The callback function to be invoked on focus",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[callback]",
+            "postName": " ",
+            "type": "{(event: FocusEvent) => void}",
+            "postType": " ",
+            "description": "The callback function to be invoked on focus",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseFocusReturn",
+      "optional": false,
+      "description": "object with focus state and methods",
+      "problems": [],
+      "source": [
+        {
+          "number": 9,
+          "source": " * @returns {UseFocusReturn} An object with focus state and methods",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseFocusReturn}",
+            "postType": " ",
+            "description": "object with focus state and methods",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 10,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 14,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "target",
+      "type": "HookTarget",
+      "optional": false,
+      "description": "The target element to focus",
+      "problems": [],
+      "source": [
+        {
+          "number": 15,
+          "source": " * @param {HookTarget} target The target element to focus",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "target",
+            "postName": " ",
+            "type": "{HookTarget}",
+            "postType": " ",
+            "description": "The target element to focus",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.enabled",
+      "type": "boolean",
+      "optional": true,
+      "description": "The enabled state of the focus hook",
+      "problems": [],
+      "source": [
+        {
+          "number": 16,
+          "source": " * @param {boolean} [options.enabled=true] The enabled state of the focus hook",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.enabled=true]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "The enabled state of the focus hook",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ],
+      "default": "true"
+    },
+    {
+      "tag": "param",
+      "name": "options.initialValue",
+      "type": "boolean",
+      "optional": true,
+      "description": "The initial focus state of the target",
+      "problems": [],
+      "source": [
+        {
+          "number": 17,
+          "source": " * @param {boolean} [options.initialValue=false] The initial focus state of the target",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.initialValue=false]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "The initial focus state of the target",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ],
+      "default": "false"
+    },
+    {
+      "tag": "param",
+      "name": "options.onFocus",
+      "type": "(event: FocusEvent) => void",
+      "optional": true,
+      "description": "The callback function to be invoked on focus",
+      "problems": [],
+      "source": [
+        {
+          "number": 18,
+          "source": " * @param {(event: FocusEvent) => void} [options.onFocus] The callback function to be invoked on focus",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onFocus]",
+            "postName": " ",
+            "type": "{(event: FocusEvent) => void}",
+            "postType": " ",
+            "description": "The callback function to be invoked on focus",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.onBlur",
+      "type": "(event: FocusEvent) => void",
+      "optional": true,
+      "description": "The callback function to be invoked on blur",
+      "problems": [],
+      "source": [
+        {
+          "number": 19,
+          "source": " * @param {(event: FocusEvent) => void} [options.onBlur] The callback function to be invoked on blur",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onBlur]",
+            "postName": " ",
+            "type": "{(event: FocusEvent) => void}",
+            "postType": " ",
+            "description": "The callback function to be invoked on blur",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseFocusReturn",
+      "optional": false,
+      "description": "object with focus state and methods",
+      "problems": [],
+      "source": [
+        {
+          "number": 20,
+          "source": " * @returns {UseFocusReturn} An object with focus state and methods",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseFocusReturn}",
+            "postType": " ",
+            "description": "object with focus state and methods",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 21,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 25,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "callback",
+      "type": "(event: FocusEvent) => void",
+      "optional": true,
+      "description": "The callback function to be invoked on focus",
+      "problems": [],
+      "source": [
+        {
+          "number": 27,
+          "source": " * @param {(event: FocusEvent) => void} [callback] The callback function to be invoked on focus",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[callback]",
+            "postName": " ",
+            "type": "{(event: FocusEvent) => void}",
+            "postType": " ",
+            "description": "The callback function to be invoked on focus",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseFocusReturn & { ref: StateRef<Target> }",
+      "optional": false,
+      "description": "object with focus state, methods and ref",
+      "problems": [],
+      "source": [
+        {
+          "number": 28,
+          "source": " * @returns {UseFocusReturn & { ref: StateRef<Target> }} An object with focus state, methods and ref",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseFocusReturn & { ref: StateRef<Target> }}",
+            "postType": " ",
+            "description": "object with focus state, methods and ref",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 29,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 33,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.enabled",
+      "type": "boolean",
+      "optional": true,
+      "description": "The enabled state of the focus hook",
+      "problems": [],
+      "source": [
+        {
+          "number": 35,
+          "source": " * @param {boolean} [options.enabled=true] The enabled state of the focus hook",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.enabled=true]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "The enabled state of the focus hook",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ],
+      "default": "true"
+    },
+    {
+      "tag": "param",
+      "name": "options.initialValue",
+      "type": "boolean",
+      "optional": true,
+      "description": "The initial focus state of the target",
+      "problems": [],
+      "source": [
+        {
+          "number": 36,
+          "source": " * @param {boolean} [options.initialValue=false] The initial focus state of the target",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.initialValue=false]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "The initial focus state of the target",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ],
+      "default": "false"
+    },
+    {
+      "tag": "param",
+      "name": "options.onFocus",
+      "type": "(event: FocusEvent) => void",
+      "optional": true,
+      "description": "The callback function to be invoked on focus",
+      "problems": [],
+      "source": [
+        {
+          "number": 37,
+          "source": " * @param {(event: FocusEvent) => void} [options.onFocus] The callback function to be invoked on focus",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onFocus]",
+            "postName": " ",
+            "type": "{(event: FocusEvent) => void}",
+            "postType": " ",
+            "description": "The callback function to be invoked on focus",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.onBlur",
+      "type": "(event: FocusEvent) => void",
+      "optional": true,
+      "description": "The callback function to be invoked on blur",
+      "problems": [],
+      "source": [
+        {
+          "number": 38,
+          "source": " * @param {(event: FocusEvent) => void} [options.onBlur] The callback function to be invoked on blur",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onBlur]",
+            "postName": " ",
+            "type": "{(event: FocusEvent) => void}",
+            "postType": " ",
+            "description": "The callback function to be invoked on blur",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseFocusReturn & { ref: StateRef<Target> }",
+      "optional": false,
+      "description": "object with focus state, methods and ref",
+      "problems": [],
+      "source": [
+        {
+          "number": 39,
+          "source": " * @returns {UseFocusReturn & { ref: StateRef<Target> }} An object with focus state, methods and ref",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseFocusReturn & { ref: StateRef<Target> }}",
+            "postType": " ",
+            "description": "object with focus state, methods and ref",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 40,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    }
+  ],
+  "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { HookTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { StateRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The enabled state of the focus hook */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The initial focus state of the target */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The on blur callback */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  onBlur</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The on focus callback */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  onFocus</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The boolean state value of the target */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  focused</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Blur the target */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  blur</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Focus the target */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  focus</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocus</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> FocusEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFocusReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span></code></pre>",
+  "dependencies": {
+    "hooks": [
+      "useRefState"
+    ],
+    "utils": [
+      "isTarget"
+    ],
+    "packages": []
+  },
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "demo": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useBoolean, useField, useFocus } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@siberiacancode/reactuse'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { CheckIcon, Eye, EyeOff, XIcon } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'lucide-react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { cn } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/lib'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Rule</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  description</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  id</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  title</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  check</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">value</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> RULES</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Rule</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    id: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'length'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    title: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'At least 8 characters'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    description: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'The longer, the better'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    check</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">: (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">value</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> value.</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">length</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> >=</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 8</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  },</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    id: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'uppercase'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    title: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'One uppercase letter'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    description: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Like A, B, C...'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    check</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">: (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">value</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> /</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">[A-Z]</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">/</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">test</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(value)</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  },</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    id: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'number'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    title: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'One number'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    description: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Digits from 0 to 9'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    check</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">: (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">value</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> /</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">\\d</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">/</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">test</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(value)</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  },</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    id: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'special'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    title: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'One special character'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    description: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Such as !, @, #, $, %'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    check</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">: (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">value</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> /</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">[!@#$%^&#x26;*(),.?\":{}|&#x3C;>]</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">/</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">test</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(value)</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  }</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">];</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Demo</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> passwordField</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useField</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">''</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> password</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> passwordField.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">watch</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">focused</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useFocus</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(passwordField.ref);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">visible</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">toggleVisible</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useBoolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">false</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> passedRules</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> RULES</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">filter</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">((</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">rule</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> rule.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">check</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(password)).</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">length</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> showRules</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> focused </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">||</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">password </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> passedRules </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> RULES</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">length</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'demo-ui flex w-full max-w-sm flex-col gap-3 p-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex flex-col gap-1'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">h2</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground text-sm font-semibold'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>Create a password&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">h2</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">p</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-muted-foreground text-xs'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          Choose a strong password to protect your account.</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">p</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'relative'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">input</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'border-border bg-card text-foreground w-full rounded-md border px-3 py-2 pr-10 text-sm outline-none'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          id</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'password'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          placeholder</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Enter password'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          type</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{visible </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'text'</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> :</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'password'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          {</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">...</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">passwordField.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">register</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">()}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          aria-label</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{visible </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'Hide password'</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> :</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'Show password'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'absolute top-1/2 right-0 -translate-y-1/2'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          data-variant</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'unstyled'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          type</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'button'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          onClick</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> toggleVisible</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">()}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        ></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          {visible </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">EyeOff</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'size-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> /> </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">Eye</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'size-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> />}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        {showRules </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'border-border bg-card absolute top-full right-0 left-0 z-10 mt-2 flex flex-col gap-2 rounded-lg border p-3 shadow-lg'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex items-center justify-between'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground text-xs font-medium'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>Password requirements&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-muted-foreground font-mono text-[10px] tabular-nums'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                {passedRules} / {</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">RULES</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">length</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex flex-col gap-1.5'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              {</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">RULES</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">map</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">((</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">rule</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">                const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> passed</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> rule.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">check</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(password);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">                return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                  &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> key</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{rule.id} </span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex items-start gap-2'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                    &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">                      className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">cn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">                        'mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full transition-colors'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                        passed </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'bg-green-500/15 text-green-500'</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> :</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'bg-muted text-muted-foreground'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                      )}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                    ></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                      {passed </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">CheckIcon</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'size-3'</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> strokeWidth</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">3</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">} />}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                      {</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">passed </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">XIcon</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'size-3'</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> strokeWidth</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">2.5</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">} />}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                    &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                    &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex flex-col leading-tight'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                      &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">                        className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">cn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">                          'text-xs font-medium transition-colors'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                          passed </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'text-foreground'</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> :</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'text-muted-foreground'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                        )}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                      ></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                        {rule.title}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                      &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                      &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-muted-foreground text-[10px]'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>{rule.description}&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                    &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                  &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                );</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              })}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        )}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  );</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">};</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> default</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Demo;</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>"
+}

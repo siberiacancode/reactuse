@@ -102,6 +102,7 @@ export const useFocusTrap = ((...params: any[]) => {
       if (event.shiftKey && document.activeElement === firstElement) {
         event.preventDefault();
         lastElement.focus();
+        return;
       }
 
       if (document.activeElement === lastElement) {

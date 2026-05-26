@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
  * @example
  * const fps = useFps();
  */
-export const useFps = () => {
+export const useFps = (callback) => {
   const [fps, setFps] = useState(0);
   useEffect(() => {
     let frameCount = 0;
@@ -25,6 +25,7 @@ export const useFps = () => {
       if (elapsedTime >= 1000) {
         const calculatedFps = Math.round((frameCount * 1000) / elapsedTime);
         setFps(calculatedFps);
+        callback?.(calculatedFps);
         frameCount = 0;
         startTime = currentTime;
       }

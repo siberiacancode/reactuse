@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1757059687000
+lastModifiedTime: 1779722441000
 ---
 
 import metadata from './useFileDialog.meta.json';

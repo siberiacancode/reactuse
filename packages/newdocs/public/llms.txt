@@ -35,6 +35,8 @@
 - [useEventSource](https://reactuse.org/functions/hooks/useEventSource): Hook that provides a reactive wrapper for event source
 - [useEyeDropper](https://reactuse.org/functions/hooks/useEyeDropper): Hook that gives you access to the eye dropper
 - [useFavicon](https://reactuse.org/functions/hooks/useFavicon): Hook that manages the favicon
+- [useFileSystemAccess](https://reactuse.org/functions/hooks/useFileSystemAccess): Hook for reading and writing local files via the File System Access API
+- [useFps](https://reactuse.org/functions/hooks/useFps): Hook that measures frames per second
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
@@ -43,6 +45,8 @@
 - [useDoubleClick](https://reactuse.org/functions/hooks/useDoubleClick): Hook that defines the logic when double clicking an element
 - [useDropZone](https://reactuse.org/functions/hooks/useDropZone): Hook that provides drop zone functionality
 - [useFileDialog](https://reactuse.org/functions/hooks/useFileDialog): Hook to handle file input
+- [useFocus](https://reactuse.org/functions/hooks/useFocus): Hook that allows you to focus on a specific element
+- [useFocusTrap](https://reactuse.org/functions/hooks/useFocusTrap): Hook that traps focus within a given element
 ### Lifecycles
 
 - [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates

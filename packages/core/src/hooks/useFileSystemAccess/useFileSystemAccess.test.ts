@@ -109,13 +109,15 @@ it('Should open file and load text data', async () => {
 
   const { result } = renderHook(useFileSystemAccess);
 
+  let openData: string | ArrayBuffer | Blob = '';
   await act(async () => {
-    await result.current.open();
+    openData = await result.current.open();
   });
 
   expect(result.current.name).toBe('file.txt');
   expect(result.current.type).toBe('text/plain');
   expect(result.current.data).toBe('content');
+  expect(openData).toBe('content');
   expect(window.showOpenFilePicker).toHaveBeenCalled();
 });
 
@@ -136,14 +138,16 @@ it('Should open file and load array buffer data', async () => {
 
   const { result } = renderHook(() => useFileSystemAccess({ dataType: 'ArrayBuffer' }));
 
+  let openData: string | ArrayBuffer | Blob = '';
   await act(async () => {
-    await result.current.open();
+    openData = await result.current.open();
   });
 
   expect(result.current.name).toBe('file.bin');
   expect(result.current.type).toBe('application/octet-stream');
   expect(result.current.data).toBeInstanceOf(ArrayBuffer);
   expect(result.current.data).toEqual(buffer);
+  expect(openData).toEqual(buffer);
 });
 
 it('Should open file and load blob data', async () => {
@@ -180,12 +184,14 @@ it('Should create new file and load data', async () => {
 
   const { result } = renderHook(useFileSystemAccess);
 
+  let createData: string | ArrayBuffer | Blob = '';
   await act(async () => {
-    await result.current.create({ suggestedName: 'file.txt' });
+    createData = await result.current.create({ suggestedName: 'file.txt' });
   });
 
   expect(window.showSaveFilePicker).toHaveBeenCalled();
   expect(result.current.name).toBe('file.txt');
+  expect(createData).toBe('');
 });
 
 it('Should save to current handle', async () => {
@@ -202,13 +208,15 @@ it('Should save to current handle', async () => {
 
   const { result } = renderHook(useFileSystemAccess);
 
+  let saveData: string | ArrayBuffer | Blob = '';
   await act(async () => {
     await result.current.open();
-    await result.current.save();
+    saveData = await result.current.save();
   });
 
   expect(window.showOpenFilePicker).toHaveBeenCalled();
   expect(result.current.data).toBe('content');
+  expect(saveData).toBe('content');
 });
 
 it('Should save as new file', async () => {
@@ -223,12 +231,14 @@ it('Should save as new file', async () => {
 
   const { result } = renderHook(useFileSystemAccess);
 
+  let saveAsData: string | ArrayBuffer | Blob = '';
   await act(async () => {
-    await result.current.saveAs({ suggestedName: 'file.txt' });
+    saveAsData = await result.current.saveAs({ suggestedName: 'file.txt' });
   });
 
   expect(window.showSaveFilePicker).toHaveBeenCalled();
   expect(result.current.data).toBe('content');
+  expect(saveAsData).toBe('content');
 });
 
 it('Should update from current handle', async () => {
@@ -272,12 +282,30 @@ it('Should fallback save to save as new file', async () => {
 
   const { result } = renderHook(useFileSystemAccess);
 
+  let saveData: string | ArrayBuffer | Blob = '';
   await act(async () => {
-    await result.current.save({ suggestedName: 'file.txt' });
+    saveData = await result.current.save({ suggestedName: 'file.txt' });
   });
 
   expect(window.showSaveFilePicker).toHaveBeenCalled();
   expect(result.current.data).toBe('content');
+  expect(saveData).toBe('content');
+});
+
+it('Should throw update error without file handle', async () => {
+  const { result } = renderHook(useFileSystemAccess);
+
+  let error: Error | undefined;
+
+  await act(async () => {
+    try {
+      await result.current.update();
+    } catch (thrownError) {
+      error = thrownError as Error;
+    }
+  });
+
+  expect(error?.message).toBe('No file handle');
 });
 
 it('Should set data', () => {

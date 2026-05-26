@@ -1,15 +1,15 @@
 ---
-title: useFileDialog
-description: Hook to handle file input
+title: useFocus
+description: Hook that allows you to focus on a specific element
 category: elements
-usage: low
+usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779722441000
+lastModifiedTime: 1768553242000
 ---
 
-import metadata from './useFileDialog.meta.json';
+import metadata from './useFocus.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useFileDialog.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useFileDialog
+    npx useverse@latest add useFocus
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,13 @@ import metadata from './useFileDialog.meta.json';
 ## Usage
 
 ```tsx
-const { values, open, reset } = useFileDialog((value) => console.log(value));
+const { focus, blur, focused } = useFocus(ref, () => console.log('focused'));
 // or
-const { values, open, reset } = useFileDialog({ accept: 'image/*' });
+const { focus, blur, focused } = useFocus(ref);
+// or
+const { ref, focus, blur, focused } = useFocus(() => console.log('focused'));
+// or
+const { ref, focus, blur, focused } = useFocus();
 ```
 
 ## Type Declarations

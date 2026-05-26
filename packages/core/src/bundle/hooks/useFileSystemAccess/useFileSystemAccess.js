@@ -30,34 +30,35 @@ export const useFileSystemAccess = (options = {}) => {
   const [file, setFile] = useState();
   const load = async () => {
     const handle = handleRef.current;
-    if (!handle) return;
+    if (!handle) throw new Error('No file handle');
     const file = await handle.getFile();
     setFile(file);
-    if (dataType === 'Text') return setData(await file.text());
-    if (dataType === 'ArrayBuffer') return setData(await file.arrayBuffer());
-    if (dataType === 'Blob') return setData(file);
-    throw new Error(`Invalid data type: ${dataType}`);
+    const actionMap = {
+      Text: () => file.text(),
+      ArrayBuffer: () => file.arrayBuffer(),
+      Blob: () => file
+    };
+    const data = await actionMap[dataType]();
+    setData(data);
+    return data;
   };
   const open = async (params) => {
-    if (!supported) return;
     const [handle] = await window.showOpenFilePicker({
       ...options,
       ...params
     });
     handleRef.current = handle;
-    await load();
+    return load();
   };
   const create = async (params = {}) => {
-    if (!supported) return;
     handleRef.current = await window.showSaveFilePicker({
       ...options,
       ...params
     });
     setData(undefined);
-    await load();
+    return load();
   };
   const saveAs = async (params) => {
-    if (!supported) return;
     handleRef.current = await window.showSaveFilePicker({
       ...options,
       ...params
@@ -65,19 +66,16 @@ export const useFileSystemAccess = (options = {}) => {
     const writable = await handleRef.current.createWritable();
     await writable.write(data);
     await writable.close();
-    await load();
+    return load();
   };
   const save = async (params) => {
-    if (!supported) return;
     if (!handleRef.current) return saveAs(params);
     const writable = await handleRef.current.createWritable();
     await writable.write(data);
     await writable.close();
-    await load();
+    return load();
   };
-  const update = async () => {
-    await load();
-  };
+  const update = load;
   const set = (data) => setData(data);
   return {
     supported,

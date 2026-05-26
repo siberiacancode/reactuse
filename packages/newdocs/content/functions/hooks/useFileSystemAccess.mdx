@@ -1,15 +1,15 @@
 ---
-title: useFileDialog
-description: Hook to handle file input
-category: elements
+title: useFileSystemAccess
+description: Hook for reading and writing local files via the File System Access API
+category: browser
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779722441000
+lastModifiedTime: 1775226876000
 ---
 
-import metadata from './useFileDialog.meta.json';
+import metadata from './useFileSystemAccess.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useFileDialog.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useFileDialog
+    npx useverse@latest add useFileSystemAccess
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './useFileDialog.meta.json';
 ## Usage
 
 ```tsx
-const { values, open, reset } = useFileDialog((value) => console.log(value));
-// or
-const { values, open, reset } = useFileDialog({ accept: 'image/*' });
+const fileSystemAccess = useFileSystemAccess({ dataType: 'Text' });
 ```
 
 ## Type Declarations

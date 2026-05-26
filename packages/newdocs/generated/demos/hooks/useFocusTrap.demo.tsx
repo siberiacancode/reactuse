@@ -1,3 +1,5 @@
+'use client'
+
 import type { SubmitEvent } from 'react';
 
 import { useField, useFocusTrap } from '@siberiacancode/reactuse';

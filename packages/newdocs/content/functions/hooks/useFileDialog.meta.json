@@ -8,7 +8,7 @@
   "usage": "low",
   "description": "Hook to handle file input",
   "category": "Elements",
-  "lastModified": 1757059687000,
+  "lastModified": 1779722441000,
   "examples": [
     "const { values, open, reset } = useFileDialog((value) => console.log(value));",
     "const { values, open, reset } = useFileDialog({ accept: 'image/*' });"

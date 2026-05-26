@@ -1,15 +1,15 @@
 ---
-title: useFileDialog
-description: Hook to handle file input
+title: useFocusTrap
+description: Hook that traps focus within a given element
 category: elements
-usage: low
+usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779722441000
+lastModifiedTime: 1779190580000
 ---
 
-import metadata from './useFileDialog.meta.json';
+import metadata from './useFocusTrap.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useFileDialog.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useFileDialog
+    npx useverse@latest add useFocusTrap
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,9 @@ import metadata from './useFileDialog.meta.json';
 ## Usage
 
 ```tsx
-const { values, open, reset } = useFileDialog((value) => console.log(value));
+const { active, disable, toggle, enable } = useFocusTrap(ref, true);
 // or
-const { values, open, reset } = useFileDialog({ accept: 'image/*' });
+const { ref, active, disable, toggle, enable } = useFocusTrap(true);
 ```
 
 ## Type Declarations

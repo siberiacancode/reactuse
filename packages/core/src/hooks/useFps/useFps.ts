@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+type UseFpsCallback = (fps: number) => void;
+
 /**
  * @name useFps
  * @description - Hook that measures frames per second
@@ -13,7 +15,7 @@ import { useEffect, useState } from 'react';
  * @example
  * const fps = useFps();
  */
-export const useFps = () => {
+export const useFps = (callback?: UseFpsCallback) => {
   const [fps, setFps] = useState(0);
 
   useEffect(() => {
@@ -29,6 +31,7 @@ export const useFps = () => {
       if (elapsedTime >= 1000) {
         const calculatedFps = Math.round((frameCount * 1000) / elapsedTime);
         setFps(calculatedFps);
+        callback?.(calculatedFps);
         frameCount = 0;
         startTime = currentTime;
       }

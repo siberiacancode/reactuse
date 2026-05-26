@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog",
+      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap",
 
       "---async---",
       "useAsync",
@@ -11,7 +11,7 @@
       "useAsyncEffect","useDidUpdate",
 
       "---browser---",
-      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps",
 
       "---utilities---",
       "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent",
