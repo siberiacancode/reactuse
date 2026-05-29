@@ -1,15 +1,15 @@
 ---
-title: useFullscreen
-description: Hook to handle fullscreen events
-category: browser
+title: useHash
+description: Hook that manages the hash value
+category: state
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779823596000
+lastModifiedTime: 1770651919000
 ---
 
-import metadata from './useFullscreen.meta.json';
+import metadata from './useHash.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useFullscreen.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useFullscreen
+    npx useverse@latest add useHash
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,13 @@ import metadata from './useFullscreen.meta.json';
 ## Usage
 
 ```tsx
-const { enter, exit, toggle, value } = useFullscreen(ref);
+const { value, set } = useHash("initial");
 // or
-const { ref, enter, exit, toggle, value } = useFullscreen();
+const { value, set } = useHash("initial", (newHash) => console.log('callback'));
+// or
+const { value, set } = useHash();
+// or
+const { value, set } = useHash((newHash) => console.log('callback'));
 ```
 
 ## Type Declarations

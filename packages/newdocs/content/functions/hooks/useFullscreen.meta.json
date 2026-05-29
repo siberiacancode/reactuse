@@ -54,7 +54,7 @@
   },
   "description": "Hook to handle fullscreen events",
   "category": "Browser",
-  "lastModified": 1760199703000,
+  "lastModified": 1779823596000,
   "examples": [
     "const { enter, exit, toggle, value } = useFullscreen(ref);",
     "const { ref, enter, exit, toggle, value } = useFullscreen();"

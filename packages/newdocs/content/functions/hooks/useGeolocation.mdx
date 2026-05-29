@@ -1,15 +1,15 @@
 ---
-title: useFullscreen
-description: Hook to handle fullscreen events
+title: useGeolocation
+description: Hook that returns the current geolocation
 category: browser
-usage: low
+usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779823596000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useFullscreen.meta.json';
+import metadata from './useGeolocation.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useFullscreen.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useFullscreen
+    npx useverse@latest add useGeolocation
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,9 @@ import metadata from './useFullscreen.meta.json';
 ## Usage
 
 ```tsx
-const { enter, exit, toggle, value } = useFullscreen(ref);
+const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation((position) => console.log(position));
 // or
-const { ref, enter, exit, toggle, value } = useFullscreen();
+const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();
 ```
 
 ## Type Declarations

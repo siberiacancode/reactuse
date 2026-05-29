@@ -107,6 +107,44 @@ it('Should update state on geolocation error', () => {
   });
 });
 
+it('Should call onChange callback when geolocation changes', () => {
+  const onChange = vi.fn();
+  const position = {
+    coords: {
+      latitude: 50,
+      longitude: 14,
+      altitude: 100,
+      accuracy: 10,
+      altitudeAccuracy: 5,
+      heading: 90,
+      speed: 10
+    },
+    timestamp: 123456789
+  };
+
+  mockNavigatorGeolocation.watchPosition.mockImplementation((success) => success(position));
+
+  renderHook(() => useGeolocation({ onChange }));
+
+  expect(onChange).toHaveBeenCalledOnce();
+  expect(onChange).toHaveBeenCalledWith(position);
+});
+
+it('Should call onError callback when geolocation error occurs', () => {
+  const onError = vi.fn();
+  const error = {
+    code: 1,
+    message: 'User denied Geolocation'
+  };
+
+  mockNavigatorGeolocation.watchPosition.mockImplementation((_, failure) => failure(error));
+
+  renderHook(() => useGeolocation({ onError }));
+
+  expect(onError).toHaveBeenCalledOnce();
+  expect(onError).toHaveBeenCalledWith(error);
+});
+
 it('Should cleanup on unmount', () => {
   const { unmount } = renderHook(useGeolocation);
 

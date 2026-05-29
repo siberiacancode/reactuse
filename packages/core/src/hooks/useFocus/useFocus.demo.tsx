@@ -48,7 +48,7 @@ const Demo = () => {
   const showRules = focused || (!!password && passedRules < RULES.length);
 
   return (
-    <section className='demo-ui flex w-full max-w-sm flex-col gap-3 p-4'>
+    <section className='flex w-full max-w-sm flex-col gap-3 p-4'>
       <div className='flex flex-col gap-1'>
         <h2 className='text-foreground text-sm font-semibold'>Create a password</h2>
         <p className='text-muted-foreground text-xs'>

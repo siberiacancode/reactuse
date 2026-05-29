@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1760199703000
+lastModifiedTime: 1779823596000
 ---
 
 import metadata from './useFullscreen.meta.json';

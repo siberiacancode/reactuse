@@ -17,7 +17,7 @@ const Demo = () => {
   };
 
   return (
-    <section className='demo-ui flex w-full max-w-md flex-col p-4'>
+    <section className='flex w-full max-w-md flex-col p-4'>
       <div
         ref={fullscreen.ref}
         className='border-border group relative overflow-hidden rounded-xl border'

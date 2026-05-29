@@ -38,6 +38,8 @@
 - [useFileSystemAccess](https://reactuse.org/functions/hooks/useFileSystemAccess): Hook for reading and writing local files via the File System Access API
 - [useFps](https://reactuse.org/functions/hooks/useFps): Hook that measures frames per second
 - [useFullscreen](https://reactuse.org/functions/hooks/useFullscreen): Hook to handle fullscreen events
+- [useGamepad](https://reactuse.org/functions/hooks/useGamepad): Hook for getting information about gamepad
+- [useGeolocation](https://reactuse.org/functions/hooks/useGeolocation): Hook that returns the current geolocation
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
@@ -69,6 +71,7 @@
 - [useDefault](https://reactuse.org/functions/hooks/useDefault): Hook that returns the default value
 - [useDisclosure](https://reactuse.org/functions/hooks/useDisclosure): Hook that allows you to open and close a modal
 - [useField](https://reactuse.org/functions/hooks/useField): Hook to manage a form field
+- [useHash](https://reactuse.org/functions/hooks/useHash): Hook that manages the hash value
 ### Users
 
 - [useBrowserLanguage](https://reactuse.org/functions/hooks/useBrowserLanguage): Hook that returns the current browser language

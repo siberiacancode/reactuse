@@ -16,6 +16,10 @@ const Demo = () => {
       {
         description: 'Text',
         accept: { 'text/plain': ['.txt'] }
+      },
+      {
+        description: 'Markdown',
+        accept: { 'text/markdown': ['.md', '.markdown'] }
       }
     ]
   });
@@ -26,9 +30,7 @@ const Demo = () => {
   const [content, setContent] = useState('');
 
   const findPanelRef = useClickOutside<HTMLDivElement>(() => {
-    toggleFindOpen(false);
-    findField.reset();
-    replaceField.reset();
+    if (findOpen) toggleFindOpen(false);
   });
 
   if (!fileSystemAccess.supported)
@@ -48,13 +50,12 @@ const Demo = () => {
 
   const find = findField.watch();
   const replace = replaceField.watch();
-  const matches = (fileSystemAccess.data ?? '').split(find).length - 1 || 0;
+  const matches = find ? content.split(find).length - 1 : 0;
   const dirty = !!fileSystemAccess.file && content !== fileSystemAccess.data;
 
   const onSave = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     await fileSystemAccess.save();
-    setContent(fileSystemAccess.data ?? '');
   };
 
   const onOpen = async (event: MouseEvent<HTMLButtonElement>) => {
@@ -66,13 +67,13 @@ const Demo = () => {
   const onReplaceAll = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!find || !matches) return;
-    fileSystemAccess.set((fileSystemAccess.data ?? '').split(find).join(replace));
+    setContent((current) => current.split(find).join(replace));
     findField.setValue('');
     replaceField.setValue('');
   };
 
   return (
-    <section className='demo-ui flex w-full max-w-2xl flex-col p-4'>
+    <section className='flex w-full max-w-2xl flex-col p-4'>
       <div className='border-border bg-card relative flex h-[280px] flex-col overflow-hidden rounded-xl border shadow-sm'>
         {!fileSystemAccess.file && (
           <div className='flex size-full flex-col items-center justify-center gap-3 p-6'>
@@ -81,7 +82,9 @@ const Demo = () => {
             </div>
             <div className='flex flex-col items-center gap-1 text-center'>
               <p className='text-foreground text-sm font-medium'>No file opened</p>
-              <p className='text-muted-foreground text-xs'>Open a .txt file to start editing</p>
+              <p className='text-muted-foreground text-xs'>
+                Open a .txt or .md file to start editing
+              </p>
             </div>
             <button data-size='sm' type='button' onClick={onOpen}>
               Open file

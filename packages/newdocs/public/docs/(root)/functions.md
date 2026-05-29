@@ -58,3 +58,6 @@ A quick list of available functions.
 - [useFps](/functions/hooks/useFps): Hook that measures frames per second
 - [useFul](/functions/hooks/useFul): Hook that can be so useful
 - [useFullscreen](/functions/hooks/useFullscreen): Hook to handle fullscreen events
+- [useGamepad](/functions/hooks/useGamepad): Hook for getting information about gamepad
+- [useGeolocation](/functions/hooks/useGeolocation): Hook that returns the current geolocation
+- [useHash](/functions/hooks/useHash): Hook that manages the hash value
