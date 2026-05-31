@@ -6,7 +6,7 @@ const Demo = () => {
   useFul();
 
   return (
-    <section className='demo-ui flex w-full max-w-md flex-col items-center gap-3 p-6'>
+    <section className='flex w-full max-w-md flex-col items-center gap-3 p-6'>
       <div className='text-5xl'>🎉</div>
       <div className='flex flex-col items-center gap-1 text-center'>
         <h2 className='text-foreground text-sm font-semibold'>Surprise! It's a joke.</h2>

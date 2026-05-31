@@ -1,15 +1,15 @@
 ---
-title: useGeolocation
-description: Hook that returns the current geolocation
-category: browser
+title: useHover
+description: Hook that defines the logic when hovering an element
+category: elements
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780065515000
+lastModifiedTime: 1770651919000
 ---
 
-import metadata from './useGeolocation.meta.json';
+import metadata from './useHover.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useGeolocation.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useGeolocation
+    npx useverse@latest add useHover
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,13 @@ import metadata from './useGeolocation.meta.json';
 ## Usage
 
 ```tsx
-const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation((position) => console.log(position));
+const hovering = useHover(ref, () => console.log('callback'));
 // or
-const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();
+const hovering = useHover(ref, options);
+// or
+const { ref, value } = useHover(() => console.log('callback'));
+// or
+const { ref, value } = useHover(options);
 ```
 
 ## Type Declarations

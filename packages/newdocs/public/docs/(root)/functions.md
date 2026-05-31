@@ -61,3 +61,6 @@ A quick list of available functions.
 - [useGamepad](/functions/hooks/useGamepad): Hook for getting information about gamepad
 - [useGeolocation](/functions/hooks/useGeolocation): Hook that returns the current geolocation
 - [useHash](/functions/hooks/useHash): Hook that manages the hash value
+- [useHotkeys](/functions/hooks/useHotkeys): Hook that listens for hotkeys
+- [useHover](/functions/hooks/useHover): Hook that defines the logic when hovering an element
+- [useIdle](/functions/hooks/useIdle): Hook that defines the logic when the user is idle

@@ -1,3 +1,5 @@
+'use client';
+
 import { useAsync, useHover } from '@siberiacancode/reactuse';
 
 import { cn } from '@/utils/lib';

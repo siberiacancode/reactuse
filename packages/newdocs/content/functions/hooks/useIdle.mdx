@@ -1,15 +1,15 @@
 ---
-title: useGeolocation
-description: Hook that returns the current geolocation
-category: browser
-usage: medium
+title: useIdle
+description: Hook that defines the logic when the user is idle
+category: sensors
+usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780065515000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useGeolocation.meta.json';
+import metadata from './useIdle.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useGeolocation.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useGeolocation
+    npx useverse@latest add useIdle
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,11 @@ import metadata from './useGeolocation.meta.json';
 ## Usage
 
 ```tsx
-const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation((position) => console.log(position));
+const { idle, lastActive } = useIdle();
 // or
-const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();
+const { idle, lastActive } = useIdle(1000, (idle) => console.log(idle));
+// or
+const { idle, lastActive } = useIdle(1000, { onChange: (idle) => console.log(idle) });
 ```
 
 ## Type Declarations

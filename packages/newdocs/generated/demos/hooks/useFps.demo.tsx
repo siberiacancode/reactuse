@@ -32,7 +32,7 @@ const Demo = () => {
   const peak = history.length ? Math.max(...history) : 0;
 
   return (
-    <section className='demo-ui flex w-full max-w-xs flex-col p-4'>
+    <section className='flex w-full max-w-xs flex-col p-4'>
       <div className='border-border bg-card flex flex-col gap-3 rounded-xl border p-3 shadow-sm'>
         <div className='flex items-end justify-between gap-3'>
           <div className='flex flex-col leading-none'>

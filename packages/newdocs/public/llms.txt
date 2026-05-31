@@ -50,6 +50,7 @@
 - [useFileDialog](https://reactuse.org/functions/hooks/useFileDialog): Hook to handle file input
 - [useFocus](https://reactuse.org/functions/hooks/useFocus): Hook that allows you to focus on a specific element
 - [useFocusTrap](https://reactuse.org/functions/hooks/useFocusTrap): Hook that traps focus within a given element
+- [useHover](https://reactuse.org/functions/hooks/useHover): Hook that defines the logic when hovering an element
 ### Humors
 
 - [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful
@@ -61,6 +62,8 @@
 
 - [useDeviceMotion](https://reactuse.org/functions/hooks/useDeviceMotion): Hook that work with device motion
 - [useDeviceOrientation](https://reactuse.org/functions/hooks/useDeviceOrientation): Hook that provides the current device orientation
+- [useHotkeys](https://reactuse.org/functions/hooks/useHotkeys): Hook that listens for hotkeys
+- [useIdle](https://reactuse.org/functions/hooks/useIdle): Hook that defines the logic when the user is idle
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state

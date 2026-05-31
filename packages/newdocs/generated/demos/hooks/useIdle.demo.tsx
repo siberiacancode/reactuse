@@ -1,8 +1,10 @@
+'use client'
+
 import { useIdle } from '@siberiacancode/reactuse';
 
 import { cn } from '@/utils/lib';
 
-const IDLE_TIMEOUT = 2500;
+const IDLE_TIMEOUT = 3000;
 
 const Demo = () => {
   const { idle } = useIdle(IDLE_TIMEOUT);
@@ -24,7 +26,7 @@ const Demo = () => {
 
         <div className='flex flex-col items-start gap-0.5'>
           <span className='text-sm font-medium'>siberiacancode</span>
-          <span className='text-muted-foreground text-xs'>Opensource team</span>
+          <span className='text-muted-foreground text-xs'>{idle ? 'Away' : 'Online'}</span>
         </div>
       </div>
     </section>

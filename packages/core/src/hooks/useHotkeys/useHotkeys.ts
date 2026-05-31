@@ -44,12 +44,9 @@ export interface UseHotkeysKey {
   key: string;
 }
 
-/** The use hotkeys target type */
-export type UseHotkeysTarget = Element | React.RefObject<Element | null | undefined>;
-
 export interface UseHotkeys {
   (
-    target: UseHotkeysTarget,
+    target: HookTarget,
     hotkeys: UseHotkeysHotkeys,
     callback: (event: KeyboardEvent) => void,
     options?: UseHotkeysOptions
@@ -79,8 +76,6 @@ export interface UseHotkeys {
  *
  * @example
  * useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed'));
- * @example
- * useHotkeys(ref, 'ctrl+a, ctrl+b', () => console.log('hotkey pressed'));
  *
  * @overload
  * @template Target The target element
@@ -92,8 +87,6 @@ export interface UseHotkeys {
  *
  * @example
  * const ref = useHotkeys('ctrl+a', () => console.log('hotkey pressed'));
- * @example
- * const ref = useHotkeys('ctrl+a, ctrl+b', () => console.log('hotkey pressed'));
  */
 export const useHotkeys = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
@@ -101,7 +94,7 @@ export const useHotkeys = ((...params: any[]) => {
   const callback = (target ? params[2] : params[1]) as (event: KeyboardEvent) => void;
   const options = (target ? params[3] : params[2]) as UseHotkeysOptions | undefined;
 
-  const internalRef = useRefState(window);
+  const internalRef = useRefState<Element | Window>();
   const keysRef = useRef<UseHotkeysKey[]>([]);
   const enabled = options?.enabled ?? true;
 
@@ -128,9 +121,10 @@ export const useHotkeys = ((...params: any[]) => {
 
   useEffect(() => {
     keysRef.current = [];
-    if (!target && !internalRef.state && !enabled) return;
+    if (!enabled) return;
 
-    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as Element | Window) ?? window;
     if (!element) return;
 
     element.addEventListener('keydown', onKeyDown as EventListener);

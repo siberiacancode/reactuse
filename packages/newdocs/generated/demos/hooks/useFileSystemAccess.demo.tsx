@@ -75,7 +75,7 @@ const Demo = () => {
   };
 
   return (
-    <section className='demo-ui flex w-full max-w-2xl flex-col p-4'>
+    <section className='flex w-full max-w-2xl flex-col p-4'>
       <div className='border-border bg-card relative flex h-[280px] flex-col overflow-hidden rounded-xl border shadow-sm'>
         {!fileSystemAccess.file && (
           <div className='flex size-full flex-col items-center justify-center gap-3 p-6'>

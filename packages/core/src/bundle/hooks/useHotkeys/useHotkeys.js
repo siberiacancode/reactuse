@@ -31,8 +31,6 @@ export const isHotkeyMatch = (hotkey, keys) =>
  *
  * @example
  * useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed'));
- * @example
- * useHotkeys(ref, 'ctrl+a, ctrl+b', () => console.log('hotkey pressed'));
  *
  * @overload
  * @template Target The target element
@@ -44,15 +42,13 @@ export const isHotkeyMatch = (hotkey, keys) =>
  *
  * @example
  * const ref = useHotkeys('ctrl+a', () => console.log('hotkey pressed'));
- * @example
- * const ref = useHotkeys('ctrl+a, ctrl+b', () => console.log('hotkey pressed'));
  */
 export const useHotkeys = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const hotkeys = target ? params[1] : params[0];
   const callback = target ? params[2] : params[1];
   const options = target ? params[3] : params[2];
-  const internalRef = useRefState(window);
+  const internalRef = useRefState();
   const keysRef = useRef([]);
   const enabled = options?.enabled ?? true;
   const onKeyDown = useEvent((event) => {
@@ -73,8 +69,8 @@ export const useHotkeys = (...params) => {
   });
   useEffect(() => {
     keysRef.current = [];
-    if (!target && !internalRef.state && !enabled) return;
-    const element = target ? isTarget.getElement(target) : internalRef.current;
+    if (!enabled) return;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     if (!element) return;
     element.addEventListener('keydown', onKeyDown);
     element.addEventListener('keyup', onKeyUp);
