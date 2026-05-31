@@ -1,15 +1,15 @@
 ---
-title: useHotkeys
-description: Hook that listens for hotkeys
+title: useInfiniteScroll
+description: Hook that defines the logic for infinite scroll
 category: sensors
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780207176000
+lastModifiedTime: 1770651919000
 ---
 
-import metadata from './useHotkeys.meta.json';
+import metadata from './useInfiniteScroll.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useHotkeys.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useHotkeys
+    npx useverse@latest add useInfiniteScroll
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,13 +47,9 @@ import metadata from './useHotkeys.meta.json';
 ## Usage
 
 ```tsx
-useHotkeys(ref, 'ctrl+a', { onChange: () => console.log('hotkey pressed') });
+const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));
 // or
-useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed'));
-// or
-const ref = useHotkeys('ctrl+a', { onChange: () => console.log('hotkey pressed') });
-// or
-const ref = useHotkeys('ctrl+a', () => console.log('hotkey pressed'));
+const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));
 ```
 
 ## Type Declarations

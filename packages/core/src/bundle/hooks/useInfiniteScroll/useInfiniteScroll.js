@@ -33,7 +33,7 @@ export const useInfiniteScroll = (...params) => {
   const options = target ? params[2] : params[1];
   const direction = options?.direction ?? 'bottom';
   const distance = options?.distance ?? 10;
-  const [loading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const internalRef = useRefState();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
@@ -56,9 +56,9 @@ export const useInfiniteScroll = (...params) => {
         left: scrollLeft
       };
       if (distances[direction] <= distance) {
-        setIsLoading(true);
+        setLoading(true);
         await internalCallbackRef.current(event);
-        setIsLoading(false);
+        setLoading(false);
       }
     };
     element.addEventListener('scroll', onLoadMore);

@@ -1,3 +1,5 @@
+'use client'
+
 import { useIntersectionObserver } from '@siberiacancode/reactuse';
 import { useRef, useState } from 'react';
 

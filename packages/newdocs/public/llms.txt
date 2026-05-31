@@ -51,6 +51,7 @@
 - [useFocus](https://reactuse.org/functions/hooks/useFocus): Hook that allows you to focus on a specific element
 - [useFocusTrap](https://reactuse.org/functions/hooks/useFocusTrap): Hook that traps focus within a given element
 - [useHover](https://reactuse.org/functions/hooks/useHover): Hook that defines the logic when hovering an element
+- [useImage](https://reactuse.org/functions/hooks/useImage): Hook that load an image in the browser
 ### Humors
 
 - [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful
@@ -64,6 +65,8 @@
 - [useDeviceOrientation](https://reactuse.org/functions/hooks/useDeviceOrientation): Hook that provides the current device orientation
 - [useHotkeys](https://reactuse.org/functions/hooks/useHotkeys): Hook that listens for hotkeys
 - [useIdle](https://reactuse.org/functions/hooks/useIdle): Hook that defines the logic when the user is idle
+- [useInfiniteScroll](https://reactuse.org/functions/hooks/useInfiniteScroll): Hook that defines the logic for infinite scroll
+- [useIntersectionObserver](https://reactuse.org/functions/hooks/useIntersectionObserver): Hook that gives you intersection observer state
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state

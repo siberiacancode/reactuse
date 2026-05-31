@@ -72,7 +72,7 @@ export const useInfiniteScroll = ((...params: any[]) => {
   const direction = options?.direction ?? 'bottom';
   const distance = options?.distance ?? 10;
 
-  const [loading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const internalRef = useRefState<Element>();
   const internalCallbackRef = useRef(callback);
@@ -101,9 +101,9 @@ export const useInfiniteScroll = ((...params: any[]) => {
       };
 
       if (distances[direction] <= distance) {
-        setIsLoading(true);
+        setLoading(true);
         await internalCallbackRef.current(event);
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 

@@ -1,15 +1,15 @@
 ---
-title: useHotkeys
-description: Hook that listens for hotkeys
+title: useIntersectionObserver
+description: Hook that gives you intersection observer state
 category: sensors
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780207176000
+lastModifiedTime: 1768553242000
 ---
 
-import metadata from './useHotkeys.meta.json';
+import metadata from './useIntersectionObserver.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useHotkeys.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useHotkeys
+    npx useverse@latest add useIntersectionObserver
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,13 +47,13 @@ import metadata from './useHotkeys.meta.json';
 ## Usage
 
 ```tsx
-useHotkeys(ref, 'ctrl+a', { onChange: () => console.log('hotkey pressed') });
+const { ref, entries, observer } = useIntersectionObserver();
 // or
-useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed'));
+const { entries, observer } = useIntersectionObserver(ref);
 // or
-const ref = useHotkeys('ctrl+a', { onChange: () => console.log('hotkey pressed') });
+const { ref, entries, observer } = useIntersectionObserver(() => console.log('callback'));
 // or
-const ref = useHotkeys('ctrl+a', () => console.log('hotkey pressed'));
+const { entries, observer } = useIntersectionObserver(ref, () => console.log('callback'));
 ```
 
 ## Type Declarations

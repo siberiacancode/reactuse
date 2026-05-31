@@ -1,0 +1,442 @@
+{
+  "code": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { UseQueryOptions, UseQueryReturn } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useQuery/useQuery'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useQuery } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useQuery/useQuery'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/** The use image options */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseImageOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The alt of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  alt</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The class of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  class</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The crossorigin of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  crossorigin</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The loading of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  loading</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'loading'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">];</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The referrer policy of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  referrerPolicy</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'referrerPolicy'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">];</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The sizes of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  sizes</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The srcset of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  srcset</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/** The use image return type */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseImageReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseQueryReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> loadImage</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> async</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">src</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseImageOptions</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {})</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Promise</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  new</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> Promise</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">((</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">resolve</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">reject</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> img</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> new</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Image</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">srcset</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">sizes</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">class</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">: </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">className</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">loading</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">crossorigin</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">referrerPolicy</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> options;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    img.src </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> src;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (srcset) img.srcset </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> srcset;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (sizes) img.sizes </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> sizes;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (className) img.className </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> className;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (loading) img.loading </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> loading;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (crossorigin) img.crossOrigin </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> crossorigin;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (referrerPolicy) img.referrerPolicy </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> referrerPolicy;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    img.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">onload</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> resolve</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(img);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    img.onerror </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> reject;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  });</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/**</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@name</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useImage</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@description</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> - Hook that load an image in the browser</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@category</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Elements</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@usage</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> low</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> src</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The source of the image</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.srcset]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The srcset of the image</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.sizes]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The sizes of the image</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.alt]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The alt of the image</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.class]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The class of the image</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {HTMLImageElement['loading']}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.loading]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The loading of the image</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.crossorigin]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The crossorigin of the image</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {HTMLImageElement['referrerPolicy']}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.referrerPolicy]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The referrerPolicy of the image</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {DependencyList}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.keys]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The dependencies for the hook</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {(data: Data) => void}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onSuccess]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback function to be invoked on success</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {(error: Error) => void}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onError]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback function to be invoked on error</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {number}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.refetchInterval]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The refetch interval</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean | number}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.retry]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The retry count of requests</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseImageReturn}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object with the state of the image</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useImage('https://example.com/image.png');</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useImage</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  src</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseImageOptions</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    Omit</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">      UseQueryOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">      'initialData'</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'placeholderData'</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'select'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    ></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  useQuery</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">      loadImage</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(src, {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        alt: options?.alt,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        class: options?.class,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        crossorigin: options?.crossorigin,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        loading: options?.loading,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        referrerPolicy: options?.referrerPolicy,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        sizes: options?.sizes,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        srcset: options?.srcset</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      }),</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      keys: [src, </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">...</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(options?.keys </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">??</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [])],</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      onSuccess: options?.onSuccess,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      onError: options?.onError,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      refetchInterval: options?.refetchInterval,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      retry: options?.retry</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    }</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  );</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>",
+  "id": "useImage",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useImage",
+  "usage": "low",
+  "description": "Hook that load an image in the browser",
+  "category": "Elements",
+  "lastModified": 1754977987000,
+  "examples": [
+    "const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useImage('https://example.com/image.png');"
+  ],
+  "apiParameters": [
+    {
+      "tag": "param",
+      "name": "src",
+      "type": "string",
+      "optional": false,
+      "description": "The source of the image",
+      "problems": [],
+      "source": [
+        {
+          "number": 6,
+          "source": " * @param {string} src The source of the image",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "src",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The source of the image",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.srcset",
+      "type": "string",
+      "optional": true,
+      "description": "The srcset of the image",
+      "problems": [],
+      "source": [
+        {
+          "number": 7,
+          "source": " * @param {string} [options.srcset] The srcset of the image",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.srcset]",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The srcset of the image",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.sizes",
+      "type": "string",
+      "optional": true,
+      "description": "The sizes of the image",
+      "problems": [],
+      "source": [
+        {
+          "number": 8,
+          "source": " * @param {string} [options.sizes] The sizes of the image",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.sizes]",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The sizes of the image",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.alt",
+      "type": "string",
+      "optional": true,
+      "description": "The alt of the image",
+      "problems": [],
+      "source": [
+        {
+          "number": 9,
+          "source": " * @param {string} [options.alt] The alt of the image",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.alt]",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The alt of the image",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.class",
+      "type": "string",
+      "optional": true,
+      "description": "The class of the image",
+      "problems": [],
+      "source": [
+        {
+          "number": 10,
+          "source": " * @param {string} [options.class] The class of the image",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.class]",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The class of the image",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.loading",
+      "type": "HTMLImageElement['loading']",
+      "optional": true,
+      "description": "The loading of the image",
+      "problems": [],
+      "source": [
+        {
+          "number": 11,
+          "source": " * @param {HTMLImageElement['loading']} [options.loading] The loading of the image",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.loading]",
+            "postName": " ",
+            "type": "{HTMLImageElement['loading']}",
+            "postType": " ",
+            "description": "The loading of the image",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.crossorigin",
+      "type": "string",
+      "optional": true,
+      "description": "The crossorigin of the image",
+      "problems": [],
+      "source": [
+        {
+          "number": 12,
+          "source": " * @param {string} [options.crossorigin] The crossorigin of the image",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.crossorigin]",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The crossorigin of the image",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.referrerPolicy",
+      "type": "HTMLImageElement['referrerPolicy']",
+      "optional": true,
+      "description": "The referrerPolicy of the image",
+      "problems": [],
+      "source": [
+        {
+          "number": 13,
+          "source": " * @param {HTMLImageElement['referrerPolicy']} [options.referrerPolicy] The referrerPolicy of the image",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.referrerPolicy]",
+            "postName": " ",
+            "type": "{HTMLImageElement['referrerPolicy']}",
+            "postType": " ",
+            "description": "The referrerPolicy of the image",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.keys",
+      "type": "DependencyList",
+      "optional": true,
+      "description": "The dependencies for the hook",
+      "problems": [],
+      "source": [
+        {
+          "number": 14,
+          "source": " * @param {DependencyList} [options.keys] The dependencies for the hook",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.keys]",
+            "postName": " ",
+            "type": "{DependencyList}",
+            "postType": " ",
+            "description": "The dependencies for the hook",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.onSuccess",
+      "type": "(data: Data) => void",
+      "optional": true,
+      "description": "The callback function to be invoked on success",
+      "problems": [],
+      "source": [
+        {
+          "number": 15,
+          "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onSuccess]",
+            "postName": " ",
+            "type": "{(data: Data) => void}",
+            "postType": " ",
+            "description": "The callback function to be invoked on success",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.onError",
+      "type": "(error: Error) => void",
+      "optional": true,
+      "description": "The callback function to be invoked on error",
+      "problems": [],
+      "source": [
+        {
+          "number": 16,
+          "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onError]",
+            "postName": " ",
+            "type": "{(error: Error) => void}",
+            "postType": " ",
+            "description": "The callback function to be invoked on error",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.refetchInterval",
+      "type": "number",
+      "optional": true,
+      "description": "The refetch interval",
+      "problems": [],
+      "source": [
+        {
+          "number": 17,
+          "source": " * @param {number} [options.refetchInterval] The refetch interval",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.refetchInterval]",
+            "postName": " ",
+            "type": "{number}",
+            "postType": " ",
+            "description": "The refetch interval",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.retry",
+      "type": "boolean | number",
+      "optional": true,
+      "description": "The retry count of requests",
+      "problems": [],
+      "source": [
+        {
+          "number": 18,
+          "source": " * @param {boolean | number} [options.retry] The retry count of requests",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.retry]",
+            "postName": " ",
+            "type": "{boolean | number}",
+            "postType": " ",
+            "description": "The retry count of requests",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseImageReturn",
+      "optional": false,
+      "description": "object with the state of the image",
+      "problems": [],
+      "source": [
+        {
+          "number": 19,
+          "source": " * @returns {UseImageReturn} An object with the state of the image",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseImageReturn}",
+            "postType": " ",
+            "description": "object with the state of the image",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 20,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    }
+  ],
+  "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { UseQueryOptions, UseQueryReturn } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useQuery/useQuery'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseImageOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The alt of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  alt</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The class of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  class</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The crossorigin of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  crossorigin</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The loading of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  loading</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'loading'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">];</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The referrer policy of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  referrerPolicy</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'referrerPolicy'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">];</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The sizes of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  sizes</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The srcset of the image */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  srcset</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseImageReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseQueryReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span></code></pre>",
+  "dependencies": {
+    "hooks": [
+      "useQuery"
+    ],
+    "utils": [],
+    "packages": []
+  },
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "demo": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useImage } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@siberiacancode/reactuse'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { ChevronLeftIcon, ChevronRightIcon, DownloadIcon, Loader2Icon } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'lucide-react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useState } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> MIN_ID</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> MAX_ID</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 151</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> getImageUrl</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">id</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> number</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">id</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">}.png`</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> getFilename</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">id</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> number</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> `pokemon-${</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">String</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">(</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">id</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">).</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">padStart</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">3</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">, </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'0'</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">)</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">}.png`</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> downloadImage</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">img</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLImageElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">filename</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> canvas</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> document.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">createElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'canvas'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  canvas.width </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> img.naturalWidth;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  canvas.height </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> img.naturalHeight;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  canvas.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">getContext</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'2d'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">drawImage</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(img, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  canvas.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">toBlob</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">((</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">blob</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">blob) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> blobUrl</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> URL</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">createObjectURL</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(blob);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> link</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> document.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">createElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'a'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    link.href </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> blobUrl;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    link.download </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> filename;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    link.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">click</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">    URL</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">revokeObjectURL</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(blobUrl);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  });</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">};</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Demo</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">id</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">setId</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">MIN_ID</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> image</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useImage</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">getImageUrl</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(id), { crossorigin: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'anonymous'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> });</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> filename</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> getFilename</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(id);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onPrev</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> setId</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">((</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">value</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Math.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">max</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">MIN_ID</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, value </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">-</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">));</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onNext</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> setId</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">((</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">value</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Math.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">min</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">MAX_ID</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, value </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">+</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">));</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onDownload</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">image.data) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    downloadImage</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(image.data, filename);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex w-full max-w-md flex-col p-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'border-border bg-card relative flex h-[240px] items-center justify-center overflow-hidden rounded-xl border shadow-sm'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        {image.isLoading </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">Loader2Icon</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-muted-foreground size-8 animate-spin'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> />}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        {</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">image.isLoading </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> image.data </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">img</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">            key</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{id}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">            alt</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{filename}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">            className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'animate-in fade-in h-[160px] object-contain duration-300'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">            src</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{image.data.src}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        )}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          aria-label</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Previous'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'absolute top-1/2 left-2 -translate-y-1/2 rounded-full!'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          data-size</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'icon'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          data-variant</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'ghost'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          disabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{id </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">===</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> MIN_ID</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          type</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'button'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          onClick</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{onPrev}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        ></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">ChevronLeftIcon</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'size-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          aria-label</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Next'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'absolute top-1/2 right-2 -translate-y-1/2 rounded-full!'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          data-size</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'icon'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          data-variant</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'ghost'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          disabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{id </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">===</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> MAX_ID</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          type</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'button'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          onClick</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{onNext}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        ></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">ChevronRightIcon</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'size-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          aria-label</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Download'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'absolute top-3 right-3 rounded-full!'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          data-size</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'icon'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          data-variant</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'ghost'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          disabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{image.isLoading </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">||</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> !</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">image.data}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          type</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'button'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          onClick</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{onDownload}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        ></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">DownloadIcon</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'size-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground absolute bottom-5 flex w-full items-center justify-between px-4 font-mono text-xs font-semibold'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          {filename}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  );</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">};</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> default</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Demo;</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>"
+}

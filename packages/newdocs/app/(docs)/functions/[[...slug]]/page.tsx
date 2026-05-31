@@ -33,7 +33,29 @@ export const generateMetadata = async (props: FunctionPageProps) => {
 
   return {
     title: page.data.title,
-    description: page.data.description
+    description: page.data.description,
+    openGraph: {
+      title: page.data.title,
+      description: page.data.description,
+      type: 'article',
+      url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`,
+      images: [
+        {
+          url: `/new/og/${page.url}`
+        }
+      ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: page.data.title,
+      description: page.data.description,
+      images: [
+        {
+          url: `/new/og/${page.url}`
+        }
+      ],
+      creator: '@shadcn'
+    }
   };
 };
 

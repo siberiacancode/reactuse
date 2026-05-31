@@ -1,15 +1,15 @@
 ---
-title: useHotkeys
-description: Hook that listens for hotkeys
-category: sensors
-usage: medium
+title: useImage
+description: Hook that load an image in the browser
+category: elements
+usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780207176000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useHotkeys.meta.json';
+import metadata from './useImage.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useHotkeys.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useHotkeys
+    npx useverse@latest add useImage
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,13 +47,7 @@ import metadata from './useHotkeys.meta.json';
 ## Usage
 
 ```tsx
-useHotkeys(ref, 'ctrl+a', { onChange: () => console.log('hotkey pressed') });
-// or
-useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed'));
-// or
-const ref = useHotkeys('ctrl+a', { onChange: () => console.log('hotkey pressed') });
-// or
-const ref = useHotkeys('ctrl+a', () => console.log('hotkey pressed'));
+const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useImage('https://example.com/image.png');
 ```
 
 ## Type Declarations

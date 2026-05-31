@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover",
+      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage",
 
       "---async---",
       "useAsync",
@@ -23,7 +23,7 @@
       "useBrowserLanguage",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver",
 
       "---humor---",
       "useFul"

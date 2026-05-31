@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1768553242000
+lastModifiedTime: 1780207176000
 ---
 
 import metadata from './useHotkeys.meta.json';
@@ -47,7 +47,11 @@ import metadata from './useHotkeys.meta.json';
 ## Usage
 
 ```tsx
+useHotkeys(ref, 'ctrl+a', { onChange: () => console.log('hotkey pressed') });
+// or
 useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed'));
+// or
+const ref = useHotkeys('ctrl+a', { onChange: () => console.log('hotkey pressed') });
 // or
 const ref = useHotkeys('ctrl+a', () => console.log('hotkey pressed'));
 ```

@@ -64,3 +64,6 @@ A quick list of available functions.
 - [useHotkeys](/functions/hooks/useHotkeys): Hook that listens for hotkeys
 - [useHover](/functions/hooks/useHover): Hook that defines the logic when hovering an element
 - [useIdle](/functions/hooks/useIdle): Hook that defines the logic when the user is idle
+- [useImage](/functions/hooks/useImage): Hook that load an image in the browser
+- [useInfiniteScroll](/functions/hooks/useInfiniteScroll): Hook that defines the logic for infinite scroll
+- [useIntersectionObserver](/functions/hooks/useIntersectionObserver): Hook that gives you intersection observer state

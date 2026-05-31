@@ -6,7 +6,6 @@ import { isTarget } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
-import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 
 /** The use hotkeys params type */
@@ -15,6 +14,8 @@ export interface UseHotkeysOptions {
   alias?: Record<string, string>;
   /** Enable or disable the event listeners */
   enabled?: boolean;
+  /** The callback function to execute when hotkey is pressed */
+  onChange?: (event: KeyboardEvent) => void;
 }
 
 export const isHotkeyMatch = (hotkey: string, keys: UseHotkeysKey[]) =>
@@ -45,12 +46,20 @@ export interface UseHotkeysKey {
 }
 
 export interface UseHotkeys {
+  (target: HookTarget, hotkeys: UseHotkeysHotkeys, options?: UseHotkeysOptions): void;
+
   (
     target: HookTarget,
     hotkeys: UseHotkeysHotkeys,
     callback: (event: KeyboardEvent) => void,
     options?: UseHotkeysOptions
   ): void;
+
+  <Target extends Element>(
+    hotkeys: UseHotkeysHotkeys,
+    options?: UseHotkeysOptions,
+    target?: never
+  ): StateRef<Target>;
 
   <Target extends Element>(
     hotkeys: UseHotkeysHotkeys,
@@ -69,6 +78,15 @@ export interface UseHotkeys {
  * @overload
  * @param {HookTarget} [target=window] The target element to attach the event listener to
  * @param {string} hotkeys The hotkey to listen for
+ * @param {UseHotkeysOptions} [options] The options for the hook
+ * @returns {void}
+ *
+ * @example
+ * useHotkeys(ref, 'ctrl+a', { onChange: () => console.log('hotkey pressed') });
+ *
+ * @overload
+ * @param {HookTarget} [target=window] The target element to attach the event listener to
+ * @param {string} hotkeys The hotkey to listen for
  * @param {(event: KeyboardEvent) => void} callback The callback function to execute when hotkey is pressed
  * @param {Record<string, string>} [options.alias] Alias map for hotkeys
  * @param {boolean} [options.enabled=true] Enable or disable the event listeners
@@ -76,6 +94,15 @@ export interface UseHotkeys {
  *
  * @example
  * useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed'));
+ *
+ * @overload
+ * @template Target The target element
+ * @param {string} hotkeys The hotkey to listen for
+ * @param {UseHotkeysOptions} [options] The options for the hook
+ * @returns {StateRef<Target>} A reference to the target element
+ *
+ * @example
+ * const ref = useHotkeys('ctrl+a', { onChange: () => console.log('hotkey pressed') });
  *
  * @overload
  * @template Target The target element
@@ -91,57 +118,60 @@ export interface UseHotkeys {
 export const useHotkeys = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const hotkeys = (target ? params[1] : params[0]) as UseHotkeysHotkeys;
-  const callback = (target ? params[2] : params[1]) as (event: KeyboardEvent) => void;
-  const options = (target ? params[3] : params[2]) as UseHotkeysOptions | undefined;
+  const options = (
+    target
+      ? typeof params[2] === 'object'
+        ? params[2]
+        : { ...params[3], onChange: params[2] }
+      : typeof params[1] === 'object'
+        ? params[1]
+        : { ...params[2], onChange: params[1] }
+  ) as UseHotkeysOptions | undefined;
+
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
 
   const internalRef = useRefState<Element | Window>();
   const keysRef = useRef<UseHotkeysKey[]>([]);
   const enabled = options?.enabled ?? true;
 
-  const onKeyDown = useEvent((event: KeyboardEvent) => {
-    if (!enabled) return;
-
-    if (keysRef.current.some(({ code }) => code === event.code)) return;
-
-    const alias = options?.alias?.[event.key] ?? event.code;
-    const updatedKeys = [...keysRef.current, { key: event.key, code: event.code, alias }];
-    keysRef.current = updatedKeys;
-
-    const hotkeysList = hotkeys.split(',').map((h) => h.trim());
-    const isMatch = hotkeysList.some((hotkey) => isHotkeyMatch(hotkey, updatedKeys));
-    if (!isMatch) return;
-    event.preventDefault();
-    callback(event);
-  });
-
-  const onKeyUp = useEvent((event: KeyboardEvent) => {
-    if (!enabled) return;
-    keysRef.current = keysRef.current.filter(({ code }) => code !== event.code);
-  });
-
   useEffect(() => {
     keysRef.current = [];
     if (!enabled) return;
 
-    const element =
+    const eventTarget =
       ((target ? isTarget.getElement(target) : internalRef.current) as Element | Window) ?? window;
-    if (!element) return;
+    if (!eventTarget) return;
 
-    element.addEventListener('keydown', onKeyDown as EventListener);
-    element.addEventListener('keyup', onKeyUp as EventListener);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (!enabled) return;
+
+      if (keysRef.current.some(({ code }) => code === event.code)) return;
+
+      const alias = options?.alias?.[event.key] ?? event.code;
+      const updatedKeys = [...keysRef.current, { key: event.key, code: event.code, alias }];
+      keysRef.current = updatedKeys;
+
+      const hotkeysList = hotkeys.split(',').map((h) => h.trim());
+      const isMatch = hotkeysList.some((hotkey) => isHotkeyMatch(hotkey, updatedKeys));
+      if (!isMatch) return;
+      event.preventDefault();
+      optionsRef.current?.onChange?.(event);
+    };
+
+    const onKeyUp = (event: KeyboardEvent) => {
+      if (!enabled) return;
+      keysRef.current = keysRef.current.filter(({ code }) => code !== event.code);
+    };
+
+    eventTarget.addEventListener('keydown', onKeyDown as EventListener);
+    eventTarget.addEventListener('keyup', onKeyUp as EventListener);
 
     return () => {
-      element.removeEventListener('keydown', onKeyDown as EventListener);
-      element.removeEventListener('keyup', onKeyUp as EventListener);
+      eventTarget.removeEventListener('keydown', onKeyDown as EventListener);
+      eventTarget.removeEventListener('keyup', onKeyUp as EventListener);
     };
-  }, [
-    target && isTarget.getRawElement(target),
-    internalRef.state,
-    enabled,
-    hotkeys,
-    onKeyDown,
-    onKeyUp
-  ]);
+  }, [target && isTarget.getRawElement(target), internalRef.state, enabled, hotkeys]);
 
   if (target) return;
   return internalRef;

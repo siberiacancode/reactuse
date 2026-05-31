@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1780207176000
 ---
 
 import metadata from './useIdle.meta.json';
