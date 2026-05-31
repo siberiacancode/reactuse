@@ -202,8 +202,8 @@ importers:
         specifier: ^1.14.1
         version: 1.14.1
       '@siberiacancode/reactuse':
-        specifier: ^0.3.29
-        version: 0.3.29(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^0.3.30
+        version: 0.3.30(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tabler/icons-react':
         specifier: ^3.37.1
         version: 3.37.1(react@19.2.4)
@@ -3001,8 +3001,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@siberiacancode/reactuse@0.3.29':
-    resolution: {integrity: sha512-YJ86byajj/4qT7ojrxKtw+2mhAme37dTCaPz9lxjmcOq3O6Za2HJGcs6puDJtAVpGXTyDhBscqMdyZAjAsVkoQ==}
+  '@siberiacancode/reactuse@0.3.30':
+    resolution: {integrity: sha512-uYZmaAsqM9h78BdppcC6yXzxVG1yGPkANqHUxxcuxz1kfPys1j3Zt9B4QsNDCAL9lyeDvcCuE2jaS5+Jdvd19Q==}
     engines: {node: '>=14'}
     peerDependencies:
       '@types/react': ^18 || ^19
@@ -10743,7 +10743,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.14
 
-  '@siberiacancode/reactuse@0.3.29(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@siberiacancode/reactuse@0.3.30(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
