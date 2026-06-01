@@ -2,6 +2,7 @@ import { functionsSource, source } from '@docs/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
 import { Buffer } from 'node:buffer';
+import process from 'node:process';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
