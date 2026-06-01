@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1770651919000
+lastModifiedTime: 1780314562000
 ---
 
 import metadata from './useKeyPress.meta.json';

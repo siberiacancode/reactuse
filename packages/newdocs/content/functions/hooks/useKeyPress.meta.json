@@ -8,7 +8,7 @@
   "usage": "medium",
   "description": "Hook that listens for key press events",
   "category": "Sensors",
-  "lastModified": 1770651919000,
+  "lastModified": 1780314562000,
   "examples": [
     "const isKeyPressed = useKeyPress(ref, 'a');",
     "const { pressed, ref } = useKeyPress('a');"
@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} [target=window] The target to attach the event listeners to\r",
+          "source": " * @param {HookTarget} [target=window] The target to attach the event listeners to",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The target to attach the event listeners to",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -81,7 +81,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {UseKeyPressKey} key The key or keys to listen for\r",
+          "source": " * @param {UseKeyPressKey} key The key or keys to listen for",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -94,7 +94,7 @@
             "postType": " ",
             "description": "The key or keys to listen for",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -109,7 +109,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed\r",
+          "source": " * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -122,7 +122,7 @@
             "postType": " ",
             "description": "Callback function invoked when key is pressed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -137,7 +137,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {UseKeyPressReturn} An object containing the pressed state and ref\r",
+          "source": " * @returns {UseKeyPressReturn} An object containing the pressed state and ref",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -150,12 +150,12 @@
             "postType": " ",
             "description": "object containing the pressed state and ref",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 11,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -168,7 +168,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -183,7 +183,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -196,7 +196,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -211,7 +211,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {UseKeyPressKey} key The key or keys to listen for\r",
+          "source": " * @param {UseKeyPressKey} key The key or keys to listen for",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -224,7 +224,7 @@
             "postType": " ",
             "description": "The key or keys to listen for",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -239,7 +239,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed\r",
+          "source": " * @param {(pressed: boolean, event: KeyboardEvent) => void} [callback] Callback function invoked when key is pressed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -252,7 +252,7 @@
             "postType": " ",
             "description": "Callback function invoked when key is pressed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -267,7 +267,7 @@
       "source": [
         {
           "number": 19,
-          "source": " * @returns {{ pressed: boolean; ref: StateRef<Target> }} An object containing the pressed state and ref\r",
+          "source": " * @returns {{ pressed: boolean; ref: StateRef<Target> }} An object containing the pressed state and ref",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -280,12 +280,12 @@
             "postType": " ",
             "description": "object containing the pressed state and ref",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 20,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -298,7 +298,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
