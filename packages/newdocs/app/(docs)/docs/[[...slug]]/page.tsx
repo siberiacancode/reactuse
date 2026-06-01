@@ -5,6 +5,7 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { findNeighbour } from 'fumadocs-core/page-tree';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import process from 'node:process';
 
 import { DocHeader } from '../_components/doc-header';
 import { DocsToc } from '../_components/docs-toc';
@@ -15,35 +16,45 @@ export const dynamicParams = false;
 
 export const generateStaticParams = () => source.generateParams();
 
-export const generateMetadata = async (props: { params: Promise<{ slug: string[] }> }) => {
+interface DocsPageProps {
+  params: Promise<{ slug: string[] }>;
+}
+
+export const generateMetadata = async (props: DocsPageProps) => {
   const params = await props.params;
   const page = source.getPage(params.slug);
 
   if (!page) notFound();
 
-  const doc = page.data;
-
-  if (!doc.title || !doc.description) notFound();
-
   return {
-    title: doc.title,
-    description: doc.description,
-    twitter: {
-      card: 'summary_large_image',
-      title: doc.title,
-      description: doc.description,
+    title: page.data.title,
+    description: page.data.description,
+    openGraph: {
+      title: page.data.title,
+      description: page.data.description,
+      type: 'article',
+      url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`,
       images: [
         {
-          url: `/og?title=${encodeURIComponent(
-            doc.title
-          )}&description=${encodeURIComponent(doc.description)}`
+          url: `/new/og${page.url}.png`
         }
       ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: page.data.title,
+      description: page.data.description,
+      images: [
+        {
+          url: `/new/og${page.url}.png`
+        }
+      ],
+      creator: '@siberiacancode'
     }
   };
 };
 
-export const DocsPage = async (props: { params: Promise<{ slug: string[] }> }) => {
+export const DocsPage = async (props: DocsPageProps) => {
   const params = await props.params;
   const page = source.getPage(params.slug);
 

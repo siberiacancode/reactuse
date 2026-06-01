@@ -3,6 +3,7 @@ import type { source } from '@docs/lib/source';
 export type PageTreeNode = (typeof source.pageTree)['children'][number];
 export type PageTreeFolder = Extract<PageTreeNode, { type: 'folder' }>;
 export type PageTreePage = Extract<PageTreeNode, { type: 'page' }>;
+export type PageTreeRoot = Pick<typeof source.pageTree, 'children'>;
 
 // Recursively find all pages in a folder tree.
 export function getAllPagesFromFolder(folder: PageTreeFolder): PageTreePage[] {

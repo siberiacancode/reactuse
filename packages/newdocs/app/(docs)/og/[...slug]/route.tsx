@@ -4,6 +4,10 @@ import { ImageResponse } from 'next/og';
 import { Buffer } from 'node:buffer';
 import process from 'node:process';
 
+import type { PageTreePage, PageTreeRoot } from '@/lib/page-tree';
+
+import { getAllPagesFromFolder } from '@/lib/page-tree';
+
 export const revalidate = false;
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -20,29 +24,42 @@ const normalizeUrlToSlug = (url: string) =>
     .split('/')
     .filter(Boolean);
 
+const getAllPagesFromTree = (tree: PageTreeRoot): PageTreePage[] =>
+  tree.children.flatMap((child) => {
+    if (child.type === 'page') {
+      return [child];
+    }
+
+    if (child.type === 'folder') {
+      return getAllPagesFromFolder(child);
+    }
+
+    return [];
+  });
+
 export const getOgPages = (): OgPage[] => {
-  const docsPages = source.generateParams().flatMap((params) => {
-    const page = source.getPage(params.slug);
+  const docsPages = getAllPagesFromTree(source.getPageTree()).flatMap((node) => {
+    const page = source.getNodePage(node);
 
     if (!page?.data.title || !page.data.description) return [];
 
     return [
       {
-        slug: normalizeUrlToSlug(page.url),
+        slug: normalizeUrlToSlug(node.url),
         title: page.data.title,
         description: page.data.description
       }
     ];
   });
 
-  const functionsPages = functionsSource.generateParams().flatMap((params) => {
-    const page = functionsSource.getPage(params.slug);
+  const functionsPages = getAllPagesFromTree(functionsSource.getPageTree()).flatMap((node) => {
+    const page = functionsSource.getNodePage(node);
 
     if (!page?.data.title || !page.data.description) return [];
 
     return [
       {
-        slug: normalizeUrlToSlug(page.url),
+        slug: normalizeUrlToSlug(node.url),
         title: page.data.title,
         description: page.data.description
       }
@@ -53,16 +70,24 @@ export const getOgPages = (): OgPage[] => {
 };
 
 export const getOgPageBySlug = (slug: string[]) => {
-  const pathname = slug.join('/');
+  const normalizedSlug = [...slug];
+  const lastIndex = normalizedSlug.length - 1;
+  const lastSegment = normalizedSlug[lastIndex];
+
+  if (lastSegment?.endsWith('.png')) {
+    normalizedSlug[lastIndex] = lastSegment.slice(0, -4);
+  }
+
+  const pathname = normalizedSlug.join('/');
 
   return getOgPages().find((page) => page.slug.join('/') === pathname);
 };
 
-export const getOgImageUrl = (pageUrl: string) => `/og${pageUrl}`;
+export const getOgImageUrl = (pageUrl: string) => `/og${pageUrl}.png`;
 
 export const generateStaticParams = () =>
   getOgPages().map((page) => ({
-    slug: page.slug
+    slug: [...page.slug.slice(0, -1), `${page.slug[page.slug.length - 1]}.png`]
   }));
 
 const loadAssets = async () => {
@@ -84,7 +109,7 @@ const loadAssets = async () => {
       weight: 600,
       style: 'normal'
     }
-  ];
+  ] as const;
 };
 
 interface OgRouteProps {

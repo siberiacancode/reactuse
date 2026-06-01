@@ -41,7 +41,7 @@ export const generateMetadata = async (props: FunctionPageProps) => {
       url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`,
       images: [
         {
-          url: `/new/og/${page.url}`
+          url: `/new/og${page.url}.png`
         }
       ]
     },
@@ -51,10 +51,10 @@ export const generateMetadata = async (props: FunctionPageProps) => {
       description: page.data.description,
       images: [
         {
-          url: `/new/og/${page.url}`
+          url: `/new/og${page.url}.png`
         }
       ],
-      creator: '@shadcn'
+      creator: '@siberiacancode'
     }
   };
 };
