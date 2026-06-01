@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 
 import { cn } from '@docs/lib/utils';
 import { Geist, Geist_Mono, JetBrains_Mono } from 'next/font/google';
+import process from 'node:process';
 
 import { ThemeScript } from './_scripts';
 import { Provider } from './provider';
