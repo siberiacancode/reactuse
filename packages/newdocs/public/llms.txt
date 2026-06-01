@@ -59,6 +59,8 @@
 
 - [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates
 - [useDidUpdate](https://reactuse.org/functions/hooks/useDidUpdate): Hook that triggers the effect callback on updates
+- [useIsFirstRender](https://reactuse.org/functions/hooks/useIsFirstRender): Hook that returns true if the component is first render
+- [useIsomorphicLayoutEffect](https://reactuse.org/functions/hooks/useIsomorphicLayoutEffect): Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
 ### Sensorss
 
 - [useDeviceMotion](https://reactuse.org/functions/hooks/useDeviceMotion): Hook that work with device motion
@@ -67,6 +69,8 @@
 - [useIdle](https://reactuse.org/functions/hooks/useIdle): Hook that defines the logic when the user is idle
 - [useInfiniteScroll](https://reactuse.org/functions/hooks/useInfiniteScroll): Hook that defines the logic for infinite scroll
 - [useIntersectionObserver](https://reactuse.org/functions/hooks/useIntersectionObserver): Hook that gives you intersection observer state
+- [useKeyboard](https://reactuse.org/functions/hooks/useKeyboard): Hook that helps to listen for keyboard events
+- [useKeyPress](https://reactuse.org/functions/hooks/useKeyPress): Hook that listens for key press events
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state
@@ -78,6 +82,9 @@
 - [useDisclosure](https://reactuse.org/functions/hooks/useDisclosure): Hook that allows you to open and close a modal
 - [useField](https://reactuse.org/functions/hooks/useField): Hook to manage a form field
 - [useHash](https://reactuse.org/functions/hooks/useHash): Hook that manages the hash value
+### Times
+
+- [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions
 ### Users
 
 - [useBrowserLanguage](https://reactuse.org/functions/hooks/useBrowserLanguage): Hook that returns the current browser language

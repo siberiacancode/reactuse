@@ -66,7 +66,7 @@ export const useKeyPress = ((...params: any[]) => {
   const callback = (target ? params[2] : params[1]) as UseKeyPressCallback | undefined;
 
   const [pressed, setPressed] = useState(false);
-  const internalRef = useRefState(window);
+  const internalRef = useRefState<Element | Window>();
 
   const keyRef = useRef(key);
   keyRef.current = key;
@@ -74,9 +74,8 @@ export const useKeyPress = ((...params: any[]) => {
   internalCallbackRef.current = callback;
 
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-
-    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;
     if (!element) return;
 
     const onKeyDown = (event: Event) => {

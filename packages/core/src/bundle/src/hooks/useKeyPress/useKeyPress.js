@@ -30,15 +30,14 @@ export const useKeyPress = (...params) => {
   const key = target ? params[1] : params[0];
   const callback = target ? params[2] : params[1];
   const [pressed, setPressed] = useState(false);
-  const internalRef = useRefState(window);
+  const internalRef = useRefState();
   const keyRef = useRef(key);
   keyRef.current = key;
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-    const element = target ? isTarget.getElement(target) : internalRef.current;
-    if (!element) return;
+    const eventTarget = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
+    if (!eventTarget) return;
     const onKeyDown = (event) => {
       const keyboardEvent = event;
       if (
@@ -61,11 +60,11 @@ export const useKeyPress = (...params) => {
         internalCallbackRef.current?.(false, keyboardEvent);
       }
     };
-    element.addEventListener('keydown', onKeyDown);
-    element.addEventListener('keyup', onKeyUp);
+    eventTarget.addEventListener('keydown', onKeyDown);
+    eventTarget.addEventListener('keyup', onKeyUp);
     return () => {
-      element.removeEventListener('keydown', onKeyDown);
-      element.removeEventListener('keyup', onKeyUp);
+      eventTarget.removeEventListener('keydown', onKeyDown);
+      eventTarget.removeEventListener('keyup', onKeyUp);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return { pressed };

@@ -1,15 +1,15 @@
 ---
-title: useInfiniteScroll
-description: Hook that defines the logic for infinite scroll
+title: useKeyPress
+description: Hook that listens for key press events
 category: sensors
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780245351000
+lastModifiedTime: 1770651919000
 ---
 
-import metadata from './useInfiniteScroll.meta.json';
+import metadata from './useKeyPress.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useInfiniteScroll.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useInfiniteScroll
+    npx useverse@latest add useKeyPress
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,9 @@ import metadata from './useInfiniteScroll.meta.json';
 ## Usage
 
 ```tsx
-const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));
+const isKeyPressed = useKeyPress(ref, 'a');
 // or
-const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));
+const { pressed, ref } = useKeyPress('a');
 ```
 
 ## Type Declarations

@@ -1,3 +1,5 @@
+'use client'
+
 import { useCounter, useIsFirstRender } from '@siberiacancode/reactuse';
 import { RefreshCwIcon, RotateCwIcon, SparklesIcon } from 'lucide-react';
 

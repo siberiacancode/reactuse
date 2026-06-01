@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import type { MouseEvent } from 'react';
 
@@ -58,6 +58,7 @@ const Demo = () => {
   const onSave = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     await fileSystemAccess.save();
+    setContent(fileSystemAccess.data ?? '');
   };
 
   const onOpen = async (event: MouseEvent<HTMLButtonElement>) => {
@@ -69,7 +70,8 @@ const Demo = () => {
   const onReplaceAll = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!find || !matches) return;
-    setContent((current) => current.split(find).join(replace));
+    const updated = content.split(find).join(replace);
+    fileSystemAccess.set(updated);
     findField.setValue('');
     replaceField.setValue('');
   };
@@ -135,7 +137,7 @@ const Demo = () => {
                   <span className='text-foreground text-[11px] font-medium'>Find and replace</span>
                   <button
                     aria-label='Close'
-                    data-size='icon-xs'
+                    data-size='icon'
                     data-variant='ghost'
                     type='button'
                     onClick={() => toggleFindOpen()}

@@ -1,15 +1,15 @@
 ---
-title: useInfiniteScroll
-description: Hook that defines the logic for infinite scroll
-category: sensors
-usage: medium
+title: useIsomorphicLayoutEffect
+description: Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
+category: lifecycle
+usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780245351000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useInfiniteScroll.meta.json';
+import metadata from './useIsomorphicLayoutEffect.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useInfiniteScroll.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useInfiniteScroll
+    npx useverse@latest add useIsomorphicLayoutEffect
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,18 +47,8 @@ import metadata from './useInfiniteScroll.meta.json';
 ## Usage
 
 ```tsx
-const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));
-// or
-const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));
+useIsomorphicLayoutEffect(() => console.log('effect'), [])
 ```
-
-## Type Declarations
-
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
-
-## API
-
-<FunctionApi apiParameters={metadata.apiParameters} />
 
 ## Contributors
 

@@ -23,7 +23,7 @@ const targets = [
 
 const element = document.getElementById('target') as HTMLDivElement;
 
-const setElementLayoutMetrics = () => {
+beforeEach(() => {
   Object.defineProperty(element, 'clientWidth', {
     value: 200,
     configurable: true
@@ -50,10 +50,6 @@ const setElementLayoutMetrics = () => {
     writable: true,
     configurable: true
   });
-};
-
-beforeEach(() => {
-  setElementLayoutMetrics();
 });
 
 targets.forEach((target) => {
@@ -104,33 +100,19 @@ targets.forEach((target) => {
       if (!target) act(() => result.current.ref(element));
 
       await act(async () => {
+        element.scrollTop = 780;
+        element.dispatchEvent(new Event('scroll'));
+      });
+
+      expect(callback).not.toHaveBeenCalled();
+
+      await act(async () => {
         element.scrollTop = 790;
         element.dispatchEvent(new Event('scroll'));
       });
 
       expect(callback).toHaveBeenCalledOnce();
       expect(callback).toHaveBeenCalledWith(expect.any(Event));
-    });
-
-    it('Should not call callback when distance is not reached', async () => {
-      const callback = vi.fn();
-
-      const { result } = renderHook(() => {
-        if (target)
-          return useInfiniteScroll(target, callback, { distance: 10 }) as unknown as {
-            ref: StateRef<HTMLDivElement>;
-          } & UseInfiniteScrollReturn;
-        return useInfiniteScroll<HTMLDivElement>(callback, { distance: 10 });
-      });
-
-      if (!target) act(() => result.current.ref(element));
-
-      await act(async () => {
-        element.scrollTop = 780;
-        element.dispatchEvent(new Event('scroll'));
-      });
-
-      expect(callback).not.toHaveBeenCalled();
     });
 
     it('Should handle direction option', async () => {
@@ -161,11 +143,11 @@ targets.forEach((target) => {
     });
 
     it('Should block parallel callback calls while loading', async () => {
-      let resolveCallback: () => void = () => {};
+      let resolve: () => void;
       const callback = vi.fn(
         () =>
-          new Promise<void>((resolve) => {
-            resolveCallback = resolve;
+          new Promise<void>((r) => {
+            resolve = r;
           })
       );
 
@@ -179,7 +161,7 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      await act(async () => {
+      act(() => {
         element.scrollTop = 790;
         element.dispatchEvent(new Event('scroll'));
       });
@@ -187,16 +169,14 @@ targets.forEach((target) => {
       expect(result.current.loading).toBeTruthy();
       expect(callback).toHaveBeenCalledOnce();
 
-      await act(async () => {
+      act(() => {
         element.scrollTop = 790;
         element.dispatchEvent(new Event('scroll'));
       });
 
       expect(callback).toHaveBeenCalledOnce();
 
-      await act(async () => {
-        resolveCallback();
-      });
+      await act(async () => resolve!());
 
       await waitFor(() => expect(result.current.loading).toBeFalsy());
     });

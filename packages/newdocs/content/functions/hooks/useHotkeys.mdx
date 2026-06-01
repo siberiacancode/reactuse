@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780207176000
+lastModifiedTime: 1780245351000
 ---
 
 import metadata from './useHotkeys.meta.json';

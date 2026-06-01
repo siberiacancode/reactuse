@@ -30,14 +30,13 @@ export const useKeyPress = (...params) => {
   const key = target ? params[1] : params[0];
   const callback = target ? params[2] : params[1];
   const [pressed, setPressed] = useState(false);
-  const internalRef = useRefState(window);
+  const internalRef = useRefState();
   const keyRef = useRef(key);
   keyRef.current = key;
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-    const element = target ? isTarget.getElement(target) : internalRef.current;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     if (!element) return;
     const onKeyDown = (event) => {
       const keyboardEvent = event;

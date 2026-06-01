@@ -1,3 +1,5 @@
+'use client'
+
 import { useAsync, useKeyPress } from '@siberiacancode/reactuse';
 import { ChevronLeftIcon, ChevronRightIcon, Loader2Icon } from 'lucide-react';
 import { useState } from 'react';

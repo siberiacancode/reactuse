@@ -11,7 +11,6 @@ export const ThemeButton = (props: ThemeButtonProps) => {
   const theme = useTheme();
 
   const onThemeClick = async (event: MouseEvent<HTMLButtonElement>) => {
-    console.log('onThemeClick', theme.value);
     const x = event.clientX;
     const y = event.clientY;
     theme.animate(x, y, theme.value === 'dark' ? 'light' : 'dark');

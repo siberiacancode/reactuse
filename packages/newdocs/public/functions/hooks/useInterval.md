@@ -1,15 +1,15 @@
 ---
-title: useInfiniteScroll
-description: Hook that defines the logic for infinite scroll
-category: sensors
-usage: medium
+title: useInterval
+description: Hook that makes and interval and returns controlling functions
+category: time
+usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780245351000
+lastModifiedTime: 1776172602000
 ---
 
-import metadata from './useInfiniteScroll.meta.json';
+import metadata from './useInterval.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useInfiniteScroll.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useInfiniteScroll
+    npx useverse@latest add useInterval
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,9 @@ import metadata from './useInfiniteScroll.meta.json';
 ## Usage
 
 ```tsx
-const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));
+const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), 2500);
 // or
-const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));
+const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), { interval: 2500 });
 ```
 
 ## Type Declarations

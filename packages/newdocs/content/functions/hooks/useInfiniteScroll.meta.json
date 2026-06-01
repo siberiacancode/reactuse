@@ -8,7 +8,7 @@
   "usage": "medium",
   "description": "Hook that defines the logic for infinite scroll",
   "category": "Sensors",
-  "lastModified": 1770651919000,
+  "lastModified": 1780245351000,
   "examples": [
     "const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));",
     "const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));"

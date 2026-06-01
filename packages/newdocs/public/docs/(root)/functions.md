@@ -67,3 +67,8 @@ A quick list of available functions.
 - [useImage](/functions/hooks/useImage): Hook that load an image in the browser
 - [useInfiniteScroll](/functions/hooks/useInfiniteScroll): Hook that defines the logic for infinite scroll
 - [useIntersectionObserver](/functions/hooks/useIntersectionObserver): Hook that gives you intersection observer state
+- [useInterval](/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions
+- [useIsFirstRender](/functions/hooks/useIsFirstRender): Hook that returns true if the component is first render
+- [useIsomorphicLayoutEffect](/functions/hooks/useIsomorphicLayoutEffect): Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
+- [useKeyboard](/functions/hooks/useKeyboard): Hook that helps to listen for keyboard events
+- [useKeyPress](/functions/hooks/useKeyPress): Hook that listens for key press events

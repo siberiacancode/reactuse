@@ -8,7 +8,7 @@
       "useAsync",
 
       "---lifecycle---",
-      "useAsyncEffect","useDidUpdate",
+      "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect",
 
       "---browser---",
       "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation",
@@ -23,9 +23,12 @@
       "useBrowserLanguage",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress",
 
       "---humor---",
-      "useFul"
+      "useFul",
+
+      "---time---",
+      "useInterval"
     ]
   }

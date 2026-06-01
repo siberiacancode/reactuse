@@ -1,3 +1,5 @@
+'use client'
+
 import { useInterval } from '@siberiacancode/reactuse';
 import { useState } from 'react';
 

@@ -1,15 +1,15 @@
 ---
-title: useInfiniteScroll
-description: Hook that defines the logic for infinite scroll
+title: useKeyboard
+description: Hook that helps to listen for keyboard events
 category: sensors
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780245351000
+lastModifiedTime: 1775645190000
 ---
 
-import metadata from './useInfiniteScroll.meta.json';
+import metadata from './useKeyboard.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useInfiniteScroll.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useInfiniteScroll
+    npx useverse@latest add useKeyboard
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,13 @@ import metadata from './useInfiniteScroll.meta.json';
 ## Usage
 
 ```tsx
-const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));
+useKeyboard(ref, (event) => console.log('key down'));
 // or
-const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));
+useKeyboard(ref, { onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
+// or
+const ref = useKeyboard((event) => console.log('key down'));
+// or
+const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
 ```
 
 ## Type Declarations
