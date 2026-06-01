@@ -1,8 +1,7 @@
 export const siteConfig = {
   name: 'reactuse',
   url: 'https://reactuse.org',
-  ogImage: 'https://reactuse.org/logo.svg',
-  description: '-',
+  description: 'Improve your react applications with our library 📦 designed for comfort and speed',
   links: {
     npm: 'https://www.npmjs.com/package/@siberiacancode/reactuse',
     github: 'https://github.com/siberiacancode/reactuse'

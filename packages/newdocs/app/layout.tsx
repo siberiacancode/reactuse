@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
-import { cn } from '@docs/lib/utils';
 import { Geist, Geist_Mono, JetBrains_Mono } from 'next/font/google';
 import process from 'node:process';
+
+import { CONFIG } from '@/src/constants';
+import { cn } from '@/src/lib';
 
 import { ThemeScript } from './_scripts';
 import { Provider } from './provider';
@@ -15,7 +17,18 @@ const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono'
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains' });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL!)
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000/new'),
+  title: {
+    default: CONFIG.NAME,
+    template: '%s'
+  },
+  description: CONFIG.DESCRIPTION,
+  applicationName: CONFIG.NAME,
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png'
+  }
 };
 
 export const Layout = ({ children }: { children: ReactNode }) => (

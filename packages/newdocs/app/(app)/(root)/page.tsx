@@ -10,8 +10,7 @@ import { IconBrandGithub, IconHeartFilled } from '@tabler/icons-react';
 import Link from 'next/link';
 
 const title = 'reactuse';
-const description =
-  '158+ production-ready React hooks. Lightweight, tree-shakeable, and TypeScript-first.';
+const description = siteConfig.description;
 
 const stats = [
   { label: 'Hooks', value: '158+' },

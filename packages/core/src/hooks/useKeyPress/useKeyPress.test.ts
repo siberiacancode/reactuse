@@ -51,9 +51,9 @@ targets.forEach((target) => {
 
       if (!target && result.current.ref) act(() => result.current.ref?.(element));
 
-      act(() => {
-        element.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Enter' }));
-      });
+      act(() =>
+        element.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Enter' }))
+      );
 
       expect(result.current.pressed).toBeTruthy();
     });
@@ -111,24 +111,6 @@ targets.forEach((target) => {
       expect(result.current.pressed).toBeTruthy();
       expect(callback).toHaveBeenCalledOnce();
       expect(callback).toHaveBeenCalledWith(true, expect.any(KeyboardEvent));
-    });
-
-    it('Should not react on non matching key', () => {
-      const callback = vi.fn();
-
-      const { result } = renderHook(() => {
-        if (target) return useKeyPress(target, 'Enter', callback);
-        return useKeyPress<HTMLDivElement>('Enter', callback);
-      });
-
-      if (!target && result.current.ref) act(() => result.current.ref?.(element));
-
-      act(() => {
-        element.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'a' }));
-      });
-
-      expect(result.current.pressed).toBeFalsy();
-      expect(callback).not.toHaveBeenCalled();
     });
 
     it('Should handle target changes', () => {

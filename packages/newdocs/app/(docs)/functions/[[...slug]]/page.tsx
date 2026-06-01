@@ -32,10 +32,10 @@ export const generateMetadata = async (props: FunctionPageProps) => {
   if (!page) notFound();
 
   return {
-    title: page.data.title,
+    title: `${page.data.title} React hook Reactuse`,
     description: page.data.description,
     openGraph: {
-      title: page.data.title,
+      title: `${page.data.title} React hook Reactuse`,
       description: page.data.description,
       type: 'article',
       url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`,
@@ -47,7 +47,7 @@ export const generateMetadata = async (props: FunctionPageProps) => {
     },
     twitter: {
       card: 'summary_large_image',
-      title: page.data.title,
+      title: `${page.data.title} React hook Reactuse`,
       description: page.data.description,
       images: [
         {

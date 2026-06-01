@@ -104,9 +104,9 @@ export const DocsPage = async (props: DocsPageProps) => {
           </div>
         </div>
       </div>
-      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
+      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
         {!!doc.toc.length && (
-          <div className='no-scrollbar h-full overflow-y-auto overscroll-contain px-8'>
+          <div className='no-scrollbar h-full overflow-y-auto overscroll-contain pt-12'>
             <DocsToc items={doc.toc} path={page.data.info.path} />
           </div>
         )}
