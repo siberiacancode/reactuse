@@ -1,6 +1,6 @@
 import type { Paint } from '@siberiacancode/reactuse';
 
-import { useField, useInterval, useKeyPressEvent, usePaint } from '@siberiacancode/reactuse';
+import { useField, useInterval, useKeyPress, usePaint } from '@siberiacancode/reactuse';
 import { useState } from 'react';
 
 const Demo = () => {
@@ -24,8 +24,8 @@ const Demo = () => {
     immediately: paint.drawing
   });
 
-  useKeyPressEvent('c', paint.clear);
-  useKeyPressEvent('u', paint.undo);
+  useKeyPress('c', paint.clear);
+  useKeyPress('u', paint.undo);
 
   return (
     <>
