@@ -11,7 +11,6 @@ export * from './useInfiniteScroll/useInfiniteScroll';
 export * from './useIntersectionObserver/useIntersectionObserver';
 export * from './useKeyboard/useKeyboard';
 export * from './useKeyPress/useKeyPress';
-export * from './useKeyPressEvent/useKeyPressEvent';
 export * from './useKeysPressed/useKeysPressed';
 export * from './useLockScroll/useLockScroll';
 export * from './useMeasure/useMeasure';

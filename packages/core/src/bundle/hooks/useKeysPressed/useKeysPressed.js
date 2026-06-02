@@ -3,7 +3,7 @@ import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
 /**
  * @name useKeysPressed
- * @description Tracks all currently pressed keyboard keys and their codes
+ * @description - Hook that tracks all currently pressed keyboard keys and their codes
  * @category Sensors
  * @usage low
  *
@@ -28,7 +28,7 @@ export const useKeysPressed = (...params) => {
   const options = target ? params[1] : params[0];
   const enabled = options?.enabled ?? true;
   const [value, setValue] = useState([]);
-  const internalRef = useRefState(window);
+  const internalRef = useRefState();
   useEffect(() => {
     if (!enabled) return;
     setValue([]);

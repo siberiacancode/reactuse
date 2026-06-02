@@ -1,3 +1,5 @@
+'use client'
+
 import { useList } from '@siberiacancode/reactuse';
 import { CheckIcon, XIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -85,7 +87,7 @@ const Demo = () => {
             <button
               aria-label='Remove'
               className='rounded-full! opacity-0 transition-opacity group-hover:opacity-100'
-              data-size='icon'
+              data-size='icon-xs'
               data-variant='ghost'
               type='button'
               onClick={() => todos.removeAt(index)}

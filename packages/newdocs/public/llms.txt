@@ -55,6 +55,7 @@
 ### Humors
 
 - [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful
+- [useLess](https://reactuse.org/functions/hooks/useLess): Hook that can be so useless
 ### Lifecycles
 
 - [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates
@@ -71,6 +72,7 @@
 - [useIntersectionObserver](https://reactuse.org/functions/hooks/useIntersectionObserver): Hook that gives you intersection observer state
 - [useKeyboard](https://reactuse.org/functions/hooks/useKeyboard): Hook that helps to listen for keyboard events
 - [useKeyPress](https://reactuse.org/functions/hooks/useKeyPress): Hook that listens for key press events
+- [useKeysPressed](https://reactuse.org/functions/hooks/useKeysPressed): Hook that tracks all currently pressed keyboard keys and their codes
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state
@@ -82,6 +84,7 @@
 - [useDisclosure](https://reactuse.org/functions/hooks/useDisclosure): Hook that allows you to open and close a modal
 - [useField](https://reactuse.org/functions/hooks/useField): Hook to manage a form field
 - [useHash](https://reactuse.org/functions/hooks/useHash): Hook that manages the hash value
+- [useList](https://reactuse.org/functions/hooks/useList): Hook that provides state and helper methods to manage a list of items
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions
@@ -98,3 +101,5 @@
 - [useDebounceValue](https://reactuse.org/functions/hooks/useDebounceValue): Hook that creates a debounced value
 - [useDevicePixelRatio](https://reactuse.org/functions/hooks/useDevicePixelRatio): Hook that returns the device's pixel ratio
 - [useEvent](https://reactuse.org/functions/hooks/useEvent): Hook that creates an event and returns a stable reference of it
+- [useLastChanged](https://reactuse.org/functions/hooks/useLastChanged): Hook for records the timestamp of the last change
+- [useLatest](https://reactuse.org/functions/hooks/useLatest): Hook that returns the stable reference of the value

@@ -29,7 +29,7 @@ export interface UseKeysPressed {
 
 /**
  * @name useKeysPressed
- * @description Tracks all currently pressed keyboard keys and their codes
+ * @description - Hook that tracks all currently pressed keyboard keys and their codes
  * @category Sensors
  * @usage low
  *
@@ -55,7 +55,7 @@ export const useKeysPressed = ((...params: any[]) => {
 
   const enabled = options?.enabled ?? true;
   const [value, setValue] = useState<{ key: string; code: string }[]>([]);
-  const internalRef = useRefState(window);
+  const internalRef = useRefState<Element | Window>();
 
   useEffect(() => {
     if (!enabled) return;

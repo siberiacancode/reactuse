@@ -1,3 +1,5 @@
+'use client'
+
 import { useLess } from '@siberiacancode/reactuse';
 
 const Demo = () => {

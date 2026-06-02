@@ -72,3 +72,8 @@ A quick list of available functions.
 - [useIsomorphicLayoutEffect](/functions/hooks/useIsomorphicLayoutEffect): Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
 - [useKeyboard](/functions/hooks/useKeyboard): Hook that helps to listen for keyboard events
 - [useKeyPress](/functions/hooks/useKeyPress): Hook that listens for key press events
+- [useKeysPressed](/functions/hooks/useKeysPressed): Hook that tracks all currently pressed keyboard keys and their codes
+- [useLastChanged](/functions/hooks/useLastChanged): Hook for records the timestamp of the last change
+- [useLatest](/functions/hooks/useLatest): Hook that returns the stable reference of the value
+- [useLess](/functions/hooks/useLess): Hook that can be so useless
+- [useList](/functions/hooks/useList): Hook that provides state and helper methods to manage a list of items

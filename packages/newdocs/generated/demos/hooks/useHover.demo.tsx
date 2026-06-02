@@ -10,7 +10,7 @@ interface Pokemon {
 }
 
 const fetchPokemon = async (name: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 200));
   return fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then(
     (response) => response.json() as Promise<Pokemon>
   );
