@@ -1,6 +1,11 @@
 import type { ReactNode } from 'react';
 
-import { getCookie, setCookie, usePreferredColorScheme } from '@siberiacancode/reactuse';
+import {
+  dispatchCookieEvent,
+  getCookie,
+  setCookie,
+  usePreferredColorScheme
+} from '@siberiacancode/reactuse';
 import { useLayoutEffect, useMemo, useState } from 'react';
 
 import { COOKIES } from '@/src/constants';
@@ -34,6 +39,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const root = document.documentElement;
     const activeTheme = getTheme(theme);
 
+    dispatchCookieEvent();
     setCookie(COOKIES.THEME, theme, {
       path: '/'
     });

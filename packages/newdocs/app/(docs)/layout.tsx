@@ -66,7 +66,7 @@ export const DocsLayout = async ({ children }: DocsLayoutProps) => {
         <SidebarProvider
           style={
             {
-              '--sidebar-width': 'calc(var(--spacing) * 75)'
+              '--sidebar-width': 'calc(var(--spacing) * 84)'
             } as React.CSSProperties
           }
           className='3xl:fixed:container 3xl:fixed:px-3 min-h-min flex-1 items-start px-0 [--top-spacing:0] lg:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] lg:[--top-spacing:calc(var(--spacing)*4)]'

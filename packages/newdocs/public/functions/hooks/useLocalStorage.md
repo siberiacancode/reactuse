@@ -1,15 +1,15 @@
 ---
-title: useKeysPressed
-description: Hook that tracks all currently pressed keyboard keys and their codes
-category: sensors
-usage: low
+title: useLocalStorage
+description: Hook that manages local storage value
+category: state
+usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780397353000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useKeysPressed.meta.json';
+import metadata from './useLocalStorage.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useKeysPressed.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useKeysPressed
+    npx useverse@latest add useLocalStorage
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './useKeysPressed.meta.json';
 ## Usage
 
 ```tsx
-const { value } = useKeysPressed(ref);
-// or
-const { value, ref } = useKeysPressed();
+const { value, set, remove } = useLocalStorage('key', 'value');
 ```
 
 ## Type Declarations

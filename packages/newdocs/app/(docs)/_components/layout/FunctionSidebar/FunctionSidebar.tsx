@@ -29,7 +29,7 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
 
   return (
     <Sidebar
-      className='sticky top-[calc(var(--header-height)+4rem)] z-30 hidden h-[80svh] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(56)] lg:flex'
+      className='sticky top-[calc(var(--header-height)+0.75rem)] z-30 hidden h-[calc(100svh-var(--header-height)-0.75rem)] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(64)] lg:flex'
       collapsible='none'
       {...props}
     >
@@ -52,7 +52,7 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
                     >
                       <Link href={item.url}>
                         <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
-                        {item.name}
+                        <span className='relative block min-w-0 truncate'>{item.name}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

@@ -85,6 +85,7 @@
 - [useField](https://reactuse.org/functions/hooks/useField): Hook to manage a form field
 - [useHash](https://reactuse.org/functions/hooks/useHash): Hook that manages the hash value
 - [useList](https://reactuse.org/functions/hooks/useList): Hook that provides state and helper methods to manage a list of items
+- [useLocalStorage](https://reactuse.org/functions/hooks/useLocalStorage): Hook that manages local storage value
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions

@@ -1,47 +1,43 @@
 'use client'
 
-import { useCookie } from '@siberiacancode/reactuse';
-import { BellIcon, ChevronDownIcon } from 'lucide-react';
+import { getCookie, useCookie } from '@siberiacancode/reactuse';
+import { MoonIcon, SunIcon } from 'lucide-react';
 
-const FREQUENCY_OPTIONS = [
-  { value: 'live', label: 'Real-time' },
-  { value: 'daily', label: 'Daily digest' },
-  { value: 'weekly', label: 'Weekly summary' },
-  { value: 'off', label: 'Off' }
-];
+type Theme = 'dark' | 'light';
+
+const getInitialTheme = (): Theme => {
+  const cookieTheme = getCookie('reactuse_docs_theme') as Theme | undefined;
+  if (cookieTheme === 'dark' || cookieTheme === 'light') return cookieTheme;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
 
 const Demo = () => {
-  const cookie = useCookie('notify', 'daily');
+  const themeCookie = useCookie<Theme>('reactuse_docs_theme', {
+    initialValue: getInitialTheme,
+    path: '/'
+  });
+
+  const onToggle = () => {
+    const nextTheme = themeCookie.value === 'dark' ? 'light' : 'dark';
+    themeCookie.set(nextTheme, { path: '/' });
+    const root = document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(themeCookie.value);
+  };
 
   return (
-    <section className='flex min-w-md flex-col gap-2 p-4'>
-      <div className='flex w-full max-w-md items-start justify-between gap-4 rounded-xl border p-4'>
-        <div className='flex items-center gap-3'>
-          <BellIcon className='text-muted-foreground size-6 shrink-0' />
-          <div className='flex flex-col gap-0.5'>
-            <span className='text-sm font-medium'>Email notifications</span>
-            <span className='text-muted-foreground text-xs'>How often you get updates</span>
-          </div>
-        </div>
-
-        <div className='relative'>
-          <select
-            value={cookie.value ?? 'daily'}
-            onChange={(event) => cookie.set(event.target.value)}
-          >
-            {FREQUENCY_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          <ChevronDownIcon className='text-muted-foreground pointer-events-none absolute top-1/2 right-2 size-4 -translate-y-1/2' />
-        </div>
-      </div>
-
-      <p className='text-muted-foreground text-xs'>
-        Saved as <code>notify={cookie.value ?? 'daily'}</code> cookie.
-      </p>
+    <section className='flex w-full max-w-sm flex-col items-center gap-3 p-8'>
+      <button
+        aria-label='Toggle theme'
+        className='rounded-full!'
+        data-size='icon'
+        data-variant='outline'
+        type='button'
+        onClick={onToggle}
+      >
+        {themeCookie.value === 'dark' && <MoonIcon className='text-foreground size-5' />}
+        {themeCookie.value === 'light' && <SunIcon className='text-foreground size-5' />}
+      </button>
     </section>
   );
 };

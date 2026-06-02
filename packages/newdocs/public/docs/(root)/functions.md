@@ -77,3 +77,4 @@ A quick list of available functions.
 - [useLatest](/functions/hooks/useLatest): Hook that returns the stable reference of the value
 - [useLess](/functions/hooks/useLess): Hook that can be so useless
 - [useList](/functions/hooks/useList): Hook that provides state and helper methods to manage a list of items
+- [useLocalStorage](/functions/hooks/useLocalStorage): Hook that manages local storage value

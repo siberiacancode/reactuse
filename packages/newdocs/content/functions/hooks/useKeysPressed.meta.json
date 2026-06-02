@@ -8,7 +8,7 @@
   "usage": "low",
   "description": "Hook that tracks all currently pressed keyboard keys and their codes",
   "category": "Sensors",
-  "lastModified": 1770651919000,
+  "lastModified": 1780397353000,
   "examples": [
     "const { value } = useKeysPressed(ref);",
     "const { value, ref } = useKeysPressed();"

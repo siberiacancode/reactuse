@@ -87,7 +87,7 @@ const Demo = () => {
             <button
               aria-label='Remove'
               className='rounded-full! opacity-0 transition-opacity group-hover:opacity-100'
-              data-size='icon-xs'
+              data-size='icon'
               data-variant='ghost'
               type='button'
               onClick={() => todos.removeAt(index)}

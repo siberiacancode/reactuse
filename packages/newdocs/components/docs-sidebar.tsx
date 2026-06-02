@@ -65,7 +65,7 @@ export const DocsSidebar = ({
 
   return (
     <Sidebar
-      className='sticky top-[calc(var(--header-height)+0.75rem)] z-30 hidden h-[calc(100svh-var(--header-height)-0.75rem)] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(56)] lg:flex'
+      className='sticky top-[calc(var(--header-height)+0.5rem)] z-30 hidden h-[calc(100svh-var(--header-height)-0.5rem)] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(64)] lg:flex'
       collapsible='none'
       {...props}
     >
@@ -86,7 +86,7 @@ export const DocsSidebar = ({
                   >
                     <Link href={href}>
                       <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
-                      {name}
+                      <span className='relative block min-w-0 truncate'>{name}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -127,7 +127,7 @@ export const DocsSidebar = ({
                         >
                           <Link href={page.url}>
                             <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
-                            {page.name}
+                            <span className='relative block min-w-0 truncate'>{page.name}</span>
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -155,7 +155,7 @@ export const DocsSidebar = ({
                     >
                       <Link href={item.url}>
                         <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
-                        {item.name}
+                        <span className='relative block min-w-0 truncate'>{item.name}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
