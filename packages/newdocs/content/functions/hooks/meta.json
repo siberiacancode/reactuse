@@ -5,7 +5,7 @@
       "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage",
 
       "---async---",
-      "useAsync",
+      "useAsync","useLockCallback",
 
       "---lifecycle---",
       "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect",
