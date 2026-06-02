@@ -6,6 +6,7 @@ import { MoonIcon, SunIcon } from 'lucide-react';
 type Theme = 'dark' | 'light';
 
 const getInitialTheme = (): Theme => {
+  if (typeof window === 'undefined') return 'dark';
   const cookieTheme = getCookie('reactuse_docs_theme') as Theme | undefined;
   if (cookieTheme === 'dark' || cookieTheme === 'light') return cookieTheme;
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';

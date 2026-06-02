@@ -37,7 +37,7 @@ interface RepoLinkProps {
 const RepoLink = ({ name, active, onClick }: RepoLinkProps) => (
   <span
     className={cn(
-      'cursor-pointer rounded-sm px-0.5 font-medium underline underline-offset-2 transition-colors',
+      'cursor-pointer rounded-sm rounded-sm! px-0.5 font-medium underline underline-offset-2 transition-colors',
       active
         ? 'bg-foreground/10 text-foreground decoration-foreground'
         : 'text-foreground decoration-foreground/40 hover:decoration-foreground'
@@ -76,7 +76,7 @@ const RepoCard = ({ repo, loading }: RepoCardProps) => (
         </div>
 
         {repo.description && (
-          <p className='text-muted-foreground hidden min-h-[32px] text-xs leading-relaxed sm:line-clamp-2 sm:block'>
+          <p className='text-muted-foreground hidden min-h-[32px] text-xs leading-relaxed sm:line-clamp-2'>
             {repo.description}
           </p>
         )}
@@ -123,7 +123,7 @@ const Demo = () => {
       <h2 className='text-foreground text-base font-semibold'>The stack behind modern frontend</h2>
 
       <div className='flex flex-col gap-4 sm:flex-row sm:items-start'>
-        <p className='text-muted-foreground order-2 flex-1 text-base leading-relaxed sm:order-1'>
+        <p className='text-muted-foreground order-2 flex-1 text-base leading-relaxed select-none sm:order-1'>
           Modern web stacks evolve fast. We deploy our apps on{' '}
           <RepoLink
             active={activeName === 'vercel/next.js'}
