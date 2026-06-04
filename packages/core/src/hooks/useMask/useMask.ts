@@ -1,6 +1,14 @@
-import type { InputHTMLAttributes } from 'react';
+import type {
+  ChangeEventHandler,
+  ClipboardEventHandler,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler
+} from 'react';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
+
+import { useRerender } from '../useRerender/useRerender';
 
 const DEFAULT_TOKENS: Record<string, RegExp> = {
   '9': /\d/,
@@ -12,30 +20,30 @@ const DEFAULT_TOKENS: Record<string, RegExp> = {
 
 /** The use mask options type */
 export interface UseMaskOptions {
-  /** Clear value on blur when mask is incomplete, false by default */
+  /** Clear value on blur when mask is incomplete */
   autoClear?: boolean;
   /** Mask pattern string or array of string literals and RegExp objects */
   mask: string | Array<string | RegExp>;
-  /** Called before masking on each keystroke, can return overrides for mask options */
-  modify?:
-    | ((value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'showMask' | 'slot' | 'tokens'>>)
-    | undefined;
   /** Defines when mask slots are displayed */
   showMask?: UseMaskShow;
-  /** Character displayed in unfilled slots, "_" by default */
-  slot?: string | null;
+  /** Character displayed in unfilled slot */
+  slot?: string;
   /** Override or extend the default token map */
   tokens?: Record<string, RegExp>;
   /** Escape hatch for advanced cursor/value manipulation */
-  beforeMaskedStateChange?: (states: {
+  beforeMaskedChange?: (states: {
     previousState: MaskState;
     currentState: MaskState;
     nextState: MaskState;
   }) => MaskState;
+  /** Called before masking on each keystroke, can return overrides for mask options */
+  modify?: (
+    value: string
+  ) => Partial<Pick<UseMaskOptions, 'mask' | 'showMask' | 'slot' | 'tokens'>>;
   /** Called on every change with raw and masked values */
   onChangeRaw?: (rawValue: string, maskedValue: string) => void;
   /** Called when all required mask slots are filled */
-  onComplete?: (maskedValue: string, rawValue: string) => void;
+  onFilled?: (maskedValue: string, rawValue: string) => void;
   /** Transform each character before validation and insertion */
   transform?: (char: string) => string;
 }
@@ -47,30 +55,42 @@ export interface MaskState {
 }
 
 /** The use mask register params type */
-export type UseMaskRegisterParams = Pick<
-  InputHTMLAttributes<HTMLInputElement>,
-  'onBlur' | 'onChange' | 'onFocus' | 'onKeyDown' | 'onMouseDown' | 'onMouseUp' | 'onPaste'
->;
+export interface UseMaskRegisterParams {
+  /** The blur event handler */
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  /** The change event handler */
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  /** The focus event handler */
+  onFocus?: FocusEventHandler<HTMLInputElement>;
+  /** The key down event handler */
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+  /** The mouse down event handler */
+  onMouseDown?: MouseEventHandler<HTMLInputElement>;
+  /** The mouse up event handler */
+  onMouseUp?: MouseEventHandler<HTMLInputElement>;
+  /** The paste event handler */
+  onPaste?: ClipboardEventHandler<HTMLInputElement>;
+}
 
-type UseMaskBlurEvent = Parameters<NonNullable<UseMaskRegisterParams['onBlur']>>[0];
-type UseMaskChangeEvent = Parameters<NonNullable<UseMaskRegisterParams['onChange']>>[0];
-type UseMaskFocusEvent = Parameters<NonNullable<UseMaskRegisterParams['onFocus']>>[0];
-type UseMaskKeyboardEvent = Parameters<NonNullable<UseMaskRegisterParams['onKeyDown']>>[0];
-type UseMaskMouseEvent = Parameters<NonNullable<UseMaskRegisterParams['onMouseDown']>>[0];
-type UseMaskPasteEvent = Parameters<NonNullable<UseMaskRegisterParams['onPaste']>>[0];
-
+/** The use mask show type */
 export type UseMaskShow = 'always' | 'filled' | 'focus' | 'never';
 
 /** The use mask return type */
-export interface UseMaskReturn {
-  /** Current masked display value */
+export interface UseMaskValue {
+  /** Current value displayed in the input */
   displayValue: string;
   /** Whether all required mask slots are filled */
   filled: boolean;
+  /** Current masked value without placeholder slots */
+  maskedValue: string;
   /** Current raw unmasked value */
   rawValue: string;
-  /** Current masked display value */
+  /** Current value displayed in the input */
   value: string;
+}
+
+/** The use mask return type */
+export interface UseMaskReturn extends UseMaskValue {
   /** Register the masked input */
   register: (params?: UseMaskRegisterParams) => UseMaskRegisterParams & {
     ref: (node: HTMLInputElement | null | undefined) => void;
@@ -79,6 +99,8 @@ export interface UseMaskReturn {
   reset: () => void;
   /** Set the raw input value */
   set: (value: string) => void;
+  /** The watch function */
+  watch: () => UseMaskValue;
 }
 
 export type UseMaskReturnValue = UseMaskReturn;
@@ -103,20 +125,9 @@ interface UndoState {
   selectionStart: number;
 }
 
-interface ResolvedMaskOptions {
-  showMask: UseMaskShow;
-  slot: string | null | undefined;
-  slots: MaskSlot[];
-  transform?: (char: string) => string;
-}
-
 const MAX_UNDO_HISTORY = 100;
 
-const shouldShowMask = (
-  showMask: UseMaskShow,
-  focused: boolean,
-  processedValue: string
-): boolean => {
+const shouldShowMask = (showMask: UseMaskShow, focused: boolean, processedValue: string) => {
   if (showMask === 'always') {
     return true;
   }
@@ -132,13 +143,13 @@ const shouldShowMask = (
   return false;
 };
 
-export const normalizeChar = (char: string, transform?: (char: string) => string): string => {
+export const normalizeChar = (char: string, transform?: (char: string) => string) => {
   const transformed = transform ? transform(char) : char;
 
   return transformed[0] ?? '';
 };
 
-export const testPattern = (pattern: RegExp, char: string): boolean => {
+export const testPattern = (pattern: RegExp, char: string) => {
   pattern.lastIndex = 0;
 
   return pattern.test(char);
@@ -147,7 +158,7 @@ export const testPattern = (pattern: RegExp, char: string): boolean => {
 export const parseMask = (
   mask: string | Array<string | RegExp>,
   tokens: Record<string, RegExp>
-): MaskSlot[] => {
+) => {
   if (Array.isArray(mask)) {
     return mask.map((item): MaskSlot => {
       if (item instanceof RegExp) {
@@ -197,7 +208,7 @@ export const parseMask = (
   return slots;
 };
 
-export const getSlot = (slot: string | null | undefined, index: number): string => {
+export const getSlot = (slot: string | null | undefined, index: number) => {
   if (!slot) {
     return '';
   }
@@ -216,7 +227,7 @@ export const consumeToMask = (
     consumeMatchingLiterals: boolean;
     transform?: (char: string) => string;
   }
-): string => {
+) => {
   let result = '';
   let inputIndex = 0;
 
@@ -256,7 +267,7 @@ export const applyMaskToRaw = (
   rawValue: string,
   slots: MaskSlot[],
   transform?: (char: string) => string
-): string =>
+) =>
   consumeToMask(rawValue, slots, {
     transform,
     consumeMatchingLiterals: false
@@ -266,7 +277,7 @@ export const processInput = (
   inputValue: string,
   slots: MaskSlot[],
   transform?: (char: string) => string
-): string =>
+) =>
   consumeToMask(inputValue, slots, {
     transform,
     consumeMatchingLiterals: true
@@ -277,7 +288,7 @@ export const buildDisplayValue = (
   slots: MaskSlot[],
   slotValue: string | null | undefined,
   showSlots: boolean
-): string => {
+) => {
   if (!showSlots) {
     return processedValue;
   }
@@ -304,7 +315,7 @@ export const buildDisplayValue = (
   return displayValue;
 };
 
-export const extractRaw = (maskedValue: string, slots: MaskSlot[]): string => {
+export const extractRaw = (maskedValue: string, slots: MaskSlot[]) => {
   let rawValue = '';
 
   for (let index = 0; index < maskedValue.length && index < slots.length; index++) {
@@ -319,7 +330,7 @@ export const extractRaw = (maskedValue: string, slots: MaskSlot[]): string => {
   return rawValue;
 };
 
-export const checkComplete = (maskedValue: string, slots: MaskSlot[]): boolean => {
+export const checkComplete = (maskedValue: string, slots: MaskSlot[]) => {
   for (let index = 0; index < slots.length; index++) {
     const slot = slots[index];
 
@@ -337,7 +348,7 @@ export const checkComplete = (maskedValue: string, slots: MaskSlot[]): boolean =
   return true;
 };
 
-export const findNextTokenIndex = (slots: MaskSlot[], from: number): number => {
+export const findNextTokenIndex = (slots: MaskSlot[], from: number) => {
   for (let index = from; index < slots.length; index++) {
     if (slots[index].type === 'token') {
       return index;
@@ -347,7 +358,7 @@ export const findNextTokenIndex = (slots: MaskSlot[], from: number): number => {
   return slots.length;
 };
 
-export const findPrevTokenIndex = (slots: MaskSlot[], from: number): number => {
+export const findPrevTokenIndex = (slots: MaskSlot[], from: number) => {
   for (let index = from; index >= 0; index--) {
     if (slots[index].type === 'token') {
       return index;
@@ -357,28 +368,28 @@ export const findPrevTokenIndex = (slots: MaskSlot[], from: number): number => {
   return -1;
 };
 
-const getResolvedOptions = (options: UseMaskOptions, rawValue: string): ResolvedMaskOptions => {
+const getResolvedOptions = (options: UseMaskOptions, rawValue: string) => {
   const tokens = { ...DEFAULT_TOKENS, ...options.tokens };
   let mask = options.mask;
   let showMask = options.showMask ?? 'focus';
-  let slot: string | null | undefined = options.slot === undefined ? '_' : options.slot;
+  let slot: string | undefined = options.slot === undefined ? ' ' : options.slot;
 
   const overrides = options.modify?.(rawValue);
 
   if (overrides) {
-    if (overrides.mask !== undefined) {
+    if (overrides.mask) {
       mask = overrides.mask;
     }
 
-    if (overrides.tokens !== undefined) {
+    if (overrides.tokens) {
       Object.assign(tokens, overrides.tokens);
     }
 
-    if (overrides.slot !== undefined) {
+    if (overrides.slot) {
       slot = overrides.slot;
     }
 
-    if (overrides.showMask !== undefined) {
+    if (overrides.showMask) {
       showMask = overrides.showMask;
     }
   }
@@ -391,7 +402,7 @@ const getResolvedOptions = (options: UseMaskOptions, rawValue: string): Resolved
   };
 };
 
-const getInputSelection = (input: HTMLInputElement | null): MaskState['selection'] => {
+const getInputSelection = (input: HTMLInputElement | null) => {
   if (!input) {
     return null;
   }
@@ -406,40 +417,194 @@ const getInputSelection = (input: HTMLInputElement | null): MaskState['selection
   return { start, end };
 };
 
-const findNextEditablePosition = (from: number, slots: MaskSlot[], value: string): number => {
+const findNextEditablePosition = (from: number, slots: MaskSlot[]) => {
   let position = from;
 
-  while (
-    position < slots.length &&
-    position < value.length &&
-    slots[position] &&
-    slots[position].type === 'literal'
-  ) {
+  while (position < slots.length && slots[position]?.type === 'literal') {
     position++;
   }
 
   return position;
 };
 
-export const formatMask = (rawValue: string, options: UseMaskOptions): string => {
+export const replaceRangeWithText = (
+  processedValue: string,
+  slots: MaskSlot[],
+  start: number,
+  end: number,
+  text: string,
+  transform?: (char: string) => string
+) => {
+  const beforeRawValue = extractRaw(processedValue.slice(0, start), slots.slice(0, start));
+  const afterRawValue = extractRaw(processedValue.slice(end), slots.slice(end));
+
+  return applyMaskToRaw(beforeRawValue + text + afterRawValue, slots, transform);
+};
+
+export const deleteBackward = (
+  processedValue: string,
+  slots: MaskSlot[],
+  start: number,
+  end: number,
+  modifier: boolean,
+  transform?: (char: string) => string
+) => {
+  if (modifier) {
+    const clampedStart = Math.min(start, processedValue.length);
+
+    return {
+      value: replaceRangeWithText(processedValue, slots, 0, clampedStart, '', transform),
+      cursor: 0
+    };
+  }
+
+  if (start !== end) {
+    const clampedEnd = Math.min(end, processedValue.length);
+
+    return {
+      value: replaceRangeWithText(processedValue, slots, start, clampedEnd, '', transform),
+      cursor: start
+    };
+  }
+
+  if (start === 0) {
+    return null;
+  }
+
+  let deletePosition = start - 1;
+  while (deletePosition >= 0 && slots[deletePosition]?.type === 'literal') {
+    deletePosition--;
+  }
+
+  if (deletePosition < 0) {
+    return null;
+  }
+
+  return {
+    value: replaceRangeWithText(
+      processedValue,
+      slots,
+      deletePosition,
+      deletePosition + 1,
+      '',
+      transform
+    ),
+    cursor: deletePosition
+  };
+};
+
+export const deleteForward = (
+  processedValue: string,
+  slots: MaskSlot[],
+  start: number,
+  end: number,
+  transform?: (char: string) => string
+) => {
+  if (start !== end) {
+    const clampedEnd = Math.min(end, processedValue.length);
+
+    return {
+      value: replaceRangeWithText(processedValue, slots, start, clampedEnd, '', transform),
+      cursor: start
+    };
+  }
+
+  let deletePosition = start;
+  while (deletePosition < slots.length && slots[deletePosition]?.type === 'literal') {
+    deletePosition++;
+  }
+
+  if (deletePosition >= processedValue.length) {
+    return null;
+  }
+
+  return {
+    value: replaceRangeWithText(processedValue, slots, start, deletePosition + 1, '', transform),
+    cursor: start
+  };
+};
+
+export const insertChar = (
+  processedValue: string,
+  slots: MaskSlot[],
+  start: number,
+  end: number,
+  char: string,
+  transform?: (char: string) => string
+) => {
+  let insertPosition = Math.min(start, processedValue.length);
+  while (insertPosition < slots.length && slots[insertPosition]?.type === 'literal') {
+    insertPosition++;
+  }
+
+  if (insertPosition >= slots.length) {
+    return null;
+  }
+
+  const slot = slots[insertPosition];
+  if (slot.type !== 'token') {
+    return null;
+  }
+
+  const normalizedChar = normalizeChar(char, transform);
+  if (!testPattern(slot.pattern, normalizedChar)) {
+    return null;
+  }
+
+  return {
+    value: replaceRangeWithText(
+      processedValue,
+      slots,
+      insertPosition,
+      start < end ? Math.min(end, processedValue.length) : insertPosition,
+      normalizedChar,
+      transform
+    ),
+    cursor: findNextEditablePosition(insertPosition + 1, slots)
+  };
+};
+
+export const pasteText = (
+  processedValue: string,
+  slots: MaskSlot[],
+  start: number,
+  end: number,
+  text: string,
+  transform?: (char: string) => string
+) => {
+  const clampedStart = Math.min(start, processedValue.length);
+  const clampedEnd = Math.min(end, processedValue.length);
+  const beforeRawValue = extractRaw(
+    processedValue.slice(0, clampedStart),
+    slots.slice(0, clampedStart)
+  );
+  const maskedPrefix = applyMaskToRaw(beforeRawValue + text, slots, transform);
+
+  return {
+    value: replaceRangeWithText(processedValue, slots, clampedStart, clampedEnd, text, transform),
+    cursor: Math.min(maskedPrefix.length, slots.length)
+  };
+};
+
+export const formatMask = (rawValue: string, options: UseMaskOptions) => {
   const { slots, transform } = getResolvedOptions(options, rawValue);
 
   return applyMaskToRaw(rawValue, slots, transform);
 };
 
-export const unformatMask = (maskedValue: string, options: UseMaskOptions): string => {
+export const unformatMask = (maskedValue: string, options: UseMaskOptions) => {
   const { slots } = getResolvedOptions(options, '');
 
   return extractRaw(maskedValue, slots);
 };
 
-export const isMaskComplete = (maskedValue: string, options: UseMaskOptions): boolean => {
+export const isMaskComplete = (maskedValue: string, options: UseMaskOptions) => {
   const { slots } = getResolvedOptions(options, '');
 
   return checkComplete(maskedValue, slots);
 };
 
-export const generatePattern = (mode: 'full-inexact' | 'full', options: UseMaskOptions): string => {
+export const generatePattern = (mode: 'full-inexact' | 'full', options: UseMaskOptions) => {
   const { slots } = getResolvedOptions(options, '');
   let pattern = '';
 
@@ -469,27 +634,57 @@ export const generatePattern = (mode: 'full-inexact' | 'full', options: UseMaskO
  * @usage medium
  *
  * @param {UseMaskOptions} options The hook options
+ * @param {boolean} [options.autoClear=false] Clear value on blur when mask is incomplete
+ * @param {string | Array<string | RegExp>} options.mask Mask pattern string or array of literals and RegExp tokens
+ * @param {(value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'showMask' | 'slot' | 'tokens'>>} [options.modify] Called before masking and can return dynamic mask option overrides
+ * @param {UseMaskShow} [options.showMask="focus"] Defines when placeholder slots are displayed
+ * @param {string | null} [options.slot=""] Character displayed in unfilled slots
+ * @param {Record<string, RegExp>} [options.tokens] Override or extend the default token map
+ * @param {(states: { previousState: MaskState; currentState: MaskState; nextState: MaskState }) => MaskState} [options.beforeMaskedStateChange] Escape hatch for advanced cursor/value manipulation
+ * @param {(rawValue: string, maskedValue: string) => void} [options.onChangeRaw] Called on every change with raw and display values
+ * @param {(maskedValue: string, rawValue: string) => void} [options.onFilled] Called when all required mask slots are filled
+ * @param {(char: string) => string} [options.transform] Transform each character before validation and insertion
  * @returns {UseMaskReturn} An object with the masked input state
  *
  * @example
  * const phoneMask = useMask({ mask: '+7 (999) 999-99-99' });
- * <input {...phoneMask.register()} />
  */
 export const useMask = (options: UseMaskOptions): UseMaskReturn => {
   const optionsRef = useRef(options);
   optionsRef.current = options;
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [maskedValue, setMaskedValue] = useState('');
-  const [rawValue, setRawValue] = useState('');
+  const valueRef = useRef<UseMaskValue>({
+    displayValue: '',
+    filled: false,
+    maskedValue: '',
+    rawValue: '',
+    value: ''
+  });
 
   const processedRef = useRef('');
   const displayValueRef = useRef('');
   const rawValueRef = useRef('');
   const wasCompleteRef = useRef(false);
   const isFocusedRef = useRef(false);
+  const watchingRef = useRef(false);
   const undoStackRef = useRef<UndoState[]>([]);
   const redoStackRef = useRef<UndoState[]>([]);
+  const rerender = useRerender();
+
+  const updateRefs = (value: Partial<Omit<UseMaskValue, 'value'>>) => {
+    const displayValue = value.displayValue ?? valueRef.current.displayValue;
+
+    valueRef.current = {
+      displayValue,
+      value: displayValue,
+      filled: value.filled ?? valueRef.current.filled,
+      maskedValue: value.maskedValue ?? valueRef.current.maskedValue,
+      rawValue: value.rawValue ?? valueRef.current.rawValue
+    };
+
+    if (watchingRef.current) rerender();
+  };
 
   const updateValue = (nextMaskedValue: string, cursorPosition?: number) => {
     const hookOptions = optionsRef.current;
@@ -534,40 +729,49 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
             }
     };
 
-    const maskedState = hookOptions.beforeMaskedStateChange
-      ? hookOptions.beforeMaskedStateChange({
+    const maskedState = hookOptions.beforeMaskedChange
+      ? hookOptions.beforeMaskedChange({
           previousState,
           currentState,
           nextState
         })
       : nextState;
-    const displayValue = maskedState.value;
+    const nextInputValue = maskedState.value;
     const finalProcessedValue = processInput(
-      displayValue,
+      nextInputValue,
       resolvedOptions.slots,
       resolvedOptions.transform
     );
     const finalRawValue = extractRaw(finalProcessedValue, resolvedOptions.slots);
+    const finalMaskedValue = applyMaskToRaw(
+      finalRawValue,
+      resolvedOptions.slots,
+      resolvedOptions.transform
+    );
+    const complete = checkComplete(finalMaskedValue, resolvedOptions.slots);
 
-    processedRef.current = finalProcessedValue;
-    displayValueRef.current = displayValue;
+    processedRef.current = finalMaskedValue;
+    displayValueRef.current = nextInputValue;
     rawValueRef.current = finalRawValue;
-    setMaskedValue(displayValue);
-    setRawValue(finalRawValue);
+    updateRefs({
+      displayValue: nextInputValue,
+      filled: complete,
+      maskedValue: finalMaskedValue,
+      rawValue: finalRawValue
+    });
 
     if (inputRef.current) {
-      inputRef.current.value = displayValue;
+      inputRef.current.value = nextInputValue;
 
       if (maskedState.selection && document.activeElement === inputRef.current) {
         inputRef.current.setSelectionRange(maskedState.selection.start, maskedState.selection.end);
       }
     }
 
-    hookOptions.onChangeRaw?.(finalRawValue, displayValue);
+    hookOptions.onChangeRaw?.(finalRawValue, nextInputValue);
 
-    const complete = checkComplete(finalProcessedValue, resolvedOptions.slots);
     if (complete && !wasCompleteRef.current) {
-      hookOptions.onComplete?.(displayValue, finalRawValue);
+      hookOptions.onFilled?.(nextInputValue, finalRawValue);
     }
 
     wasCompleteRef.current = complete;
@@ -620,7 +824,7 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
     const processedValue = processedRef.current;
     const endPosition =
       processedValue.length > 0
-        ? findNextEditablePosition(processedValue.length, slots, processedValue)
+        ? findNextEditablePosition(processedValue.length, slots)
         : findNextTokenIndex(slots, 0);
     const startPosition = findNextTokenIndex(slots, 0);
 
@@ -647,9 +851,9 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
 
       node.value = displayValue;
       displayValueRef.current = displayValue;
-      setMaskedValue(displayValue);
+      updateRefs({ displayValue });
     },
-    onChange: (event: UseMaskChangeEvent) => {
+    onChange: ((event) => {
       const element = event.currentTarget;
       const { slots, transform } = getResolvedOptions(optionsRef.current, rawValueRef.current);
       const previousValue = displayValueRef.current;
@@ -700,8 +904,8 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
 
       updateValue(reformattedValue, maskedPrefix.length);
       registerParams?.onChange?.(event);
-    },
-    onFocus: (event: UseMaskFocusEvent) => {
+    }) as ChangeEventHandler<HTMLInputElement>,
+    onFocus: ((event) => {
       const input = event.currentTarget;
       isFocusedRef.current = true;
 
@@ -716,7 +920,7 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
 
       input.value = displayValue;
       displayValueRef.current = displayValue;
-      setMaskedValue(displayValue);
+      updateRefs({ displayValue });
 
       requestAnimationFrame(() => {
         if (input === document.activeElement) {
@@ -724,8 +928,8 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
         }
       });
       registerParams?.onFocus?.(event);
-    },
-    onBlur: (event: UseMaskBlurEvent) => {
+    }) as FocusEventHandler<HTMLInputElement>,
+    onBlur: ((event) => {
       const input = event.currentTarget;
       isFocusedRef.current = false;
 
@@ -741,23 +945,28 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
       const complete = checkComplete(processedValue, slots);
 
       if (optionsRef.current.autoClear && !complete && processedValue.length > 0) {
-        input.value = '';
+        let nextDisplayValue = '';
+
         processedRef.current = '';
         displayValueRef.current = '';
         rawValueRef.current = '';
-        setMaskedValue('');
-        setRawValue('');
+        updateRefs({
+          displayValue: '',
+          filled: false,
+          maskedValue: '',
+          rawValue: ''
+        });
         wasCompleteRef.current = false;
-        optionsRef.current.onChangeRaw?.('', '');
 
         if (shouldShowMask(showMask, false, '')) {
-          const emptyDisplayValue = buildDisplayValue('', slots, slot, true);
+          nextDisplayValue = buildDisplayValue('', slots, slot, true);
 
-          input.value = emptyDisplayValue;
-          displayValueRef.current = emptyDisplayValue;
-          setMaskedValue(emptyDisplayValue);
+          displayValueRef.current = nextDisplayValue;
+          updateRefs({ displayValue: nextDisplayValue });
         }
 
+        input.value = nextDisplayValue;
+        optionsRef.current.onChangeRaw?.('', nextDisplayValue);
         registerParams?.onBlur?.(event);
         return;
       }
@@ -770,8 +979,12 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
           processedRef.current = '';
           displayValueRef.current = '';
           rawValueRef.current = '';
-          setMaskedValue('');
-          setRawValue('');
+          updateRefs({
+            displayValue: '',
+            filled: false,
+            maskedValue: '',
+            rawValue: ''
+          });
           wasCompleteRef.current = false;
           optionsRef.current.onChangeRaw?.('', '');
 
@@ -783,12 +996,19 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
 
         input.value = displayValue;
         displayValueRef.current = displayValue;
-        setMaskedValue(displayValue);
+        processedRef.current = processedValue;
+        rawValueRef.current = extractRaw(processedValue, slots);
+        updateRefs({
+          displayValue,
+          filled: false,
+          maskedValue: applyMaskToRaw(rawValueRef.current, slots, transform),
+          rawValue: rawValueRef.current
+        });
       }
 
       registerParams?.onBlur?.(event);
-    },
-    onMouseDown: (event: UseMaskMouseEvent) => {
+    }) as FocusEventHandler<HTMLInputElement>,
+    onMouseDown: ((event) => {
       const input = event.currentTarget;
 
       requestAnimationFrame(() => {
@@ -806,7 +1026,7 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
         const processedValue = processedRef.current;
         const endPosition =
           processedValue.length > 0
-            ? findNextEditablePosition(processedValue.length, slots, processedValue)
+            ? findNextEditablePosition(processedValue.length, slots)
             : findNextTokenIndex(slots, 0);
 
         if (start > endPosition) {
@@ -814,8 +1034,8 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
         }
       });
       registerParams?.onMouseDown?.(event);
-    },
-    onMouseUp: (event: UseMaskMouseEvent) => {
+    }) as MouseEventHandler<HTMLInputElement>,
+    onMouseUp: ((event) => {
       const input = event.currentTarget;
 
       if (input === document.activeElement) {
@@ -823,8 +1043,8 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
       }
 
       registerParams?.onMouseUp?.(event);
-    },
-    onKeyDown: (event: UseMaskKeyboardEvent) => {
+    }) as MouseEventHandler<HTMLInputElement>,
+    onKeyDown: ((event) => {
       const input = event.currentTarget;
       const { slots, transform } = getResolvedOptions(optionsRef.current, rawValueRef.current);
       const processedValue = processedRef.current;
@@ -871,118 +1091,32 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
 
       if (event.key === 'Backspace') {
         event.preventDefault();
+        const edit = deleteBackward(processedValue, slots, start, end, modifier, transform);
 
-        if (event.metaKey || (event.ctrlKey && !event.altKey)) {
-          const clampedStart = Math.min(start, processedValue.length);
-          const afterRawValue = extractRaw(
-            processedValue.slice(clampedStart),
-            slots.slice(clampedStart)
-          );
-          const nextMaskedValue = applyMaskToRaw(afterRawValue, slots, transform);
-
+        if (edit) {
           pushUndoState();
-          updateValue(nextMaskedValue, 0);
-          registerParams?.onKeyDown?.(event);
-          return;
+          updateValue(edit.value, edit.cursor);
         }
 
-        if (start !== end) {
-          const clampedEnd = Math.min(end, processedValue.length);
-          const beforeValue = processedValue.slice(0, start);
-          const afterRawValue = extractRaw(
-            processedValue.slice(clampedEnd),
-            slots.slice(clampedEnd)
-          );
-          const nextMaskedValue = applyMaskToRaw(
-            extractRaw(beforeValue, slots) + afterRawValue,
-            slots,
-            transform
-          );
-
-          pushUndoState();
-          updateValue(nextMaskedValue, start);
-          registerParams?.onKeyDown?.(event);
-          return;
-        }
-
-        if (start === 0) {
-          registerParams?.onKeyDown?.(event);
-          return;
-        }
-
-        let deletePosition = start - 1;
-        while (deletePosition >= 0 && slots[deletePosition]?.type === 'literal') {
-          deletePosition--;
-        }
-
-        if (deletePosition < 0) {
-          registerParams?.onKeyDown?.(event);
-          return;
-        }
-
-        const beforeRawValue = extractRaw(
-          processedValue.slice(0, deletePosition),
-          slots.slice(0, deletePosition)
-        );
-        const afterRawValue = extractRaw(
-          processedValue.slice(deletePosition + 1),
-          slots.slice(deletePosition + 1)
-        );
-        const nextMaskedValue = applyMaskToRaw(beforeRawValue + afterRawValue, slots, transform);
-
-        pushUndoState();
-        updateValue(nextMaskedValue, deletePosition);
         registerParams?.onKeyDown?.(event);
         return;
       }
 
       if (event.key === 'Delete') {
         event.preventDefault();
+        const edit = deleteForward(processedValue, slots, start, end, transform);
 
-        if (start !== end) {
-          const clampedEnd = Math.min(end, processedValue.length);
-          const beforeValue = processedValue.slice(0, start);
-          const afterRawValue = extractRaw(
-            processedValue.slice(clampedEnd),
-            slots.slice(clampedEnd)
-          );
-          const nextMaskedValue = applyMaskToRaw(
-            extractRaw(beforeValue, slots) + afterRawValue,
-            slots,
-            transform
-          );
-
+        if (edit) {
           pushUndoState();
-          updateValue(nextMaskedValue, start);
-          registerParams?.onKeyDown?.(event);
-          return;
+          updateValue(edit.value, edit.cursor);
         }
 
-        let deletePosition = start;
-        while (deletePosition < slots.length && slots[deletePosition]?.type === 'literal') {
-          deletePosition++;
-        }
-
-        if (deletePosition >= processedValue.length) {
-          registerParams?.onKeyDown?.(event);
-          return;
-        }
-
-        const beforeRawValue = extractRaw(processedValue.slice(0, start), slots.slice(0, start));
-        const afterRawValue = extractRaw(
-          processedValue.slice(deletePosition + 1),
-          slots.slice(deletePosition + 1)
-        );
-        const nextMaskedValue = applyMaskToRaw(beforeRawValue + afterRawValue, slots, transform);
-
-        pushUndoState();
-        updateValue(nextMaskedValue, start);
         registerParams?.onKeyDown?.(event);
         return;
       }
 
       if (event.key === 'ArrowRight' && !event.shiftKey) {
-        const nextPosition = findNextEditablePosition(start + 1, slots, input.value);
+        const nextPosition = findNextEditablePosition(start + 1, slots);
 
         if (nextPosition !== start + 1) {
           event.preventDefault();
@@ -1009,58 +1143,17 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
 
       if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
         event.preventDefault();
+        const edit = insertChar(processedValue, slots, start, end, event.key, transform);
 
-        let insertPosition = Math.min(start, processedValue.length);
-        while (insertPosition < slots.length && slots[insertPosition]?.type === 'literal') {
-          insertPosition++;
+        if (edit) {
+          pushUndoState();
+          updateValue(edit.value, edit.cursor);
         }
-
-        if (insertPosition >= slots.length) {
-          registerParams?.onKeyDown?.(event);
-          return;
-        }
-
-        const slot = slots[insertPosition];
-        if (slot.type !== 'token') {
-          registerParams?.onKeyDown?.(event);
-          return;
-        }
-
-        const char = normalizeChar(event.key, transform);
-        if (!testPattern(slot.pattern, char)) {
-          registerParams?.onKeyDown?.(event);
-          return;
-        }
-
-        const beforeRawValue = extractRaw(
-          processedValue.slice(0, insertPosition),
-          slots.slice(0, insertPosition)
-        );
-        const afterRawValue =
-          start < end
-            ? extractRaw(
-                processedValue.slice(Math.min(end, processedValue.length)),
-                slots.slice(Math.min(end, processedValue.length))
-              )
-            : extractRaw(processedValue.slice(insertPosition), slots.slice(insertPosition));
-        const nextMaskedValue = applyMaskToRaw(
-          beforeRawValue + char + afterRawValue,
-          slots,
-          transform
-        );
-        const nextCursorPosition = findNextEditablePosition(
-          insertPosition + 1,
-          slots,
-          nextMaskedValue
-        );
-
-        pushUndoState();
-        updateValue(nextMaskedValue, nextCursorPosition);
       }
 
       registerParams?.onKeyDown?.(event);
-    },
-    onPaste: (event: UseMaskPasteEvent) => {
+    }) as KeyboardEventHandler<HTMLInputElement>,
+    onPaste: ((event) => {
       const input = event.currentTarget;
       event.preventDefault();
 
@@ -1069,31 +1162,17 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
       const processedValue = processedRef.current;
       const start = input.selectionStart ?? 0;
       const end = input.selectionEnd ?? 0;
-      const clampedStart = Math.min(start, processedValue.length);
-      const clampedEnd = Math.min(end, processedValue.length);
-      const beforeRawValue = extractRaw(
-        processedValue.slice(0, clampedStart),
-        slots.slice(0, clampedStart)
-      );
-      const afterRawValue = extractRaw(processedValue.slice(clampedEnd), slots.slice(clampedEnd));
-      const nextMaskedValue = applyMaskToRaw(
-        beforeRawValue + pastedText + afterRawValue,
-        slots,
-        transform
-      );
+      const edit = pasteText(processedValue, slots, start, end, pastedText, transform);
 
       pushUndoState();
-      updateValue(nextMaskedValue);
-
-      const maskedPrefix = applyMaskToRaw(beforeRawValue + pastedText, slots, transform);
-      const pasteEndPosition = Math.min(maskedPrefix.length, slots.length);
+      updateValue(edit.value);
 
       if (input === document.activeElement) {
-        input.setSelectionRange(pasteEndPosition, pasteEndPosition);
+        input.setSelectionRange(edit.cursor, edit.cursor);
       }
 
       registerParams?.onPaste?.(event);
-    }
+    }) as ClipboardEventHandler<HTMLInputElement>
   });
 
   const reset = () => {
@@ -1105,39 +1184,45 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
     rawValueRef.current = '';
     undoStackRef.current = [];
     redoStackRef.current = [];
-    setMaskedValue('');
-    setRawValue('');
+    updateRefs({
+      displayValue: '',
+      filled: false,
+      maskedValue: '',
+      rawValue: ''
+    });
     wasCompleteRef.current = false;
+    let nextDisplayValue = '';
 
     if (input) {
       const { showMask, slots, slot } = getResolvedOptions(hookOptions, '');
 
       if (shouldShowMask(showMask, false, '')) {
-        const displayValue = buildDisplayValue('', slots, slot, true);
+        nextDisplayValue = buildDisplayValue('', slots, slot, true);
 
-        input.value = displayValue;
-        displayValueRef.current = displayValue;
-        setMaskedValue(displayValue);
-      } else {
-        input.value = '';
+        displayValueRef.current = nextDisplayValue;
+        updateRefs({ displayValue: nextDisplayValue });
       }
+
+      input.value = nextDisplayValue;
     }
 
-    hookOptions.onChangeRaw?.('', '');
+    hookOptions.onChangeRaw?.('', nextDisplayValue);
   };
 
-  const filled = checkComplete(
-    processedRef.current,
-    getResolvedOptions(optionsRef.current, rawValueRef.current).slots
-  );
+  const watch = () => {
+    watchingRef.current = true;
+    return valueRef.current;
+  };
 
   return {
     register,
-    displayValue: maskedValue,
-    value: maskedValue,
-    rawValue,
-    filled,
+    displayValue: valueRef.current.displayValue,
+    value: valueRef.current.value,
+    maskedValue: valueRef.current.maskedValue,
+    rawValue: valueRef.current.rawValue,
+    filled: valueRef.current.filled,
     set,
-    reset
+    reset,
+    watch
   };
 };

@@ -7,16 +7,21 @@ import {
   buildDisplayValue,
   checkComplete,
   consumeToMask,
+  deleteBackward,
+  deleteForward,
   extractRaw,
   findNextTokenIndex,
   findPrevTokenIndex,
   formatMask,
   generatePattern,
   getSlot,
+  insertChar,
   isMaskComplete,
   normalizeChar,
   parseMask,
+  pasteText,
   processInput,
+  replaceRangeWithText,
   testPattern,
   unformatMask,
   useMask
@@ -192,6 +197,48 @@ describe('findPrevTokenIndex', () => {
   });
 });
 
+describe('replaceRangeWithText', () => {
+  it('Should replace processed range with raw text', () => {
+    expect(replaceRangeWithText('12/34', getDateSlots(), 3, 5, '9')).toBe('12/9');
+  });
+});
+
+describe('deleteBackward', () => {
+  it('Should delete previous token', () => {
+    expect(deleteBackward('12/34', getDateSlots(), 5, 5, false)).toEqual({
+      value: '12/3',
+      cursor: 4
+    });
+  });
+});
+
+describe('deleteForward', () => {
+  it('Should delete next token', () => {
+    expect(deleteForward('12/34', getDateSlots(), 3, 3)).toEqual({
+      value: '12/4',
+      cursor: 3
+    });
+  });
+});
+
+describe('insertChar', () => {
+  it('Should insert char into next token slot', () => {
+    expect(insertChar('12/4', getDateSlots(), 3, 3, '3')).toEqual({
+      value: '12/34',
+      cursor: 4
+    });
+  });
+});
+
+describe('pasteText', () => {
+  it('Should paste text into processed range', () => {
+    expect(pasteText('', getDateSlots(), 0, 0, '1234')).toEqual({
+      value: '12/34',
+      cursor: 5
+    });
+  });
+});
+
 describe('formatMask', () => {
   it('Should format raw value', () => {
     expect(formatMask('1234', { mask: '99/99' })).toBe('12/34');
@@ -227,10 +274,12 @@ it('Should use mask', () => {
   expect(result.current.filled).toBeFalsy();
   expect(result.current.rawValue).toBe('');
   expect(result.current.displayValue).toBe('');
+  expect(result.current.maskedValue).toBe('');
   expect(result.current.value).toBe('');
   expect(result.current.register).toBeTypeOf('function');
   expect(result.current.set).toBeTypeOf('function');
   expect(result.current.reset).toBeTypeOf('function');
+  expect(result.current.watch).toBeTypeOf('function');
 });
 
 it('Should use mask on server side', () => {
@@ -239,27 +288,50 @@ it('Should use mask on server side', () => {
   expect(result.current.filled).toBeFalsy();
   expect(result.current.rawValue).toBe('');
   expect(result.current.displayValue).toBe('');
+  expect(result.current.maskedValue).toBe('');
   expect(result.current.value).toBe('');
   expect(result.current.register).toBeTypeOf('function');
   expect(result.current.set).toBeTypeOf('function');
   expect(result.current.reset).toBeTypeOf('function');
+  expect(result.current.watch).toBeTypeOf('function');
 });
 
 it('Should register input', () => {
   const { result } = renderHook(() => useMask({ mask: '99/99' }));
 
   act(() => applyHandlers(result.current.register()));
+  act(() => result.current.watch());
   act(() => result.current.set('1234'));
 
   expect(input.value).toBe('12/34');
   expect(result.current.rawValue).toBe('1234');
   expect(result.current.displayValue).toBe('12/34');
+  expect(result.current.maskedValue).toBe('12/34');
   expect(result.current.value).toBe('12/34');
   expect(result.current.filled).toBeTruthy();
 });
 
 it('Should handle input change from register', () => {
   const { result } = renderHook(() => useMask({ mask: '99/99' }));
+
+  act(() => applyHandlers(result.current.register()));
+  act(() => result.current.watch());
+
+  act(() => {
+    input.value = '1234';
+    input.dispatchEvent(new Event('change'));
+  });
+
+  expect(input.value).toBe('12/34');
+  expect(result.current.rawValue).toBe('1234');
+});
+
+it('Should rerender values only after watch', () => {
+  let renders = 0;
+  const { result } = renderHook(() => {
+    renders++;
+    return useMask({ mask: '99/99' });
+  });
 
   act(() => applyHandlers(result.current.register()));
 
@@ -269,7 +341,17 @@ it('Should handle input change from register', () => {
   });
 
   expect(input.value).toBe('12/34');
-  expect(result.current.rawValue).toBe('1234');
+  expect(result.current.rawValue).toBe('');
+  expect(renders).toBe(1);
+  expect(result.current.watch().rawValue).toBe('1234');
+
+  act(() => {
+    input.value = '12';
+    input.dispatchEvent(new Event('change'));
+  });
+
+  expect(result.current.rawValue).toBe('12');
+  expect(renders).toBe(2);
 });
 
 it('Should call register params handlers', () => {
@@ -291,17 +373,19 @@ it('Should call register params handlers', () => {
 });
 
 it('Should show mask slots always', () => {
-  const { result } = renderHook(() => useMask({ mask: '99/99', showMask: 'always' }));
+  const { result } = renderHook(() => useMask({ mask: '99/99', showMask: 'always', slot: '_' }));
 
+  act(() => result.current.watch());
   act(() => applyHandlers(result.current.register()));
 
   expect(input.value).toBe('__/__');
   expect(result.current.displayValue).toBe('__/__');
+  expect(result.current.maskedValue).toBe('');
   expect(result.current.value).toBe('__/__');
 });
 
 it('Should show mask slots on focus by default', () => {
-  const { result } = renderHook(() => useMask({ mask: '99/99' }));
+  const { result } = renderHook(() => useMask({ mask: '99/99', slot: '_' }));
 
   act(() => applyHandlers(result.current.register()));
   act(() => input.dispatchEvent(new Event('focus')));
@@ -314,9 +398,10 @@ it('Should show mask slots on focus by default', () => {
 });
 
 it('Should show mask slots when value is filled', () => {
-  const { result } = renderHook(() => useMask({ mask: '99/99', showMask: 'filled' }));
+  const { result } = renderHook(() => useMask({ mask: '99/99', showMask: 'filled', slot: '_' }));
 
   act(() => applyHandlers(result.current.register()));
+  act(() => result.current.watch());
 
   act(() => {
     input.value = '12';
@@ -324,6 +409,8 @@ it('Should show mask slots when value is filled', () => {
   });
 
   expect(input.value).toBe('12/__');
+  expect(result.current.displayValue).toBe('12/__');
+  expect(result.current.maskedValue).toBe('12/');
 });
 
 it('Should never show mask slots', () => {
@@ -339,14 +426,34 @@ it('Should reset mask state', () => {
   const { result } = renderHook(() => useMask({ mask: '99/99' }));
 
   act(() => applyHandlers(result.current.register()));
+  act(() => result.current.watch());
   act(() => result.current.set('1234'));
   act(() => result.current.reset());
 
   expect(input.value).toBe('');
   expect(result.current.rawValue).toBe('');
   expect(result.current.displayValue).toBe('');
+  expect(result.current.maskedValue).toBe('');
   expect(result.current.value).toBe('');
   expect(result.current.filled).toBeFalsy();
+});
+
+it('Should reset with current display value in raw change callback', () => {
+  const onChangeRaw = vi.fn();
+  const { result } = renderHook(() =>
+    useMask({ mask: '99/99', showMask: 'always', slot: '_', onChangeRaw })
+  );
+
+  act(() => applyHandlers(result.current.register()));
+  act(() => result.current.watch());
+  act(() => result.current.set('1234'));
+  onChangeRaw.mockClear();
+  act(() => result.current.reset());
+
+  expect(input.value).toBe('__/__');
+  expect(result.current.displayValue).toBe('__/__');
+  expect(result.current.maskedValue).toBe('');
+  expect(onChangeRaw).toHaveBeenCalledWith('', '__/__');
 });
 
 it('Should auto clear incomplete value on blur', () => {
@@ -362,4 +469,27 @@ it('Should auto clear incomplete value on blur', () => {
 
   expect(input.value).toBe('');
   expect(result.current.rawValue).toBe('');
+});
+
+it('Should auto clear with current display value in raw change callback', () => {
+  const onChangeRaw = vi.fn();
+  const { result } = renderHook(() =>
+    useMask({ mask: '99/99', autoClear: true, showMask: 'always', slot: '_', onChangeRaw })
+  );
+
+  act(() => applyHandlers(result.current.register()));
+  act(() => result.current.watch());
+
+  act(() => {
+    input.value = '12';
+    input.dispatchEvent(new Event('change'));
+  });
+  onChangeRaw.mockClear();
+  act(() => input.dispatchEvent(new Event('blur')));
+
+  expect(input.value).toBe('__/__');
+  expect(result.current.rawValue).toBe('');
+  expect(result.current.displayValue).toBe('__/__');
+  expect(result.current.maskedValue).toBe('');
+  expect(onChangeRaw).toHaveBeenCalledWith('', '__/__');
 });
