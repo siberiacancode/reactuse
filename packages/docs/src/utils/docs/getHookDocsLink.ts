@@ -2,6 +2,8 @@ import { readdir } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 
+const SITE_ORIGIN = 'https://reactuse.org';
+
 let migratedHookNamesPromise: Promise<Set<string>> | null = null;
 
 const getMigratedHookNames = async () => {
@@ -22,12 +24,24 @@ const getMigratedHookNames = async () => {
   return migratedHookNamesPromise;
 };
 
-export const getHookDocsLink = async (name: string) => {
+export interface HookDocsNavigation {
+  link: string;
+  rel?: string;
+  target?: string;
+}
+
+export const getHookDocsLink = async (name: string): Promise<HookDocsNavigation> => {
   const migratedHookNames = await getMigratedHookNames();
 
   if (migratedHookNames.has(name)) {
-    return `/new/functions/hooks/${name}`;
+    return {
+      link: `${SITE_ORIGIN}/new/functions/hooks/${name}`,
+      rel: 'noreferrer',
+      target: '_self'
+    };
   }
 
-  return `/functions/hooks/${name}`;
+  return {
+    link: `/functions/hooks/${name}`
+  };
 };

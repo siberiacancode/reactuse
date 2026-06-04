@@ -7,7 +7,7 @@ export default {
     const hooksWithLinks = await Promise.all(
       hooks.map(async (hook) => ({
         ...hook,
-        link: await getHookDocsLink(hook.name)
+        ...(await getHookDocsLink(hook.name))
       }))
     );
 

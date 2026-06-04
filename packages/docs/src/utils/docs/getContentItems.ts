@@ -7,6 +7,8 @@ interface ContentItem {
   category: string;
   description: string;
   link: string;
+  rel?: string;
+  target?: string;
   text: string;
 }
 
@@ -35,11 +37,13 @@ export const getContentItems = async () => {
         return null;
       }
 
+      const navigation = await getHookDocsLink(item.name);
+
       return {
         text: item.name,
         description: jsdoc.description.description,
         category: jsdoc.category?.name,
-        link: await getHookDocsLink(item.name)
+        ...navigation
       };
     })
   );
