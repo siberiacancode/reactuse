@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage",
+      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress",
 
       "---async---",
       "useAsync","useLockCallback",
@@ -29,6 +29,9 @@
       "useFul","useLess",
 
       "---time---",
-      "useInterval"
+      "useInterval",
+
+      "---debug---",
+      "useLogger"
     ]
   }

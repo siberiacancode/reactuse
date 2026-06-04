@@ -1,6 +1,7 @@
 import { parseHookJsdoc } from '../parseHookJsdoc';
 import { getContent } from './getContent';
 import { getContentFile } from './getContentFile';
+import { getHookDocsLink } from './getHookDocsLink';
 
 interface ContentItem {
   category: string;
@@ -38,7 +39,7 @@ export const getContentItems = async () => {
         text: item.name,
         description: jsdoc.description.description,
         category: jsdoc.category?.name,
-        link: `/functions/hooks/${item.name}`
+        link: await getHookDocsLink(item.name)
       };
     })
   );

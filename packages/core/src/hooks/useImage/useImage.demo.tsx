@@ -32,6 +32,7 @@ const Demo = () => {
 
   const image = useImage(getImageUrl(id), { crossorigin: 'anonymous' });
   const filename = getFilename(id);
+  const isLoading = image.isLoading || image.isRefetching;
 
   const onPrev = () => setId((value) => Math.max(MIN_ID, value - 1));
   const onNext = () => setId((value) => Math.min(MAX_ID, value + 1));
@@ -43,11 +44,14 @@ const Demo = () => {
   return (
     <section className='flex w-full max-w-md flex-col p-4'>
       <div className='border-border bg-card relative flex h-[240px] items-center justify-center overflow-hidden rounded-xl border shadow-sm'>
-        {image.isLoading && <Loader2Icon className='text-muted-foreground size-8 animate-spin' />}
+        {isLoading && (
+          <div className='bg-card/70 absolute inset-0 z-10 flex items-center justify-center backdrop-blur-[1px]'>
+            <Loader2Icon className='text-muted-foreground size-8 animate-spin' />
+          </div>
+        )}
 
-        {!image.isLoading && image.data && (
+        {image.data && (
           <img
-            key={id}
             alt={filename}
             className='animate-in fade-in h-[160px] object-contain duration-300'
             src={image.data.src}
@@ -83,7 +87,7 @@ const Demo = () => {
           className='absolute top-3 right-3 rounded-full!'
           data-size='icon'
           data-variant='ghost'
-          disabled={image.isLoading || !image.data}
+          disabled={isLoading || !image.data}
           type='button'
           onClick={onDownload}
         >

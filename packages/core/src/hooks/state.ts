@@ -8,13 +8,14 @@ export * from './useDefault/useDefault';
 export * from './useDisclosure/useDisclosure';
 export * from './useField/useField';
 export * from './useHash/useHash';
-
 // collections
 export * from './useList/useList';
 
 // storage
 export * from './useLocalStorage/useLocalStorage';
+
 export * from './useMap/useMap';
+export * from './useMask/useMask';
 export * from './useMergedRef/useMergedRef';
 export * from './useObject/useObject';
 export * from './useOffsetPagination/useOffsetPagination';

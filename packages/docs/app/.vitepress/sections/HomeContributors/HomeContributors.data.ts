@@ -7,7 +7,7 @@ export default {
   async load() {
     try {
       const log = await git.log();
-      const contributorsMap = new Map();
+      const contributorsMap = new Map<string, { name: string; email: string; avatar: string }>();
 
       log.all.forEach((commit) => {
         const { author_email, author_name } = commit;
@@ -20,9 +20,9 @@ export default {
         }
       });
 
-      const contributors = contributorsMap
-        .values()
-        .toSorted((a, b) => a.name.localeCompare(b.name));
+      const contributors = [...contributorsMap.values()].toSorted((a, b) =>
+        a.name.localeCompare(b.name)
+      );
 
       return {
         contributors

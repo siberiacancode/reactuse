@@ -8,7 +8,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @usage low
  *
  * @overload
- * @param {HookTarget | Window} target DOM element or ref to attach keyboard listeners to
+ * @param {HookTarget | Window} [target=window] DOM element or ref to attach keyboard listeners to
  * @param {UseKeysPressedOptions} [options.enabled=true] Enable or disable the event listeners
  * @returns {UseKeysPressedReturn} Object containing the array of currently pressed keys
  *
@@ -32,7 +32,7 @@ export const useKeysPressed = (...params) => {
   useEffect(() => {
     if (!enabled) return;
     setValue([]);
-    const element = target ? isTarget.getElement(target) : internalRef.current;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     if (!element) return;
     const onKeyDown = (event) => {
       const keyboardEvent = event;

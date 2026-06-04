@@ -34,7 +34,7 @@ export interface UseKeysPressed {
  * @usage low
  *
  * @overload
- * @param {HookTarget | Window} target DOM element or ref to attach keyboard listeners to
+ * @param {HookTarget | Window} [target=window] DOM element or ref to attach keyboard listeners to
  * @param {UseKeysPressedOptions} [options.enabled=true] Enable or disable the event listeners
  * @returns {UseKeysPressedReturn} Object containing the array of currently pressed keys
  *
@@ -61,7 +61,8 @@ export const useKeysPressed = ((...params: any[]) => {
     if (!enabled) return;
     setValue([]);
 
-    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;
     if (!element) return;
 
     const onKeyDown = (event: Event) => {

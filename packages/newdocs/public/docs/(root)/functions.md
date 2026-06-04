@@ -79,3 +79,6 @@ A quick list of available functions.
 - [useList](/functions/hooks/useList): Hook that provides state and helper methods to manage a list of items
 - [useLocalStorage](/functions/hooks/useLocalStorage): Hook that manages local storage value
 - [useLockCallback](/functions/hooks/useLockCallback): Hook that prevents a callback from being executed multiple times simultaneously
+- [useLockScroll](/functions/hooks/useLockScroll): Hook that locks scroll on an element or document body
+- [useLogger](/functions/hooks/useLogger): Hook for debugging lifecycle
+- [useLongPress](/functions/hooks/useLongPress): Hook that defines the logic when long pressing an element

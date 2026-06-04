@@ -41,6 +41,9 @@
 - [useFullscreen](https://reactuse.org/functions/hooks/useFullscreen): Hook to handle fullscreen events
 - [useGamepad](https://reactuse.org/functions/hooks/useGamepad): Hook for getting information about gamepad
 - [useGeolocation](https://reactuse.org/functions/hooks/useGeolocation): Hook that returns the current geolocation
+### Debugs
+
+- [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
@@ -53,6 +56,8 @@
 - [useFocusTrap](https://reactuse.org/functions/hooks/useFocusTrap): Hook that traps focus within a given element
 - [useHover](https://reactuse.org/functions/hooks/useHover): Hook that defines the logic when hovering an element
 - [useImage](https://reactuse.org/functions/hooks/useImage): Hook that load an image in the browser
+- [useLockScroll](https://reactuse.org/functions/hooks/useLockScroll): Hook that locks scroll on an element or document body
+- [useLongPress](https://reactuse.org/functions/hooks/useLongPress): Hook that defines the logic when long pressing an element
 ### Humors
 
 - [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful

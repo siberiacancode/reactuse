@@ -1,3 +1,5 @@
+'use client'
+
 'use client';
 
 import { target, useDisclosure, useLockScroll } from '@siberiacancode/reactuse';
@@ -32,7 +34,8 @@ const Demo = () => {
               <h3 className='text-foreground text-sm font-semibold'>Delete this project?</h3>
               <button
                 aria-label='Close'
-                data-size='icon'
+                className='rounded-full!'
+                data-size='icon-xs'
                 data-variant='ghost'
                 type='button'
                 onClick={dialog.close}

@@ -10,7 +10,7 @@ const Demo = () => {
   const { idle } = useIdle(IDLE_TIMEOUT);
 
   return (
-    <section className='flex flex-col items-center p-4'>
+    <section className='flex flex-col items-center gap-3 p-4'>
       <div className='flex w-full max-w-xs items-center gap-3'>
         <div className='relative shrink-0'>
           <div className='flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-neutral-700 to-neutral-900 text-sm font-semibold text-white'>
@@ -29,6 +29,10 @@ const Demo = () => {
           <span className='text-muted-foreground text-xs'>Opensource team</span>
         </div>
       </div>
+
+      <p className='text-muted-foreground max-w-xs text-center text-xs leading-relaxed'>
+        Wait a moment without moving the mouse or pressing keys to see the idle state.
+      </p>
     </section>
   );
 };
