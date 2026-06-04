@@ -1,8 +1,11 @@
-import type { RefObject } from 'react';
+import type { ChangeEventHandler, FocusEventHandler, RefObject } from 'react';
 
 import { useRef, useState } from 'react';
 
 import { useRerender } from '../useRerender/useRerender';
+
+/** The use field element type */
+type UseFieldElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
 /** The use field params type */
 export interface UseFieldOptions {
@@ -40,6 +43,10 @@ export interface UseFieldRegisterParams {
     value: number;
     message: string;
   };
+  /** The blur event handler */
+  onBlur?: FocusEventHandler<UseFieldElement>;
+  /** The change event handler */
+  onChange?: ChangeEventHandler<UseFieldElement>;
   /** The pattern validation */
   pattern?: {
     value: RegExp;
@@ -58,7 +65,7 @@ export interface UseFieldReturn<Value> {
   /** The error state */
   error?: string;
   /** The input ref */
-  ref: RefObject<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null>;
+  ref: RefObject<UseFieldElement | null>;
   /** The set error function */
   touched: boolean;
   /** The set error function */
@@ -69,11 +76,9 @@ export interface UseFieldReturn<Value> {
   getValue: () => Value;
   /** The register function */
   register: (params?: UseFieldRegisterParams) => {
-    onBlur: () => void;
-    onChange: () => void;
-    ref: (
-      node: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null | undefined
-    ) => void;
+    onBlur: FocusEventHandler<UseFieldElement>;
+    onChange: ChangeEventHandler<UseFieldElement>;
+    ref: (node: UseFieldElement | null | undefined) => void;
   };
   /** The reset function */
   reset: () => void;
@@ -111,7 +116,7 @@ export const useField = <
   initialValue = '' as Value,
   options?: UseFieldOptions
 ): UseFieldReturn<Type> => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<UseFieldElement | null>(null);
   const watchingRef = useRef(false);
   const rerender = useRerender();
 
@@ -120,13 +125,19 @@ export const useField = <
   const [error, setError] = useState<string | undefined>(undefined);
 
   const getValue = () => {
-    if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+    if (
+      inputRef.current instanceof HTMLInputElement &&
+      (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+    )
       return inputRef.current.checked as Type;
     return (inputRef.current?.value ?? initialValue) as Type;
   };
 
   const setValue = (value: Type) => {
-    if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox') {
+    if (
+      inputRef.current instanceof HTMLInputElement &&
+      (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+    ) {
       inputRef.current.checked = value as boolean;
       if (watchingRef.current) return rerender();
       return;
@@ -179,34 +190,40 @@ export const useField = <
   };
 
   const register = (registerParams?: UseFieldRegisterParams) => ({
-    ref: (node: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null | undefined) => {
+    ref: (node: UseFieldElement | null | undefined) => {
       if (!inputRef.current && node) {
         if (options?.autoFocus) node.focus();
-        inputRef.current = node as HTMLInputElement;
-        if (inputRef.current.type === 'radio') {
-          inputRef.current.defaultChecked = initialValue === node.value;
+        inputRef.current = node;
+        if (node instanceof HTMLInputElement && node.type === 'radio') {
+          node.defaultChecked = initialValue === node.value;
           return;
         }
-        if (inputRef.current.type === 'checkbox') {
-          inputRef.current.defaultChecked = !!initialValue;
+        if (node instanceof HTMLInputElement && node.type === 'checkbox') {
+          node.defaultChecked = !!initialValue;
           return;
         }
-        inputRef.current.defaultValue = String(initialValue);
+        if ('defaultValue' in node) {
+          node.defaultValue = String(initialValue);
+        } else {
+          node.value = String(initialValue);
+        }
 
         if (registerParams && options?.validateOnMount) validate(registerParams);
       }
     },
-    onChange: async () => {
-      if (watchingRef.current) return rerender();
+    onChange: (async (event) => {
+      if (watchingRef.current) rerender();
       if (inputRef.current!.value !== initialValue) setDirty(true);
       if (inputRef.current!.value === initialValue) setDirty(false);
       if (registerParams && options?.validateOnChange) await validate(registerParams);
       if (registerParams && options?.validateOnBlur) setError(undefined);
-    },
-    onBlur: async () => {
+      registerParams?.onChange?.(event);
+    }) as ChangeEventHandler<UseFieldElement>,
+    onBlur: (async (event) => {
       if (registerParams && options?.validateOnBlur) await validate(registerParams);
       setTouched(true);
-    }
+      registerParams?.onBlur?.(event);
+    }) as FocusEventHandler<UseFieldElement>
   });
 
   const watch = () => {

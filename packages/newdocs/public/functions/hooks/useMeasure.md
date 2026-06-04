@@ -1,15 +1,15 @@
 ---
-title: useMask
-description: Hook to apply an input mask
-category: state
-usage: medium
+title: useMeasure
+description: Hook to measure the size and position of an element
+category: browser
+usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780559434000
+lastModifiedTime: 1768553242000
 ---
 
-import metadata from './useMask.meta.json';
+import metadata from './useMeasure.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useMask.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useMask
+    npx useverse@latest add useMeasure
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,9 @@ import metadata from './useMask.meta.json';
 ## Usage
 
 ```tsx
-const phoneMask = useMask({ mask: '+7 (999) 999-99-99' }); <input {...phoneMask.register()} />
+const { x, y, width, height, top, left, bottom, right } = useMeasure(ref);
+// or
+const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();
 ```
 
 ## Type Declarations

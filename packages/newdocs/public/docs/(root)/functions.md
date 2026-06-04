@@ -84,3 +84,4 @@ A quick list of available functions.
 - [useLongPress](/functions/hooks/useLongPress): Hook that defines the logic when long pressing an element
 - [useMap](/functions/hooks/useMap): Hook that manages a map structure
 - [useMask](/functions/hooks/useMask): Hook to apply an input mask
+- [useMeasure](/functions/hooks/useMeasure): Hook to measure the size and position of an element

@@ -27,12 +27,18 @@ export const useField = (initialValue = '', options) => {
   const [touched, setTouched] = useState(options?.initialTouched ?? false);
   const [error, setError] = useState(undefined);
   const getValue = () => {
-    if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+    if (
+      inputRef.current?.type !== 'textarea' &&
+      (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+    )
       return inputRef.current.checked;
     return inputRef.current?.value ?? initialValue;
   };
   const setValue = (value) => {
-    if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox') {
+    if (
+      inputRef.current?.type !== 'textarea' &&
+      (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+    ) {
       inputRef.current.checked = value;
       if (watchingRef.current) return rerender();
       return;

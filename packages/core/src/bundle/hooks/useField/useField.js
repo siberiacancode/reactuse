@@ -27,12 +27,18 @@ export const useField = (initialValue = '', options) => {
   const [touched, setTouched] = useState(options?.initialTouched ?? false);
   const [error, setError] = useState(undefined);
   const getValue = () => {
-    if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+    if (
+      inputRef.current instanceof HTMLInputElement &&
+      (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+    )
       return inputRef.current.checked;
     return inputRef.current?.value ?? initialValue;
   };
   const setValue = (value) => {
-    if (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox') {
+    if (
+      inputRef.current instanceof HTMLInputElement &&
+      (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+    ) {
       inputRef.current.checked = value;
       if (watchingRef.current) return rerender();
       return;
@@ -77,28 +83,34 @@ export const useField = (initialValue = '', options) => {
       if (!inputRef.current && node) {
         if (options?.autoFocus) node.focus();
         inputRef.current = node;
-        if (inputRef.current.type === 'radio') {
-          inputRef.current.defaultChecked = initialValue === node.value;
+        if (node instanceof HTMLInputElement && node.type === 'radio') {
+          node.defaultChecked = initialValue === node.value;
           return;
         }
-        if (inputRef.current.type === 'checkbox') {
-          inputRef.current.defaultChecked = !!initialValue;
+        if (node instanceof HTMLInputElement && node.type === 'checkbox') {
+          node.defaultChecked = !!initialValue;
           return;
         }
-        inputRef.current.defaultValue = String(initialValue);
+        if ('defaultValue' in node) {
+          node.defaultValue = String(initialValue);
+        } else {
+          node.value = String(initialValue);
+        }
         if (registerParams && options?.validateOnMount) validate(registerParams);
       }
     },
-    onChange: async () => {
-      if (watchingRef.current) return rerender();
+    onChange: async (event) => {
+      if (watchingRef.current) rerender();
       if (inputRef.current.value !== initialValue) setDirty(true);
       if (inputRef.current.value === initialValue) setDirty(false);
       if (registerParams && options?.validateOnChange) await validate(registerParams);
       if (registerParams && options?.validateOnBlur) setError(undefined);
+      registerParams?.onChange?.(event);
     },
-    onBlur: async () => {
+    onBlur: async (event) => {
       if (registerParams && options?.validateOnBlur) await validate(registerParams);
       setTouched(true);
+      registerParams?.onBlur?.(event);
     }
   });
   const watch = () => {

@@ -56,12 +56,15 @@ export const Search = (props: Props) => {
           <span className='truncate text-sm'>Search docs...</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className='rounded-xl border-none bg-clip-padding p-2 pb-11 shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800'>
+      <DialogContent
+        className='rounded-xl border-none bg-clip-padding px-2 py-3 shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800'
+        showCloseButton={false}
+      >
         <DialogHeader className='sr-only'>
           <DialogTitle>Search documentation...</DialogTitle>
           <DialogDescription>Search for a command to run...</DialogDescription>
         </DialogHeader>
-        <Command className='**:data-[slot=command-input-wrapper]:bg-input/50 **:data-[slot=command-input-wrapper]:border-input rounded-none bg-transparent **:data-[slot=command-input]:!h-9 **:data-[slot=command-input]:py-0 **:data-[slot=command-input-wrapper]:mb-0 **:data-[slot=command-input-wrapper]:!h-9 **:data-[slot=command-input-wrapper]:rounded-md **:data-[slot=command-input-wrapper]:border'>
+        <Command>
           <div className='relative'>
             <CommandInput placeholder='Search documentation...' onValueChange={setSearch} />
             {query.isLoading && (
@@ -88,12 +91,11 @@ export const Search = (props: Props) => {
                     .filter((child) => child.type === 'page')
                     .map((item) => (
                       <CommandItem
-                        asChild
                         key={item.url}
                         className='cursor-pointer'
                         value={item.name!.toString()}
                       >
-                        <div>
+                        <div className='flex items-center justify-center gap-2'>
                           {!isFunction && <ArrowRightIcon />}
                           {isFunction && <CircleDashedIcon />}
                           <Link href={item.url} onClick={() => dialog.close()}>

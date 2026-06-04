@@ -1,3 +1,5 @@
+'use client'
+
 import { useBoolean, useMeasure } from '@siberiacancode/reactuse';
 
 const COLLAPSED_HEIGHT = 60;

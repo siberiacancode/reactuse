@@ -41,6 +41,7 @@
 - [useFullscreen](https://reactuse.org/functions/hooks/useFullscreen): Hook to handle fullscreen events
 - [useGamepad](https://reactuse.org/functions/hooks/useGamepad): Hook for getting information about gamepad
 - [useGeolocation](https://reactuse.org/functions/hooks/useGeolocation): Hook that returns the current geolocation
+- [useMeasure](https://reactuse.org/functions/hooks/useMeasure): Hook to measure the size and position of an element
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle

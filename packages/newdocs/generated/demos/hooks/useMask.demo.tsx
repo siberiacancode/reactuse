@@ -33,8 +33,8 @@ const Demo = () => {
 
   const phone = useMask({
     mask: DEFAULT_MASK,
-    showMaskOnFocus: false,
-    slotChar: null,
+    showMask: 'never',
+    slot: null,
     modify: (rawValue) => ({ mask: detectCountry(rawValue)?.mask ?? DEFAULT_MASK }),
     beforeMaskedStateChange: ({ nextState }) => ({
       ...nextState,
@@ -44,10 +44,10 @@ const Demo = () => {
 
   const cardNumber = useMask({
     mask: '9999 9999 9999 9999',
-    showMaskOnFocus: false,
-    slotChar: null
+    showMask: 'never',
+    slot: null
   });
-  const expiry = useMask({ mask: '99/99', showMaskOnFocus: false, slotChar: null });
+  const expiry = useMask({ mask: '99/99', showMask: 'never', slot: null });
 
   const country = detectCountry(phone.rawValue);
 
@@ -78,13 +78,13 @@ const Demo = () => {
             </span>
           )}
           <input
-            ref={phone.ref}
             className={cn(
               'border-border bg-card text-foreground w-full rounded-md border py-2 pr-3 text-sm outline-none',
               country ? 'pl-10!' : 'pl-3'
             )}
             inputMode='tel'
             placeholder='Start typing with country code'
+            {...phone.register()}
           />
         </div>
         {country && <span className='text-muted-foreground px-1 text-[10px]'>{country.name}</span>}
@@ -94,18 +94,18 @@ const Demo = () => {
         <label className='text-foreground text-xs font-medium'>Card details</label>
 
         <input
-          ref={cardNumber.ref}
           className='border-border bg-card text-foreground rounded-md border px-3 py-2 font-mono text-sm tracking-wider outline-none'
           inputMode='numeric'
           placeholder='1234 5678 9012 3456'
+          {...cardNumber.register()}
         />
 
         <div className='flex gap-2'>
           <input
-            ref={expiry.ref}
             className='border-border bg-card text-foreground w-full rounded-md border px-3 py-2 font-mono text-sm outline-none'
             inputMode='numeric'
             placeholder='MM/YY'
+            {...expiry.register()}
           />
           <input
             className='border-border bg-card text-foreground w-full rounded-md border px-3 py-2 font-mono text-sm outline-none'

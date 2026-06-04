@@ -4,7 +4,7 @@ description: Hook to apply an input mask
 category: state
 usage: medium
 type: hook
-isTest: false
+isTest: true
 isDemo: true
 lastModifiedTime: 1780559434000
 ---
@@ -47,7 +47,7 @@ import metadata from './useMask.meta.json';
 ## Usage
 
 ```tsx
-const phoneMask = useMask({ mask: '+7 (999) 999-99-99' });
+const phoneMask = useMask({ mask: '+7 (999) 999-99-99' }); <input {...phoneMask.register()} />
 ```
 
 ## Type Declarations

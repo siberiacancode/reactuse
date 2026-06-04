@@ -145,6 +145,41 @@ it('Should validate on change and clear error after valid value', async () => {
   expect(result.current.error).toBeUndefined();
 });
 
+it('Should call register change handler after internal change handler', async () => {
+  const onChange = vi.fn();
+  const { result } = renderHook(() => useField(''));
+  const handlers = result.current.register({
+    onChange
+  });
+
+  act(() => applyHandlers(handlers));
+
+  await act(async () => {
+    input.value = 'value';
+    input.dispatchEvent(new Event('change'));
+  });
+
+  expect(onChange).toHaveBeenCalledOnce();
+  expect(result.current.dirty).toBeTruthy();
+});
+
+it('Should call register blur handler after internal blur handler', async () => {
+  const onBlur = vi.fn();
+  const { result } = renderHook(() => useField(''));
+  const handlers = result.current.register({
+    onBlur
+  });
+
+  act(() => applyHandlers(handlers));
+
+  await act(async () => {
+    input.dispatchEvent(new Event('blur'));
+  });
+
+  expect(onBlur).toHaveBeenCalledOnce();
+  expect(result.current.touched).toBeTruthy();
+});
+
 it('Should manually set error', () => {
   const { result } = renderHook(useField);
 
