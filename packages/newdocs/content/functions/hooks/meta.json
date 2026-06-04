@@ -17,7 +17,7 @@
       "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent","useLastChanged","useLatest",
 
       "---state---",
-      "useBoolean","useControllableState","useCookie","useCookies","useCounter","useDefault","useDisclosure","useField","useHash","useList","useLocalStorage",
+      "useBoolean","useControllableState","useCookie","useCookies","useCounter","useDefault","useDisclosure","useField","useHash","useList","useLocalStorage","useMap","useMask",
 
       "---user---",
       "useBrowserLanguage",

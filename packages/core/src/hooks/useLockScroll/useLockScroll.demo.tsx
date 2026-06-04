@@ -1,11 +1,9 @@
-'use client';
-
-import { target, useDisclosure, useLockScroll } from '@siberiacancode/reactuse';
+import { useDisclosure, useLockScroll } from '@siberiacancode/reactuse';
 import { XIcon } from 'lucide-react';
 
 const Demo = () => {
   const dialog = useDisclosure();
-  useLockScroll(target(document.body), { enabled: dialog.opened });
+  useLockScroll({ enabled: dialog.opened });
 
   return (
     <section className='flex w-full max-w-md flex-col gap-3 p-4'>

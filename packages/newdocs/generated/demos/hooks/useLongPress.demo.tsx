@@ -67,7 +67,7 @@ const Demo = () => {
         <button
           ref={longPress.ref}
           className={cn(
-            'relative flex w-full items-center justify-center overflow-hidden rounded-full! px-4! text-sm font-semibold transition-colors select-none',
+            'relative flex h-10! w-full items-center justify-center overflow-hidden rounded-full! text-sm font-semibold transition-colors select-none',
             holding ? 'bg-muted text-muted-foreground' : 'bg-white text-neutral-900'
           )}
           data-variant='unstyled'

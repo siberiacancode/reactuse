@@ -1,15 +1,15 @@
 ---
-title: useKeysPressed
-description: Hook that tracks all currently pressed keyboard keys and their codes
-category: sensors
-usage: low
+title: useMap
+description: Hook that manages a map structure
+category: state
+usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780559434000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useKeysPressed.meta.json';
+import metadata from './useMap.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useKeysPressed.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useKeysPressed
+    npx useverse@latest add useMap
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './useKeysPressed.meta.json';
 ## Usage
 
 ```tsx
-const { value } = useKeysPressed(ref);
-// or
-const { value, ref } = useKeysPressed();
+const { value, set, remove, clear, reset, size, has } = useMap([1, 'one'], [2, 'two']);
 ```
 
 ## Type Declarations

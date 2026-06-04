@@ -8,8 +8,8 @@ const Demo = () => {
   const { idle } = useIdle(IDLE_TIMEOUT);
 
   return (
-    <section className='flex flex-col items-center gap-3 p-4'>
-      <div className='flex w-full max-w-xs items-center gap-3'>
+    <section className='flex flex-col items-center gap-4 p-4'>
+      <div className='flex items-center gap-3'>
         <div className='relative shrink-0'>
           <div className='flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-neutral-700 to-neutral-900 text-sm font-semibold text-white'>
             SC
@@ -23,13 +23,13 @@ const Demo = () => {
         </div>
 
         <div className='flex flex-col items-start gap-0.5'>
-          <span className='text-sm font-medium'>siberiacancode</span>
-          <span className='text-muted-foreground text-xs'>Opensource team</span>
+          <span className='text-foreground text-sm font-medium'>siberiacancode</span>
+          <span className='text-muted-foreground text-xs'>{idle ? 'Away' : 'Online'}</span>
         </div>
       </div>
 
-      <p className='text-muted-foreground max-w-xs text-center text-xs leading-relaxed'>
-        Wait a moment without moving the mouse or pressing keys to see the idle state.
+      <p className='text-muted-foreground max-w-[220px] text-center text-[10px] leading-relaxed'>
+        Stop moving the mouse and keyboard for a moment to switch to the idle state.
       </p>
     </section>
   );

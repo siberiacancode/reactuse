@@ -1,15 +1,15 @@
 ---
-title: useKeysPressed
-description: Hook that tracks all currently pressed keyboard keys and their codes
-category: sensors
-usage: low
+title: useMask
+description: Hook to apply an input mask
+category: state
+usage: medium
 type: hook
-isTest: true
+isTest: false
 isDemo: true
 lastModifiedTime: 1780559434000
 ---
 
-import metadata from './useKeysPressed.meta.json';
+import metadata from './useMask.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useKeysPressed.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useKeysPressed
+    npx useverse@latest add useMask
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './useKeysPressed.meta.json';
 ## Usage
 
 ```tsx
-const { value } = useKeysPressed(ref);
-// or
-const { value, ref } = useKeysPressed();
+const phoneMask = useMask({ mask: '+7 (999) 999-99-99' });
 ```
 
 ## Type Declarations

@@ -1,13 +1,11 @@
 'use client'
 
-'use client';
-
-import { target, useDisclosure, useLockScroll } from '@siberiacancode/reactuse';
+import { useDisclosure, useLockScroll } from '@siberiacancode/reactuse';
 import { XIcon } from 'lucide-react';
 
 const Demo = () => {
   const dialog = useDisclosure();
-  useLockScroll(target(document.body), { enabled: dialog.opened });
+  useLockScroll({ enabled: dialog.opened });
 
   return (
     <section className='flex w-full max-w-md flex-col gap-3 p-4'>
@@ -34,8 +32,7 @@ const Demo = () => {
               <h3 className='text-foreground text-sm font-semibold'>Delete this project?</h3>
               <button
                 aria-label='Close'
-                className='rounded-full!'
-                data-size='icon-xs'
+                data-size='icon'
                 data-variant='ghost'
                 type='button'
                 onClick={dialog.close}

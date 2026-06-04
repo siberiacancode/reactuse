@@ -82,3 +82,5 @@ A quick list of available functions.
 - [useLockScroll](/functions/hooks/useLockScroll): Hook that locks scroll on an element or document body
 - [useLogger](/functions/hooks/useLogger): Hook for debugging lifecycle
 - [useLongPress](/functions/hooks/useLongPress): Hook that defines the logic when long pressing an element
+- [useMap](/functions/hooks/useMap): Hook that manages a map structure
+- [useMask](/functions/hooks/useMask): Hook to apply an input mask
