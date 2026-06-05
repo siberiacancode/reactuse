@@ -32,6 +32,8 @@ it('Should use field', () => {
   expect(result.current.clearError).toBeTypeOf('function');
   expect(result.current.register).toBeTypeOf('function');
   expect(result.current.getValue()).toBe('');
+
+  act(() => applyHandlers(result.current.register()));
 });
 
 it('Should use field on server side', () => {
@@ -50,6 +52,8 @@ it('Should use field on server side', () => {
   expect(result.current.clearError).toBeTypeOf('function');
   expect(result.current.register).toBeTypeOf('function');
   expect(result.current.getValue()).toBe('');
+
+  act(() => applyHandlers(result.current.register()));
 });
 
 it('Should register input', () => {
