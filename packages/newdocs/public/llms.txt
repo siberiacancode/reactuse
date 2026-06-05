@@ -43,6 +43,8 @@
 - [useGeolocation](https://reactuse.org/functions/hooks/useGeolocation): Hook that returns the current geolocation
 - [useMeasure](https://reactuse.org/functions/hooks/useMeasure): Hook to measure the size and position of an element
 - [useMediaControls](https://reactuse.org/functions/hooks/useMediaControls): that provides controls for HTML media elements (audio/video)
+- [useMediaQuery](https://reactuse.org/functions/hooks/useMediaQuery): Hook that manages a media query
+- [useMemory](https://reactuse.org/functions/hooks/useMemory): Hook that gives you current memory usage
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle

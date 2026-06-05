@@ -19,6 +19,7 @@ const COUNTRIES = [
 ] as const;
 
 const DEFAULT_MASK = '999999999999999';
+const INITIAL_DATE_VALUE = '05062026';
 
 const SORTED_COUNTRIES = COUNTRIES.toSorted((a, b) => b.code.length - a.code.length);
 
@@ -46,6 +47,11 @@ const Demo = () => {
     showMask: 'never'
   });
   const expiry = useMask({ mask: '99/99', showMask: 'never' });
+  const paymentDate = useMask({
+    mask: '99/99/9999',
+    showMask: 'never',
+    initialValue: INITIAL_DATE_VALUE
+  });
 
   const country = detectCountry(phone.rawValue);
 
@@ -104,6 +110,12 @@ const Demo = () => {
             inputMode='numeric'
             placeholder='MM/YY'
             {...expiry.register()}
+          />
+          <input
+            className='border-border bg-card text-foreground w-full rounded-md border px-3 py-2 font-mono text-sm outline-none'
+            inputMode='numeric'
+            placeholder='DD/MM/YYYY'
+            {...paymentDate.register()}
           />
           <input
             className='border-border bg-card text-foreground w-full rounded-md border px-3 py-2 font-mono text-sm outline-none'

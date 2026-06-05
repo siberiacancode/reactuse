@@ -4,9 +4,9 @@ description: that provides controls for HTML media elements (audio/video)
 category: browser
 usage: low
 type: hook
-isTest: false
+isTest: true
 isDemo: true
-lastModifiedTime: 1770651919000
+lastModifiedTime: 1780634272000
 ---
 
 import metadata from './useMediaControls.meta.json';

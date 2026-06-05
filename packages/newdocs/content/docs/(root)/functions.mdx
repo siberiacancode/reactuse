@@ -86,3 +86,5 @@ A quick list of available functions.
 - [useMask](/functions/hooks/useMask): Hook to apply an input mask
 - [useMeasure](/functions/hooks/useMeasure): Hook to measure the size and position of an element
 - [useMediaControls](/functions/hooks/useMediaControls): that provides controls for HTML media elements (audio/video)
+- [useMediaQuery](/functions/hooks/useMediaQuery): Hook that manages a media query
+- [useMemory](/functions/hooks/useMemory): Hook that gives you current memory usage

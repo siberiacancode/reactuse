@@ -1,15 +1,15 @@
 ---
-title: useMediaControls
-description: that provides controls for HTML media elements (audio/video)
+title: useMemory
+description: Hook that gives you current memory usage
 category: browser
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780634272000
+lastModifiedTime: 1779190580000
 ---
 
-import metadata from './useMediaControls.meta.json';
+import metadata from './useMemory.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useMediaControls.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useMediaControls
+    npx useverse@latest add useMemory
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,13 +47,7 @@ import metadata from './useMediaControls.meta.json';
 ## Usage
 
 ```tsx
-const { playing, play, pause } = useMediaControls(videoRef, 'video.mp4');
-// or
-const { playing, play, pause } = useMediaControls(audioRef, { src: 'audio.mp3', type: 'audio/mp3' });
-// or
-const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>('video.mp4');
-// or
-const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>({ src: 'video.mp4', type: 'video/mp4' });
+const { supported, value } = useMemory();
 ```
 
 ## Type Declarations

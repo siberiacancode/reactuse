@@ -80,9 +80,10 @@ export const getSlot = (slot, index) => {
 export const consumeToMask = (inputValue, slots, options) => {
   let result = '';
   let inputIndex = 0;
+  let pendingLiterals = '';
   for (const slot of slots) {
     if (slot.type === 'literal') {
-      result += slot.char;
+      pendingLiterals += slot.char;
       if (options.consumeMatchingLiterals && inputValue[inputIndex] === slot.char) {
         inputIndex++;
       }
@@ -93,7 +94,8 @@ export const consumeToMask = (inputValue, slots, options) => {
       const char = normalizeChar(inputValue[inputIndex], options.transform);
       inputIndex++;
       if (testPattern(slot.pattern, char)) {
-        result += char;
+        result += pendingLiterals + char;
+        pendingLiterals = '';
         matched = true;
         break;
       }
@@ -559,12 +561,6 @@ export const useMask = (options) => {
         return;
       }
       node.value = displayValueRef.current;
-      updateRefs({
-        displayValue: displayValueRef.current,
-        filled: wasCompleteRef.current,
-        maskedValue: processedRef.current,
-        rawValue: rawValueRef.current
-      });
     },
     onChange: (event) => {
       const element = event.currentTarget;

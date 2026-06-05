@@ -1,3 +1,5 @@
+'use client'
+
 import { useMediaQuery } from '@siberiacancode/reactuse';
 
 const PLACES = [

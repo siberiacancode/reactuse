@@ -4,9 +4,9 @@ description: Hook to apply an input mask
 category: state
 usage: medium
 type: hook
-isTest: true
+isTest: false
 isDemo: true
-lastModifiedTime: 1780586413000
+lastModifiedTime: 1780634272000
 ---
 
 import metadata from './useMask.meta.json';

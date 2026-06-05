@@ -251,10 +251,11 @@ export const consumeToMask = (
 ) => {
   let result = '';
   let inputIndex = 0;
+  let pendingLiterals = '';
 
   for (const slot of slots) {
     if (slot.type === 'literal') {
-      result += slot.char;
+      pendingLiterals += slot.char;
 
       if (options.consumeMatchingLiterals && inputValue[inputIndex] === slot.char) {
         inputIndex++;
@@ -270,7 +271,8 @@ export const consumeToMask = (
       inputIndex++;
 
       if (testPattern(slot.pattern, char)) {
-        result += char;
+        result += pendingLiterals + char;
+        pendingLiterals = '';
         matched = true;
         break;
       }
@@ -891,12 +893,6 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
       }
 
       node.value = displayValueRef.current;
-      updateRefs({
-        displayValue: displayValueRef.current,
-        filled: wasCompleteRef.current,
-        maskedValue: processedRef.current,
-        rawValue: rawValueRef.current
-      });
     },
     onChange: ((event) => {
       const element = event.currentTarget;

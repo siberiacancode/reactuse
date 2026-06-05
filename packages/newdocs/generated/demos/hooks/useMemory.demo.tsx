@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemory } from '@siberiacancode/reactuse';
 import { useEffect, useState } from 'react';
 
