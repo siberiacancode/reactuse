@@ -90,6 +90,28 @@ it('Should update memory values when they change', () => {
   expect(result.current.value).toEqual(updatedMemory);
 });
 
+it('Should call callback when memory values change', () => {
+  const callback = vi.fn();
+
+  renderHook(() => useMemory(callback));
+
+  const updatedMemory = {
+    jsHeapSizeLimit: 2147483648,
+    totalJSHeapSize: 1073741824,
+    usedJSHeapSize: 671088640
+  };
+
+  Object.defineProperty(globalThis.performance, 'memory', {
+    writable: true,
+    value: updatedMemory
+  });
+
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledWith(updatedMemory);
+});
+
 it('Should cleanup up on unmount', () => {
   const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
   const { unmount } = renderHook(useMemory);

@@ -1,5 +1,5 @@
 import { useMemory } from '@siberiacancode/reactuse';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const formatBytes = (bytes: number) => {
   const units = ['B', 'KB', 'MB', 'GB'];
@@ -15,34 +15,42 @@ const formatBytes = (bytes: number) => {
 const HISTORY_LENGTH = 40;
 
 const Demo = () => {
-  const memory = useMemory();
   const [history, setHistory] = useState<number[]>([]);
+  const [peak, setPeak] = useState(0);
+
+  const memory = useMemory((value) => {
+    setHistory((current) => [...current, value.usedJSHeapSize].slice(-HISTORY_LENGTH));
+    setPeak((current) => Math.max(current, value.usedJSHeapSize));
+  });
 
   const used = memory.value?.usedJSHeapSize ?? 0;
   const limit = memory.value?.jsHeapSizeLimit ?? 1;
   const percent = (used / limit) * 100;
 
-  useEffect(() => {
-    if (!memory.supported) return;
-    setHistory((current) => [...current, percent].slice(-HISTORY_LENGTH));
-  }, [used]);
-
-  if (!memory.supported) {
+  if (!memory.supported)
     return (
-      <section className='flex w-full max-w-md flex-col gap-2 p-4'>
-        <h2 className='text-foreground text-sm font-semibold'>Memory monitor</h2>
-        <p className='text-muted-foreground text-xs leading-relaxed'>
-          The <code>performance.memory</code> API is only available in Chromium-based browsers
-          (Chrome, Edge). Open this page there to see live memory usage.
-        </p>
-      </section>
+      <p>
+        API not supported, make sure to check for compatibility with different browsers when using
+        this{' '}
+        <a
+          href='https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory'
+          rel='noreferrer'
+          target='_blank'
+        >
+          API
+        </a>
+      </p>
     );
-  }
+
+  const min = Math.min(...history);
+  const max = Math.max(...history);
+  const range = max - min || 1;
 
   const points = history
     .map((value, index) => {
       const x = (index / (HISTORY_LENGTH - 1)) * 100;
-      const y = 100 - value;
+      const normalized = (value - min) / range;
+      const y = 95 - normalized * 90;
       return `${x},${y}`;
     })
     .join(' ');
@@ -63,22 +71,24 @@ const Demo = () => {
             preserveAspectRatio='none'
             viewBox='0 0 100 100'
           >
-            <polyline
-              className='text-foreground'
-              fill='none'
-              points={points}
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='1.5'
-              vectorEffect='non-scaling-stroke'
-            />
-            {history.length > 0 && (
-              <polygon
-                className='text-foreground/10'
-                fill='currentColor'
-                points={`0,100 ${points} 100,100`}
-              />
+            {history.length > 1 && (
+              <>
+                <polygon
+                  className='text-foreground/10'
+                  fill='currentColor'
+                  points={`0,100 ${points} 100,100`}
+                />
+                <polyline
+                  className='text-foreground'
+                  fill='none'
+                  points={points}
+                  stroke='currentColor'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth='1.5'
+                  vectorEffect='non-scaling-stroke'
+                />
+              </>
             )}
           </svg>
         </div>
@@ -91,11 +101,9 @@ const Demo = () => {
             </span>
           </div>
           <div className='flex flex-col gap-0.5'>
-            <span className='text-muted-foreground text-[10px] tracking-wider uppercase'>
-              Total
-            </span>
+            <span className='text-muted-foreground text-[10px] tracking-wider uppercase'>Peak</span>
             <span className='text-foreground font-mono text-sm font-semibold tabular-nums'>
-              {formatBytes(memory.value?.totalJSHeapSize ?? 0)}
+              {formatBytes(peak)}
             </span>
           </div>
           <div className='flex flex-col gap-0.5'>

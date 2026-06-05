@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: false
 isDemo: true
-lastModifiedTime: 1780634272000
+lastModifiedTime: 1780637964000
 ---
 
 import metadata from './useMask.meta.json';

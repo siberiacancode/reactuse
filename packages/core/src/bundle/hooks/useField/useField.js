@@ -28,16 +28,18 @@ export const useField = (initialValue = '', options) => {
   const [error, setError] = useState(undefined);
   const getValue = () => {
     if (
-      inputRef.current instanceof HTMLInputElement &&
-      (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+      inputRef.current &&
+      'checked' in inputRef.current &&
+      (inputRef.current.type === 'radio' || inputRef.current.type === 'checkbox')
     )
       return inputRef.current.checked;
     return inputRef.current?.value ?? initialValue;
   };
   const setValue = (value) => {
     if (
-      inputRef.current instanceof HTMLInputElement &&
-      (inputRef.current?.type === 'radio' || inputRef.current?.type === 'checkbox')
+      inputRef.current &&
+      'checked' in inputRef.current &&
+      (inputRef.current.type === 'radio' || inputRef.current.type === 'checkbox')
     ) {
       inputRef.current.checked = value;
       if (watchingRef.current) return rerender();
@@ -83,11 +85,11 @@ export const useField = (initialValue = '', options) => {
       if (!inputRef.current && node) {
         if (options?.autoFocus) node.focus();
         inputRef.current = node;
-        if (node instanceof HTMLInputElement && node.type === 'radio') {
+        if ('checked' in node && node.type === 'radio') {
           node.defaultChecked = initialValue === node.value;
           return;
         }
-        if (node instanceof HTMLInputElement && node.type === 'checkbox') {
+        if ('checked' in node && node.type === 'checkbox') {
           node.defaultChecked = !!initialValue;
           return;
         }

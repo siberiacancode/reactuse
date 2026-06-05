@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 declare global {
   interface Performance {
@@ -18,6 +18,9 @@ export interface UseMemoryReturn {
   value: Performance['memory'];
 }
 
+/** The use memory callback type */
+export type UseMemoryCallback = (value: Performance['memory']) => void;
+
 /**
  * @name useMemory
  * @description - Hook that gives you current memory usage
@@ -26,12 +29,18 @@ export interface UseMemoryReturn {
  *
  * @browserapi performance.memory https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory
  *
+ * @param {(value: Performance['memory']) => void} [callback] The callback to execute when the memory usage changes
  * @returns {UseMemoryReturn} An object containing the current memory usage
  *
  * @example
  * const { supported, value } = useMemory();
+ *
+ * @example
+ * const { value } = useMemory((nextValue) => {
+ *   console.log(nextValue.usedJSHeapSize);
+ * });
  */
-export const useMemory = (): UseMemoryReturn => {
+export const useMemory = (callback?: UseMemoryCallback): UseMemoryReturn => {
   const supported =
     typeof performance !== 'undefined' && 'memory' in performance && !!performance.memory;
 
@@ -45,15 +54,20 @@ export const useMemory = (): UseMemoryReturn => {
         }
   );
 
+  const callbackRef = useRef(callback);
+  callbackRef.current = callback;
+
   useEffect(() => {
     if (!supported) return;
 
     const intervalId = setInterval(() => {
-      setValue(performance.memory);
+      const nextValue = performance.memory;
+      setValue(nextValue);
+      callbackRef.current?.(nextValue);
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [supported]);
 
   return { supported, value };
 };

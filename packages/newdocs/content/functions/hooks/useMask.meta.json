@@ -8,7 +8,7 @@
   "usage": "medium",
   "description": "Hook to apply an input mask",
   "category": "State",
-  "lastModified": 1780634272000,
+  "lastModified": 1780637964000,
   "examples": [
     "const phoneMask = useMask({ mask: '+7 (999) 999-99-99' });"
   ],

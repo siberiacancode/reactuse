@@ -202,8 +202,8 @@ importers:
         specifier: ^1.14.1
         version: 1.14.1
       '@siberiacancode/reactuse':
-        specifier: ^0.3.37
-        version: 0.3.37(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^0.3.38
+        version: 0.3.38(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tabler/icons-react':
         specifier: ^3.37.1
         version: 3.37.1(react@19.2.4)
@@ -240,9 +240,6 @@ importers:
       fumadocs-ui:
         specifier: 16.0.5
         version: 16.0.5(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(algoliasearch@5.51.0)(lucide-react@0.474.0(react@19.2.4))(next@16.1.4(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tailwindcss@4.2.1)
-      jotai:
-        specifier: ^2.19.1
-        version: 2.19.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.14)(react@19.2.4)
       lru-cache:
         specifier: ^11.2.4
         version: 11.2.6
@@ -3001,8 +2998,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@siberiacancode/reactuse@0.3.37':
-    resolution: {integrity: sha512-Ll3UJPaeLosO33WGSC4IpMIWYoN9+fcEsOypesFizT5B023JwmqpHe4WloYpx5YvOJXX7h47riNLZwuUB/XBUg==}
+  '@siberiacancode/reactuse@0.3.38':
+    resolution: {integrity: sha512-WigdR3SJ69VRW9B/KKg/K8m9GH1pHStxqC/jBPmgwcOjdvDPeQvrFC1K/F3VH1KC3gnCN+59dVfsJoW6k0/YDg==}
     engines: {node: '>=14'}
     peerDependencies:
       '@types/react': ^18 || ^19
@@ -5540,24 +5537,6 @@ packages:
 
   jose@6.1.3:
     resolution: {integrity: sha512-0TpaTfihd4QMNwrz/ob2Bp7X04yuxJkjRGi4aKmOqwhov54i6u79oCv7T+C7lo70MKH6BesI3vscD1yb/yzKXQ==}
-
-  jotai@2.19.1:
-    resolution: {integrity: sha512-sqm9lVZiqBHZH8aSRk32DSiZDHY3yUIlulXYn9GQj7/LvoUdYXSMti7ZPJGo+6zjzKFt5a25k/I6iBCi43PJcw==}
-    engines: {node: '>=12.20.0'}
-    peerDependencies:
-      '@babel/core': '>=7.0.0'
-      '@babel/template': '>=7.0.0'
-      '@types/react': '>=17.0.0'
-      react: '>=17.0.0'
-    peerDependenciesMeta:
-      '@babel/core':
-        optional: true
-      '@babel/template':
-        optional: true
-      '@types/react':
-        optional: true
-      react:
-        optional: true
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -10743,7 +10722,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.14
 
-  '@siberiacancode/reactuse@0.3.37(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@siberiacancode/reactuse@0.3.38(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
@@ -13714,13 +13693,6 @@ snapshots:
     optional: true
 
   jose@6.1.3: {}
-
-  jotai@2.19.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.14)(react@19.2.4):
-    optionalDependencies:
-      '@babel/core': 7.29.0
-      '@babel/template': 7.28.6
-      '@types/react': 19.2.14
-      react: 19.2.4
 
   js-tokens@4.0.0: {}
 
