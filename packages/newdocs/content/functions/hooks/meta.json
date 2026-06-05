@@ -8,7 +8,7 @@
       "useAsync","useLockCallback",
 
       "---lifecycle---",
-      "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect",
+      "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect","useMount",
 
       "---browser---",
       "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls","useMediaQuery","useMemory",
@@ -23,7 +23,7 @@
       "useBrowserLanguage",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse",
 
       "---humor---",
       "useFul","useLess",

@@ -72,6 +72,7 @@
 - [useDidUpdate](https://reactuse.org/functions/hooks/useDidUpdate): Hook that triggers the effect callback on updates
 - [useIsFirstRender](https://reactuse.org/functions/hooks/useIsFirstRender): Hook that returns true if the component is first render
 - [useIsomorphicLayoutEffect](https://reactuse.org/functions/hooks/useIsomorphicLayoutEffect): Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
+- [useMount](https://reactuse.org/functions/hooks/useMount): Hook that executes a callback when the component mounts
 ### Sensorss
 
 - [useDeviceMotion](https://reactuse.org/functions/hooks/useDeviceMotion): Hook that work with device motion
@@ -83,6 +84,7 @@
 - [useKeyboard](https://reactuse.org/functions/hooks/useKeyboard): Hook that helps to listen for keyboard events
 - [useKeyPress](https://reactuse.org/functions/hooks/useKeyPress): Hook that listens for key press events
 - [useKeysPressed](https://reactuse.org/functions/hooks/useKeysPressed): Hook that tracks all currently pressed keyboard keys and their codes
+- [useMouse](https://reactuse.org/functions/hooks/useMouse): Hook that manages a mouse position
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state

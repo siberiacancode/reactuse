@@ -89,3 +89,5 @@ A quick list of available functions.
 - [useMediaQuery](/functions/hooks/useMediaQuery): Hook that manages a media query
 - [useMemory](/functions/hooks/useMemory): Hook that gives you current memory usage
 - [useMergedRef](/functions/hooks/useMergedRef): Hook that merges multiple refs into a single ref
+- [useMount](/functions/hooks/useMount): Hook that executes a callback when the component mounts
+- [useMouse](/functions/hooks/useMouse): Hook that manages a mouse position
