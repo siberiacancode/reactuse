@@ -46,6 +46,7 @@
 - [useMediaControls](https://reactuse.org/functions/hooks/useMediaControls): Hook that provides controls for HTML media elements (audio/video)
 - [useMediaQuery](https://reactuse.org/functions/hooks/useMediaQuery): Hook that manages a media query
 - [useMemory](https://reactuse.org/functions/hooks/useMemory): Hook that gives you current memory usage
+- [useNetwork](https://reactuse.org/functions/hooks/useNetwork): Hook to track network status
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle

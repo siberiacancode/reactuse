@@ -93,3 +93,4 @@ A quick list of available functions.
 - [useMouse](/functions/hooks/useMouse): Hook that manages a mouse position
 - [useMutation](/functions/hooks/useMutation): Hook that defines the logic when mutate data
 - [useMutationObserver](/functions/hooks/useMutationObserver): Hook that gives you mutation observer state
+- [useNetwork](/functions/hooks/useNetwork): Hook to track network status

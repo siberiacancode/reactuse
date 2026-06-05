@@ -1,6 +1,6 @@
 'use client'
 
-import { useHover, useMutation, useQuery } from '@siberiacancode/reactuse';
+import { useMutation, useQuery } from '@siberiacancode/reactuse';
 import { BadgeCheckIcon, CalendarIcon, Loader2Icon } from 'lucide-react';
 
 interface Profile {
@@ -43,9 +43,11 @@ const formatCount = (count: number) => {
 };
 
 const Demo = () => {
-  const profileQuery = useQuery(fetchProfile, { placeholderData: profile });
+  const profileQuery = useQuery(fetchProfile, {
+    enabled: false,
+    placeholderData: profile
+  });
   const followMutation = useMutation(toggleFollow);
-  const hover = useHover<HTMLButtonElement>();
 
   const data = profileQuery.data!;
 
@@ -54,8 +56,7 @@ const Demo = () => {
     profileQuery.refetch();
   };
 
-  const label = data.following ? (hover.value ? 'Unfollow' : 'Following') : 'Follow';
-  const loading = followMutation.isLoading || profileQuery.isLoading;
+  const loading = followMutation.isLoading || profileQuery.isRefetching;
 
   return (
     <section className='flex w-full max-w-md flex-col p-4'>
@@ -67,15 +68,22 @@ const Demo = () => {
         </div>
 
         <button
-          ref={hover.ref}
-          className='rounded-full!'
+          className='group min-w-[112px] rounded-full!'
           data-variant={data.following ? 'outline' : 'default'}
           disabled={loading}
           type='button'
           onClick={onToggleFollow}
         >
-          {loading && <Loader2Icon className='size-4 animate-spin' />}
-          {label}
+          {loading ? (
+            <Loader2Icon className='size-4 animate-spin' />
+          ) : data.following ? (
+            <>
+              <span className='group-hover:hidden'>Following</span>
+              <span className='hidden group-hover:inline'>Unfollow</span>
+            </>
+          ) : (
+            'Follow'
+          )}
         </button>
       </div>
 

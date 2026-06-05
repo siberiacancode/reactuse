@@ -1,3 +1,5 @@
+'use client'
+
 import { useNetwork } from '@siberiacancode/reactuse';
 import { ActivityIcon, ArrowDownIcon, GaugeIcon, WifiIcon, WifiOffIcon } from 'lucide-react';
 
