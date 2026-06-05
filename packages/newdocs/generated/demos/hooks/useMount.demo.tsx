@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useMount } from '@siberiacancode/reactuse';
 import { RocketIcon, SparklesIcon, ZapIcon } from 'lucide-react';
@@ -31,7 +31,7 @@ const Demo = () => {
         <span
           className={cn(
             'text-foreground text-2xl font-bold transition-all duration-500 ease-out',
-            started && 'scale-90'
+            started && 'scale-85'
           )}
         >
           Welcome back 👋

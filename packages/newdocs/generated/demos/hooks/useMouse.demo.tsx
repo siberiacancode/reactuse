@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useMouse } from '@siberiacancode/reactuse';
 import { ArrowRightIcon } from 'lucide-react';
@@ -22,11 +22,11 @@ const Demo = () => {
       >
         <div
           ref={spotlightRef}
-          className='pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100'
           style={{
             background:
               'radial-gradient(300px circle at var(--x) var(--y), rgba(255,255,255,0.1), transparent 65%)'
           }}
+          className='pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100'
         />
 
         <div className='relative flex flex-col gap-4'>

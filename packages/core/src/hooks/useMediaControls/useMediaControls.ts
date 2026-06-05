@@ -87,7 +87,7 @@ export interface UseMediaControls {
 
 /**
  * @name useMediaControls
- * @description Hook that provides controls for HTML media elements (audio/video)
+ * @description - Hook that provides controls for HTML media elements (audio/video)
  * @category Browser
  * @usage low
  *

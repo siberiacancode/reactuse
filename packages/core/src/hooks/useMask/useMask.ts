@@ -3,7 +3,8 @@ import type {
   ClipboardEventHandler,
   FocusEventHandler,
   KeyboardEventHandler,
-  MouseEventHandler
+  MouseEventHandler,
+  RefObject
 } from 'react';
 
 import { useRef } from 'react';
@@ -18,6 +19,8 @@ const DEFAULT_TOKENS: Record<string, RegExp> = {
   '#': /[-+0-9]/
 };
 
+export type UseMaskPattern = string | Array<string | RegExp>;
+
 /** The use mask options type */
 export interface UseMaskOptions {
   /** Clear value on blur when mask is incomplete */
@@ -25,7 +28,7 @@ export interface UseMaskOptions {
   /** Initial raw value */
   initialValue?: string;
   /** Mask pattern string or array of string literals and RegExp objects */
-  mask: string | Array<string | RegExp>;
+  mask: UseMaskPattern;
   /** Defines when mask slots are displayed */
   showMask?: UseMaskShow;
   /** Character displayed in unfilled slot */
@@ -103,6 +106,8 @@ export interface UseMaskValue {
 
 /** The use mask return type */
 export interface UseMaskReturn {
+  /** The input ref */
+  ref: RefObject<HTMLInputElement | null>;
   /** Get current mask value */
   getValue: <Type extends UseMaskGetValueType = 'raw'>(type?: Type) => UseMaskGetValueMap[Type];
   /** Register the masked input */
@@ -176,10 +181,7 @@ export const testPattern = (pattern: RegExp, char: string) => {
   return pattern.test(char);
 };
 
-export const parseMask = (
-  mask: string | Array<string | RegExp>,
-  tokens: Record<string, RegExp>
-) => {
+export const parseMask = (mask: UseMaskPattern, tokens: Record<string, RegExp>) => {
   if (Array.isArray(mask)) {
     return mask.map((item): MaskSlot => {
       if (item instanceof RegExp) {
@@ -656,10 +658,10 @@ export const generatePattern = (mode: 'full-inexact' | 'full', options: UseMaskO
  * @category State
  * @usage medium
  *
- * @param {UseMaskOptions} options The hook options
+ * @param {UseMaskPattern} mask Mask pattern string or array of literals and RegExp tokens
+ * @param {Omit<UseMaskOptions, 'mask'>} [options] The hook options when mask is passed as the first argument
  * @param {boolean} [options.autoClear=false] Clear value on blur when mask is incomplete
  * @param {string} [options.initialValue=""] Initial raw value
- * @param {string | Array<string | RegExp>} options.mask Mask pattern string or array of literals and RegExp tokens
  * @param {(value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'showMask' | 'slot' | 'tokens'>>} [options.modify] Called before masking and can return dynamic mask option overrides
  * @param {UseMaskShow} [options.showMask="focus"] Defines when placeholder slots are displayed
  * @param {string | null} [options.slot=""] Character displayed in unfilled slots
@@ -671,14 +673,18 @@ export const generatePattern = (mode: 'full-inexact' | 'full', options: UseMaskO
  * @returns {UseMaskReturn} An object with the masked input state
  *
  * @example
- * const phoneMask = useMask({ mask: '+7 (999) 999-99-99' });
+ * const phoneMask = useMask('+7 (999) 999-99-99');
  */
-export const useMask = (options: UseMaskOptions): UseMaskReturn => {
-  const optionsRef = useRef(options);
-  optionsRef.current = options;
+export const useMask = (
+  mask: UseMaskPattern,
+  options?: Omit<UseMaskOptions, 'mask'>
+): UseMaskReturn => {
+  const hookOptions = { ...options, mask };
+  const optionsRef = useRef(hookOptions);
+  optionsRef.current = hookOptions;
 
-  const initialRawValue = options.initialValue ?? '';
-  const initialResolvedOptions = getResolvedOptions(options, initialRawValue);
+  const initialRawValue = hookOptions.initialValue ?? '';
+  const initialResolvedOptions = getResolvedOptions(hookOptions, initialRawValue);
   const initialMaskedValue = applyMaskToRaw(
     initialRawValue,
     initialResolvedOptions.slots,
@@ -1257,6 +1263,7 @@ export const useMask = (options: UseMaskOptions): UseMaskReturn => {
 
   return {
     getValue,
+    ref: inputRef,
     register,
     setValue,
     reset,

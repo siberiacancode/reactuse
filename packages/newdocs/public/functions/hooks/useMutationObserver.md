@@ -1,15 +1,15 @@
 ---
-title: useMask
-description: Hook to apply an input mask
-category: state
-usage: medium
+title: useMutationObserver
+description: Hook that gives you mutation observer state
+category: sensors
+usage: low
 type: hook
-isTest: false
+isTest: true
 isDemo: true
-lastModifiedTime: 1780637964000
+lastModifiedTime: 1768553242000
 ---
 
-import metadata from './useMask.meta.json';
+import metadata from './useMutationObserver.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useMask.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useMask
+    npx useverse@latest add useMutationObserver
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,13 @@ import metadata from './useMask.meta.json';
 ## Usage
 
 ```tsx
-const phoneMask = useMask('+7 (999) 999-99-99');
+const { observer, stop } = useMutationObserver(ref, { childList: true });
+// or
+const { ref, observer, stop } = useMutationObserver({ childList: true });
+// or
+const { ref, observer, stop } = useMutationObserver((mutations) => console.log(mutations));
+// or
+const { observer, stop } = useMutationObserver((mutations) => console.log(mutations), ref);
 ```
 
 ## Type Declarations

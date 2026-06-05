@@ -17,6 +17,7 @@
 
 - [useAsync](https://reactuse.org/functions/hooks/useAsync): Hook that provides the state of an async callback
 - [useLockCallback](https://reactuse.org/functions/hooks/useLockCallback): Hook that prevents a callback from being executed multiple times simultaneously
+- [useMutation](https://reactuse.org/functions/hooks/useMutation): Hook that defines the logic when mutate data
 ### Browsers
 
 - [useAudio](https://reactuse.org/functions/hooks/useAudio): Hook that manages audio playback with sprite support
@@ -42,7 +43,7 @@
 - [useGamepad](https://reactuse.org/functions/hooks/useGamepad): Hook for getting information about gamepad
 - [useGeolocation](https://reactuse.org/functions/hooks/useGeolocation): Hook that returns the current geolocation
 - [useMeasure](https://reactuse.org/functions/hooks/useMeasure): Hook to measure the size and position of an element
-- [useMediaControls](https://reactuse.org/functions/hooks/useMediaControls): that provides controls for HTML media elements (audio/video)
+- [useMediaControls](https://reactuse.org/functions/hooks/useMediaControls): Hook that provides controls for HTML media elements (audio/video)
 - [useMediaQuery](https://reactuse.org/functions/hooks/useMediaQuery): Hook that manages a media query
 - [useMemory](https://reactuse.org/functions/hooks/useMemory): Hook that gives you current memory usage
 ### Debugs
@@ -85,6 +86,7 @@
 - [useKeyPress](https://reactuse.org/functions/hooks/useKeyPress): Hook that listens for key press events
 - [useKeysPressed](https://reactuse.org/functions/hooks/useKeysPressed): Hook that tracks all currently pressed keyboard keys and their codes
 - [useMouse](https://reactuse.org/functions/hooks/useMouse): Hook that manages a mouse position
+- [useMutationObserver](https://reactuse.org/functions/hooks/useMutationObserver): Hook that gives you mutation observer state
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state

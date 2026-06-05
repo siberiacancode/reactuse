@@ -85,9 +85,11 @@ A quick list of available functions.
 - [useMap](/functions/hooks/useMap): Hook that manages a map structure
 - [useMask](/functions/hooks/useMask): Hook to apply an input mask
 - [useMeasure](/functions/hooks/useMeasure): Hook to measure the size and position of an element
-- [useMediaControls](/functions/hooks/useMediaControls): that provides controls for HTML media elements (audio/video)
+- [useMediaControls](/functions/hooks/useMediaControls): Hook that provides controls for HTML media elements (audio/video)
 - [useMediaQuery](/functions/hooks/useMediaQuery): Hook that manages a media query
 - [useMemory](/functions/hooks/useMemory): Hook that gives you current memory usage
 - [useMergedRef](/functions/hooks/useMergedRef): Hook that merges multiple refs into a single ref
 - [useMount](/functions/hooks/useMount): Hook that executes a callback when the component mounts
 - [useMouse](/functions/hooks/useMouse): Hook that manages a mouse position
+- [useMutation](/functions/hooks/useMutation): Hook that defines the logic when mutate data
+- [useMutationObserver](/functions/hooks/useMutationObserver): Hook that gives you mutation observer state

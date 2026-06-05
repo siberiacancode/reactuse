@@ -1,3 +1,5 @@
+'use client'
+
 import { useHover, useMutation, useQuery } from '@siberiacancode/reactuse';
 import { BadgeCheckIcon, CalendarIcon, Loader2Icon } from 'lucide-react';
 
@@ -53,7 +55,6 @@ const Demo = () => {
   };
 
   const label = data.following ? (hover.value ? 'Unfollow' : 'Following') : 'Follow';
-  const loading = followMutation.isLoading || profileQuery.isLoading;
 
   return (
     <section className='flex w-full max-w-md flex-col p-4'>
@@ -68,11 +69,11 @@ const Demo = () => {
           ref={hover.ref}
           className='rounded-full!'
           data-variant={data.following ? 'outline' : 'default'}
-          disabled={loading}
+          disabled={followMutation.isLoading}
           type='button'
           onClick={onToggleFollow}
         >
-          {loading && <Loader2Icon className='size-4 animate-spin' />}
+          {followMutation.isLoading && <Loader2Icon className='size-4 animate-spin' />}
           {label}
         </button>
       </div>

@@ -82,7 +82,11 @@ export const useField = (initialValue = '', options) => {
   };
   const register = (registerParams) => ({
     ref: (node) => {
-      if (!inputRef.current && node) {
+      if (!node) {
+        inputRef.current = null;
+        return;
+      }
+      if (inputRef.current !== node) {
         if (options?.autoFocus) node.focus();
         inputRef.current = node;
         if ('checked' in node && node.type === 'radio') {

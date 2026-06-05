@@ -1,0 +1,829 @@
+{
+  "code": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useEffect, useRef, useState } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { HookTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { isTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { StateRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useRefState } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/** The mutation observer callback type */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  mutations</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationRecord</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[],</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  observer</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserver</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/** The mutation observer options type */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserverInit</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The enabled state of the mutation observer */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The callback to execute when mutation is detected */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  onChange</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/** The mutation observer return type */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The mutation observer instance */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  observer</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/**</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@name</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useMutationObserver</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@description</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> - Hook that gives you mutation observer state</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@category</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Sensors</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@usage</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> low</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@browserapi</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> MutationObserver https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {HookTarget}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target element to observe</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">true]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The enabled state of the mutation observer</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseMutationObserverCallback}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onChange]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback to execute when mutation is detected</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.attributes]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Set to true if mutations to target's attributes are to be observed</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.characterData]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Set to true if mutations to target's data are to be observed</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.childList]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Set to true if mutations to target's children are to be observed</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.subtree]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Set to true if mutations to not just target, but also target's descendants are to be observed</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseMutationObserverReturn}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object containing the mutation observer state</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { observer, stop } = useMutationObserver(ref, { childList: true });</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@template</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target element</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">true]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The enabled state of the mutation observer</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseMutationObserverCallback}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onChange]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback to execute when mutation is detected</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.attributes]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Set to true if mutations to target's attributes are to be observed</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.characterData]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Set to true if mutations to target's data are to be observed</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.childList]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Set to true if mutations to target's children are to be observed</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {boolean}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.subtree]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Set to true if mutations to not just target, but also target's descendants are to be observed</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseMutationObserverReturn &#x26; { ref: StateRef&#x3C;Target> }}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> A React ref to attach to the target element</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { ref, observer, stop } = useMutationObserver({ childList: true });</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@template</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target element</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseMutationObserverCallback}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> callback</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback to execute when mutation is detected</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseMutationObserverReturn &#x26; { ref: StateRef&#x3C;Target> }}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> A React ref to attach to the target element</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { ref, observer, stop } = useMutationObserver((mutations) => console.log(mutations));</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseMutationObserverCallback}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> callback</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The callback to execute when mutation is detected</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {HookTarget}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target element to observe</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseMutationObserverReturn}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object containing the mutation observer state</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { observer, stop } = useMutationObserver((mutations) => console.log(mutations), ref);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> useMutationObserver</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> ((</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">...</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">params</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> any</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">isTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> undefined</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> undefined</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">      ?</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> typeof</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">===</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'object'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        ?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        :</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { onChange: params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] }</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">      :</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> typeof</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">===</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'object'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        ?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        :</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { onChange: params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] }</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  ) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> undefined</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> options?.onChange;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> options?.enabled </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">??</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> true</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">observer</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">setObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">MutationObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>();</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> internalRef</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRefState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> internalCallbackRef</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(callback);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  internalCallbackRef.current </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> callback;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  useEffect</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">enabled </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">||</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> !</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">internalRef.state)) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> element</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> isTarget.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">getElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(target) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> internalRef.current;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">element) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> observer</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> new</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">((</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">mutations</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">observer</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      internalCallbackRef.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">current</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">?.(mutations, observer);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    });</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    setObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(observer);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    observer.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">observe</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(element </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, options);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      observer.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">disconnect</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  }, [</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> isTarget.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">getRawElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(target),</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    internalRef.state,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    options?.childList,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    options?.attributes,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    options?.characterData,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    options?.subtree,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    options?.attributeOldValue,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    options?.characterDataOldValue,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    options?.attributeFilter,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    enabled</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  ]);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (target) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { observer };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    ref: internalRef,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    observer</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>",
+  "id": "useMutationObserver",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useMutationObserver",
+  "usage": "low",
+  "browserapi": {
+    "tag": "browserapi",
+    "name": "MutationObserver",
+    "type": "",
+    "optional": false,
+    "description": "https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver",
+    "problems": [],
+    "source": [
+      {
+        "number": 6,
+        "source": " * @browserapi MutationObserver https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver",
+        "tokens": {
+          "start": " ",
+          "delimiter": "*",
+          "postDelimiter": " ",
+          "tag": "@browserapi",
+          "postTag": " ",
+          "name": "MutationObserver",
+          "postName": " ",
+          "type": "",
+          "postType": "",
+          "description": "https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver",
+          "end": "",
+          "lineEnd": ""
+        }
+      },
+      {
+        "number": 7,
+        "source": " *",
+        "tokens": {
+          "start": " ",
+          "delimiter": "*",
+          "postDelimiter": "",
+          "tag": "",
+          "postTag": "",
+          "name": "",
+          "postName": "",
+          "type": "",
+          "postType": "",
+          "description": "",
+          "end": "",
+          "lineEnd": ""
+        }
+      }
+    ]
+  },
+  "description": "Hook that gives you mutation observer state",
+  "category": "Sensors",
+  "lastModified": 1768553242000,
+  "examples": [
+    "const { observer, stop } = useMutationObserver(ref, { childList: true });",
+    "const { ref, observer, stop } = useMutationObserver({ childList: true });",
+    "const { ref, observer, stop } = useMutationObserver((mutations) => console.log(mutations));",
+    "const { observer, stop } = useMutationObserver((mutations) => console.log(mutations), ref);"
+  ],
+  "apiParameters": [
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 8,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "target",
+      "type": "HookTarget",
+      "optional": false,
+      "description": "The target element to observe",
+      "problems": [],
+      "source": [
+        {
+          "number": 9,
+          "source": " * @param {HookTarget} target The target element to observe",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "target",
+            "postName": " ",
+            "type": "{HookTarget}",
+            "postType": " ",
+            "description": "The target element to observe",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.enabled",
+      "type": "boolean",
+      "optional": true,
+      "description": "The enabled state of the mutation observer",
+      "problems": [],
+      "source": [
+        {
+          "number": 10,
+          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.enabled=true]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "The enabled state of the mutation observer",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ],
+      "default": "true"
+    },
+    {
+      "tag": "param",
+      "name": "options.onChange",
+      "type": "UseMutationObserverCallback",
+      "optional": true,
+      "description": "The callback to execute when mutation is detected",
+      "problems": [],
+      "source": [
+        {
+          "number": 11,
+          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onChange]",
+            "postName": " ",
+            "type": "{UseMutationObserverCallback}",
+            "postType": " ",
+            "description": "The callback to execute when mutation is detected",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.attributes",
+      "type": "boolean",
+      "optional": true,
+      "description": "Set to true if mutations to target's attributes are to be observed",
+      "problems": [],
+      "source": [
+        {
+          "number": 12,
+          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.attributes]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Set to true if mutations to target's attributes are to be observed",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.characterData",
+      "type": "boolean",
+      "optional": true,
+      "description": "Set to true if mutations to target's data are to be observed",
+      "problems": [],
+      "source": [
+        {
+          "number": 13,
+          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.characterData]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Set to true if mutations to target's data are to be observed",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.childList",
+      "type": "boolean",
+      "optional": true,
+      "description": "Set to true if mutations to target's children are to be observed",
+      "problems": [],
+      "source": [
+        {
+          "number": 14,
+          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.childList]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Set to true if mutations to target's children are to be observed",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.subtree",
+      "type": "boolean",
+      "optional": true,
+      "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
+      "problems": [],
+      "source": [
+        {
+          "number": 15,
+          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.subtree]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseMutationObserverReturn",
+      "optional": false,
+      "description": "object containing the mutation observer state",
+      "problems": [],
+      "source": [
+        {
+          "number": 16,
+          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseMutationObserverReturn}",
+            "postType": " ",
+            "description": "object containing the mutation observer state",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 17,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 21,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.enabled",
+      "type": "boolean",
+      "optional": true,
+      "description": "The enabled state of the mutation observer",
+      "problems": [],
+      "source": [
+        {
+          "number": 23,
+          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.enabled=true]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "The enabled state of the mutation observer",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ],
+      "default": "true"
+    },
+    {
+      "tag": "param",
+      "name": "options.onChange",
+      "type": "UseMutationObserverCallback",
+      "optional": true,
+      "description": "The callback to execute when mutation is detected",
+      "problems": [],
+      "source": [
+        {
+          "number": 24,
+          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onChange]",
+            "postName": " ",
+            "type": "{UseMutationObserverCallback}",
+            "postType": " ",
+            "description": "The callback to execute when mutation is detected",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.attributes",
+      "type": "boolean",
+      "optional": true,
+      "description": "Set to true if mutations to target's attributes are to be observed",
+      "problems": [],
+      "source": [
+        {
+          "number": 25,
+          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.attributes]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Set to true if mutations to target's attributes are to be observed",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.characterData",
+      "type": "boolean",
+      "optional": true,
+      "description": "Set to true if mutations to target's data are to be observed",
+      "problems": [],
+      "source": [
+        {
+          "number": 26,
+          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.characterData]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Set to true if mutations to target's data are to be observed",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.childList",
+      "type": "boolean",
+      "optional": true,
+      "description": "Set to true if mutations to target's children are to be observed",
+      "problems": [],
+      "source": [
+        {
+          "number": 27,
+          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.childList]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Set to true if mutations to target's children are to be observed",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.subtree",
+      "type": "boolean",
+      "optional": true,
+      "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
+      "problems": [],
+      "source": [
+        {
+          "number": 28,
+          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.subtree]",
+            "postName": " ",
+            "type": "{boolean}",
+            "postType": " ",
+            "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "A",
+      "type": "UseMutationObserverReturn & { ref: StateRef<Target> }",
+      "optional": false,
+      "description": "React ref to attach to the target element",
+      "problems": [],
+      "source": [
+        {
+          "number": 29,
+          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "A",
+            "postName": " ",
+            "type": "{UseMutationObserverReturn & { ref: StateRef<Target> }}",
+            "postType": " ",
+            "description": "React ref to attach to the target element",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 30,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 34,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "callback",
+      "type": "UseMutationObserverCallback",
+      "optional": false,
+      "description": "The callback to execute when mutation is detected",
+      "problems": [],
+      "source": [
+        {
+          "number": 36,
+          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "callback",
+            "postName": " ",
+            "type": "{UseMutationObserverCallback}",
+            "postType": " ",
+            "description": "The callback to execute when mutation is detected",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "A",
+      "type": "UseMutationObserverReturn & { ref: StateRef<Target> }",
+      "optional": false,
+      "description": "React ref to attach to the target element",
+      "problems": [],
+      "source": [
+        {
+          "number": 37,
+          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "A",
+            "postName": " ",
+            "type": "{UseMutationObserverReturn & { ref: StateRef<Target> }}",
+            "postType": " ",
+            "description": "React ref to attach to the target element",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 38,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 42,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "callback",
+      "type": "UseMutationObserverCallback",
+      "optional": false,
+      "description": "The callback to execute when mutation is detected",
+      "problems": [],
+      "source": [
+        {
+          "number": 43,
+          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "callback",
+            "postName": " ",
+            "type": "{UseMutationObserverCallback}",
+            "postType": " ",
+            "description": "The callback to execute when mutation is detected",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "target",
+      "type": "HookTarget",
+      "optional": false,
+      "description": "The target element to observe",
+      "problems": [],
+      "source": [
+        {
+          "number": 44,
+          "source": " * @param {HookTarget} target The target element to observe",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "target",
+            "postName": " ",
+            "type": "{HookTarget}",
+            "postType": " ",
+            "description": "The target element to observe",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseMutationObserverReturn",
+      "optional": false,
+      "description": "object containing the mutation observer state",
+      "problems": [],
+      "source": [
+        {
+          "number": 45,
+          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseMutationObserverReturn}",
+            "postType": " ",
+            "description": "object containing the mutation observer state",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 46,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    }
+  ],
+  "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { HookTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { StateRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  mutations</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationRecord</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[],</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  observer</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserver</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserverInit</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The enabled state of the mutation observer */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The callback to execute when mutation is detected */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  onChange</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The mutation observer instance */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  observer</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span></code></pre>",
+  "dependencies": {
+    "hooks": [
+      "useRefState"
+    ],
+    "utils": [
+      "isTarget"
+    ],
+    "packages": []
+  },
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "demo": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'use client'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useMutation } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@siberiacancode/reactuse'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { Loader2Icon } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'lucide-react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useState } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { cn } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/lib'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> toggleFollow</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">next</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  new</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> Promise</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>((</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">resolve</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> setTimeout</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> resolve</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(next), </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1200</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">));</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Demo</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">following</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">setFollowing</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">false</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">followers</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">setFollowers</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">12400</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> followMutation</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useMutation</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(toggleFollow, {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    onSuccess</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">: (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">next</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">      setFollowing</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(next);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">      setFollowers</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">((</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">current</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> current </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">+</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (next </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> :</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> -</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">));</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    }</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  });</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> formatCount</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">count</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> number</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    count </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">>=</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1000</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> ?</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> `${</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">(</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">count</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> /</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1000</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">).</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">toFixed</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">)</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">}K`</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> :</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> `${</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">count</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">}`</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex w-full max-w-sm justify-center p-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'border-border bg-card w-full overflow-hidden rounded-2xl border'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'h-20 bg-gradient-to-r from-violet-500 to-fuchsia-600'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> /></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'px-4 pb-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex items-end justify-between'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'ring-card -mt-8 flex size-16 items-center justify-center rounded-full bg-gradient-to-br from-neutral-700 to-neutral-900 text-lg font-bold text-white ring-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              SC</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">cn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">                'flex h-9 min-w-[104px] items-center justify-center gap-1.5 rounded-full px-4 text-sm font-semibold transition-colors'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                following</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">                  ?</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'border-border text-foreground hover:border-destructive hover:text-destructive group border bg-transparent'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">                  :</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'bg-foreground text-background hover:opacity-90'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              )}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              data-variant</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'unstyled'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              disabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{followMutation.isLoading}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              type</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'button'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              onClick</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> followMutation.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">mutate</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">following)}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            ></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              {followMutation.isLoading </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">Loader2Icon</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'size-4 animate-spin'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              ) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> following </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                &#x3C;></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                  &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'group-hover:hidden'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>Following&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                  &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'hidden group-hover:inline'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>Unfollow&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                &#x3C;/></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              ) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">                'Follow'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              )}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'mt-3 flex flex-col gap-0.5'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground text-base font-bold'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>siberiacancode&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-muted-foreground text-sm'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>@siberiacancode&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">p</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground mt-3 text-sm'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            Open source React hooks library. Ship faster with reactuse 🚀</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">p</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'mt-3 flex gap-4 text-sm'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground font-semibold'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              892 &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-muted-foreground font-normal'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>Following&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground font-semibold'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              {</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">formatCount</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(followers)}{</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">' '</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-muted-foreground font-normal'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>Followers&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  );</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">};</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> default</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Demo;</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>"
+}

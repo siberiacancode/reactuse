@@ -5,7 +5,7 @@
       "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress",
 
       "---async---",
-      "useAsync","useLockCallback",
+      "useAsync","useLockCallback","useMutation",
 
       "---lifecycle---",
       "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect","useMount",
@@ -23,7 +23,7 @@
       "useBrowserLanguage",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver",
 
       "---humor---",
       "useFul","useLess",

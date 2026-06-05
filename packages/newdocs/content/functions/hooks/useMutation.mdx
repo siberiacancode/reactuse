@@ -1,15 +1,15 @@
 ---
-title: useMask
-description: Hook to apply an input mask
-category: state
-usage: medium
+title: useMutation
+description: Hook that defines the logic when mutate data
+category: async
+usage: high
 type: hook
-isTest: false
+isTest: true
 isDemo: true
-lastModifiedTime: 1780637964000
+lastModifiedTime: 1779190580000
 ---
 
-import metadata from './useMask.meta.json';
+import metadata from './useMutation.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useMask.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useMask
+    npx useverse@latest add useMutation
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useMask.meta.json';
 ## Usage
 
 ```tsx
-const phoneMask = useMask('+7 (999) 999-99-99');
+const { mutate, mutateAsync, isLoading, isError, isSuccess, error, data } = useMutation((name) => Promise.resolve(name));
 ```
 
 ## Type Declarations

@@ -1,6 +1,6 @@
 ---
 title: useMediaControls
-description: that provides controls for HTML media elements (audio/video)
+description: Hook that provides controls for HTML media elements (audio/video)
 category: browser
 usage: low
 type: hook

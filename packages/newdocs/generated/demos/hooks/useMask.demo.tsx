@@ -32,8 +32,7 @@ const Demo = () => {
   const name = useField('');
   const cvv = useField('');
 
-  const phoneMask = useMask({
-    mask: DEFAULT_MASK,
+  const phoneMask = useMask(DEFAULT_MASK, {
     showMask: 'never',
     modify: (rawValue) => ({ mask: detectCountry(rawValue)?.mask ?? DEFAULT_MASK }),
     beforeMaskedChange: ({ nextState }) => ({
@@ -44,13 +43,11 @@ const Demo = () => {
 
   const phone = phoneMask.watch();
 
-  const cardNumber = useMask({
-    mask: '9999 9999 9999 9999',
+  const cardNumber = useMask('9999 9999 9999 9999', {
     showMask: 'never'
   });
-  const expiry = useMask({ mask: '99/99', showMask: 'never' });
-  const paymentDate = useMask({
-    mask: '99/99/9999',
+  const expiry = useMask('99/99', { showMask: 'never' });
+  const paymentDate = useMask('99/99/9999', {
     showMask: 'never',
     initialValue: INITIAL_DATE_VALUE
   });

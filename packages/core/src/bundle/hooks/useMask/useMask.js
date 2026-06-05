@@ -358,10 +358,10 @@ export const generatePattern = (mode, options) => {
  * @category State
  * @usage medium
  *
- * @param {UseMaskOptions} options The hook options
+ * @param {UseMaskPattern} mask Mask pattern string or array of literals and RegExp tokens
+ * @param {Omit<UseMaskOptions, 'mask'>} [options] The hook options when mask is passed as the first argument
  * @param {boolean} [options.autoClear=false] Clear value on blur when mask is incomplete
  * @param {string} [options.initialValue=""] Initial raw value
- * @param {string | Array<string | RegExp>} options.mask Mask pattern string or array of literals and RegExp tokens
  * @param {(value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'showMask' | 'slot' | 'tokens'>>} [options.modify] Called before masking and can return dynamic mask option overrides
  * @param {UseMaskShow} [options.showMask="focus"] Defines when placeholder slots are displayed
  * @param {string | null} [options.slot=""] Character displayed in unfilled slots
@@ -373,13 +373,14 @@ export const generatePattern = (mode, options) => {
  * @returns {UseMaskReturn} An object with the masked input state
  *
  * @example
- * const phoneMask = useMask({ mask: '+7 (999) 999-99-99' });
+ * const phoneMask = useMask('+7 (999) 999-99-99');
  */
-export const useMask = (options) => {
-  const optionsRef = useRef(options);
-  optionsRef.current = options;
-  const initialRawValue = options.initialValue ?? '';
-  const initialResolvedOptions = getResolvedOptions(options, initialRawValue);
+export const useMask = (mask, options) => {
+  const hookOptions = { ...options, mask };
+  const optionsRef = useRef(hookOptions);
+  optionsRef.current = hookOptions;
+  const initialRawValue = hookOptions.initialValue ?? '';
+  const initialResolvedOptions = getResolvedOptions(hookOptions, initialRawValue);
   const initialMaskedValue = applyMaskToRaw(
     initialRawValue,
     initialResolvedOptions.slots,
@@ -868,6 +869,7 @@ export const useMask = (options) => {
   };
   return {
     getValue,
+    ref: inputRef,
     register,
     setValue,
     reset,

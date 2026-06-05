@@ -47,7 +47,7 @@ import metadata from './useMask.meta.json';
 ## Usage
 
 ```tsx
-const phoneMask = useMask({ mask: '+7 (999) 999-99-99' });
+const phoneMask = useMask('+7 (999) 999-99-99');
 ```
 
 ## Type Declarations
