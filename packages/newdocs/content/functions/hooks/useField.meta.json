@@ -8,7 +8,7 @@
   "usage": "medium",
   "description": "Hook to manage a form field",
   "category": "State",
-  "lastModified": 1780638301000,
+  "lastModified": 1780662926000,
   "examples": [
     "const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();"
   ],

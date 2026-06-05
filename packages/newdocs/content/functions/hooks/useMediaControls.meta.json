@@ -8,7 +8,7 @@
   "usage": "low",
   "description": "Hook that provides controls for HTML media elements (audio/video)",
   "category": "Browser",
-  "lastModified": 1780634272000,
+  "lastModified": 1780662926000,
   "examples": [
     "const { playing, play, pause } = useMediaControls(videoRef, 'video.mp4');",
     "const { playing, play, pause } = useMediaControls(audioRef, { src: 'audio.mp3', type: 'audio/mp3' });",

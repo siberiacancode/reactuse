@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useMutationObserver } from '@siberiacancode/reactuse';
 import { FileTextIcon } from 'lucide-react';
@@ -42,10 +42,10 @@ const Demo = () => {
       </div>
 
       <div
-        ref={editor.ref}
-        suppressContentEditableWarning
-        className='text-foreground min-h-36 rounded-lg text-base leading-relaxed outline-none'
         contentEditable
+        suppressContentEditableWarning
+        ref={editor.ref}
+        className='text-foreground min-h-36 rounded-lg text-base leading-relaxed outline-none'
         onPaste={onPaste}
       >
         {INITIAL_TEXT}
