@@ -358,6 +358,7 @@ export const generatePattern = (mode, options) => {
  *
  * @param {UseMaskOptions} options The hook options
  * @param {boolean} [options.autoClear=false] Clear value on blur when mask is incomplete
+ * @param {string} [options.initialValue=""] Initial raw value
  * @param {string | Array<string | RegExp>} options.mask Mask pattern string or array of literals and RegExp tokens
  * @param {(value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'showMask' | 'slot' | 'tokens'>>} [options.modify] Called before masking and can return dynamic mask option overrides
  * @param {UseMaskShow} [options.showMask="focus"] Defines when placeholder slots are displayed
@@ -375,18 +376,32 @@ export const generatePattern = (mode, options) => {
 export const useMask = (options) => {
   const optionsRef = useRef(options);
   optionsRef.current = options;
+  const initialRawValue = options.initialValue ?? '';
+  const initialResolvedOptions = getResolvedOptions(options, initialRawValue);
+  const initialMaskedValue = applyMaskToRaw(
+    initialRawValue,
+    initialResolvedOptions.slots,
+    initialResolvedOptions.transform
+  );
+  const initialDisplayValue = buildDisplayValue(
+    initialMaskedValue,
+    initialResolvedOptions.slots,
+    initialResolvedOptions.slot,
+    shouldShowMask(initialResolvedOptions.showMask, false, initialMaskedValue)
+  );
+  const initialFilled = checkComplete(initialMaskedValue, initialResolvedOptions.slots);
   const inputRef = useRef(null);
   const valueRef = useRef({
-    displayValue: '',
-    filled: false,
-    maskedValue: '',
-    rawValue: '',
-    value: ''
+    displayValue: initialDisplayValue,
+    filled: initialFilled,
+    maskedValue: initialMaskedValue,
+    rawValue: initialRawValue,
+    value: initialDisplayValue
   });
-  const processedRef = useRef('');
-  const displayValueRef = useRef('');
-  const rawValueRef = useRef('');
-  const wasCompleteRef = useRef(false);
+  const processedRef = useRef(initialMaskedValue);
+  const displayValueRef = useRef(initialDisplayValue);
+  const rawValueRef = useRef(initialRawValue);
+  const wasCompleteRef = useRef(initialFilled);
   const isFocusedRef = useRef(false);
   const watchingRef = useRef(false);
   const undoStackRef = useRef([]);
@@ -506,10 +521,19 @@ export const useMask = (options) => {
     const nextMaskedValue = applyMaskToRaw(state.rawValue, slots, transform);
     updateValue(nextMaskedValue, state.selectionStart);
   };
-  const set = (value) => {
+  const setValue = (value) => {
     const { slots, transform } = getResolvedOptions(optionsRef.current, value);
     const nextMaskedValue = applyMaskToRaw(value, slots, transform);
     updateValue(nextMaskedValue);
+  };
+  const getValue = (type = 'raw') => {
+    if (type === 'display') {
+      return valueRef.current.displayValue;
+    }
+    if (type === 'masked') {
+      return valueRef.current.maskedValue;
+    }
+    return valueRef.current.rawValue;
   };
   const clampCursorToProcessed = (element) => {
     const start = element.selectionStart ?? 0;
@@ -534,14 +558,13 @@ export const useMask = (options) => {
       if (!node || node.value) {
         return;
       }
-      const { showMask, slots, slot } = getResolvedOptions(optionsRef.current, '');
-      if (!shouldShowMask(showMask, false, '')) {
-        return;
-      }
-      const displayValue = buildDisplayValue('', slots, slot, true);
-      node.value = displayValue;
-      displayValueRef.current = displayValue;
-      updateRefs({ displayValue });
+      node.value = displayValueRef.current;
+      updateRefs({
+        displayValue: displayValueRef.current,
+        filled: wasCompleteRef.current,
+        maskedValue: processedRef.current,
+        rawValue: rawValueRef.current
+      });
     },
     onChange: (event) => {
       const element = event.currentTarget;
@@ -816,42 +839,41 @@ export const useMask = (options) => {
   const reset = () => {
     const input = inputRef.current;
     const hookOptions = optionsRef.current;
-    processedRef.current = '';
-    displayValueRef.current = '';
-    rawValueRef.current = '';
+    const nextRawValue = hookOptions.initialValue ?? '';
+    const { showMask, slots, slot, transform } = getResolvedOptions(hookOptions, nextRawValue);
+    const nextMaskedValue = applyMaskToRaw(nextRawValue, slots, transform);
+    const nextDisplayValue = buildDisplayValue(
+      nextMaskedValue,
+      slots,
+      slot,
+      shouldShowMask(showMask, false, nextMaskedValue)
+    );
+    const complete = checkComplete(nextMaskedValue, slots);
+    processedRef.current = nextMaskedValue;
+    displayValueRef.current = nextDisplayValue;
+    rawValueRef.current = nextRawValue;
     undoStackRef.current = [];
     redoStackRef.current = [];
     updateRefs({
-      displayValue: '',
-      filled: false,
-      maskedValue: '',
-      rawValue: ''
+      displayValue: nextDisplayValue,
+      filled: complete,
+      maskedValue: nextMaskedValue,
+      rawValue: nextRawValue
     });
-    wasCompleteRef.current = false;
-    let nextDisplayValue = '';
+    wasCompleteRef.current = complete;
     if (input) {
-      const { showMask, slots, slot } = getResolvedOptions(hookOptions, '');
-      if (shouldShowMask(showMask, false, '')) {
-        nextDisplayValue = buildDisplayValue('', slots, slot, true);
-        displayValueRef.current = nextDisplayValue;
-        updateRefs({ displayValue: nextDisplayValue });
-      }
       input.value = nextDisplayValue;
     }
-    hookOptions.onChangeRaw?.('', nextDisplayValue);
+    hookOptions.onChangeRaw?.(nextRawValue, nextDisplayValue);
   };
   const watch = () => {
     watchingRef.current = true;
     return valueRef.current;
   };
   return {
+    getValue,
     register,
-    displayValue: valueRef.current.displayValue,
-    value: valueRef.current.value,
-    maskedValue: valueRef.current.maskedValue,
-    rawValue: valueRef.current.rawValue,
-    filled: valueRef.current.filled,
-    set,
+    setValue,
     reset,
     watch
   };

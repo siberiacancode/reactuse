@@ -64,9 +64,9 @@ export const useMediaControls = (...params) => {
   const [buffered, setBuffered] = useState([]);
   const [stalled, setStalled] = useState(false);
   const [ended, setEnded] = useState(false);
-  const [playbackRate, setPlaybackRateState] = useState(1);
-  const [muted, setMutedState] = useState(false);
-  const [volume, setVolumeState] = useState(1);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [muted, setMuted] = useState(false);
+  const [volume, setVolume] = useState(1);
   useEffect(() => {
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
@@ -76,11 +76,10 @@ export const useMediaControls = (...params) => {
     if (options.media) element.setAttribute('media', options.media);
     setDuration(element.duration);
     setCurrentTime(element.currentTime);
-    setPlaying(false);
     setEnded(element.ended);
-    setMutedState(element.muted);
-    setVolumeState(element.volume);
-    setPlaybackRateState(element.playbackRate);
+    setMuted(element.muted);
+    setVolume(element.volume);
+    setPlaybackRate(element.playbackRate);
     const onPlaying = () => {
       setPlaying(true);
       setStalled(false);
@@ -97,10 +96,10 @@ export const useMediaControls = (...params) => {
     const onDurationChange = () => setDuration(element.duration);
     const onTimeUpdate = () => setCurrentTime(element.currentTime);
     const onVolumechange = () => {
-      setMutedState(element.muted);
-      setVolumeState(element.volume);
+      setMuted(element.muted);
+      setVolume(element.volume);
     };
-    const onRatechange = () => setPlaybackRateState(element.playbackRate);
+    const onRatechange = () => setPlaybackRate(element.playbackRate);
     const onProgress = () => setBuffered(timeRangeToArray(element.buffered));
     element.addEventListener('playing', onPlaying);
     element.addEventListener('pause', onPause);
@@ -114,6 +113,7 @@ export const useMediaControls = (...params) => {
     element.addEventListener('timeupdate', onTimeUpdate);
     element.addEventListener('volumechange', onVolumechange);
     element.addEventListener('ratechange', onRatechange);
+    if (playing) element.play();
     return () => {
       element.removeEventListener('playing', onPlaying);
       element.removeEventListener('pause', onPause);
@@ -128,7 +128,13 @@ export const useMediaControls = (...params) => {
       element.removeEventListener('volumechange', onVolumechange);
       element.removeEventListener('ratechange', onRatechange);
     };
-  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  }, [
+    target && isTarget.getRawElement(target),
+    internalRef.state,
+    options.src,
+    options.type,
+    options.media
+  ]);
   const play = async () => {
     const element = elementRef.current;
     if (!element) return;

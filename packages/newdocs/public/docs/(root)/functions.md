@@ -85,3 +85,4 @@ A quick list of available functions.
 - [useMap](/functions/hooks/useMap): Hook that manages a map structure
 - [useMask](/functions/hooks/useMask): Hook to apply an input mask
 - [useMeasure](/functions/hooks/useMeasure): Hook to measure the size and position of an element
+- [useMediaControls](/functions/hooks/useMediaControls): that provides controls for HTML media elements (audio/video)

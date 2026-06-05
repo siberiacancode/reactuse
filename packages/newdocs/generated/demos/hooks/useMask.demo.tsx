@@ -11,14 +11,14 @@ interface Country {
   name: string;
 }
 
-const COUNTRIES: Country[] = [
+const COUNTRIES = [
   { code: '7', name: 'Russia', flag: '🇷🇺', mask: '+9 (999) 999-99-99' },
   { code: '1', name: 'USA', flag: '🇺🇸', mask: '+9 (999) 999-9999' },
   { code: '44', name: 'UK', flag: '🇬🇧', mask: '+99 9999 999999' },
   { code: '77', name: 'Kazakhstan', flag: '🇰🇿', mask: '+99 (999) 999-99-99' },
   { code: '380', name: 'Ukraine', flag: '🇺🇦', mask: '+999 (99) 999-99-99' },
   { code: '998', name: 'Uzbekistan', flag: '🇺🇿', mask: '+999 (99) 999-99-99' }
-];
+] as const;
 
 const DEFAULT_MASK = '999999999999999';
 
@@ -31,23 +31,23 @@ const Demo = () => {
   const name = useField('');
   const cvv = useField('');
 
-  const phone = useMask({
+  const phoneMask = useMask({
     mask: DEFAULT_MASK,
     showMask: 'never',
-    slot: null,
     modify: (rawValue) => ({ mask: detectCountry(rawValue)?.mask ?? DEFAULT_MASK }),
-    beforeMaskedStateChange: ({ nextState }) => ({
+    beforeMaskedChange: ({ nextState }) => ({
       ...nextState,
       selection: { start: nextState.value.length, end: nextState.value.length }
     })
   });
 
+  const phone = phoneMask.watch();
+
   const cardNumber = useMask({
     mask: '9999 9999 9999 9999',
-    showMask: 'never',
-    slot: null
+    showMask: 'never'
   });
-  const expiry = useMask({ mask: '99/99', showMask: 'never', slot: null });
+  const expiry = useMask({ mask: '99/99', showMask: 'never' });
 
   const country = detectCountry(phone.rawValue);
 
@@ -84,7 +84,7 @@ const Demo = () => {
             )}
             inputMode='tel'
             placeholder='Start typing with country code'
-            {...phone.register()}
+            {...phoneMask.register()}
           />
         </div>
         {country && <span className='text-muted-foreground px-1 text-[10px]'>{country.name}</span>}

@@ -1,15 +1,15 @@
 ---
-title: useMask
-description: Hook to apply an input mask
-category: state
-usage: medium
+title: useMediaControls
+description: that provides controls for HTML media elements (audio/video)
+category: browser
+usage: low
 type: hook
-isTest: true
+isTest: false
 isDemo: true
-lastModifiedTime: 1780586413000
+lastModifiedTime: 1770651919000
 ---
 
-import metadata from './useMask.meta.json';
+import metadata from './useMediaControls.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useMask.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useMask
+    npx useverse@latest add useMediaControls
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,13 @@ import metadata from './useMask.meta.json';
 ## Usage
 
 ```tsx
-const phoneMask = useMask({ mask: '+7 (999) 999-99-99' });
+const { playing, play, pause } = useMediaControls(videoRef, 'video.mp4');
+// or
+const { playing, play, pause } = useMediaControls(audioRef, { src: 'audio.mp3', type: 'audio/mp3' });
+// or
+const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>('video.mp4');
+// or
+const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>({ src: 'video.mp4', type: 'video/mp4' });
 ```
 
 ## Type Declarations

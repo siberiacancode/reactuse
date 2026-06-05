@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780584302000
+lastModifiedTime: 1780586413000
 ---
 
 import metadata from './useMask.meta.json';
@@ -47,7 +47,7 @@ import metadata from './useMask.meta.json';
 ## Usage
 
 ```tsx
-const phoneMask = useMask({ mask: '+7 (999) 999-99-99' }); <input {...phoneMask.register()} />
+const phoneMask = useMask({ mask: '+7 (999) 999-99-99' });
 ```
 
 ## Type Declarations

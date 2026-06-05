@@ -11,7 +11,7 @@
       "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect",
 
       "---browser---",
-      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls",
 
       "---utilities---",
       "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent","useLastChanged","useLatest",
