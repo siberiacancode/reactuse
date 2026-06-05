@@ -24,18 +24,19 @@ const Demo = () => {
   const peak = history.length ? Math.max(...history) : 0;
 
   return (
-    <section className='flex w-full max-w-sm flex-col gap-3 p-4'>
+    <section className='flex w-full max-w-lg flex-col gap-3 p-4'>
       <div className='flex items-center justify-between'>
-        <span className='text-foreground text-sm font-semibold'>Frames per second</span>
+        <span className='text-foreground text-sm font-semibold'>FRAME PER SECONDS</span>
         <span className='text-muted-foreground font-mono text-xs tabular-nums'>
           {String(fps).padStart(2, '0')} FPS
         </span>
       </div>
 
-      <div className='bg-background flex h-28 items-end gap-[2px] rounded-lg border p-3'>
+      <div className='bg-background flex h-44 items-end gap-[2px] rounded-lg border p-3'>
         {Array.from({ length: HISTORY }).map((_, index) => {
           const value = history[history.length - HISTORY + index] ?? 0;
           const height = Math.max((value / max) * 100, 4);
+
           return (
             <div
               key={index}
@@ -50,19 +51,19 @@ const Demo = () => {
         <div className='flex flex-col gap-0.5'>
           <span className='text-muted-foreground text-[10px] tracking-wider uppercase'>Min</span>
           <span className='text-foreground font-mono text-sm font-semibold tabular-nums'>
-            {min || '—'}
+            {min || '--'}
           </span>
         </div>
         <div className='flex flex-col gap-0.5'>
           <span className='text-muted-foreground text-[10px] tracking-wider uppercase'>Avg</span>
           <span className='text-foreground font-mono text-sm font-semibold tabular-nums'>
-            {avg || '—'}
+            {avg || '--'}
           </span>
         </div>
         <div className='flex flex-col gap-0.5'>
           <span className='text-muted-foreground text-[10px] tracking-wider uppercase'>Peak</span>
           <span className='text-foreground font-mono text-sm font-semibold tabular-nums'>
-            {peak || '—'}
+            {peak || '--'}
           </span>
         </div>
       </div>

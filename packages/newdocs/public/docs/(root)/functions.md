@@ -88,3 +88,4 @@ A quick list of available functions.
 - [useMediaControls](/functions/hooks/useMediaControls): that provides controls for HTML media elements (audio/video)
 - [useMediaQuery](/functions/hooks/useMediaQuery): Hook that manages a media query
 - [useMemory](/functions/hooks/useMemory): Hook that gives you current memory usage
+- [useMergedRef](/functions/hooks/useMergedRef): Hook that merges multiple refs into a single ref

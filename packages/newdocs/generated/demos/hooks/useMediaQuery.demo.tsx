@@ -28,8 +28,8 @@ const Demo = () => {
           </div>
 
           <p className='text-muted-foreground px-1 text-sm'>
-            Compact <code>mobile</code> layout for small screens. Stacked destinations,
-            tap-friendly actions, and short copy that respects narrow viewports.
+            Compact <code>mobile</code> layout for small screens. Stacked destinations, tap-friendly
+            actions, and short copy that respects narrow viewports.
           </p>
 
           <div className='flex flex-col gap-2'>

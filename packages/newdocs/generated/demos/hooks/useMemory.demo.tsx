@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useMemory } from '@siberiacancode/reactuse';
 import { useState } from 'react';
@@ -42,8 +42,8 @@ const Demo = () => {
     setPeak((current) => Math.max(current, value.usedJSHeapSize));
   });
 
-  const used = memory.value?.usedJSHeapSize ?? 0;
-  const limit = memory.value?.jsHeapSizeLimit ?? 1;
+  const used = memory.value.usedJSHeapSize ?? 0;
+  const limit = memory.value.jsHeapSizeLimit ?? 1;
 
   if (!memory.supported)
     return (
@@ -80,7 +80,7 @@ const Demo = () => {
   return (
     <section className='flex w-full max-w-lg flex-col gap-3 p-4'>
       <div className='flex items-center justify-between'>
-        <span className='text-foreground text-sm font-semibold'>JS Heap usage</span>
+        <span className='text-foreground text-sm font-semibold'>JS HEAP USAGE</span>
         <span className='text-muted-foreground font-mono text-xs tabular-nums'>
           {((used / limit) * 100).toFixed(1)}%
         </span>
@@ -93,12 +93,26 @@ const Demo = () => {
           viewBox='0 0 100 100'
         >
           <defs>
-            <linearGradient id='heap-line' x1='0' x2='0' y1='0' y2='1'>
+            <linearGradient
+              gradientUnits='userSpaceOnUse'
+              id='heap-line'
+              x1='0'
+              x2='0'
+              y1='0'
+              y2='1'
+            >
               <stop offset='0%' stopColor='#ef4444' />
               <stop offset='50%' stopColor='#eab308' />
               <stop offset='100%' stopColor='#22c55e' />
             </linearGradient>
-            <linearGradient id='heap-area' x1='0' x2='0' y1='0' y2='1'>
+            <linearGradient
+              gradientUnits='userSpaceOnUse'
+              id='heap-area'
+              x1='0'
+              x2='0'
+              y1='0'
+              y2='1'
+            >
               <stop offset='0%' stopColor='#ef4444' stopOpacity='0.2' />
               <stop offset='100%' stopColor='#22c55e' stopOpacity='0' />
             </linearGradient>

@@ -98,6 +98,7 @@
 - [useLocalStorage](https://reactuse.org/functions/hooks/useLocalStorage): Hook that manages local storage value
 - [useMap](https://reactuse.org/functions/hooks/useMap): Hook that manages a map structure
 - [useMask](https://reactuse.org/functions/hooks/useMask): Hook to apply an input mask
+- [useMergedRef](https://reactuse.org/functions/hooks/useMergedRef): Hook that merges multiple refs into a single ref
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions
