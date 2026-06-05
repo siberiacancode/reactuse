@@ -18,13 +18,16 @@ const Demo = () => {
   if (view === 'mobile') {
     return (
       <section className='flex justify-center p-6'>
-        <div className='relative flex h-[430px] w-[264px] flex-col gap-4 overflow-hidden rounded-[2rem] border px-4 pt-12 pb-4'>
+        <div className='relative flex h-107.5 w-66 flex-col gap-4 overflow-hidden rounded-4xl border px-4 pt-12 pb-4'>
           <div className='bg-border absolute top-3 left-1/2 h-5 w-22 -translate-x-1/2 rounded-full' />
 
-          <h3 className='text-2xl font-bold'>Mobile view</h3>
-          <p className='text-muted-foreground text-sm'>
-            Compact <code>mobile</code> layout for small screens. Stacked cards, tap-friendly rows,
-            and short copy for narrow viewports.
+          <div className='flex items-center justify-between px-1'>
+            <h3 className='text-3xl!'>Mobile view</h3>
+          </div>
+
+          <p className='text-muted-foreground px-1 text-sm'>
+            Compact <code>mobile</code> layout for small screens. Stacked destinations, tap-friendly
+            actions, and short copy that respects narrow viewports.
           </p>
 
           <div className='flex flex-col gap-2'>
@@ -56,10 +59,13 @@ const Demo = () => {
         <div className='relative flex h-[440px] w-96 flex-col gap-4 overflow-hidden rounded-3xl border px-5 pt-10 pb-5'>
           <div className='bg-border absolute top-4 left-1/2 size-2 -translate-x-1/2 rounded-full' />
 
-          <h3 className='text-xl font-bold'>Tablet view</h3>
+          <div className='flex items-center justify-between'>
+            <h3 className='text-xl!'>Tablet view</h3>
+          </div>
+
           <p className='text-muted-foreground text-sm'>
-            Balanced <code>tablet</code> layout for medium screens. A two-column grid with more room
-            for content and comfortable margins.
+            Balanced <code>tablet</code> layout for medium screens. More room for planning with a
+            comfortable reading width and a tidy two-column grid.
           </p>
 
           <div className='grid grid-cols-2 gap-2'>
@@ -90,13 +96,16 @@ const Demo = () => {
         <div className='relative flex h-80 w-[480px] flex-col gap-4 overflow-hidden rounded-xl border px-6 pt-9 pb-5'>
           <div className='bg-border absolute top-0 left-1/2 h-2 w-16 -translate-x-1/2 rounded-b-md' />
 
-          <h3 className='text-2xl font-bold'>Desktop view</h3>
+          <div className='flex items-center justify-between'>
+            <h3 className='text-4xl!'>Desktop view</h3>
+          </div>
+
           <p className='text-muted-foreground text-sm'>
-            Wide <code>desktop</code> layout for large displays. A three-column grid showing the
-            full catalog at once with rich detail.
+            Wide <code>desktop</code> layout for large displays. Multi-column trip planning, richer
+            details, and room to compare destinations side by side.
           </p>
 
-          <div className='mt-3 grid grid-cols-3 gap-2'>
+          <div className='mt-5 grid grid-cols-3 gap-2'>
             {PLACES.map((place) => (
               <div
                 key={place.name}

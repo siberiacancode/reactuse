@@ -91,12 +91,26 @@ const Demo = () => {
           viewBox='0 0 100 100'
         >
           <defs>
-            <linearGradient id='heap-line' x1='0' x2='0' y1='0' y2='1'>
+            <linearGradient
+              gradientUnits='userSpaceOnUse'
+              id='heap-line'
+              x1='0'
+              x2='0'
+              y1='0'
+              y2='1'
+            >
               <stop offset='0%' stopColor='#ef4444' />
               <stop offset='50%' stopColor='#eab308' />
               <stop offset='100%' stopColor='#22c55e' />
             </linearGradient>
-            <linearGradient id='heap-area' x1='0' x2='0' y1='0' y2='1'>
+            <linearGradient
+              gradientUnits='userSpaceOnUse'
+              id='heap-area'
+              x1='0'
+              x2='0'
+              y1='0'
+              y2='1'
+            >
               <stop offset='0%' stopColor='#ef4444' stopOpacity='0.2' />
               <stop offset='100%' stopColor='#22c55e' stopOpacity='0' />
             </linearGradient>
