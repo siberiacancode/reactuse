@@ -1,3 +1,5 @@
+'use client'
+
 import { useDebounceCallback, useObject } from '@siberiacancode/reactuse';
 import { SearchIcon } from 'lucide-react';
 import { useState } from 'react';

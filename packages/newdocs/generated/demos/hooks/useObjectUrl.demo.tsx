@@ -1,3 +1,5 @@
+'use client'
+
 import { useObjectUrl } from '@siberiacancode/reactuse';
 import { DownloadIcon, RefreshCwIcon, SparklesIcon } from 'lucide-react';
 import { useRef } from 'react';

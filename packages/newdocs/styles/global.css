@@ -829,3 +829,41 @@
 .demo-ui input[type='range']:disabled {
   @apply pointer-events-none opacity-50;
 }
+
+.demo-ui [data-slot='table-container'] {
+  @apply relative w-full overflow-x-auto;
+}
+
+.demo-ui [data-slot='table'] {
+  @apply w-full caption-bottom text-sm;
+}
+
+.demo-ui [data-slot='table-header'] {
+  @apply [&_tr]:border-b;
+}
+
+.demo-ui [data-slot='table-body'] {
+  @apply [&_tr:last-child]:border-0;
+}
+
+.demo-ui [data-slot='table-footer'] {
+  @apply bg-muted/50 border-t font-medium [&>tr]:last:border-b-0;
+}
+
+.demo-ui [data-slot='table-row'] {
+  @apply hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors;
+}
+
+.demo-ui [data-slot='table-head'] {
+  @apply text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap;
+  @apply [&:has([role=checkbox])]:pr-0;
+}
+
+.demo-ui [data-slot='table-cell'] {
+  @apply p-2 align-middle whitespace-nowrap;
+  @apply [&:has([role=checkbox])]:pr-0;
+}
+
+.demo-ui [data-slot='table-caption'] {
+  @apply text-muted-foreground mt-4 text-sm;
+}

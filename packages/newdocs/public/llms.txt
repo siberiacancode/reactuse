@@ -47,6 +47,7 @@
 - [useMediaQuery](https://reactuse.org/functions/hooks/useMediaQuery): Hook that manages a media query
 - [useMemory](https://reactuse.org/functions/hooks/useMemory): Hook that gives you current memory usage
 - [useNetwork](https://reactuse.org/functions/hooks/useNetwork): Hook to track network status
+- [useObjectUrl](https://reactuse.org/functions/hooks/useObjectUrl): Hook that creates and revokes an object URL for a Blob or MediaSource
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
@@ -104,6 +105,8 @@
 - [useMap](https://reactuse.org/functions/hooks/useMap): Hook that manages a map structure
 - [useMask](https://reactuse.org/functions/hooks/useMask): Hook to apply an input mask
 - [useMergedRef](https://reactuse.org/functions/hooks/useMergedRef): Hook that merges multiple refs into a single ref
+- [useObject](https://reactuse.org/functions/hooks/useObject): Hook that provides state and helper methods to manage an object
+- [useOffsetPagination](https://reactuse.org/functions/hooks/useOffsetPagination): Hook that defines the logic when pagination
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions

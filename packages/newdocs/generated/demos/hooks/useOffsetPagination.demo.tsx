@@ -1,3 +1,5 @@
+'use client'
+
 import { useOffsetPagination } from '@siberiacancode/reactuse';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useState } from 'react';

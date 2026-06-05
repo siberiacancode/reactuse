@@ -1,3 +1,5 @@
+import type { ClipboardEvent } from 'react';
+
 import { useMutationObserver } from '@siberiacancode/reactuse';
 import { FileTextIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -26,7 +28,7 @@ const Demo = () => {
     }
   });
 
-  const onPaste = (event: React.ClipboardEvent) => {
+  const onPaste = (event: ClipboardEvent) => {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
     document.execCommand('insertText', false, text);
