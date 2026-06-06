@@ -28,5 +28,5 @@ export const useOptimistic = (externalState, update) => {
     setState((currentState) => internalUpdateRef.current(currentState, optimisticValue));
     return promise.finally(() => setPromised(true));
   };
-  return [state, updateState];
+  return [state, updateState, setState];
 };

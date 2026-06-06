@@ -113,6 +113,27 @@ it('Should update state when orientationchange event is fired', () => {
   });
 });
 
+it('Should call callback when orientation changes', () => {
+  const callback = vi.fn();
+
+  renderHook(() => useOrientation(callback));
+
+  act(() => {
+    Object.defineProperty(window.screen, 'orientation', {
+      value: createMockScreenOrientation(90, 'landscape-primary'),
+      writable: true,
+      configurable: true
+    });
+    window.dispatchEvent(new Event('orientationchange'));
+  });
+
+  expect(callback).toHaveBeenCalledOnce();
+  expect(callback).toHaveBeenCalledWith({
+    angle: 90,
+    orientationType: 'landscape-primary'
+  });
+});
+
 it('Should call lock function when lock method is called', () => {
   const { result } = renderHook(useOrientation);
 

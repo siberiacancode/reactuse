@@ -7,7 +7,6 @@ import { liteClient } from 'algoliasearch/lite';
 import { useDocsSearch } from 'fumadocs-core/search/client';
 import { ArrowRightIcon, CircleDashedIcon, Loader2Icon } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import {
   Button,
@@ -35,7 +34,6 @@ interface Props {
 
 export const Search = (props: Props) => {
   const dialog = useDisclosure();
-  const router = useRouter();
   const { setSearch, query } = useDocsSearch({
     type: 'algolia',
     client,
@@ -90,19 +88,15 @@ export const Search = (props: Props) => {
                   {group.children
                     .filter((child) => child.type === 'page')
                     .map((item) => (
-                      <CommandItem
-                        key={item.url}
-                        className='cursor-pointer'
-                        value={item.name!.toString()}
-                      >
-                        <div className='flex items-center justify-center gap-2'>
-                          {!isFunction && <ArrowRightIcon />}
-                          {isFunction && <CircleDashedIcon />}
-                          <Link href={item.url} onClick={() => dialog.close()}>
-                            {item.name!.toString()}
-                          </Link>
-                        </div>
-                      </CommandItem>
+                      <Link key={item.url} className='block' href={item.url} onClick={dialog.close}>
+                        <CommandItem className='cursor-pointer' value={item.name!.toString()}>
+                          <div className='flex items-center justify-center gap-2'>
+                            {!isFunction && <ArrowRightIcon />}
+                            {isFunction && <CircleDashedIcon />}
+                            <span>{item.name!.toString()}</span>
+                          </div>
+                        </CommandItem>
+                      </Link>
                     ))}
                 </CommandGroup>
               );
@@ -111,15 +105,15 @@ export const Search = (props: Props) => {
             <CommandGroup className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'>
               {Array.isArray(query.data) &&
                 query.data.map((item) => (
-                  <CommandItem
-                    key={item.id}
-                    className='cursor-pointer'
-                    keywords={['nav', 'navigation', item.content.toLowerCase()]}
-                    value={`Navigation ${item.content}`}
-                    onSelect={() => router.push(item.url)}
-                  >
-                    {item.content}
-                  </CommandItem>
+                  <Link key={item.id} className='block' href={item.url} onClick={dialog.close}>
+                    <CommandItem
+                      className='cursor-pointer'
+                      keywords={['nav', 'navigation', item.content.toLowerCase()]}
+                      value={`Navigation ${item.content}`}
+                    >
+                      {item.content}
+                    </CommandItem>
+                  </Link>
                 ))}
             </CommandGroup>
           </CommandList>

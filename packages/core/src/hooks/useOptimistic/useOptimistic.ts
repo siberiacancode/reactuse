@@ -42,5 +42,5 @@ export const useOptimistic = <State, OptimisticState = State>(
     return promise.finally(() => setPromised(true));
   };
 
-  return [state, updateState] as const;
+  return [state, updateState, setState] as const;
 };

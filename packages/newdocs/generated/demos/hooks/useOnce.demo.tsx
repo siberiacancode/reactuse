@@ -1,3 +1,5 @@
+'use client'
+
 import { useOnce } from '@siberiacancode/reactuse';
 
 const Demo = () => {

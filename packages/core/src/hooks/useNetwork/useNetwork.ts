@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export interface Connection extends EventTarget {
   readonly downlink: number;
@@ -53,6 +53,33 @@ export interface UseNetworkReturn {
 export const getConnection = () =>
   navigator?.connection || navigator?.mozConnection || navigator?.webkitConnection;
 
+const getNetworkState = (): UseNetworkReturn => {
+  if (typeof navigator === 'undefined') {
+    return {
+      online: false,
+      type: undefined,
+      effectiveType: undefined,
+      saveData: false,
+      downlink: 0,
+      downlinkMax: 0,
+      rtt: 0
+    };
+  }
+
+  const online = navigator.onLine;
+  const connection = getConnection();
+
+  return {
+    online,
+    downlink: connection?.downlink,
+    downlinkMax: connection?.downlinkMax,
+    effectiveType: connection?.effectiveType,
+    rtt: connection?.rtt,
+    saveData: connection?.saveData,
+    type: connection?.type
+  };
+};
+
 /**
  * @name useNetwork
  * @description - Hook to track network status
@@ -61,71 +88,43 @@ export const getConnection = () =>
  *
  * @browserapi navigator.connection https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection
  *
+ * @param {(value: UseNetworkReturn) => void} [callback] The callback invoked when the network state changes
  * @returns {UseNetworkReturn} An object containing the network status
  *
  * @example
  * const { online, downlink, downlinkMax, effectiveType, rtt, saveData, type } = useNetwork();
  */
-export const useNetwork = (): UseNetworkReturn => {
-  const [value, setValue] = useState(() => {
-    if (typeof navigator === 'undefined') {
-      return {
-        online: false,
-        type: undefined,
-        effectiveType: undefined,
-        saveData: false,
-        downlink: 0,
-        downlinkMax: 0,
-        rtt: 0
-      };
-    }
-    const online = navigator.onLine;
-    const connection = getConnection();
-
-    return {
-      online,
-      downlink: connection?.downlink,
-      downlinkMax: connection?.downlinkMax,
-      effectiveType: connection?.effectiveType,
-      rtt: connection?.rtt,
-      saveData: connection?.saveData,
-      type: connection?.type
-    };
-  });
+export const useNetwork = (callback?: (value: UseNetworkReturn) => void): UseNetworkReturn => {
+  const [value, setValue] = useState(getNetworkState);
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
   useEffect(() => {
-    const callback = () => {
-      const online = navigator.onLine;
-      const connection = getConnection();
+    const handleChange = () => {
+      const nextValue = getNetworkState();
 
-      setValue({
-        online,
-        downlink: connection?.downlink,
-        downlinkMax: connection?.downlinkMax,
-        effectiveType: connection?.effectiveType,
-        rtt: connection?.rtt,
-        saveData: connection?.saveData,
-        type: connection?.type
-      });
+      setValue(nextValue);
+      internalCallbackRef.current?.(nextValue);
     };
-    window.addEventListener('online', callback, { passive: true });
-    window.addEventListener('offline', callback, { passive: true });
+
+    window.addEventListener('online', handleChange, { passive: true });
+    window.addEventListener('offline', handleChange, { passive: true });
 
     const connection = getConnection();
 
     if (connection) {
-      connection.addEventListener('change', callback, { passive: true });
+      connection.addEventListener('change', handleChange, { passive: true });
     }
 
     return () => {
-      window.removeEventListener('online', callback);
-      window.removeEventListener('offline', callback);
+      window.removeEventListener('online', handleChange);
+      window.removeEventListener('offline', handleChange);
 
       if (connection) {
-        connection.removeEventListener('change', callback);
+        connection.removeEventListener('change', handleChange);
       }
     };
-  });
+  }, []);
 
   return value;
 };

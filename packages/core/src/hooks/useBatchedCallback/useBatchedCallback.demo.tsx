@@ -1,6 +1,8 @@
 import { useBatchedCallback } from '@siberiacancode/reactuse';
 import { useState } from 'react';
 
+import { cn } from '@/utils/lib';
+
 interface AnalyticsEvent {
   action: 'deselected' | 'selected';
   tag: string;
@@ -40,30 +42,37 @@ const Demo = () => {
   };
 
   return (
-    <section className='flex max-w-md flex-col items-center gap-4'>
-      <div className='flex flex-col gap-1 text-center'>
-        <h3>What will you use the service for?</h3>
+    <section className='flex max-w-md flex-col items-center gap-4 p-4'>
+      <h3 className='text-foreground text-center text-base font-semibold'>
+        What will you use the service for?
+      </h3>
+
+      <div className='flex flex-wrap justify-center gap-2'>
+        {INTERESTS.map((interest) => {
+          const active = tags.includes(interest.tag);
+          return (
+            <button
+              key={interest.tag}
+              className={cn(
+                'h-9 rounded-full! px-4 text-sm font-medium transition-colors',
+                active
+                  ? 'bg-foreground text-background'
+                  : 'bg-muted text-foreground hover:bg-accent'
+              )}
+              data-variant='unstyled'
+              type='button'
+              onClick={() => onToggle(interest.tag)}
+            >
+              {interest.label}
+            </button>
+          );
+        })}
       </div>
 
-      <div className='mb-6 flex flex-wrap justify-center gap-2'>
-        {INTERESTS.map((interest) => (
-          <button
-            key={interest.tag}
-            data-variant={tags.includes(interest.tag) ? 'outline' : 'default'}
-            type='button'
-            onClick={() => onToggle(interest.tag)}
-          >
-            {interest.label}
-          </button>
-        ))}
-      </div>
-
-      <div className='flex flex-col gap-6 px-3 md:flex-row'>
-        <p className='text-muted-foreground text-center text-xs'>
-          We batch analytics events for economy of scale. So far we tracked{' '}
-          <code>{totalEvents}</code> events and sent <code>{requestsSent}</code> requests.
-        </p>
-      </div>
+      <p className='text-muted-foreground max-w-xs text-center text-xs'>
+        We batch analytics events for economy of scale. So far we tracked <code>{totalEvents}</code>{' '}
+        events and sent <code>{requestsSent}</code> requests.
+      </p>
     </section>
   );
 };

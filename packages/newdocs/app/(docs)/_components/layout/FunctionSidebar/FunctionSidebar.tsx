@@ -33,7 +33,7 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
       collapsible='none'
       {...props}
     >
-      <div className='from-background/75 via-background/25 pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b to-transparent' />
+      <div className='pointer-events-none absolute top-8 z-10 h-8 w-(--sidebar-menu-width) shrink-0 bg-linear-to-b from-background via-background/80 to-background/50 blur-xs' />
       <div className='from-background/75 via-background/25 pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t to-transparent' />
       <SidebarContent className='no-scrollbar h-full w-(--sidebar-menu-width) overflow-y-auto overscroll-contain px-2 pt-12 pb-22'>
         {groups.map((group, index) => (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 declare global {
   interface ScreenOrientation {
@@ -45,12 +45,15 @@ export interface useOrientationReturn {
  *
  * @browserapi screen.orientation https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
  *
+ * @param {(value: UseOrientationValue) => void} [callback] The callback invoked when the orientation changes
  * @returns {useOrientationReturn} The current screen orientation
  *
  * @example
  * const { supported, value, lock, unlock } = useOrientation();
  */
-export const useOrientation = (): useOrientationReturn => {
+export const useOrientation = (
+  callback?: (value: UseOrientationValue) => void
+): useOrientationReturn => {
   const supported =
     typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
   const orientation = (supported ? window.screen.orientation : {}) as ScreenOrientation;
@@ -59,15 +62,21 @@ export const useOrientation = (): useOrientationReturn => {
     angle: orientation.angle ?? 0,
     orientationType: orientation.type
   });
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
   useEffect(() => {
     if (!supported) return;
 
-    const onOrientationChange = () =>
-      setValue({
+    const onOrientationChange = () => {
+      const nextValue = {
         angle: window.screen.orientation.angle,
         orientationType: window.screen.orientation.type
-      });
+      };
+
+      setValue(nextValue);
+      internalCallbackRef.current?.(nextValue);
+    };
 
     window.addEventListener('orientationchange', onOrientationChange);
     return () => {

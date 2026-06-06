@@ -1,3 +1,5 @@
+'use client'
+
 import type { OperatingSystem } from '@siberiacancode/reactuse';
 
 import { useOperatingSystem } from '@siberiacancode/reactuse';

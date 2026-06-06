@@ -97,3 +97,8 @@ A quick list of available functions.
 - [useObject](/functions/hooks/useObject): Hook that provides state and helper methods to manage an object
 - [useObjectUrl](/functions/hooks/useObjectUrl): Hook that creates and revokes an object URL for a Blob or MediaSource
 - [useOffsetPagination](/functions/hooks/useOffsetPagination): Hook that defines the logic when pagination
+- [useOnce](/functions/hooks/useOnce): Hook that runs an effect only once. Please do not use it in production code!
+- [useOnline](/functions/hooks/useOnline): Hook that manages if the user is online
+- [useOperatingSystem](/functions/hooks/useOperatingSystem): Hook that returns the operating system of the current browser
+- [useOptimistic](/functions/hooks/useOptimistic): Hook that allows get optimistic value before its update
+- [useOrientation](/functions/hooks/useOrientation): Hook that provides the current screen orientation

@@ -1,3 +1,5 @@
+'use client'
+
 import { useOrientation } from '@siberiacancode/reactuse';
 
 const Demo = () => {

@@ -1,19 +1,18 @@
-import { useClipboard } from '@siberiacancode/reactuse';
+import { useClipboard, useDisclosure } from '@siberiacancode/reactuse';
 import { CheckIcon, CopyIcon } from 'lucide-react';
-import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 const SHARE_URL = 'https://reactuse.org';
 
 const Demo = () => {
   const clipboard = useClipboard();
-  const [showToast, setShowToast] = useState(false);
+  const toast = useDisclosure();
 
   const onShare = () => {
-    if (showToast) return;
+    if (toast.opened) return;
     clipboard.copy(SHARE_URL);
-    setShowToast(true);
-    setTimeout(setShowToast, 1500, false);
+    toast.open();
+    setTimeout(toast.close, 1500);
   };
 
   return (
@@ -45,7 +44,7 @@ const Demo = () => {
         </a>
       </p>
 
-      {showToast &&
+      {toast.opened &&
         createPortal(
           <div className='animate-in fade-in slide-in-from-bottom-4 fixed right-4 bottom-6 left-4 flex items-center gap-3 rounded-2xl border border-black/5 bg-white px-4 py-3.5 text-sm font-medium text-gray-900 shadow-xl duration-300 sm:right-6 sm:left-auto sm:w-auto sm:min-w-72 dark:border-white/10 dark:bg-neutral-900 dark:text-white'>
             <div className='flex size-6 shrink-0 items-center justify-center rounded-full bg-gray-900 dark:bg-white'>

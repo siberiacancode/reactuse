@@ -13,6 +13,7 @@ it('Should use query', () => {
   expect(result.current.isRefetching).toBeFalsy();
   expect(result.current.isSuccess).toBeFalsy();
   expect(result.current.refetch).toBeTypeOf('function');
+  expect(result.current.fetch).toBeTypeOf('function');
   expect(result.current.abort).toBeTypeOf('function');
   expect(result.current.error).toBeUndefined();
   expect(result.current.data).toBeUndefined();
@@ -27,6 +28,7 @@ it('Should use query on server side', () => {
   expect(result.current.isRefetching).toBeFalsy();
   expect(result.current.isSuccess).toBeFalsy();
   expect(result.current.refetch).toBeTypeOf('function');
+  expect(result.current.fetch).toBeTypeOf('function');
   expect(result.current.abort).toBeTypeOf('function');
   expect(result.current.error).toBeUndefined();
   expect(result.current.data).toBeUndefined();
@@ -91,6 +93,24 @@ it('Should refetch data', async () => {
     expect(result.current.isRefetching).toBeFalsy();
     expect(result.current.data).toBe('data');
   });
+});
+
+it('Should fetch data manually', async () => {
+  const { result } = renderHook(() => useQuery(() => Promise.resolve('data')));
+
+  await waitFor(() => {
+    expect(result.current.isLoading).toBeFalsy();
+    expect(result.current.isFetching).toBeFalsy();
+    expect(result.current.isRefetching).toBeFalsy();
+    expect(result.current.data).toBe('data');
+  });
+
+  await act(async () => await result.current.fetch());
+
+  expect(result.current.isLoading).toBeFalsy();
+  expect(result.current.isFetching).toBeFalsy();
+  expect(result.current.isRefetching).toBeFalsy();
+  expect(result.current.data).toBe('data');
 });
 
 it('Should abort request', async () => {

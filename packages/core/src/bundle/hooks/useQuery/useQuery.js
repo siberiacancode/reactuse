@@ -26,7 +26,7 @@ import { useMount } from '../useMount/useMount';
 export const useQuery = (callback, options) => {
   const enabled = options?.enabled ?? true;
   const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
-  const alreadyRequested = useRef(false);
+  const alreadyRequestedRef = useRef(false);
   const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -45,11 +45,11 @@ export const useQuery = (callback, options) => {
     abort();
     setIsFetching(true);
     if (action === 'init') {
-      alreadyRequested.current = true;
+      alreadyRequestedRef.current = true;
       setIsLoading(true);
     }
     if (action === 'refetch') setIsRefetching(true);
-    callback({ signal: abortControllerRef.current.signal, keys })
+    return callback({ signal: abortControllerRef.current.signal, keys })
       .then((response) => {
         const data = options?.select ? options?.select(response) : response;
         options?.onSuccess?.(data);
@@ -72,7 +72,8 @@ export const useQuery = (callback, options) => {
             setTimeout(request, retryDelay, action);
             return;
           }
-          return request(action);
+          request(action);
+          return;
         }
         options?.onError?.(error);
         setData(undefined);
@@ -96,11 +97,11 @@ export const useQuery = (callback, options) => {
   };
   useMount(() => {
     if (!enabled) return;
-    request('init');
+    void request('init');
   });
   useDidUpdate(() => {
     if (!enabled) return;
-    request(alreadyRequested.current ? 'refetch' : 'init');
+    void request(alreadyRequestedRef.current ? 'refetch' : 'init');
   }, [enabled, ...keys]);
   useEffect(
     () => () => {
@@ -108,7 +109,10 @@ export const useQuery = (callback, options) => {
     },
     [enabled, options?.refetchInterval, options?.retry, ...keys]
   );
-  const refetch = () => request('refetch');
+  const refetch = () => {
+    request('refetch');
+  };
+  const fetch = () => request('refetch');
   return {
     abort,
     data,
@@ -118,6 +122,7 @@ export const useQuery = (callback, options) => {
     isLoading,
     isError,
     isSuccess,
-    isRefetching
+    isRefetching,
+    fetch
   };
 };
