@@ -1,122 +1,239 @@
 import {
+  useClickOutside,
   useDebounceCallback,
   useDisclosure,
   useMutation,
   useOptimistic,
   useQuery
 } from '@siberiacancode/reactuse';
-import { HeartIcon, XIcon } from 'lucide-react';
-import { createPortal } from 'react-dom';
+import { HeartIcon, MoreHorizontalIcon, PinIcon, Trash2Icon, Undo2Icon } from 'lucide-react';
+import { useState } from 'react';
 
 import { cn } from '@/utils/lib';
 
-const POST = {
-  name: 'reactuse',
-  handle: '@reactuse',
-  time: '2h',
-  text: 'Like this post to see optimistic updates in action — the UI reacts instantly, but every 5th request fails and rolls back.',
+interface Post {
+  handle: string;
+  id: string;
+  liked: boolean;
+  likes: number;
+  logo: string;
+  name: string;
+  pinned: boolean;
+  text: string;
+  time: string;
+}
+
+const REGULAR_POST: Post = {
+  id: 'regular',
+  name: 'React',
+  handle: '@reactjs',
+  logo: 'https://cdn.simpleicons.org/react',
+  text: 'Try liking or deleting this post — changes appear instantly, then sync or roll back.',
+  time: '5h',
+  pinned: false,
   liked: false,
-  likes: 12
+  likes: 42
 };
 
-type Post = typeof POST;
+let POSTS: Post[] = [
+  {
+    id: 'pinned',
+    name: 'reactuse',
+    handle: '@reactuse',
+    logo: 'https://reactuse.org/logo.svg',
+    text: 'Welcome to reactuse — a collection of essential React hooks. This post is pinned and cannot be deleted.',
+    time: '2h',
+    pinned: true,
+    liked: false,
+    likes: 128
+  },
+  { ...REGULAR_POST }
+];
 
-let attempt = 0;
-
-// eslint-disable-next-line e18e/prefer-timer-args
-const fetchPost = () => new Promise<Post>((resolve) => setTimeout(() => resolve({ ...POST }), 500));
-
-const toggleLike = (next: boolean) =>
-  new Promise<Post>((resolve, reject) => {
-    setTimeout(() => {
-      attempt += 1;
-      if (attempt % 5 === 0) {
-        reject(new Error('Network error'));
-        return;
-      }
-      POST.liked = next;
-      POST.likes = 12 + (next ? 1 : 0);
-      resolve({ ...POST });
-    }, 500);
-  });
-
-const Demo = () => {
-  const postQuery = useQuery(fetchPost, { enabled: false, placeholderData: POST });
-  const toggleLikeMutation = useMutation(toggleLike);
-
-  const data = postQuery.data!;
-
-  const toast = useDisclosure();
-  const [optimisticLiked, updateOptimistic, setOptimisticLiked] = useOptimistic(
-    data.liked,
-    (_, value: boolean) => value
+const fetchPosts = () =>
+  new Promise<Post[]>((resolve) =>
+    setTimeout(() => resolve(POSTS.map((post) => ({ ...post }))), 500)
   );
 
-  const commit = useDebounceCallback((next: boolean) => {
-    if (next === data.liked) return;
-
-    const promise = (async () => {
-      try {
-        await toggleLikeMutation.mutateAsync(next);
-        await postQuery.refetch();
-      } catch {
-        toast.open();
-        setTimeout(toast.close, 1500);
-        throw new Error('Network error');
+const likePost = (id: string, liked: boolean) =>
+  new Promise<void>((resolve) =>
+    setTimeout(() => {
+      const post = POSTS.find((item) => item.id === id);
+      if (post) {
+        post.liked = liked;
+        post.likes += liked ? 1 : -1;
       }
-    })();
+      resolve();
+    }, 500)
+  );
 
-    updateOptimistic(next, promise);
-  }, 600);
+const deletePost = (id: string) =>
+  new Promise<void>((resolve) =>
+    setTimeout(() => {
+      POSTS = POSTS.filter((post) => post.id !== id);
+      resolve();
+    }, 800)
+  );
 
-  const onLike = () => {
-    const next = !optimisticLiked;
-    setOptimisticLiked(next);
-    commit(next);
-  };
+const restorePost = () =>
+  new Promise<void>((resolve) =>
+    setTimeout(() => {
+      POSTS = [...POSTS, { ...REGULAR_POST }];
+      resolve();
+    }, 800)
+  );
 
-  const likeCount = data.likes + (optimisticLiked === data.liked ? 0 : optimisticLiked ? 1 : -1);
+interface PostCardProps {
+  post: Post;
+  onDelete: (id: string) => void;
+  onLike: (post: Post) => void;
+}
+
+const PostCard = ({ post, onLike, onDelete }: PostCardProps) => {
+  const menu = useDisclosure();
+  const ref = useClickOutside<HTMLDivElement>(() => menu.close());
 
   return (
-    <section className='relative flex w-full max-w-md flex-col py-4'>
-      <article className='flex flex-col gap-3'>
-        <div className='flex items-center gap-2'>
-          <div className='bg-muted flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full'>
-            <img alt='reactuse' className='size-6' src='https://reactuse.org/logo.svg' />
-          </div>
-          <span className='text-foreground text-sm font-semibold'>{data.name}</span>
-          <span className='text-muted-foreground text-xs'>{data.handle}</span>
-          <span className='text-muted-foreground text-xs'>· {data.time}</span>
+    <article className='border-border flex flex-col gap-2 border-b py-3 last:border-b-0'>
+      <div className='flex items-center gap-2'>
+        <div className='bg-muted flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full'>
+          <img alt={post.name} className='size-5' src={post.logo} />
         </div>
+        <span className='text-foreground text-sm font-semibold'>{post.name}</span>
+        <span className='text-muted-foreground text-xs'>{post.handle}</span>
+        <span className='text-muted-foreground text-xs'>· {post.time}</span>
 
-        <p className='text-foreground text-sm leading-relaxed'>{data.text}</p>
+        {post.pinned && <PinIcon className='text-muted-foreground ml-auto size-4 fill-current' />}
 
-        <div className='flex items-center'>
-          <button
-            className={cn(
-              'flex items-center gap-1.5 px-0! text-sm transition-colors',
-              optimisticLiked ? 'text-destructive' : 'text-muted-foreground hover:text-destructive'
+        {!post.pinned && (
+          <div className='relative ml-auto'>
+            <button
+              aria-label='More'
+              className='text-muted-foreground hover:text-foreground'
+              data-size='icon-sm'
+              data-variant='ghost'
+              type='button'
+              onClick={menu.toggle}
+            >
+              <MoreHorizontalIcon className='size-4' />
+            </button>
+
+            {menu.opened && (
+              <div
+                ref={ref}
+                className='absolute top-full right-0 mt-1'
+                data-slot='dropdown-menu-content'
+              >
+                <div
+                  data-slot='dropdown-menu-item'
+                  data-variant='destructive'
+                  onClick={() => {
+                    menu.close();
+                    onDelete(post.id);
+                  }}
+                >
+                  <Trash2Icon />
+                  Delete
+                </div>
+              </div>
             )}
-            data-variant='unstyled'
+          </div>
+        )}
+      </div>
+
+      <p className='text-foreground text-sm leading-relaxed'>{post.text}</p>
+
+      <button
+        className={cn(
+          'flex w-fit items-center gap-1.5 px-0! text-sm transition-colors',
+          post.liked ? 'text-destructive' : 'text-muted-foreground hover:text-destructive'
+        )}
+        data-variant='unstyled'
+        type='button'
+        onClick={() => onLike(post)}
+      >
+        <HeartIcon className='size-4' fill={post.liked ? 'currentColor' : 'none'} />
+        {post.likes}
+      </button>
+    </article>
+  );
+};
+
+const Demo = () => {
+  const postsQuery = useQuery(fetchPosts, { enabled: false, placeholderData: POSTS });
+  const likeMutation = useMutation(({ id, liked }: { id: string; liked: boolean }) =>
+    likePost(id, liked)
+  );
+  const deleteMutation = useMutation(deletePost);
+  const restoreMutation = useMutation(restorePost);
+
+  const data = postsQuery.data!;
+
+  const [posts, updateOptimistic, setPosts] = useOptimistic(data, (_, value) => value);
+
+  const [deletedIds, setDeletedIds] = useState<string[]>([]);
+
+  const likeCommit = useDebounceCallback((id: string, liked: boolean, optimistic: Post[]) => {
+    const promise = (async () => {
+      await likeMutation.mutateAsync({ id, liked });
+      await postsQuery.fetch();
+    })();
+    updateOptimistic(optimistic, promise);
+  }, 600);
+
+  const onLike = (target: Post) => {
+    const liked = !target.liked;
+    const optimistic = posts.map((item) =>
+      item.id === target.id ? { ...item, liked, likes: item.likes + (liked ? 1 : -1) } : item
+    );
+    setPosts(optimistic);
+    likeCommit(target.id, liked, optimistic);
+  };
+
+  const onDelete = (id: string) => {
+    setDeletedIds((current) => [...current, id]);
+
+    const promise = (async () => {
+      await deleteMutation.mutateAsync(id);
+      await postsQuery.fetch();
+    })();
+    updateOptimistic(
+      posts.filter((item) => item.id !== id),
+      promise
+    );
+  };
+
+  const onUndo = () => {
+    setDeletedIds([]);
+
+    const promise = (async () => {
+      await restoreMutation.mutateAsync();
+      await postsQuery.fetch();
+    })();
+    updateOptimistic([...posts, { ...REGULAR_POST }], promise);
+  };
+
+  return (
+    <section className='flex w-full max-w-md flex-col py-4'>
+      {posts.map((item) => (
+        <PostCard key={item.id} post={item} onDelete={onDelete} onLike={onLike} />
+      ))}
+
+      {!!deletedIds.length && (
+        <div className='flex items-center justify-between pt-3'>
+          <span className='text-muted-foreground text-sm'>Post deleted</span>
+          <button
+            data-size='sm'
+            data-variant='ghost'
+            disabled={restoreMutation.isLoading}
             type='button'
-            onClick={onLike}
+            onClick={onUndo}
           >
-            <HeartIcon className='size-4' fill={optimisticLiked ? 'currentColor' : 'none'} />
-            {likeCount}
+            <Undo2Icon className='size-3.5' />
+            Undo
           </button>
         </div>
-      </article>
-
-      {toast.opened &&
-        createPortal(
-          <div className='animate-in fade-in slide-in-from-bottom-4 fixed right-4 bottom-6 left-4 flex items-center gap-3 rounded-2xl border border-black/5 bg-white px-4 py-3.5 text-sm font-medium text-gray-900 shadow-xl duration-300 sm:right-6 sm:left-auto sm:w-auto sm:min-w-72 dark:border-white/10 dark:bg-neutral-900 dark:text-white'>
-            <div className='bg-destructive flex size-6 shrink-0 items-center justify-center rounded-full'>
-              <XIcon className='size-3.5 text-white' strokeWidth={3} />
-            </div>
-            Failed to change like
-          </div>,
-          document.body
-        )}
+      )}
     </section>
   );
 };

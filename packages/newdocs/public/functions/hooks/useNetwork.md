@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779190580000
+lastModifiedTime: 1780745248000
 ---
 
 import metadata from './useNetwork.meta.json';

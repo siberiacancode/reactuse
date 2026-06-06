@@ -81,7 +81,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
 
   return (
     <div
-      className='flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full'
+      className='flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full xl:gap-8 2xl:gap-10'
       data-slot='docs'
     >
       <div className='mx-auto mt-12 flex max-w-[50rem] min-w-0 flex-1 flex-col pb-24'>
@@ -123,7 +123,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
         </div>
       </div>
 
-      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
+      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex xl:pl-2 2xl:pl-4'>
         {!!doc.toc.length && (
           <div className='no-scrollbar h-full overflow-y-auto overscroll-contain pt-12'>
             <FunctionToc

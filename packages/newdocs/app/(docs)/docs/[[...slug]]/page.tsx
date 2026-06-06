@@ -70,7 +70,7 @@ export const DocsPage = async (props: DocsPageProps) => {
 
   return (
     <div
-      className='flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full'
+      className='flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full xl:gap-8 2xl:gap-10'
       data-slot='docs'
     >
       <div className='flex min-w-0 flex-1 flex-col'>
@@ -104,7 +104,7 @@ export const DocsPage = async (props: DocsPageProps) => {
           </div>
         </div>
       </div>
-      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex'>
+      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex xl:pl-2 2xl:pl-4'>
         {!!doc.toc.length && (
           <div className='no-scrollbar h-full overflow-y-auto overscroll-contain pt-12'>
             <DocsToc items={doc.toc} path={page.data.info.path} />

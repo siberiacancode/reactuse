@@ -6,7 +6,6 @@ import { cn } from '@docs/lib/utils';
 import { Button } from '@docs/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@docs/ui/popover';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import { TOP_LEVEL_SECTIONS } from './docs-sidebar';
@@ -21,22 +20,16 @@ const MobileLink = ({
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
   className?: string;
-}) => {
-  const router = useRouter();
-  return (
-    <Link
-      className={cn('flex items-center gap-2 text-2xl font-medium', className)}
-      href={href}
-      onClick={() => {
-        router.push(href.toString());
-        onOpenChange?.(false);
-      }}
-      {...props}
-    >
-      {children}
-    </Link>
-  );
-};
+}) => (
+  <Link
+    className={cn('flex items-center gap-2 text-2xl font-medium', className)}
+    href={href}
+    onClick={() => onOpenChange?.(false)}
+    {...props}
+  >
+    {children}
+  </Link>
+);
 
 export const MobileNav = ({
   items,

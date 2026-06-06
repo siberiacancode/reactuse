@@ -18,7 +18,7 @@ const Demo = () => {
       </p>
     );
 
-  const portrait = orientation.value.orientationType;
+  const portrait = orientation.value.orientationType?.startsWith('portrait') ?? true;
 
   return (
     <section className='items-cesnter flex flex-col gap-5 p-6'>

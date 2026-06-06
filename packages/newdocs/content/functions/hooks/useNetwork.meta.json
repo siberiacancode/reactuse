@@ -54,7 +54,7 @@
   },
   "description": "Hook to track network status",
   "category": "Browser",
-  "lastModified": 1779190580000,
+  "lastModified": 1780745248000,
   "examples": [
     "const { online, downlink, downlinkMax, effectiveType, rtt, saveData, type } = useNetwork();"
   ],

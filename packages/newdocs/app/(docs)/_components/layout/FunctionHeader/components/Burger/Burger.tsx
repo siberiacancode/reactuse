@@ -62,7 +62,7 @@ export const Burger = ({ groups, className, ...props }: BurgerProps) => {
           <div className='flex flex-col gap-4'>
             <div className='text-muted-foreground text-sm font-medium'>Menu</div>
             <div className='flex flex-col gap-3'>
-              <Link className='text-2xl font-medium' href='/' onClick={burger.toggle}>
+              <Link className='text-2xl font-medium' href='/' onClick={burger.close}>
                 Home
               </Link>
             </div>
@@ -72,7 +72,7 @@ export const Burger = ({ groups, className, ...props }: BurgerProps) => {
               <div className='text-muted-foreground text-sm font-medium'>{group.name}</div>
               <div className='flex flex-col gap-3'>
                 {group.items.map((item) => (
-                  <Link key={item.url} href={item.url} onClick={burger.toggle}>
+                  <Link key={item.url} href={item.url} onClick={burger.close}>
                     {item.name}
                   </Link>
                 ))}

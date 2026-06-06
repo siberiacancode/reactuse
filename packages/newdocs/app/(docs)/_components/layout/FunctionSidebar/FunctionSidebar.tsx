@@ -33,9 +33,9 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
       collapsible='none'
       {...props}
     >
-      <div className='pointer-events-none absolute top-8 z-10 h-8 w-(--sidebar-menu-width) shrink-0 bg-linear-to-b from-background via-background/80 to-background/50 blur-xs' />
-      <div className='from-background/75 via-background/25 pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t to-transparent' />
-      <SidebarContent className='no-scrollbar h-full w-(--sidebar-menu-width) overflow-y-auto overscroll-contain px-2 pt-12 pb-22'>
+      <div className='from-background via-background/80 to-background/50 pointer-events-none absolute inset-x-0 top-8 z-10 h-8 shrink-0 bg-linear-to-b blur-xs' />
+
+      <SidebarContent className='no-scrollbar mt-12 h-full w-(--sidebar-menu-width) overflow-y-auto overscroll-contain px-2 pb-22'>
         {groups.map((group, index) => (
           <SidebarGroup key={index}>
             <SidebarGroupLabel className='text-muted-foreground font-medium capitalize'>

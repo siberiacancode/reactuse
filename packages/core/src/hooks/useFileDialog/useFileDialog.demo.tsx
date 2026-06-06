@@ -89,9 +89,10 @@ const Demo = () => {
 
         <div className='px-4 py-3'>
           <textarea
-            className='text-foreground placeholder:text-muted-foreground min-h-[140px] w-full resize-none bg-transparent text-sm leading-relaxed outline-none'
+            className='text-foreground placeholder:text-muted-foreground no-scrollbar min-h-[140px] w-full resize-none bg-transparent text-sm leading-relaxed outline-none'
             id='description'
             placeholder='Add your message...'
+            rows={8}
             {...messageField.register()}
           />
         </div>

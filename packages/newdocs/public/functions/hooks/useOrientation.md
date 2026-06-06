@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1756014035000
+lastModifiedTime: 1780745248000
 ---
 
 import metadata from './useOrientation.meta.json';
