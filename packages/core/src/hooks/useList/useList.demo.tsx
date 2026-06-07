@@ -1,3 +1,5 @@
+import type { SubmitEvent } from 'react';
+
 import { useList } from '@siberiacancode/reactuse';
 import { CheckIcon, XIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -19,7 +21,8 @@ const Demo = () => {
 
   const [value, setValue] = useState('');
 
-  const onAdd = () => {
+  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const text = value.trim();
     if (!text) return;
     todos.push({ id: crypto.randomUUID(), text, done: false });
@@ -36,26 +39,25 @@ const Demo = () => {
     <section className='flex w-full max-w-sm flex-col gap-3 p-4'>
       <h2 className='text-foreground text-sm font-semibold'>Today's tasks</h2>
 
-      <div className='flex items-center gap-2'>
-        <input
-          className='border-border bg-card text-foreground placeholder:text-muted-foreground flex-1 rounded-md border px-3 py-2 text-sm outline-none'
-          placeholder='What needs to be done?'
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') onAdd();
-          }}
-        />
-        <button disabled={!value.trim()} type='button' onClick={onAdd}>
-          Add
-        </button>
-      </div>
+      <form onSubmit={onSubmit}>
+        <div className='flex items-center gap-2'>
+          <input
+            className='border-border bg-card text-foreground placeholder:text-muted-foreground flex-1 rounded-md border px-3 py-2 text-sm outline-none'
+            placeholder='What needs to be done?'
+            value={value}
+            onChange={(event) => setValue(event.target.value)}
+          />
+          <button disabled={!value.trim()} type='submit'>
+            Add
+          </button>
+        </div>
+      </form>
 
       <div className='flex flex-col'>
         {todos.value.map((todo, index) => (
           <div
             key={todo.id}
-            className='group hover:bg-muted/40 -mx-2 flex items-center gap-3 rounded-md px-2 py-2 transition-colors'
+            className='group hover:bg-muted/40 -mx-2 flex items-center gap-3 rounded-md px-1 py-2 transition-colors'
           >
             <label className='flex shrink-0 cursor-pointer items-center'>
               <input
@@ -84,7 +86,7 @@ const Demo = () => {
 
             <button
               aria-label='Remove'
-              className='rounded-full! opacity-0 transition-opacity group-hover:opacity-100'
+              className='opacity-0 transition-opacity group-hover:opacity-100'
               data-size='icon'
               data-variant='ghost'
               type='button'
@@ -97,9 +99,8 @@ const Demo = () => {
       </div>
 
       <span className='text-muted-foreground px-1 text-[10px]'>
-        {remaining === 0
-          ? 'All done — nice work ✨'
-          : `${remaining} ${remaining === 1 ? 'task' : 'tasks'} left`}
+        {!remaining && 'All done — nice work ✨'}
+        {remaining && `${remaining} ${remaining === 1 ? 'task' : 'tasks'} left`}
       </span>
     </section>
   );
