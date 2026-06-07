@@ -102,3 +102,4 @@ A quick list of available functions.
 - [useOperatingSystem](/functions/hooks/useOperatingSystem): Hook that returns the operating system of the current browser
 - [useOptimistic](/functions/hooks/useOptimistic): Hook that allows get optimistic value before its update
 - [useOrientation](/functions/hooks/useOrientation): Hook that provides the current screen orientation
+- [useOtpCredential](/functions/hooks/useOtpCredential): Hook that creates an otp credential

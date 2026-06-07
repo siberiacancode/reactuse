@@ -1,5 +1,5 @@
 import { useBoolean, useField, useFocus } from '@siberiacancode/reactuse';
-import { CheckIcon, Eye, EyeOff, XIcon } from 'lucide-react';
+import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from 'lucide-react';
 
 import { cn } from '@/utils/lib';
 
@@ -71,7 +71,7 @@ const Demo = () => {
           type='button'
           onClick={() => toggleVisible()}
         >
-          {visible ? <EyeOff className='size-4' /> : <Eye className='size-4' />}
+          {visible ? <EyeOffIcon className='size-4' /> : <EyeIcon className='size-4' />}
         </button>
 
         {showRules && (

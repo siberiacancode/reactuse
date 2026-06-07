@@ -48,9 +48,9 @@ const Demo = () => {
   }, [counter.value]);
 
   return (
-    <section className='flex w-full max-w-md flex-col gap-3 p-4'>
-      <div className='bg-muted/20 flex h-[220px] flex-col rounded-lg'>
-        <div className='flex items-center justify-between px-1 py-2'>
+    <section className='bg-muted/20 flex w-full max-w-md flex-col gap-3 rounded-lg p-4'>
+      <div className='flex h-[220px] flex-col'>
+        <div className='flex items-center justify-between'>
           <span className='text-foreground text-[10px] font-semibold tracking-wider uppercase'>
             Console
           </span>
@@ -70,7 +70,7 @@ const Demo = () => {
           </div>
         </div>
 
-        <div ref={scrollRef} className='no-scrollbar flex-1 overflow-y-auto px-1 py-2'>
+        <div ref={scrollRef} className='no-scrollbar flex-1 overflow-y-auto'>
           {logs.map((entry) => (
             <div
               key={entry.id}

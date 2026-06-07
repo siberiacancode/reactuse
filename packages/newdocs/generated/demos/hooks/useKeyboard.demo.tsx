@@ -10,19 +10,17 @@ const TARGET = 'react';
 const Demo = () => {
   const [input, setInput] = useState('');
 
-  useKeyboard({
-    onKeyDown: (event) => {
-      event.preventDefault();
+  useKeyboard((event) => {
+    event.preventDefault();
 
-      if (event.key === 'Backspace') {
-        setInput((current) => current.slice(0, -1));
-        return;
-      }
-
-      if (event.key.length !== 1 || !/\p{L}/u.test(event.key)) return;
-      if (input.length >= TARGET.length) return;
-      setInput((current) => current + event.key.toLowerCase());
+    if (event.key === 'Backspace') {
+      setInput((current) => current.slice(0, -1));
+      return;
     }
+
+    if (event.key.length !== 1 || !/\p{L}/u.test(event.key)) return;
+    if (input.length >= TARGET.length) return;
+    setInput((current) => current + event.key.toLowerCase());
   });
 
   const cells = Array.from({ length: TARGET.length }, (_, index) => {

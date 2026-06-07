@@ -73,7 +73,7 @@ export const DocsPage = async (props: DocsPageProps) => {
       className='scroll-mt-24 pb-8 text-[1.05rem] sm:text-[15px] xl:grid xl:w-full xl:grid-cols-[minmax(0,var(--docs-content-width))_var(--sidebar-width)] xl:gap-[var(--docs-layout-gap)]'
       data-slot='docs'
     >
-      <div className='mt-12 min-w-0 flex-col pb-24 xl:flex xl:px-12 2xl:px-16'>
+      <div className='mt-12 min-w-0 flex-col pb-24 xl:flex xl:px-16 2xl:px-22'>
         <div className='mb-6 flex w-full min-w-0 flex-col gap-6 text-neutral-800 md:px-0 dark:text-neutral-300'>
           <DocHeader
             description={doc.description}

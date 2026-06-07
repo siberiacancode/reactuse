@@ -1,3 +1,5 @@
+'use client'
+
 import { useOtpCredential } from '@siberiacancode/reactuse';
 import { MessageSquareTextIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
