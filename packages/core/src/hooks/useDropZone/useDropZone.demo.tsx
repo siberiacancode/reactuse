@@ -119,7 +119,7 @@ const Demo = () => {
               <div className='flex min-w-0 flex-1 flex-col leading-tight'>
                 <span className='truncate text-xs font-medium text-white'>{file.name}</span>
                 <span className='text-[10px] text-white/70 tabular-nums'>
-                  {formatSize(file.size)} · {file.type.replace('image/', '').toUpperCase()}
+                  {formatSize(file.size)} - {file.type.replace('image/', '').toUpperCase()}
                 </span>
               </div>
             </div>
@@ -128,12 +128,12 @@ const Demo = () => {
           <button
             aria-label='Remove'
             className='absolute top-2 right-2'
-            data-size='icon-sm'
+            data-size='icon'
             data-variant='secondary'
             type='button'
             onClick={onRemove}
           >
-            <XIcon className='size-3.5' />
+            <XIcon className='size-4' />
           </button>
         </div>
       )}

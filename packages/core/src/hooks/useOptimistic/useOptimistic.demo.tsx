@@ -23,46 +23,55 @@ interface Post {
   time: string;
 }
 
-const REGULAR_POST: Post = {
-  id: 'regular',
-  name: 'React',
-  handle: '@reactjs',
-  logo: 'https://cdn.simpleicons.org/react',
-  text: 'Try liking or deleting this post — changes appear instantly, then sync or roll back.',
-  time: '5h',
-  pinned: false,
-  liked: false,
-  likes: 42
-};
+const POST_IDS = ['pinned', 'regular'] as const;
 
-let POSTS: Post[] = [
+const INITIAL_POSTS: Post[] = [
   {
     id: 'pinned',
     name: 'reactuse',
     handle: '@reactuse',
     logo: 'https://reactuse.org/logo.svg',
-    text: 'Welcome to reactuse — a collection of essential React hooks. This post is pinned and cannot be deleted.',
+    text: 'Welcome to reactuse - a collection of essential React hooks. This post is pinned and cannot be deleted.',
     time: '2h',
     pinned: true,
     liked: false,
     likes: 128
   },
-  { ...REGULAR_POST }
+  {
+    id: 'regular',
+    name: 'React',
+    handle: '@reactjs',
+    logo: 'https://cdn.simpleicons.org/react',
+    text: 'Try liking or deleting this post - changes appear instantly, then sync or roll back.',
+    time: '5h',
+    pinned: false,
+    liked: false,
+    likes: 42
+  }
 ];
 
-const fetchPosts = () =>
-  new Promise<Post[]>((resolve) =>
-    setTimeout(() => resolve(POSTS.map((post) => ({ ...post }))), 500)
+let POSTS: Post[] = INITIAL_POSTS.map((post) => ({ ...post }));
+
+const getInitialPost = (id: string) => INITIAL_POSTS.find((post) => post.id === id) ?? null;
+
+const fetchPost = (id: string) =>
+  new Promise<Post | null>((resolve) =>
+    setTimeout(() => {
+      const post = POSTS.find((item) => item.id === id);
+      resolve(post ? { ...post } : null);
+    }, 500)
   );
 
 const likePost = (id: string, liked: boolean) =>
   new Promise<void>((resolve) =>
     setTimeout(() => {
       const post = POSTS.find((item) => item.id === id);
+
       if (post) {
         post.liked = liked;
         post.likes += liked ? 1 : -1;
       }
+
       resolve();
     }, 500)
   );
@@ -75,37 +84,119 @@ const deletePost = (id: string) =>
     }, 800)
   );
 
-const restorePost = () =>
+const restorePost = (id: string) =>
   new Promise<void>((resolve) =>
     setTimeout(() => {
-      POSTS = [...POSTS, { ...REGULAR_POST }];
+      const source = getInitialPost(id);
+
+      if (source && !POSTS.some((post) => post.id === id)) {
+        POSTS = [...POSTS, { ...source }];
+      }
+
       resolve();
     }, 800)
   );
 
-interface PostCardProps {
-  post: Post;
-  onDelete: (id: string) => void;
-  onLike: (post: Post) => void;
-}
-
-const PostCard = ({ post, onLike, onDelete }: PostCardProps) => {
+const PostCard = ({ id }: { id: string }) => {
   const menu = useDisclosure();
   const ref = useClickOutside<HTMLDivElement>(() => menu.close());
+  const [deleted, setDeleted] = useState(false);
+
+  const postQuery = useQuery(() => fetchPost(id), {
+    enabled: false,
+    placeholderData: getInitialPost(id)
+  });
+
+  const likeMutation = useMutation(({ id: targetId, liked }: { id: string; liked: boolean }) =>
+    likePost(targetId, liked)
+  );
+  const deleteMutation = useMutation(deletePost);
+  const restoreMutation = useMutation(restorePost);
+
+  const post = postQuery.data;
+  const [optimisticPost, updateOptimistic, setOptimisticPost] = useOptimistic(
+    post,
+    (_, value: Post | null) => value
+  );
+
+  const likeCommit = useDebounceCallback((nextPost: Post) => {
+    const promise = (async () => {
+      await likeMutation.mutateAsync({ id: nextPost.id, liked: nextPost.liked });
+      await postQuery.fetch();
+    })();
+
+    updateOptimistic(nextPost, promise);
+  }, 600);
+
+  const onLike = () => {
+    if (!optimisticPost) return;
+
+    const liked = !optimisticPost.liked;
+    const nextPost = {
+      ...optimisticPost,
+      liked,
+      likes: optimisticPost.likes + (liked ? 1 : -1)
+    };
+
+    setOptimisticPost(nextPost);
+    likeCommit(nextPost);
+  };
+
+  const onDelete = () => {
+    if (!optimisticPost) return;
+
+    setDeleted(true);
+
+    void (async () => {
+      await deleteMutation.mutateAsync(optimisticPost.id);
+      await postQuery.fetch();
+    })();
+  };
+
+  const onUndo = () => {
+    setDeleted(false);
+
+    void (async () => {
+      await restoreMutation.mutateAsync(id);
+      await postQuery.fetch();
+    })();
+  };
+
+  if (deleted) {
+    return (
+      <div className='border-border flex items-center justify-between border-b py-3 last:border-b-0'>
+        <span className='text-muted-foreground text-sm'>Post deleted</span>
+        <button
+          data-size='sm'
+          data-variant='ghost'
+          disabled={restoreMutation.isLoading}
+          type='button'
+          onClick={onUndo}
+        >
+          <Undo2Icon className='size-3.5' />
+          Undo
+        </button>
+      </div>
+    );
+  }
+
+  if (!optimisticPost) return null;
 
   return (
     <article className='border-border flex flex-col gap-2 border-b py-3 last:border-b-0'>
       <div className='flex items-center gap-2'>
         <div className='bg-muted flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full'>
-          <img alt={post.name} className='size-5' src={post.logo} />
+          <img alt={optimisticPost.name} className='size-5' src={optimisticPost.logo} />
         </div>
-        <span className='text-foreground text-sm font-semibold'>{post.name}</span>
-        <span className='text-muted-foreground text-xs'>{post.handle}</span>
-        <span className='text-muted-foreground text-xs'>· {post.time}</span>
+        <span className='text-foreground text-sm font-semibold'>{optimisticPost.name}</span>
+        <span className='text-muted-foreground text-xs'>{optimisticPost.handle}</span>
+        <span className='text-muted-foreground text-xs'>- {optimisticPost.time}</span>
 
-        {post.pinned && <PinIcon className='text-muted-foreground ml-auto size-4 fill-current' />}
+        {optimisticPost.pinned && (
+          <PinIcon className='text-muted-foreground ml-auto size-4 fill-current' />
+        )}
 
-        {!post.pinned && (
+        {!optimisticPost.pinned && (
           <div className='relative ml-auto'>
             <button
               aria-label='More'
@@ -113,7 +204,7 @@ const PostCard = ({ post, onLike, onDelete }: PostCardProps) => {
               data-size='icon-sm'
               data-variant='ghost'
               type='button'
-              onClick={menu.toggle}
+              onClick={() => menu.toggle()}
             >
               <MoreHorizontalIcon className='size-4' />
             </button>
@@ -129,7 +220,7 @@ const PostCard = ({ post, onLike, onDelete }: PostCardProps) => {
                   data-variant='destructive'
                   onClick={() => {
                     menu.close();
-                    onDelete(post.id);
+                    onDelete();
                   }}
                 >
                   <Trash2Icon />
@@ -141,101 +232,30 @@ const PostCard = ({ post, onLike, onDelete }: PostCardProps) => {
         )}
       </div>
 
-      <p className='text-foreground text-sm leading-relaxed'>{post.text}</p>
+      <p className='text-foreground text-sm leading-relaxed'>{optimisticPost.text}</p>
 
       <button
         className={cn(
           'flex w-fit items-center gap-1.5 px-0! text-sm transition-colors',
-          post.liked ? 'text-destructive' : 'text-muted-foreground hover:text-destructive'
+          optimisticPost.liked ? 'text-destructive' : 'text-muted-foreground hover:text-destructive'
         )}
         data-variant='unstyled'
         type='button'
-        onClick={() => onLike(post)}
+        onClick={onLike}
       >
-        <HeartIcon className='size-4' fill={post.liked ? 'currentColor' : 'none'} />
-        {post.likes}
+        <HeartIcon className='size-4' fill={optimisticPost.liked ? 'currentColor' : 'none'} />
+        {optimisticPost.likes}
       </button>
     </article>
   );
 };
 
-const Demo = () => {
-  const postsQuery = useQuery(fetchPosts, { enabled: false, placeholderData: POSTS });
-  const likeMutation = useMutation(({ id, liked }: { id: string; liked: boolean }) =>
-    likePost(id, liked)
-  );
-  const deleteMutation = useMutation(deletePost);
-  const restoreMutation = useMutation(restorePost);
-
-  const data = postsQuery.data!;
-
-  const [posts, updateOptimistic, setPosts] = useOptimistic(data, (_, value) => value);
-
-  const [deletedIds, setDeletedIds] = useState<string[]>([]);
-
-  const likeCommit = useDebounceCallback((id: string, liked: boolean, optimistic: Post[]) => {
-    const promise = (async () => {
-      await likeMutation.mutateAsync({ id, liked });
-      await postsQuery.fetch();
-    })();
-    updateOptimistic(optimistic, promise);
-  }, 600);
-
-  const onLike = (target: Post) => {
-    const liked = !target.liked;
-    const optimistic = posts.map((item) =>
-      item.id === target.id ? { ...item, liked, likes: item.likes + (liked ? 1 : -1) } : item
-    );
-    setPosts(optimistic);
-    likeCommit(target.id, liked, optimistic);
-  };
-
-  const onDelete = (id: string) => {
-    setDeletedIds((current) => [...current, id]);
-
-    const promise = (async () => {
-      await deleteMutation.mutateAsync(id);
-      await postsQuery.fetch();
-    })();
-    updateOptimistic(
-      posts.filter((item) => item.id !== id),
-      promise
-    );
-  };
-
-  const onUndo = () => {
-    setDeletedIds([]);
-
-    const promise = (async () => {
-      await restoreMutation.mutateAsync();
-      await postsQuery.fetch();
-    })();
-    updateOptimistic([...posts, { ...REGULAR_POST }], promise);
-  };
-
-  return (
-    <section className='flex w-full max-w-md flex-col py-4'>
-      {posts.map((item) => (
-        <PostCard key={item.id} post={item} onDelete={onDelete} onLike={onLike} />
-      ))}
-
-      {!!deletedIds.length && (
-        <div className='flex items-center justify-between pt-3'>
-          <span className='text-muted-foreground text-sm'>Post deleted</span>
-          <button
-            data-size='sm'
-            data-variant='ghost'
-            disabled={restoreMutation.isLoading}
-            type='button'
-            onClick={onUndo}
-          >
-            <Undo2Icon className='size-3.5' />
-            Undo
-          </button>
-        </div>
-      )}
-    </section>
-  );
-};
+const Demo = () => (
+  <section className='flex w-full max-w-md flex-col py-4'>
+    {POST_IDS.map((id) => (
+      <PostCard key={id} id={id} />
+    ))}
+  </section>
+);
 
 export default Demo;

@@ -56,7 +56,7 @@ export const FunctionToc = ({ type, name, items, hooks }: FunctionTocProps) => {
   }, []);
 
   return (
-    <nav className='sticky top-0 flex flex-col gap-2 p-4 pt-0 text-sm'>
+    <nav className='sticky top-0 flex flex-col gap-2 text-sm'>
       <p className='text-md text-foreground font-semibold'>On this page</p>
       <ul className='flex flex-col gap-2'>
         {items.map((item) => (

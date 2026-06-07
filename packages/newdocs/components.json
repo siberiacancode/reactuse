@@ -1,5 +1,5 @@
 {
-  "$schema": "https://ui.shadcn.com/schema.json",
+  "$schema": "https://shadcn.com",
   "style": "new-york",
   "rsc": true,
   "tsx": true,
@@ -10,10 +10,10 @@
     "prefix": ""
   },
   "aliases": {
-    "utils": "@docs/lib/utils",
-    "ui": "@docs/ui",
-    "lib": "@docs/lib",
-    "hooks": "@docs/hooks"
+    "utils": "@docs/src/lib/utils",
+    "ui": "@docs/src/components/ui",
+    "lib": "@docs/src/lib",
+    "hooks": "@docs/src/hooks"
   },
   "iconLibrary": "lucide"
 }

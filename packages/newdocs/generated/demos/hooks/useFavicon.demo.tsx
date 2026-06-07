@@ -52,17 +52,6 @@ const Demo = () => {
           );
         })}
       </div>
-
-      <div className='border-border bg-muted/30 flex items-center gap-2 rounded-lg border px-3 py-2'>
-        <img
-          alt='Current favicon'
-          className='size-4 shrink-0 object-contain'
-          src={favicon.href ?? FAVICONS[0].url}
-        />
-        <span className='text-muted-foreground truncate font-mono text-[10px]'>
-          {favicon.href ?? 'default'}
-        </span>
-      </div>
     </section>
   );
 };

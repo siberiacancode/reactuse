@@ -81,10 +81,10 @@ const FunctionPage = async (props: FunctionPageProps) => {
 
   return (
     <div
-      className='flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full xl:gap-8 2xl:gap-10'
+      className='scroll-mt-24 pb-8 text-[1.05rem] sm:text-[15px] xl:grid xl:w-full xl:grid-cols-[minmax(0,var(--docs-content-width))_var(--sidebar-width)] xl:gap-[var(--docs-layout-gap)]'
       data-slot='docs'
     >
-      <div className='mx-auto mt-12 flex max-w-[50rem] min-w-0 flex-1 flex-col pb-24'>
+      <div className='mt-12 min-w-0 flex-col px-6 pb-24 xl:flex xl:px-16 2xl:px-22'>
         <div className='mb-6 flex w-full min-w-0 flex-col gap-6 text-neutral-800 md:px-0 dark:text-neutral-300'>
           <FunctionHeader
             category={doc.category}
@@ -99,7 +99,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
           />
         </div>
 
-        <div className='mx-auto w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0'>
+        <div className='w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0'>
           <MDX components={mdxComponents} />
 
           <PageLastUpdate date={new Date(lastModifiedTime)} />
@@ -123,7 +123,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
         </div>
       </div>
 
-      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex xl:pl-2 2xl:pl-4'>
+      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex xl:pl-2'>
         {!!doc.toc.length && (
           <div className='no-scrollbar h-full overflow-y-auto overscroll-contain pt-12'>
             <FunctionToc

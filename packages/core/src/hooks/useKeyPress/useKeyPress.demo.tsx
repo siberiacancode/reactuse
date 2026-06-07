@@ -1,5 +1,5 @@
 import { useAsync, useKeyPress } from '@siberiacancode/reactuse';
-import { ChevronLeftIcon, ChevronRightIcon, Loader2Icon } from 'lucide-react';
+import { HeartIcon, Loader2Icon, XIcon } from 'lucide-react';
 import { useState } from 'react';
 
 interface Pokemon {
@@ -27,7 +27,6 @@ const fetchPokemon = async (id: number) => {
 
 const Demo = () => {
   const [id, setId] = useState(randomId);
-
   const pokemonAsync = useAsync(() => fetchPokemon(id), [id]);
 
   const onNext = () => setId(randomId());
@@ -43,8 +42,8 @@ const Demo = () => {
   const loading = !pokemonAsync.data;
 
   return (
-    <section className='flex w-full max-w-xs flex-col items-center gap-3 p-4'>
-      <div className='border-border bg-card relative h-[370px] w-full overflow-hidden rounded-2xl border shadow-lg'>
+    <section className='flex w-full max-w-[280px] flex-col items-center gap-3 p-4'>
+      <div className='border-border bg-card relative aspect-[3/4] w-full overflow-hidden rounded-2xl border shadow-lg'>
         <div className='absolute inset-0 flex items-center justify-center'>
           {loading && <Loader2Icon className='text-muted-foreground size-8 animate-spin' />}
           {!loading && pokemonAsync.data && (
@@ -88,30 +87,28 @@ const Demo = () => {
                 ))}
               </div>
             </div>
+
+            <button
+              aria-label='Pass'
+              className='absolute bottom-4 left-4 flex size-11 items-center justify-center rounded-full bg-white text-neutral-900 shadow-lg transition-transform hover:scale-110'
+              data-variant='unstyled'
+              type='button'
+              onClick={onNext}
+            >
+              <XIcon className='size-5' strokeWidth={2.5} />
+            </button>
+
+            <button
+              aria-label='Like'
+              className='text-destructive absolute right-4 bottom-4 flex size-11 items-center justify-center rounded-full bg-white shadow-lg transition-transform hover:scale-110'
+              data-variant='unstyled'
+              type='button'
+              onClick={onNext}
+            >
+              <HeartIcon className='size-5' fill='currentColor' />
+            </button>
           </>
         )}
-      </div>
-
-      <div className='flex w-full items-stretch gap-2'>
-        <button
-          aria-label='Pass'
-          className='flex-1'
-          data-variant='secondary'
-          type='button'
-          onClick={onNext}
-        >
-          <ChevronLeftIcon className='size-5' />
-        </button>
-
-        <button
-          aria-label='Like'
-          className='flex-1'
-          data-variant='secondary'
-          type='button'
-          onClick={onNext}
-        >
-          <ChevronRightIcon className='size-5' />
-        </button>
       </div>
 
       <span className='text-muted-foreground text-[10px]'>Use ← → keys to swipe</span>

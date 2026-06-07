@@ -538,11 +538,11 @@
 }
 
 .demo-ui button {
-  @apply focus-visible:border-ring focus-visible:ring-ring/50 inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50;
-  @apply h-9 px-4 py-2;
-}
-.demo-ui button {
-  @apply focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:ring-3 disabled:pointer-events-none disabled:opacity-50 aria-invalid:ring-3;
+  @apply inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none;
+  @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-3;
+  @apply active:not-aria-[haspopup]:translate-y-px;
+  @apply disabled:pointer-events-none disabled:opacity-50;
+  @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 aria-invalid:ring-3;
 }
 
 .demo-ui button > svg {
@@ -555,19 +555,19 @@
 
 .demo-ui button:not([data-variant]),
 .demo-ui button[data-variant='default'] {
-  @apply bg-primary text-primary-foreground hover:bg-primary/90;
-}
-
-.demo-ui button[data-variant='secondary'] {
-  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground;
+  @apply bg-primary text-primary-foreground hover:bg-primary/80;
 }
 
 .demo-ui button[data-variant='outline'] {
-  @apply bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 border shadow-xs;
+  @apply border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 border;
+}
+
+.demo-ui button[data-variant='secondary'] {
+  @apply bg-secondary text-secondary-foreground aria-expanded:bg-secondary aria-expanded:text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)];
 }
 
 .demo-ui button[data-variant='ghost'] {
-  @apply hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50;
+  @apply hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50;
 }
 
 .demo-ui button[data-variant='link'] {
@@ -625,6 +625,122 @@
 
 .demo-ui code {
   @apply text-[var(--brand-hex)];
+}
+
+.demo-ui [data-slot='badge'] {
+  @apply inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow];
+  @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
+  @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40;
+}
+
+.demo-ui [data-slot='badge'] > svg {
+  @apply pointer-events-none size-3;
+}
+
+.demo-ui [data-slot='badge']:not([data-variant]),
+.demo-ui [data-slot='badge'][data-variant='default'] {
+  @apply bg-primary text-primary-foreground;
+}
+
+.demo-ui [data-slot='badge'][data-variant='secondary'] {
+  @apply bg-secondary text-secondary-foreground;
+}
+
+.demo-ui [data-slot='badge'][data-variant='destructive'] {
+  @apply bg-destructive dark:bg-destructive/60 text-white;
+}
+
+.demo-ui [data-slot='badge'][data-variant='outline'] {
+  @apply border-border text-foreground;
+}
+
+.demo-ui [data-slot='badge'][data-variant='ghost'] {
+  @apply text-foreground;
+}
+
+.demo-ui [data-slot='badge'][data-variant='link'] {
+  @apply text-primary underline-offset-4;
+}
+
+.demo-ui [data-slot='card'] {
+  @apply bg-card text-card-foreground ring-foreground/10 flex flex-col gap-4 overflow-hidden rounded-xl py-4 text-sm ring-1;
+}
+
+.demo-ui [data-slot='card'][data-size='sm'] {
+  @apply gap-3 py-3;
+}
+
+.demo-ui [data-slot='card-header'] {
+  @apply grid auto-rows-min items-start gap-1 rounded-t-xl px-4;
+}
+
+.demo-ui [data-slot='card-header']:has([data-slot='card-action']) {
+  @apply grid-cols-[1fr_auto];
+}
+
+.demo-ui [data-slot='card-title'] {
+  @apply text-base leading-snug font-medium;
+}
+
+.demo-ui [data-slot='card'][data-size='sm'] [data-slot='card-title'] {
+  @apply text-sm;
+}
+
+.demo-ui [data-slot='card-description'] {
+  @apply text-muted-foreground text-sm;
+}
+
+.demo-ui [data-slot='card-action'] {
+  @apply col-start-2 row-span-2 row-start-1 self-start justify-self-end;
+}
+
+.demo-ui [data-slot='card-content'] {
+  @apply px-4;
+}
+
+.demo-ui [data-slot='card-footer'] {
+  @apply bg-muted/50 flex items-center rounded-b-xl border-t p-4;
+}
+
+.demo-ui [data-slot='alert'] {
+  @apply relative grid w-full gap-0.5 rounded-lg border px-2.5 py-2 text-left text-sm;
+}
+
+.demo-ui [data-slot='alert']:has(> svg) {
+  @apply grid-cols-[auto_1fr] gap-x-2;
+}
+
+.demo-ui [data-slot='alert'] > svg {
+  @apply row-span-2 size-4 translate-y-0.5 text-current;
+}
+
+.demo-ui [data-slot='alert']:not([data-variant]),
+.demo-ui [data-slot='alert'][data-variant='default'] {
+  @apply bg-card text-card-foreground;
+}
+
+.demo-ui [data-slot='alert'][data-variant='destructive'] {
+  @apply bg-card text-destructive;
+}
+
+.demo-ui [data-slot='alert'][data-variant='destructive'] [data-slot='alert-description'] {
+  @apply text-destructive/90;
+}
+
+.demo-ui [data-slot='alert-title'] {
+  @apply font-medium;
+}
+
+.demo-ui [data-slot='alert']:has(> svg) [data-slot='alert-title'] {
+  @apply col-start-2;
+}
+
+.demo-ui [data-slot='alert-description'] {
+  @apply text-muted-foreground text-sm;
+}
+
+.demo-ui [data-slot='alert']:has(> svg) [data-slot='alert-description'] {
+  @apply col-start-2;
 }
 
 .demo-ui [data-slot='tabs'] {
@@ -714,6 +830,45 @@
   background-color: var(--primary-foreground);
 }
 
+.demo-ui input[type='checkbox']:not([role='switch']) {
+  @apply border-input relative flex size-4 shrink-0 appearance-none items-center justify-center rounded-[4px] border transition-colors outline-none;
+  @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-3;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply checked:border-primary checked:bg-primary checked:text-primary-foreground;
+  @apply dark:bg-input/30 dark:checked:bg-primary;
+}
+
+.demo-ui input[type='checkbox']:not([role='switch']):checked::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  background-color: var(--primary-foreground);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>")
+    center / contain no-repeat;
+}
+
+.demo-ui input[type='radio'] {
+  @apply border-input relative flex aspect-square size-4 shrink-0 appearance-none rounded-full border p-2 outline-none;
+  @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-3;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply checked:border-primary checked:bg-primary;
+  @apply dark:bg-input/30 dark:checked:bg-primary;
+}
+
+.demo-ui input[type='radio']:checked::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: var(--primary-foreground);
+  transform: translate(-50%, -50%);
+}
+
 .demo-ui [data-slot='avatar'] {
   @apply relative flex size-8 shrink-0 overflow-hidden rounded-full select-none;
 }
@@ -761,21 +916,44 @@
   @apply bg-popover text-popover-foreground ring-foreground/10 z-50 min-w-32 overflow-hidden rounded-lg p-1 shadow-md ring-1;
 }
 
-.demo-ui [data-slot='dropdown-menu-item'] {
-  @apply hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm outline-hidden transition-colors select-none;
+.demo-ui [data-slot='dropdown-menu-sub-content'] {
+  @apply bg-popover text-popover-foreground ring-foreground/10 z-50 min-w-24 overflow-hidden rounded-lg p-1 shadow-lg ring-1;
+}
+
+.demo-ui [data-slot='dropdown-menu-item'],
+.demo-ui [data-slot='dropdown-menu-checkbox-item'],
+.demo-ui [data-slot='dropdown-menu-radio-item'],
+.demo-ui [data-slot='dropdown-menu-sub-trigger'] {
+  @apply hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden transition-colors select-none;
+}
+
+.demo-ui [data-slot='dropdown-menu-checkbox-item'],
+.demo-ui [data-slot='dropdown-menu-radio-item'] {
+  @apply pr-8 pl-1.5;
 }
 
 .demo-ui [data-slot='dropdown-menu-item'][data-variant='destructive'] {
-  @apply text-destructive hover:bg-destructive/10 hover:text-destructive;
-  @apply dark:hover:bg-destructive/20;
+  @apply text-destructive hover:bg-destructive/10 hover:text-destructive dark:hover:bg-destructive/20;
 }
 
-.demo-ui [data-slot='dropdown-menu-item'] svg {
+.demo-ui [data-slot='dropdown-menu-item'] svg,
+.demo-ui [data-slot='dropdown-menu-checkbox-item'] svg,
+.demo-ui [data-slot='dropdown-menu-radio-item'] svg,
+.demo-ui [data-slot='dropdown-menu-sub-trigger'] svg {
   @apply pointer-events-none size-4 shrink-0;
 }
 
+.demo-ui [data-slot='dropdown-menu-checkbox-item-indicator'],
+.demo-ui [data-slot='dropdown-menu-radio-item-indicator'] {
+  @apply pointer-events-none absolute right-2 flex items-center justify-center;
+}
+
+.demo-ui [data-slot='dropdown-menu-sub-trigger'] svg:last-child {
+  @apply ml-auto;
+}
+
 .demo-ui [data-slot='dropdown-menu-label'] {
-  @apply text-muted-foreground px-2 py-1.5 text-xs font-medium;
+  @apply text-muted-foreground px-1.5 py-1 text-xs font-medium;
 }
 
 .demo-ui [data-slot='dropdown-menu-separator'] {
@@ -784,6 +962,67 @@
 
 .demo-ui [data-slot='dropdown-menu-shortcut'] {
   @apply text-muted-foreground ml-auto text-xs tracking-widest;
+}
+
+.demo-ui [data-slot='popover-content'] {
+  @apply bg-popover text-popover-foreground ring-foreground/10 z-50 flex w-72 flex-col gap-2.5 rounded-lg p-2.5 text-sm shadow-md ring-1 outline-hidden;
+}
+
+.demo-ui [data-slot='popover-header'] {
+  @apply flex flex-col gap-0.5 text-sm;
+}
+
+.demo-ui [data-slot='popover-title'] {
+  @apply font-medium;
+}
+
+.demo-ui [data-slot='popover-description'] {
+  @apply text-muted-foreground;
+}
+
+.demo-ui [data-slot='tooltip-content'] {
+  @apply bg-foreground text-background z-50 inline-flex w-fit max-w-xs items-center gap-1.5 rounded-md px-3 py-1.5 text-xs;
+}
+
+.demo-ui [data-slot='dialog-overlay'] {
+  @apply fixed inset-0 z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs;
+}
+
+.demo-ui [data-slot='dialog-content'] {
+  @apply bg-popover text-popover-foreground ring-foreground/10 fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl p-4 text-sm ring-1 outline-none sm:max-w-sm;
+}
+
+.demo-ui [data-slot='dialog-header'] {
+  @apply flex flex-col gap-2;
+}
+
+.demo-ui [data-slot='dialog-footer'] {
+  @apply bg-muted/50 -mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t p-4 sm:flex-row sm:justify-end;
+}
+
+.demo-ui [data-slot='dialog-title'] {
+  @apply text-base leading-none font-medium;
+}
+
+.demo-ui [data-slot='dialog-description'] {
+  @apply text-muted-foreground text-sm;
+}
+
+.demo-ui [data-slot='separator'] {
+  @apply bg-border shrink-0;
+}
+
+.demo-ui [data-slot='separator'][data-orientation='horizontal'],
+.demo-ui [data-slot='separator']:not([data-orientation='vertical']) {
+  @apply h-px w-full;
+}
+
+.demo-ui [data-slot='separator'][data-orientation='vertical'] {
+  @apply w-px self-stretch;
+}
+
+.demo-ui [data-slot='skeleton'] {
+  @apply bg-muted animate-pulse rounded-md;
 }
 
 .demo-ui input[type='range'] {

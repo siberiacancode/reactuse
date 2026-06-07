@@ -99,7 +99,7 @@ const Demo = () => {
     <section className='flex flex-col items-center gap-5 p-4'>
       <svg className='w-64' viewBox={`0 0 ${BOARD_SIZE} ${BOARD_SIZE}`}>
         {[CELL_SIZE, CELL_SIZE * 2].map((position) => (
-          <g key={position} className='text-border'>
+          <g key={position} className='text-muted-foreground'>
             <line
               stroke='currentColor'
               strokeLinecap='round'
@@ -191,7 +191,7 @@ const Demo = () => {
         ))}
       </svg>
 
-      <div className='flex items-center gap-3 text-sm'>
+      <div className='flex min-h-9 items-center gap-3 text-sm'>
         {!result && (
           <p className='text-muted-foreground flex items-center gap-1.5'>
             <PlayerIcon player={current} /> to move

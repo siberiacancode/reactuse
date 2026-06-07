@@ -29,15 +29,15 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
 
   return (
     <Sidebar
-      className='sticky top-[calc(var(--header-height)+1px)] z-30 hidden h-[calc(100svh-var(--header-height)-1px)] overscroll-none bg-transparent [--sidebar-menu-width:--spacing(64)] lg:flex'
+      className='sticky top-[calc(var(--header-height)+1px)] z-30 hidden h-[calc(100svh-var(--header-height)-5rem)] overscroll-none bg-transparent [--sidebar-menu-width:var(--sidebar-width)] xl:flex'
       collapsible='none'
       {...props}
     >
-      <div className='from-background via-background/80 to-background/50 pointer-events-none absolute inset-x-0 top-8 z-10 h-8 shrink-0 bg-linear-to-b blur-xs' />
+      <div className='from-background via-background/80 to-background/50 pointer-events-none absolute inset-x-0 top-0 z-10 h-12 shrink-0 bg-linear-to-b blur-xs' />
 
-      <SidebarContent className='no-scrollbar mt-12 h-full w-(--sidebar-menu-width) overflow-y-auto overscroll-contain px-2 pb-22'>
+      <SidebarContent className='no-scrollbar h-full w-(--sidebar-menu-width) gap-5 overflow-x-hidden overflow-y-auto overscroll-contain pt-12 pb-12'>
         {groups.map((group, index) => (
-          <SidebarGroup key={index}>
+          <SidebarGroup key={index} className='p-0'>
             <SidebarGroupLabel className='text-muted-foreground font-medium capitalize'>
               {group.name}
             </SidebarGroupLabel>

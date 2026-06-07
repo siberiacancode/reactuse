@@ -70,11 +70,11 @@ export const DocsPage = async (props: DocsPageProps) => {
 
   return (
     <div
-      className='flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full xl:gap-8 2xl:gap-10'
+      className='scroll-mt-24 pb-8 text-[1.05rem] sm:text-[15px] xl:grid xl:w-full xl:grid-cols-[minmax(0,var(--docs-content-width))_var(--sidebar-width)] xl:gap-[var(--docs-layout-gap)]'
       data-slot='docs'
     >
-      <div className='flex min-w-0 flex-1 flex-col'>
-        <div className='mx-auto mb-6 flex w-full max-w-[45rem] min-w-0 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300'>
+      <div className='mt-12 min-w-0 flex-col px-6 pb-24 xl:flex xl:px-12 2xl:px-16'>
+        <div className='mb-6 flex w-full min-w-0 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300'>
           <DocHeader
             description={doc.description}
             markdown={raw}
@@ -84,7 +84,7 @@ export const DocsPage = async (props: DocsPageProps) => {
             title={doc.title}
           />
         </div>
-        <div className='mx-auto w-full max-w-[45rem] flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0'>
+        <div className='w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0'>
           <MDX components={mdxComponents} />
           <div className='hidden h-16 w-full items-center gap-2 px-4 sm:flex sm:px-0'>
             {neighbours.previous && (
@@ -104,7 +104,7 @@ export const DocsPage = async (props: DocsPageProps) => {
           </div>
         </div>
       </div>
-      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex xl:pl-2 2xl:pl-4'>
+      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex xl:pl-2'>
         {!!doc.toc.length && (
           <div className='no-scrollbar h-full overflow-y-auto overscroll-contain pt-12'>
             <DocsToc items={doc.toc} path={page.data.info.path} />

@@ -71,15 +71,19 @@ const Demo = () => {
               const isSelected = selectedMethod === method.id;
 
               return (
-                <div
+                <label
                   key={method.id}
-                  className='hover:bg-muted/50 data-[selected=true]:border-primary data-[selected=true]:bg-muted/50 flex cursor-pointer items-center gap-3 rounded-xl border p-4 text-left transition-colors'
-                  data-selected={isSelected}
-                  role='button'
-                  tabIndex={0}
-                  onClick={() => onPaymentMethodChange(method.id)}
+                  className='border-border hover:bg-muted/50 has-[:checked]:border-foreground/30 has-[:checked]:bg-muted/50 relative flex cursor-pointer items-center gap-3 rounded-xl border p-4 text-left transition-colors'
                 >
-                  <div className='flex size-10 items-center justify-center rounded-full border'>
+                  <input
+                    checked={isSelected}
+                    className='absolute! top-4 right-4'
+                    name='method'
+                    type='radio'
+                    onChange={() => onPaymentMethodChange(method.id)}
+                  />
+
+                  <div className='bg-card flex size-10 items-center justify-center rounded-full border'>
                     <Icon className='size-4' />
                   </div>
 
@@ -87,16 +91,13 @@ const Demo = () => {
                     <span className='text-sm'>{method.title}</span>
                     <span className='text-muted-foreground text-xs'>{method.description}</span>
                   </span>
-
-                  {isSelected && <CheckIcon className='size-4' />}
-                </div>
+                </label>
               );
             })}
           </div>
 
           <div className='relative'>
             <AtSignIcon className='pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-50' />
-
             <input
               className='pl-8!'
               placeholder='you@example.com'

@@ -1,7 +1,7 @@
 import type { SubmitEvent } from 'react';
 
 import { useField, useFocusTrap } from '@siberiacancode/reactuse';
-import { ChevronDownIcon, MailIcon, XIcon } from 'lucide-react';
+import { AtSignIcon, ChevronDownIcon, XIcon } from 'lucide-react';
 
 const ROLES = [
   { value: 'viewer', label: 'Viewer' },
@@ -51,7 +51,7 @@ const Demo = () => {
               Email
             </label>
             <div className='relative'>
-              <MailIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 z-10 size-3.5 -translate-y-1/2' />
+              <AtSignIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 z-10 size-4 -translate-y-1/2' />
               <input
                 data-autofocus
                 className='pl-9!'
