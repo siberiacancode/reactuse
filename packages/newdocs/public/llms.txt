@@ -68,6 +68,7 @@
 - [useImage](https://reactuse.org/functions/hooks/useImage): Hook that load an image in the browser
 - [useLockScroll](https://reactuse.org/functions/hooks/useLockScroll): Hook that locks scroll on an element or document body
 - [useLongPress](https://reactuse.org/functions/hooks/useLongPress): Hook that defines the logic when long pressing an element
+- [usePaint](https://reactuse.org/functions/hooks/usePaint): Hook that allows you to draw in a specific area
 ### Humors
 
 - [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful
@@ -94,6 +95,7 @@
 - [useMouse](https://reactuse.org/functions/hooks/useMouse): Hook that manages a mouse position
 - [useMutationObserver](https://reactuse.org/functions/hooks/useMutationObserver): Hook that gives you mutation observer state
 - [useOrientation](https://reactuse.org/functions/hooks/useOrientation): Hook that provides the current screen orientation
+- [usePageLeave](https://reactuse.org/functions/hooks/usePageLeave): Hook what calls given function when mouse leaves the page
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state

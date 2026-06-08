@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress",
+      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress","usePaint",
 
       "---async---",
       "useAsync","useLockCallback","useMutation","useOptimistic",
@@ -23,7 +23,7 @@
       "useBrowserLanguage","useOperatingSystem",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave",
 
       "---humor---",
       "useFul","useLess","useOnce",

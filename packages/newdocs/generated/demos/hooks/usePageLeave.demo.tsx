@@ -1,3 +1,5 @@
+'use client'
+
 import { useDisclosure, usePageLeave } from '@siberiacancode/reactuse';
 import { SparklesIcon, XIcon } from 'lucide-react';
 

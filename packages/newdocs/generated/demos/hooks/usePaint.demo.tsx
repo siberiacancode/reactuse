@@ -1,3 +1,5 @@
+'use client'
+
 import type { Line } from '@siberiacancode/reactuse';
 
 import { useHotkeys, usePaint } from '@siberiacancode/reactuse';

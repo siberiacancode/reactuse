@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { isTarget } from '@/utils/helpers';
-import { useEvent } from '../useEvent/useEvent';
 import { useRefState } from '../useRefState/useRefState';
 const DEFAULT_BRUSH_RADIUS = 10;
+const DEFAULT_COLOR = 'black';
+const DEFAULT_OPACITY = 1;
+/** The pointer class that represents a coordinate */
 export class Pointer {
   x;
   y;
@@ -28,19 +30,14 @@ export class Pointer {
   equalsTo(point) {
     return this.x === point.x && this.y === point.y;
   }
-  moveByAngle(
-    // The angle in radians
-    angle,
-    // How much the point should be moved
-    distance
-  ) {
-    // Rotate the angle based on the browser coordinate system ([0,0] in the top left)
+  moveByAngle(angle, distance) {
     const angleRotated = angle + Math.PI / 2;
     this.x += Math.sin(angleRotated) * distance;
     this.y -= Math.cos(angleRotated) * distance;
     return this;
   }
 }
+/** The paint class that handles the drawing engine */
 export class Paint {
   pointer;
   brush;
@@ -48,25 +45,19 @@ export class Paint {
   smooth = false;
   points = [];
   lines = [];
-  constructor({ x, y, radius, smooth }) {
+  constructor({ x, y, radius, smooth, lines = [] }) {
     this.smooth = smooth;
     this.pointer = new Pointer(x, y);
     this.brush = new Pointer(x, y);
     this.radius = radius;
     this.points = [];
-    this.lines = [];
+    this.lines = lines;
   }
   getBrushCoordinates() {
-    return {
-      x: this.brush.x,
-      y: this.brush.y
-    };
+    return { x: this.brush.x, y: this.brush.y };
   }
   getPointerCoordinates() {
-    return {
-      x: this.pointer.x,
-      y: this.pointer.y
-    };
+    return { x: this.pointer.x, y: this.pointer.y };
   }
   update(point) {
     if (this.pointer.equalsTo(point)) return false;
@@ -99,54 +90,67 @@ export class Paint {
  *
  * @overload
  * @param {HookTarget} target The target element to be painted
+ * @param {UsePaintInitialValue} [initialValue] The initial value of the paint
  * @param {UsePaintOptions} [options] The options to be used
- * @returns {UsePaintReturn} An object containing the current pencil options and functions to interact with the paint
+ * @returns {UsePaintReturn} An object containing the current brush state and functions to interact with the paint
  *
  * @example
- * const drawing = usePaint(canvasRef);
+ * const paint = usePaint(canvasRef, { color: 'red', radius: 10 });
  *
  * @overload
+ * @param {UsePaintInitialValue} [initialValue] The initial value of the paint
  * @param {UsePaintOptions} [options] The options to be used
- * @returns {UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }} An object containing the current pencil options and functions to interact with the paint
+ * @returns {UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }} An object containing the current brush state and functions to interact with the paint
  *
  * @example
- * const { ref, drawing } = usePaint();
+ * const { ref, draw, clear, undo, redo, changeColor } = usePaint({ color: 'red', radius: 10 }, { smooth: true });
  */
 export const usePaint = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
-  const options = (target ? params[1] : params[0]) ?? {};
-  const color = options?.color ?? 'black';
-  const opacity = options?.opacity ?? 1;
-  const radius = options?.radius ?? DEFAULT_BRUSH_RADIUS;
+  const initialValue = (target ? params[1] : params[0]) ?? {};
+  const options = (target ? params[2] : params[1]) ?? {};
+  const initialLinesRef = useRef(initialValue.lines ?? []);
+  const [color, setColor] = useState(initialValue.color ?? DEFAULT_COLOR);
+  const [radius, setRadius] = useState(initialValue.radius ?? DEFAULT_BRUSH_RADIUS);
+  const [opacity, setOpacity] = useState(initialValue.opacity ?? DEFAULT_OPACITY);
+  const [drawing, setDrawing] = useState(false);
+  const [canUndo, setCanUndo] = useState(!!initialLinesRef.current.length);
+  const [canRedo, setCanRedo] = useState(false);
   const paintRef = useRef(
     new Paint({
       x: 0,
       y: 0,
-      radius: options?.radius ?? DEFAULT_BRUSH_RADIUS,
-      smooth: options?.smooth ?? false
+      radius: initialValue.radius ?? DEFAULT_BRUSH_RADIUS,
+      smooth: options.smooth ?? false,
+      lines: initialLinesRef.current
     })
   );
-  const [drawing, setIsDrawing] = useState(false);
   const internalRef = useRefState();
   const contextRef = useRef(null);
-  const draw = (points, color, opacity, radius) => {
+  const redoStackRef = useRef([]);
+  /** Mirrors current values so the mount-only listeners always read fresh data */
+  const stateRef = useRef({ color, radius, opacity, drawing, options });
+  stateRef.current = { color, radius, opacity, drawing, options };
+  const draw = (line) => {
     if (!contextRef.current) return;
-    contextRef.current.globalAlpha = opacity;
-    contextRef.current.strokeStyle = color;
-    contextRef.current.lineWidth = radius * 2;
+    if (!line.points.length) return;
+    contextRef.current.globalAlpha = line.opacity;
+    contextRef.current.strokeStyle = line.color;
+    contextRef.current.lineWidth = line.radius * 2;
     contextRef.current.lineCap = 'round';
     contextRef.current.lineJoin = 'round';
-    let p1 = points[0];
-    let p2 = points[1];
+    let p1 = line.points[0];
+    let p2 = line.points[1];
     contextRef.current.beginPath();
-    for (let i = 1; i < points.length; i += 1) {
+    contextRef.current.moveTo(p1.x, p1.y);
+    for (let i = 1; i < line.points.length; i += 1) {
       const midPoint = {
         x: p1.x + (p2.x - p1.x) / 2,
         y: p1.y + (p2.y - p1.y) / 2
       };
       contextRef.current.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
-      p1 = points[i];
-      p2 = points[i + 1];
+      p1 = line.points[i];
+      p2 = line.points[i + 1];
     }
     contextRef.current.lineTo(p1.x, p1.y);
     contextRef.current.stroke();
@@ -160,101 +164,148 @@ export const usePaint = (...params) => {
       contextRef.current.canvas.height
     );
   };
-  const onMouseMove = useEvent((event) => {
-    if (!drawing) return;
-    options?.onMouseMove?.(event, paintRef.current);
-    const point = { x: event.offsetX, y: event.offsetY };
-    const isUpdated = paintRef.current.update(point);
-    if (!isUpdated) return;
-    if (!contextRef.current) return;
+  const render = () => {
     clearCanvas();
-    contextRef.current.clearRect(
-      0,
-      0,
-      contextRef.current.canvas.width,
-      contextRef.current.canvas.height
-    );
-    // const brush = paintRef.current.getBrushCoordinates();
-    // // Draw brush point
-    // contextRef.current.beginPath();
-    // contextRef.current.fillStyle = 'red';
-    // contextRef.current.arc(brush.x, brush.y, radius, 0, Math.PI * 2, true);
-    // contextRef.current.fill();
-    // // Draw the lazy radius.
-    // contextRef.current.beginPath();
-    // contextRef.current.strokeStyle = '#ccc';
-    // contextRef.current.arc(brush.x, brush.y, radius * 2, 0, Math.PI * 2, true);
-    // contextRef.current.stroke();
-    paintRef.current.lines.forEach(({ points, color, opacity, radius }) =>
-      draw(points, color, opacity, radius)
-    );
-    draw(paintRef.current.points, color, opacity, radius);
-  });
-  const onMouseDown = useEvent((event) => {
-    if (!contextRef.current) return;
-    const point = { x: event.offsetX, y: event.offsetY };
-    paintRef.current.brush.update(point);
-    paintRef.current.points.push(point);
-    draw(paintRef.current.points, color, opacity, radius);
-    options?.onMouseDown?.(event, paintRef.current);
-    setIsDrawing(true);
-  });
-  const onMouseUp = useEvent((event) => {
-    if (!contextRef.current) return;
+    paintRef.current.lines.forEach((line) => draw(line));
     if (paintRef.current.points.length) {
-      paintRef.current.lines.push({
-        points: paintRef.current.points,
-        color,
-        opacity,
-        radius
-      });
-      paintRef.current.points = [];
+      const { color, radius, opacity } = stateRef.current;
+      draw({ points: paintRef.current.points, color, radius, opacity });
     }
-    options?.onMouseUp?.(event, paintRef.current);
-    setIsDrawing(false);
-  });
+  };
+  const finalizeStroke = () => {
+    if (!paintRef.current.points.length) return;
+    const { color, radius, opacity } = stateRef.current;
+    paintRef.current.lines.push({
+      points: paintRef.current.points,
+      color,
+      radius,
+      opacity
+    });
+    paintRef.current.points = [];
+    redoStackRef.current = [];
+    setCanUndo(true);
+    setCanRedo(false);
+  };
+  const changeColor = (color) => setColor(color);
+  const changeOpacity = (opacity) => setOpacity(opacity);
+  const changeRadius = (radius) => {
+    paintRef.current.radius = radius;
+    setRadius(radius);
+  };
   const clear = () => {
     if (!contextRef.current) return;
     clearCanvas();
     paintRef.current.lines = [];
     paintRef.current.points = [];
+    redoStackRef.current = [];
+    setCanUndo(false);
+    setCanRedo(false);
   };
   const undo = () => {
     if (!contextRef.current) return;
-    clearCanvas();
-    paintRef.current.lines.pop();
-    paintRef.current.lines.forEach(({ points, color, opacity, radius }) =>
-      draw(points, color, opacity, radius)
-    );
+    const line = paintRef.current.lines.pop();
+    if (!line) return;
+    redoStackRef.current.push(line);
+    render();
+    setCanUndo(!!paintRef.current.lines.length);
+    setCanRedo(true);
+  };
+  const redo = () => {
+    if (!contextRef.current) return;
+    const line = redoStackRef.current.pop();
+    if (!line) return;
+    paintRef.current.lines.push(line);
+    render();
+    setCanUndo(true);
+    setCanRedo(!!redoStackRef.current.length);
   };
   useEffect(() => {
     if (!target && !internalRef.state) return;
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     contextRef.current = element.getContext('2d');
-    if (options?.initialLines) {
-      paintRef.current.lines = options.initialLines;
-      options.initialLines.forEach(({ points, color, opacity, radius }) =>
-        draw(points, color, opacity, radius)
-      );
-    }
+    const resize = () => {
+      if (!contextRef.current) return;
+      const dpr = window.devicePixelRatio || 1;
+      const rect = element.getBoundingClientRect();
+      element.width = rect.width * dpr;
+      element.height = rect.height * dpr;
+      contextRef.current.scale(dpr, dpr);
+      render();
+    };
+    paintRef.current.lines = initialLinesRef.current;
+    resize();
+    const observer = new ResizeObserver(resize);
+    observer.observe(element);
+    const onMouseDown = (event) => {
+      if (!contextRef.current) return;
+      const point = { x: event.offsetX, y: event.offsetY };
+      paintRef.current.brush.update(point);
+      paintRef.current.points.push(point);
+      render();
+      stateRef.current.options.onMouseDown?.(event, paintRef.current);
+      setDrawing(true);
+    };
+    const onMouseMove = (event) => {
+      if (!stateRef.current.drawing) return;
+      stateRef.current.options.onMouseMove?.(event, paintRef.current);
+      const point = { x: event.offsetX, y: event.offsetY };
+      const isUpdated = paintRef.current.update(point);
+      if (!isUpdated) return;
+      render();
+    };
+    const onMouseUp = (event) => {
+      if (!contextRef.current) return;
+      finalizeStroke();
+      stateRef.current.options.onMouseUp?.(event, paintRef.current);
+      setDrawing(false);
+    };
+    const onMouseEnter = (event) => {
+      if (event.buttons !== 1) return;
+      if (!contextRef.current) return;
+      const point = { x: event.offsetX, y: event.offsetY };
+      paintRef.current.brush.update(point);
+      paintRef.current.points.push(point);
+      render();
+      stateRef.current.options.onMouseDown?.(event, paintRef.current);
+      setDrawing(true);
+    };
+    const onMouseLeave = (event) => {
+      if (!stateRef.current.drawing) return;
+      finalizeStroke();
+      stateRef.current.options.onMouseUp?.(event, paintRef.current);
+      setDrawing(false);
+    };
     element.addEventListener('mousedown', onMouseDown);
     element.addEventListener('mousemove', onMouseMove);
     element.addEventListener('mouseup', onMouseUp);
+    element.addEventListener('mouseleave', onMouseLeave);
+    element.addEventListener('mouseenter', onMouseEnter);
     return () => {
-      if (!element) return;
+      observer.disconnect();
       element.removeEventListener('mousedown', onMouseDown);
       element.removeEventListener('mousemove', onMouseMove);
       element.removeEventListener('mouseup', onMouseUp);
+      element.removeEventListener('mouseleave', onMouseLeave);
+      element.removeEventListener('mouseenter', onMouseEnter);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
-  if (target) return { drawing, clear, undo, draw, lines: paintRef.current.lines };
-  return {
-    ref: internalRef,
+  const result = {
+    color,
+    radius,
+    opacity,
     drawing,
+    canUndo,
+    canRedo,
+    lines: paintRef.current.lines,
+    changeColor,
+    changeRadius,
+    changeOpacity,
+    draw,
     clear,
     undo,
-    draw,
-    lines: paintRef.current.lines
+    redo
   };
+  if (target) return result;
+  return { ...result, ref: internalRef };
 };

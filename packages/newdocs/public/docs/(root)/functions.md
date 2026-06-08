@@ -103,3 +103,5 @@ A quick list of available functions.
 - [useOptimistic](/functions/hooks/useOptimistic): Hook that allows get optimistic value before its update
 - [useOrientation](/functions/hooks/useOrientation): Hook that provides the current screen orientation
 - [useOtpCredential](/functions/hooks/useOtpCredential): Hook that creates an otp credential
+- [usePageLeave](/functions/hooks/usePageLeave): Hook what calls given function when mouse leaves the page
+- [usePaint](/functions/hooks/usePaint): Hook that allows you to draw in a specific area
