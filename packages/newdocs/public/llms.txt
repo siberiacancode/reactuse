@@ -51,6 +51,8 @@
 - [useObjectUrl](https://reactuse.org/functions/hooks/useObjectUrl): Hook that creates and revokes an object URL for a Blob or MediaSource
 - [useOnline](https://reactuse.org/functions/hooks/useOnline): Hook that manages if the user is online
 - [useOtpCredential](https://reactuse.org/functions/hooks/useOtpCredential): Hook that creates an otp credential
+- [usePermission](https://reactuse.org/functions/hooks/usePermission): Hook that gives you the state of permission
+- [usePictureInPicture](https://reactuse.org/functions/hooks/usePictureInPicture): Hook that provides Picture-in-Picture functionality for video elements
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle

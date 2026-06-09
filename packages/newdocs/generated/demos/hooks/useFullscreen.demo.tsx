@@ -7,7 +7,7 @@ const VOLUME = 0.1;
 
 const Demo = () => {
   const fullscreen = useFullscreen<HTMLDivElement>();
-  const media = useMediaControls<HTMLVideoElement>('https://vjs.zencdn.net/v/oceans.mp4');
+  const media = useMediaControls<HTMLVideoElement>('/new/videos/waves.mp4');
 
   const onMute = () => {
     if (media.muted) {
@@ -30,7 +30,6 @@ const Demo = () => {
           playsInline
           ref={media.ref}
           className='aspect-video w-full bg-black object-cover'
-          poster='https://vjs.zencdn.net/v/oceans.png'
           preload='none'
         />
 

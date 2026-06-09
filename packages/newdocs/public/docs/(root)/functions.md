@@ -107,3 +107,5 @@ A quick list of available functions.
 - [usePaint](/functions/hooks/usePaint): Hook that allows you to draw in a specific area
 - [useParallax](/functions/hooks/useParallax): Hook to help create parallax effect
 - [usePerformanceObserver](/functions/hooks/usePerformanceObserver): Hook that allows you to observe performance entries
+- [usePermission](/functions/hooks/usePermission): Hook that gives you the state of permission
+- [usePictureInPicture](/functions/hooks/usePictureInPicture): Hook that provides Picture-in-Picture functionality for video elements
