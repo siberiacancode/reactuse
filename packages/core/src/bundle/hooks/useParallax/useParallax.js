@@ -1,8 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { isTarget } from '@/utils/helpers';
-import { useDeviceOrientation } from '../useDeviceOrientation/useDeviceOrientation';
-import { useOrientation } from '../useOrientation/useOrientation';
 import { useRefState } from '../useRefState/useRefState';
+import { useRerender } from '../useRerender/useRerender';
+const DEFAULT_ADJUST = (value) => value;
+export const getDeviceOrientationParallax = (beta, gamma, orientationType) => {
+  if (beta === null || gamma === null) return null;
+  switch (orientationType) {
+    case 'landscape-primary':
+      return { roll: gamma / 90, tilt: beta / 90 };
+    case 'landscape-secondary':
+      return { roll: -gamma / 90, tilt: -beta / 90 };
+    case 'portrait-secondary':
+      return { roll: beta / 90, tilt: -gamma / 90 };
+    case 'portrait-primary':
+    default:
+      return { roll: -beta / 90, tilt: gamma / 90 };
+  }
+};
+export const getMouseParallax = (event, element) => {
+  const { left, top, width, height } = element.getBoundingClientRect();
+  const elementPositionX = left + window.scrollX;
+  const elementPositionY = top + window.scrollY;
+  return {
+    roll: -(event.pageY - elementPositionY - height / 2) / height,
+    tilt: (event.pageX - elementPositionX - width / 2) / width
+  };
+};
 /**
  * @name useParallax
  * @description - Hook to help create parallax effect
@@ -11,134 +34,153 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @param {HookTarget} target The target element for the parallax effect
- * @param {UseParallaxOptions} options The options for the parallax effect
- * @returns {UseParallaxReturn} An object of parallax values
+ * @param {(value: UseParallaxValue, event: Event) => void} [callback] The callback invoked on parallax updates
+ * @returns {UseParallaxReturn} An object with parallax snapshot controls
  *
  * @example
- * const { value } = useParallax(ref);
+ * const { snapshot, watch } = useParallax(ref, (value) => console.log(value));
+ *
+ * @overload
+ * @param {HookTarget} target The target element for the parallax effect
+ * @param {UseParallaxOptions} options The options for the parallax effect
+ * @returns {UseParallaxReturn} An object with parallax snapshot controls
+ *
+ * @example
+ * const { snapshot, watch } = useParallax(ref, options);
+ *
+ * @overload
+ * @template Target The target element for the parallax effect
+ * @param {(value: UseParallaxValue, event: Event) => void} [callback] The callback invoked on parallax updates
+ * @returns {UseParallaxReturn & { ref: StateRef<Target> }} An object with parallax snapshot controls and a ref
+ *
+ * @example
+ * const { ref, snapshot, watch } = useParallax<HTMLDivElement>((value) => console.log(value));
  *
  * @overload
  * @template Target The target element for the parallax effect
  * @param {UseParallaxOptions} options The options for the parallax effect
- * @returns {UseParallaxReturn & { ref: StateRef<Target> }} An object of parallax values
+ * @returns {UseParallaxReturn & { ref: StateRef<Target> }} An object with parallax snapshot controls and a ref
  *
  * @example
- * const { ref, value } = useParallax();
+ * const { ref, snapshot, watch } = useParallax<HTMLDivElement>(options);
  */
 export const useParallax = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
-  const options = params[1] ? params[1] : params[0];
+  const options = target
+    ? typeof params[1] === 'function'
+      ? { ...params[2], onChange: params[1] }
+      : params[1]
+    : typeof params[0] === 'function'
+      ? { ...params[1], onChange: params[0] }
+      : params[0];
+  const supported =
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined' &&
+    'DeviceOrientationEvent' in window &&
+    !!window.DeviceOrientationEvent &&
+    'screen' in window &&
+    'orientation' in window.screen;
+  const orientation = supported ? window.screen.orientation : undefined;
   const internalRef = useRefState();
-  const screenOrientation = useOrientation();
-  const deviceOrientation = useDeviceOrientation();
-  const {
-    deviceOrientationRollAdjust = (value) => value,
-    deviceOrientationTiltAdjust = (value) => value,
-    mouseRollAdjust = (value) => value,
-    mouseTiltAdjust = (value) => value
-  } = options ?? {};
-  const [value, setValue] = useState({
+  const internalOptionsRef = useRef(options);
+  internalOptionsRef.current = options;
+  const snapshotRef = useRef({
     roll: 0,
     tilt: 0,
     source: 'mouse'
   });
+  const watchingRef = useRef(false);
+  const rerender = useRerender();
+  const screenOrientationValueRef = useRef({
+    angle: orientation?.angle ?? 0,
+    orientationType: orientation?.type
+  });
+  const deviceOrientationValueRef = useRef({
+    alpha: null,
+    beta: null,
+    gamma: null,
+    absolute: false
+  });
+  const watch = () => {
+    watchingRef.current = true;
+    return snapshotRef.current;
+  };
   useEffect(() => {
-    if (!target && !internalRef.state) return;
-    const element = target ? isTarget.getElement(target) : internalRef.current;
-    if (!element) return;
-    const onMouseMove = (event) => {
-      const { left, top } = element.getBoundingClientRect();
-      const elementPositionX = left + window.scrollX;
-      const elementPositionY = top + window.scrollY;
-      const getSource = () => {
-        const isDeviceOrientation =
-          deviceOrientation.supported &&
-          (deviceOrientation.value.alpha || deviceOrientation.value.gamma);
-        if (isDeviceOrientation) return 'deviceOrientation';
-        return 'mouse';
+    if (!supported) return;
+    const publishValue = (nextValue, event) => {
+      snapshotRef.current = nextValue;
+      if (watchingRef.current) rerender();
+      internalOptionsRef.current?.onChange?.(nextValue, event);
+    };
+    const updateValue = (event) => {
+      const element = target ? isTarget.getElement(target) : internalRef.current;
+      if (!element) return;
+      const { alpha, beta, gamma } = deviceOrientationValueRef.current;
+      const hasDeviceOrientation = alpha !== null || beta !== null || gamma !== null;
+      if (hasDeviceOrientation) {
+        const parallax = getDeviceOrientationParallax(
+          beta,
+          gamma,
+          screenOrientationValueRef.current.orientationType
+        );
+        if (!parallax) return;
+        publishValue(
+          {
+            source: 'deviceOrientation',
+            roll: (internalOptionsRef.current?.deviceOrientationRollAdjust ?? DEFAULT_ADJUST)(
+              parallax.roll
+            ),
+            tilt: (internalOptionsRef.current?.deviceOrientationTiltAdjust ?? DEFAULT_ADJUST)(
+              parallax.tilt
+            )
+          },
+          event ?? new Event('deviceorientation')
+        );
+        return;
+      }
+      if (!(event instanceof MouseEvent)) return;
+      const parallax = getMouseParallax(event, element);
+      publishValue(
+        {
+          source: 'mouse',
+          roll: (internalOptionsRef.current?.mouseRollAdjust ?? DEFAULT_ADJUST)(parallax.roll),
+          tilt: (internalOptionsRef.current?.mouseTiltAdjust ?? DEFAULT_ADJUST)(parallax.tilt)
+        },
+        event
+      );
+    };
+    const onMouseMove = (event) => updateValue(event);
+    const onDeviceOrientation = (event) => {
+      deviceOrientationValueRef.current = {
+        alpha: event.alpha,
+        beta: event.beta,
+        gamma: event.gamma,
+        absolute: event.absolute
       };
-      const getRoll = () => {
-        const source = getSource();
-        if (source === 'deviceOrientation') {
-          let value;
-          switch (screenOrientation.value.orientationType) {
-            case 'landscape-primary':
-              value = deviceOrientation.value.gamma / 90;
-              break;
-            case 'landscape-secondary':
-              value = -deviceOrientation.value.gamma / 90;
-              break;
-            case 'portrait-primary':
-              value = -deviceOrientation.value.beta / 90;
-              break;
-            case 'portrait-secondary':
-              value = deviceOrientation.value.beta / 90;
-              break;
-            default:
-              value = -deviceOrientation.value.beta / 90;
-          }
-          return deviceOrientationRollAdjust(value);
-        } else {
-          const y = event.pageY - elementPositionY;
-          const height = element.getBoundingClientRect().height;
-          const value = -(y - height / 2) / height;
-          return mouseRollAdjust(value);
-        }
+      updateValue(event);
+    };
+    const onOrientationChange = (event) => {
+      screenOrientationValueRef.current = {
+        angle: window.screen.orientation.angle,
+        orientationType: window.screen.orientation.type
       };
-      const getTilt = () => {
-        const source = getSource();
-        if (source === 'deviceOrientation') {
-          let value;
-          switch (screenOrientation.value.orientationType) {
-            case 'landscape-primary':
-              value = deviceOrientation.value.beta / 90;
-              break;
-            case 'landscape-secondary':
-              value = -deviceOrientation.value.beta / 90;
-              break;
-            case 'portrait-primary':
-              value = deviceOrientation.value.gamma / 90;
-              break;
-            case 'portrait-secondary':
-              value = -deviceOrientation.value.gamma / 90;
-              break;
-            default:
-              value = deviceOrientation.value.gamma / 90;
-          }
-          return deviceOrientationTiltAdjust(value);
-        } else {
-          const x = event.pageX - elementPositionX;
-          const width = element.getBoundingClientRect().width;
-          const value = (x - width / 2) / width;
-          return mouseTiltAdjust(value);
-        }
-      };
-      const source = getSource();
-      const roll = getRoll();
-      const tilt = getTilt();
-      setValue({
-        roll,
-        source,
-        tilt
-      });
+      updateValue(event);
     };
     document.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('deviceorientation', onDeviceOrientation);
+    window.addEventListener('orientationchange', onOrientationChange);
+    updateValue();
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('deviceorientation', onDeviceOrientation);
+      window.removeEventListener('orientationchange', onOrientationChange);
     };
-  }, [
-    target && isTarget.getRawElement(target),
-    internalRef.state,
-    screenOrientation.value.angle,
-    screenOrientation.value.orientationType,
-    deviceOrientation.value.gamma,
-    deviceOrientation.value.beta,
-    deviceOrientation.value.alpha,
-    deviceOrientation.value.absolute
-  ]);
-  if (target) return { value };
+  }, [supported, internalRef.state, target && isTarget.getRawElement(target)]);
+  if (target) return { snapshot: snapshotRef.current, supported, watch };
   return {
     ref: internalRef,
-    value
+    snapshot: snapshotRef.current,
+    supported,
+    watch
   };
 };

@@ -23,7 +23,7 @@
       "useBrowserLanguage","useOperatingSystem",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver",
 
       "---humor---",
       "useFul","useLess","useOnce",

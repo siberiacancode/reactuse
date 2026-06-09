@@ -8,7 +8,7 @@
   "usage": "low",
   "description": "Hook that allows you to draw in a specific area",
   "category": "Elements",
-  "lastModified": 1768553242000,
+  "lastModified": 1780921357000,
   "examples": [
     "const paint = usePaint(canvasRef, { color: 'red', radius: 10 });",
     "const { ref, draw, clear, undo, redo, changeColor } = usePaint({ color: 'red', radius: 10 }, { smooth: true });"

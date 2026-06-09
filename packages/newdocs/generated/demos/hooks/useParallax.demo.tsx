@@ -1,3 +1,5 @@
+'use client'
+
 import { useParallax } from '@siberiacancode/reactuse';
 
 const LAYERS = [
@@ -48,16 +50,16 @@ const Demo = () => {
 
       <div className='perspective-[300px]'>
         <div
-          className='border-border flex h-72 w-56 items-center justify-center overflow-hidden rounded-xl border bg-white shadow-lg transition-transform duration-300 ease-out'
           id='parallax-card'
+          className='border-border flex h-72 w-56 items-center justify-center overflow-hidden rounded-xl border bg-white shadow-lg transition-transform duration-300 ease-out'
         >
           <div className='relative size-[4em] overflow-hidden text-6xl'>
             {LAYERS.map((layer) => (
               <img
                 key={layer.id}
+                id={layer.id}
                 alt={layer.id}
                 className='absolute h-full w-full transition-transform duration-300 ease-out'
-                id={layer.id}
                 src={layer.src}
               />
             ))}

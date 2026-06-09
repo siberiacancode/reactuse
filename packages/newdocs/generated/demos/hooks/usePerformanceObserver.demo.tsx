@@ -1,3 +1,5 @@
+'use client'
+
 import { usePerformanceObserver } from '@siberiacancode/reactuse';
 import { GaugeIcon, RotateCwIcon } from 'lucide-react';
 

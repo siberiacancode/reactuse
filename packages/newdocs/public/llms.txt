@@ -96,6 +96,8 @@
 - [useMutationObserver](https://reactuse.org/functions/hooks/useMutationObserver): Hook that gives you mutation observer state
 - [useOrientation](https://reactuse.org/functions/hooks/useOrientation): Hook that provides the current screen orientation
 - [usePageLeave](https://reactuse.org/functions/hooks/usePageLeave): Hook what calls given function when mouse leaves the page
+- [useParallax](https://reactuse.org/functions/hooks/useParallax): Hook to help create parallax effect
+- [usePerformanceObserver](https://reactuse.org/functions/hooks/usePerformanceObserver): Hook that allows you to observe performance entries
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state

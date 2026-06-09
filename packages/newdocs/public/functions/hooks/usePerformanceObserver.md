@@ -1,15 +1,15 @@
 ---
-title: usePaint
-description: Hook that allows you to draw in a specific area
-category: elements
+title: usePerformanceObserver
+description: Hook that allows you to observe performance entries
+category: sensors
 usage: low
 type: hook
-isTest: false
+isTest: true
 isDemo: true
-lastModifiedTime: 1780921357000
+lastModifiedTime: 1773841927000
 ---
 
-import metadata from './usePaint.meta.json';
+import metadata from './usePerformanceObserver.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './usePaint.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add usePaint
+    npx useverse@latest add usePerformanceObserver
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './usePaint.meta.json';
 ## Usage
 
 ```tsx
-const paint = usePaint(canvasRef, { color: 'red', radius: 10 });
-// or
-const { ref, draw, clear, undo, redo, changeColor } = usePaint({ color: 'red', radius: 10 }, { smooth: true });
+const { supported, entries, start, stop } = usePerformanceObserver();
 ```
 
 ## Type Declarations

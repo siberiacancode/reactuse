@@ -105,3 +105,5 @@ A quick list of available functions.
 - [useOtpCredential](/functions/hooks/useOtpCredential): Hook that creates an otp credential
 - [usePageLeave](/functions/hooks/usePageLeave): Hook what calls given function when mouse leaves the page
 - [usePaint](/functions/hooks/usePaint): Hook that allows you to draw in a specific area
+- [useParallax](/functions/hooks/useParallax): Hook to help create parallax effect
+- [usePerformanceObserver](/functions/hooks/usePerformanceObserver): Hook that allows you to observe performance entries
