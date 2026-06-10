@@ -20,6 +20,7 @@ const Demo = () => {
   const languageField = useField('en');
   const notificationsField = useField(true);
   const publicField = useField(false);
+  const isPublic = publicField.watch();
 
   const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -86,9 +87,11 @@ const Demo = () => {
                 Receive product updates and release notes
               </span>
             </div>
-            <span className='border-border bg-muted has-[:checked]:bg-foreground has-[:checked]:border-foreground relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border transition-colors'>
+            <span className='inline-flex h-5 w-9 shrink-0 cursor-pointer items-center'>
               <input className='peer sr-only' type='checkbox' {...notificationsField.register()} />
-              <span className='bg-background absolute left-0.5 size-3.5 rounded-full transition-transform peer-checked:translate-x-4' />
+              <span className='border-border bg-muted peer-checked:border-foreground peer-checked:bg-foreground relative inline-flex h-5 w-9 rounded-full border transition-colors'>
+                <span className='bg-background absolute top-0.5 left-0.5 size-3.5 rounded-full transition-transform peer-checked:translate-x-4' />
+              </span>
             </span>
           </label>
 
@@ -119,16 +122,15 @@ const Demo = () => {
         </div>
 
         <label className='flex cursor-pointer items-start gap-3'>
-          <span
-            className={cn(
-              'border-input has-[:checked]:bg-foreground has-[:checked]:border-foreground relative mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-[4px] border transition-colors'
-            )}
-          >
+          <span className='mt-0.5 flex shrink-0 items-center'>
             <input className='peer sr-only' type='checkbox' {...publicField.register()} />
-            <CheckIcon
-              className='text-background size-3 opacity-0 peer-checked:opacity-100'
-              strokeWidth={3}
-            />
+            <span
+              className={cn(
+                'border-border peer-checked:border-foreground peer-checked:bg-foreground flex size-4 items-center justify-center rounded-[5px] border transition-colors'
+              )}
+            >
+              {isPublic && <CheckIcon className='text-background size-3' strokeWidth={3.5} />}
+            </span>
           </span>
           <div className='flex flex-col gap-0.5'>
             <span className='text-foreground text-xs font-medium'>Make profile public</span>

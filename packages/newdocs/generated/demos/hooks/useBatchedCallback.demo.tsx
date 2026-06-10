@@ -49,14 +49,14 @@ const Demo = () => {
         What will you use the service for?
       </h3>
 
-      <div className='flex flex-wrap justify-center gap-2'>
+      <div className='flex flex-wrap justify-center gap-1'>
         {INTERESTS.map((interest) => {
           const active = tags.includes(interest.tag);
           return (
             <button
               key={interest.tag}
               className={cn(
-                'h-9 rounded-full! px-4 text-sm font-medium transition-colors',
+                'h-9 rounded-full! px-3 text-sm font-medium transition-colors',
                 active
                   ? 'bg-foreground text-background'
                   : 'bg-muted text-foreground hover:bg-accent'

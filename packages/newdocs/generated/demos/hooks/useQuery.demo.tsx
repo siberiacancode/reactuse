@@ -1,3 +1,5 @@
+'use client'
+
 import { useQuery } from '@siberiacancode/reactuse';
 import { useState } from 'react';
 

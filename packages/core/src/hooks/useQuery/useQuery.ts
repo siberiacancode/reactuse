@@ -86,11 +86,12 @@ export const useQuery = <QueryData, Data = QueryData>(
   options?: UseQueryOptions<QueryData, Data>
 ): UseQueryReturn<Data> => {
   const enabled = options?.enabled ?? true;
+  const canRequestOnMount = enabled && typeof window !== 'undefined';
   const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
   const alreadyRequestedRef = useRef(false);
 
-  const [isFetching, setIsFetching] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(canRequestOnMount);
+  const [isLoading, setIsLoading] = useState(canRequestOnMount);
   const [isError, setIsError] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
   const [isSuccess, setIsSuccess] = useState(!!options?.placeholderData);

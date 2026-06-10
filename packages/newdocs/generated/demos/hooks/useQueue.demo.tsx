@@ -1,3 +1,5 @@
+'use client'
+
 import { useInterval, useQueue } from '@siberiacancode/reactuse';
 import { CheckIcon } from 'lucide-react';
 

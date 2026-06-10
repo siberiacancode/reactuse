@@ -19,6 +19,7 @@
 - [useLockCallback](https://reactuse.org/functions/hooks/useLockCallback): Hook that prevents a callback from being executed multiple times simultaneously
 - [useMutation](https://reactuse.org/functions/hooks/useMutation): Hook that defines the logic when mutate data
 - [useOptimistic](https://reactuse.org/functions/hooks/useOptimistic): Hook that allows get optimistic value before its update
+- [useQuery](https://reactuse.org/functions/hooks/useQuery): Hook that defines the logic when query data
 ### Browsers
 
 - [useAudio](https://reactuse.org/functions/hooks/useAudio): Hook that manages audio playback with sprite support
@@ -120,6 +121,7 @@
 - [useMergedRef](https://reactuse.org/functions/hooks/useMergedRef): Hook that merges multiple refs into a single ref
 - [useObject](https://reactuse.org/functions/hooks/useObject): Hook that provides state and helper methods to manage an object
 - [useOffsetPagination](https://reactuse.org/functions/hooks/useOffsetPagination): Hook that defines the logic when pagination
+- [useQueue](https://reactuse.org/functions/hooks/useQueue): Hook that manages a queue
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions

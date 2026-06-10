@@ -118,3 +118,5 @@ A quick list of available functions.
 - [usePreferredReducedMotion](/functions/hooks/usePreferredReducedMotion): Hook that returns the reduced motion preference
 - [usePrevious](/functions/hooks/usePrevious): Hook that returns the previous value
 - [useProgress](/functions/hooks/useProgress): Hook that creates a lightweight progress bar
+- [useQuery](/functions/hooks/useQuery): Hook that defines the logic when query data
+- [useQueue](/functions/hooks/useQueue): Hook that manages a queue

@@ -116,24 +116,32 @@ const Demo = () => {
       )}
 
       {step === 2 && (
-        <div className='flex flex-col items-center justify-center'>
-          <div className='flex flex-col items-center gap-3 py-4'>
+        <div className='flex flex-col gap-4'>
+          <div className='border-border bg-card flex flex-col items-center gap-4 rounded-2xl border px-6 py-8 text-center'>
             <div className='flex size-14 items-center justify-center rounded-full bg-green-500/10 text-green-500'>
               <CheckIcon className='size-8' />
             </div>
 
-            <div className='flex flex-col items-center gap-1'>
+            <div className='flex flex-col items-center gap-2'>
               <h4>Payment successful</h4>
-              <p className='text-muted-foreground text-sm'>
-                Receipt sent to <code>{email}</code>
+              <p className='text-muted-foreground max-w-xs text-sm'>
+                Your order is confirmed and the receipt has been sent to {email}.
               </p>
-              <p className='text-muted-foreground text-xs'>
-                Paid with <strong>{currentMethod.title}</strong>
-              </p>
+            </div>
+
+            <div className='bg-muted/50 flex w-full max-w-xs flex-col gap-2 rounded-xl p-4 text-left'>
+              <div className='flex items-center justify-between gap-3 text-sm'>
+                <span className='text-muted-foreground'>Payment method</span>
+                <span className='text-foreground font-medium'>{currentMethod.title}</span>
+              </div>
+              <div className='flex items-center justify-between gap-3 text-sm'>
+                <span className='text-muted-foreground'>Email</span>
+                <span className='text-foreground font-medium'>{email}</span>
+              </div>
             </div>
           </div>
 
-          <div className='flex justify-start gap-2'>
+          <div className='flex justify-start'>
             <button data-variant='outline' type='button' onClick={() => location.back()}>
               <ArrowLeftIcon className='size-4' /> Back
             </button>
