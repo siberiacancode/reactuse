@@ -109,3 +109,12 @@ A quick list of available functions.
 - [usePerformanceObserver](/functions/hooks/usePerformanceObserver): Hook that allows you to observe performance entries
 - [usePermission](/functions/hooks/usePermission): Hook that gives you the state of permission
 - [usePictureInPicture](/functions/hooks/usePictureInPicture): Hook that provides Picture-in-Picture functionality for video elements
+- [usePointerLock](/functions/hooks/usePointerLock): Hook that provides reactive pointer lock
+- [usePostMessage](/functions/hooks/usePostMessage): Hook that allows you to receive messages from other origins
+- [usePreferredColorScheme](/functions/hooks/usePreferredColorScheme): Hook that returns user preferred color scheme
+- [usePreferredContrast](/functions/hooks/usePreferredContrast): Hook that returns the contrast preference
+- [usePreferredDark](/functions/hooks/usePreferredDark): Hook that returns if the user prefers dark mode
+- [usePreferredLanguages](/functions/hooks/usePreferredLanguages): that returns a browser preferred languages from navigator
+- [usePreferredReducedMotion](/functions/hooks/usePreferredReducedMotion): Hook that returns the reduced motion preference
+- [usePrevious](/functions/hooks/usePrevious): Hook that returns the previous value
+- [useProgress](/functions/hooks/useProgress): Hook that creates a lightweight progress bar

@@ -1,3 +1,5 @@
+'use client'
+
 import { usePostMessage } from '@siberiacancode/reactuse';
 import { KeyRoundIcon } from 'lucide-react';
 import { useState } from 'react';

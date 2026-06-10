@@ -62,7 +62,14 @@ const RepoCard = ({ repo, loading }: RepoCardProps) => (
     {!loading && repo && (
       <>
         <div className='flex items-center gap-2'>
-          <img alt={repo.full_name} className='size-8 rounded-md' src={repo.owner.avatar_url} />
+          <div className='size-8 rounded-md' data-slot='avatar'>
+            <img
+              alt={repo.full_name}
+              className='object-cover'
+              data-slot='avatar-image'
+              src={repo.owner.avatar_url}
+            />
+          </div>
           <div className='flex min-w-0 flex-1 flex-col leading-tight'>
             <span className='text-muted-foreground truncate text-[10px]'>
               {repo.full_name.split('/')[0]}

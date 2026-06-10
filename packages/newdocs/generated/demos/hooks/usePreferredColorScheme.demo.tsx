@@ -1,3 +1,5 @@
+'use client'
+
 import { usePreferredColorScheme } from '@siberiacancode/reactuse';
 import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
 

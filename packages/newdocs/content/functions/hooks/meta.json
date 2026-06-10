@@ -11,16 +11,16 @@
       "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect","useMount",
 
       "---browser---",
-      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls","useMediaQuery","useMemory","useNetwork","useObjectUrl","useOnline","useOtpCredential","usePermission","usePictureInPicture",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls","useMediaQuery","useMemory","useNetwork","useObjectUrl","useOnline","useOtpCredential","usePermission","usePictureInPicture","usePointerLock","usePostMessage",
 
       "---utilities---",
-      "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent","useLastChanged","useLatest",
+      "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent","useLastChanged","useLatest","usePrevious",
 
       "---state---",
       "useBoolean","useControllableState","useCookie","useCookies","useCounter","useDefault","useDisclosure","useField","useHash","useList","useLocalStorage","useMap","useMask","useMergedRef","useObject","useOffsetPagination",
 
       "---user---",
-      "useBrowserLanguage","useOperatingSystem",
+      "useBrowserLanguage","useOperatingSystem","usePreferredColorScheme","usePreferredContrast","usePreferredDark","usePreferredLanguages","usePreferredReducedMotion",
 
       "---sensors---",
       "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver",
@@ -29,7 +29,7 @@
       "useFul","useLess","useOnce",
 
       "---time---",
-      "useInterval",
+      "useInterval","useProgress",
 
       "---debug---",
       "useLogger"

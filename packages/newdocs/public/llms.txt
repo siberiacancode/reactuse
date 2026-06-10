@@ -53,6 +53,8 @@
 - [useOtpCredential](https://reactuse.org/functions/hooks/useOtpCredential): Hook that creates an otp credential
 - [usePermission](https://reactuse.org/functions/hooks/usePermission): Hook that gives you the state of permission
 - [usePictureInPicture](https://reactuse.org/functions/hooks/usePictureInPicture): Hook that provides Picture-in-Picture functionality for video elements
+- [usePointerLock](https://reactuse.org/functions/hooks/usePointerLock): Hook that provides reactive pointer lock
+- [usePostMessage](https://reactuse.org/functions/hooks/usePostMessage): Hook that allows you to receive messages from other origins
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
@@ -121,10 +123,16 @@
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions
+- [useProgress](https://reactuse.org/functions/hooks/useProgress): Hook that creates a lightweight progress bar
 ### Users
 
 - [useBrowserLanguage](https://reactuse.org/functions/hooks/useBrowserLanguage): Hook that returns the current browser language
 - [useOperatingSystem](https://reactuse.org/functions/hooks/useOperatingSystem): Hook that returns the operating system of the current browser
+- [usePreferredColorScheme](https://reactuse.org/functions/hooks/usePreferredColorScheme): Hook that returns user preferred color scheme
+- [usePreferredContrast](https://reactuse.org/functions/hooks/usePreferredContrast): Hook that returns the contrast preference
+- [usePreferredDark](https://reactuse.org/functions/hooks/usePreferredDark): Hook that returns if the user prefers dark mode
+- [usePreferredLanguages](https://reactuse.org/functions/hooks/usePreferredLanguages): that returns a browser preferred languages from navigator
+- [usePreferredReducedMotion](https://reactuse.org/functions/hooks/usePreferredReducedMotion): Hook that returns the reduced motion preference
 ### Utilitiess
 
 - [useBatchedCallback](https://reactuse.org/functions/hooks/useBatchedCallback): Hook that batches calls and forwards them to a callback
@@ -137,3 +145,4 @@
 - [useEvent](https://reactuse.org/functions/hooks/useEvent): Hook that creates an event and returns a stable reference of it
 - [useLastChanged](https://reactuse.org/functions/hooks/useLastChanged): Hook for records the timestamp of the last change
 - [useLatest](https://reactuse.org/functions/hooks/useLatest): Hook that returns the stable reference of the value
+- [usePrevious](https://reactuse.org/functions/hooks/usePrevious): Hook that returns the previous value

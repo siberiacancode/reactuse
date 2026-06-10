@@ -1,3 +1,5 @@
+'use client'
+
 import type { CSSProperties } from 'react';
 
 import { useEventListener, usePointerLock } from '@siberiacancode/reactuse';

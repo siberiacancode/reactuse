@@ -60,15 +60,19 @@ const Demo = () => {
                   className='flex flex-col items-center justify-center gap-2 rounded-lg bg-neutral-900 p-3'
                 >
                   {participant.initials && (
-                    <div className='flex size-12 items-center justify-center rounded-full bg-gradient-to-br from-neutral-700 to-neutral-900 text-sm font-semibold text-white'>
-                      {participant.initials}
+                    <div
+                      className='size-12 bg-gradient-to-br from-neutral-700 to-neutral-900 text-sm font-semibold text-white'
+                      data-slot='avatar'
+                    >
+                      <span data-slot='avatar-fallback'>{participant.initials}</span>
                     </div>
                   )}
                   {participant.avatar && (
-                    <div className='flex size-12 items-center justify-center overflow-hidden rounded-full bg-neutral-800'>
+                    <div className='size-12 bg-neutral-800' data-slot='avatar'>
                       <img
                         alt={participant.name}
-                        className='size-full object-cover'
+                        className='object-cover'
+                        data-slot='avatar-image'
                         src={participant.avatar}
                       />
                     </div>

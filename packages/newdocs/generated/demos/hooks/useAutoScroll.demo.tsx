@@ -184,15 +184,22 @@ const Demo = () => {
                   className={cn('flex items-end gap-2', isMe && 'flex-row-reverse')}
                 >
                   {isMe && (
-                    <div className='flex size-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-neutral-700 to-neutral-900 text-[10px] font-semibold text-white'>
-                      SC
+                    <div
+                      className='size-7 shrink-0 bg-gradient-to-br from-neutral-700 to-neutral-900 text-[10px] font-semibold text-white'
+                      data-slot='avatar'
+                    >
+                      <span data-slot='avatar-fallback'>SC</span>
                     </div>
                   )}
                   {!isMe && (
-                    <div className='size-7 shrink-0 overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-800'>
+                    <div
+                      className='size-7 shrink-0 bg-neutral-200 dark:bg-neutral-800'
+                      data-slot='avatar'
+                    >
                       <img
                         alt='reactuse'
-                        className='size-full translate-x-1 translate-y-1.5 scale-130 object-cover object-top'
+                        className='translate-x-1 translate-y-1.5 scale-130 object-cover object-top'
+                        data-slot='avatar-image'
                         src={message.avatar}
                       />
                     </div>
