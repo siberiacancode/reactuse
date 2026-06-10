@@ -5,9 +5,9 @@ import { useState } from 'react';
 const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 
 const generateCode = () =>
-  Array.from({ length: 6 })
-    .fill(CHARS[Math.floor(Math.random() * CHARS.length)])
-    .join('');
+  Array.from(crypto.getRandomValues(new Uint8Array(6)), (byte) => CHARS[byte % CHARS.length]).join(
+    ''
+  );
 
 const Demo = () => {
   const [code, setCode] = useState<string>();
