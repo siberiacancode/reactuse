@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {Function} callback The callback to be locked",
+          "source": " * @param {Function} callback The callback to be locked\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The callback to be locked",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @returns {Function} The locked callback",
+          "source": " * @returns {Function} The locked callback\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,12 +64,12 @@
             "postType": " ",
             "description": "locked callback",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 8,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

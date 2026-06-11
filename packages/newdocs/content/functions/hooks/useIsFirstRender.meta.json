@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @returns {boolean} True if the component is first render",
+          "source": " * @returns {boolean} True if the component is first render\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,12 +36,12 @@
             "postType": " ",
             "description": "if the component is first render",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 7,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -54,7 +54,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

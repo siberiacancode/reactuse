@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} target The element to measure",
+          "source": " * @param {HookTarget} target The element to measure\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The element to measure",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {UseMeasureReturn} The element's size and position",
+          "source": " * @returns {UseMeasureReturn} The element's size and position\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,12 +93,12 @@
             "postType": " ",
             "description": "element's size and position",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 9,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -126,7 +126,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -154,7 +154,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @returns {UseMeasureReturn & { ref: StateRef<Target> }} The element's size and position",
+          "source": " * @returns {UseMeasureReturn & { ref: StateRef<Target> }} The element's size and position\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,12 +167,12 @@
             "postType": " ",
             "description": "element's size and position",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 16,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -185,7 +185,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

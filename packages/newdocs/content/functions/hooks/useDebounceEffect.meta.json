@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {EffectCallback} effect The effect callback to run",
+          "source": " * @param {EffectCallback} effect The effect callback to run\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The effect callback to run",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {number} delay The delay in milliseconds",
+          "source": " * @param {number} delay The delay in milliseconds\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The delay in milliseconds",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {DependencyList} deps The dependencies list for the effect",
+          "source": " * @param {DependencyList} deps The dependencies list for the effect\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,12 +92,12 @@
             "postType": " ",
             "description": "The dependencies list for the effect",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 9,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,7 +110,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

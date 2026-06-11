@@ -8,7 +8,7 @@
   "usage": "high",
   "description": "Hook that defines the logic when query data",
   "category": "Async",
-  "lastModified": 1780745248000,
+  "lastModified": 1781098447000,
   "examples": [
     "const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));"
   ],
@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {() => Promise<Data>} callback The callback function to be invoked",
+          "source": " * @param {() => Promise<Data>} callback The callback function to be invoked\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The callback function to be invoked",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {DependencyList} [options.keys] The dependencies for the hook",
+          "source": " * @param {DependencyList} [options.keys] The dependencies for the hook\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The dependencies for the hook",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success",
+          "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,7 +92,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on success",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -107,7 +107,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error",
+          "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -120,7 +120,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on error",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -135,7 +135,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {UseQueryOptionsSelect<Data>} [options.select] The select function to be invoked",
+          "source": " * @param {UseQueryOptionsSelect<Data>} [options.select] The select function to be invoked\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -148,7 +148,7 @@
             "postType": " ",
             "description": "The select function to be invoked",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -163,7 +163,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {Data | (() => Data)} [options.initialData] The initial data for the hook",
+          "source": " * @param {Data | (() => Data)} [options.initialData] The initial data for the hook\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -176,7 +176,7 @@
             "postType": " ",
             "description": "The initial data for the hook",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -191,7 +191,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @param {Data | (() => Data)} [options.placeholderData] The placeholder data for the hook",
+          "source": " * @param {Data | (() => Data)} [options.placeholderData] The placeholder data for the hook\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -204,7 +204,7 @@
             "postType": " ",
             "description": "The placeholder data for the hook",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -219,7 +219,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @param {number} [options.refetchInterval] The refetch interval",
+          "source": " * @param {number} [options.refetchInterval] The refetch interval\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -232,7 +232,7 @@
             "postType": " ",
             "description": "The refetch interval",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -247,7 +247,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @param {boolean | number} [options.retry] The retry count of requests",
+          "source": " * @param {boolean | number} [options.retry] The retry count of requests\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -260,7 +260,7 @@
             "postType": " ",
             "description": "The retry count of requests",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -275,7 +275,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @returns {UseQueryReturn<Data>} An object with the state of the query",
+          "source": " * @returns {UseQueryReturn<Data>} An object with the state of the query\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -288,12 +288,12 @@
             "postType": " ",
             "description": "object with the state of the query",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 17,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -306,7 +306,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

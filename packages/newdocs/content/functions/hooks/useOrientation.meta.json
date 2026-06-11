@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi screen.orientation https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation",
+        "source": " * @browserapi screen.orientation https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -69,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(value: UseOrientationValue) => void} [callback] The callback invoked when the orientation changes",
+          "source": " * @param {(value: UseOrientationValue) => void} [callback] The callback invoked when the orientation changes\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": " ",
             "description": "The callback invoked when the orientation changes",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -97,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {useOrientationReturn} The current screen orientation",
+          "source": " * @returns {useOrientationReturn} The current screen orientation\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,12 +110,12 @@
             "postType": " ",
             "description": "current screen orientation",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -128,7 +128,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

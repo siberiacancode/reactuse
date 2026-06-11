@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} [target=window] The target element to observe active element changes",
+          "source": " * @param {HookTarget} [target=window] The target element to observe active element changes\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The target element to observe active element changes",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -81,7 +81,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {ActiveElement | null} The active element",
+          "source": " * @returns {ActiveElement | null} The active element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -94,12 +94,12 @@
             "postType": " ",
             "description": "active element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 9,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -112,7 +112,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -127,7 +127,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -140,7 +140,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -155,7 +155,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @returns {{ ref: StateRef<Element>; activeElement: ActiveElement | null }} An object containing the ref and active element",
+          "source": " * @returns {{ ref: StateRef<Element>; activeElement: ActiveElement | null }} An object containing the ref and active element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -168,12 +168,12 @@
             "postType": " ",
             "description": "object containing the ref and active element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 16,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -186,7 +186,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

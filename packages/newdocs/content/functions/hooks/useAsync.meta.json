@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {() => Promise<Data>} callback The async callback",
+          "source": " * @param {() => Promise<Data>} callback The async callback\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The async callback",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {DependencyList} [deps=[]] The dependencies of the callback",
+          "source": " * @param {DependencyList} [deps=[]] The dependencies of the callback\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The dependencies of the callback",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {UseAsyncReturn<Data>} The state of the async callback",
+          "source": " * @returns {UseAsyncReturn<Data>} The state of the async callback\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,12 +93,12 @@
             "postType": " ",
             "description": "state of the async callback",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 9,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {number} [initialProgress] Initial progress value in range 0..1",
+          "source": " * @param {number} [initialProgress] Initial progress value in range 0..1\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "Initial progress value in range 0..1",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {boolean} [options.active] Controls progress externally (true -> start, false -> done)",
+          "source": " * @param {boolean} [options.active] Controls progress externally (true -> start, false -> done)\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "Controls progress externally (true -> start, false -> done)",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {number} [options.maximum=0.95] Maximum value when progress starts",
+          "source": " * @param {number} [options.maximum=0.95] Maximum value when progress starts\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,7 +92,7 @@
             "postType": " ",
             "description": "Maximum value when progress starts",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -108,7 +108,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {number} [options.speed=250] Auto increment interval in milliseconds",
+          "source": " * @param {number} [options.speed=250] Auto increment interval in milliseconds\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -121,7 +121,7 @@
             "postType": " ",
             "description": "Auto increment interval in milliseconds",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -137,7 +137,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {number} [options.rate=0.02] Additional random increment amount on each tick",
+          "source": " * @param {number} [options.rate=0.02] Additional random increment amount on each tick\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -150,7 +150,7 @@
             "postType": " ",
             "description": "Additional random increment amount on each tick",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -166,7 +166,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {number} [options.delay=250] Delay before reset to null after done",
+          "source": " * @param {number} [options.delay=250] Delay before reset to null after done\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -179,7 +179,7 @@
             "postType": " ",
             "description": "Delay before reset to null after done",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -195,7 +195,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @returns {UseProgressReturn} Current progress state and control methods",
+          "source": " * @returns {UseProgressReturn} Current progress state and control methods\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -208,12 +208,12 @@
             "postType": " ",
             "description": "progress state and control methods",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 13,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -226,7 +226,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

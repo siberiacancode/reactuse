@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi window.matchMedia https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia",
+        "source": " * @browserapi window.matchMedia https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -69,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {string} query The media query string",
+          "source": " * @param {string} query The media query string\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": " ",
             "description": "The media query string",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -97,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {boolean} A boolean indicating if the media query matches",
+          "source": " * @returns {boolean} A boolean indicating if the media query matches\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,12 +110,12 @@
             "postType": " ",
             "description": "boolean indicating if the media query matches",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -128,7 +128,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

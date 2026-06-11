@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @returns {UsePreferredReducedMotionReturn} The reduced motion preference",
+          "source": " * @returns {UsePreferredReducedMotionReturn} The reduced motion preference\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,12 +36,12 @@
             "postType": " ",
             "description": "reduced motion preference",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 7,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -54,7 +54,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

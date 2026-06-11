@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {(() => Value) | Value} initialValue The initial value of the constant",
+          "source": " * @param {(() => Value) | Value} initialValue The initial value of the constant\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The initial value of the constant",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {Value} The constant value",
+          "source": " * @returns {Value} The constant value\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,12 +64,12 @@
             "postType": " ",
             "description": "constant value",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 9,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

@@ -1105,3 +1105,13 @@
 .demo-ui [data-slot='table-caption'] {
   @apply text-muted-foreground mt-4 text-sm;
 }
+
+@keyframes landing-getting-started-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}

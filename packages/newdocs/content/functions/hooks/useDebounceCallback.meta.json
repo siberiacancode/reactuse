@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(...args: Params) => Return} callback The callback function",
+          "source": " * @param {(...args: Params) => Return} callback The callback function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The callback function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {number} delay The delay in milliseconds",
+          "source": " * @param {number} delay The delay in milliseconds\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The delay in milliseconds",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {(...args: Params) => Return} The callback with debounce",
+          "source": " * @returns {(...args: Params) => Return} The callback with debounce\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,12 +92,12 @@
             "postType": " ",
             "description": "callback with debounce",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,7 +110,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

@@ -26,7 +26,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -39,7 +39,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -54,7 +54,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} target The target to attach the event listeners to",
+          "source": " * @param {HookTarget} target The target to attach the event listeners to\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -67,7 +67,7 @@
             "postType": " ",
             "description": "The target to attach the event listeners to",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -82,7 +82,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {KeyboardEventHandler} callback The callback function to be invoked on key down",
+          "source": " * @param {KeyboardEventHandler} callback The callback function to be invoked on key down\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -95,7 +95,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on key down",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -110,7 +110,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {void}",
+          "source": " * @returns {void}\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -123,12 +123,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -141,7 +141,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -156,7 +156,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -169,7 +169,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -184,7 +184,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @param {HookTarget} target The target to attach the event listeners to",
+          "source": " * @param {HookTarget} target The target to attach the event listeners to\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -197,7 +197,7 @@
             "postType": " ",
             "description": "The target to attach the event listeners to",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -212,7 +212,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {UseKeyboardEventOptions} [options] The keyboard event options",
+          "source": " * @param {UseKeyboardEventOptions} [options] The keyboard event options\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -225,7 +225,7 @@
             "postType": " ",
             "description": "The keyboard event options",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -240,7 +240,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @returns {void}",
+          "source": " * @returns {void}\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -253,12 +253,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 18,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -271,7 +271,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -286,7 +286,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -299,7 +299,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -314,7 +314,7 @@
       "source": [
         {
           "number": 24,
-          "source": " * @param {KeyboardEventHandler} callback The callback function to be invoked on key down",
+          "source": " * @param {KeyboardEventHandler} callback The callback function to be invoked on key down\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -327,7 +327,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on key down",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -342,7 +342,7 @@
       "source": [
         {
           "number": 25,
-          "source": " * @returns {StateRef<Target>} A ref to attach to the target element",
+          "source": " * @returns {StateRef<Target>} A ref to attach to the target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -355,12 +355,12 @@
             "postType": " ",
             "description": "ref to attach to the target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 26,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -373,7 +373,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -388,7 +388,7 @@
       "source": [
         {
           "number": 30,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -401,7 +401,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -416,7 +416,7 @@
       "source": [
         {
           "number": 32,
-          "source": " * @param {UseKeyboardEventOptions} [options] The keyboard event options",
+          "source": " * @param {UseKeyboardEventOptions} [options] The keyboard event options\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -429,7 +429,7 @@
             "postType": " ",
             "description": "The keyboard event options",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -444,7 +444,7 @@
       "source": [
         {
           "number": 33,
-          "source": " * @returns {StateRef<Target>} A ref to attach to the target element",
+          "source": " * @returns {StateRef<Target>} A ref to attach to the target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -457,12 +457,12 @@
             "postType": " ",
             "description": "ref to attach to the target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 34,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -475,7 +475,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

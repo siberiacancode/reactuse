@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {Value} [options.value] The controlled value. When provided, the component becomes controlled",
+          "source": " * @param {Value} [options.value] The controlled value. When provided, the component becomes controlled\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The controlled value. When provided, the component becomes controlled",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {Value} [options.initialValue] The initial value for uncontrolled state",
+          "source": " * @param {Value} [options.initialValue] The initial value for uncontrolled state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The initial value for uncontrolled state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {(value: Value) => void} [options.onChange] The callback function called when the state changes",
+          "source": " * @param {(value: Value) => void} [options.onChange] The callback function called when the state changes\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,7 +92,7 @@
             "postType": " ",
             "description": "The callback function called when the state changes",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -107,7 +107,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {UseControllableStateReturn<Value>} A tuple containing the current value, setter function, and controlled flag",
+          "source": " * @returns {UseControllableStateReturn<Value>} A tuple containing the current value, setter function, and controlled flag\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -120,12 +120,12 @@
             "postType": " ",
             "description": "tuple containing the current value, setter function, and controlled flag",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -138,7 +138,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

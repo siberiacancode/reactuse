@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi IntersectionObserver https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver",
+        "source": " * @browserapi IntersectionObserver https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -72,7 +72,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -85,7 +85,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -100,7 +100,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {HookTarget} target The target element to detect intersection",
+          "source": " * @param {HookTarget} target The target element to detect intersection\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -113,7 +113,7 @@
             "postType": " ",
             "description": "The target element to detect intersection",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -128,7 +128,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean} [options.enabled=true] The IntersectionObserver options",
+          "source": " * @param {boolean} [options.enabled=true] The IntersectionObserver options\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -141,7 +141,7 @@
             "postType": " ",
             "description": "The IntersectionObserver options",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -157,7 +157,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected",
+          "source": " * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -170,7 +170,7 @@
             "postType": " ",
             "description": "The callback to execute when intersection is detected",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -185,7 +185,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {HookTarget} [options.root=document] The root element to observe",
+          "source": " * @param {HookTarget} [options.root=document] The root element to observe\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -198,7 +198,7 @@
             "postType": " ",
             "description": "The root element to observe",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -214,7 +214,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @returns {UseIntersectionObserverReturn} An object containing the state",
+          "source": " * @returns {UseIntersectionObserverReturn} An object containing the state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -227,12 +227,12 @@
             "postType": " ",
             "description": "object containing the state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 14,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -245,7 +245,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -260,7 +260,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -273,7 +273,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -288,7 +288,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @param {boolean} [options.enabled=true] The IntersectionObserver options",
+          "source": " * @param {boolean} [options.enabled=true] The IntersectionObserver options\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -301,7 +301,7 @@
             "postType": " ",
             "description": "The IntersectionObserver options",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -317,7 +317,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected",
+          "source": " * @param {((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) | undefined} [options.onChange] The callback to execute when intersection is detected\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -330,7 +330,7 @@
             "postType": " ",
             "description": "The callback to execute when intersection is detected",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -345,7 +345,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @param {HookTarget} [options.root=document] The root element to observe",
+          "source": " * @param {HookTarget} [options.root=document] The root element to observe\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -358,7 +358,7 @@
             "postType": " ",
             "description": "The root element to observe",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -374,7 +374,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
+          "source": " * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -387,12 +387,12 @@
             "postType": " ",
             "description": "React ref to attach to the target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 24,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -405,7 +405,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -420,7 +420,7 @@
       "source": [
         {
           "number": 28,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -433,7 +433,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -448,7 +448,7 @@
       "source": [
         {
           "number": 30,
-          "source": " * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected",
+          "source": " * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -461,7 +461,7 @@
             "postType": " ",
             "description": "The callback to execute when intersection is detected",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -476,7 +476,7 @@
       "source": [
         {
           "number": 31,
-          "source": " * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
+          "source": " * @returns {UseIntersectionObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -489,12 +489,12 @@
             "postType": " ",
             "description": "React ref to attach to the target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 32,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -507,7 +507,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -522,7 +522,7 @@
       "source": [
         {
           "number": 36,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -535,7 +535,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -550,7 +550,7 @@
       "source": [
         {
           "number": 37,
-          "source": " * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected",
+          "source": " * @param {UseIntersectionObserverCallback} callback The callback to execute when intersection is detected\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -563,7 +563,7 @@
             "postType": " ",
             "description": "The callback to execute when intersection is detected",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -578,7 +578,7 @@
       "source": [
         {
           "number": 38,
-          "source": " * @param {HookTarget} target The target element to detect intersection",
+          "source": " * @param {HookTarget} target The target element to detect intersection\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -591,7 +591,7 @@
             "postType": " ",
             "description": "The target element to detect intersection",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -606,7 +606,7 @@
       "source": [
         {
           "number": 39,
-          "source": " * @returns {UseIntersectionObserverReturn} An object containing the state",
+          "source": " * @returns {UseIntersectionObserverReturn} An object containing the state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -619,12 +619,12 @@
             "postType": " ",
             "description": "object containing the state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 40,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -637,7 +637,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

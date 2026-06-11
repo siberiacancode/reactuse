@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi localStorage https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+        "source": " * @browserapi localStorage https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -69,7 +69,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {string} key The key of the storage",
+          "source": " * @param {string} key The key of the storage\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": " ",
             "description": "The key of the storage",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -97,7 +97,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {UseStorageInitialValue<Value>} [initialValue] The initial value of the storage",
+          "source": " * @param {UseStorageInitialValue<Value>} [initialValue] The initial value of the storage\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,7 +110,7 @@
             "postType": " ",
             "description": "The initial value of the storage",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -125,7 +125,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {UseStorageOptions<Value>} [options] The options of the storage",
+          "source": " * @param {UseStorageOptions<Value>} [options] The options of the storage\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -138,12 +138,12 @@
             "postType": " ",
             "description": "The options of the storage",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 12,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -156,7 +156,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

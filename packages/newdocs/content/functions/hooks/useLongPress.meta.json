@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} target The target element to be long pressed",
+          "source": " * @param {HookTarget} target The target element to be long pressed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The target element to be long pressed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(event: LongPressEvents) => void} callback The callback function to be invoked on long press",
+          "source": " * @param {(event: LongPressEvents) => void} callback The callback function to be invoked on long press\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,7 +93,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on long press",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -108,7 +108,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {UseLongPressOptions} [options] The options for the long press",
+          "source": " * @param {UseLongPressOptions} [options] The options for the long press\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -121,7 +121,7 @@
             "postType": " ",
             "description": "The options for the long press",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -136,7 +136,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {boolean} The long pressing state",
+          "source": " * @returns {boolean} The long pressing state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -149,12 +149,12 @@
             "postType": " ",
             "description": "long pressing state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,7 +167,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -182,7 +182,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -195,7 +195,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -210,7 +210,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {(event: LongPressEvents) => void} callback The callback function to be invoked on long press",
+          "source": " * @param {(event: LongPressEvents) => void} callback The callback function to be invoked on long press\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -223,7 +223,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on long press",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -238,7 +238,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @param {UseLongPressOptions} [options] The options for the long press",
+          "source": " * @param {UseLongPressOptions} [options] The options for the long press\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -251,7 +251,7 @@
             "postType": " ",
             "description": "The options for the long press",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -266,7 +266,7 @@
       "source": [
         {
           "number": 19,
-          "source": " * @returns {boolean} The long pressing state",
+          "source": " * @returns {boolean} The long pressing state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -279,12 +279,12 @@
             "postType": " ",
             "description": "long pressing state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 20,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -297,7 +297,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

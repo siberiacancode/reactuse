@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {Value} initialValue The initial object value",
+          "source": " * @param {Value} initialValue The initial object value\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The initial object value",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {UseObjectReturn<Value>} An object containing the current state and functions to interact with the object",
+          "source": " * @returns {UseObjectReturn<Value>} An object containing the current state and functions to interact with the object\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,12 +64,12 @@
             "postType": " ",
             "description": "object containing the current state and functions to interact with the object",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 9,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

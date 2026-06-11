@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {UsePostMessageOrigin} origin The origin of the message",
+          "source": " * @param {UsePostMessageOrigin} origin The origin of the message\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The origin of the message",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {(message: Message) => Message} callback callback to get received message",
+          "source": " * @param {(message: Message) => Message} callback callback to get received message\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,7 +92,7 @@
             "postType": " ",
             "description": "callback to get received message",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -107,7 +107,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {(message: Message) => void} An object containing the current message",
+          "source": " * @returns {(message: Message) => void} An object containing the current message\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -120,12 +120,12 @@
             "postType": " ",
             "description": "object containing the current message",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -138,7 +138,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

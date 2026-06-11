@@ -3,3 +3,10 @@ packages:
 publicHoistPattern:
   - eslint
   - prettier
+minimumReleaseAgeExclude:
+  - '@siberiacancode/reactuse'
+allowBuilds:
+  core-js: true
+  esbuild: true
+  msw: true
+  sharp: true

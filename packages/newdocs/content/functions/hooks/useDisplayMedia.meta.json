@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia",
+        "source": " * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -70,7 +70,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -98,7 +98,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {HookTarget} target The target video element to display the media stream",
+          "source": " * @param {HookTarget} target The target video element to display the media stream\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": " ",
             "description": "The target video element to display the media stream",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -126,7 +126,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing",
+          "source": " * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": " ",
             "description": "Whether to enable audio sharing",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -154,7 +154,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {boolean} [options.immediately=false] Whether to start immediately",
+          "source": " * @param {boolean} [options.immediately=false] Whether to start immediately\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,7 +167,7 @@
             "postType": " ",
             "description": "Whether to start immediately",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -183,7 +183,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing",
+          "source": " * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -196,7 +196,7 @@
             "postType": " ",
             "description": "Whether to enable video sharing",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -211,7 +211,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @returns {UseDisplayMediaReturn} Object containing stream, sharing status and control methods",
+          "source": " * @returns {UseDisplayMediaReturn} Object containing stream, sharing status and control methods\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -224,12 +224,12 @@
             "postType": " ",
             "description": "containing stream, sharing status and control methods",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 14,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -242,7 +242,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -257,7 +257,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -270,7 +270,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -285,7 +285,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing",
+          "source": " * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -298,7 +298,7 @@
             "postType": " ",
             "description": "Whether to enable audio sharing",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -313,7 +313,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {boolean} [options.immediately=false] Whether to start immediately",
+          "source": " * @param {boolean} [options.immediately=false] Whether to start immediately\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -326,7 +326,7 @@
             "postType": " ",
             "description": "Whether to start immediately",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -342,7 +342,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing",
+          "source": " * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -355,7 +355,7 @@
             "postType": " ",
             "description": "Whether to enable video sharing",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -370,7 +370,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @returns {UseDisplayMediaReturn & { ref: StateRef<HTMLVideoElement> }} Object containing stream, sharing status, control methods and ref",
+          "source": " * @returns {UseDisplayMediaReturn & { ref: StateRef<HTMLVideoElement> }} Object containing stream, sharing status, control methods and ref\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -383,12 +383,12 @@
             "postType": " ",
             "description": "containing stream, sharing status, control methods and ref",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 24,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -401,7 +401,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

@@ -6,7 +6,7 @@ usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780745248000
+lastModifiedTime: 1781098447000
 ---
 
 import metadata from './useQuery.meta.json';

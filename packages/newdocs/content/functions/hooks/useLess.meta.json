@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {Value} [value] The value to be returned",
+          "source": " * @param {Value} [value] The value to be returned\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": " ",
             "description": "The value to be returned",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {Value} The value passed to the hook",
+          "source": " * @returns {Value} The value passed to the hook\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,12 +65,12 @@
             "postType": " ",
             "description": "value passed to the hook",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

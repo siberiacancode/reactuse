@@ -26,7 +26,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -39,7 +39,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -54,7 +54,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} [target=window] The target element to attach the event listener to",
+          "source": " * @param {HookTarget} [target=window] The target element to attach the event listener to\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -67,7 +67,7 @@
             "postType": " ",
             "description": "The target element to attach the event listener to",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -83,7 +83,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {string} hotkeys The hotkey to listen for",
+          "source": " * @param {string} hotkeys The hotkey to listen for\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -96,7 +96,7 @@
             "postType": " ",
             "description": "The hotkey to listen for",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -111,7 +111,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {UseHotkeysOptions} [options] The options for the hook",
+          "source": " * @param {UseHotkeysOptions} [options] The options for the hook\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -124,7 +124,7 @@
             "postType": " ",
             "description": "The options for the hook",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -139,7 +139,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {void}",
+          "source": " * @returns {void}\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -152,12 +152,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -170,7 +170,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -185,7 +185,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -198,7 +198,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -213,7 +213,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {HookTarget} [target=window] The target element to attach the event listener to",
+          "source": " * @param {HookTarget} [target=window] The target element to attach the event listener to\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -226,7 +226,7 @@
             "postType": " ",
             "description": "The target element to attach the event listener to",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -242,7 +242,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {string} hotkeys The hotkey to listen for",
+          "source": " * @param {string} hotkeys The hotkey to listen for\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -255,7 +255,7 @@
             "postType": " ",
             "description": "The hotkey to listen for",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -270,7 +270,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @param {(event: KeyboardEvent) => void} callback The callback function to execute when hotkey is pressed",
+          "source": " * @param {(event: KeyboardEvent) => void} callback The callback function to execute when hotkey is pressed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -283,7 +283,7 @@
             "postType": " ",
             "description": "The callback function to execute when hotkey is pressed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -298,7 +298,7 @@
       "source": [
         {
           "number": 19,
-          "source": " * @param {Record<string, string>} [options.alias] Alias map for hotkeys",
+          "source": " * @param {Record<string, string>} [options.alias] Alias map for hotkeys\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -311,7 +311,7 @@
             "postType": " ",
             "description": "Alias map for hotkeys",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -326,7 +326,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @param {boolean} [options.enabled=true] Enable or disable the event listeners",
+          "source": " * @param {boolean} [options.enabled=true] Enable or disable the event listeners\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -339,7 +339,7 @@
             "postType": " ",
             "description": "Enable or disable the event listeners",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -355,7 +355,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @returns {void}",
+          "source": " * @returns {void}\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -368,12 +368,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 22,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -386,7 +386,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -401,7 +401,7 @@
       "source": [
         {
           "number": 26,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -414,7 +414,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -429,7 +429,7 @@
       "source": [
         {
           "number": 28,
-          "source": " * @param {string} hotkeys The hotkey to listen for",
+          "source": " * @param {string} hotkeys The hotkey to listen for\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -442,7 +442,7 @@
             "postType": " ",
             "description": "The hotkey to listen for",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -457,7 +457,7 @@
       "source": [
         {
           "number": 29,
-          "source": " * @param {UseHotkeysOptions} [options] The options for the hook",
+          "source": " * @param {UseHotkeysOptions} [options] The options for the hook\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -470,7 +470,7 @@
             "postType": " ",
             "description": "The options for the hook",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -485,7 +485,7 @@
       "source": [
         {
           "number": 30,
-          "source": " * @returns {StateRef<Target>} A reference to the target element",
+          "source": " * @returns {StateRef<Target>} A reference to the target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -498,12 +498,12 @@
             "postType": " ",
             "description": "reference to the target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 31,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -516,7 +516,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -531,7 +531,7 @@
       "source": [
         {
           "number": 35,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -544,7 +544,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -559,7 +559,7 @@
       "source": [
         {
           "number": 37,
-          "source": " * @param {string} hotkeys The hotkey to listen for",
+          "source": " * @param {string} hotkeys The hotkey to listen for\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -572,7 +572,7 @@
             "postType": " ",
             "description": "The hotkey to listen for",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -587,7 +587,7 @@
       "source": [
         {
           "number": 38,
-          "source": " * @param {(event: KeyboardEvent) => void} callback The callback function to execute when hotkey is pressed",
+          "source": " * @param {(event: KeyboardEvent) => void} callback The callback function to execute when hotkey is pressed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -600,7 +600,7 @@
             "postType": " ",
             "description": "The callback function to execute when hotkey is pressed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -615,7 +615,7 @@
       "source": [
         {
           "number": 39,
-          "source": " * @param {Record<string, string>} [options.alias] Alias map for hotkeys",
+          "source": " * @param {Record<string, string>} [options.alias] Alias map for hotkeys\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -628,7 +628,7 @@
             "postType": " ",
             "description": "Alias map for hotkeys",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -643,7 +643,7 @@
       "source": [
         {
           "number": 40,
-          "source": " * @param {boolean} [options.enabled=true] Enable or disable the event listeners",
+          "source": " * @param {boolean} [options.enabled=true] Enable or disable the event listeners\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -656,7 +656,7 @@
             "postType": " ",
             "description": "Enable or disable the event listeners",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -672,7 +672,7 @@
       "source": [
         {
           "number": 41,
-          "source": " * @returns {StateRef<Target>} A reference to the target element",
+          "source": " * @returns {StateRef<Target>} A reference to the target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -685,12 +685,12 @@
             "postType": " ",
             "description": "reference to the target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 42,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -703,7 +703,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

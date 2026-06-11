@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(body: Body) => Promise<Data>} callback The callback function to be invoked",
+          "source": " * @param {(body: Body) => Promise<Data>} callback The callback function to be invoked\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The callback function to be invoked",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {boolean | number} [options.retry] The retry count of requests",
+          "source": " * @param {boolean | number} [options.retry] The retry count of requests\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The retry count of requests",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success",
+          "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,7 +92,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on success",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -107,7 +107,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error",
+          "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -120,7 +120,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on error",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -135,7 +135,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @returns {UseMutationReturn<Data>} An object with the state of the mutation",
+          "source": " * @returns {UseMutationReturn<Data>} An object with the state of the mutation\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -148,12 +148,12 @@
             "postType": " ",
             "description": "object with the state of the mutation",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 13,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -166,7 +166,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

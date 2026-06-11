@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {boolean} [initialValue=false] The initial boolean value",
+          "source": " * @param {boolean} [initialValue=false] The initial boolean value\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The initial boolean value",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @returns {UseBooleanReturn} An object containing the boolean state value and utility functions to manipulate the state",
+          "source": " * @returns {UseBooleanReturn} An object containing the boolean state value and utility functions to manipulate the state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,12 +65,12 @@
             "postType": " ",
             "description": "object containing the boolean state value and utility functions to manipulate the state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 8,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

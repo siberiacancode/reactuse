@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {EffectCallback} effect The callback to execute",
+          "source": " * @param {EffectCallback} effect The callback to execute\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,12 +36,12 @@
             "postType": " ",
             "description": "The callback to execute",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 7,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -54,7 +54,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

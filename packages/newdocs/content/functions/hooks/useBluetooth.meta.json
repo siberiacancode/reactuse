@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi navigator.bluetooth https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth",
+        "source": " * @browserapi navigator.bluetooth https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/bluetooth",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -69,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {boolean} [options.acceptAllDevices=false] The options to request all Bluetooth devices",
+          "source": " * @param {boolean} [options.acceptAllDevices=false] The options to request all Bluetooth devices\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": " ",
             "description": "The options to request all Bluetooth devices",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -98,7 +98,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {Array<BluetoothLEScanFilter>} [options.filters] Array of filters to apply when scanning Bluetooth devices",
+          "source": " * @param {Array<BluetoothLEScanFilter>} [options.filters] Array of filters to apply when scanning Bluetooth devices\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": " ",
             "description": "Array of filters to apply when scanning Bluetooth devices",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -126,7 +126,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {Array<BluetoothServiceUUID>} [options.optionalServices] Array of optional services that the application can use",
+          "source": " * @param {Array<BluetoothServiceUUID>} [options.optionalServices] Array of optional services that the application can use\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": " ",
             "description": "Array of optional services that the application can use",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -154,7 +154,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @returns {UseBluetoothReturn} Object containing battery information & Battery API support",
+          "source": " * @returns {UseBluetoothReturn} Object containing battery information & Battery API support\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,12 +167,12 @@
             "postType": " ",
             "description": "containing battery information & Battery API support",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 12,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -185,7 +185,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

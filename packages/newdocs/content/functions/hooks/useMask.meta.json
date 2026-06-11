@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {UseMaskPattern} mask Mask pattern string or array of literals and RegExp tokens",
+          "source": " * @param {UseMaskPattern} mask Mask pattern string or array of literals and RegExp tokens\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "Mask pattern string or array of literals and RegExp tokens",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {Omit<UseMaskOptions, 'mask'>} [options] The hook options when mask is passed as the first argument",
+          "source": " * @param {Omit<UseMaskOptions, 'mask'>} [options] The hook options when mask is passed as the first argument\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The hook options when mask is passed as the first argument",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {boolean} [options.autoClear=false] Clear value on blur when mask is incomplete",
+          "source": " * @param {boolean} [options.autoClear=false] Clear value on blur when mask is incomplete\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,7 +92,7 @@
             "postType": " ",
             "description": "Clear value on blur when mask is incomplete",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -108,7 +108,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {string} [options.initialValue=\"\"] Initial raw value",
+          "source": " * @param {string} [options.initialValue=\"\"] Initial raw value\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -121,7 +121,7 @@
             "postType": " ",
             "description": "Initial raw value",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -137,7 +137,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {(value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'showMask' | 'slot' | 'tokens'>>} [options.modify] Called before masking and can return dynamic mask option overrides",
+          "source": " * @param {(value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'showMask' | 'slot' | 'tokens'>>} [options.modify] Called before masking and can return dynamic mask option overrides\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -150,7 +150,7 @@
             "postType": " ",
             "description": "Called before masking and can return dynamic mask option overrides",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -165,7 +165,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {UseMaskShow} [options.showMask=\"focus\"] Defines when placeholder slots are displayed",
+          "source": " * @param {UseMaskShow} [options.showMask=\"focus\"] Defines when placeholder slots are displayed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -178,7 +178,7 @@
             "postType": " ",
             "description": "Defines when placeholder slots are displayed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -194,7 +194,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {string | null} [options.slot=\"\"] Character displayed in unfilled slots",
+          "source": " * @param {string | null} [options.slot=\"\"] Character displayed in unfilled slots\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -207,7 +207,7 @@
             "postType": " ",
             "description": "Character displayed in unfilled slots",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -223,7 +223,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @param {Record<string, RegExp>} [options.tokens] Override or extend the default token map",
+          "source": " * @param {Record<string, RegExp>} [options.tokens] Override or extend the default token map\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -236,7 +236,7 @@
             "postType": " ",
             "description": "Override or extend the default token map",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -251,7 +251,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @param {(states: { previousState: MaskState; currentState: MaskState; nextState: MaskState }) => MaskState} [options.beforeMaskedStateChange] Escape hatch for advanced cursor/value manipulation",
+          "source": " * @param {(states: { previousState: MaskState; currentState: MaskState; nextState: MaskState }) => MaskState} [options.beforeMaskedStateChange] Escape hatch for advanced cursor/value manipulation\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -264,7 +264,7 @@
             "postType": " ",
             "description": "Escape hatch for advanced cursor/value manipulation",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -279,7 +279,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @param {(rawValue: string, maskedValue: string) => void} [options.onChangeRaw] Called on every change with raw and display values",
+          "source": " * @param {(rawValue: string, maskedValue: string) => void} [options.onChangeRaw] Called on every change with raw and display values\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -292,7 +292,7 @@
             "postType": " ",
             "description": "Called on every change with raw and display values",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -307,7 +307,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {(maskedValue: string, rawValue: string) => void} [options.onFilled] Called when all required mask slots are filled",
+          "source": " * @param {(maskedValue: string, rawValue: string) => void} [options.onFilled] Called when all required mask slots are filled\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -320,7 +320,7 @@
             "postType": " ",
             "description": "Called when all required mask slots are filled",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -335,7 +335,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {(char: string) => string} [options.transform] Transform each character before validation and insertion",
+          "source": " * @param {(char: string) => string} [options.transform] Transform each character before validation and insertion\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -348,7 +348,7 @@
             "postType": " ",
             "description": "Transform each character before validation and insertion",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -363,7 +363,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @returns {UseMaskReturn} An object with the masked input state",
+          "source": " * @returns {UseMaskReturn} An object with the masked input state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -376,12 +376,12 @@
             "postType": " ",
             "description": "object with the masked input state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 19,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -394,7 +394,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

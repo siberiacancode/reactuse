@@ -35,28 +35,32 @@ const Demo = () => {
         <span className='text-muted-foreground text-xs tabular-nums'>{formattedDate}</span>
 
         <div className='flex items-center justify-between gap-3'>
-          {rateQuery.isLoading && <div className='bg-muted h-9 w-32 animate-pulse rounded-md' />}
-          {!rateQuery.isLoading && !!price && (
-            <span className='text-foreground font-mono text-3xl font-bold tabular-nums'>
-              {price.toFixed(4)}
-            </span>
-          )}
+          <div className='flex h-9 items-center'>
+            {rateQuery.isLoading && <div className='bg-muted h-9 w-32 animate-pulse rounded-md' />}
+            {!rateQuery.isLoading && !!price && (
+              <span className='text-foreground font-mono text-3xl leading-none font-bold tabular-nums'>
+                {price.toFixed(4)}
+              </span>
+            )}
+          </div>
 
-          {rateQuery.isLoading && <div className='bg-muted h-7 w-16 animate-pulse rounded-md' />}
-          {!rateQuery.isLoading && !!price && (
-            <div
-              className={cn(
-                'flex items-center gap-1 rounded-md px-2 py-1 text-sm font-semibold tabular-nums',
-                up
-                  ? 'bg-green-500/10 text-green-600 dark:text-green-500'
-                  : 'bg-destructive/10 text-destructive'
-              )}
-            >
-              {up ? <ArrowUpIcon className='size-3.5' /> : <ArrowDownIcon className='size-3.5' />}
-              {percent >= 0 ? '+' : ''}
-              {percent.toFixed(2)}%
-            </div>
-          )}
+          <div className='flex h-7 items-center'>
+            {rateQuery.isLoading && <div className='bg-muted h-7 w-16 animate-pulse rounded-md' />}
+            {!rateQuery.isLoading && !!price && (
+              <div
+                className={cn(
+                  'flex h-7 items-center gap-1 rounded-md px-2 py-1 text-sm font-semibold tabular-nums',
+                  up
+                    ? 'bg-green-500/10 text-green-600 dark:text-green-500'
+                    : 'bg-destructive/10 text-destructive'
+                )}
+              >
+                {up ? <ArrowUpIcon className='size-3.5' /> : <ArrowDownIcon className='size-3.5' />}
+                {percent >= 0 ? '+' : ''}
+                {percent.toFixed(2)}%
+              </div>
+            )}
+          </div>
         </div>
 
         <div className='flex items-center gap-2'>

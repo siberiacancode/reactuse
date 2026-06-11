@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi window.PictureInPicture https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API",
+        "source": " * @browserapi window.PictureInPicture https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -70,7 +70,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -98,7 +98,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {HookTarget} target The target video element",
+          "source": " * @param {HookTarget} target The target video element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": " ",
             "description": "The target video element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -126,7 +126,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {() => void} [options.onEnter] Callback when Picture-in-Picture mode is entered",
+          "source": " * @param {() => void} [options.onEnter] Callback when Picture-in-Picture mode is entered\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": " ",
             "description": "Callback when Picture-in-Picture mode is entered",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -154,7 +154,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {() => void} [options.onExit] Callback when Picture-in-Picture mode is exited",
+          "source": " * @param {() => void} [options.onExit] Callback when Picture-in-Picture mode is exited\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,7 +167,7 @@
             "postType": " ",
             "description": "Callback when Picture-in-Picture mode is exited",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -182,7 +182,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @returns {UsePictureInPictureReturn} An object containing Picture-in-Picture state and controls",
+          "source": " * @returns {UsePictureInPictureReturn} An object containing Picture-in-Picture state and controls\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -195,12 +195,12 @@
             "postType": " ",
             "description": "object containing Picture-in-Picture state and controls",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 13,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -213,7 +213,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -228,7 +228,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -241,7 +241,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -256,7 +256,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @param {() => void} [options.onEnter] Callback when Picture-in-Picture mode is entered",
+          "source": " * @param {() => void} [options.onEnter] Callback when Picture-in-Picture mode is entered\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -269,7 +269,7 @@
             "postType": " ",
             "description": "Callback when Picture-in-Picture mode is entered",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -284,7 +284,7 @@
       "source": [
         {
           "number": 19,
-          "source": " * @param {() => void} [options.onExit] Callback when Picture-in-Picture mode is exited",
+          "source": " * @param {() => void} [options.onExit] Callback when Picture-in-Picture mode is exited\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -297,7 +297,7 @@
             "postType": " ",
             "description": "Callback when Picture-in-Picture mode is exited",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -312,7 +312,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @returns {UsePictureInPictureReturn & { ref: StateRef<HTMLVideoElement> }} An object containing Picture-in-Picture state, controls and ref",
+          "source": " * @returns {UsePictureInPictureReturn & { ref: StateRef<HTMLVideoElement> }} An object containing Picture-in-Picture state, controls and ref\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -325,12 +325,12 @@
             "postType": " ",
             "description": "object containing Picture-in-Picture state, controls and ref",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 21,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -343,7 +343,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

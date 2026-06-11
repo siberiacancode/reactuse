@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi window.location https://developer.mozilla.org/en-US/docs/Web/API/Window/location",
+        "source": " * @browserapi window.location https://developer.mozilla.org/en-US/docs/Web/API/Window/location\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,7 +29,7 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Window/location",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseBrowserLocationReturn} The current browser location state and navigation methods",
+          "source": " * @returns {UseBrowserLocationReturn} The current browser location state and navigation methods\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,12 +64,12 @@
             "postType": " ",
             "description": "current browser location state and navigation methods",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

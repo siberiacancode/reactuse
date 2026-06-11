@@ -26,7 +26,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -39,7 +39,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -54,7 +54,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} target The target element to be hovered",
+          "source": " * @param {HookTarget} target The target element to be hovered\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -67,7 +67,7 @@
             "postType": " ",
             "description": "The target element to be hovered",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -82,7 +82,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(event: Event) => void} [callback] The callback function to be invoked on mouse enter",
+          "source": " * @param {(event: Event) => void} [callback] The callback function to be invoked on mouse enter\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -95,7 +95,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on mouse enter",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -110,7 +110,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {boolean} The value of the hover",
+          "source": " * @returns {boolean} The value of the hover\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -123,12 +123,12 @@
             "postType": " ",
             "description": "value of the hover",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -141,7 +141,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -156,7 +156,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -169,7 +169,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -184,7 +184,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @param {HookTarget} target The target element to be hovered",
+          "source": " * @param {HookTarget} target The target element to be hovered\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -197,7 +197,7 @@
             "postType": " ",
             "description": "The target element to be hovered",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -212,7 +212,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {(event: Event) => void} [options.onEntry] The callback function to be invoked on mouse enter",
+          "source": " * @param {(event: Event) => void} [options.onEntry] The callback function to be invoked on mouse enter\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -225,7 +225,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on mouse enter",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -240,7 +240,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {(event: Event) => void} [options.onLeave] The callback function to be invoked on mouse leave",
+          "source": " * @param {(event: Event) => void} [options.onLeave] The callback function to be invoked on mouse leave\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -253,7 +253,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on mouse leave",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -268,7 +268,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @returns {boolean} The value of the hover",
+          "source": " * @returns {boolean} The value of the hover\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -281,12 +281,12 @@
             "postType": " ",
             "description": "value of the hover",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 19,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -299,7 +299,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -314,7 +314,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -327,7 +327,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -342,7 +342,7 @@
       "source": [
         {
           "number": 25,
-          "source": " * @param {(event: Event) => void} [callback] The callback function to be invoked on mouse enter",
+          "source": " * @param {(event: Event) => void} [callback] The callback function to be invoked on mouse enter\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -355,7 +355,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on mouse enter",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -370,7 +370,7 @@
       "source": [
         {
           "number": 26,
-          "source": " * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The object with the ref and the value of the hover",
+          "source": " * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The object with the ref and the value of the hover\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -383,12 +383,12 @@
             "postType": " ",
             "description": "object with the ref and the value of the hover",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 27,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -401,7 +401,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -416,7 +416,7 @@
       "source": [
         {
           "number": 31,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -429,7 +429,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -444,7 +444,7 @@
       "source": [
         {
           "number": 33,
-          "source": " * @param {(event: Event) => void} [options.onEntry] The callback function to be invoked on mouse enter",
+          "source": " * @param {(event: Event) => void} [options.onEntry] The callback function to be invoked on mouse enter\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -457,7 +457,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on mouse enter",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -472,7 +472,7 @@
       "source": [
         {
           "number": 34,
-          "source": " * @param {(event: Event) => void} [options.onLeave] The callback function to be invoked on mouse leave",
+          "source": " * @param {(event: Event) => void} [options.onLeave] The callback function to be invoked on mouse leave\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -485,7 +485,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on mouse leave",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -500,7 +500,7 @@
       "source": [
         {
           "number": 35,
-          "source": " * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The object with the ref and the value of the hover",
+          "source": " * @returns {{ ref: StateRef<Target> } & UseHoverReturn} The object with the ref and the value of the hover\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -513,12 +513,12 @@
             "postType": " ",
             "description": "object with the ref and the value of the hover",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 36,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -531,7 +531,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

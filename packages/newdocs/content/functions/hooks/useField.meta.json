@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {Value} [params.initialValue = \"\"] Initial value",
+          "source": " * @param {Value} [params.initialValue = \"\"] Initial value\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "Initial value",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {boolean} [params.initialTouched=false] Initial touched state",
+          "source": " * @param {boolean} [params.initialTouched=false] Initial touched state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "Initial touched state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -81,7 +81,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean} [params.autoFocus=false] Auto focus",
+          "source": " * @param {boolean} [params.autoFocus=false] Auto focus\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -94,7 +94,7 @@
             "postType": " ",
             "description": "Auto focus",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -110,7 +110,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {boolean} [params.validateOnChange=false] Validate on change",
+          "source": " * @param {boolean} [params.validateOnChange=false] Validate on change\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -123,7 +123,7 @@
             "postType": " ",
             "description": "Validate on change",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -139,7 +139,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {boolean} [params.validateOnBlur=false] Validate on blur",
+          "source": " * @param {boolean} [params.validateOnBlur=false] Validate on blur\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -152,7 +152,7 @@
             "postType": " ",
             "description": "Validate on blur",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -168,7 +168,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @param {boolean} [params.validateOnMount=false] Validate on mount",
+          "source": " * @param {boolean} [params.validateOnMount=false] Validate on mount\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -181,7 +181,7 @@
             "postType": " ",
             "description": "Validate on mount",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -197,7 +197,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @returns {UseFieldReturn<Value>} An object containing input information",
+          "source": " * @returns {UseFieldReturn<Value>} An object containing input information\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -210,12 +210,12 @@
             "postType": " ",
             "description": "object containing input information",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 15,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -228,7 +228,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

@@ -7,10 +7,6 @@ export const CONFIG = {
   },
   URL: 'https://reactuse.org',
   DESCRIPTION: 'Improve your react applications with our library 📦 designed for comfort and speed',
-  LINKS: {
-    npm: 'https://www.npmjs.com/package/@siberiacancode/reactuse',
-    github: 'https://github.com/siberiacancode/reactuse'
-  },
   SOURCE: (name: string, type = 'ts') =>
     `https://github.com/siberiacancode/reactuse/blob/main/packages/core/src/hooks/${name}/${name}.${type}`
 };

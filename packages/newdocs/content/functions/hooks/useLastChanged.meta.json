@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {any} source  The source of the last change",
+          "source": " * @param {any} source  The source of the last change\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The source of the last change",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {number | null} [options.initialValue=null] The initial value",
+          "source": " * @param {number | null} [options.initialValue=null] The initial value\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The initial value",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {number | null} Return timestamp of the last change",
+          "source": " * @returns {number | null} Return timestamp of the last change\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,12 +93,12 @@
             "postType": " ",
             "description": "timestamp of the last change",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 9,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

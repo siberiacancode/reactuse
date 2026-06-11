@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} target The target element to auto-scroll",
+          "source": " * @param {HookTarget} target The target element to auto-scroll\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The target element to auto-scroll",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {boolean} [options.enabled] Whether auto-scrolling is enabled",
+          "source": " * @param {boolean} [options.enabled] Whether auto-scrolling is enabled\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,7 +93,7 @@
             "postType": " ",
             "description": "Whether auto-scrolling is enabled",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -108,7 +108,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {void}",
+          "source": " * @returns {void}\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -121,12 +121,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -154,7 +154,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,7 +167,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -182,7 +182,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {boolean} [options.enabled] Whether auto-scrolling is enabled",
+          "source": " * @param {boolean} [options.enabled] Whether auto-scrolling is enabled\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -195,7 +195,7 @@
             "postType": " ",
             "description": "Whether auto-scrolling is enabled",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -210,7 +210,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @returns {StateRef<Target>} A React ref to attach to the list element",
+          "source": " * @returns {StateRef<Target>} A React ref to attach to the list element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -223,12 +223,12 @@
             "postType": " ",
             "description": "React ref to attach to the list element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 18,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -241,7 +241,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

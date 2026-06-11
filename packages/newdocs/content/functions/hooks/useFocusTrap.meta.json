@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} target The target element for focus trap",
+          "source": " * @param {HookTarget} target The target element for focus trap\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The target element for focus trap",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {boolean} [active=true] Whether focus trap is active",
+          "source": " * @param {boolean} [active=true] Whether focus trap is active\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,7 +93,7 @@
             "postType": " ",
             "description": "Whether focus trap is active",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -109,7 +109,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseFocusTrapReturn} Object with the focus trap state and methods",
+          "source": " * @returns {UseFocusTrapReturn} Object with the focus trap state and methods\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -122,12 +122,12 @@
             "postType": " ",
             "description": "with the focus trap state and methods",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -140,7 +140,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -155,7 +155,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -168,7 +168,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -183,7 +183,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {boolean} [active=true] Whether focus trap is active",
+          "source": " * @param {boolean} [active=true] Whether focus trap is active\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -196,7 +196,7 @@
             "postType": " ",
             "description": "Whether focus trap is active",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -212,7 +212,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @returns {UseFocusTrapReturn & { ref: StateRef<Target> }} Object with the focus trap state and methods",
+          "source": " * @returns {UseFocusTrapReturn & { ref: StateRef<Target> }} Object with the focus trap state and methods\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -225,12 +225,12 @@
             "postType": " ",
             "description": "with the focus trap state and methods",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 18,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -243,7 +243,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi performance.memory https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory",
+        "source": " * @browserapi performance.memory https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -70,7 +70,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(value: Performance['memory']) => void} [callback] The callback to execute when the memory usage changes",
+          "source": " * @param {(value: Performance['memory']) => void} [callback] The callback to execute when the memory usage changes\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": " ",
             "description": "The callback to execute when the memory usage changes",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -98,7 +98,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseMemoryReturn} An object containing the current memory usage",
+          "source": " * @returns {UseMemoryReturn} An object containing the current memory usage\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,12 +111,12 @@
             "postType": " ",
             "description": "object containing the current memory usage",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -129,7 +129,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

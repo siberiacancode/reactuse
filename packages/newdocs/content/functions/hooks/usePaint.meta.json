@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} target The target element to be painted",
+          "source": " * @param {HookTarget} target The target element to be painted\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The target element to be painted",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {UsePaintInitialValue} [initialValue] The initial value of the paint",
+          "source": " * @param {UsePaintInitialValue} [initialValue] The initial value of the paint\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,7 +93,7 @@
             "postType": " ",
             "description": "The initial value of the paint",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -108,7 +108,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {UsePaintOptions} [options] The options to be used",
+          "source": " * @param {UsePaintOptions} [options] The options to be used\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -121,7 +121,7 @@
             "postType": " ",
             "description": "The options to be used",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -136,7 +136,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {UsePaintReturn} An object containing the current brush state and functions to interact with the paint",
+          "source": " * @returns {UsePaintReturn} An object containing the current brush state and functions to interact with the paint\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -149,12 +149,12 @@
             "postType": " ",
             "description": "object containing the current brush state and functions to interact with the paint",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,7 +167,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -182,7 +182,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -195,7 +195,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -210,7 +210,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {UsePaintInitialValue} [initialValue] The initial value of the paint",
+          "source": " * @param {UsePaintInitialValue} [initialValue] The initial value of the paint\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -223,7 +223,7 @@
             "postType": " ",
             "description": "The initial value of the paint",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -238,7 +238,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {UsePaintOptions} [options] The options to be used",
+          "source": " * @param {UsePaintOptions} [options] The options to be used\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -251,7 +251,7 @@
             "postType": " ",
             "description": "The options to be used",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -266,7 +266,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @returns {UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }} An object containing the current brush state and functions to interact with the paint",
+          "source": " * @returns {UsePaintReturn & { ref: StateRef<HTMLCanvasElement> }} An object containing the current brush state and functions to interact with the paint\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -279,12 +279,12 @@
             "postType": " ",
             "description": "object containing the current brush state and functions to interact with the paint",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 19,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -297,7 +297,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

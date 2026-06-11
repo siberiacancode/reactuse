@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {(batch: Params[]) => void} callback The callback that receives a batch of calls",
+          "source": " * @param {(batch: Params[]) => void} callback The callback that receives a batch of calls\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The callback that receives a batch of calls",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {number} options.size The batch settings with size and optional delay",
+          "source": " * @param {number} options.size The batch settings with size and optional delay\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The batch settings with size and optional delay",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {number} [options.delay=1000] The delay (ms) after which pending calls are flushed",
+          "source": " * @param {number} [options.delay=1000] The delay (ms) after which pending calls are flushed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,7 +92,7 @@
             "postType": " ",
             "description": "The delay (ms) after which pending calls are flushed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -108,7 +108,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {BatchedCallback<Params>} The batched callback with flush and cancel helpers",
+          "source": " * @returns {BatchedCallback<Params>} The batched callback with flush and cancel helpers\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -121,12 +121,12 @@
             "postType": " ",
             "description": "batched callback with flush and cancel helpers",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

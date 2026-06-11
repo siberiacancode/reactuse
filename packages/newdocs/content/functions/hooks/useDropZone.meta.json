@@ -26,7 +26,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -39,7 +39,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -54,7 +54,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {Target} target The target element drop zone's",
+          "source": " * @param {Target} target The target element drop zone's\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -67,7 +67,7 @@
             "postType": " ",
             "description": "The target element drop zone's",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -82,7 +82,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {DataTypes} [options.dataTypes] The data types",
+          "source": " * @param {DataTypes} [options.dataTypes] The data types\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -95,7 +95,7 @@
             "postType": " ",
             "description": "The data types",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -110,7 +110,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean} [options.multiple] The multiple mode",
+          "source": " * @param {boolean} [options.multiple] The multiple mode\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -123,7 +123,7 @@
             "postType": " ",
             "description": "The multiple mode",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -138,7 +138,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function",
+          "source": " * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -151,7 +151,7 @@
             "postType": " ",
             "description": "The on drop callback function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -166,7 +166,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function",
+          "source": " * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -179,7 +179,7 @@
             "postType": " ",
             "description": "The on enter callback function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -194,7 +194,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function",
+          "source": " * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -207,7 +207,7 @@
             "postType": " ",
             "description": "The on leave callback function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -222,7 +222,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @param {(event: DragEvent) => void} [options.onOver] The on over callback function",
+          "source": " * @param {(event: DragEvent) => void} [options.onOver] The on over callback function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -235,7 +235,7 @@
             "postType": " ",
             "description": "The on over callback function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -250,7 +250,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @returns {UseDropZoneReturn} The object with drop zone states",
+          "source": " * @returns {UseDropZoneReturn} The object with drop zone states\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -263,12 +263,12 @@
             "postType": " ",
             "description": "object with drop zone states",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 16,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -281,7 +281,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -296,7 +296,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -309,7 +309,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -324,7 +324,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {Target} target The target element drop zone's",
+          "source": " * @param {Target} target The target element drop zone's\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -337,7 +337,7 @@
             "postType": " ",
             "description": "The target element drop zone's",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -352,7 +352,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop",
+          "source": " * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -365,7 +365,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on drop",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -380,7 +380,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @returns {UseDropZoneReturn} The object with drop zone states",
+          "source": " * @returns {UseDropZoneReturn} The object with drop zone states\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -393,12 +393,12 @@
             "postType": " ",
             "description": "object with drop zone states",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 24,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -411,7 +411,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -426,7 +426,7 @@
       "source": [
         {
           "number": 28,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -439,7 +439,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -454,7 +454,7 @@
       "source": [
         {
           "number": 29,
-          "source": " * @param {DataTypes} [options.dataTypes] The data types",
+          "source": " * @param {DataTypes} [options.dataTypes] The data types\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -467,7 +467,7 @@
             "postType": " ",
             "description": "The data types",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -482,7 +482,7 @@
       "source": [
         {
           "number": 30,
-          "source": " * @param {boolean} [options.multiple] The multiple mode",
+          "source": " * @param {boolean} [options.multiple] The multiple mode\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -495,7 +495,7 @@
             "postType": " ",
             "description": "The multiple mode",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -510,7 +510,7 @@
       "source": [
         {
           "number": 31,
-          "source": " * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function",
+          "source": " * @param {(files: File[] | null, event: DragEvent) => void} [options.onDrop] The on drop callback function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -523,7 +523,7 @@
             "postType": " ",
             "description": "The on drop callback function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -538,7 +538,7 @@
       "source": [
         {
           "number": 32,
-          "source": " * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function",
+          "source": " * @param {(event: DragEvent) => void} [options.onEnter] The on enter callback function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -551,7 +551,7 @@
             "postType": " ",
             "description": "The on enter callback function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -566,7 +566,7 @@
       "source": [
         {
           "number": 33,
-          "source": " * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function",
+          "source": " * @param {(event: DragEvent) => void} [options.onLeave] The on leave callback function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -579,7 +579,7 @@
             "postType": " ",
             "description": "The on leave callback function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -594,7 +594,7 @@
       "source": [
         {
           "number": 34,
-          "source": " * @param {(event: DragEvent) => void} [options.onOver] The on over callback function",
+          "source": " * @param {(event: DragEvent) => void} [options.onOver] The on over callback function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -607,7 +607,7 @@
             "postType": " ",
             "description": "The on over callback function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -622,7 +622,7 @@
       "source": [
         {
           "number": 35,
-          "source": " * @returns {UseDropZoneReturn & { ref: StateRef<Target> }} The object with drop zone states and ref",
+          "source": " * @returns {UseDropZoneReturn & { ref: StateRef<Target> }} The object with drop zone states and ref\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -635,12 +635,12 @@
             "postType": " ",
             "description": "object with drop zone states and ref",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 36,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -653,7 +653,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -668,7 +668,7 @@
       "source": [
         {
           "number": 40,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -681,7 +681,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -696,7 +696,7 @@
       "source": [
         {
           "number": 41,
-          "source": " * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop",
+          "source": " * @param {(files: File[] | null, event: DragEvent) => void} [callback] The callback function to be invoked on drop\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -709,7 +709,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on drop",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -724,7 +724,7 @@
       "source": [
         {
           "number": 42,
-          "source": " * @returns {UseDropZoneReturn & { ref: StateRef<Target> }} The object with drop zone states and ref",
+          "source": " * @returns {UseDropZoneReturn & { ref: StateRef<Target> }} The object with drop zone states and ref\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -737,12 +737,12 @@
             "postType": " ",
             "description": "object with drop zone states and ref",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 43,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -755,7 +755,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

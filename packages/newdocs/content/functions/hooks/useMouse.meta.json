@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget} [target=window] The target element to manage the mouse position for",
+          "source": " * @param {HookTarget} [target=window] The target element to manage the mouse position for\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The target element to manage the mouse position for",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -81,7 +81,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates",
+          "source": " * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -94,7 +94,7 @@
             "postType": " ",
             "description": "The callback to invoke on mouse updates",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -109,7 +109,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseMouseReturn} An object with mouse value controls",
+          "source": " * @returns {UseMouseReturn} An object with mouse value controls\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -122,12 +122,12 @@
             "postType": " ",
             "description": "object with mouse value controls",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -140,7 +140,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -155,7 +155,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -168,7 +168,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -183,7 +183,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates",
+          "source": " * @param {(value: UseMouseValue, event: Event) => void} [callback] The callback to invoke on mouse updates\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -196,7 +196,7 @@
             "postType": " ",
             "description": "The callback to invoke on mouse updates",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -211,7 +211,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with mouse value controls and a ref",
+          "source": " * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with mouse value controls and a ref\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -224,12 +224,12 @@
             "postType": " ",
             "description": "object with mouse value controls and a ref",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 18,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -242,7 +242,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

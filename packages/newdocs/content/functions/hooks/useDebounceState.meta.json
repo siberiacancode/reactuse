@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {Value} value The value to be debounced",
+          "source": " * @param {Value} value The value to be debounced\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The value to be debounced",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {number} delay The delay in milliseconds",
+          "source": " * @param {number} delay The delay in milliseconds\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The delay in milliseconds",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {[Value, (value: Value) => void]} The debounced state",
+          "source": " * @returns {[Value, (value: Value) => void]} The debounced state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,12 +92,12 @@
             "postType": " ",
             "description": "debounced state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,7 +110,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

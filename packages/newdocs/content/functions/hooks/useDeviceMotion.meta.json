@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi DeviceMotionEvent https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent/DeviceMotionEvent",
+        "source": " * @browserapi DeviceMotionEvent https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent/DeviceMotionEvent\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent/DeviceMotionEvent",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -70,7 +70,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -98,7 +98,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {(event: DeviceMotionEvent) => void} [callback] The callback function to be invoked",
+          "source": " * @param {(event: DeviceMotionEvent) => void} [callback] The callback function to be invoked\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": " ",
             "description": "The callback function to be invoked",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -126,7 +126,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {UseDeviceMotionReturn} Device motion controls with snapshot/watch API",
+          "source": " * @returns {UseDeviceMotionReturn} Device motion controls with snapshot/watch API\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,12 +139,12 @@
             "postType": " ",
             "description": "motion controls with snapshot/watch API",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -157,7 +157,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -172,7 +172,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -185,7 +185,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -200,7 +200,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {UseDeviceMotionOptions} [options] Configuration options",
+          "source": " * @param {UseDeviceMotionOptions} [options] Configuration options\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -213,7 +213,7 @@
             "postType": " ",
             "description": "Configuration options",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -228,7 +228,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {boolean} [options.enabled] Whether to enable the hook",
+          "source": " * @param {boolean} [options.enabled] Whether to enable the hook\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -241,7 +241,7 @@
             "postType": " ",
             "description": "Whether to enable the hook",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -256,7 +256,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @param {(event: DeviceMotionEvent) => void} [options.onChange] The callback function to be invoked",
+          "source": " * @param {(event: DeviceMotionEvent) => void} [options.onChange] The callback function to be invoked\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -269,7 +269,7 @@
             "postType": " ",
             "description": "The callback function to be invoked",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -284,7 +284,7 @@
       "source": [
         {
           "number": 19,
-          "source": " * @returns {UseDeviceMotionReturn} Device motion controls with snapshot/watch API",
+          "source": " * @returns {UseDeviceMotionReturn} Device motion controls with snapshot/watch API\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -297,12 +297,12 @@
             "postType": " ",
             "description": "motion controls with snapshot/watch API",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 20,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -315,7 +315,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

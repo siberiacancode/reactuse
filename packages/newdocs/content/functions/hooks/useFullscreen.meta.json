@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi Fullscreen API https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API",
+        "source": " * @browserapi Fullscreen API https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "API https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -70,7 +70,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -98,7 +98,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {HookTarget} target The target element for fullscreen",
+          "source": " * @param {HookTarget} target The target element for fullscreen\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": " ",
             "description": "The target element for fullscreen",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -126,7 +126,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean} [options.initialValue=false] initial value of fullscreen",
+          "source": " * @param {boolean} [options.initialValue=false] initial value of fullscreen\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": " ",
             "description": "initial value of fullscreen",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -155,7 +155,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {() => void} [options.onEnter] on enter fullscreen",
+          "source": " * @param {() => void} [options.onEnter] on enter fullscreen\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -168,7 +168,7 @@
             "postType": " ",
             "description": "on enter fullscreen",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -183,7 +183,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {() => void} [options.onExit] on exit fullscreen",
+          "source": " * @param {() => void} [options.onExit] on exit fullscreen\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -196,7 +196,7 @@
             "postType": " ",
             "description": "on exit fullscreen",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -211,7 +211,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @returns {UseFullScreenReturn} An object with the fullscreen state and methods",
+          "source": " * @returns {UseFullScreenReturn} An object with the fullscreen state and methods\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -224,12 +224,12 @@
             "postType": " ",
             "description": "object with the fullscreen state and methods",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 14,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -242,7 +242,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -257,7 +257,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -270,7 +270,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -285,7 +285,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @param {boolean} [options.initialValue=false] initial value of fullscreen",
+          "source": " * @param {boolean} [options.initialValue=false] initial value of fullscreen\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -298,7 +298,7 @@
             "postType": " ",
             "description": "initial value of fullscreen",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -314,7 +314,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {() => void} [options.onEnter] on enter fullscreen",
+          "source": " * @param {() => void} [options.onEnter] on enter fullscreen\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -327,7 +327,7 @@
             "postType": " ",
             "description": "on enter fullscreen",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -342,7 +342,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @param {() => void} [options.onExit] on exit fullscreen",
+          "source": " * @param {() => void} [options.onExit] on exit fullscreen\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -355,7 +355,7 @@
             "postType": " ",
             "description": "on exit fullscreen",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -370,7 +370,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @returns {UseFullScreenReturn & { ref: RefObject<Target> }} An object with the fullscreen state and methods",
+          "source": " * @returns {UseFullScreenReturn & { ref: RefObject<Target> }} An object with the fullscreen state and methods\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -383,12 +383,12 @@
             "postType": " ",
             "description": "object with the fullscreen state and methods",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 24,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -401,7 +401,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

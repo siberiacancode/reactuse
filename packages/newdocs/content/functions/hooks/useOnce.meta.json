@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {EffectCallback} effect The effect to run",
+          "source": " * @param {EffectCallback} effect The effect to run\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,12 +37,12 @@
             "postType": " ",
             "description": "The effect to run",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 9,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -55,7 +55,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

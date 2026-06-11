@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {Breakpoints<Breakpoint>} breakpoints The breakpoints to use",
+          "source": " * @param {Breakpoints<Breakpoint>} breakpoints The breakpoints to use\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The breakpoints to use",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {UseBreakpointsStrategy} [strategy=min-width] The strategy to use for matching",
+          "source": " * @param {UseBreakpointsStrategy} [strategy=min-width] The strategy to use for matching\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The strategy to use for matching",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseBreakpointsReturn<Breakpoint>} An object containing the current breakpoint",
+          "source": " * @returns {UseBreakpointsReturn<Breakpoint>} An object containing the current breakpoint\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,12 +93,12 @@
             "postType": " ",
             "description": "object containing the current breakpoint",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {string} src The source of the image",
+          "source": " * @param {string} src The source of the image\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The source of the image",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {string} [options.srcset] The srcset of the image",
+          "source": " * @param {string} [options.srcset] The srcset of the image\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "The srcset of the image",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {string} [options.sizes] The sizes of the image",
+          "source": " * @param {string} [options.sizes] The sizes of the image\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,7 +92,7 @@
             "postType": " ",
             "description": "The sizes of the image",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -107,7 +107,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {string} [options.alt] The alt of the image",
+          "source": " * @param {string} [options.alt] The alt of the image\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -120,7 +120,7 @@
             "postType": " ",
             "description": "The alt of the image",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -135,7 +135,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {string} [options.class] The class of the image",
+          "source": " * @param {string} [options.class] The class of the image\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -148,7 +148,7 @@
             "postType": " ",
             "description": "The class of the image",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -163,7 +163,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {HTMLImageElement['loading']} [options.loading] The loading of the image",
+          "source": " * @param {HTMLImageElement['loading']} [options.loading] The loading of the image\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -176,7 +176,7 @@
             "postType": " ",
             "description": "The loading of the image",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -191,7 +191,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {string} [options.crossorigin] The crossorigin of the image",
+          "source": " * @param {string} [options.crossorigin] The crossorigin of the image\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -204,7 +204,7 @@
             "postType": " ",
             "description": "The crossorigin of the image",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -219,7 +219,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @param {HTMLImageElement['referrerPolicy']} [options.referrerPolicy] The referrerPolicy of the image",
+          "source": " * @param {HTMLImageElement['referrerPolicy']} [options.referrerPolicy] The referrerPolicy of the image\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -232,7 +232,7 @@
             "postType": " ",
             "description": "The referrerPolicy of the image",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -247,7 +247,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @param {DependencyList} [options.keys] The dependencies for the hook",
+          "source": " * @param {DependencyList} [options.keys] The dependencies for the hook\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -260,7 +260,7 @@
             "postType": " ",
             "description": "The dependencies for the hook",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -275,7 +275,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success",
+          "source": " * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -288,7 +288,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on success",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -303,7 +303,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error",
+          "source": " * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -316,7 +316,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on error",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -331,7 +331,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {number} [options.refetchInterval] The refetch interval",
+          "source": " * @param {number} [options.refetchInterval] The refetch interval\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -344,7 +344,7 @@
             "postType": " ",
             "description": "The refetch interval",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -359,7 +359,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @param {boolean | number} [options.retry] The retry count of requests",
+          "source": " * @param {boolean | number} [options.retry] The retry count of requests\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -372,7 +372,7 @@
             "postType": " ",
             "description": "The retry count of requests",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -387,7 +387,7 @@
       "source": [
         {
           "number": 19,
-          "source": " * @returns {UseImageReturn} An object with the state of the image",
+          "source": " * @returns {UseImageReturn} An object with the state of the image\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -400,12 +400,12 @@
             "postType": " ",
             "description": "object with the state of the image",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 20,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -418,7 +418,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

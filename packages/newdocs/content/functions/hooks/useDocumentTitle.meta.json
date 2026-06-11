@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi document.title https://developer.mozilla.org/en-US/docs/Web/API/Document/title",
+        "source": " * @browserapi document.title https://developer.mozilla.org/en-US/docs/Web/API/Document/title\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Document/title",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -69,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {string} [initialValue] The initial title. If not provided, the current document title will be used",
+          "source": " * @param {string} [initialValue] The initial title. If not provided, the current document title will be used\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": " ",
             "description": "The initial title. If not provided, the current document title will be used",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -97,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {boolean} [options.restore] Restore the previous title on unmount",
+          "source": " * @param {boolean} [options.restore] Restore the previous title on unmount\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,7 +110,7 @@
             "postType": " ",
             "description": "Restore the previous title on unmount",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -125,7 +125,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {UseDocumentTitleReturn} An array containing the current title and a function to update the title",
+          "source": " * @returns {UseDocumentTitleReturn} An array containing the current title and a function to update the title\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -138,12 +138,12 @@
             "postType": " ",
             "description": "array containing the current title and a function to update the title",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 11,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -156,7 +156,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

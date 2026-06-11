@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {string} [initialFavicon] The initial favicon. If not provided, the current favicon will be used",
+          "source": " * @param {string} [initialFavicon] The initial favicon. If not provided, the current favicon will be used\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The initial favicon. If not provided, the current favicon will be used",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon",
+          "source": " * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,12 +64,12 @@
             "postType": " ",
             "description": "array containing the current favicon and a function to update the favicon",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 8,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

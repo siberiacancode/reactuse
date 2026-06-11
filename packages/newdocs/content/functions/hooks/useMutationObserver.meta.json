@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi MutationObserver https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver",
+        "source": " * @browserapi MutationObserver https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -72,7 +72,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -85,7 +85,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -100,7 +100,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {HookTarget} target The target element to observe",
+          "source": " * @param {HookTarget} target The target element to observe\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -113,7 +113,7 @@
             "postType": " ",
             "description": "The target element to observe",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -128,7 +128,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer",
+          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -141,7 +141,7 @@
             "postType": " ",
             "description": "The enabled state of the mutation observer",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -157,7 +157,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected",
+          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -170,7 +170,7 @@
             "postType": " ",
             "description": "The callback to execute when mutation is detected",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -185,7 +185,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed",
+          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -198,7 +198,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's attributes are to be observed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -213,7 +213,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed",
+          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -226,7 +226,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's data are to be observed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -241,7 +241,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed",
+          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -254,7 +254,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's children are to be observed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -269,7 +269,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed",
+          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -282,7 +282,7 @@
             "postType": " ",
             "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -297,7 +297,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state",
+          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -310,12 +310,12 @@
             "postType": " ",
             "description": "object containing the mutation observer state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 17,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -328,7 +328,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -343,7 +343,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -356,7 +356,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -371,7 +371,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer",
+          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -384,7 +384,7 @@
             "postType": " ",
             "description": "The enabled state of the mutation observer",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -400,7 +400,7 @@
       "source": [
         {
           "number": 24,
-          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected",
+          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -413,7 +413,7 @@
             "postType": " ",
             "description": "The callback to execute when mutation is detected",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -428,7 +428,7 @@
       "source": [
         {
           "number": 25,
-          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed",
+          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -441,7 +441,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's attributes are to be observed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -456,7 +456,7 @@
       "source": [
         {
           "number": 26,
-          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed",
+          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -469,7 +469,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's data are to be observed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -484,7 +484,7 @@
       "source": [
         {
           "number": 27,
-          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed",
+          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -497,7 +497,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's children are to be observed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -512,7 +512,7 @@
       "source": [
         {
           "number": 28,
-          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed",
+          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -525,7 +525,7 @@
             "postType": " ",
             "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -540,7 +540,7 @@
       "source": [
         {
           "number": 29,
-          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
+          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -553,12 +553,12 @@
             "postType": " ",
             "description": "React ref to attach to the target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 30,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -571,7 +571,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -586,7 +586,7 @@
       "source": [
         {
           "number": 34,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -599,7 +599,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -614,7 +614,7 @@
       "source": [
         {
           "number": 36,
-          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected",
+          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -627,7 +627,7 @@
             "postType": " ",
             "description": "The callback to execute when mutation is detected",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -642,7 +642,7 @@
       "source": [
         {
           "number": 37,
-          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
+          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -655,12 +655,12 @@
             "postType": " ",
             "description": "React ref to attach to the target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 38,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -673,7 +673,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -688,7 +688,7 @@
       "source": [
         {
           "number": 42,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -701,7 +701,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -716,7 +716,7 @@
       "source": [
         {
           "number": 43,
-          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected",
+          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -729,7 +729,7 @@
             "postType": " ",
             "description": "The callback to execute when mutation is detected",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -744,7 +744,7 @@
       "source": [
         {
           "number": 44,
-          "source": " * @param {HookTarget} target The target element to observe",
+          "source": " * @param {HookTarget} target The target element to observe\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -757,7 +757,7 @@
             "postType": " ",
             "description": "The target element to observe",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -772,7 +772,7 @@
       "source": [
         {
           "number": 45,
-          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state",
+          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -785,12 +785,12 @@
             "postType": " ",
             "description": "object containing the mutation observer state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 46,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -803,7 +803,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

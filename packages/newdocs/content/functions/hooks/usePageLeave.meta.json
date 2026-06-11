@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {() => void} [callback] The callback function what calls then mouse leaves the page",
+          "source": " * @param {() => void} [callback] The callback function what calls then mouse leaves the page\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The callback function what calls then mouse leaves the page",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @returns {boolean} A boolean which determines if the mouse left the page",
+          "source": " * @returns {boolean} A boolean which determines if the mouse left the page\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,12 +64,12 @@
             "postType": " ",
             "description": "boolean which determines if the mouse left the page",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 8,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

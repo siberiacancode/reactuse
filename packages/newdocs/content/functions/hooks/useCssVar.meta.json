@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {string} key The CSS variable key",
+          "source": " * @param {string} key The CSS variable key\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The CSS variable key",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {string} initialValue The initial value of the CSS variable",
+          "source": " * @param {string} initialValue The initial value of the CSS variable\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,7 +93,7 @@
             "postType": " ",
             "description": "The initial value of the CSS variable",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -108,7 +108,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseCssVarReturn & { ref: StateRef<Element> }} The object containing the value of the CSS variable and ref",
+          "source": " * @returns {UseCssVarReturn & { ref: StateRef<Element> }} The object containing the value of the CSS variable and ref\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -121,12 +121,12 @@
             "postType": " ",
             "description": "object containing the value of the CSS variable and ref",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -154,7 +154,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,7 +167,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -182,7 +182,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @param {HookTarget} target The target element",
+          "source": " * @param {HookTarget} target The target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -195,7 +195,7 @@
             "postType": " ",
             "description": "The target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -210,7 +210,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {string} key The CSS variable key",
+          "source": " * @param {string} key The CSS variable key\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -223,7 +223,7 @@
             "postType": " ",
             "description": "The CSS variable key",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -238,7 +238,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {string} initialValue The initial value of the CSS variable",
+          "source": " * @param {string} initialValue The initial value of the CSS variable\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -251,7 +251,7 @@
             "postType": " ",
             "description": "The initial value of the CSS variable",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -266,7 +266,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @returns {UseCssVarReturn} The object containing the value of the CSS variable",
+          "source": " * @returns {UseCssVarReturn} The object containing the value of the CSS variable\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -279,12 +279,12 @@
             "postType": " ",
             "description": "object containing the value of the CSS variable",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 19,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -297,7 +297,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

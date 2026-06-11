@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {State} state The value to be returned initially and whenever no action is pending",
+          "source": " * @param {State} state The value to be returned initially and whenever no action is pending\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The value to be returned initially and whenever no action is pending",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(currentState: State, optimisticValue: State) => State} update A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state",
+          "source": " * @param {(currentState: State, optimisticValue: State) => State} update A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseOptimisticReturn<State>} The resulting optimistic state, and the function to update it",
+          "source": " * @returns {UseOptimisticReturn<State>} The resulting optimistic state, and the function to update it\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,12 +92,12 @@
             "postType": " ",
             "description": "resulting optimistic state, and the function to update it",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,7 +110,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

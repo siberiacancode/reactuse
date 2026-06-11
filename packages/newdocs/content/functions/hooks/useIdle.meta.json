@@ -25,7 +25,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -38,7 +38,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -53,7 +53,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @returns {UseIdleReturn} An object containing the idle state and the last active time",
+          "source": " * @returns {UseIdleReturn} An object containing the idle state and the last active time\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -66,12 +66,12 @@
             "postType": " ",
             "description": "object containing the idle state and the last active time",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 8,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -84,7 +84,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -99,7 +99,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -112,7 +112,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -127,7 +127,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @param {number} [milliseconds=ONE_MINUTE] The idle time in milliseconds",
+          "source": " * @param {number} [milliseconds=ONE_MINUTE] The idle time in milliseconds\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -140,7 +140,7 @@
             "postType": " ",
             "description": "The idle time in milliseconds",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -156,7 +156,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @param {(idle: boolean) => void} callback The callback to execute when idle state changes",
+          "source": " * @param {(idle: boolean) => void} callback The callback to execute when idle state changes\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -169,7 +169,7 @@
             "postType": " ",
             "description": "The callback to execute when idle state changes",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -184,7 +184,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @returns {UseIdleReturn} An object containing the idle state and the last active time",
+          "source": " * @returns {UseIdleReturn} An object containing the idle state and the last active time\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -197,12 +197,12 @@
             "postType": " ",
             "description": "object containing the idle state and the last active time",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 16,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -215,7 +215,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -230,7 +230,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -243,7 +243,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -258,7 +258,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {number} [milliseconds=ONE_MINUTE] The idle time in milliseconds",
+          "source": " * @param {number} [milliseconds=ONE_MINUTE] The idle time in milliseconds\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -271,7 +271,7 @@
             "postType": " ",
             "description": "The idle time in milliseconds",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -287,7 +287,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @param {(idle: boolean) => void} [options.onChange] The callback to execute when idle state changes",
+          "source": " * @param {(idle: boolean) => void} [options.onChange] The callback to execute when idle state changes\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -300,7 +300,7 @@
             "postType": " ",
             "description": "The callback to execute when idle state changes",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -315,7 +315,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @param {boolean} [options.initialValue=false] The options for the hook",
+          "source": " * @param {boolean} [options.initialValue=false] The options for the hook\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -328,7 +328,7 @@
             "postType": " ",
             "description": "The options for the hook",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -344,7 +344,7 @@
       "source": [
         {
           "number": 24,
-          "source": " * @param {Array<keyof WindowEventMap>} [options.events=IDLE_EVENTS]",
+          "source": " * @param {Array<keyof WindowEventMap>} [options.events=IDLE_EVENTS]\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -357,7 +357,7 @@
             "postType": " ",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -373,7 +373,7 @@
       "source": [
         {
           "number": 25,
-          "source": " * @returns {UseIdleReturn} An object containing the idle state and the last active time",
+          "source": " * @returns {UseIdleReturn} An object containing the idle state and the last active time\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -386,12 +386,12 @@
             "postType": " ",
             "description": "object containing the idle state and the last active time",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 26,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -404,7 +404,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {...Ref<Element>[]} refs The refs to merge",
+          "source": " * @param {...Ref<Element>[]} refs The refs to merge\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The refs to merge",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {RefCallback<Element>} A memoized ref callback that assigns to all provided refs",
+          "source": " * @returns {RefCallback<Element>} A memoized ref callback that assigns to all provided refs\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,12 +64,12 @@
             "postType": " ",
             "description": "memoized ref callback that assigns to all provided refs",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 9,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

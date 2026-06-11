@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi navigator.geolocation https://developer.mozilla.org/en-US/docs/Web/API/Navigator/geolocation",
+        "source": " * @browserapi navigator.geolocation https://developer.mozilla.org/en-US/docs/Web/API/Navigator/geolocation\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/geolocation",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       },
       {
         "number": 7,
-        "source": " *",
+        "source": " *\r",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": ""
+          "lineEnd": "\r"
         }
       }
     ]
@@ -70,7 +70,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -98,7 +98,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {UseGeolocationCallback} [callback] The callback function to be invoked when geolocation changes",
+          "source": " * @param {UseGeolocationCallback} [callback] The callback function to be invoked when geolocation changes\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": " ",
             "description": "The callback function to be invoked when geolocation changes",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -126,7 +126,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean} [params.enableHighAccuracy] Enable high accuracy",
+          "source": " * @param {boolean} [params.enableHighAccuracy] Enable high accuracy\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": " ",
             "description": "Enable high accuracy",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -154,7 +154,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {number} [params.maximumAge] Maximum age",
+          "source": " * @param {number} [params.maximumAge] Maximum age\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,7 +167,7 @@
             "postType": " ",
             "description": "Maximum age",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -182,7 +182,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {number} [params.timeout] Timeout",
+          "source": " * @param {number} [params.timeout] Timeout\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -195,7 +195,7 @@
             "postType": " ",
             "description": "Timeout",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -210,7 +210,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @returns {UseGeolocationReturn}",
+          "source": " * @returns {UseGeolocationReturn}\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -223,12 +223,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 14,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -241,7 +241,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -256,7 +256,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -269,7 +269,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -284,7 +284,7 @@
       "source": [
         {
           "number": 19,
-          "source": " * @param {UseGeolocationOptions} [options] Configuration options",
+          "source": " * @param {UseGeolocationOptions} [options] Configuration options\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -297,7 +297,7 @@
             "postType": " ",
             "description": "Configuration options",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -312,7 +312,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @param {(position: GeolocationPosition) => void} [options.onChange] The callback function to be invoked when geolocation changes",
+          "source": " * @param {(position: GeolocationPosition) => void} [options.onChange] The callback function to be invoked when geolocation changes\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -325,7 +325,7 @@
             "postType": " ",
             "description": "The callback function to be invoked when geolocation changes",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -340,7 +340,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {(error: GeolocationPositionError) => void} [options.onError] The callback function to be invoked on geolocation error",
+          "source": " * @param {(error: GeolocationPositionError) => void} [options.onError] The callback function to be invoked on geolocation error\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -353,7 +353,7 @@
             "postType": " ",
             "description": "The callback function to be invoked on geolocation error",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -368,7 +368,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @param {boolean} [options.enableHighAccuracy] Enable high accuracy",
+          "source": " * @param {boolean} [options.enableHighAccuracy] Enable high accuracy\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -381,7 +381,7 @@
             "postType": " ",
             "description": "Enable high accuracy",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -396,7 +396,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @param {number} [options.maximumAge] Maximum age",
+          "source": " * @param {number} [options.maximumAge] Maximum age\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -409,7 +409,7 @@
             "postType": " ",
             "description": "Maximum age",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -424,7 +424,7 @@
       "source": [
         {
           "number": 24,
-          "source": " * @param {number} [options.timeout] Timeout",
+          "source": " * @param {number} [options.timeout] Timeout\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -437,7 +437,7 @@
             "postType": " ",
             "description": "Timeout",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -452,7 +452,7 @@
       "source": [
         {
           "number": 25,
-          "source": " * @returns {UseGeolocationReturn}",
+          "source": " * @returns {UseGeolocationReturn}\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -465,12 +465,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 26,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -483,7 +483,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {(state: DocumentVisibilityState) => void} [callback] The callback to execute when the visibility state changes",
+          "source": " * @param {(state: DocumentVisibilityState) => void} [callback] The callback to execute when the visibility state changes\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": " ",
             "description": "The callback to execute when the visibility state changes",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @returns {DocumentVisibilityState} The current visibility state of the document, which can be 'visible' or 'hidden'",
+          "source": " * @returns {DocumentVisibilityState} The current visibility state of the document, which can be 'visible' or 'hidden'\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,12 +65,12 @@
             "postType": " ",
             "description": "current visibility state of the document, which can be 'visible' or 'hidden'",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 8,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

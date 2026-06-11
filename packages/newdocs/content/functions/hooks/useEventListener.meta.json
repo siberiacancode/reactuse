@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {HookTarget} target The target element to attach the event listener to",
+          "source": " * @param {HookTarget} target The target element to attach the event listener to\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The target element to attach the event listener to",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {Event | Event[]} event An array of event types to listen for",
+          "source": " * @param {Event | Event[]} event An array of event types to listen for\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,7 +93,7 @@
             "postType": " ",
             "description": "An array of event types to listen for",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -108,7 +108,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} handler The event handler function",
+          "source": " * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} handler The event handler function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -121,7 +121,7 @@
             "postType": " ",
             "description": "The event handler function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -136,7 +136,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {UseEventListenerOptions} [options] Options for the event listener",
+          "source": " * @param {UseEventListenerOptions} [options] Options for the event listener\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -149,7 +149,7 @@
             "postType": " ",
             "description": "Options for the event listener",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -164,7 +164,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @returns {void}",
+          "source": " * @returns {void}\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -177,12 +177,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 14,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -195,7 +195,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -210,7 +210,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -223,7 +223,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -238,7 +238,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {Event | Event[]} event An array of event types to listen for",
+          "source": " * @param {Event | Event[]} event An array of event types to listen for\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -251,7 +251,7 @@
             "postType": " ",
             "description": "An array of event types to listen for",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -266,7 +266,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @param {(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void} handler The event handler function",
+          "source": " * @param {(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void} handler The event handler function\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -279,7 +279,7 @@
             "postType": " ",
             "description": "The event handler function",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -294,7 +294,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @param {UseEventListenerOptions} [options] Options for the event listener",
+          "source": " * @param {UseEventListenerOptions} [options] Options for the event listener\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -307,7 +307,7 @@
             "postType": " ",
             "description": "Options for the event listener",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -322,7 +322,7 @@
       "source": [
         {
           "number": 24,
-          "source": " * @returns {UseEventListenerReturn<Target>} A reference to the target element",
+          "source": " * @returns {UseEventListenerReturn<Target>} A reference to the target element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -335,12 +335,12 @@
             "postType": " ",
             "description": "reference to the target element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 25,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -353,7 +353,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]

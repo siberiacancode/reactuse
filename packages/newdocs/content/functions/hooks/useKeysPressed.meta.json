@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {HookTarget | Window} [target=window] DOM element or ref to attach keyboard listeners to",
+          "source": " * @param {HookTarget | Window} [target=window] DOM element or ref to attach keyboard listeners to\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "DOM element or ref to attach keyboard listeners to",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -81,7 +81,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {UseKeysPressedOptions} [options.enabled=true] Enable or disable the event listeners",
+          "source": " * @param {UseKeysPressedOptions} [options.enabled=true] Enable or disable the event listeners\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -94,7 +94,7 @@
             "postType": " ",
             "description": "Enable or disable the event listeners",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ],
@@ -110,7 +110,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseKeysPressedReturn} Object containing the array of currently pressed keys",
+          "source": " * @returns {UseKeysPressedReturn} Object containing the array of currently pressed keys\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -123,12 +123,12 @@
             "postType": " ",
             "description": "containing the array of currently pressed keys",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 10,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -141,7 +141,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -156,7 +156,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @overload",
+          "source": " * @overload\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -169,7 +169,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -184,7 +184,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {UseKeysPressedOptions} [options] - Optional configuration options",
+          "source": " * @param {UseKeysPressedOptions} [options] - Optional configuration options\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -197,7 +197,7 @@
             "postType": " ",
             "description": "- Optional configuration options",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
@@ -212,7 +212,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @returns {UseKeysPressedReturn & { ref: StateRef<Target> }} Object containing the array of currently pressed keys and ref to attach to the element",
+          "source": " * @returns {UseKeysPressedReturn & { ref: StateRef<Target> }} Object containing the array of currently pressed keys and ref to attach to the element\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -225,12 +225,12 @@
             "postType": " ",
             "description": "containing the array of currently pressed keys and ref to attach to the element",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         },
         {
           "number": 18,
-          "source": " *",
+          "source": " *\r",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -243,7 +243,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": ""
+            "lineEnd": "\r"
           }
         }
       ]
