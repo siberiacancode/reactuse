@@ -1,0 +1,83 @@
+{
+  "code": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useEffect, useRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/**</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@name</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRenderCount</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@description</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> - Hook returns count component render times</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@category</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Debug</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@usage</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> low</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {number}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> A number which determines how many times component renders</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const renderCount = useRenderCount();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRenderCount</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> renderCountRef</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  useEffect</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    renderCountRef.current </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">+=</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> 1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  });</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> renderCountRef.current;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">};</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>",
+  "id": "useRenderCount",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useRenderCount",
+  "usage": "low",
+  "description": "Hook returns count component render times",
+  "category": "Debug",
+  "lastModified": 1754977987000,
+  "examples": [
+    "const renderCount = useRenderCount();"
+  ],
+  "apiParameters": [
+    {
+      "tag": "returns",
+      "name": "A",
+      "type": "number",
+      "optional": false,
+      "description": "number which determines how many times component renders",
+      "problems": [],
+      "source": [
+        {
+          "number": 6,
+          "source": " * @returns {number} A number which determines how many times component renders\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "A",
+            "postName": " ",
+            "type": "{number}",
+            "postType": " ",
+            "description": "number which determines how many times component renders",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        },
+        {
+          "number": 7,
+          "source": " *\r",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": "\r"
+          }
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "hooks": [],
+    "utils": [],
+    "packages": []
+  },
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    },
+    {
+      "name": "hywax",
+      "avatar": "https://gravatar.com/avatar/ab8b137d9abca284149f9e016d760700?d=retro"
+    },
+    {
+      "name": "dacorm",
+      "avatar": "https://gravatar.com/avatar/853cbc8ba80d73e35da5f7b72f4eaf6f?d=retro"
+    }
+  ],
+  "demo": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useRenderCount } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@siberiacancode/reactuse'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useState } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Demo</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> renderCount</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRenderCount</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">value</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">setValue</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">''</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex flex-col items-center gap-4 p-8'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'relative rounded-xl border-2 border-green-500 p-3 transition-colors duration-300'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'absolute -top-3 left-3 rounded-full bg-green-500 px-2 py-0.5 font-mono text-[10px] font-semibold text-white tabular-nums'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          ×{renderCount}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">span</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">input</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          placeholder</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Type to re-render…'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          value</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{value}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">          onChange</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{(</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> setValue</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(event.target.value)}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  );</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">};</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> default</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Demo;</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>"
+}

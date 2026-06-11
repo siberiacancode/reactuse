@@ -1,22 +1,21 @@
 import { useRefState } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const internalRefState = useRefState<number>(0);
+  const enabled = useRefState(false);
 
   return (
-    <div>
-      <p>
-        Render count: <code>{internalRefState.current}</code>
-      </p>
-      <button
-        type='button'
-        onClick={() => {
-          internalRefState.current += 1;
-        }}
-      >
-        Ref Update
-      </button>
-    </div>
+    <section className='flex flex-col items-center gap-3 p-8'>
+      <input
+        checked={enabled.current}
+        role='switch'
+        type='checkbox'
+        onChange={() => (enabled.current = !enabled.current)}
+      />
+
+      <span className='text-muted-foreground text-sm'>
+        {enabled.current ? 'Enabled' : 'Disabled'}
+      </span>
+    </section>
   );
 };
 

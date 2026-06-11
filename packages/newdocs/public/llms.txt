@@ -56,9 +56,12 @@
 - [usePictureInPicture](https://reactuse.org/functions/hooks/usePictureInPicture): Hook that provides Picture-in-Picture functionality for video elements
 - [usePointerLock](https://reactuse.org/functions/hooks/usePointerLock): Hook that provides reactive pointer lock
 - [usePostMessage](https://reactuse.org/functions/hooks/usePostMessage): Hook that allows you to receive messages from other origins
+- [useRaf](https://reactuse.org/functions/hooks/useRaf): Hook that defines the logic for raf callback
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
+- [useRenderCount](https://reactuse.org/functions/hooks/useRenderCount): Hook returns count component render times
+- [useRenderInfo](https://reactuse.org/functions/hooks/useRenderInfo): Hook for getting information about component rerender
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
@@ -122,6 +125,8 @@
 - [useObject](https://reactuse.org/functions/hooks/useObject): Hook that provides state and helper methods to manage an object
 - [useOffsetPagination](https://reactuse.org/functions/hooks/useOffsetPagination): Hook that defines the logic when pagination
 - [useQueue](https://reactuse.org/functions/hooks/useQueue): Hook that manages a queue
+- [useRafState](https://reactuse.org/functions/hooks/useRafState): Hook that returns the value and a function to set the value
+- [useRefState](https://reactuse.org/functions/hooks/useRefState): Hook that returns the state reference of the value
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions

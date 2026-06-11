@@ -120,3 +120,8 @@ A quick list of available functions.
 - [useProgress](/functions/hooks/useProgress): Hook that creates a lightweight progress bar
 - [useQuery](/functions/hooks/useQuery): Hook that defines the logic when query data
 - [useQueue](/functions/hooks/useQueue): Hook that manages a queue
+- [useRaf](/functions/hooks/useRaf): Hook that defines the logic for raf callback
+- [useRafState](/functions/hooks/useRafState): Hook that returns the value and a function to set the value
+- [useRefState](/functions/hooks/useRefState): Hook that returns the state reference of the value
+- [useRenderCount](/functions/hooks/useRenderCount): Hook returns count component render times
+- [useRenderInfo](/functions/hooks/useRenderInfo): Hook for getting information about component rerender

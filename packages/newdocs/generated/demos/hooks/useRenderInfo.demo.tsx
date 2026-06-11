@@ -1,3 +1,5 @@
+'use client'
+
 import { useRenderInfo, useRerender } from '@siberiacancode/reactuse';
 import { ActivityIcon, RefreshCwIcon } from 'lucide-react';
 

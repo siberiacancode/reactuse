@@ -1,25 +1,27 @@
-import { useCounter, useRaf } from '@siberiacancode/reactuse';
+import { useRaf } from '@siberiacancode/reactuse';
+import { useRef, useState } from 'react';
 
 const Demo = () => {
-  const counter = useCounter();
-  const { active, resume, pause } = useRaf(() => counter.inc());
+  const [fps, setFps] = useState(0);
+  const framesRef = useRef(0);
+  const elapsedRef = useRef(0);
+
+  useRaf(({ delta }) => {
+    framesRef.current += 1;
+    elapsedRef.current += delta;
+
+    if (elapsedRef.current >= 1000) {
+      setFps(Math.round((framesRef.current * 1000) / elapsedRef.current));
+      framesRef.current = 0;
+      elapsedRef.current = 0;
+    }
+  });
 
   return (
-    <>
-      <p>
-        Count: <code>{counter.value}</code>
-      </p>
-
-      {active ? (
-        <button type='button' onClick={pause}>
-          Pause
-        </button>
-      ) : (
-        <button type='button' onClick={resume}>
-          Resume
-        </button>
-      )}
-    </>
+    <section className='flex flex-col items-center gap-2 p-8'>
+      <span className='text-foreground font-mono text-6xl font-bold tabular-nums'>{fps}</span>
+      <span className='text-muted-foreground text-sm'>frames per second</span>
+    </section>
   );
 };
 
