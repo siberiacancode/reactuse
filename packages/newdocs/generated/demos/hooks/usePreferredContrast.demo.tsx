@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { usePreferredContrast } from '@siberiacancode/reactuse';
 import { CircleIcon, ContrastIcon, SlidersHorizontalIcon } from 'lucide-react';

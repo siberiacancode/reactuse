@@ -10,9 +10,7 @@
   "description": "Hook that can be so useful",
   "category": "Humor",
   "lastModified": 1754977987000,
-  "examples": [
-    "const value = useFul(state);"
-  ],
+  "examples": ["const value = useFul(state);"],
   "apiParameters": [
     {
       "tag": "param",

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useLastChanged } from '@siberiacancode/reactuse';
 import { FileTextIcon } from 'lucide-react';

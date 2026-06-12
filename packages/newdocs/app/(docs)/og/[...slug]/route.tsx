@@ -149,9 +149,10 @@ export const GET = async (_request: Request, props: OgRouteProps) => {
           <div
             style={{
               textWrap: 'balance',
-              fontSize: page.title.length > 28 ? 64 : 80
+              fontSize: page.title.length > 28 ? 64 : 80,
+              lineHeight: 0.95
             }}
-            tw='mt-16 max-w-[880px] font-semibold leading-[0.95] tracking-[-0.06em]'
+            tw='mt-16 max-w-[880px] font-semibold'
           >
             {page.title}
           </div>
@@ -159,9 +160,10 @@ export const GET = async (_request: Request, props: OgRouteProps) => {
           <div
             style={{
               textWrap: 'balance',
-              fontSize: page.description.length > 90 ? 30 : 38
+              fontSize: page.description.length > 90 ? 30 : 38,
+              lineHeight: 1.25
             }}
-            tw='mt-8 max-w-[820px] leading-[1.25] text-stone-400'
+            tw='mt-8 max-w-[820px] text-stone-400'
           >
             {page.description}
           </div>

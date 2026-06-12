@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useFullscreen, useMediaControls } from '@siberiacancode/reactuse';
 import { MaximizeIcon, PauseIcon, PlayIcon, Volume2Icon, VolumeXIcon } from 'lucide-react';

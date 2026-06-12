@@ -9,9 +9,7 @@
   "description": "Hook that allows you to receive messages from other origins",
   "category": "Browser",
   "lastModified": 1769360827000,
-  "examples": [
-    "const postMessage = usePostMessage();"
-  ],
+  "examples": ["const postMessage = usePostMessage();"],
   "apiParameters": [
     {
       "tag": "overload",

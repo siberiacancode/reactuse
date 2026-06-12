@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { usePreferredDark } from '@siberiacancode/reactuse';
 import { MoonIcon, SunIcon } from 'lucide-react';

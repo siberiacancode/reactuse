@@ -49,11 +49,17 @@ import metadata from './useKeyboard.meta.json';
 ```tsx
 useKeyboard(ref, (event) => console.log('key down'));
 // or
-useKeyboard(ref, { onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
+useKeyboard(ref, {
+  onKeyDown: (event) => console.log('key down'),
+  onKeyUp: (event) => console.log('key up')
+});
 // or
 const ref = useKeyboard((event) => console.log('key down'));
 // or
-const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
+const ref = useKeyboard({
+  onKeyDown: (event) => console.log('key down'),
+  onKeyUp: (event) => console.log('key up')
+});
 ```
 
 ## Type Declarations

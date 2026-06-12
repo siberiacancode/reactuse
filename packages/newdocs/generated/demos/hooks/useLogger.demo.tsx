@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   useAutoScroll,
@@ -50,7 +50,7 @@ const Demo = () => {
   }, [counter.value]);
 
   return (
-    <section className='bg-muted/20 flex w-full max-w-md flex-col gap-3 rounded-lg p-4'>
+    <section className='bg-card flex w-full max-w-md flex-col gap-3 rounded-lg p-4'>
       <div className='flex h-[220px] flex-col'>
         <div className='flex items-center justify-between'>
           <span className='text-foreground text-[10px] font-semibold tracking-wider uppercase'>

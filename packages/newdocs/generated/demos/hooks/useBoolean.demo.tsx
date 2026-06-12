@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useBoolean } from '@siberiacancode/reactuse';
 import { Eye, EyeOff } from 'lucide-react';
@@ -30,7 +30,7 @@ const Demo = () => {
       </div>
 
       <p className='text-xs'>
-        The current state is <code>{visible ? 'shown' : 'hidden'}</code>
+        The current state is <b>{visible ? 'shown' : 'hidden'}</b>
       </p>
     </section>
   );

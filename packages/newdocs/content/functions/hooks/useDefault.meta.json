@@ -9,9 +9,7 @@
   "description": "Hook that returns the default value",
   "category": "State",
   "lastModified": 1779190580000,
-  "examples": [
-    "const [value, setValue] = useDefault(initialValue, defaultValue);"
-  ],
+  "examples": ["const [value, setValue] = useDefault(initialValue, defaultValue);"],
   "apiParameters": [
     {
       "tag": "param",

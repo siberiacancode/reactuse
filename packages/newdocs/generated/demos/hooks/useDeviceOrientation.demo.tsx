@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useDeviceOrientation } from '@siberiacancode/reactuse';
 import { SmartphoneIcon } from 'lucide-react';

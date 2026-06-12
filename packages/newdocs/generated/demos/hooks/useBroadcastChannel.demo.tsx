@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useBroadcastChannel } from '@siberiacancode/reactuse';
 import { MinusIcon, PlusIcon, ShoppingCartIcon, Trash2Icon } from 'lucide-react';

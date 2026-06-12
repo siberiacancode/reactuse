@@ -49,7 +49,9 @@ import metadata from './useInterval.meta.json';
 ```tsx
 const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), 2500);
 // or
-const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), { interval: 2500 });
+const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), {
+  interval: 2500
+});
 ```
 
 ## Type Declarations

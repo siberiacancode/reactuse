@@ -47,7 +47,10 @@ import metadata from './useOptimistic.meta.json';
 ## Usage
 
 ```tsx
-const [optimisticValue, updateOptimistic] = useOptimistic<number>(count, (currentState, optimisticValue) => currentState + optimisticValue);
+const [optimisticValue, updateOptimistic] = useOptimistic<number>(
+  count,
+  (currentState, optimisticValue) => currentState + optimisticValue
+);
 ```
 
 ## Type Declarations

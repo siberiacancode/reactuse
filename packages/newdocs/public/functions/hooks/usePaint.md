@@ -49,7 +49,10 @@ import metadata from './usePaint.meta.json';
 ```tsx
 const paint = usePaint(canvasRef, { color: 'red', radius: 10 });
 // or
-const { ref, draw, clear, undo, redo, changeColor } = usePaint({ color: 'red', radius: 10 }, { smooth: true });
+const { ref, draw, clear, undo, redo, changeColor } = usePaint(
+  { color: 'red', radius: 10 },
+  { smooth: true }
+);
 ```
 
 ## Type Declarations

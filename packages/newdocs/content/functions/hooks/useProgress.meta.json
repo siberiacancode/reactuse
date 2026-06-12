@@ -9,9 +9,7 @@
   "description": "Hook that creates a lightweight progress bar",
   "category": "Time",
   "lastModified": 1779190580000,
-  "examples": [
-    "const { value, active, start, done, inc, set, remove } = useProgress(0.2);"
-  ],
+  "examples": ["const { value, active, start, done, inc, set, remove } = useProgress(0.2);"],
   "apiParameters": [
     {
       "tag": "param",

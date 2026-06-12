@@ -55,9 +55,7 @@
   "description": "Hook that manages the document title and allows updating it",
   "category": "Browser",
   "lastModified": 1779453247000,
-  "examples": [
-    "const { value, set } = useDocumentTitle();"
-  ],
+  "examples": ["const { value, set } = useDocumentTitle();"],
   "apiParameters": [
     {
       "tag": "param",

@@ -55,9 +55,7 @@
   "description": "that returns a browser preferred languages from navigator",
   "category": "User",
   "lastModified": 1754977987000,
-  "examples": [
-    "const languages = usePreferredLanguages();"
-  ],
+  "examples": ["const languages = usePreferredLanguages();"],
   "apiParameters": [
     {
       "tag": "returns",

@@ -55,9 +55,7 @@
   "description": "Hook that allows you to observe performance entries",
   "category": "Sensors",
   "lastModified": 1773841927000,
-  "examples": [
-    "const { supported, entries, start, stop } = usePerformanceObserver();"
-  ],
+  "examples": ["const { supported, entries, start, stop } = usePerformanceObserver();"],
   "apiParameters": [
     {
       "tag": "param",

@@ -9,9 +9,7 @@
   "description": "Hook that creates an event and returns a stable reference of it",
   "category": "Utilities",
   "lastModified": 1754977987000,
-  "examples": [
-    "const onClick = useEvent(() => console.log('clicked'));"
-  ],
+  "examples": ["const onClick = useEvent(() => console.log('clicked'));"],
   "apiParameters": [
     {
       "tag": "param",

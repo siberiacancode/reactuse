@@ -49,11 +49,17 @@ import metadata from './useMediaControls.meta.json';
 ```tsx
 const { playing, play, pause } = useMediaControls(videoRef, 'video.mp4');
 // or
-const { playing, play, pause } = useMediaControls(audioRef, { src: 'audio.mp3', type: 'audio/mp3' });
+const { playing, play, pause } = useMediaControls(audioRef, {
+  src: 'audio.mp3',
+  type: 'audio/mp3'
+});
 // or
 const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>('video.mp4');
 // or
-const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>({ src: 'video.mp4', type: 'video/mp4' });
+const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>({
+  src: 'video.mp4',
+  type: 'video/mp4'
+});
 ```
 
 ## Type Declarations

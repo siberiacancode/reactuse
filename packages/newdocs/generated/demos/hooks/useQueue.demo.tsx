@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useInterval, useQueue } from '@siberiacancode/reactuse';
 import { CheckIcon } from 'lucide-react';
@@ -102,7 +102,7 @@ const Demo = () => {
         {waiting.map((order, index) => (
           <div
             key={order.id}
-            className='border-border bg-muted/30 animate-in fade-in flex items-center gap-3 rounded-xl border p-3'
+            className='border-border bg-card animate-in fade-in flex items-center gap-3 rounded-xl border p-3'
           >
             <span className='border-border text-muted-foreground flex size-7 shrink-0 items-center justify-center rounded-full border text-xs font-medium tabular-nums'>
               {index + 1}

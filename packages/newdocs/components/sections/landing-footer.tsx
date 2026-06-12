@@ -1,3 +1,6 @@
+'use client';
+
+import { motion } from 'motion/react';
 import Link from 'next/link';
 
 import { LINKS } from '@/src/constants';
@@ -5,7 +8,13 @@ import { LINKS } from '@/src/constants';
 export const LandingFooter = () => (
   <footer>
     <div className='mx-auto max-w-6xl px-6 py-16'>
-      <div className='flex flex-col items-center text-center'>
+      <motion.div
+        className='flex flex-col items-center text-center'
+        initial={{ opacity: 0, y: 24 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
         {/* logo on top, name below */}
         <Link className='inline-flex flex-col items-center gap-3' href='/'>
           <img alt='reactuse' className='size-12' src='/logo.svg' />
@@ -68,7 +77,7 @@ export const LandingFooter = () => (
             </Link>
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   </footer>
 );

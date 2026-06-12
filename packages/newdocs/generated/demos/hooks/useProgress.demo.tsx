@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useDisclosure, useProgress, useQuery } from '@siberiacancode/reactuse';
 import { ChevronLeftIcon, CircleDotIcon, GitForkIcon, StarIcon } from 'lucide-react';

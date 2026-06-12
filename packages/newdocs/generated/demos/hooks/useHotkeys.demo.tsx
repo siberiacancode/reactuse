@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useDisclosure, useField, useHotkeys, useKeyPress } from '@siberiacancode/reactuse';
 import { FileTextIcon, HomeIcon, PlusIcon, SearchIcon, SettingsIcon } from 'lucide-react';

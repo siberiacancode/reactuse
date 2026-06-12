@@ -9,9 +9,7 @@
   "description": "Hook what calls given function when mouse leaves the page",
   "category": "Sensors",
   "lastModified": 1754977987000,
-  "examples": [
-    "const isLeft = usePageLeave(() => console.log('on leave'))"
-  ],
+  "examples": ["const isLeft = usePageLeave(() => console.log('on leave'))"],
   "apiParameters": [
     {
       "tag": "param",
@@ -89,9 +87,7 @@
     }
   ],
   "dependencies": {
-    "hooks": [
-      "useEvent"
-    ],
+    "hooks": ["useEvent"],
     "utils": [],
     "packages": []
   },

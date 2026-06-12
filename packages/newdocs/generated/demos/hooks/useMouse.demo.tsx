@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useMouse } from '@siberiacancode/reactuse';
 import { ArrowRightIcon } from 'lucide-react';

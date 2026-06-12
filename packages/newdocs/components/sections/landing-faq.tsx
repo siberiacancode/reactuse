@@ -1,5 +1,7 @@
 'use client';
 
+import { motion } from 'motion/react';
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/src/components/ui';
 
 const FAQ = [
@@ -40,7 +42,13 @@ export const LandingFaq = () => (
     <div className='mx-auto max-w-6xl px-6 py-12 md:py-24'>
       <div className='grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16'>
         {/* ── Heading ── */}
-        <div className='max-w-md'>
+        <motion.div
+          className='max-w-md'
+          initial={{ opacity: 0, y: 28 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.45 }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
           <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
             FAQ
           </h2>
@@ -48,25 +56,32 @@ export const LandingFaq = () => (
             Everything you need to know about reactuse. Can&apos;t find what you&apos;re looking
             for? Open an issue on GitHub.
           </p>
-        </div>
+        </motion.div>
 
         {/* ── Accordion ── */}
-        <Accordion collapsible className='w-full' defaultValue='item-0' type='single'>
-          {FAQ.map((faq, index) => {
-            const value = `item-${index}`;
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
+          <Accordion collapsible className='w-full' defaultValue='item-0' type='single'>
+            {FAQ.map((faq, index) => {
+              const value = `item-${index}`;
 
-            return (
-              <AccordionItem key={value} value={value}>
-                <AccordionTrigger className='py-6 text-left text-lg font-medium hover:no-underline md:text-xl'>
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className='text-muted-foreground max-w-2xl pb-6 text-base leading-relaxed md:text-lg'>
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            );
-          })}
-        </Accordion>
+              return (
+                <AccordionItem key={value} value={value}>
+                  <AccordionTrigger className='py-6 text-left text-lg font-medium hover:no-underline md:text-xl'>
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className='text-muted-foreground max-w-2xl pb-6 text-base leading-relaxed md:text-lg'>
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
+        </motion.div>
       </div>
     </div>
   </section>

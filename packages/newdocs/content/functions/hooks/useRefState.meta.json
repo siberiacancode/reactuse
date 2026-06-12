@@ -9,9 +9,7 @@
   "description": "Hook that returns the state reference of the value",
   "category": "State",
   "lastModified": 1766052966000,
-  "examples": [
-    "const internalRefState = useRefState();"
-  ],
+  "examples": ["const internalRefState = useRefState();"],
   "apiParameters": [
     {
       "tag": "param",

@@ -9,9 +9,7 @@
   "description": "Hook that prevents a callback from being executed multiple times simultaneously",
   "category": "Async",
   "lastModified": 1754977987000,
-  "examples": [
-    "const lockedCallback = useLockCallback(() => promise());"
-  ],
+  "examples": ["const lockedCallback = useLockCallback(() => promise());"],
   "apiParameters": [
     {
       "tag": "param",

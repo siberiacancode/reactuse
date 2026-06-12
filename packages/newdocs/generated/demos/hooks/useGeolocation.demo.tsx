@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useCopy, useGeolocation } from '@siberiacancode/reactuse';
 import { CheckIcon, CopyIcon, MapPinIcon } from 'lucide-react';

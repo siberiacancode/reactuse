@@ -9,9 +9,7 @@
   "description": "Hook that returns true if the component is first render",
   "category": "Lifecycle",
   "lastModified": 1754977987000,
-  "examples": [
-    "const isFirstRender = useIsFirstRender();"
-  ],
+  "examples": ["const isFirstRender = useIsFirstRender();"],
   "apiParameters": [
     {
       "tag": "returns",

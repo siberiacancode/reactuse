@@ -55,9 +55,7 @@
   "description": "Hook that provides reactive pointer lock",
   "category": "Browser",
   "lastModified": 1781083610000,
-  "examples": [
-    "const { supported, lock, unlock, element } = usePointerLock();"
-  ],
+  "examples": ["const { supported, lock, unlock, element } = usePointerLock();"],
   "apiParameters": [
     {
       "tag": "returns",

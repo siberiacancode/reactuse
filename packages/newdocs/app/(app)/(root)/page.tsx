@@ -2,18 +2,15 @@ import type { Metadata } from 'next';
 
 import { LandingHero } from '@docs/components/landing-hero';
 import {
-  LandingExploreHooks,
+  LandingBentoHooks,
+  LandingCli,
+  LandingContributors,
   LandingFaq,
   LandingFooter,
-  LandingGettingStarted,
-  LandingContributors,
-  LandingCli
+  LandingGettingStarted
 } from '@docs/components/sections';
 import { siteConfig } from '@docs/lib/config';
-import { getContributors } from '@docs/lib/contributors';
-import { Button } from '@docs/ui/button';
-import { IconHeartFilled } from '@tabler/icons-react';
-import Link from 'next/link';
+
 import { LandingStats } from '@/components/sections/landing-stats';
 
 const title = 'reactuse';
@@ -62,100 +59,55 @@ const advantages = [
   }
 ];
 
-const featuredHooks = [
-  'useBoolean',
-  'useCounter',
-  'useDebounceState',
-  'useDisclosure',
-  'useList',
-  'useToggle',
-  'useClipboard',
-  'useCookie',
-  'useLocalStorage',
-  'useMediaQuery',
-  'useOnline',
-  'useDocumentTitle',
-  'useBattery',
-  'useDeviceMotion',
-  'useGeolocation',
-  'useIdle',
-  'useMouse',
-  'useNetwork',
-  'useClickOutside',
-  'useElementSize',
-  'useHover',
-  'useIntersectionObserver',
-  'useResizeObserver',
-  'useMutationObserver',
-  'useAsync',
-  'useDebounceCallback',
-  'useInterval',
-  'useTimeout',
-  'useThrottle',
-  'useEventListener',
-  'useConst',
-  'useCopy',
-  'useEvent',
-  'usePrevious',
-  'useStep',
-  'useDefault'
-];
-
 export const metadata: Metadata = {
   title,
   description
 };
 
-const HomePage = async () => {
-  const [contributors, hooks] = await Promise.all([getContributors(), []]);
+const HomePage = () => (
+  <div className='bg-background min-h-screen'>
+    <main>
+      <LandingHero />
+      <LandingStats stats={stats} />
 
-  const allHooks = hooks.length > 0 ? hooks : featuredHooks;
+      <section className='border-border border-t'>
+        <div className='mx-auto max-w-6xl px-6 py-24 md:py-32'>
+          <h2 className='font-display text-foreground text-5xl font-bold tracking-tighter md:text-7xl lg:text-8xl'>
+            Why reactuse?
+          </h2>
 
-  return (
-    <div className='bg-background min-h-screen'>
-      <main>
-        <LandingHero />
-        <LandingStats stats={stats} />
-
-        <section className='border-border border-t'>
-          <div className='mx-auto max-w-6xl px-6 py-24 md:py-32'>
-            <h2 className='font-display text-foreground text-5xl font-bold tracking-tighter md:text-7xl lg:text-8xl'>
-              Why reactuse?
-            </h2>
-
-            <div className='mt-12 flex flex-col gap-0 md:mt-16'>
-              {advantages.map((advantage) => (
-                <div
-                  key={advantage.title}
-                  className='group border-border/40 flex items-start gap-6 border-b py-5 transition-colors last:border-0 hover:border-[color:color-mix(in_oklab,var(--brand)_30%,transparent)] md:gap-8'
-                >
-                  <span className='font-display text-muted-foreground/40 pt-1 text-3xl leading-none transition-colors group-hover:text-[var(--brand)] md:text-4xl'>
-                    {advantage.number}
-                  </span>
-                  <div className='flex-1'>
-                    <h3 className='font-display text-foreground text-2xl font-semibold transition-colors group-hover:text-[var(--brand)] md:text-3xl'>
-                      {advantage.title}
-                    </h3>
-                    <p className='text-muted-foreground mt-2 max-w-2xl text-base leading-relaxed md:text-lg'>
-                      {advantage.description}
-                    </p>
-                  </div>
+          <div className='mt-12 flex flex-col gap-0 md:mt-16'>
+            {advantages.map((advantage) => (
+              <div
+                key={advantage.title}
+                className='group border-border/40 flex items-start gap-6 border-b py-5 transition-colors last:border-0 hover:border-[color:color-mix(in_oklab,var(--brand)_30%,transparent)] md:gap-8'
+              >
+                <span className='font-display text-muted-foreground/40 pt-1 text-3xl leading-none transition-colors group-hover:text-[var(--brand)] md:text-4xl'>
+                  {advantage.number}
+                </span>
+                <div className='flex-1'>
+                  <h3 className='font-display text-foreground text-2xl font-semibold transition-colors group-hover:text-[var(--brand)] md:text-3xl'>
+                    {advantage.title}
+                  </h3>
+                  <p className='text-muted-foreground mt-2 max-w-2xl text-base leading-relaxed md:text-lg'>
+                    {advantage.description}
+                  </p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <LandingExploreHooks hooks={allHooks} />
-        <LandingCli />
-        <LandingGettingStarted />
-        <LandingFaq />
-        <LandingContributors contributors={contributors} />
-      </main>
+      <LandingBentoHooks />
+      <LandingCli />
+      <LandingGettingStarted />
+      <LandingFaq />
+      <LandingContributors />
+    </main>
 
-      <LandingFooter />
-    </div>
-  );
-};
+    <LandingFooter />
+  </div>
+);
 
 export default HomePage;

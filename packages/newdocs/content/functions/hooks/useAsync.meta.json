@@ -9,9 +9,7 @@
   "description": "Hook that provides the state of an async callback",
   "category": "Async",
   "lastModified": 1754977987000,
-  "examples": [
-    "const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);"
-  ],
+  "examples": ["const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);"],
   "apiParameters": [
     {
       "tag": "param",

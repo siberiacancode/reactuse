@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useHash } from '@siberiacancode/reactuse';
 import { MountainIcon, TreesIcon, TriangleIcon, WavesIcon } from 'lucide-react';

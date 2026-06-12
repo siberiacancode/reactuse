@@ -47,7 +47,8 @@ import metadata from './useOffsetPagination.meta.json';
 ## Usage
 
 ```tsx
-const { currentPage, currentPageSize, pageCount, isFirstPage, isLastPage, prev, next } = useOffsetPagination({ total: 100, initialPageSize: 10, initialPage: 1 });
+const { currentPage, currentPageSize, pageCount, isFirstPage, isLastPage, prev, next } =
+  useOffsetPagination({ total: 100, initialPageSize: 10, initialPage: 1 });
 ```
 
 ## Type Declarations

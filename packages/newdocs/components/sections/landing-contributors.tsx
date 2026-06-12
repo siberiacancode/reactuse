@@ -2,8 +2,10 @@
 
 import { useBoolean } from '@siberiacancode/reactuse';
 import { ArrowUpRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 
+import { useDocsMetadata } from '@/app/_contexts/docs-metadata';
 import {
   Avatar,
   AvatarFallback,
@@ -16,27 +18,25 @@ import {
 } from '@/src/components/ui';
 import { cn } from '@/src/lib';
 
-interface Contributor {
-  avatar: string;
-  name: string;
-}
-
-interface LandingContributorsProps {
-  contributors: Contributor[];
-}
-
 const INITIAL_COUNT = 64;
 
 const getInitials = (name: string) => name.slice(0, 2).toUpperCase();
 
-export const LandingContributors = ({ contributors }: LandingContributorsProps) => {
+export const LandingContributors = () => {
+  const { contributors } = useDocsMetadata();
   const [showAll, toggleShowAll] = useBoolean();
   const hasMore = contributors.length > INITIAL_COUNT;
 
   return (
     <section>
       <div className='mx-auto max-w-6xl px-6 py-12 md:py-24'>
-        <div className='mb-12 max-w-2xl'>
+        <motion.div
+          className='mb-12 max-w-2xl'
+          initial={{ opacity: 0, y: 28 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.45 }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
           <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
             Contributors
           </h2>
@@ -56,9 +56,15 @@ export const LandingContributors = ({ contributors }: LandingContributorsProps) 
             </Link>
             .
           </p>
-        </div>
+        </motion.div>
 
-        <div className='relative'>
+        <motion.div
+          className='relative'
+          initial={{ opacity: 0, y: 24 }}
+          transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.2 }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
           {/* animated collapsible grid */}
           <div
             className={cn(
@@ -105,7 +111,7 @@ export const LandingContributors = ({ contributors }: LandingContributorsProps) 
               </Button>
             </div>
           )}
-        </div>
+        </motion.div>
 
         {showAll && (
           <div className='mt-8 flex justify-center'>

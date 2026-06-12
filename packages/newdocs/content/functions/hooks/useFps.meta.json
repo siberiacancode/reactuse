@@ -55,9 +55,7 @@
   "description": "Hook that measures frames per second",
   "category": "Browser",
   "lastModified": 1779803241000,
-  "examples": [
-    "const fps = useFps();"
-  ],
+  "examples": ["const fps = useFps();"],
   "apiParameters": [
     {
       "tag": "returns",

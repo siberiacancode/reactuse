@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useRenderCount } from '@siberiacancode/reactuse';
 import { useState } from 'react';

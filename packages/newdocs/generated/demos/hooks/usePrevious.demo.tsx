@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { usePrevious, useQuery } from '@siberiacancode/reactuse';
 import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react';

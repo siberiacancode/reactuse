@@ -55,9 +55,7 @@
   "description": "Hook that manages if the user is online",
   "category": "Browser",
   "lastModified": 1754977987000,
-  "examples": [
-    "const online = useOnline();"
-  ],
+  "examples": ["const online = useOnline();"],
   "apiParameters": [
     {
       "tag": "returns",

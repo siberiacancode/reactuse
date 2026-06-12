@@ -1,25 +1,25 @@
-import fs from 'node:fs/promises';
+import fs from 'node:fs';
 import path from 'node:path';
 
 import { CONTENT_ROOT, PUBLIC_ROOT } from './constants';
 
-export const init = async () => {
+const init = () => {
   console.log('[generate-static] Starting...');
 
-  const files = await fs.readdir(CONTENT_ROOT, {
+  const files = fs.readdirSync(CONTENT_ROOT, {
     recursive: true
   });
 
   for (const file of files) {
-    if (!file.endsWith('.mdx')) continue;
+    if (typeof file !== 'string' || !file.endsWith('.mdx')) continue;
 
     const sourcePath = path.join(CONTENT_ROOT, file);
     const targetPath = path.join(PUBLIC_ROOT, file.replace(/\.mdx$/i, '.md'));
 
-    const content = await fs.readFile(sourcePath, 'utf8');
+    const content = fs.readFileSync(sourcePath, 'utf8');
 
-    await fs.mkdir(path.dirname(targetPath), { recursive: true });
-    await fs.writeFile(targetPath, content, 'utf8');
+    fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+    fs.writeFileSync(targetPath, content, 'utf8');
   }
 
   console.log('[generate-static] Done\n');

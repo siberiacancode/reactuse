@@ -9,9 +9,7 @@
   "description": "Hook that executes a callback when the component mounts",
   "category": "Lifecycle",
   "lastModified": 1754977987000,
-  "examples": [
-    "useMount(() => console.log('This effect runs on the initial render'));"
-  ],
+  "examples": ["useMount(() => console.log('This effect runs on the initial render'));"],
   "apiParameters": [
     {
       "tag": "param",

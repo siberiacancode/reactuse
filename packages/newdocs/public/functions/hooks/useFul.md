@@ -11,7 +11,6 @@ lastModifiedTime: 1754977987000
 
 import metadata from './useFul.meta.json';
 
-
 <Callout title='Warning' variant='warning' className='my-5'>
   {metadata.warning}
 </Callout>

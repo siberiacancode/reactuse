@@ -9,9 +9,7 @@
   "description": "Hook that merges multiple refs into a single ref",
   "category": "State",
   "lastModified": 1756623419000,
-  "examples": [
-    "const mergedRef = useMergedRef(firstRef, secondRef);"
-  ],
+  "examples": ["const mergedRef = useMergedRef(firstRef, secondRef);"],
   "apiParameters": [
     {
       "tag": "param",

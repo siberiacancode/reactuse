@@ -11,7 +11,13 @@ lastModifiedTime: 1754977987000
 
 import metadata from './useCounter.meta.json';
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+<FunctionBanner
+  browserapi={metadata.browserapi}
+  code={metadata.demo}
+  type={metadata.type}
+  name={metadata.name}
+  language='tsx'
+/>
 
 ## Installation
 
@@ -22,25 +28,15 @@ import metadata from './useCounter.meta.json';
     <TabsTrigger value='manual'>Manual</TabsTrigger>
   </TabsList>
   <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
+    ```packages-install npm install @siberiacancode/reactuse ```
   </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useCounter
-    ```
-  </TabsContent>
+  <TabsContent value='cli'>```packages-install npx useverse@latest add useCounter ```</TabsContent>
   <TabsContent value='manual'>
     <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <FunctionCode code={metadata.code} language='tsx' />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
   </TabsContent>
 </FunctionTabs>
 
@@ -54,7 +50,7 @@ const { count, dec, inc, reset, set } = useCounter({ initialValue: 5, min: 0, ma
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+<FunctionCode code={metadata.typeDeclarations} language='tsx' />
 
 ## API
 

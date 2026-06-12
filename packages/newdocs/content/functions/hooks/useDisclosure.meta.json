@@ -9,9 +9,7 @@
   "description": "Hook that allows you to open and close a modal",
   "category": "State",
   "lastModified": 1775899527000,
-  "examples": [
-    "const { opened, open, close, toggle } = useDisclosure();"
-  ],
+  "examples": ["const { opened, open, close, toggle } = useDisclosure();"],
   "apiParameters": [
     {
       "tag": "param",

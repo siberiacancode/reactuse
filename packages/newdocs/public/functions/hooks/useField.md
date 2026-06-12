@@ -47,7 +47,19 @@ import metadata from './useField.meta.json';
 ## Usage
 
 ```tsx
-const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();
+const {
+  register,
+  getValue,
+  setValue,
+  reset,
+  dirty,
+  error,
+  setError,
+  clearError,
+  touched,
+  focus,
+  watch
+} = useField();
 ```
 
 ## Type Declarations

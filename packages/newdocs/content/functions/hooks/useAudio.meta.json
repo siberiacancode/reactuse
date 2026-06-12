@@ -55,9 +55,7 @@
   "description": "Hook that manages audio playback with sprite support",
   "category": "Browser",
   "lastModified": 1762758339000,
-  "examples": [
-    "const audio = useAudio(\"/path/to/sound.mp3\");"
-  ],
+  "examples": ["const audio = useAudio(\"/path/to/sound.mp3\");"],
   "apiParameters": [
     {
       "tag": "param",

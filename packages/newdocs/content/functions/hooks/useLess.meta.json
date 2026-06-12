@@ -10,9 +10,7 @@
   "description": "Hook that can be so useless",
   "category": "Humor",
   "lastModified": 1754977987000,
-  "examples": [
-    "const value = useLess(state);"
-  ],
+  "examples": ["const value = useLess(state);"],
   "apiParameters": [
     {
       "tag": "param",

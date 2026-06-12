@@ -2,6 +2,7 @@
 
 import { useInterval } from '@siberiacancode/reactuse';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -81,7 +82,13 @@ export const LandingGettingStarted = () => {
   return (
     <section>
       <div className='mx-auto max-w-6xl px-6 py-12 md:py-24'>
-        <div className='max-w-3xl'>
+        <motion.div
+          className='max-w-3xl'
+          initial={{ opacity: 0, y: 28 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.45 }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
           <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
             Getting started
           </h2>
@@ -116,15 +123,19 @@ export const LandingGettingStarted = () => {
               <ArrowRight className='size-4' />
             </Link>
           </Button>
-        </div>
+        </motion.div>
 
-        <div
+        <motion.div
           className='mt-12 grid gap-4 lg:grid-cols-[1.7fr_1fr]'
+          initial={{ opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.25 }}
+          whileInView={{ opacity: 1, y: 0 }}
           onMouseEnter={interval.pause}
           onMouseLeave={interval.resume}
         >
           {/* ── Main card ── */}
-          <div className='border-border bg-card flex flex-col overflow-hidden rounded-xl border p-8 md:p-10'>
+          <div className='bg-card flex flex-col overflow-hidden rounded-xl p-8 md:p-10'>
             <div className='flex flex-1 flex-col'>
               {/* logo (link, no border, theme-aware) */}
               <Link
@@ -205,10 +216,8 @@ export const LandingGettingStarted = () => {
                 <button
                   key={framework.name}
                   className={cn(
-                    'group border-border bg-card flex w-full flex-1 items-center gap-4 rounded-xl border p-5 text-left transition-all duration-300',
-                    isActive
-                      ? 'bg-muted/40 ring-border ring-2'
-                      : 'hover:border-foreground/20 hover:bg-muted/30'
+                    'group bg-card flex w-full flex-1 items-center gap-4 rounded-xl p-5 text-left transition-all duration-300',
+                    isActive ? 'bg-muted/40 ring-border ring-2' : 'hover:bg-muted/30'
                   )}
                   type='button'
                   onClick={() => setActiveFrameworkIndex(index)}
@@ -236,7 +245,7 @@ export const LandingGettingStarted = () => {
               );
             })}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

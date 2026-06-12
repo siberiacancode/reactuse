@@ -9,9 +9,7 @@
   "description": "Hook for getting information about component rerender",
   "category": "Debug",
   "lastModified": 1754977987000,
-  "examples": [
-    "const rerenderInfo = useRenderInfo('Component');"
-  ],
+  "examples": ["const rerenderInfo = useRenderInfo('Component');"],
   "apiParameters": [
     {
       "tag": "param",

@@ -55,9 +55,7 @@
   "description": "Hook that manages a media query",
   "category": "Browser",
   "lastModified": 1755150117000,
-  "examples": [
-    "const matches = useMediaQuery('(max-width: 768px)');"
-  ],
+  "examples": ["const matches = useMediaQuery('(max-width: 768px)');"],
   "apiParameters": [
     {
       "tag": "param",

@@ -9,9 +9,7 @@
   "description": "Hook that returns the operating system of the current browser",
   "category": "User",
   "lastModified": 1754977987000,
-  "examples": [
-    "const operatingSystem = useOperatingSystem();"
-  ],
+  "examples": ["const operatingSystem = useOperatingSystem();"],
   "apiParameters": [
     {
       "tag": "returns",

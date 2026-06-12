@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowUpRightIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -34,6 +35,7 @@ interface Segment {
 }
 
 interface ScriptLine {
+  id: string;
   kind: LineKind;
   segments: Segment[];
 }
@@ -42,6 +44,7 @@ const text = (value: string): Segment[] => [{ text: value }];
 
 const script: ScriptLine[] = [
   {
+    id: 'init-command',
     kind: 'command',
     segments: [
       { className: 'text-zinc-500', text: '~/my-app $ ' },
@@ -49,22 +52,25 @@ const script: ScriptLine[] = [
     ]
   },
   {
+    id: 'created-config',
     kind: 'output',
     segments: [
-      { className: 'text-emerald-400', text: '✓ ' },
+      { className: 'text-white', text: '✓ ' },
       { className: 'text-zinc-300', text: 'Created ' },
       { className: 'text-cyan-400', text: 'reactuse.json' }
     ]
   },
   {
+    id: 'installed-dependencies',
     kind: 'output',
     segments: [
-      { className: 'text-emerald-400', text: '✓ ' },
+      { className: 'text-white', text: '✓ ' },
       { className: 'text-zinc-300', text: 'Installed dependencies' }
     ]
   },
-  { kind: 'output', segments: text('') },
+  { id: 'space-after-init', kind: 'output', segments: text('') },
   {
+    id: 'add-command',
     kind: 'command',
     segments: [
       { className: 'text-zinc-500', text: '~/my-app $ ' },
@@ -72,27 +78,31 @@ const script: ScriptLine[] = [
     ]
   },
   {
+    id: 'resolved-hook',
     kind: 'output',
     segments: [
-      { className: 'text-emerald-400', text: '✓ ' },
+      { className: 'text-white', text: '✓ ' },
       { className: 'text-zinc-300', text: 'Resolved ' },
       { className: 'text-violet-400', text: 'useCounter' }
     ]
   },
   {
+    id: 'added-hook-file',
     kind: 'output',
     segments: [
-      { className: 'text-emerald-400', text: '✓ ' },
+      { className: 'text-white', text: '✓ ' },
       { className: 'text-zinc-300', text: 'Added ' },
       { className: 'text-cyan-400', text: 'hooks/useCounter.ts' }
     ]
   },
-  { kind: 'output', segments: text('') },
+  { id: 'space-after-add', kind: 'output', segments: text('') },
   {
+    id: 'usage-comment',
     kind: 'output',
     segments: [{ className: 'text-zinc-500', text: '// use it in your component' }]
   },
   {
+    id: 'usage-import',
     kind: 'output',
     segments: [
       { className: 'text-violet-400', text: 'import ' },
@@ -104,13 +114,14 @@ const script: ScriptLine[] = [
     ]
   },
   {
+    id: 'usage-call',
     kind: 'output',
     segments: [
       { className: 'text-violet-400', text: 'const ' },
       { className: 'text-zinc-300', text: '{ ' },
       { className: 'text-cyan-400', text: 'count, inc' },
       { className: 'text-zinc-300', text: ' } = ' },
-      { className: 'text-emerald-400', text: 'useCounter' },
+      { className: 'text-white', text: 'useCounter' },
       { className: 'text-zinc-300', text: '()' }
     ]
   }
@@ -160,13 +171,13 @@ export const LandingCli = () => {
   const renderTypedSegments = (segments: Segment[], count: number) => {
     let remaining = count;
 
-    return segments.map((segment, index) => {
+    return segments.map((segment) => {
       if (remaining <= 0) return null;
       const slice = segment.text.slice(0, remaining);
       remaining -= segment.text.length;
 
       return (
-        <span key={index} className={segment.className}>
+        <span key={`${segment.className ?? 'plain'}-${segment.text}`} className={segment.className}>
           {slice}
         </span>
       );
@@ -178,7 +189,13 @@ export const LandingCli = () => {
       <div className='mx-auto max-w-6xl px-6 py-12 md:py-24'>
         <div className='grid items-center gap-10 lg:grid-cols-2 lg:gap-16'>
           {/* ── Steps (left) — big numerals ── */}
-          <ol className='flex flex-col gap-8'>
+          <motion.ol
+            className='flex flex-col gap-8'
+            initial={{ opacity: 0, x: -24 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, amount: 0.35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+          >
             {steps.map((step, index) => (
               <li
                 key={step.title}
@@ -210,10 +227,16 @@ export const LandingCli = () => {
                 </div>
               </li>
             ))}
-          </ol>
+          </motion.ol>
 
           {/* ── Terminal (right) — right-side fade ── */}
-          <div className='border-border relative overflow-hidden rounded-xl border bg-[#0a0a0a]'>
+          <motion.div
+            className='border-border relative overflow-hidden rounded-xl border bg-[#0a0a0a]'
+            initial={{ opacity: 0, scale: 0.97, y: 30 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, amount: 0.35 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          >
             {/* title bar */}
             <div className='flex items-center gap-2 border-b border-white/10 px-4 py-3'>
               <span className='size-3 rounded-full bg-white/20' />
@@ -227,13 +250,13 @@ export const LandingCli = () => {
             {/* body */}
             <div className='relative h-80 overflow-hidden px-5 py-4 font-mono text-sm leading-relaxed'>
               <div>
-                {script.slice(0, lineIndex + 1).map((line, index) => {
-                  const isCurrent = index === lineIndex;
+                {script.slice(0, lineIndex + 1).map((line) => {
+                  const isCurrent = line.id === script[lineIndex]?.id;
                   const isTyping = isCurrent && line.kind === 'command';
                   const full = segmentsToText(line.segments);
 
                   return (
-                    <div key={index} className='whitespace-pre'>
+                    <div key={line.id} className='whitespace-pre'>
                       {isTyping ? (
                         <>
                           {renderTypedSegments(line.segments, charCount)}
@@ -244,8 +267,11 @@ export const LandingCli = () => {
                       ) : line.segments.length === 1 && line.segments[0].text === '' ? (
                         '\u00A0'
                       ) : (
-                        line.segments.map((segment, segmentIndex) => (
-                          <span key={segmentIndex} className={segment.className}>
+                        line.segments.map((segment) => (
+                          <span
+                            key={`${segment.className ?? 'plain'}-${segment.text}`}
+                            className={segment.className}
+                          >
                             {segment.text}
                           </span>
                         ))
@@ -258,7 +284,7 @@ export const LandingCli = () => {
               {/* right-side fade */}
               <div className='pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0a0a0a] to-transparent' />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

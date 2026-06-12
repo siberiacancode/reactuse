@@ -9,9 +9,7 @@
   "description": "Hook that provides state and helper methods to manage a list of items",
   "category": "State",
   "lastModified": 1754977987000,
-  "examples": [
-    "const { value, set, push, removeAt, insertAt, updateAt, clear } = useList();"
-  ],
+  "examples": ["const { value, set, push, removeAt, insertAt, updateAt, clear } = useList();"],
   "apiParameters": [
     {
       "tag": "param",

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useDisclosure, useLongPress } from '@siberiacancode/reactuse';
 import { CheckIcon, Loader2Icon, XIcon } from 'lucide-react';

@@ -9,9 +9,7 @@
   "description": "Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment",
   "category": "Lifecycle",
   "lastModified": 1754977987000,
-  "examples": [
-    "useIsomorphicLayoutEffect(() => console.log('effect'), [])"
-  ],
+  "examples": ["useIsomorphicLayoutEffect(() => console.log('effect'), [])"],
   "apiParameters": [],
   "dependencies": {
     "hooks": [],

@@ -13,7 +13,7 @@ const Demo = () => {
 
   return (
     <section className='flex min-w-md flex-col gap-2 p-4'>
-      <div className='flex w-full max-w-md items-start justify-between gap-4 rounded-xl border p-4'>
+      <div className='flex w-full max-w-md items-start justify-between gap-4 p-4'>
         <div className='flex items-center gap-3'>
           <BellIcon className='text-muted-foreground size-6 shrink-0' />
           <div className='flex flex-col gap-0.5'>
@@ -36,10 +36,6 @@ const Demo = () => {
           <ChevronDownIcon className='text-muted-foreground pointer-events-none absolute top-1/2 right-2 size-4 -translate-y-1/2' />
         </div>
       </div>
-
-      <p className='text-muted-foreground text-xs'>
-        Saved as <code>notify={settingLocalStorage.value ?? 'daily'}</code> storage.
-      </p>
     </section>
   );
 };

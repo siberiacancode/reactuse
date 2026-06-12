@@ -47,7 +47,7 @@ import metadata from './useDidUpdate.meta.json';
 ## Usage
 
 ```tsx
-useDidUpdate(() => console.log("effect runs on updates"), deps);
+useDidUpdate(() => console.log('effect runs on updates'), deps);
 ```
 
 ## Type Declarations

@@ -55,9 +55,7 @@
   "description": "Hook that gives you access to the eye dropper",
   "category": "Browser",
   "lastModified": 1755262808000,
-  "examples": [
-    "const { supported, value, open } = useEyeDropper();"
-  ],
+  "examples": ["const { supported, value, open } = useEyeDropper();"],
   "apiParameters": [
     {
       "tag": "param",

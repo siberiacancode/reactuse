@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useRaf } from '@siberiacancode/reactuse';
 import { useRef, useState } from 'react';

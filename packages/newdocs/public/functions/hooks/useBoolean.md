@@ -6,7 +6,7 @@ usage: necessary
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1781247117000
 ---
 
 import metadata from './useBoolean.meta.json';
@@ -47,7 +47,7 @@ import metadata from './useBoolean.meta.json';
 ## Usage
 
 ```tsx
-const [on, toggle] = useBoolean()
+const [on, toggle] = useBoolean();
 ```
 
 ## Type Declarations

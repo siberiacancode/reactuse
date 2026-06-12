@@ -55,9 +55,7 @@
   "description": "Hook that creates and revokes an object URL for a Blob or MediaSource",
   "category": "Browser",
   "lastModified": 1775226876000,
-  "examples": [
-    "const { value } = useObjectUrl(blob);"
-  ],
+  "examples": ["const { value } = useObjectUrl(blob);"],
   "apiParameters": [
     {
       "tag": "param",

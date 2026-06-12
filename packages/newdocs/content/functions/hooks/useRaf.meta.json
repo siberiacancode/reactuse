@@ -55,9 +55,7 @@
   "description": "Hook that defines the logic for raf callback",
   "category": "Browser",
   "lastModified": 1754977987000,
-  "examples": [
-    "useRaf(() => console.log('callback'));"
-  ],
+  "examples": ["useRaf(() => console.log('callback'));"],
   "apiParameters": [
     {
       "tag": "param",

@@ -47,7 +47,9 @@ import metadata from './useImage.meta.json';
 ## Usage
 
 ```tsx
-const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useImage('https://example.com/image.png');
+const { data, isLoading, isError, isSuccess, error, refetch, isRefetching } = useImage(
+  'https://example.com/image.png'
+);
 ```
 
 ## Type Declarations

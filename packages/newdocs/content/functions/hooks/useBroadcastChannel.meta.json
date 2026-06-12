@@ -55,9 +55,7 @@
   "description": "Hook that provides cross-tab/window communication",
   "category": "Browser",
   "lastModified": 1779458191000,
-  "examples": [
-    "const { supported, data, post, error } = useBroadcastChannel('channel');"
-  ],
+  "examples": ["const { supported, data, post, error } = useBroadcastChannel('channel');"],
   "apiParameters": [
     {
       "tag": "param",
