@@ -79,10 +79,10 @@ export const LandingGettingStarted = () => {
   }, INTERVAL);
 
   return (
-    <section className='border-border border-t'>
+    <section>
       <div className='mx-auto max-w-6xl px-6 py-12 md:py-24'>
         <div className='max-w-3xl'>
-          <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-6xl'>
+          <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
             Getting started
           </h2>
           <p className='text-muted-foreground mt-6 text-lg leading-relaxed md:text-xl'>

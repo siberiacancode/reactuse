@@ -1,12 +1,20 @@
 import type { Metadata } from 'next';
 
 import { LandingHero } from '@docs/components/landing-hero';
-import { LandingExploreHooks, LandingFaq, LandingFooter, LandingGettingStarted } from '@docs/components/sections';
+import {
+  LandingExploreHooks,
+  LandingFaq,
+  LandingFooter,
+  LandingGettingStarted,
+  LandingContributors,
+  LandingCli
+} from '@docs/components/sections';
 import { siteConfig } from '@docs/lib/config';
 import { getContributors } from '@docs/lib/contributors';
 import { Button } from '@docs/ui/button';
-import {  IconHeartFilled } from '@tabler/icons-react';
+import { IconHeartFilled } from '@tabler/icons-react';
 import Link from 'next/link';
+import { LandingStats } from '@/components/sections/landing-stats';
 
 const title = 'reactuse';
 const description = siteConfig.description;
@@ -53,8 +61,6 @@ const advantages = [
     title: 'Community Driven'
   }
 ];
-
-
 
 const featuredHooks = [
   'useBoolean',
@@ -109,21 +115,7 @@ const HomePage = async () => {
     <div className='bg-background min-h-screen'>
       <main>
         <LandingHero />
-
-        <div className='border-border bg-card/30 relative overflow-hidden border-y py-6'>
-          <div className='animate-marquee flex whitespace-nowrap'>
-            {[...stats, ...stats, ...stats, ...stats].map((stat, index) => (
-              <div key={`${stat.label}-${index}`} className='mx-12 flex items-center gap-3'>
-                <span className='font-display text-foreground text-3xl font-bold md:text-4xl'>
-                  {stat.value}
-                </span>
-                <span className='text-muted-foreground text-sm tracking-wider uppercase md:text-base'>
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <LandingStats stats={stats} />
 
         <section className='border-border border-t'>
           <div className='mx-auto max-w-6xl px-6 py-24 md:py-32'>
@@ -155,95 +147,10 @@ const HomePage = async () => {
         </section>
 
         <LandingExploreHooks hooks={allHooks} />
+        <LandingCli />
         <LandingGettingStarted />
-        <LandingFaq  />
-
-        <section className='border-border bg-card/30 border-t'>
-          <div className='mx-auto max-w-6xl px-6 py-24 md:py-32'>
-            <h2 className='font-display text-foreground text-5xl font-bold tracking-tighter md:text-7xl lg:text-8xl'>
-              Sponsors
-            </h2>
-            <p className='text-muted-foreground mt-6 max-w-xl text-lg'>
-              reactuse is open source and free to use. Your sponsorship helps maintain the library,
-              add new hooks, and support the community.
-            </p>
-
-            <div className='border-border bg-card/50 mt-12 rounded-2xl border border-dashed px-8 py-20 text-center'>
-              <p className='text-muted-foreground mb-6'>
-                No sponsors yet. Be the first to support reactuse!
-              </p>
-              <div className='flex flex-col justify-center gap-3 sm:flex-row'>
-                <Link
-                  href='https://github.com/sponsors/siberiacancode'
-                  rel='noreferrer'
-                  target='_blank'
-                >
-                  <Button className='h-9 rounded-full px-6 transition-colors' size='sm'>
-                    <IconHeartFilled className='mr-2 h-3.5 w-3.5' />
-                    Sponsor on GitHub
-                  </Button>
-                </Link>
-                <Link href='https://opencollective.com/reactuse' rel='noreferrer' target='_blank'>
-                  <Button
-                    className='border-border text-foreground h-9 rounded-full bg-transparent px-6 transition-colors hover:bg-[color:color-mix(in_oklab,var(--brand)_8%,transparent)] hover:text-[var(--brand)]'
-                    size='sm'
-                    variant='outline'
-                  >
-                    Open Collective
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className='border-border border-t'>
-          <div className='mx-auto max-w-6xl px-6 py-24 md:py-32'>
-            <div className='mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between'>
-              <div>
-                <h2 className='font-display text-foreground text-5xl font-bold tracking-tighter md:text-7xl lg:text-8xl'>
-                  Contributors
-                </h2>
-                <p className='text-muted-foreground mt-4 text-lg'>
-                  Built with love by 60+ amazing developers
-                </p>
-              </div>
-              <Link
-                className='text-muted-foreground text-sm transition-colors hover:text-[var(--brand)]'
-                href='https://github.com/siberiacancode'
-                rel='noreferrer'
-                target='_blank'
-              >
-                Maintained by{' '}
-                <span className='text-foreground font-semibold'>SIBERIA CAN CODE</span>
-              </Link>
-            </div>
-
-            <div className='flex flex-wrap gap-2'>
-              {contributors.slice(0, 64).map((contributor) => (
-                <Link
-                  key={contributor.name}
-                  className='group relative'
-                  href={`https://github.com/${contributor.name}`}
-                  rel='noreferrer'
-                  target='_blank'
-                  title={contributor.name}
-                >
-                  <img
-                    style={
-                      {
-                        ['--tw-border-opacity' as string]: '1'
-                      } as React.CSSProperties
-                    }
-                    alt={contributor.name}
-                    className='border-border bg-card h-10 w-10 rounded-full border transition-all hover:z-10 hover:scale-110'
-                    src={contributor.avatar}
-                  />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+        <LandingFaq />
+        <LandingContributors contributors={contributors} />
       </main>
 
       <LandingFooter />

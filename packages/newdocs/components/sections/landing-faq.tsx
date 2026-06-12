@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from '@/src/components/ui';
-
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/src/components/ui';
 
 const FAQ = [
   {
@@ -47,7 +41,7 @@ export const LandingFaq = () => (
       <div className='grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16'>
         {/* ── Heading ── */}
         <div className='max-w-md'>
-          <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-6xl'>
+          <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
             FAQ
           </h2>
           <p className='text-muted-foreground mt-6 text-lg leading-relaxed'>

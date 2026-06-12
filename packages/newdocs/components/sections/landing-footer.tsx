@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { LINKS } from '@/src/constants';
 
 export const LandingFooter = () => (
-  <footer className='border-border border-t'>
+  <footer>
     <div className='mx-auto max-w-6xl px-6 py-16'>
       <div className='flex flex-col items-center text-center'>
         {/* logo on top, name below */}
@@ -52,7 +52,7 @@ export const LandingFooter = () => (
         </nav>
 
         {/* bottom */}
-        <div className='border-border/50 mt-10 w-full border-t pt-8'>
+        <div className='mt-10 w-full pt-8'>
           <p className='text-muted-foreground text-xs'>
             © {new Date().getFullYear()} reactuse. Released under the MIT License.
           </p>

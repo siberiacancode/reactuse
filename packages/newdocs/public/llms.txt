@@ -62,6 +62,7 @@
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
 - [useRenderCount](https://reactuse.org/functions/hooks/useRenderCount): Hook returns count component render times
 - [useRenderInfo](https://reactuse.org/functions/hooks/useRenderInfo): Hook for getting information about component rerender
+- [useRerender](https://reactuse.org/functions/hooks/useRerender): Hook that defines the logic to force rerender a component
 ### Elementss
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element

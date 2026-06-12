@@ -125,3 +125,4 @@ A quick list of available functions.
 - [useRefState](/functions/hooks/useRefState): Hook that returns the state reference of the value
 - [useRenderCount](/functions/hooks/useRenderCount): Hook returns count component render times
 - [useRenderInfo](/functions/hooks/useRenderInfo): Hook for getting information about component rerender
+- [useRerender](/functions/hooks/useRerender): Hook that defines the logic to force rerender a component

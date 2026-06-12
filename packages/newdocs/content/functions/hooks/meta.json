@@ -32,6 +32,6 @@
       "useInterval","useProgress",
 
       "---debug---",
-      "useLogger","useRenderCount","useRenderInfo"
+      "useLogger","useRenderCount","useRenderInfo","useRerender"
     ]
   }
