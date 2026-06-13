@@ -15,6 +15,14 @@ import { FunctionContributors } from './app/(docs)/functions/_components/functio
 import { FunctionDemo } from './app/(docs)/functions/_components/function-demo';
 import { FunctionTabs } from './app/(docs)/functions/_components/function-tabs';
 import { Callout, MARKDOWN_COMPONENTS } from './src/components';
+import {
+  AstroIcon,
+  NextjsIcon,
+  ReactIcon,
+  ReactRouterIcon,
+  TanStackIcon,
+  ViteIcon
+} from './src/components/icons';
 import { PackageManagerTab, PackageManagerTabs } from './src/components/code-block-command';
 import {
   Avatar,
@@ -45,6 +53,12 @@ export const CUSTOM_COMPONENTS = {
   FunctionContributors,
   PackageManagerTabs,
   PackageManagerTab,
+  AstroIcon,
+  NextjsIcon,
+  ReactIcon,
+  ReactRouterIcon,
+  TanStackIcon,
+  ViteIcon,
   Steps,
   Step
 };

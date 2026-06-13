@@ -6,6 +6,13 @@ import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import {
+  AstroIcon,
+  NextjsIcon,
+  ReactRouterIcon,
+  TanStackIcon,
+  ViteIcon
+} from '@/src/components/icons';
 import { Button } from '@/src/components/ui';
 import { cn } from '@/src/lib';
 
@@ -16,7 +23,7 @@ const frameworks = [
     description:
       'Best choice for a single page application. Fast dev server, instant HMR and optimized builds out of the box.',
     href: '/docs/installation/vite',
-    logo: 'https://cdn.simpleicons.org/vite',
+    icon: ViteIcon,
     name: 'Vite',
     short: 'Single page application',
     site: 'https://vite.dev'
@@ -25,64 +32,53 @@ const frameworks = [
     description:
       'Best choice for an application with server-side rendering. Reactuse hooks are SSR-friendly and work without extra setup.',
     href: '/docs/installation/nextjs',
-    logo: 'https://cdn.simpleicons.org/nextdotjs',
+    icon: NextjsIcon,
     name: 'Next.js',
     short: 'Server-side rendering',
     site: 'https://nextjs.org'
   },
   {
     description:
-      'Full-featured routing framework for React. Use reactuse hooks in loaders, actions and route components.',
-    href: '/docs/installation/react-router',
-    logo: 'https://cdn.simpleicons.org/reactrouter',
-    name: 'React Router',
-    short: 'Declarative routing',
-    site: 'https://reactrouter.com'
-  },
-  {
-    description:
-      'Content-driven sites with React islands. Use reactuse hooks in interactive Astro components without extra setup.',
-    href: '/docs/installation/astro',
-    logo: 'https://cdn.simpleicons.org/astro',
-    name: 'Astro',
-    short: 'Content-driven sites',
-    site: 'https://astro.build'
+      'Full-stack React framework powered by TanStack Router. SSR, streaming and server functions with full type safety.',
+    href: '/docs/installation/tanstack',
+    icon: TanStackIcon,
+    name: 'TanStack Start',
+    short: 'Full-stack framework',
+    site: 'https://tanstack.com/start'
   },
   {
     description:
       'Fully type-safe router with built-in caching and first-class search params. Pairs perfectly with reactuse hooks.',
     href: '/docs/installation/tanstack-router',
-    logo: 'https://cdn.simpleicons.org/tanstack',
+    icon: TanStackIcon,
     name: 'TanStack Router',
     short: 'Type-safe routing',
     site: 'https://tanstack.com/router'
   },
   {
     description:
-      'Full-stack React framework powered by TanStack Router. SSR, streaming and server functions with full type safety.',
-    href: '/docs/installation/tanstack',
-    logo: 'https://cdn.simpleicons.org/tanstack',
-    name: 'TanStack Start',
-    short: 'Full-stack framework',
-    site: 'https://tanstack.com/start'
+      'Content-driven sites with React islands. Use reactuse hooks in interactive Astro components without extra setup.',
+    href: '/docs/installation/astro',
+    icon: AstroIcon,
+    name: 'Astro',
+    short: 'Content-driven sites',
+    site: 'https://astro.build'
+  },
+  {
+    description:
+      'Full-featured routing framework for React. Use reactuse hooks in loaders, actions and route components.',
+    href: '/docs/installation/react-router',
+    icon: ReactRouterIcon,
+    name: 'React Router',
+    short: 'Declarative routing',
+    site: 'https://reactrouter.com'
   }
 ];
-
-const getMask = (logo: string) => ({
-  backgroundColor: 'currentColor',
-  maskImage: `url(${logo})`,
-  WebkitMaskImage: `url(${logo})`,
-  maskRepeat: 'no-repeat',
-  WebkitMaskRepeat: 'no-repeat',
-  maskSize: 'contain',
-  WebkitMaskSize: 'contain',
-  maskPosition: 'center',
-  WebkitMaskPosition: 'center'
-});
 
 export const LandingGettingStarted = () => {
   const [activeFrameworkIndex, setActiveFrameworkIndex] = useState(0);
   const activeFramework = frameworks[activeFrameworkIndex];
+  const ActiveFrameworkIcon = activeFramework.icon;
 
   const interval = useInterval(() => {
     setActiveFrameworkIndex((current) => (current + 1) % frameworks.length);
@@ -154,10 +150,10 @@ export const LandingGettingStarted = () => {
                 rel='noreferrer'
                 target='_blank'
               >
-                <span
+                <ActiveFrameworkIcon
                   aria-hidden='true'
-                  className='text-foreground block size-16'
-                  style={getMask(activeFramework.logo)}
+                  className='text-foreground size-16'
+                  fill='currentColor'
                 />
               </Link>
 
@@ -220,6 +216,7 @@ export const LandingGettingStarted = () => {
           <div className='flex flex-col gap-3'>
             {frameworks.map((framework, index) => {
               const isActive = activeFrameworkIndex === index;
+              const FrameworkIcon = framework.icon;
 
               return (
                 <div
@@ -234,10 +231,10 @@ export const LandingGettingStarted = () => {
                     type='button'
                     onClick={() => setActiveFrameworkIndex(index)}
                   >
-                    <span
+                    <FrameworkIcon
                       aria-hidden='true'
-                      className='text-foreground block size-8 shrink-0'
-                      style={getMask(framework.logo)}
+                      className='text-foreground size-8 shrink-0'
+                      fill='currentColor'
                     />
                     <span className='min-w-0 flex-1'>
                       <span className='text-foreground block text-base font-medium'>
@@ -250,7 +247,7 @@ export const LandingGettingStarted = () => {
                   </button>
                   <Link
                     className={cn(
-                      'shrink-0 rounded-full p-2 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 hover:bg-background',
+                      'hover:bg-background shrink-0 rounded-full p-2 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5',
                       isActive ? 'text-foreground' : 'text-muted-foreground'
                     )}
                     aria-label={`Open ${framework.name} installation`}

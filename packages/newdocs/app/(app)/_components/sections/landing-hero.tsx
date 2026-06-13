@@ -2,29 +2,24 @@ import { Button } from '@docs/ui/button';
 import { ArrowRight, Github } from 'lucide-react';
 import Link from 'next/link';
 
+import {
+  AstroIcon,
+  NextjsIcon,
+  ReactRouterIcon,
+  TanStackIcon,
+  ViteIcon
+} from '@/src/components/icons';
 import { LINKS } from '@/src/constants';
 
 import { LandingBackdrop } from './landing-backdrop';
 
 const FRAMEWORKS = [
-  { logo: 'https://cdn.simpleicons.org/nextdotjs', name: 'Next.js' },
-  { logo: 'https://cdn.simpleicons.org/vite', name: 'Vite' },
-  { logo: 'https://cdn.simpleicons.org/reactrouter', name: 'React Router' },
-  { logo: 'https://cdn.simpleicons.org/tanstack', name: 'TanStack' },
-  { logo: 'https://cdn.simpleicons.org/astro', name: 'Astro' }
+  { icon: ViteIcon, name: 'Vite' },
+  { icon: NextjsIcon, name: 'Next.js' },
+  { icon: TanStackIcon, name: 'TanStack' },
+  { icon: AstroIcon, name: 'Astro' },
+  { icon: ReactRouterIcon, name: 'React Router' }
 ];
-
-const LOGO_MASK = (logo: string) => ({
-  backgroundColor: 'currentColor',
-  maskImage: `url(${logo})`,
-  WebkitMaskImage: `url(${logo})`,
-  maskRepeat: 'no-repeat',
-  WebkitMaskRepeat: 'no-repeat',
-  maskSize: 'contain',
-  WebkitMaskSize: 'contain',
-  maskPosition: 'center',
-  WebkitMaskPosition: 'center'
-});
 
 interface LandingHeroProps {
   hooksCount: string;
@@ -125,16 +120,23 @@ export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
             </span>
           </p>
           <div className='bg-background mt-3 flex w-fit flex-wrap items-center gap-x-6 gap-y-3 rounded-full px-3 py-2.5'>
-            {FRAMEWORKS.map((framework) => (
-              <span key={framework.name} className='text-muted-foreground flex items-center gap-2'>
+            {FRAMEWORKS.map((framework) => {
+              const FrameworkIcon = framework.icon;
+
+              return (
                 <span
-                  aria-hidden='true'
-                  className='block size-5 shrink-0'
-                  style={LOGO_MASK(framework.logo)}
-                />
-                <span className='text-sm font-medium'>{framework.name}</span>
-              </span>
-            ))}
+                  key={framework.name}
+                  className='text-muted-foreground flex items-center gap-2'
+                >
+                  <FrameworkIcon
+                    aria-hidden='true'
+                    className='size-5 shrink-0'
+                    fill='currentColor'
+                  />
+                  <span className='text-sm font-medium'>{framework.name}</span>
+                </span>
+              );
+            })}
           </div>
         </div>
       </div>
