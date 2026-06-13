@@ -41,7 +41,7 @@ export const LandingAdvantages = (props: LandingAdvantagesProps) => {
   const advantages = getAdvantages(props);
 
   return (
-    <section className='border-border border-t'>
+    <section>
       <div className='container mx-auto px-6 py-12 md:py-24'>
         <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
           Why reactuse?

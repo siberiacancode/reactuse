@@ -12,6 +12,7 @@ import {
   useDropZone,
   useField,
   useFileDialog,
+  useInterval,
   useLongPress,
   useMask,
   useMeasure,
@@ -426,7 +427,6 @@ const detectCountry = (rawValue: string): Country | undefined =>
   SORTED_COUNTRIES.find((country) => rawValue.startsWith(country.code));
 
 const MaskDemo = () => {
-  const name = useField('');
   const cvv = useField('');
 
   const phoneMask = useMask(DEFAULT_MASK, {
@@ -450,12 +450,6 @@ const MaskDemo = () => {
         <h3 className='text-foreground text-base font-semibold'>Checkout</h3>
         <p className='text-muted-foreground text-xs'>Enter your details to pay $49.00.</p>
       </div>
-
-      <div className='flex flex-col gap-1.5'>
-        <Label>Full name</Label>
-        <Input placeholder='John Carter' {...name.register()} />
-      </div>
-
       <div className='flex flex-col gap-1.5'>
         <Label>Phone number</Label>
         <div className='relative'>
@@ -471,7 +465,6 @@ const MaskDemo = () => {
             {...phoneMask.register()}
           />
         </div>
-        {country && <span className='text-muted-foreground px-1 text-[10px]'>{country.name}</span>}
       </div>
 
       <div className='flex flex-col gap-2'>
@@ -581,6 +574,56 @@ const MergedRefDemo = () => {
           </div>
         )}
       </div>
+    </div>
+  );
+};
+
+/* ── useInterval ── */
+
+const GREETINGS = [
+  'Hello',
+  'Привет',
+  'Hola',
+  'Bonjour',
+  'こんにちは',
+  '你好',
+  'Ciao',
+  'Olá',
+  'Hallo',
+  'Salam'
+];
+
+const GREETING_INTERVAL = 3000;
+
+const IntervalDemo = () => {
+  const [index, setIndex] = useState(0);
+
+  useInterval(() => {
+    setIndex((current) => (current + 1) % GREETINGS.length);
+  }, GREETING_INTERVAL);
+
+  return (
+    <div className='flex w-full flex-col items-center gap-5'>
+      <div key={index} className='animate-in fade-in slide-in-from-bottom-2 duration-500'>
+        <span className='text-foreground text-5xl font-bold tracking-tight'>
+          {GREETINGS[index]}
+        </span>
+      </div>
+
+      <div className='bg-muted h-1 w-32 overflow-hidden rounded-full'>
+        <div
+          key={index}
+          className='bg-foreground h-full origin-left'
+          style={{ animation: `landing-bento-interval-progress ${GREETING_INTERVAL}ms linear` }}
+        />
+      </div>
+
+      <style>{`
+        @keyframes landing-bento-interval-progress {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+      `}</style>
     </div>
   );
 };
@@ -1120,6 +1163,9 @@ export const LandingBentoHooks = ({ hooks }: LandingBentoHooksProps) => (
               <DropdownDemo />
             </Cell>
             <Cell>
+              <IntervalDemo />
+            </Cell>
+            <Cell>
               <BooleanDemo />
             </Cell>
           </div>
@@ -1141,7 +1187,7 @@ export const LandingBentoHooks = ({ hooks }: LandingBentoHooksProps) => (
           </div>
         </div>
 
-        <div className='from-background pointer-events-none absolute inset-x-0 bottom-0 h-80 bg-gradient-to-t to-transparent' />
+        <div className='from-background pointer-events-none absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t to-transparent' />
       </motion.div>
     </div>
   </section>
