@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi localStorage https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage\r",
+        "source": " * @browserapi localStorage https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that manages local storage value",
   "category": "State",
   "lastModified": 1754977987000,
-  "examples": ["const { value, set, remove } = useLocalStorage('key', 'value');"],
+  "examples": [
+    "const { value, set, remove } = useLocalStorage('key', 'value');"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {string} key The key of the storage\r",
+          "source": " * @param {string} key The key of the storage",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": " ",
             "description": "The key of the storage",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -95,7 +97,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {UseStorageInitialValue<Value>} [initialValue] The initial value of the storage\r",
+          "source": " * @param {UseStorageInitialValue<Value>} [initialValue] The initial value of the storage",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,7 +110,7 @@
             "postType": " ",
             "description": "The initial value of the storage",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -123,7 +125,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {UseStorageOptions<Value>} [options] The options of the storage\r",
+          "source": " * @param {UseStorageOptions<Value>} [options] The options of the storage",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -136,12 +138,12 @@
             "postType": " ",
             "description": "The options of the storage",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 12,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -154,7 +156,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -162,7 +164,9 @@
   ],
   "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { UseStorageInitialValue, UseStorageOptions } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useStorage/useStorage'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span></code></pre>",
   "dependencies": {
-    "hooks": ["useStorage"],
+    "hooks": [
+      "useStorage"
+    ],
     "utils": [],
     "packages": []
   },

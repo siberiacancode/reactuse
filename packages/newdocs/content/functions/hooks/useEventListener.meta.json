@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {HookTarget} target The target element to attach the event listener to\r",
+          "source": " * @param {HookTarget} target The target element to attach the event listener to",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The target element to attach the event listener to",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {Event | Event[]} event An array of event types to listen for\r",
+          "source": " * @param {Event | Event[]} event An array of event types to listen for",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,7 +93,7 @@
             "postType": " ",
             "description": "An array of event types to listen for",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -108,7 +108,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} handler The event handler function\r",
+          "source": " * @param {(this: Target, event: HTMLElementEventMap[Event]) => void} handler The event handler function",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -121,7 +121,7 @@
             "postType": " ",
             "description": "The event handler function",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -136,7 +136,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {UseEventListenerOptions} [options] Options for the event listener\r",
+          "source": " * @param {UseEventListenerOptions} [options] Options for the event listener",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -149,7 +149,7 @@
             "postType": " ",
             "description": "Options for the event listener",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -164,7 +164,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @returns {void}\r",
+          "source": " * @returns {void}",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -177,12 +177,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 14,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -195,7 +195,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -210,7 +210,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -223,7 +223,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -238,7 +238,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {Event | Event[]} event An array of event types to listen for\r",
+          "source": " * @param {Event | Event[]} event An array of event types to listen for",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -251,7 +251,7 @@
             "postType": " ",
             "description": "An array of event types to listen for",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -266,7 +266,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @param {(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void} handler The event handler function\r",
+          "source": " * @param {(this: Target, event: HTMLElementEventMap[Event] | MediaQueryListEventMap[Event]) => void} handler The event handler function",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -279,7 +279,7 @@
             "postType": " ",
             "description": "The event handler function",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -294,7 +294,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @param {UseEventListenerOptions} [options] Options for the event listener\r",
+          "source": " * @param {UseEventListenerOptions} [options] Options for the event listener",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -307,7 +307,7 @@
             "postType": " ",
             "description": "Options for the event listener",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -322,7 +322,7 @@
       "source": [
         {
           "number": 24,
-          "source": " * @returns {UseEventListenerReturn<Target>} A reference to the target element\r",
+          "source": " * @returns {UseEventListenerReturn<Target>} A reference to the target element",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -335,12 +335,12 @@
             "postType": " ",
             "description": "reference to the target element",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 25,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -353,7 +353,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -361,8 +361,12 @@
   ],
   "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { HookTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { StateRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListenerOptions</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">} </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> AddEventListenerOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListenerReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> keyof</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> WindowEventMap</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> keyof</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> WindowEventMap</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    listener</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">this</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Window</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> WindowEventMap</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListenerOptions</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> keyof</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> DocumentEventMap</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> keyof</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> DocumentEventMap</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    listener</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">this</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Document</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> DocumentEventMap</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListenerOptions</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> keyof</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLElementEventMap</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> keyof</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLElementEventMap</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    listener</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">this</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLElementEventMap</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListenerOptions</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> keyof</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLElementEventMap</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> keyof</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLElementEventMap</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    listener</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">this</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLElementEventMap</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListenerOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListenerReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  &#x3C;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    Target extends </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    Event extends keyof </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">MediaQueryListEventMap</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> keyof MediaQueryListEventMap</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  ></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    listener</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">this</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MediaQueryListEventMap</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Event</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListenerOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseEventListenerReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span></code></pre>",
   "dependencies": {
-    "hooks": ["useRefState"],
-    "utils": ["isTarget"],
+    "hooks": [
+      "useRefState"
+    ],
+    "utils": [
+      "isTarget"
+    ],
     "packages": []
   },
   "contributors": [

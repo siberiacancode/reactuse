@@ -44,6 +44,7 @@ import {
   UserIcon,
   XIcon
 } from 'lucide-react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 
@@ -76,7 +77,6 @@ import {
   TabsTrigger,
   Textarea
 } from '@/src/components/ui';
-import { useDocsMetadata } from '@/app/_contexts/docs-metadata';
 import { cn } from '@/utils/lib';
 
 const Cell = ({ children, className }: { children: ReactNode; className?: string }) => (
@@ -103,8 +103,8 @@ const CounterDemo = () => {
       <span className='text-muted-foreground text-sm font-medium tracking-widest'>GUESTS</span>
       <div className='flex items-center gap-6'>
         <Button
-          className={cn(counter.value <= 1 && 'opacity-25')}
-          size='icon'
+          className={cn('rounded-full', counter.value <= 1 && 'opacity-25')}
+          size='icon-lg'
           variant='ghost'
           onClick={() => counter.dec()}
         >
@@ -112,8 +112,8 @@ const CounterDemo = () => {
         </Button>
         <span className='w-24 text-center text-7xl font-light tabular-nums'>{counter.value}</span>
         <Button
-          className={cn(counter.value >= 10 && 'opacity-25')}
-          size='icon'
+          className={cn('rounded-full', counter.value >= 10 && 'opacity-25')}
+          size='icon-lg'
           variant='ghost'
           onClick={() => counter.inc()}
         >
@@ -137,8 +137,8 @@ const BooleanDemo = () => {
         <Input className='pr-10' defaultValue='reactuse2026' type={visible ? 'text' : 'password'} />
         <Button
           aria-label={visible ? 'Hide password' : 'Show password'}
-          className='absolute top-1/2 right-1 -translate-y-1/2'
-          size='icon-sm'
+          className='absolute top-1/2 right-1 -translate-y-1/2 rounded-full'
+          size='icon-lg'
           variant='ghost'
           onClick={() => toggle()}
         >
@@ -196,7 +196,10 @@ const ColorSchemeDemo = () => {
 const DropdownDemo = () => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
-      <button className='flex cursor-pointer items-center gap-3' type='button'>
+      <button
+        className='border-border bg-card hover:bg-accent flex w-full cursor-pointer items-center gap-3 rounded-full border p-2 pr-4 text-left transition-colors'
+        type='button'
+      >
         <div className='relative shrink-0'>
           <Avatar className='size-10'>
             <AvatarFallback className='bg-gradient-to-br from-neutral-700 to-neutral-900 text-sm font-semibold text-white'>
@@ -211,7 +214,7 @@ const DropdownDemo = () => (
         </div>
       </button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent align='start' className='w-56'>
+    <DropdownMenuContent align='start' className='min-w-64 rounded-2xl'>
       <DropdownMenuItem>
         <UserIcon />
         Profile
@@ -270,11 +273,11 @@ const CopyDemo = () => {
         </TabsList>
 
         <div className='relative flex items-center'>
-          <Input readOnly className='h-11 rounded-full pr-20 pl-4' value={COMMANDS[manager]} />
+          <Input readOnly className='h-12 rounded-full pr-24 pl-4' value={COMMANDS[manager]} />
           <Button
-            className='absolute right-1.5 h-8'
+            className='absolute right-1.5 h-9 rounded-full px-4'
             disabled={copied}
-            size='sm'
+            size='lg'
             onClick={() => copy(COMMANDS[manager])}
           >
             {copied ? <CheckIcon className='size-4' /> : <CopyIcon className='size-4' />}
@@ -389,7 +392,7 @@ const FieldDemo = () => {
       </div>
 
       <div className='flex justify-end'>
-        <Button size='sm' type='submit'>
+        <Button className='rounded-full px-5' size='lg' type='submit'>
           Save changes
         </Button>
       </div>
@@ -497,7 +500,7 @@ const MaskDemo = () => {
         </div>
       </div>
 
-      <Button size='sm' type='button'>
+      <Button className='rounded-full px-5' size='lg' type='button'>
         Pay $49.00
       </Button>
     </div>
@@ -535,7 +538,7 @@ const MergedRefDemo = () => {
         <button
           aria-expanded={menu.opened}
           aria-haspopup='listbox'
-          className='border-border bg-card hover:bg-accent flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border px-3 py-2 transition-colors'
+          className='border-border bg-card hover:bg-accent flex w-full cursor-pointer items-center justify-between gap-2 rounded-full border px-3 py-2.5 transition-colors'
           type='button'
           onClick={() => menu.toggle()}
         >
@@ -562,7 +565,7 @@ const MergedRefDemo = () => {
             {FRAMEWORKS.map((framework) => (
               <button
                 key={framework.value}
-                className='hover:bg-accent hover:text-accent-foreground flex w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm transition-colors outline-none'
+                className='hover:bg-accent hover:text-accent-foreground flex w-full cursor-pointer items-center gap-2 rounded-full px-2.5 py-1.5 text-sm transition-colors outline-none'
                 type='button'
                 onClick={() => onSelect(framework.value)}
               >
@@ -612,13 +615,13 @@ const CssVarDemo = () => {
           {ACCENT_COLORS.map((color) => (
             <button
               key={color.value}
-              aria-label={color.label}
-              className='border-border size-5 cursor-pointer rounded-full border transition-transform hover:scale-110'
               style={{
                 backgroundColor: color.value,
                 outline: primary.value === color.value ? `2px solid ${color.value}` : 'none',
                 outlineOffset: '2px'
               }}
+              aria-label={color.label}
+              className='border-border size-5 cursor-pointer rounded-full border transition-transform hover:scale-110'
               type='button'
               onClick={() => primary.set(color.value)}
             />
@@ -633,7 +636,7 @@ const CssVarDemo = () => {
             <button
               key={option.value}
               className={cn(
-                'rounded-md px-2.5 py-1 text-xs font-medium transition-colors',
+                'rounded-full px-2.5 py-1 text-xs font-medium transition-colors',
                 radius.value === option.value ? 'bg-background shadow-sm' : 'text-muted-foreground'
               )}
               type='button'
@@ -646,7 +649,7 @@ const CssVarDemo = () => {
       </div>
 
       <button
-        className='border-border h-10 w-full border text-sm font-medium text-neutral-900 transition-all'
+        className='border-border h-11 w-full rounded-full border text-sm font-medium text-neutral-900 transition-all'
         style={{ backgroundColor: 'var(--demo-primary)', borderRadius: 'var(--demo-radius)' }}
         type='button'
       >
@@ -766,8 +769,8 @@ const DropZoneDemo = () => {
           </div>
           <Button
             aria-label='Remove'
-            className='absolute top-2 right-2'
-            size='icon'
+            className='absolute top-2 right-2 rounded-full'
+            size='icon-lg'
             variant='secondary'
             onClick={() => setFile(null)}
           >
@@ -808,7 +811,7 @@ const createUsers = (page: number): TableUser[] =>
 const PaginationDemo = () => {
   const [users, setUsers] = useState<TableUser[]>(() => createUsers(1));
 
-  const { page, pageCount, isFirstPage, isLastPage, next, prev, setPage } = useOffsetPagination({
+  const { page, pageCount, isFirstPage, isLastPage, next, prev } = useOffsetPagination({
     total: TOTAL,
     initialPage: 1,
     initialPageSize: PAGE_SIZE,
@@ -857,14 +860,26 @@ const PaginationDemo = () => {
       </Table>
 
       <div className='flex items-center justify-between'>
-        <Button disabled={isFirstPage} size='sm' variant='ghost' onClick={prev}>
+        <Button
+          className='rounded-full px-4'
+          disabled={isFirstPage}
+          size='lg'
+          variant='ghost'
+          onClick={prev}
+        >
           <ChevronLeftIcon className='size-4' />
           Prev
         </Button>
         <span className='text-muted-foreground text-xs tabular-nums'>
           {page} / {pageCount}
         </span>
-        <Button disabled={isLastPage} size='sm' variant='ghost' onClick={next}>
+        <Button
+          className='rounded-full px-4'
+          disabled={isLastPage}
+          size='lg'
+          variant='ghost'
+          onClick={next}
+        >
           Next
           <ChevronRightIcon className='size-4' />
         </Button>
@@ -992,10 +1007,9 @@ const LongPressDemo = () => {
       <button
         ref={longPress.ref}
         className={cn(
-          'relative flex h-10 w-full items-center justify-center overflow-hidden rounded-full text-sm font-semibold transition-colors select-none',
+          'relative flex h-11 w-full items-center justify-center overflow-hidden rounded-full text-sm font-semibold transition-colors select-none',
           holding ? 'bg-muted text-muted-foreground' : 'bg-foreground text-background'
         )}
-        disabled={holding}
         type='button'
       >
         {holding ? (
@@ -1019,100 +1033,116 @@ const LongPressDemo = () => {
 
 /* ── Section ── */
 
-export const LandingBentoHooks = () => {
-  const { hooks } = useDocsMetadata();
+export interface LandingBentoHook {
+  name: string;
+}
 
-  return (
-    <section>
-      <div className='mx-auto max-w-6xl px-6 py-24 md:py-32'>
-        <div className='flex max-w-3xl flex-col gap-6'>
-          <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
-            Explore hooks
-          </h2>
-          <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
-            Everything you keep rebuilding on every project — {hooks.length}+ production-ready
-            hooks, already typed and tested.
-          </p>
-          <div className='flex flex-wrap items-center gap-2'>
-            <Button asChild className='rounded-full px-7 py-6 font-mono text-lg font-semibold'>
-              <Link href='/functions/hooks/useActiveElement'>
-                <span>View all</span>
-                <ArrowRight className='size-4' />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
-              variant='secondary'
-            >
-              <Link href='/functions'>
-                <span>Browse all functions</span>
-                <ArrowRight className='size-4' />
-              </Link>
-            </Button>
+interface LandingBentoHooksProps {
+  hooks: LandingBentoHook[];
+}
+
+export const LandingBentoHooks = ({ hooks }: LandingBentoHooksProps) => (
+  <section>
+    <div className='container mx-auto px-6 py-24 md:py-32'>
+      <motion.div
+        className='flex max-w-3xl flex-col gap-6'
+        initial={{ opacity: 0, y: -28 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.45 }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
+        <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
+          Explore hooks
+        </h2>
+        <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
+          Everything you keep rebuilding on every project — {hooks.length}+ production-ready hooks,
+          already typed and tested.
+        </p>
+        <div className='flex flex-wrap items-center gap-2'>
+          <Button asChild className='rounded-full px-7 py-6 font-mono text-lg font-semibold'>
+            <Link href='/functions/hooks/useActiveElement'>
+              <span>View all</span>
+              <ArrowRight className='size-4' />
+            </Link>
+          </Button>
+          <Button
+            asChild
+            className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
+            variant='secondary'
+          >
+            <Link href='/functions'>
+              <span>Browse all functions</span>
+              <ArrowRight className='size-4' />
+            </Link>
+          </Button>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className='relative mt-14 max-h-[1100px] overflow-hidden'
+        initial={{ opacity: 0, y: -32 }}
+        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.2 }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+          {/* Column 1 */}
+          <div className='flex flex-col gap-4'>
+            <Cell>
+              <FieldDemo />
+            </Cell>
+            <Cell>
+              <CounterDemo />
+            </Cell>
+            <Cell>
+              <CssVarDemo />
+            </Cell>
+            <Cell>
+              <ColorSchemeDemo />
+            </Cell>
+            <Cell>
+              <OnlineDemo />
+            </Cell>
+          </div>
+
+          {/* Column 2 */}
+          <div className='flex flex-col gap-4'>
+            <Cell>
+              <MaskDemo />
+            </Cell>
+            <Cell className='p-3'>
+              <DropZoneDemo />
+            </Cell>
+            <Cell>
+              <CopyDemo />
+            </Cell>
+            <Cell>
+              <DropdownDemo />
+            </Cell>
+            <Cell>
+              <BooleanDemo />
+            </Cell>
+          </div>
+
+          {/* Column 3 */}
+          <div className='flex flex-col gap-4'>
+            <Cell>
+              <LongPressDemo />
+            </Cell>
+            <Cell>
+              <PaginationDemo />
+            </Cell>
+            <Cell className='p-3'>
+              <QueryDemo />
+            </Cell>
+            <Cell>
+              <MergedRefDemo />
+            </Cell>
           </div>
         </div>
 
-        <div className='relative mt-14 max-h-[1100px] overflow-hidden'>
-          <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-            {/* Column 1 */}
-            <div className='flex flex-col gap-4'>
-              <Cell>
-                <FieldDemo />
-              </Cell>
-              <Cell>
-                <CounterDemo />
-              </Cell>
-              <Cell>
-                <CssVarDemo />
-              </Cell>
-              <Cell>
-                <ColorSchemeDemo />
-              </Cell>
-              <Cell>
-                <OnlineDemo />
-              </Cell>
-            </div>
-
-            {/* Column 2 */}
-            <div className='flex flex-col gap-4'>
-              <Cell>
-                <MaskDemo />
-              </Cell>
-              <Cell className='p-3'>
-                <DropZoneDemo />
-              </Cell>
-              <Cell>
-                <CopyDemo />
-              </Cell>
-              <Cell>
-                <DropdownDemo />
-              </Cell>
-              <Cell>
-                <BooleanDemo />
-              </Cell>
-            </div>
-
-            {/* Column 3 */}
-            <div className='flex flex-col gap-4'>
-              <Cell>
-                <LongPressDemo />
-              </Cell>
-              <Cell>
-                <PaginationDemo />
-              </Cell>
-              <Cell className='p-3'>
-                <QueryDemo />
-              </Cell>
-              <Cell>
-                <MergedRefDemo />
-              </Cell>
-            </div>
-          </div>
-
-          <div className='from-background pointer-events-none absolute inset-x-0 bottom-0 h-80 bg-gradient-to-t to-transparent' />
-        </div>
-      </div>
-    </section>
-  );
-};
+        <div className='from-background pointer-events-none absolute inset-x-0 bottom-0 h-80 bg-gradient-to-t to-transparent' />
+      </motion.div>
+    </div>
+  </section>
+);

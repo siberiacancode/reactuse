@@ -10,7 +10,9 @@
   "description": "Hook that can be so useless",
   "category": "Humor",
   "lastModified": 1754977987000,
-  "examples": ["const value = useLess(state);"],
+  "examples": [
+    "const value = useLess(state);"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -22,7 +24,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {Value} [value] The value to be returned\r",
+          "source": " * @param {Value} [value] The value to be returned",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -35,7 +37,7 @@
             "postType": " ",
             "description": "The value to be returned",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -50,7 +52,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {Value} The value passed to the hook\r",
+          "source": " * @returns {Value} The value passed to the hook",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -63,12 +65,12 @@
             "postType": " ",
             "description": "value passed to the hook",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 11,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -81,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {(value: FileList | null) => void} callback The callback to execute when a file is selected\r",
+          "source": " * @param {(value: FileList | null) => void} callback The callback to execute when a file is selected",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "The callback to execute when a file is selected",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {boolean} [options.multiple=true] Whether multiple files can be selected\r",
+          "source": " * @param {boolean} [options.multiple=true] Whether multiple files can be selected",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,7 +93,7 @@
             "postType": " ",
             "description": "Whether multiple files can be selected",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -109,7 +109,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {string} [options.accept='*'] The accepted file types\r",
+          "source": " * @param {string} [options.accept='*'] The accepted file types",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -122,7 +122,7 @@
             "postType": " ",
             "description": "The accepted file types",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -138,7 +138,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean} [options.reset=false] Whether the input should be reset when the callback is called\r",
+          "source": " * @param {boolean} [options.reset=false] Whether the input should be reset when the callback is called",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -151,7 +151,7 @@
             "postType": " ",
             "description": "Whether the input should be reset when the callback is called",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -167,7 +167,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {string} [options.capture] The capture value\r",
+          "source": " * @param {string} [options.capture] The capture value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -180,7 +180,7 @@
             "postType": " ",
             "description": "The capture value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -195,7 +195,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @returns {UseFileDialogReturn} An object containing the selected files\r",
+          "source": " * @returns {UseFileDialogReturn} An object containing the selected files",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -208,12 +208,12 @@
             "postType": " ",
             "description": "object containing the selected files",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 13,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -226,7 +226,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -241,7 +241,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -254,7 +254,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -269,7 +269,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @param {boolean} [options.multiple=true] Whether multiple files can be selected\r",
+          "source": " * @param {boolean} [options.multiple=true] Whether multiple files can be selected",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -282,7 +282,7 @@
             "postType": " ",
             "description": "Whether multiple files can be selected",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -298,7 +298,7 @@
       "source": [
         {
           "number": 19,
-          "source": " * @param {string} [options.accept='*'] The accepted file types\r",
+          "source": " * @param {string} [options.accept='*'] The accepted file types",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -311,7 +311,7 @@
             "postType": " ",
             "description": "The accepted file types",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -327,7 +327,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @param {boolean} [options.reset=false] Whether the input should be reset when the callback is called\r",
+          "source": " * @param {boolean} [options.reset=false] Whether the input should be reset when the callback is called",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -340,7 +340,7 @@
             "postType": " ",
             "description": "Whether the input should be reset when the callback is called",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -356,7 +356,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {string} [options.capture] The capture value\r",
+          "source": " * @param {string} [options.capture] The capture value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -369,7 +369,7 @@
             "postType": " ",
             "description": "The capture value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -384,7 +384,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @returns {UseFileDialogReturn} An object containing the selected files\r",
+          "source": " * @returns {UseFileDialogReturn} An object containing the selected files",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -397,12 +397,12 @@
             "postType": " ",
             "description": "object containing the selected files",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 23,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -415,7 +415,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

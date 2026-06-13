@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi PerformanceObserver https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver\r",
+        "source": " * @browserapi PerformanceObserver https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that allows you to observe performance entries",
   "category": "Sensors",
   "lastModified": 1773841927000,
-  "examples": ["const { supported, entries, start, stop } = usePerformanceObserver();"],
+  "examples": [
+    "const { supported, entries, start, stop } = usePerformanceObserver();"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {UsePerformanceObserverOptions} options The options for the performance observer\r",
+          "source": " * @param {UsePerformanceObserverOptions} options The options for the performance observer",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": " ",
             "description": "The options for the performance observer",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -95,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {PerformanceObserverCallback} callback The function to handle performance entries\r",
+          "source": " * @param {PerformanceObserverCallback} callback The function to handle performance entries",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,7 +110,7 @@
             "postType": " ",
             "description": "The function to handle performance entries",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -123,7 +125,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {object} An object containing the observer's support status and methods to start and stop the observer\r",
+          "source": " * @returns {object} An object containing the observer's support status and methods to start and stop the observer",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -136,12 +138,12 @@
             "postType": " ",
             "description": "object containing the observer's support status and methods to start and stop the observer",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 11,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -154,7 +156,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

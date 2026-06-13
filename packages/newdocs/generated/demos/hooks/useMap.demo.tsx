@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useMap } from '@siberiacancode/reactuse';
 import { MinusIcon, PlusIcon } from 'lucide-react';

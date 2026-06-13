@@ -9,7 +9,9 @@
   "description": "Hook that defines the logic to force rerender a component",
   "category": "Debug",
   "lastModified": 1754977987000,
-  "examples": ["const rerender = useRerender();"],
+  "examples": [
+    "const rerender = useRerender();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @returns {UseRerenderReturn} The rerender function\r",
+          "source": " * @returns {UseRerenderReturn} The rerender function",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,12 +36,12 @@
             "postType": " ",
             "description": "rerender function",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 7,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -52,7 +54,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

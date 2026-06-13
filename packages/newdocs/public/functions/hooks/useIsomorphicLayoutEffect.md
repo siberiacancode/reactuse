@@ -47,7 +47,7 @@ import metadata from './useIsomorphicLayoutEffect.meta.json';
 ## Usage
 
 ```tsx
-useIsomorphicLayoutEffect(() => console.log('effect'), []);
+useIsomorphicLayoutEffect(() => console.log('effect'), [])
 ```
 
 ## Contributors

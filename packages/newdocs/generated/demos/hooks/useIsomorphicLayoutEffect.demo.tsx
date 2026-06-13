@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useIsomorphicLayoutEffect } from '@siberiacancode/reactuse';
 

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useMediaControls } from '@siberiacancode/reactuse';
 import {

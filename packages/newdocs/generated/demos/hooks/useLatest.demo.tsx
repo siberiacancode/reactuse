@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useLatest } from '@siberiacancode/reactuse';
 import { TrendingUpIcon, ZapIcon } from 'lucide-react';

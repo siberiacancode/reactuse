@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi window.devicePixelRatio https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio\r",
+        "source": " * @browserapi window.devicePixelRatio https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that returns the device's pixel ratio",
   "category": "Utilities",
   "lastModified": 1779458191000,
-  "examples": ["const { supported, value } = useDevicePixelRatio();"],
+  "examples": [
+    "const { supported, value } = useDevicePixelRatio();"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(value: number) => void} [callback] The callback to execute when the device pixel ratio changes\r",
+          "source": " * @param {(value: number) => void} [callback] The callback to execute when the device pixel ratio changes",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": " ",
             "description": "The callback to execute when the device pixel ratio changes",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -95,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseDevicePixelRatioReturn} The ratio and supported flag\r",
+          "source": " * @returns {UseDevicePixelRatioReturn} The ratio and supported flag",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,12 +110,12 @@
             "postType": " ",
             "description": "ratio and supported flag",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 10,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -126,7 +128,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

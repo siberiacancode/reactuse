@@ -47,9 +47,7 @@ import metadata from './useEventSource.meta.json';
 ## Usage
 
 ```tsx
-const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', [
-  'message'
-]);
+const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', ['message']);
 ```
 
 ## Type Declarations

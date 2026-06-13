@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia\r",
+        "source": " * @browserapi mediaDevices.getDisplayMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -70,7 +70,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -83,7 +83,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -98,7 +98,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {HookTarget} target The target video element to display the media stream\r",
+          "source": " * @param {HookTarget} target The target video element to display the media stream",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -111,7 +111,7 @@
             "postType": " ",
             "description": "The target video element to display the media stream",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -126,7 +126,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing\r",
+          "source": " * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -139,7 +139,7 @@
             "postType": " ",
             "description": "Whether to enable audio sharing",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -154,7 +154,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {boolean} [options.immediately=false] Whether to start immediately\r",
+          "source": " * @param {boolean} [options.immediately=false] Whether to start immediately",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -167,7 +167,7 @@
             "postType": " ",
             "description": "Whether to start immediately",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -183,7 +183,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing\r",
+          "source": " * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -196,7 +196,7 @@
             "postType": " ",
             "description": "Whether to enable video sharing",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -211,7 +211,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @returns {UseDisplayMediaReturn} Object containing stream, sharing status and control methods\r",
+          "source": " * @returns {UseDisplayMediaReturn} Object containing stream, sharing status and control methods",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -224,12 +224,12 @@
             "postType": " ",
             "description": "containing stream, sharing status and control methods",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 14,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -242,7 +242,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -257,7 +257,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -270,7 +270,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -285,7 +285,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing\r",
+          "source": " * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -298,7 +298,7 @@
             "postType": " ",
             "description": "Whether to enable audio sharing",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -313,7 +313,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @param {boolean} [options.immediately=false] Whether to start immediately\r",
+          "source": " * @param {boolean} [options.immediately=false] Whether to start immediately",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -326,7 +326,7 @@
             "postType": " ",
             "description": "Whether to start immediately",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -342,7 +342,7 @@
       "source": [
         {
           "number": 22,
-          "source": " * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing\r",
+          "source": " * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -355,7 +355,7 @@
             "postType": " ",
             "description": "Whether to enable video sharing",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -370,7 +370,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @returns {UseDisplayMediaReturn & { ref: StateRef<HTMLVideoElement> }} Object containing stream, sharing status, control methods and ref\r",
+          "source": " * @returns {UseDisplayMediaReturn & { ref: StateRef<HTMLVideoElement> }} Object containing stream, sharing status, control methods and ref",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -383,12 +383,12 @@
             "postType": " ",
             "description": "containing stream, sharing status, control methods and ref",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 24,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -401,7 +401,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -409,8 +409,12 @@
   ],
   "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { HookTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { StateRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseDisplayMediaReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Whether screen sharing is currently active */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  sharing</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The media stream object */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  stream</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MediaStream</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> null</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Whether the display media API is supported */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  supported</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Start screen sharing */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  start</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Promise</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Stop screen sharing */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  stop</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseDisplayMediaOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Whether to enable audio sharing */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  audio</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MediaTrackConstraints</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Whether to start immediately */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  immediately</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Whether to enable video sharing */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  video</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MediaTrackConstraints</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseDisplayMedia</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseDisplayMediaOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseDisplayMediaReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLVideoElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseDisplayMediaOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseDisplayMediaReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span></code></pre>",
   "dependencies": {
-    "hooks": ["useRefState"],
-    "utils": ["isTarget"],
+    "hooks": [
+      "useRefState"
+    ],
+    "utils": [
+      "isTarget"
+    ],
     "packages": []
   },
   "contributors": [

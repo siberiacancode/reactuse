@@ -26,7 +26,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -39,7 +39,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -54,7 +54,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {string} [initialValue] The initial hash value if no hash exists\r",
+          "source": " * @param {string} [initialValue] The initial hash value if no hash exists",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -67,7 +67,7 @@
             "postType": " ",
             "description": "The initial hash value if no hash exists",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -82,7 +82,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {UseHashOptions} [options] Configuration options\r",
+          "source": " * @param {UseHashOptions} [options] Configuration options",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -95,7 +95,7 @@
             "postType": " ",
             "description": "Configuration options",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -110,7 +110,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {boolean} [options.enabled] The enabled state of the hook\r",
+          "source": " * @param {boolean} [options.enabled] The enabled state of the hook",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -123,7 +123,7 @@
             "postType": " ",
             "description": "The enabled state of the hook",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -138,7 +138,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {'initial' | 'replace'} [options.mode] The mode of hash setting\r",
+          "source": " * @param {'initial' | 'replace'} [options.mode] The mode of hash setting",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -151,7 +151,7 @@
             "postType": " ",
             "description": "The mode of hash setting",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -166,7 +166,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {(hash: string) => void} [options.onChange] Callback function called when hash changes\r",
+          "source": " * @param {(hash: string) => void} [options.onChange] Callback function called when hash changes",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -179,7 +179,7 @@
             "postType": " ",
             "description": "Callback function called when hash changes",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -194,7 +194,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value\r",
+          "source": " * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -207,12 +207,12 @@
             "postType": " ",
             "description": "array containing the hash value and a function to set the hash value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 13,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -225,7 +225,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -240,7 +240,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -253,7 +253,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -268,7 +268,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @param {string} [initialValue] The initial hash value if no hash exists\r",
+          "source": " * @param {string} [initialValue] The initial hash value if no hash exists",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -281,7 +281,7 @@
             "postType": " ",
             "description": "The initial hash value if no hash exists",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -296,7 +296,7 @@
       "source": [
         {
           "number": 19,
-          "source": " * @param {(hash: string) => void} [callback] Callback function called when hash changes\r",
+          "source": " * @param {(hash: string) => void} [callback] Callback function called when hash changes",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -309,7 +309,7 @@
             "postType": " ",
             "description": "Callback function called when hash changes",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -324,7 +324,7 @@
       "source": [
         {
           "number": 20,
-          "source": " * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value\r",
+          "source": " * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -337,12 +337,12 @@
             "postType": " ",
             "description": "array containing the hash value and a function to set the hash value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 21,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -355,7 +355,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -370,7 +370,7 @@
       "source": [
         {
           "number": 25,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -383,7 +383,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -398,7 +398,7 @@
       "source": [
         {
           "number": 26,
-          "source": " * @param {UseHashOptions} [options] Configuration options\r",
+          "source": " * @param {UseHashOptions} [options] Configuration options",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -411,7 +411,7 @@
             "postType": " ",
             "description": "Configuration options",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -426,7 +426,7 @@
       "source": [
         {
           "number": 27,
-          "source": " * @param {boolean} [options.enabled] The enabled state of the hook\r",
+          "source": " * @param {boolean} [options.enabled] The enabled state of the hook",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -439,7 +439,7 @@
             "postType": " ",
             "description": "The enabled state of the hook",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -454,7 +454,7 @@
       "source": [
         {
           "number": 28,
-          "source": " * @param {'initial' | 'replace'} [options.mode] The mode of hash setting\r",
+          "source": " * @param {'initial' | 'replace'} [options.mode] The mode of hash setting",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -467,7 +467,7 @@
             "postType": " ",
             "description": "The mode of hash setting",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -482,7 +482,7 @@
       "source": [
         {
           "number": 29,
-          "source": " * @param {(hash: string) => void} [options.onChange] Callback function called when hash changes\r",
+          "source": " * @param {(hash: string) => void} [options.onChange] Callback function called when hash changes",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -495,7 +495,7 @@
             "postType": " ",
             "description": "Callback function called when hash changes",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -510,7 +510,7 @@
       "source": [
         {
           "number": 30,
-          "source": " * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value\r",
+          "source": " * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -523,12 +523,12 @@
             "postType": " ",
             "description": "array containing the hash value and a function to set the hash value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 31,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -541,7 +541,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -556,7 +556,7 @@
       "source": [
         {
           "number": 35,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -569,7 +569,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -584,7 +584,7 @@
       "source": [
         {
           "number": 36,
-          "source": " * @param {(hash: string) => void} [callback] Callback function called when hash changes\r",
+          "source": " * @param {(hash: string) => void} [callback] Callback function called when hash changes",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -597,7 +597,7 @@
             "postType": " ",
             "description": "Callback function called when hash changes",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -612,7 +612,7 @@
       "source": [
         {
           "number": 37,
-          "source": " * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value\r",
+          "source": " * @returns {UseHashReturn} An array containing the hash value and a function to set the hash value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -625,12 +625,12 @@
             "postType": " ",
             "description": "array containing the hash value and a function to set the hash value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 38,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -643,7 +643,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

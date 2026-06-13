@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi navigator.language https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language\r",
+        "source": " * @browserapi navigator.language https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that returns the current browser language",
   "category": "User",
   "lastModified": 1754977987000,
-  "examples": ["const browserLanguage = useBrowserLanguage();"],
+  "examples": [
+    "const browserLanguage = useBrowserLanguage();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {string} The current browser language\r",
+          "source": " * @returns {string} The current browser language",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,12 +82,12 @@
             "postType": " ",
             "description": "current browser language",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -98,7 +100,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

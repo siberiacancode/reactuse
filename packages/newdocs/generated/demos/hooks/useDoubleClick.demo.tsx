@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useBoolean, useDoubleClick } from '@siberiacancode/reactuse';
 import { HandIcon, RotateCcwIcon, ZoomInIcon, ZoomOutIcon } from 'lucide-react';

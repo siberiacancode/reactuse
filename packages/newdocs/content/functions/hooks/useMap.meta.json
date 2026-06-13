@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {Value[]} [values] The initial array of the map\r",
+          "source": " * @param {Value[]} [values] The initial array of the map",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The initial array of the map",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {UseMapReturn<Key, Value>} An object containing the current map and functions to interact with the map\r",
+          "source": " * @returns {UseMapReturn<Key, Value>} An object containing the current map and functions to interact with the map",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,12 +64,12 @@
             "postType": " ",
             "description": "object containing the current map and functions to interact with the map",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi window.location https://developer.mozilla.org/en-US/docs/Web/API/Window/location\r",
+        "source": " * @browserapi window.location https://developer.mozilla.org/en-US/docs/Web/API/Window/location",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,7 +29,7 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Window/location",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -37,7 +37,9 @@
   "description": "Hook that returns reactive browser location state with navigation controls",
   "category": "Browser",
   "lastModified": 1778075431000,
-  "examples": ["const { value, push, back, forward, go } = useBrowserLocation();"],
+  "examples": [
+    "const { value, push, back, forward, go } = useBrowserLocation();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseBrowserLocationReturn} The current browser location state and navigation methods\r",
+          "source": " * @returns {UseBrowserLocationReturn} The current browser location state and navigation methods",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "current browser location state and navigation methods",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 10,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

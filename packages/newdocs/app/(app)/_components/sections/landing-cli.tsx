@@ -186,15 +186,15 @@ export const LandingCli = () => {
 
   return (
     <section>
-      <div className='mx-auto max-w-6xl px-6 py-12 md:py-24'>
+      <div className='container mx-auto px-6 py-12 md:py-24'>
         <div className='grid items-center gap-10 lg:grid-cols-2 lg:gap-16'>
           {/* ── Steps (left) — big numerals ── */}
           <motion.ol
             className='flex flex-col gap-8'
-            initial={{ opacity: 0, x: -24 }}
+            initial={{ opacity: 0, y: -24 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true, amount: 0.35 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
           >
             {steps.map((step, index) => (
               <li
@@ -232,7 +232,7 @@ export const LandingCli = () => {
           {/* ── Terminal (right) — right-side fade ── */}
           <motion.div
             className='border-border relative overflow-hidden rounded-xl border bg-[#0a0a0a]'
-            initial={{ opacity: 0, scale: 0.97, y: 30 }}
+            initial={{ opacity: 0, scale: 0.97, y: -30 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true, amount: 0.35 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}

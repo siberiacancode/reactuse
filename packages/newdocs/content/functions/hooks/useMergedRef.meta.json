@@ -9,7 +9,9 @@
   "description": "Hook that merges multiple refs into a single ref",
   "category": "State",
   "lastModified": 1756623419000,
-  "examples": ["const mergedRef = useMergedRef(firstRef, secondRef);"],
+  "examples": [
+    "const mergedRef = useMergedRef(firstRef, secondRef);"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {...Ref<Element>[]} refs The refs to merge\r",
+          "source": " * @param {...Ref<Element>[]} refs The refs to merge",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The refs to merge",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {RefCallback<Element>} A memoized ref callback that assigns to all provided refs\r",
+          "source": " * @returns {RefCallback<Element>} A memoized ref callback that assigns to all provided refs",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "memoized ref callback that assigns to all provided refs",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

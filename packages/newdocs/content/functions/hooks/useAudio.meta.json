@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi Audio https://developer.mozilla.org/en-US/docs/Web/API/Audio\r",
+        "source": " * @browserapi Audio https://developer.mozilla.org/en-US/docs/Web/API/Audio",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Audio",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that manages audio playback with sprite support",
   "category": "Browser",
   "lastModified": 1762758339000,
-  "examples": ["const audio = useAudio(\"/path/to/sound.mp3\");"],
+  "examples": [
+    "const audio = useAudio(\"/path/to/sound.mp3\");"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {string} url The URL of the audio file to play\r",
+          "source": " * @param {string} url The URL of the audio file to play",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": " ",
             "description": "The URL of the audio file to play",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -95,7 +97,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {UseAudioOptions} [options] Audio configuration options\r",
+          "source": " * @param {UseAudioOptions} [options] Audio configuration options",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,7 +110,7 @@
             "postType": " ",
             "description": "Audio configuration options",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -123,7 +125,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {number} [options.volume=1] Initial volume level (0 to 1)\r",
+          "source": " * @param {number} [options.volume=1] Initial volume level (0 to 1)",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -136,7 +138,7 @@
             "postType": " ",
             "description": "Initial volume level (0 to 1)",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -152,7 +154,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {number} [options.playbackRate=1] Initial playback speed (0.5 to 2)\r",
+          "source": " * @param {number} [options.playbackRate=1] Initial playback speed (0.5 to 2)",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -165,7 +167,7 @@
             "postType": " ",
             "description": "Initial playback speed (0.5 to 2)",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -181,7 +183,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @param {boolean} [options.interrupt=false] Whether to stop current playback when starting a new one\r",
+          "source": " * @param {boolean} [options.interrupt=false] Whether to stop current playback when starting a new one",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -194,7 +196,7 @@
             "postType": " ",
             "description": "Whether to stop current playback when starting a new one",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -210,7 +212,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @param {boolean} [options.soundEnabled=true] Whether audio playback is initially enabled\r",
+          "source": " * @param {boolean} [options.soundEnabled=true] Whether audio playback is initially enabled",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -223,7 +225,7 @@
             "postType": " ",
             "description": "Whether audio playback is initially enabled",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -239,7 +241,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @param {SpriteMap} [options.sprite] Map of named audio segments for sprite-based playback\r",
+          "source": " * @param {SpriteMap} [options.sprite] Map of named audio segments for sprite-based playback",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -252,7 +254,7 @@
             "postType": " ",
             "description": "Map of named audio segments for sprite-based playback",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -267,7 +269,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @returns {UseAudioReturn} An object containing audio controls and state\r",
+          "source": " * @returns {UseAudioReturn} An object containing audio controls and state",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -280,12 +282,12 @@
             "postType": " ",
             "description": "object containing audio controls and state",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 17,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -298,7 +300,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi BroadcastChannel https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel\r",
+        "source": " * @browserapi BroadcastChannel https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that provides cross-tab/window communication",
   "category": "Browser",
   "lastModified": 1779458191000,
-  "examples": ["const { supported, data, post, error } = useBroadcastChannel('channel');"],
+  "examples": [
+    "const { supported, data, post, error } = useBroadcastChannel('channel');"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {string} name The name of the channel\r",
+          "source": " * @param {string} name The name of the channel",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": " ",
             "description": "The name of the channel",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -95,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {Function} callback A callback function that will be called when a message is received\r",
+          "source": " * @param {Function} callback A callback function that will be called when a message is received",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,7 +110,7 @@
             "postType": " ",
             "description": "A callback function that will be called when a message is received",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -123,7 +125,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {UseBroadcastChannelReturn} An object containing the channel state and controls\r",
+          "source": " * @returns {UseBroadcastChannelReturn} An object containing the channel state and controls",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -136,12 +138,12 @@
             "postType": " ",
             "description": "object containing the channel state and controls",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 11,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -154,7 +156,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

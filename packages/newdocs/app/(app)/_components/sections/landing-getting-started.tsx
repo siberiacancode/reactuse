@@ -81,10 +81,10 @@ export const LandingGettingStarted = () => {
 
   return (
     <section>
-      <div className='mx-auto max-w-6xl px-6 py-12 md:py-24'>
+      <div className='container mx-auto px-6 py-12 md:py-24'>
         <motion.div
           className='max-w-3xl'
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: -28 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true, amount: 0.45 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -127,7 +127,7 @@ export const LandingGettingStarted = () => {
 
         <motion.div
           className='mt-12 grid gap-4 lg:grid-cols-[1.7fr_1fr]'
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true, amount: 0.25 }}
           whileInView={{ opacity: 1, y: 0 }}

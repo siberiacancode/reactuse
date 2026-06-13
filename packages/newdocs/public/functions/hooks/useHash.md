@@ -47,9 +47,9 @@ import metadata from './useHash.meta.json';
 ## Usage
 
 ```tsx
-const { value, set } = useHash('initial');
+const { value, set } = useHash("initial");
 // or
-const { value, set } = useHash('initial', (newHash) => console.log('callback'));
+const { value, set } = useHash("initial", (newHash) => console.log('callback'));
 // or
 const { value, set } = useHash();
 // or

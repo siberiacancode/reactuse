@@ -24,7 +24,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -37,7 +37,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -52,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {() => void} callback Any callback function\r",
+          "source": " * @param {() => void} callback Any callback function",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -65,7 +65,7 @@
             "postType": " ",
             "description": "Any callback function",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -80,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {number} [interval=1000] Time in milliseconds\r",
+          "source": " * @param {number} [interval=1000] Time in milliseconds",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -93,7 +93,7 @@
             "postType": " ",
             "description": "Time in milliseconds",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -109,7 +109,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {boolean} [options.immediately=true] Start the interval immediately\r",
+          "source": " * @param {boolean} [options.immediately=true] Start the interval immediately",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -122,7 +122,7 @@
             "postType": " ",
             "description": "Start the interval immediately",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -138,7 +138,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {UseIntervalReturn}\r",
+          "source": " * @returns {UseIntervalReturn}",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -151,12 +151,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 11,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -169,7 +169,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -184,7 +184,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -197,7 +197,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -212,7 +212,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @param {() => void} callback Any callback function\r",
+          "source": " * @param {() => void} callback Any callback function",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -225,7 +225,7 @@
             "postType": " ",
             "description": "Any callback function",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -240,7 +240,7 @@
       "source": [
         {
           "number": 17,
-          "source": " * @param {number} [options.interval=1000] Time in milliseconds\r",
+          "source": " * @param {number} [options.interval=1000] Time in milliseconds",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -253,7 +253,7 @@
             "postType": " ",
             "description": "Time in milliseconds",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -269,7 +269,7 @@
       "source": [
         {
           "number": 18,
-          "source": " * @param {boolean} [options.immediately=true] Start the interval immediately\r",
+          "source": " * @param {boolean} [options.immediately=true] Start the interval immediately",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -282,12 +282,12 @@
             "postType": " ",
             "description": "Start the interval immediately",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 19,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -300,7 +300,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],

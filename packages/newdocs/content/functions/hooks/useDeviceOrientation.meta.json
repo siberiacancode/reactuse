@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi DeviceOrientationEvent https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent/DeviceOrientationEvent\r",
+        "source": " * @browserapi DeviceOrientationEvent https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent/DeviceOrientationEvent",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent/DeviceOrientationEvent",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that provides the current device orientation",
   "category": "Sensors",
   "lastModified": 1779453143000,
-  "examples": ["const { supported, value } = useDeviceOrientation();"],
+  "examples": [
+    "const { supported, value } = useDeviceOrientation();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {UseDeviceOrientationReturn} The current device orientation\r",
+          "source": " * @returns {UseDeviceOrientationReturn} The current device orientation",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,12 +82,12 @@
             "postType": " ",
             "description": "current device orientation",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -98,7 +100,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

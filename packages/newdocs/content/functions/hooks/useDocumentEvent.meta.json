@@ -9,7 +9,9 @@
   "description": "Hook attaches an event listener to the document object for the specified event",
   "category": "Browser",
   "lastModified": 1779456202000,
-  "examples": ["useDocumentEvent('click', () => console.log('clicked'));"],
+  "examples": [
+    "useDocumentEvent('click', () => console.log('clicked'));"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {Event} event The event to listen for.\r",
+          "source": " * @param {Event} event The event to listen for.",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The event to listen for.",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(event: DocumentEventMap[Event]) => void} listener The callback function to be executed when the event is triggered\r",
+          "source": " * @param {(event: DocumentEventMap[Event]) => void} listener The callback function to be executed when the event is triggered",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,7 +64,7 @@
             "postType": " ",
             "description": "The callback function to be executed when the event is triggered",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -77,7 +79,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {UseEventListenerOptions} [options] The options for the event listener\r",
+          "source": " * @param {UseEventListenerOptions} [options] The options for the event listener",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -90,7 +92,7 @@
             "postType": " ",
             "description": "The options for the event listener",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -105,7 +107,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {void}\r",
+          "source": " * @returns {void}",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -118,12 +120,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 11,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -136,7 +138,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -144,8 +146,12 @@
   ],
   "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { UseEventListenerOptions } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useEventListener/useEventListener'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span></code></pre>",
   "dependencies": {
-    "hooks": ["useEventListener"],
-    "utils": ["isTarget"],
+    "hooks": [
+      "useEventListener"
+    ],
+    "utils": [
+      "isTarget"
+    ],
     "packages": []
   },
   "contributors": [

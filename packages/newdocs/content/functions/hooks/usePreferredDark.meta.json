@@ -9,10 +9,14 @@
   "description": "Hook that returns if the user prefers dark mode",
   "category": "User",
   "lastModified": 1754977987000,
-  "examples": ["const isDark = usePreferredDark();"],
+  "examples": [
+    "const isDark = usePreferredDark();"
+  ],
   "apiParameters": [],
   "dependencies": {
-    "hooks": ["useMediaQuery"],
+    "hooks": [
+      "useMediaQuery"
+    ],
     "utils": [],
     "packages": []
   },

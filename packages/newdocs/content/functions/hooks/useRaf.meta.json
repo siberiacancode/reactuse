@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame\r",
+        "source": " * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that defines the logic for raf callback",
   "category": "Browser",
   "lastModified": 1754977987000,
-  "examples": ["useRaf(() => console.log('callback'));"],
+  "examples": [
+    "useRaf(() => console.log('callback'));"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {UseRafCallback} callback The callback to execute\r",
+          "source": " * @param {UseRafCallback} callback The callback to execute",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": " ",
             "description": "The callback to execute",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -95,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {number} [options.delay] The delay between each frame in milliseconds\r",
+          "source": " * @param {number} [options.delay] The delay between each frame in milliseconds",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,7 +110,7 @@
             "postType": " ",
             "description": "The delay between each frame in milliseconds",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -123,7 +125,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean} [options.enabled=true] Whether the callback should be enabled\r",
+          "source": " * @param {boolean} [options.enabled=true] Whether the callback should be enabled",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -136,7 +138,7 @@
             "postType": " ",
             "description": "Whether the callback should be enabled",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -152,7 +154,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @returns {UseRafCallbackReturn} An object of raf callback functions\r",
+          "source": " * @returns {UseRafCallbackReturn} An object of raf callback functions",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -165,12 +167,12 @@
             "postType": " ",
             "description": "object of raf callback functions",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 12,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -183,7 +185,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

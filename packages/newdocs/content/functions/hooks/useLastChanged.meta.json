@@ -9,7 +9,9 @@
   "description": "Hook for records the timestamp of the last change",
   "category": "Utilities",
   "lastModified": 1755150117000,
-  "examples": ["const lastChanged = useLastChanged(source);"],
+  "examples": [
+    "const lastChanged = useLastChanged(source);"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {any} source  The source of the last change\r",
+          "source": " * @param {any} source  The source of the last change",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The source of the last change",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {number | null} [options.initialValue=null] The initial value\r",
+          "source": " * @param {number | null} [options.initialValue=null] The initial value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,7 +64,7 @@
             "postType": " ",
             "description": "The initial value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -78,7 +80,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {number | null} Return timestamp of the last change\r",
+          "source": " * @returns {number | null} Return timestamp of the last change",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -91,12 +93,12 @@
             "postType": " ",
             "description": "timestamp of the last change",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -109,7 +111,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -117,7 +119,9 @@
   ],
   "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseLastChangedOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> number</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span></code></pre>",
   "dependencies": {
-    "hooks": ["useDidUpdate"],
+    "hooks": [
+      "useDidUpdate"
+    ],
     "utils": [],
     "packages": []
   },

@@ -47,8 +47,7 @@ import metadata from './useObject.meta.json';
 ## Usage
 
 ```tsx
-const { value, set, reset, remove, update, merge, clear, toggle, has, keys, isEmpty, size } =
-  useObject({ name: 'John', age: 30, isActive: true });
+const { value, set, reset, remove, update, merge, clear, toggle, has, keys, isEmpty, size } = useObject({ name: 'John', age: 30, isActive: true });
 ```
 
 ## Type Declarations

@@ -9,7 +9,9 @@
   "description": "Hook for debugging lifecycle",
   "category": "Debug",
   "lastModified": 1754977987000,
-  "examples": ["useLogger('Component', [1, 2, 3]);"],
+  "examples": [
+    "useLogger('Component', [1, 2, 3]);"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {string} name The name or identifier for the logger\r",
+          "source": " * @param {string} name The name or identifier for the logger",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The name or identifier for the logger",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {unknown[]} params Additional arguments to be logged\r",
+          "source": " * @param {unknown[]} params Additional arguments to be logged",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "Additional arguments to be logged",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 8,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,14 +82,16 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
     }
   ],
   "dependencies": {
-    "hooks": ["useDidUpdate"],
+    "hooks": [
+      "useDidUpdate"
+    ],
     "utils": [],
     "packages": []
   },

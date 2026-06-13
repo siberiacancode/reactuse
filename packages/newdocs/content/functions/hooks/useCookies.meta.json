@@ -9,7 +9,9 @@
   "description": "Hook that manages cookie values",
   "category": "State",
   "lastModified": 1754977987000,
-  "examples": ["const { value, set, remove, getAll, clear } = useCookies();"],
+  "examples": [
+    "const { value, set, remove, getAll, clear } = useCookies();"
+  ],
   "apiParameters": [
     {
       "tag": "overload",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {UseCookieReturn<Value>} The value and the set function\r",
+          "source": " * @returns {UseCookieReturn<Value>} The value and the set function",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "value and the set function",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi navigator.languages https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages\r",
+        "source": " * @browserapi navigator.languages https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "that returns a browser preferred languages from navigator",
   "category": "User",
   "lastModified": 1754977987000,
-  "examples": ["const languages = usePreferredLanguages();"],
+  "examples": [
+    "const languages = usePreferredLanguages();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {readonly string[]} An array of strings representing the user's preferred languages\r",
+          "source": " * @returns {readonly string[]} An array of strings representing the user's preferred languages",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,12 +82,12 @@
             "postType": " ",
             "description": "array of strings representing the user's preferred languages",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -98,7 +100,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

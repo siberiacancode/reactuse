@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useEvent } from '@siberiacancode/reactuse';
 import { ArchiveIcon, ArchiveRestoreIcon, StarIcon } from 'lucide-react';

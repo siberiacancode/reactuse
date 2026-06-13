@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi File System Access API https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API\r",
+        "source": " * @browserapi File System Access API https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "System Access API https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook for reading and writing local files via the File System Access API",
   "category": "Browser",
   "lastModified": 1779803241000,
-  "examples": ["const fileSystemAccess = useFileSystemAccess({ dataType: 'Text' });"],
+  "examples": [
+    "const fileSystemAccess = useFileSystemAccess({ dataType: 'Text' });"
+  ],
   "apiParameters": [
     {
       "tag": "overload",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -95,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseFileSystemAccessReturn<string | ArrayBuffer | Blob>}\r",
+          "source": " * @returns {UseFileSystemAccessReturn<string | ArrayBuffer | Blob>}",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,12 +110,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 10,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -126,7 +128,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -141,7 +143,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -154,7 +156,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -169,7 +171,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {UseFileSystemAccessOptions} [options]\r",
+          "source": " * @param {UseFileSystemAccessOptions} [options]",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -182,7 +184,7 @@
             "postType": " ",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -197,7 +199,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @returns {UseFileSystemAccessReturn}\r",
+          "source": " * @returns {UseFileSystemAccessReturn}",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -210,12 +212,12 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 14,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -228,7 +230,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

@@ -49,10 +49,7 @@ import metadata from './useOtpCredential.meta.json';
 ```tsx
 useOtpCredential((credential) => console.log(credential));
 // or
-useOtpCredential({
-  onSuccess: (credential) => console.log(credential),
-  onError: (error) => console.log(error)
-});
+useOtpCredential({ onSuccess: (credential) => console.log(credential), onError: (error) => console.log(error) });
 ```
 
 ## Type Declarations

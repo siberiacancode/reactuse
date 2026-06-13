@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi MutationObserver https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver\r",
+        "source": " * @browserapi MutationObserver https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -72,7 +72,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -85,7 +85,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -100,7 +100,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {HookTarget} target The target element to observe\r",
+          "source": " * @param {HookTarget} target The target element to observe",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -113,7 +113,7 @@
             "postType": " ",
             "description": "The target element to observe",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -128,7 +128,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer\r",
+          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -141,7 +141,7 @@
             "postType": " ",
             "description": "The enabled state of the mutation observer",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -157,7 +157,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected\r",
+          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -170,7 +170,7 @@
             "postType": " ",
             "description": "The callback to execute when mutation is detected",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -185,7 +185,7 @@
       "source": [
         {
           "number": 12,
-          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed\r",
+          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -198,7 +198,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's attributes are to be observed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -213,7 +213,7 @@
       "source": [
         {
           "number": 13,
-          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed\r",
+          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -226,7 +226,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's data are to be observed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -241,7 +241,7 @@
       "source": [
         {
           "number": 14,
-          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed\r",
+          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -254,7 +254,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's children are to be observed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -269,7 +269,7 @@
       "source": [
         {
           "number": 15,
-          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed\r",
+          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -282,7 +282,7 @@
             "postType": " ",
             "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -297,7 +297,7 @@
       "source": [
         {
           "number": 16,
-          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state\r",
+          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -310,12 +310,12 @@
             "postType": " ",
             "description": "object containing the mutation observer state",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 17,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -328,7 +328,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -343,7 +343,7 @@
       "source": [
         {
           "number": 21,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -356,7 +356,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -371,7 +371,7 @@
       "source": [
         {
           "number": 23,
-          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer\r",
+          "source": " * @param {boolean} [options.enabled=true] The enabled state of the mutation observer",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -384,7 +384,7 @@
             "postType": " ",
             "description": "The enabled state of the mutation observer",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -400,7 +400,7 @@
       "source": [
         {
           "number": 24,
-          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected\r",
+          "source": " * @param {UseMutationObserverCallback} [options.onChange] The callback to execute when mutation is detected",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -413,7 +413,7 @@
             "postType": " ",
             "description": "The callback to execute when mutation is detected",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -428,7 +428,7 @@
       "source": [
         {
           "number": 25,
-          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed\r",
+          "source": " * @param {boolean} [options.attributes] Set to true if mutations to target's attributes are to be observed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -441,7 +441,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's attributes are to be observed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -456,7 +456,7 @@
       "source": [
         {
           "number": 26,
-          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed\r",
+          "source": " * @param {boolean} [options.characterData] Set to true if mutations to target's data are to be observed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -469,7 +469,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's data are to be observed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -484,7 +484,7 @@
       "source": [
         {
           "number": 27,
-          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed\r",
+          "source": " * @param {boolean} [options.childList] Set to true if mutations to target's children are to be observed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -497,7 +497,7 @@
             "postType": " ",
             "description": "Set to true if mutations to target's children are to be observed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -512,7 +512,7 @@
       "source": [
         {
           "number": 28,
-          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed\r",
+          "source": " * @param {boolean} [options.subtree] Set to true if mutations to not just target, but also target's descendants are to be observed",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -525,7 +525,7 @@
             "postType": " ",
             "description": "Set to true if mutations to not just target, but also target's descendants are to be observed",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -540,7 +540,7 @@
       "source": [
         {
           "number": 29,
-          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
+          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -553,12 +553,12 @@
             "postType": " ",
             "description": "React ref to attach to the target element",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 30,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -571,7 +571,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -586,7 +586,7 @@
       "source": [
         {
           "number": 34,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -599,7 +599,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -614,7 +614,7 @@
       "source": [
         {
           "number": 36,
-          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected\r",
+          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -627,7 +627,7 @@
             "postType": " ",
             "description": "The callback to execute when mutation is detected",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -642,7 +642,7 @@
       "source": [
         {
           "number": 37,
-          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element\r",
+          "source": " * @returns {UseMutationObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -655,12 +655,12 @@
             "postType": " ",
             "description": "React ref to attach to the target element",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 38,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -673,7 +673,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -688,7 +688,7 @@
       "source": [
         {
           "number": 42,
-          "source": " * @overload\r",
+          "source": " * @overload",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -701,7 +701,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -716,7 +716,7 @@
       "source": [
         {
           "number": 43,
-          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected\r",
+          "source": " * @param {UseMutationObserverCallback} callback The callback to execute when mutation is detected",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -729,7 +729,7 @@
             "postType": " ",
             "description": "The callback to execute when mutation is detected",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -744,7 +744,7 @@
       "source": [
         {
           "number": 44,
-          "source": " * @param {HookTarget} target The target element to observe\r",
+          "source": " * @param {HookTarget} target The target element to observe",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -757,7 +757,7 @@
             "postType": " ",
             "description": "The target element to observe",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -772,7 +772,7 @@
       "source": [
         {
           "number": 45,
-          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state\r",
+          "source": " * @returns {UseMutationObserverReturn} An object containing the mutation observer state",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -785,12 +785,12 @@
             "postType": " ",
             "description": "object containing the mutation observer state",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 46,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -803,7 +803,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -811,8 +811,12 @@
   ],
   "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { HookTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { StateRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  mutations</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationRecord</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[],</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  observer</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserver</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserverInit</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The enabled state of the mutation observer */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  enabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> boolean</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The callback to execute when mutation is detected */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  onChange</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The mutation observer instance */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  observer</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> MutationObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserver</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Element</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">> };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">callback</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverCallback</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseMutationObserverReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span></code></pre>",
   "dependencies": {
-    "hooks": ["useRefState"],
-    "utils": ["isTarget"],
+    "hooks": [
+      "useRefState"
+    ],
+    "utils": [
+      "isTarget"
+    ],
     "packages": []
   },
   "contributors": [

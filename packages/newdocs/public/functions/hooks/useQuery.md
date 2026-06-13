@@ -47,18 +47,7 @@ import metadata from './useQuery.meta.json';
 ## Usage
 
 ```tsx
-const {
-  data,
-  isFetching,
-  isLoading,
-  isError,
-  isSuccess,
-  error,
-  refetch,
-  isRefetching,
-  abort,
-  aborted
-} = useQuery(() => fetch('url'));
+const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));
 ```
 
 ## Type Declarations

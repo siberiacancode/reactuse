@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useLockCallback, useQuery } from '@siberiacancode/reactuse';
 import { EyeIcon, GitForkIcon, Loader2Icon, StarIcon } from 'lucide-react';

@@ -31,7 +31,11 @@ export const metadata: Metadata = {
   }
 };
 
-export const Layout = ({ children }: { children: ReactNode }) => (
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export const RootLayout = ({ children }: RootLayoutProps) => (
   <html
     suppressHydrationWarning
     className={cn('font-sans', geist.variable, geistMono.variable, jetbrainsMono.variable)}
@@ -46,4 +50,4 @@ export const Layout = ({ children }: { children: ReactNode }) => (
   </html>
 );
 
-export default Layout;
+export default RootLayout;

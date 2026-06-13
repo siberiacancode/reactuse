@@ -9,7 +9,9 @@
   "description": "Hook for getting information about component rerender",
   "category": "Debug",
   "lastModified": 1754977987000,
-  "examples": ["const rerenderInfo = useRenderInfo('Component');"],
+  "examples": [
+    "const rerenderInfo = useRenderInfo('Component');"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {string} [name='Unknown'] Component name\r",
+          "source": " * @param {string} [name='Unknown'] Component name",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "Component name",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -50,7 +52,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {boolean} [log=true] Toggle logging\r",
+          "source": " * @param {boolean} [log=true] Toggle logging",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -63,7 +65,7 @@
             "postType": " ",
             "description": "Toggle logging",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ],
@@ -79,7 +81,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {UseRenderInfoReturn} An object containing rerender information\r",
+          "source": " * @returns {UseRenderInfoReturn} An object containing rerender information",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,12 +94,12 @@
             "postType": " ",
             "description": "object containing rerender information",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,7 +112,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

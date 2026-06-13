@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame\r",
+        "source": " * @browserapi requestAnimationFrame https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that measures frames per second",
   "category": "Browser",
   "lastModified": 1779803241000,
-  "examples": ["const fps = useFps();"],
+  "examples": [
+    "const fps = useFps();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {number} A number which determines frames per second\r",
+          "source": " * @returns {number} A number which determines frames per second",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,12 +82,12 @@
             "postType": " ",
             "description": "number which determines frames per second",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -98,7 +100,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

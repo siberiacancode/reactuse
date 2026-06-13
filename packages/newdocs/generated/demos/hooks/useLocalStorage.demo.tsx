@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useLocalStorage } from '@siberiacancode/reactuse';
 import { BellIcon, ChevronDownIcon } from 'lucide-react';

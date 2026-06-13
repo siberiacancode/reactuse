@@ -9,7 +9,9 @@
   "description": "Hook returns count component render times",
   "category": "Debug",
   "lastModified": 1754977987000,
-  "examples": ["const renderCount = useRenderCount();"],
+  "examples": [
+    "const renderCount = useRenderCount();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @returns {number} A number which determines how many times component renders\r",
+          "source": " * @returns {number} A number which determines how many times component renders",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,12 +36,12 @@
             "postType": " ",
             "description": "number which determines how many times component renders",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 7,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -52,7 +54,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi URL.createObjectURL https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL\r",
+        "source": " * @browserapi URL.createObjectURL https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that creates and revokes an object URL for a Blob or MediaSource",
   "category": "Browser",
   "lastModified": 1775226876000,
-  "examples": ["const { value } = useObjectUrl(blob);"],
+  "examples": [
+    "const { value } = useObjectUrl(blob);"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {Blob | MediaSource} object The object to represent as a URL\r",
+          "source": " * @param {Blob | MediaSource} object The object to represent as a URL",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": " ",
             "description": "The object to represent as a URL",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -95,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseObjectUrlReturn} An object with the current object URL\r",
+          "source": " * @returns {UseObjectUrlReturn} An object with the current object URL",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,12 +110,12 @@
             "postType": " ",
             "description": "object with the current object URL",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 10,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -126,7 +128,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

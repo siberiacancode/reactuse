@@ -9,7 +9,9 @@
   "description": "Hook that returns the constant value",
   "category": "Utilities",
   "lastModified": 1754977987000,
-  "examples": ["const value = useConst('value');"],
+  "examples": [
+    "const value = useConst('value');"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {(() => Value) | Value} initialValue The initial value of the constant\r",
+          "source": " * @param {(() => Value) | Value} initialValue The initial value of the constant",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The initial value of the constant",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {Value} The constant value\r",
+          "source": " * @returns {Value} The constant value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "constant value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

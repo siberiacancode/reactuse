@@ -9,7 +9,9 @@
   "description": "Hook that returns true if the component is first render",
   "category": "Lifecycle",
   "lastModified": 1754977987000,
-  "examples": ["const isFirstRender = useIsFirstRender();"],
+  "examples": [
+    "const isFirstRender = useIsFirstRender();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @returns {boolean} True if the component is first render\r",
+          "source": " * @returns {boolean} True if the component is first render",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,12 +36,12 @@
             "postType": " ",
             "description": "if the component is first render",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 7,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -52,7 +54,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

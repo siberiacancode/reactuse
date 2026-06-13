@@ -49,9 +49,7 @@ import metadata from './useMemory.meta.json';
 ```tsx
 const { supported, value } = useMemory();
 // or
-const { value } = useMemory((nextValue) => {
-  console.log(nextValue.usedJSHeapSize);
-});
+const { value } = useMemory((nextValue) => { console.log(nextValue.usedJSHeapSize); });
 ```
 
 ## Type Declarations

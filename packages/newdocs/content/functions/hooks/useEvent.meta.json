@@ -9,7 +9,9 @@
   "description": "Hook that creates an event and returns a stable reference of it",
   "category": "Utilities",
   "lastModified": 1754977987000,
-  "examples": ["const onClick = useEvent(() => console.log('clicked'));"],
+  "examples": [
+    "const onClick = useEvent(() => console.log('clicked'));"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(...args: Params) => Return} callback The callback function\r",
+          "source": " * @param {(...args: Params) => Return} callback The callback function",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The callback function",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {(...args: Params) => Return} The callback\r",
+          "source": " * @returns {(...args: Params) => Return} The callback",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "callback",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 10,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

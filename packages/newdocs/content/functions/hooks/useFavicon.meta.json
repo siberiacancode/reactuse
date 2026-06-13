@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {string} [initialFavicon] The initial favicon. If not provided, the current favicon will be used\r",
+          "source": " * @param {string} [initialFavicon] The initial favicon. If not provided, the current favicon will be used",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "The initial favicon. If not provided, the current favicon will be used",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon\r",
+          "source": " * @returns {UseFaviconReturn} An array containing the current favicon and a function to update the favicon",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,12 +64,12 @@
             "postType": " ",
             "description": "array containing the current favicon and a function to update the favicon",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 8,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -90,7 +90,9 @@
   ],
   "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { Dispatch, SetStateAction } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseFaviconReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Dispatch</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">SetStateAction</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>>];</span></span></code></pre>",
   "dependencies": {
-    "hooks": ["useMount"],
+    "hooks": [
+      "useMount"
+    ],
     "utils": [],
     "packages": []
   },

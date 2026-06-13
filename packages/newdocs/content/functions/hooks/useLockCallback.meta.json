@@ -9,7 +9,9 @@
   "description": "Hook that prevents a callback from being executed multiple times simultaneously",
   "category": "Async",
   "lastModified": 1754977987000,
-  "examples": ["const lockedCallback = useLockCallback(() => promise());"],
+  "examples": [
+    "const lockedCallback = useLockCallback(() => promise());"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {Function} callback The callback to be locked\r",
+          "source": " * @param {Function} callback The callback to be locked",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The callback to be locked",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @returns {Function} The locked callback\r",
+          "source": " * @returns {Function} The locked callback",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "locked callback",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 8,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

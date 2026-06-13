@@ -1,17 +1,15 @@
-import type {ComponentProps} from 'react';
+import type { ComponentProps } from 'react';
 
 import { Icons } from '@docs/components/icons';
-import fetches from '@siberiacancode/fetches';
 import Image from 'next/image';
 import Link from 'next/link';
-import {  Fragment } from 'react';
+import { Fragment } from 'react';
 
-import { getElements } from '@/scripts/helpers';
 import { Button } from '@/src/components/ui';
 import { CONFIG, LINKS } from '@/src/constants';
 import { Badge } from '@/ui/badge';
 
-import { ThemeButton } from './ThemeButton/ThemeButton';
+import { ThemeButton } from '../ThemeButton/ThemeButton';
 
 const LATEST_RELEASE = {
   href: 'https://github.com/siberiacancode/reactuse/releases/tag/v0.3.8',
@@ -34,22 +32,26 @@ const formatStarsCount = (count: number) => {
   return `${Math.round(count / 1000)}${count >= 1000 ? 'k' : ''}`;
 };
 
-export type LandingHeaderProps = ComponentProps<'header'>;
+export interface LandingHeaderHook {
+  name: string;
+}
 
-export const LandingHeader = async (props: LandingHeaderProps) => {
-  const repositoryResponse = await fetches.get<{ stargazers_count: number }>(
-    'https://api.github.com/repos/siberiacancode/reactuse',
-    {
-      cache: 'force-cache'
-    }
+export interface LandingHeaderRepository {
+  stargazersCount: number;
+}
+
+export interface LandingHeaderProps extends ComponentProps<'header'> {
+  hooks: LandingHeaderHook[];
+  repository: LandingHeaderRepository;
+}
+
+export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProps) => {
+  const formattedCount = formatStarsCount(repository.stargazersCount);
+  const items = createMarqueeItems(
+    hooks
+      .map((hook) => hook.name)
+      .sort((a, b) => a.localeCompare(b))
   );
-
-  const formattedCount = formatStarsCount(repositoryResponse.data.stargazers_count);
-
-  const hooks = (await getElements('hook'))
-    .map((hook) => hook.name)
-    .sort((a, b) => a.localeCompare(b));
-  const items = createMarqueeItems(hooks);
 
   return (
     <>

@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi navigator.connection https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection\r",
+        "source": " * @browserapi navigator.connection https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -69,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {(value: UseNetworkReturn) => void} [callback] The callback invoked when the network state changes\r",
+          "source": " * @param {(value: UseNetworkReturn) => void} [callback] The callback invoked when the network state changes",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -82,7 +82,7 @@
             "postType": " ",
             "description": "The callback invoked when the network state changes",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -97,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @returns {UseNetworkReturn} An object containing the network status\r",
+          "source": " * @returns {UseNetworkReturn} An object containing the network status",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -110,12 +110,12 @@
             "postType": " ",
             "description": "object containing the network status",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 10,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -128,7 +128,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

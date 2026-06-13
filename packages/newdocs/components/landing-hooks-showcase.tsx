@@ -23,7 +23,7 @@ export const LandingHooksShowcase = ({ hooks }: LandingHooksShowcaseProps) => {
 
   return (
     <section className='border-border bg-card/30 border-t'>
-      <div className='mx-auto max-w-6xl px-6 pt-24 md:pt-32'>
+      <div className='container mx-auto px-6 pt-24 md:pt-32'>
         <div>
           <h2 className='font-display text-foreground text-5xl font-bold tracking-tighter md:text-7xl lg:text-8xl'>
             Explore Hooks
@@ -57,7 +57,7 @@ export const LandingHooksShowcase = ({ hooks }: LandingHooksShowcaseProps) => {
           })}
         </div>
 
-        <div className='mx-auto flex max-w-6xl justify-start gap-4 px-6 pt-6 pb-24 md:pb-32'>
+        <div className='container mx-auto flex justify-start gap-4 px-6 pt-6 pb-24 md:pb-32'>
           <Link
             className='bg-foreground text-background inline-flex items-center gap-2 rounded-full px-7 py-4 font-mono text-lg font-semibold transition-all duration-300 hover:scale-[1.02] hover:bg-[var(--brand)] hover:text-black'
             href='/functions/hooks/useActiveElement'

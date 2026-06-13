@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useClickOutside, useDisclosure, usePictureInPicture } from '@siberiacancode/reactuse';
 import {

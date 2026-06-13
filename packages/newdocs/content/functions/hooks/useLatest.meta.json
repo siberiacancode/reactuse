@@ -9,7 +9,9 @@
   "description": "Hook that returns the stable reference of the value",
   "category": "Utilities",
   "lastModified": 1754977987000,
-  "examples": ["const { value, ref } = useLatest(value);"],
+  "examples": [
+    "const { value, ref } = useLatest(value);"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {Value} value The value to get the previous value\r",
+          "source": " * @param {Value} value The value to get the previous value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The value to get the previous value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {UseLatestReturn<Value>} The previous value\r",
+          "source": " * @returns {UseLatestReturn<Value>} The previous value",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "previous value",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

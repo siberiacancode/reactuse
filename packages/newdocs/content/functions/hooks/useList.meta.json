@@ -9,7 +9,9 @@
   "description": "Hook that provides state and helper methods to manage a list of items",
   "category": "State",
   "lastModified": 1754977987000,
-  "examples": ["const { value, set, push, removeAt, insertAt, updateAt, clear } = useList();"],
+  "examples": [
+    "const { value, set, push, removeAt, insertAt, updateAt, clear } = useList();"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {Item[] | (() => Item[])} initialList The initial list of items\r",
+          "source": " * @param {Item[] | (() => Item[])} initialList The initial list of items",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The initial list of items",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @returns {UseListReturn} An object containing the current list and functions to interact with the list\r",
+          "source": " * @returns {UseListReturn} An object containing the current list and functions to interact with the list",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "object containing the current list and functions to interact with the list",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

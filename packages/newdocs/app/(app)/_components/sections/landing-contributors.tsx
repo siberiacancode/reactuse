@@ -1,11 +1,8 @@
 'use client';
 
 import { useBoolean } from '@siberiacancode/reactuse';
-import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
-import Link from 'next/link';
 
-import { useDocsMetadata } from '@/app/_contexts/docs-metadata';
 import {
   Avatar,
   AvatarFallback,
@@ -22,17 +19,25 @@ const INITIAL_COUNT = 64;
 
 const getInitials = (name: string) => name.slice(0, 2).toUpperCase();
 
-export const LandingContributors = () => {
-  const { contributors } = useDocsMetadata();
+export interface LandingContributor {
+  avatar: string;
+  name: string;
+}
+
+interface LandingContributorsProps {
+  contributors: LandingContributor[];
+}
+
+export const LandingContributors = ({ contributors }: LandingContributorsProps) => {
   const [showAll, toggleShowAll] = useBoolean();
   const hasMore = contributors.length > INITIAL_COUNT;
 
   return (
     <section>
-      <div className='mx-auto max-w-6xl px-6 py-12 md:py-24'>
+      <div className='w-full px-6 py-12 md:container md:mx-auto md:py-24'>
         <motion.div
           className='mb-12 max-w-2xl'
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: -28 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true, amount: 0.45 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -44,52 +49,36 @@ export const LandingContributors = () => {
             <span className='text-foreground font-semibold'>Built by the community.</span> reactuse
             is an open-source project maintained by{' '}
             <span className='text-foreground font-semibold'>{contributors.length}</span> developers
-            around the world. Every hook, fix and doc is a contribution —{' '}
-            <Link
-              className='text-foreground inline-flex items-center gap-0.5 font-medium underline underline-offset-4'
-              href='/docs/contributing'
-              rel='noreferrer'
-              target='_blank'
-            >
-              read the contribute guide
-              <ArrowUpRight className='size-4' />
-            </Link>
-            .
+            around the world. Every hook, fix and doc is a contribution.
           </p>
         </motion.div>
 
         <motion.div
           className='relative'
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: -24 }}
           transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true, amount: 0.2 }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          {/* animated collapsible grid */}
           <div
             className={cn(
               'overflow-hidden transition-[max-height] duration-700 ease-in-out',
-              showAll ? 'max-h-[4000px]' : 'max-h-72'
+              showAll ? 'max-h-[4000px]' : 'max-h-44 md:max-h-72'
             )}
           >
             <TooltipProvider delayDuration={100}>
-              <div className='flex flex-wrap gap-2.5'>
+              <div className='flex w-full flex-wrap justify-between gap-y-2.5 md:justify-start md:gap-2.5'>
                 {contributors.map((contributor) => (
                   <Tooltip key={contributor.name}>
                     <TooltipTrigger asChild>
-                      <Link
-                        className='transition-transform hover:z-10 hover:scale-110'
-                        href={`https://github.com/${contributor.name}`}
-                        rel='noreferrer'
-                        target='_blank'
-                      >
+                      <div>
                         <Avatar className='border-border size-12 border'>
                           <AvatarImage alt={contributor.name} src={contributor.avatar} />
                           <AvatarFallback className='bg-muted text-muted-foreground text-xs font-medium'>
                             {getInitials(contributor.name)}
                           </AvatarFallback>
                         </Avatar>
-                      </Link>
+                      </div>
                     </TooltipTrigger>
                     <TooltipContent side='top'>{contributor.name}</TooltipContent>
                   </Tooltip>
@@ -98,9 +87,8 @@ export const LandingContributors = () => {
             </TooltipProvider>
           </div>
 
-          {/* overlay with centered ghost button (only while collapsed) */}
           {hasMore && !showAll && (
-            <div className='absolute inset-x-0 bottom-0 flex h-32 items-center justify-center'>
+            <div className='absolute inset-x-0 bottom-0 flex h-20 items-center justify-center md:h-32'>
               <div className='from-background via-background/80 pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent' />
               <Button
                 className='relative rounded-full px-6'

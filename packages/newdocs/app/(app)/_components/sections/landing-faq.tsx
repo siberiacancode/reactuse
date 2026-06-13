@@ -39,12 +39,12 @@ const FAQ = [
 
 export const LandingFaq = () => (
   <section>
-    <div className='mx-auto max-w-6xl px-6 py-12 md:py-24'>
+    <div className='container mx-auto px-6 py-12 md:py-24'>
       <div className='grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16'>
         {/* ── Heading ── */}
         <motion.div
           className='max-w-md'
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: -28 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true, amount: 0.45 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export const LandingFaq = () => (
 
         {/* ── Accordion ── */}
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: -28 }}
           transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true, amount: 0.25 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -23,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {UseOffsetPaginationOptions} options - The options for the hook\r",
+          "source": " * @param {UseOffsetPaginationOptions} options - The options for the hook",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -36,7 +36,7 @@
             "postType": " ",
             "description": "- The options for the hook",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -51,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {number} [options.total] - The total number of items\r",
+          "source": " * @param {number} [options.total] - The total number of items",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -64,7 +64,7 @@
             "postType": " ",
             "description": "- The total number of items",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -79,7 +79,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {number} [options.pageSize] - The number of items per page\r",
+          "source": " * @param {number} [options.pageSize] - The number of items per page",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -92,7 +92,7 @@
             "postType": " ",
             "description": "- The number of items per page",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -107,7 +107,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {number} [options.initialPage] - The current page\r",
+          "source": " * @param {number} [options.initialPage] - The current page",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -120,7 +120,7 @@
             "postType": " ",
             "description": "- The current page",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -135,7 +135,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @param {({ page, pageSize }: { page: number; pageSize: number }) => void} [options.onChange] - The callback function to be invoked when page changes\r",
+          "source": " * @param {({ page, pageSize }: { page: number; pageSize: number }) => void} [options.onChange] - The callback function to be invoked when page changes",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -148,7 +148,7 @@
             "postType": " ",
             "description": "- The callback function to be invoked when page changes",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -163,7 +163,7 @@
       "source": [
         {
           "number": 11,
-          "source": " * @returns {UseOffsetPaginationReturn} - The state of the hook\r",
+          "source": " * @returns {UseOffsetPaginationReturn} - The state of the hook",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -176,12 +176,12 @@
             "postType": " ",
             "description": "The state of the hook",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 12,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -194,7 +194,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

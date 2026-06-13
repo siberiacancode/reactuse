@@ -47,7 +47,7 @@ import metadata from './usePageLeave.meta.json';
 ## Usage
 
 ```tsx
-const isLeft = usePageLeave(() => console.log('on leave'));
+const isLeft = usePageLeave(() => console.log('on leave'))
 ```
 
 ## API

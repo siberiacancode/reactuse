@@ -16,7 +16,7 @@
     "source": [
       {
         "number": 6,
-        "source": " * @browserapi document.title https://developer.mozilla.org/en-US/docs/Web/API/Document/title\r",
+        "source": " * @browserapi document.title https://developer.mozilla.org/en-US/docs/Web/API/Document/title",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -29,12 +29,12 @@
           "postType": "",
           "description": "https://developer.mozilla.org/en-US/docs/Web/API/Document/title",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       },
       {
         "number": 7,
-        "source": " *\r",
+        "source": " *",
         "tokens": {
           "start": " ",
           "delimiter": "*",
@@ -47,7 +47,7 @@
           "postType": "",
           "description": "",
           "end": "",
-          "lineEnd": "\r"
+          "lineEnd": ""
         }
       }
     ]
@@ -55,7 +55,9 @@
   "description": "Hook that manages the document title and allows updating it",
   "category": "Browser",
   "lastModified": 1779453247000,
-  "examples": ["const { value, set } = useDocumentTitle();"],
+  "examples": [
+    "const { value, set } = useDocumentTitle();"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -67,7 +69,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {string} [initialValue] The initial title. If not provided, the current document title will be used\r",
+          "source": " * @param {string} [initialValue] The initial title. If not provided, the current document title will be used",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,7 +82,7 @@
             "postType": " ",
             "description": "The initial title. If not provided, the current document title will be used",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -95,7 +97,7 @@
       "source": [
         {
           "number": 9,
-          "source": " * @param {boolean} [options.restore] Restore the previous title on unmount\r",
+          "source": " * @param {boolean} [options.restore] Restore the previous title on unmount",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,7 +110,7 @@
             "postType": " ",
             "description": "Restore the previous title on unmount",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -123,7 +125,7 @@
       "source": [
         {
           "number": 10,
-          "source": " * @returns {UseDocumentTitleReturn} An array containing the current title and a function to update the title\r",
+          "source": " * @returns {UseDocumentTitleReturn} An array containing the current title and a function to update the title",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -136,12 +138,12 @@
             "postType": " ",
             "description": "array containing the current title and a function to update the title",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 11,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -154,7 +156,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

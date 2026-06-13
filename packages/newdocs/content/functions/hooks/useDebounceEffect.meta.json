@@ -9,7 +9,9 @@
   "description": "Hook that runs an effect after a delay when dependencies change",
   "category": "Utilities",
   "lastModified": 1768590847000,
-  "examples": ["useDebounceEffect(() => console.log('effect'), 500, [value]);"],
+  "examples": [
+    "useDebounceEffect(() => console.log('effect'), 500, [value]);"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {EffectCallback} effect The effect callback to run\r",
+          "source": " * @param {EffectCallback} effect The effect callback to run",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The effect callback to run",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @param {number} delay The delay in milliseconds\r",
+          "source": " * @param {number} delay The delay in milliseconds",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,7 +64,7 @@
             "postType": " ",
             "description": "The delay in milliseconds",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -77,7 +79,7 @@
       "source": [
         {
           "number": 8,
-          "source": " * @param {DependencyList} deps The dependencies list for the effect\r",
+          "source": " * @param {DependencyList} deps The dependencies list for the effect",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -90,12 +92,12 @@
             "postType": " ",
             "description": "The dependencies list for the effect",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 9,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -108,7 +110,7 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]

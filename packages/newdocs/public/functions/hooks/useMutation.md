@@ -47,9 +47,7 @@ import metadata from './useMutation.meta.json';
 ## Usage
 
 ```tsx
-const { mutate, mutateAsync, isLoading, isError, isSuccess, error, data } = useMutation((name) =>
-  Promise.resolve(name)
-);
+const { mutate, mutateAsync, isLoading, isError, isSuccess, error, data } = useMutation((name) => Promise.resolve(name));
 ```
 
 ## Type Declarations

@@ -9,7 +9,9 @@
   "description": "Hook what calls given function when mouse leaves the page",
   "category": "Sensors",
   "lastModified": 1754977987000,
-  "examples": ["const isLeft = usePageLeave(() => console.log('on leave'))"],
+  "examples": [
+    "const isLeft = usePageLeave(() => console.log('on leave'))"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -21,7 +23,7 @@
       "source": [
         {
           "number": 6,
-          "source": " * @param {() => void} [callback] The callback function what calls then mouse leaves the page\r",
+          "source": " * @param {() => void} [callback] The callback function what calls then mouse leaves the page",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -34,7 +36,7 @@
             "postType": " ",
             "description": "The callback function what calls then mouse leaves the page",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
@@ -49,7 +51,7 @@
       "source": [
         {
           "number": 7,
-          "source": " * @returns {boolean} A boolean which determines if the mouse left the page\r",
+          "source": " * @returns {boolean} A boolean which determines if the mouse left the page",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -62,12 +64,12 @@
             "postType": " ",
             "description": "boolean which determines if the mouse left the page",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         },
         {
           "number": 8,
-          "source": " *\r",
+          "source": " *",
           "tokens": {
             "start": " ",
             "delimiter": "*",
@@ -80,14 +82,16 @@
             "postType": "",
             "description": "",
             "end": "",
-            "lineEnd": "\r"
+            "lineEnd": ""
           }
         }
       ]
     }
   ],
   "dependencies": {
-    "hooks": ["useEvent"],
+    "hooks": [
+      "useEvent"
+    ],
     "utils": [],
     "packages": []
   },
