@@ -27,7 +27,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { ref, entry, observer } = useResizeObserver();
+ * const { ref, entries, observer } = useResizeObserver();
  *
  * @overload
  * @template Target The target element
@@ -35,7 +35,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { ref, entry, observer } = useResizeObserver((entry) => console.log(entry));
+ * const { ref, entries, observer } = useResizeObserver((entries) => console.log(entries));
  *
  * @overload
  * @param {HookTarget} target The target element to observe
@@ -43,7 +43,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseResizeObserverReturn} An object containing the resize observer state
  *
  * @example
- * const { entry, observer } = useResizeObserver(ref, (entry) => console.log(entry));
+ * const { entries, observer } = useResizeObserver(ref, (entries) => console.log(entries));
  */
 export const useResizeObserver = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
@@ -56,8 +56,8 @@ export const useResizeObserver = (...params) => {
       : { onChange: params[0] };
   const callback = options?.onChange;
   const enabled = options?.enabled ?? true;
-  const [entry, setEntry] = useState();
   const [observer, setObserver] = useState();
+  const [entries, setEntries] = useState();
   const internalRef = useRefState();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
@@ -65,9 +65,9 @@ export const useResizeObserver = (...params) => {
     if (!enabled || (!target && !internalRef.state)) return;
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
-    const observer = new ResizeObserver(([entry], observer) => {
-      setEntry(entry);
-      internalCallbackRef.current?.(entry, observer);
+    const observer = new ResizeObserver((entries, observer) => {
+      setEntries(entries);
+      internalCallbackRef.current?.(entries, observer);
     });
     setObserver(observer);
     observer.observe(element, options);
@@ -75,10 +75,10 @@ export const useResizeObserver = (...params) => {
       observer.disconnect();
     };
   }, [target && isTarget.getRawElement(target), internalRef.state, options?.box, enabled]);
-  if (target) return { entry, observer };
+  if (target) return { observer, entries };
   return {
     ref: internalRef,
-    entry,
-    observer
+    observer,
+    entries
   };
 };

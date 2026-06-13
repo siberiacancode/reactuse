@@ -1,7 +1,5 @@
 export * from './useBatchedCallback/useBatchedCallback';
-// base
 export * from './useConst/useConst';
-// timing
 export * from './useDebounceCallback/useDebounceCallback';
 export * from './useDebounceEffect/useDebounceEffect';
 export * from './useDebounceState/useDebounceState';

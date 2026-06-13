@@ -7,10 +7,7 @@ export type UseScriptStatus = 'error' | 'loading' | 'ready' | 'unknown';
 export const SCRIPT_STATUS_ATTRIBUTE_NAME = 'script-status';
 
 /** The use script options extends from attributes script tag */
-export interface UseScriptOptions extends ComponentProps<'script'> {
-  /** Whether to remove the script on unmount */
-  removeOnUnmount?: boolean;
-}
+export type UseScriptOptions = ComponentProps<'script'>;
 
 /**
  * @name useScript
@@ -20,7 +17,6 @@ export interface UseScriptOptions extends ComponentProps<'script'> {
  *
  * @param {string} src The source of the script
  * @param {UseScriptOptions} [options] The options of the script extends from attributes script tag
- * @param {boolean} [options.removeOnUnmount=true] Whether to remove the script on unmount
  * @param {boolean} [options.async=true] Whether to load the script asynchronously
  * @returns {UseScriptStatus} The status of the script
  *
@@ -28,9 +24,8 @@ export interface UseScriptOptions extends ComponentProps<'script'> {
  * const status = useScript('https://example.com/script.js');
  */
 export const useScript = (src: string, options: UseScriptOptions = {}) => {
-  const isServer = typeof document === 'undefined';
   const [status, setStatus] = useState<UseScriptStatus>(() => {
-    if (isServer) return 'loading';
+    if (typeof document === 'undefined') return 'loading';
 
     const script = document.querySelector(`script[src="${src}"]`) as HTMLScriptElement;
     const scriptStatus = script?.getAttribute(SCRIPT_STATUS_ATTRIBUTE_NAME) as UseScriptStatus;
@@ -39,10 +34,10 @@ export const useScript = (src: string, options: UseScriptOptions = {}) => {
 
     return 'loading';
   });
-  const { removeOnUnmount = true, async = true } = options;
+  const { async = true } = options;
 
   useEffect(() => {
-    if (isServer) return;
+    if (typeof document === 'undefined') return;
 
     const existedScript = document.querySelector(`script[src="${src}"]`) as HTMLScriptElement;
     const scriptStatus = existedScript?.getAttribute(
@@ -76,11 +71,11 @@ export const useScript = (src: string, options: UseScriptOptions = {}) => {
     script.addEventListener('error', onError);
 
     return () => {
-      if (removeOnUnmount) script.remove();
+      script.remove();
       script.removeEventListener('load', onLoad);
       script.removeEventListener('error', onError);
     };
-  }, [src, removeOnUnmount]);
+  }, [src]);
 
   return status;
 };

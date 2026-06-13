@@ -1,4 +1,3 @@
-// timing
 export * from './useInterval/useInterval';
 export * from './useProgress/useProgress';
 export * from './useStopwatch/useStopwatch';

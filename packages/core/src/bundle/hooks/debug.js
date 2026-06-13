@@ -1,4 +1,3 @@
-// debug
 export * from './useLogger/useLogger';
 export * from './useRenderCount/useRenderCount';
 export * from './useRenderInfo/useRenderInfo';

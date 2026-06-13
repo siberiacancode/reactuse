@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll","useClickOutside","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress","usePaint",
+      "useActiveElement","useAutoScroll","useClickOutside","useContextMenu","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress","usePaint","useScript",
 
       "---async---",
       "useAsync","useLockCallback","useMutation","useOptimistic","useQuery",
@@ -23,7 +23,7 @@
       "useBrowserLanguage","useOperatingSystem","usePreferredColorScheme","usePreferredContrast","usePreferredDark","usePreferredLanguages","usePreferredReducedMotion",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver","useResizeObserver",
 
       "---humor---",
       "useFul","useLess","useOnce",

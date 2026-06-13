@@ -10,7 +10,7 @@ import { useRefState } from '../useRefState/useRefState';
 
 /** The resize observer callback type */
 export type UseResizeObserverCallback = (
-  entry: ResizeObserverEntry,
+  entries: ResizeObserverEntry[],
   observer: ResizeObserver
 ) => void;
 
@@ -25,7 +25,7 @@ export interface UseResizeObserverOptions extends ResizeObserverOptions {
 /** The resize observer return type */
 export interface UseResizeObserverReturn {
   /** The resize observer entries */
-  entry: ResizeObserverEntry;
+  entries?: ResizeObserverEntry[];
   /** The resize observer instance */
   observer?: ResizeObserver;
 }
@@ -72,7 +72,7 @@ export interface UseResizeObserver {
  * @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { ref, entry, observer } = useResizeObserver();
+ * const { ref, entries, observer } = useResizeObserver();
  *
  * @overload
  * @template Target The target element
@@ -80,7 +80,7 @@ export interface UseResizeObserver {
  * @returns {UseResizeObserverReturn & { ref: StateRef<Target> }} A React ref to attach to the target element
  *
  * @example
- * const { ref, entry, observer } = useResizeObserver((entry) => console.log(entry));
+ * const { ref, entries, observer } = useResizeObserver((entries) => console.log(entries));
  *
  * @overload
  * @param {HookTarget} target The target element to observe
@@ -88,7 +88,7 @@ export interface UseResizeObserver {
  * @returns {UseResizeObserverReturn} An object containing the resize observer state
  *
  * @example
- * const { entry, observer } = useResizeObserver(ref, (entry) => console.log(entry));
+ * const { entries, observer } = useResizeObserver(ref, (entries) => console.log(entries));
  */
 export const useResizeObserver = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
@@ -106,8 +106,8 @@ export const useResizeObserver = ((...params: any[]) => {
   const callback = options?.onChange;
   const enabled = options?.enabled ?? true;
 
-  const [entry, setEntry] = useState<ResizeObserverEntry>();
   const [observer, setObserver] = useState<ResizeObserver>();
+  const [entries, setEntries] = useState<ResizeObserverEntry[]>();
 
   const internalRef = useRefState<Element>();
   const internalCallbackRef = useRef(callback);
@@ -119,9 +119,9 @@ export const useResizeObserver = ((...params: any[]) => {
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
 
-    const observer = new ResizeObserver(([entry], observer) => {
-      setEntry(entry);
-      internalCallbackRef.current?.(entry, observer);
+    const observer = new ResizeObserver((entries, observer) => {
+      setEntries(entries);
+      internalCallbackRef.current?.(entries, observer);
     });
 
     setObserver(observer);
@@ -132,10 +132,10 @@ export const useResizeObserver = ((...params: any[]) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state, options?.box, enabled]);
 
-  if (target) return { entry, observer };
+  if (target) return { observer, entries };
   return {
     ref: internalRef,
-    entry,
-    observer
+    observer,
+    entries
   };
 }) as UseResizeObserver;

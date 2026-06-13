@@ -196,8 +196,8 @@ importers:
         specifier: ^1.14.1
         version: 1.14.3
       '@siberiacancode/reactuse':
-        specifier: ^0.3.44
-        version: 0.3.44(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^0.3.45
+        version: 0.3.45(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@tabler/icons-react':
         specifier: ^3.37.1
         version: 3.44.0(react@19.2.7)
@@ -3017,6 +3017,17 @@ packages:
 
   '@siberiacancode/reactuse@0.3.44':
     resolution: {integrity: sha512-dw7vaFHDU4G8Nbe0nsJfPXxnlVuKpeOPEF0fGEXwxEX8s4b6fYIH9viMKMcBzfZba6lh72ahmGdWp4ivVIdwQA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@types/react': ^18 || ^19
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@siberiacancode/reactuse@0.3.45':
+    resolution: {integrity: sha512-sGDzkRwlFsPNVuc5jPalrozC8Uqz5XftFSCAxPUaS7FZr7OfJXpedS2lr7ncGUeRARuxWeC3NuX0etxuH+yq2g==}
     engines: {node: '>=14'}
     peerDependencies:
       '@types/react': ^18 || ^19
@@ -9850,6 +9861,13 @@ snapshots:
       prettier: 3.8.4
 
   '@siberiacancode/reactuse@0.3.44(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
+    optionalDependencies:
+      '@types/react': 19.2.17
+
+  '@siberiacancode/reactuse@0.3.45(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)

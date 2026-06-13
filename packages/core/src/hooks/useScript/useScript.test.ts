@@ -59,18 +59,6 @@ it('Should remove script after unmount', () => {
   expect(document.querySelector(`script[src="${src}"]`)).toBeNull();
 });
 
-it('Should not remove script if removeOnUnmount is false', () => {
-  const { result, unmount } = renderHook(() => useScript(src, { removeOnUnmount: false }));
-
-  expect(result.current).toBe('loading');
-
-  expect(document.querySelector(`script[src="${src}"]`)).not.toBeNull();
-
-  unmount();
-
-  expect(document.querySelector(`script[src="${src}"]`)).not.toBeNull();
-});
-
 it('Should display unknown status when script already exist', () => {
   const script = document.createElement('script');
   script.src = src;

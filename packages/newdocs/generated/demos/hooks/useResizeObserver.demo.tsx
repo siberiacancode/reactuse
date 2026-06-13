@@ -1,3 +1,5 @@
+'use client'
+
 import { useResizeObserver } from '@siberiacancode/reactuse';
 import { GripVerticalIcon } from 'lucide-react';
 import { useRef, useState } from 'react';

@@ -1,3 +1,5 @@
+'use client'
+
 import { useScript } from '@siberiacancode/reactuse';
 import { Loader2Icon } from 'lucide-react';
 import { useRef } from 'react';

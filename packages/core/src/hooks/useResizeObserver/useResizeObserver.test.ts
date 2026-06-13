@@ -88,7 +88,7 @@ targets.forEach((target) => {
       if (target) expect(result.current.ref).toBeUndefined();
 
       expect(result.current.observer).toBeInstanceOf(MockResizeObserver);
-      expect(result.current.entry).toBeUndefined();
+      expect(result.current.entries).toBeUndefined();
     });
 
     it('Should use resize observer on server side', () => {
@@ -105,7 +105,7 @@ targets.forEach((target) => {
       if (target) expect(result.current.ref).toBeUndefined();
 
       expect(result.current.observer).toBeUndefined();
-      expect(result.current.entry).toBeUndefined();
+      expect(result.current.entries).toBeUndefined();
     });
 
     it('Should observe element', () => {
@@ -146,7 +146,7 @@ targets.forEach((target) => {
       act(() => trigger.callback(element, [resizeEntry], result.current.observer!));
 
       expect(onChange).toHaveBeenCalledOnce();
-      expect(onChange).toHaveBeenCalledWith(resizeEntry, result.current.observer);
+      expect(onChange).toHaveBeenCalledWith([resizeEntry], result.current.observer);
     });
 
     it('Should call callback on resize', () => {
@@ -169,7 +169,7 @@ targets.forEach((target) => {
       act(() => trigger.callback(element, [resizeEntry], result.current.observer!));
 
       expect(callback).toHaveBeenCalledOnce();
-      expect(callback).toHaveBeenCalledWith(resizeEntry, result.current.observer);
+      expect(callback).toHaveBeenCalledWith([resizeEntry], result.current.observer);
     });
 
     it('Should update entries state on resize', () => {
@@ -184,7 +184,7 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(result.current.entry).toBeUndefined();
+      expect(result.current.entries).toBeUndefined();
 
       const resizeEntry = createMockResizeObserverEntry({
         width: 400,
@@ -192,7 +192,7 @@ targets.forEach((target) => {
       });
       act(() => trigger.callback(element, [resizeEntry], result.current.observer!));
 
-      expect(result.current.entry).toEqual(resizeEntry);
+      expect(result.current.entries).toEqual([resizeEntry]);
     });
 
     it('Should handle resize observer options', () => {

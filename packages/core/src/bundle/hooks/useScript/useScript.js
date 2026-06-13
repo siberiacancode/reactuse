@@ -8,7 +8,6 @@ export const SCRIPT_STATUS_ATTRIBUTE_NAME = 'script-status';
  *
  * @param {string} src The source of the script
  * @param {UseScriptOptions} [options] The options of the script extends from attributes script tag
- * @param {boolean} [options.removeOnUnmount=true] Whether to remove the script on unmount
  * @param {boolean} [options.async=true] Whether to load the script asynchronously
  * @returns {UseScriptStatus} The status of the script
  *
@@ -16,18 +15,17 @@ export const SCRIPT_STATUS_ATTRIBUTE_NAME = 'script-status';
  * const status = useScript('https://example.com/script.js');
  */
 export const useScript = (src, options = {}) => {
-  const isServer = typeof document === 'undefined';
   const [status, setStatus] = useState(() => {
-    if (isServer) return 'loading';
+    if (typeof document === 'undefined') return 'loading';
     const script = document.querySelector(`script[src="${src}"]`);
     const scriptStatus = script?.getAttribute(SCRIPT_STATUS_ATTRIBUTE_NAME);
     if (scriptStatus) return scriptStatus;
     if (script) return 'unknown';
     return 'loading';
   });
-  const { removeOnUnmount = true, async = true } = options;
+  const { async = true } = options;
   useEffect(() => {
-    if (isServer) return;
+    if (typeof document === 'undefined') return;
     const existedScript = document.querySelector(`script[src="${src}"]`);
     const scriptStatus = existedScript?.getAttribute(SCRIPT_STATUS_ATTRIBUTE_NAME);
     if (scriptStatus) return setStatus(scriptStatus);
@@ -51,10 +49,10 @@ export const useScript = (src, options = {}) => {
     script.addEventListener('load', onLoad);
     script.addEventListener('error', onError);
     return () => {
-      if (removeOnUnmount) script.remove();
+      script.remove();
       script.removeEventListener('load', onLoad);
       script.removeEventListener('error', onError);
     };
-  }, [src, removeOnUnmount]);
+  }, [src]);
   return status;
 };
