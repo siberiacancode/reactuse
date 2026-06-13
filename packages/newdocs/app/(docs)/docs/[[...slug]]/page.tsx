@@ -33,7 +33,7 @@ export const generateMetadata = async (props: DocsPageProps) => {
       title: page.data.title,
       description: page.data.description,
       type: 'article',
-      url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`,
+      url: `${process.env.NEXT_PUBLIC_APP_URL}new${page.url}`,
       images: [
         {
           url: `/new/og${page.url}.png`

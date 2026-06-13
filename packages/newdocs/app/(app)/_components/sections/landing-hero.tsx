@@ -1,7 +1,8 @@
-import { siteConfig } from '@docs/lib/config';
 import { Button } from '@docs/ui/button';
 import { ArrowRight, Github } from 'lucide-react';
 import Link from 'next/link';
+
+import { LINKS } from '@/src/constants';
 
 import { LandingBackdrop } from './landing-backdrop';
 
@@ -109,7 +110,7 @@ export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
             </Link>
           </Button>
           <Button asChild className='h-11 rounded-full px-7 text-sm' variant='secondary'>
-            <Link href={siteConfig.links.github} rel='noreferrer' target='_blank'>
+            <Link href={LINKS.GITHUB} rel='noreferrer' target='_blank'>
               <Github className='size-4' />
               GitHub
             </Link>

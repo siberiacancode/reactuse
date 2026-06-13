@@ -41,6 +41,15 @@ const frameworks = [
   },
   {
     description:
+      'Content-driven sites with React islands. Use reactuse hooks in interactive Astro components without extra setup.',
+    href: '/docs/installation/astro',
+    logo: 'https://cdn.simpleicons.org/astro',
+    name: 'Astro',
+    short: 'Content-driven sites',
+    site: 'https://astro.build'
+  },
+  {
+    description:
       'Fully type-safe router with built-in caching and first-class search params. Pairs perfectly with reactuse hooks.',
     href: '/docs/installation/tanstack-router',
     logo: 'https://cdn.simpleicons.org/tanstack',
@@ -213,35 +222,43 @@ export const LandingGettingStarted = () => {
               const isActive = activeFrameworkIndex === index;
 
               return (
-                <button
+                <div
                   key={framework.name}
                   className={cn(
                     'group bg-card flex w-full flex-1 items-center gap-4 rounded-xl p-5 text-left transition-all duration-300',
                     isActive ? 'bg-muted/40 ring-border ring-2' : 'hover:bg-muted/30'
                   )}
-                  type='button'
-                  onClick={() => setActiveFrameworkIndex(index)}
                 >
-                  <span
-                    aria-hidden='true'
-                    className='text-foreground block size-8 shrink-0'
-                    style={getMask(framework.logo)}
-                  />
-                  <span className='min-w-0 flex-1'>
-                    <span className='text-foreground block text-base font-medium'>
-                      {framework.name}
+                  <button
+                    className='flex min-w-0 flex-1 appearance-none items-center gap-4 bg-transparent p-0 text-left'
+                    type='button'
+                    onClick={() => setActiveFrameworkIndex(index)}
+                  >
+                    <span
+                      aria-hidden='true'
+                      className='text-foreground block size-8 shrink-0'
+                      style={getMask(framework.logo)}
+                    />
+                    <span className='min-w-0 flex-1'>
+                      <span className='text-foreground block text-base font-medium'>
+                        {framework.name}
+                      </span>
+                      <span className='text-muted-foreground mt-0.5 block truncate text-sm'>
+                        {framework.short}
+                      </span>
                     </span>
-                    <span className='text-muted-foreground mt-0.5 block truncate text-sm'>
-                      {framework.short}
-                    </span>
-                  </span>
-                  <ArrowUpRight
+                  </button>
+                  <Link
                     className={cn(
-                      'size-4 shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5',
+                      'shrink-0 rounded-full p-2 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 hover:bg-background',
                       isActive ? 'text-foreground' : 'text-muted-foreground'
                     )}
-                  />
-                </button>
+                    aria-label={`Open ${framework.name} installation`}
+                    href={framework.href}
+                  >
+                    <ArrowUpRight className='size-4' />
+                  </Link>
+                </div>
               );
             })}
           </div>

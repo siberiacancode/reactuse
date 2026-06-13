@@ -94,7 +94,7 @@ export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProp
               </Button>
 
               <Button asChild className='rounded-full' size='sm' variant='ghost'>
-                <Link href='/docs/functions'>Functions</Link>
+                <Link href='/functions'>Functions</Link>
               </Button>
             </div>
           </div>

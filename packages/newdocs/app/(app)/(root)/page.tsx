@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 
-import { siteConfig } from '@docs/lib/config';
 import fetches from '@siberiacancode/fetches';
 
 import { getContributors } from '@/lib/contributors';
 import { getElements } from '@/scripts/helpers';
+import { CONFIG } from '@/src/constants';
 
 import {
   LandingAdvantages,
@@ -19,12 +19,9 @@ import {
   LandingStats
 } from '../_components/sections';
 
-const title = 'reactuse';
-const description = siteConfig.description;
-
 export const metadata: Metadata = {
-  title,
-  description
+  title: CONFIG.NAME,
+  description: CONFIG.DESCRIPTION
 };
 
 const formatMetricCount = (count: number) => {
@@ -67,8 +64,8 @@ const HomePage = async () => {
         <LandingStats stats={stats} />
         <LandingBentoHooks hooks={hooks} />
         <LandingAdvantages contributorsCount={contributorsCount} hooksCount={hooksCount} />
-        <LandingCli />
         <LandingGettingStarted />
+        <LandingCli />
         <LandingFaq />
         <LandingContributors contributors={contributors} />
       </main>

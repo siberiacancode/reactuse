@@ -1,4 +1,3 @@
-// import { CodeBlockCommand } from '@docs/components/code-block-command';
 import { CopyButton } from '@docs/components/copy-button';
 import { getIconForLanguageExtension } from '@docs/components/icons';
 import { cn } from '@docs/lib/utils';

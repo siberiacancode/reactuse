@@ -48,24 +48,24 @@ const script: ScriptLine[] = [
     kind: 'command',
     segments: [
       { className: 'text-zinc-500', text: '~/my-app $ ' },
-      { className: 'text-white', text: 'npx useverse@latest init' }
+      { className: 'text-zinc-950 dark:text-white', text: 'npx useverse@latest init' }
     ]
   },
   {
     id: 'created-config',
     kind: 'output',
     segments: [
-      { className: 'text-white', text: '✓ ' },
-      { className: 'text-zinc-300', text: 'Created ' },
-      { className: 'text-cyan-400', text: 'reactuse.json' }
+      { className: 'text-zinc-950 dark:text-white', text: '✓ ' },
+      { className: 'text-zinc-700 dark:text-zinc-300', text: 'Created ' },
+      { className: 'text-cyan-600 dark:text-cyan-400', text: 'reactuse.json' }
     ]
   },
   {
     id: 'installed-dependencies',
     kind: 'output',
     segments: [
-      { className: 'text-white', text: '✓ ' },
-      { className: 'text-zinc-300', text: 'Installed dependencies' }
+      { className: 'text-zinc-950 dark:text-white', text: '✓ ' },
+      { className: 'text-zinc-700 dark:text-zinc-300', text: 'Installed dependencies' }
     ]
   },
   { id: 'space-after-init', kind: 'output', segments: text('') },
@@ -74,25 +74,25 @@ const script: ScriptLine[] = [
     kind: 'command',
     segments: [
       { className: 'text-zinc-500', text: '~/my-app $ ' },
-      { className: 'text-white', text: 'npx useverse@latest add useCounter' }
+      { className: 'text-zinc-950 dark:text-white', text: 'npx useverse@latest add useCounter' }
     ]
   },
   {
     id: 'resolved-hook',
     kind: 'output',
     segments: [
-      { className: 'text-white', text: '✓ ' },
-      { className: 'text-zinc-300', text: 'Resolved ' },
-      { className: 'text-violet-400', text: 'useCounter' }
+      { className: 'text-zinc-950 dark:text-white', text: '✓ ' },
+      { className: 'text-zinc-700 dark:text-zinc-300', text: 'Resolved ' },
+      { className: 'text-violet-600 dark:text-violet-400', text: 'useCounter' }
     ]
   },
   {
     id: 'added-hook-file',
     kind: 'output',
     segments: [
-      { className: 'text-white', text: '✓ ' },
-      { className: 'text-zinc-300', text: 'Added ' },
-      { className: 'text-cyan-400', text: 'hooks/useCounter.ts' }
+      { className: 'text-zinc-950 dark:text-white', text: '✓ ' },
+      { className: 'text-zinc-700 dark:text-zinc-300', text: 'Added ' },
+      { className: 'text-cyan-600 dark:text-cyan-400', text: 'hooks/useCounter.ts' }
     ]
   },
   { id: 'space-after-add', kind: 'output', segments: text('') },
@@ -105,24 +105,24 @@ const script: ScriptLine[] = [
     id: 'usage-import',
     kind: 'output',
     segments: [
-      { className: 'text-violet-400', text: 'import ' },
-      { className: 'text-zinc-300', text: '{ ' },
-      { className: 'text-cyan-400', text: 'useCounter' },
-      { className: 'text-zinc-300', text: ' } ' },
-      { className: 'text-violet-400', text: 'from ' },
-      { className: 'text-amber-300', text: "'@/hooks'" }
+      { className: 'text-violet-600 dark:text-violet-400', text: 'import ' },
+      { className: 'text-zinc-700 dark:text-zinc-300', text: '{ ' },
+      { className: 'text-cyan-600 dark:text-cyan-400', text: 'useCounter' },
+      { className: 'text-zinc-700 dark:text-zinc-300', text: ' } ' },
+      { className: 'text-violet-600 dark:text-violet-400', text: 'from ' },
+      { className: 'text-amber-600 dark:text-amber-300', text: "'@/hooks'" }
     ]
   },
   {
     id: 'usage-call',
     kind: 'output',
     segments: [
-      { className: 'text-violet-400', text: 'const ' },
-      { className: 'text-zinc-300', text: '{ ' },
-      { className: 'text-cyan-400', text: 'count, inc' },
-      { className: 'text-zinc-300', text: ' } = ' },
-      { className: 'text-white', text: 'useCounter' },
-      { className: 'text-zinc-300', text: '()' }
+      { className: 'text-violet-600 dark:text-violet-400', text: 'const ' },
+      { className: 'text-zinc-700 dark:text-zinc-300', text: '{ ' },
+      { className: 'text-cyan-600 dark:text-cyan-400', text: 'count, inc' },
+      { className: 'text-zinc-700 dark:text-zinc-300', text: ' } = ' },
+      { className: 'text-zinc-950 dark:text-white', text: 'useCounter' },
+      { className: 'text-zinc-700 dark:text-zinc-300', text: '()' }
     ]
   }
 ];
@@ -186,8 +186,12 @@ export const LandingCli = () => {
 
   return (
     <section>
-      <div className='container mx-auto px-6 py-12 md:py-24'>
-        <div className='grid items-center gap-10 lg:grid-cols-2 lg:gap-16'>
+      <div className='container mx-auto px-6 pb-12 md:pb-24'>
+        <h2 className='font-display text-foreground text-xl font-bold tracking-tight uppercase md:text-2xl'>
+          or install by cli
+        </h2>
+
+        <div className='mt-4 grid items-center gap-10 lg:grid-cols-2 lg:gap-16'>
           {/* ── Steps (left) — big numerals ── */}
           <motion.ol
             className='flex flex-col gap-8'
@@ -231,18 +235,18 @@ export const LandingCli = () => {
 
           {/* ── Terminal (right) — right-side fade ── */}
           <motion.div
-            className='border-border relative overflow-hidden rounded-xl border bg-[#0a0a0a]'
+            className='border-border bg-card relative overflow-hidden rounded-xl border dark:bg-[#0a0a0a]'
             initial={{ opacity: 0, scale: 0.97, y: -30 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true, amount: 0.35 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
           >
             {/* title bar */}
-            <div className='flex items-center gap-2 border-b border-white/10 px-4 py-3'>
-              <span className='size-3 rounded-full bg-white/20' />
-              <span className='size-3 rounded-full bg-white/20' />
-              <span className='size-3 rounded-full bg-white/20' />
-              <span className='ml-2 font-mono text-xs tracking-wide text-white/40'>
+            <div className='border-border flex items-center gap-2 border-b px-4 py-3 dark:border-white/10'>
+              <span className='bg-muted-foreground/30 size-3 rounded-full dark:bg-white/20' />
+              <span className='bg-muted-foreground/30 size-3 rounded-full dark:bg-white/20' />
+              <span className='bg-muted-foreground/30 size-3 rounded-full dark:bg-white/20' />
+              <span className='text-muted-foreground ml-2 font-mono text-xs tracking-wide'>
                 zsh — useverse
               </span>
             </div>
@@ -261,7 +265,9 @@ export const LandingCli = () => {
                         <>
                           {renderTypedSegments(line.segments, charCount)}
                           {charCount < full.length && (
-                            <span className='landing-cli-cursor text-white'>▋</span>
+                            <span className='landing-cli-cursor text-foreground dark:text-white'>
+                              ▋
+                            </span>
                           )}
                         </>
                       ) : line.segments.length === 1 && line.segments[0].text === '' ? (
@@ -282,7 +288,7 @@ export const LandingCli = () => {
               </div>
 
               {/* right-side fade */}
-              <div className='pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0a0a0a] to-transparent' />
+              <div className='from-card pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l to-transparent dark:from-[#0a0a0a]' />
             </div>
           </motion.div>
         </div>

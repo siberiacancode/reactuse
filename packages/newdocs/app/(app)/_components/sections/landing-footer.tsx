@@ -1,6 +1,7 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
-import { LINKS } from '@/src/constants';
+import { CONFIG, LINKS } from '@/src/constants';
 
 const columns = [
   {
@@ -43,9 +44,10 @@ export const LandingFooter = () => (
           {/* ── Brand (left) ── */}
           <div className='max-w-sm'>
             <Link className='inline-flex items-center gap-2' href='/'>
-              <img alt='reactuse' className='size-7' src='/logo.svg' />
-              <span className='font-display text-foreground text-2xl leading-none font-bold lowercase'>
-                reactuse
+              <Image alt='ReactUse' height={12} src='/new/logo.svg' width={12} />
+
+              <span className='text-foreground text-lg font-semibold tracking-tight'>
+                {CONFIG.NAME}
               </span>
             </Link>
 
@@ -94,7 +96,7 @@ export const LandingFooter = () => (
         </div>
 
         {/* ── Bottom bar ── */}
-        <div className='border-border mt-16 flex flex-col items-start gap-4 border-t pt-8 sm:flex-row sm:items-center sm:justify-between'>
+        <div className='mt-16 flex flex-col items-start gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between'>
           <p className='text-muted-foreground text-xs'>
             © {new Date().getFullYear()} reactuse. Released under the MIT License. Made with care
             by{' '}
