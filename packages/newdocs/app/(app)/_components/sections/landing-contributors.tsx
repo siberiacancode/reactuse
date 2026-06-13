@@ -1,7 +1,9 @@
 'use client';
 
 import { useBoolean } from '@siberiacancode/reactuse';
+import { ArrowUpRightIcon } from 'lucide-react';
 import { motion } from 'motion/react';
+import Link from 'next/link';
 
 import {
   Avatar,
@@ -13,6 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/src/components/ui';
+import { LINKS } from '@/src/constants';
 import { cn } from '@/src/lib';
 
 const INITIAL_COUNT = 64;
@@ -51,6 +54,15 @@ export const LandingContributors = ({ contributors }: LandingContributorsProps) 
             <span className='text-foreground font-semibold'>{contributors.length}</span> developers
             around the world. Every hook, fix and doc is a contribution.
           </p>
+          <Link
+            className='text-foreground mt-5 inline-flex items-center gap-1 font-medium underline underline-offset-4'
+            href={LINKS.CONTRIBUTING}
+            rel='noreferrer'
+            target='_blank'
+          >
+            Contribute
+            <ArrowUpRightIcon className='size-4' />
+          </Link>
         </motion.div>
 
         <motion.div
