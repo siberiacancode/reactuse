@@ -44,7 +44,7 @@ export const LandingFooter = () => (
           <div className='max-w-sm'>
             <Link className='inline-flex items-center gap-2' href='/'>
               <img alt='reactuse' className='size-7' src='/logo.svg' />
-              <span className='font-display text-foreground text-xl font-bold lowercase'>
+              <span className='font-display text-foreground text-2xl leading-none font-bold lowercase'>
                 reactuse
               </span>
             </Link>

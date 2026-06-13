@@ -1,9 +1,6 @@
-'use client';
-
 import { siteConfig } from '@docs/lib/config';
 import { Button } from '@docs/ui/button';
 import { ArrowRight, Github } from 'lucide-react';
-import { motion } from 'motion/react';
 import Link from 'next/link';
 
 import { LandingBackdrop } from './landing-backdrop';
@@ -42,19 +39,9 @@ export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
     <div className='from-background pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t to-transparent' />
 
     <div className='relative container mx-auto w-full px-6'>
-      <motion.div
-        animate={{ opacity: 1, y: 0 }}
-        className='flex max-w-3xl flex-col items-start'
-        initial={{ opacity: 0, y: 24 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      >
+      <div className='flex max-w-3xl flex-col items-start'>
         {/* logo + name (no background, bigger) */}
-        <motion.div
-          animate={{ opacity: 1, y: 0 }}
-          className='flex flex-col items-start gap-3'
-          initial={{ opacity: 0, y: 24 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className='flex flex-col items-start gap-3'>
           <svg
             className='text-foreground size-16 shrink-0 md:size-24 lg:size-28'
             fill='none'
@@ -103,28 +90,18 @@ export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
           <h1 className='font-display text-foreground text-6xl leading-none font-bold tracking-tight md:text-8xl lg:text-[10rem]'>
             REACTUSE
           </h1>
-        </motion.div>
+        </div>
 
         {/* subtitle — background hugs each line */}
-        <motion.p
-          animate={{ opacity: 1, y: 0 }}
-          className='mt-6 max-w-xl text-lg leading-relaxed md:text-xl'
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+        <p className='mt-6 max-w-xl text-lg leading-relaxed md:text-xl'>
           <span className='bg-background text-muted-foreground rounded-full box-decoration-clone px-3 leading-[2.1]'>
             The largest React hooks library. {hooksCount} production-ready hooks — lightweight,
             tree-shakeable, and TypeScript-first.
           </span>
-        </motion.p>
+        </p>
 
         {/* actions */}
-        <motion.div
-          animate={{ opacity: 1, y: 0 }}
-          className='mt-8 flex flex-col items-start gap-3 sm:flex-row'
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
+        <div className='mt-8 flex flex-col items-start gap-3 sm:flex-row'>
           <Button asChild className='group h-11 rounded-full px-7 text-sm'>
             <Link href='/docs/installation'>
               Get started
@@ -137,15 +114,10 @@ export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
               GitHub
             </Link>
           </Button>
-        </motion.div>
+        </div>
 
         {/* frameworks — label hugs the line, chips share one rounded container */}
-        <motion.div
-          animate={{ opacity: 1 }}
-          className='mt-12'
-          initial={{ opacity: 0 }}
-          transition={{ duration: 0.5, delay: 0.55 }}
-        >
+        <div className='mt-12'>
           <p className='text-xs leading-[2.2] tracking-[0.2em] uppercase'>
             <span className='bg-background text-muted-foreground rounded-full box-decoration-clone px-3 py-1.5 font-mono'>
               Works with any React framework
@@ -163,8 +135,8 @@ export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
               </span>
             ))}
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </div>
   </section>
 );
