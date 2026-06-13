@@ -10,13 +10,3 @@ allowBuilds:
   esbuild: true
   msw: true
   sharp: true
-supportedArchitectures:
-  os:
-    - current
-    - linux
-  cpu:
-    - current
-    - x64
-  libc:
-    - current
-    - glibc
