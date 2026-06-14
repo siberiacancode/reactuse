@@ -11,7 +11,7 @@
       "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect","useMount","useShallowEffect",
 
       "---browser---",
-      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls","useMediaQuery","useMemory","useNetwork","useObjectUrl","useOnline","useOtpCredential","usePermission","usePictureInPicture","usePointerLock","usePostMessage","useRaf",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls","useMediaQuery","useMemory","useNetwork","useObjectUrl","useOnline","useOtpCredential","usePermission","usePictureInPicture","usePointerLock","usePostMessage","useRaf","useShare",
 
       "---utilities---",
       "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent","useLastChanged","useLatest","usePrevious",

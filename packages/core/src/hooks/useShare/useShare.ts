@@ -15,7 +15,7 @@ export interface UseShareReturn {
   /** Whether the Web Share API is supported in the current environment */
   supported: boolean;
   /** Function to trigger the native share dialog */
-  trigger: (shareParams: ShareData) => Promise<void>;
+  trigger: (params?: ShareData) => Promise<void>;
 }
 
 /**
@@ -35,7 +35,7 @@ export interface UseShareReturn {
 export const useShare = (params?: UseShareParams) => {
   const supported = typeof navigator !== 'undefined' && 'share' in navigator && !!navigator.share;
 
-  const trigger = async (shareParams: ShareData) => {
+  const trigger = async (shareParams?: ShareData) => {
     if (!supported) return;
 
     const data = {

@@ -106,15 +106,16 @@ const Demo = () => {
 
       {!details.opened && (
         <div className='flex flex-col gap-5'>
-          <div className='flex items-center gap-3'>
+          <div className='flex items-center gap-4'>
             <div
-              className='size-12 shrink-0 bg-gradient-to-br from-neutral-700 to-neutral-900 text-sm font-semibold text-white'
+              className='bg-gradient-to-br from-neutral-700 to-neutral-900 font-semibold text-white'
+              data-size='xl'
               data-slot='avatar'
             >
               <span data-slot='avatar-fallback'>SC</span>
             </div>
             <div className='flex flex-col'>
-              <h2 className='text-xl!'>siberiacancode</h2>
+              <h2 className='text-2xl!'>siberiacancode</h2>
               <span className='text-muted-foreground text-sm'>
                 Open-source tools and libraries for developers
               </span>
@@ -125,12 +126,10 @@ const Demo = () => {
             {repos.map((item) => (
               <div
                 key={item.fullName}
-                className='hover:bg-muted/40 cursor-pointer transition-colors'
-                data-size='sm'
-                data-slot='card'
+                className='border-border bg-card text-card-foreground hover:bg-muted/40 cursor-pointer rounded-xl border p-4 text-sm transition-colors'
                 onClick={() => onOpen(item.fullName)}
               >
-                <div className='flex flex-col gap-2' data-slot='card-content'>
+                <div className='flex flex-col gap-2'>
                   <span className='text-primary text-sm font-semibold'>{item.name}</span>
                   <span className='text-muted-foreground text-xs leading-relaxed'>
                     {item.description}
@@ -161,10 +160,12 @@ const Demo = () => {
 
       {details.opened && repo && (
         <div className='flex flex-col gap-5'>
-          <button data-variant='ghost' type='button' onClick={onBack}>
-            <ChevronLeftIcon className='size-4' />
-            Back
-          </button>
+          <div className='flex justify-start'>
+            <button data-variant='ghost' type='button' onClick={onBack}>
+              <ChevronLeftIcon className='size-4' />
+              Back
+            </button>
+          </div>
 
           <div className='flex flex-col gap-2'>
             <h2 className='text-2xl!'>{repo.name}</h2>

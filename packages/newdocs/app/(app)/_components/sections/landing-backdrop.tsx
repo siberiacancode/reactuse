@@ -1,5 +1,7 @@
 'use client';
 
+import type { CSSProperties } from 'react';
+
 import { useEffect, useRef } from 'react';
 
 import { useTheme } from '@/app/_contexts/theme';
@@ -126,12 +128,15 @@ const compile = (gl: WebGLRenderingContext, type: number, src: string) => {
   return shader;
 };
 
+const ANIMATION_DELAY_MS = 600;
+
 interface DitherCanvasProps {
   backgroundColor: [number, number, number];
+  staticBackground: CSSProperties['background'];
   waveColor: [number, number, number];
 }
 
-const DitherCanvas = ({ backgroundColor, waveColor }: DitherCanvasProps) => {
+const DitherCanvas = ({ backgroundColor, staticBackground, waveColor }: DitherCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -10000, y: -10000 });
   const colorsRef = useRef({ backgroundColor, waveColor });
@@ -198,9 +203,6 @@ const DitherCanvas = ({ backgroundColor, waveColor }: DitherCanvasProps) => {
     };
     resize();
 
-    const onResize = () => resize();
-    window.addEventListener('resize', onResize);
-
     const onPointerMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       // gasim effekt, esli kursor vne kanvasa
@@ -220,11 +222,12 @@ const DitherCanvas = ({ backgroundColor, waveColor }: DitherCanvasProps) => {
     };
     window.addEventListener('pointermove', onPointerMove);
 
-    const start = performance.now();
     let raf = 0;
+    let animationDelay = 0;
+    let animationStart = performance.now();
+    let isAnimating = false;
 
-    const render = () => {
-      const time = (performance.now() - start) * 0.001;
+    const drawFrame = (time: number) => {
       const { backgroundColor: bg, waveColor: wc } = colorsRef.current;
 
       gl.uniform2f(u.resolution, canvas.width, canvas.height);
@@ -240,12 +243,31 @@ const DitherCanvas = ({ backgroundColor, waveColor }: DitherCanvasProps) => {
       gl.uniform1f(u.colorNum, 4);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
+    };
+
+    const getTime = () => (isAnimating ? (performance.now() - animationStart) * 0.001 : 0);
+
+    const onResize = () => {
+      resize();
+      drawFrame(getTime());
+    };
+    window.addEventListener('resize', onResize);
+
+    const render = () => {
+      drawFrame(getTime());
       raf = requestAnimationFrame(render);
     };
-    render();
+
+    drawFrame(0);
+    animationDelay = window.setTimeout(() => {
+      isAnimating = true;
+      animationStart = performance.now();
+      render();
+    }, ANIMATION_DELAY_MS);
 
     return () => {
       cancelAnimationFrame(raf);
+      window.clearTimeout(animationDelay);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('pointermove', onPointerMove);
       gl.deleteProgram(program);
@@ -253,7 +275,9 @@ const DitherCanvas = ({ backgroundColor, waveColor }: DitherCanvasProps) => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className='block size-full' />;
+  return (
+    <canvas ref={canvasRef} className='block size-full' style={{ background: staticBackground }} />
+  );
 };
 
 export const LandingBackdrop = () => {
@@ -262,10 +286,17 @@ export const LandingBackdrop = () => {
 
   const backgroundColor: [number, number, number] = isDark ? [0, 0, 0] : [1, 1, 1];
   const waveColor: [number, number, number] = isDark ? [0.45, 0.45, 0.45] : [0.6, 0.6, 0.6];
+  const staticBackground = isDark
+    ? 'radial-gradient(ellipse at 70% 45%, rgb(55 55 55 / 0.72), transparent 34%), radial-gradient(ellipse at 42% 62%, rgb(36 36 36 / 0.64), transparent 30%), #000'
+    : 'radial-gradient(ellipse at 70% 45%, rgb(166 166 166 / 0.62), transparent 34%), radial-gradient(ellipse at 42% 62%, rgb(190 190 190 / 0.58), transparent 30%), #b8b8b8';
 
   return (
     <div className='absolute inset-0 opacity-90'>
-      <DitherCanvas backgroundColor={backgroundColor} waveColor={waveColor} />
+      <DitherCanvas
+        backgroundColor={backgroundColor}
+        staticBackground={staticBackground}
+        waveColor={waveColor}
+      />
     </div>
   );
 };

@@ -135,3 +135,4 @@ A quick list of available functions.
 - [useSessionStorage](/functions/hooks/useSessionStorage): Hook that manages session storage value
 - [useSet](/functions/hooks/useSet): Hook that manages a set structure
 - [useShallowEffect](/functions/hooks/useShallowEffect): Hook that executes an effect only when dependencies change shallowly or deeply
+- [useShare](/functions/hooks/useShare): Hook that utilizes the share api

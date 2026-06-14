@@ -57,6 +57,7 @@
 - [usePointerLock](https://reactuse.org/functions/hooks/usePointerLock): Hook that provides reactive pointer lock
 - [usePostMessage](https://reactuse.org/functions/hooks/usePostMessage): Hook that allows you to receive messages from other origins
 - [useRaf](https://reactuse.org/functions/hooks/useRaf): Hook that defines the logic for raf callback
+- [useShare](https://reactuse.org/functions/hooks/useShare): Hook that utilizes the share api
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle

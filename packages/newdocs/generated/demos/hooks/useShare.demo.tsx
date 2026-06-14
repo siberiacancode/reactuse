@@ -1,3 +1,5 @@
+'use client'
+
 import { useShare } from '@siberiacancode/reactuse';
 import { CheckIcon, GiftIcon, Share2Icon } from 'lucide-react';
 
