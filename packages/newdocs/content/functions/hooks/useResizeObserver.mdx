@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1768553242000
+lastModifiedTime: 1781376500000
 ---
 
 import metadata from './useResizeObserver.meta.json';

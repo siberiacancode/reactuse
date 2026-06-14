@@ -1,15 +1,15 @@
 ---
-title: useScript
-description: Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
-category: elements
+title: useScrollTo
+description: Hook for scrolling to a specific element
+category: sensors
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781376500000
+lastModifiedTime: 1773843478000
 ---
 
-import metadata from './useScript.meta.json';
+import metadata from './useScrollTo.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useScript.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useScript
+    npx useverse@latest add useScrollTo
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,9 @@ import metadata from './useScript.meta.json';
 ## Usage
 
 ```tsx
-const status = useScript('https://example.com/script.js');
+const trigger = useScrollTo(ref, options);
+// or
+const { ref, trigger } = useScrollTo(options);
 ```
 
 ## Type Declarations

@@ -1,15 +1,15 @@
 ---
-title: useScript
-description: Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
-category: elements
+title: useScrollIntoView
+description: Hook that provides functionality to scroll an element into view
+category: sensors
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781376500000
+lastModifiedTime: 1773843478000
 ---
 
-import metadata from './useScript.meta.json';
+import metadata from './useScrollIntoView.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useScript.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useScript
+    npx useverse@latest add useScrollIntoView
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,9 @@ import metadata from './useScript.meta.json';
 ## Usage
 
 ```tsx
-const status = useScript('https://example.com/script.js');
+const { trigger } = useScrollIntoView(ref);
+// or
+const { ref, trigger } = useScrollIntoView<HTMLDivElement>();
 ```
 
 ## Type Declarations

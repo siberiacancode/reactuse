@@ -1,3 +1,5 @@
+'use client'
+
 import { useClickOutside, useDisclosure, useMergedRef, useSet } from '@siberiacancode/reactuse';
 import { CheckIcon, ChevronDownIcon, XIcon } from 'lucide-react';
 

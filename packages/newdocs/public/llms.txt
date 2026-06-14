@@ -92,6 +92,7 @@
 - [useIsFirstRender](https://reactuse.org/functions/hooks/useIsFirstRender): Hook that returns true if the component is first render
 - [useIsomorphicLayoutEffect](https://reactuse.org/functions/hooks/useIsomorphicLayoutEffect): Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
 - [useMount](https://reactuse.org/functions/hooks/useMount): Hook that executes a callback when the component mounts
+- [useShallowEffect](https://reactuse.org/functions/hooks/useShallowEffect): Hook that executes an effect only when dependencies change shallowly or deeply
 ### Sensorss
 
 - [useDeviceMotion](https://reactuse.org/functions/hooks/useDeviceMotion): Hook that work with device motion
@@ -110,6 +111,9 @@
 - [useParallax](https://reactuse.org/functions/hooks/useParallax): Hook to help create parallax effect
 - [usePerformanceObserver](https://reactuse.org/functions/hooks/usePerformanceObserver): Hook that allows you to observe performance entries
 - [useResizeObserver](https://reactuse.org/functions/hooks/useResizeObserver): Hook that gives you resize observer state
+- [useScroll](https://reactuse.org/functions/hooks/useScroll): Hook that allows you to control scroll a element
+- [useScrollIntoView](https://reactuse.org/functions/hooks/useScrollIntoView): Hook that provides functionality to scroll an element into view
+- [useScrollTo](https://reactuse.org/functions/hooks/useScrollTo): Hook for scrolling to a specific element
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state
@@ -131,6 +135,8 @@
 - [useQueue](https://reactuse.org/functions/hooks/useQueue): Hook that manages a queue
 - [useRafState](https://reactuse.org/functions/hooks/useRafState): Hook that returns the value and a function to set the value
 - [useRefState](https://reactuse.org/functions/hooks/useRefState): Hook that returns the state reference of the value
+- [useSessionStorage](https://reactuse.org/functions/hooks/useSessionStorage): Hook that manages session storage value
+- [useSet](https://reactuse.org/functions/hooks/useSet): Hook that manages a set structure
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions

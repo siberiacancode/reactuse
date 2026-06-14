@@ -1,3 +1,5 @@
+'use client'
+
 import { useScroll } from '@siberiacancode/reactuse';
 import { ClockIcon, UserIcon } from 'lucide-react';
 import { useRef } from 'react';

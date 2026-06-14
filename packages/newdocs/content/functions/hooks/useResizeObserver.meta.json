@@ -54,7 +54,7 @@
   },
   "description": "Hook that gives you resize observer state",
   "category": "Sensors",
-  "lastModified": 1768553242000,
+  "lastModified": 1781376500000,
   "examples": [
     "const { entries, observer } = useResizeObserver(ref);",
     "const { ref, entries, observer } = useResizeObserver();",

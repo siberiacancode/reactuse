@@ -12,7 +12,7 @@ const Demo = () => {
   const settingLocalStorage = useLocalStorage('reactuse-demo-notify', 'daily');
 
   return (
-    <section className='flex min-w-md flex-col gap-2 p-4'>
+    <section className='border-border flex min-w-md flex-col gap-2 rounded-xl border p-2'>
       <div className='flex w-full max-w-md items-start justify-between gap-4 p-4'>
         <div className='flex items-center gap-3'>
           <BellIcon className='text-muted-foreground size-6 shrink-0' />

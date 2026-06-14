@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1779722441000
+lastModifiedTime: 1781376500000
 ---
 
 import metadata from './useScript.meta.json';

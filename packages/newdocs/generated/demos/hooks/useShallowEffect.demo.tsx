@@ -1,3 +1,5 @@
+'use client'
+
 import { useShallowEffect } from '@siberiacancode/reactuse';
 import { LayersIcon, RefreshCwIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';

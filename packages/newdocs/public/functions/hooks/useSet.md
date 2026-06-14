@@ -1,15 +1,15 @@
 ---
-title: useScript
-description: Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
-category: elements
-usage: low
+title: useSet
+description: Hook that manages a set structure
+category: state
+usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781376500000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useScript.meta.json';
+import metadata from './useSet.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useScript.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useScript
+    npx useverse@latest add useSet
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useScript.meta.json';
 ## Usage
 
 ```tsx
-const status = useScript('https://example.com/script.js');
+const { value, add, remove, clear, reset, toggle, union, intersection, difference, symmetricDifference, size, has } = useSet([1, 2, 3]);
 ```
 
 ## Type Declarations

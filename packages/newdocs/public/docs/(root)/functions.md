@@ -129,3 +129,9 @@ A quick list of available functions.
 - [useRerender](/functions/hooks/useRerender): Hook that defines the logic to force rerender a component
 - [useResizeObserver](/functions/hooks/useResizeObserver): Hook that gives you resize observer state
 - [useScript](/functions/hooks/useScript): Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
+- [useScroll](/functions/hooks/useScroll): Hook that allows you to control scroll a element
+- [useScrollIntoView](/functions/hooks/useScrollIntoView): Hook that provides functionality to scroll an element into view
+- [useScrollTo](/functions/hooks/useScrollTo): Hook for scrolling to a specific element
+- [useSessionStorage](/functions/hooks/useSessionStorage): Hook that manages session storage value
+- [useSet](/functions/hooks/useSet): Hook that manages a set structure
+- [useShallowEffect](/functions/hooks/useShallowEffect): Hook that executes an effect only when dependencies change shallowly or deeply

@@ -1,3 +1,5 @@
+'use client'
+
 import { useSessionStorage } from '@siberiacancode/reactuse';
 import { ChevronDownIcon, LayoutGridIcon } from 'lucide-react';
 
