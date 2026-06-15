@@ -94,7 +94,7 @@ const Demo = () => {
   const repos = reposQuery.data ?? [];
 
   return (
-    <section className='flex w-full flex-col p-6'>
+    <section className='flex max-w-xl flex-col p-6'>
       {!!progress.active && (
         <div className='bg-primary/20 fixed top-0 right-0 left-0 z-[9999] h-1'>
           <div

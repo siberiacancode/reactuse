@@ -54,7 +54,7 @@
   },
   "description": "Hook that utilizes the share api",
   "category": "Browser",
-  "lastModified": 1755262808000,
+  "lastModified": 1781450802000,
   "examples": [
     "const { share, supported } = useShare();"
   ],

@@ -1,12 +1,17 @@
 import { useBoolean, useMeasure } from '@siberiacancode/reactuse';
+import { useState } from 'react';
 
 const COLLAPSED_HEIGHT = 60;
 
 const Demo = () => {
   const [expanded, setExpanded] = useBoolean(false);
-  const measure = useMeasure<HTMLParagraphElement>();
-
-  const isOverflowing = measure.height > COLLAPSED_HEIGHT;
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const measure = useMeasure<HTMLParagraphElement>(({ height }) => {
+    const nextIsOverflowing = height > COLLAPSED_HEIGHT;
+    setIsOverflowing((isOverflowing) =>
+      isOverflowing === nextIsOverflowing ? isOverflowing : nextIsOverflowing
+    );
+  });
 
   return (
     <section className='flex w-full max-w-sm flex-col gap-2 p-4'>
@@ -15,7 +20,7 @@ const Demo = () => {
 
         <div
           className='relative overflow-hidden transition-[max-height] duration-300'
-          style={{ maxHeight: expanded ? measure.height : COLLAPSED_HEIGHT }}
+          style={{ maxHeight: expanded ? undefined : COLLAPSED_HEIGHT }}
         >
           <p ref={measure.ref} className='text-muted-foreground text-xs leading-relaxed'>
             reactuse is a collection of essential React hooks designed to handle the most common

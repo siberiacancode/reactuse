@@ -47,9 +47,9 @@ import metadata from './useMeasure.meta.json';
 ## Usage
 
 ```tsx
-const { x, y, width, height, top, left, bottom, right } = useMeasure(ref);
+const { snapshot, watch } = useMeasure(ref);
 // or
-const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();
+const { ref, snapshot, watch } = useMeasure();
 ```
 
 ## Type Declarations

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import type { HookTarget } from '@/utils/helpers';
 
@@ -7,17 +7,33 @@ import { isTarget } from '@/utils/helpers';
 import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
+import { useRerender } from '../useRerender/useRerender';
 
-/** The use measure return type */
-export type UseMeasureReturn = Pick<
+/** The measure value type */
+export type UseMeasureValue = Pick<
   DOMRectReadOnly,
   'bottom' | 'height' | 'left' | 'right' | 'top' | 'width' | 'x' | 'y'
 >;
 
+/** The use measure return type */
+export interface UseMeasureReturn {
+  /** The latest measure value snapshot */
+  snapshot: UseMeasureValue;
+  /** Function to enable subscriptions and rerender on next updates */
+  watch: () => UseMeasureValue;
+}
+
+export type UseMeasureCallback = (
+  value: UseMeasureValue,
+  entry: ResizeObserverEntry,
+  observer: ResizeObserver
+) => void;
+
 export interface UseMeasure {
-  (target: HookTarget): UseMeasureReturn;
+  (target: HookTarget, callback?: UseMeasureCallback): UseMeasureReturn;
 
   <Target extends Element>(
+    callback?: UseMeasureCallback,
     target?: never
   ): UseMeasureReturn & {
     ref: StateRef<Target>;
@@ -32,23 +48,27 @@ export interface UseMeasure {
  *
  * @overload
  * @param {HookTarget} target The element to measure
- * @returns {UseMeasureReturn} The element's size and position
+ * @param {(value: UseMeasureValue, entry: ResizeObserverEntry, observer: ResizeObserver) => void} [callback] The callback to invoke on measure updates
+ * @returns {UseMeasureReturn} The element's size and position controls
  *
  * @example
- * const { x, y, width, height, top, left, bottom, right } = useMeasure(ref);
+ * const { snapshot, watch } = useMeasure(ref);
  *
  * @overload
  * @template Target The element to measure
- * @returns {UseMeasureReturn & { ref: StateRef<Target> }} The element's size and position
+ * @param {(value: UseMeasureValue, entry: ResizeObserverEntry, observer: ResizeObserver) => void} [callback] The callback to invoke on measure updates
+ * @returns {UseMeasureReturn & { ref: StateRef<Target> }} The element's size and position controls
  *
  * @example
- * const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();
+ * const { ref, snapshot, watch } = useMeasure();
  */
 export const useMeasure = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
+  const callback = (target ? params[1] : params[0]) as UseMeasureCallback | undefined;
 
   const internalRef = useRefState<Element>();
-  const [rect, setRect] = useState({
+  const internalCallbackRef = useRef(callback);
+  const snapshotRef = useRef<UseMeasureValue>({
     x: 0,
     y: 0,
     width: 0,
@@ -58,6 +78,25 @@ export const useMeasure = ((...params: any[]) => {
     bottom: 0,
     right: 0
   });
+  const watchingRef = useRef(false);
+  const rerender = useRerender();
+
+  internalCallbackRef.current = callback;
+
+  const watch = () => {
+    watchingRef.current = true;
+    return snapshotRef.current;
+  };
+
+  const updateValue = (
+    value: UseMeasureValue,
+    entry: ResizeObserverEntry,
+    observer: ResizeObserver
+  ) => {
+    snapshotRef.current = value;
+    internalCallbackRef.current?.(value, entry, observer);
+    if (watchingRef.current) rerender();
+  };
 
   useEffect(() => {
     if (!target && !internalRef.state) return;
@@ -65,12 +104,12 @@ export const useMeasure = ((...params: any[]) => {
     const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
     if (!element) return;
 
-    const resizeObserver = new ResizeObserver((entries) => {
+    const resizeObserver = new ResizeObserver((entries, observer) => {
       const entry = entries[0];
       if (!entry) return;
 
       const { x, y, width, height, top, left, bottom, right } = entry.contentRect;
-      setRect({ x, y, width, height, top, left, bottom, right });
+      updateValue({ x, y, width, height, top, left, bottom, right }, entry, observer);
     });
 
     resizeObserver.observe(element);
@@ -80,6 +119,6 @@ export const useMeasure = ((...params: any[]) => {
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 
-  if (target) return rect;
-  return { ref: internalRef, ...rect };
+  if (target) return { snapshot: snapshotRef.current, watch };
+  return { ref: internalRef, snapshot: snapshotRef.current, watch };
 }) as UseMeasure;

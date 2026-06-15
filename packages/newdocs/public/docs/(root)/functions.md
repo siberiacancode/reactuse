@@ -136,3 +136,6 @@ A quick list of available functions.
 - [useSet](/functions/hooks/useSet): Hook that manages a set structure
 - [useShallowEffect](/functions/hooks/useShallowEffect): Hook that executes an effect only when dependencies change shallowly or deeply
 - [useShare](/functions/hooks/useShare): Hook that utilizes the share api
+- [useSize](/functions/hooks/useSize): Hook that observes and returns the width and height of element
+- [useSpeechRecognition](/functions/hooks/useSpeechRecognition): Hook that provides a streamlined interface for incorporating speech-to-text functionality
+- [useSpeechSynthesis](/functions/hooks/useSpeechSynthesis): Hook that provides speech synthesis functionality

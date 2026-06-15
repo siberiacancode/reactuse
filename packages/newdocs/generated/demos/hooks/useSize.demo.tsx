@@ -1,3 +1,5 @@
+'use client'
+
 import { useSize } from '@siberiacancode/reactuse';
 import { PlusIcon, SparklesIcon } from 'lucide-react';
 import { useRef } from 'react';

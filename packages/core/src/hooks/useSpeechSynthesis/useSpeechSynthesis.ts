@@ -36,7 +36,7 @@ export interface UseSpeechSynthesisReturn {
   /** Function to resume speech synthesis. */
   resume: () => void;
   /** Function to start speech synthesis. */
-  speak: () => void;
+  speak: (text?: string) => void;
   /** Function to stop speech synthesis. */
   stop: () => void;
   /** Function to toggle between play and pause. */

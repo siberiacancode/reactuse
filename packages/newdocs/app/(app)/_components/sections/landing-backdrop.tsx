@@ -2,7 +2,8 @@
 
 import type { CSSProperties } from 'react';
 
-import { useEffect, useRef } from 'react';
+import { useIsomorphicLayoutEffect } from '@siberiacancode/reactuse';
+import { useRef } from 'react';
 
 import { useTheme } from '@/app/_contexts/theme';
 
@@ -136,13 +137,13 @@ interface DitherCanvasProps {
   waveColor: [number, number, number];
 }
 
-const DitherCanvas = ({ backgroundColor, staticBackground, waveColor }: DitherCanvasProps) => {
+const DitherCanvas = ({ backgroundColor, waveColor }: DitherCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -10000, y: -10000 });
   const colorsRef = useRef({ backgroundColor, waveColor });
   colorsRef.current = { backgroundColor, waveColor };
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -275,9 +276,7 @@ const DitherCanvas = ({ backgroundColor, staticBackground, waveColor }: DitherCa
     };
   }, []);
 
-  return (
-    <canvas ref={canvasRef} className='block size-full' style={{ background: staticBackground }} />
-  );
+  return <canvas ref={canvasRef} className='block size-full' />;
 };
 
 export const LandingBackdrop = () => {
@@ -286,17 +285,10 @@ export const LandingBackdrop = () => {
 
   const backgroundColor: [number, number, number] = isDark ? [0, 0, 0] : [1, 1, 1];
   const waveColor: [number, number, number] = isDark ? [0.45, 0.45, 0.45] : [0.6, 0.6, 0.6];
-  const staticBackground = isDark
-    ? 'radial-gradient(ellipse at 70% 45%, rgb(55 55 55 / 0.72), transparent 34%), radial-gradient(ellipse at 42% 62%, rgb(36 36 36 / 0.64), transparent 30%), #000'
-    : 'radial-gradient(ellipse at 70% 45%, rgb(166 166 166 / 0.62), transparent 34%), radial-gradient(ellipse at 42% 62%, rgb(190 190 190 / 0.58), transparent 30%), #b8b8b8';
 
   return (
     <div className='absolute inset-0 opacity-90'>
-      <DitherCanvas
-        backgroundColor={backgroundColor}
-        staticBackground={staticBackground}
-        waveColor={waveColor}
-      />
+      <DitherCanvas backgroundColor={backgroundColor} waveColor={waveColor} />
     </div>
   );
 };

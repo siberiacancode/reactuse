@@ -32,7 +32,7 @@ const EmailItem = memo(({ email, onStar, onArchive }: EmailItemProps) => (
     )}
   >
     <div className='bg-muted flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full p-1'>
-      <img alt={email.from} className='size-7 object-contain' src={email.logo} />
+      <img alt={email.from} className='size-5 object-contain' src={email.logo} />
     </div>
 
     <div className='flex min-w-0 flex-1 flex-col'>

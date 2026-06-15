@@ -20,6 +20,7 @@ const mockResizeObserver = class ResizeObserver {
   }
 
   observe = (element: Element) => {
+    this.element = element;
     trigger.add(element, this.callback);
     mockResizeObserverObserve();
   };
@@ -59,7 +60,8 @@ targets.forEach((target) => {
           } & UseSizeReturn;
         return useSize<HTMLDivElement>();
       });
-      expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
+      expect(result.current.snapshot).toStrictEqual({ width: 0, height: 0 });
+      expect(result.current.watch).toBeTypeOf('function');
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
     });
@@ -73,12 +75,13 @@ targets.forEach((target) => {
         return useSize<HTMLDivElement>();
       });
 
-      expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
+      expect(result.current.snapshot).toStrictEqual({ width: 0, height: 0 });
+      expect(result.current.watch).toBeTypeOf('function');
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
     });
 
-    it('Should set initial value', () => {
+    it('Should set initial snapshot', () => {
       const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 200, 200));
       const { result } = renderHook(() => {
@@ -92,21 +95,21 @@ targets.forEach((target) => {
       if (!target)
         act(() => result.current.ref(document.getElementById('target')! as HTMLDivElement));
 
-      expect(result.current.value).toStrictEqual({ width: 200, height: 200 });
+      expect(result.current.watch()).toStrictEqual({ width: 200, height: 200 });
     });
 
-    it('Should change value after resize', () => {
+    it('Should call callback on resize', () => {
+      const callback = vi.fn();
       const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
       mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
+
       const { result } = renderHook(() => {
         if (target)
-          return useSize(target) as {
+          return useSize(target, callback) as unknown as {
             ref: StateRef<HTMLDivElement>;
           } & UseSizeReturn;
-        return useSize<HTMLDivElement>();
+        return useSize<HTMLDivElement>(callback);
       });
-
-      expect(result.current.value).toStrictEqual({ width: 0, height: 0 });
 
       if (!target)
         act(() => result.current.ref(document.getElementById('target')! as HTMLDivElement));
@@ -122,8 +125,42 @@ targets.forEach((target) => {
         trigger.callback(element);
       });
 
+      expect(callback).toHaveBeenLastCalledWith(
+        { width: 200, height: 200 },
+        expect.any(ResizeObserver)
+      );
+    });
+
+    it('Should return reactive value on watch', () => {
+      const mockGetBoundingClientRect = vi.spyOn(Element.prototype, 'getBoundingClientRect');
+      mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 0, 0));
+      const { result } = renderHook(() => {
+        if (target)
+          return useSize(target) as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseSizeReturn;
+        return useSize<HTMLDivElement>();
+      });
+
+      expect(result.current.snapshot).toStrictEqual({ width: 0, height: 0 });
+
+      if (!target)
+        act(() => result.current.ref(document.getElementById('target')! as HTMLDivElement));
+      act(() => result.current.watch());
+
+      act(() => {
+        const element = (
+          target ? isTarget.getElement(target) : result.current.ref.current
+        ) as Element;
+        if (!element) return;
+
+        mockGetBoundingClientRect.mockImplementation(() => new DOMRect(0, 0, 200, 200));
+
+        trigger.callback(element);
+      });
+
       expect(mockResizeObserverObserve).toHaveBeenCalledOnce();
-      expect(result.current.value).toStrictEqual({ width: 200, height: 200 });
+      expect(result.current.watch()).toStrictEqual({ width: 200, height: 200 });
     });
 
     it('Should handle target changes', () => {

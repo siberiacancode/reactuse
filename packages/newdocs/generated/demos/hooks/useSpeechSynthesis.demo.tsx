@@ -1,3 +1,4 @@
+'use client';
 import { useSpeechSynthesis } from '@siberiacancode/reactuse';
 import { PauseIcon, PlayIcon } from 'lucide-react';
 
@@ -7,7 +8,9 @@ const ARTICLE = {
 };
 
 const Demo = () => {
-  const speechSynthesis = useSpeechSynthesis();
+  const speechSynthesis = useSpeechSynthesis({
+    text: ARTICLE.text
+  });
 
   const onToggle = () => {
     if (speechSynthesis.playing) return speechSynthesis.pause();
@@ -37,18 +40,18 @@ const Demo = () => {
           <div data-slot='card-title'>{ARTICLE.title}</div>
         </div>
 
-        <div className='flex flex-col gap-4' data-slot='card-content'>
+        <div data-slot='card-content' className='flex flex-col gap-4'>
           <p className='text-muted-foreground text-sm leading-relaxed'>{ARTICLE.text}</p>
 
-          <div data-orientation='horizontal' data-slot='separator' />
+          <div data-slot='separator' data-orientation='horizontal' />
 
           <div className='flex items-center gap-3'>
             <button
-              aria-label={speechSynthesis.playing ? 'Pause' : 'Listen'}
-              className='rounded-full!'
+              type='button'
               data-size='icon'
               data-variant='secondary'
-              type='button'
+              className='rounded-full!'
+              aria-label={speechSynthesis.playing ? 'Pause' : 'Listen'}
               onClick={onToggle}
             >
               {speechSynthesis.playing ? (
@@ -60,8 +63,11 @@ const Demo = () => {
 
             <div className='flex flex-col leading-tight'>
               <span className='text-foreground text-sm font-medium'>
-                {speechSynthesis.playing && 'Playing…'}
-                {speechSynthesis.status === 'pause' ? 'Paused' : 'Listen to this article'}
+                {speechSynthesis.playing
+                  ? 'Playing…'
+                  : speechSynthesis.status === 'pause'
+                    ? 'Paused'
+                    : 'Listen to this article'}
               </span>
               <span className='text-muted-foreground text-xs'>
                 Prefer to listen? Press play to hear it.

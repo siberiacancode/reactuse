@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
+import { useRerender } from '../useRerender/useRerender';
 /**
  * @name useMeasure
  * @description - Hook to measure the size and position of an element
@@ -9,22 +10,26 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @param {HookTarget} target The element to measure
- * @returns {UseMeasureReturn} The element's size and position
+ * @param {(value: UseMeasureValue, entry: ResizeObserverEntry, observer: ResizeObserver) => void} [callback] The callback to invoke on measure updates
+ * @returns {UseMeasureReturn} The element's size and position controls
  *
  * @example
- * const { x, y, width, height, top, left, bottom, right } = useMeasure(ref);
+ * const { snapshot, watch } = useMeasure(ref);
  *
  * @overload
  * @template Target The element to measure
- * @returns {UseMeasureReturn & { ref: StateRef<Target> }} The element's size and position
+ * @param {(value: UseMeasureValue, entry: ResizeObserverEntry, observer: ResizeObserver) => void} [callback] The callback to invoke on measure updates
+ * @returns {UseMeasureReturn & { ref: StateRef<Target> }} The element's size and position controls
  *
  * @example
- * const { ref, x, y, width, height, top, left, bottom, right } = useMeasure();
+ * const { ref, snapshot, watch } = useMeasure();
  */
 export const useMeasure = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
+  const callback = target ? params[1] : params[0];
   const internalRef = useRefState();
-  const [rect, setRect] = useState({
+  const internalCallbackRef = useRef(callback);
+  const snapshotRef = useRef({
     x: 0,
     y: 0,
     width: 0,
@@ -34,21 +39,33 @@ export const useMeasure = (...params) => {
     bottom: 0,
     right: 0
   });
+  const watchingRef = useRef(false);
+  const rerender = useRerender();
+  internalCallbackRef.current = callback;
+  const watch = () => {
+    watchingRef.current = true;
+    return snapshotRef.current;
+  };
+  const updateValue = (value, entry, observer) => {
+    snapshotRef.current = value;
+    internalCallbackRef.current?.(value, entry, observer);
+    if (watchingRef.current) rerender();
+  };
   useEffect(() => {
     if (!target && !internalRef.state) return;
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
-    const resizeObserver = new ResizeObserver((entries) => {
+    const resizeObserver = new ResizeObserver((entries, observer) => {
       const entry = entries[0];
       if (!entry) return;
       const { x, y, width, height, top, left, bottom, right } = entry.contentRect;
-      setRect({ x, y, width, height, top, left, bottom, right });
+      updateValue({ x, y, width, height, top, left, bottom, right }, entry, observer);
     });
     resizeObserver.observe(element);
     return () => {
       resizeObserver.disconnect();
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
-  if (target) return rect;
-  return { ref: internalRef, ...rect };
+  if (target) return { snapshot: snapshotRef.current, watch };
+  return { ref: internalRef, snapshot: snapshotRef.current, watch };
 };

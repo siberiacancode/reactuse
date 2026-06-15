@@ -42,7 +42,7 @@ const CHATS: Chat[] = [
   }
 ];
 
-const COLLAPSED_WIDTH = 76;
+const COLLAPSED_WIDTH = 66;
 const EXPANDED_MIN = 240;
 const EXPANDED_MAX = 420;
 const SNAP_POINT = (COLLAPSED_WIDTH + EXPANDED_MIN) / 2;
@@ -88,8 +88,6 @@ const Demo = () => {
 
   return (
     <section className='flex flex-col items-center gap-3 p-4'>
-      <p className='text-muted-foreground text-sm'>Drag the handle to collapse the chat list</p>
-
       <div className='relative'>
         <div
           ref={resizeObserver.ref}

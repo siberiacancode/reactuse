@@ -1,15 +1,15 @@
 ---
-title: useShare
-description: Hook that utilizes the share api
+title: useSpeechSynthesis
+description: Hook that provides speech synthesis functionality
 category: browser
-usage: medium
+usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781450802000
+lastModifiedTime: 1767164032000
 ---
 
-import metadata from './useShare.meta.json';
+import metadata from './useSpeechSynthesis.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useShare.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useShare
+    npx useverse@latest add useSpeechSynthesis
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useShare.meta.json';
 ## Usage
 
 ```tsx
-const { share, supported } = useShare();
+const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } = useSpeechSynthesis();
 ```
 
 ## Type Declarations

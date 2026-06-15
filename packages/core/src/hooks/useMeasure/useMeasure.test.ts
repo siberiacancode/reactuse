@@ -43,7 +43,7 @@ class MockResizeObserver {
   callback: ResizeObserverCallback;
 
   observe = (element: Element) => {
-    trigger.add(element, this.callback);
+    trigger.add(element, (entries) => this.callback(entries, this));
     mockResizeObserverObserve(element);
   };
 
@@ -82,14 +82,17 @@ targets.forEach((target) => {
         return useMeasure<HTMLDivElement>();
       });
 
-      expect(result.current.x).toBe(0);
-      expect(result.current.y).toBe(0);
-      expect(result.current.width).toBe(0);
-      expect(result.current.height).toBe(0);
-      expect(result.current.top).toBe(0);
-      expect(result.current.left).toBe(0);
-      expect(result.current.bottom).toBe(0);
-      expect(result.current.right).toBe(0);
+      expect(result.current.snapshot).toStrictEqual({
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0
+      });
+      expect(result.current.watch).toBeTypeOf('function');
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
     });
@@ -103,14 +106,17 @@ targets.forEach((target) => {
         return useMeasure<HTMLDivElement>();
       });
 
-      expect(result.current.x).toBe(0);
-      expect(result.current.y).toBe(0);
-      expect(result.current.width).toBe(0);
-      expect(result.current.height).toBe(0);
-      expect(result.current.top).toBe(0);
-      expect(result.current.left).toBe(0);
-      expect(result.current.bottom).toBe(0);
-      expect(result.current.right).toBe(0);
+      expect(result.current.snapshot).toStrictEqual({
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0
+      });
+      expect(result.current.watch).toBeTypeOf('function');
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
     });
@@ -130,25 +136,17 @@ targets.forEach((target) => {
       expect(mockResizeObserverObserve).toHaveBeenCalledWith(element);
     });
 
-    it('Should update measure values on resize', () => {
+    it('Should call callback on measure update', () => {
+      const callback = vi.fn();
       const { result } = renderHook(() => {
         if (target)
-          return useMeasure(target) as {
+          return useMeasure(target, callback) as unknown as {
             ref: StateRef<HTMLDivElement>;
           } & UseMeasureReturn;
-        return useMeasure<HTMLDivElement>();
+        return useMeasure<HTMLDivElement>(callback);
       });
 
       if (!target) act(() => result.current.ref(element));
-
-      expect(result.current.x).toBe(0);
-      expect(result.current.y).toBe(0);
-      expect(result.current.width).toBe(0);
-      expect(result.current.height).toBe(0);
-      expect(result.current.top).toBe(0);
-      expect(result.current.left).toBe(0);
-      expect(result.current.bottom).toBe(0);
-      expect(result.current.right).toBe(0);
 
       const resizeEntry = createMockResizeObserverEntry({
         x: 10,
@@ -163,14 +161,57 @@ targets.forEach((target) => {
 
       act(() => trigger.callback(element, [resizeEntry]));
 
-      expect(result.current.x).toBe(10);
-      expect(result.current.y).toBe(20);
-      expect(result.current.width).toBe(200);
-      expect(result.current.height).toBe(100);
-      expect(result.current.top).toBe(20);
-      expect(result.current.left).toBe(10);
-      expect(result.current.bottom).toBe(120);
-      expect(result.current.right).toBe(210);
+      expect(callback).toHaveBeenLastCalledWith(
+        {
+          x: 10,
+          y: 20,
+          width: 200,
+          height: 100,
+          top: 20,
+          left: 10,
+          bottom: 120,
+          right: 210
+        },
+        resizeEntry,
+        expect.any(MockResizeObserver)
+      );
+    });
+
+    it('Should return reactive value on watch', () => {
+      const { result } = renderHook(() => {
+        if (target)
+          return useMeasure(target) as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseMeasureReturn;
+        return useMeasure<HTMLDivElement>();
+      });
+
+      if (!target) act(() => result.current.ref(element));
+      act(() => result.current.watch());
+
+      const resizeEntry = createMockResizeObserverEntry({
+        x: 10,
+        y: 20,
+        width: 200,
+        height: 100,
+        top: 20,
+        left: 10,
+        bottom: 120,
+        right: 210
+      });
+
+      act(() => trigger.callback(element, [resizeEntry]));
+
+      expect(result.current.watch()).toStrictEqual({
+        x: 10,
+        y: 20,
+        width: 200,
+        height: 100,
+        top: 20,
+        left: 10,
+        bottom: 120,
+        right: 210
+      });
     });
 
     it('Should handle target changes', () => {

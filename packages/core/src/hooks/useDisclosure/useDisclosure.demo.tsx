@@ -15,7 +15,7 @@ const Demo = () => {
 
   return (
     <section className='flex justify-center p-4'>
-      <div className='border-border bg-card relative flex w-full max-w-md flex-col gap-4 rounded-xl border p-5 shadow-sm'>
+      <div className='border-border bg-card relative flex w-full max-w-md flex-col gap-4 rounded-xl border p-4'>
         <div className='flex items-start justify-between gap-3'>
           <div className='flex items-center gap-3'>
             <div className='border-border bg-muted flex size-10 items-center justify-center rounded-lg border'>
@@ -81,10 +81,6 @@ const Demo = () => {
         </p>
 
         <div className='flex flex-wrap items-center gap-2'>
-          <span className='border-border bg-card text-foreground flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium'>
-            <span className='size-1.5 rounded-full bg-green-500' />
-            Active
-          </span>
           <span className='border-border bg-card text-foreground rounded-full border px-2.5 py-0.5 text-xs font-medium'>
             React 19
           </span>

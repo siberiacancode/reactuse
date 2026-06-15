@@ -1,15 +1,15 @@
 ---
-title: useShare
-description: Hook that utilizes the share api
+title: useSpeechRecognition
+description: Hook that provides a streamlined interface for incorporating speech-to-text functionality
 category: browser
-usage: medium
+usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781450802000
+lastModifiedTime: 1768411966000
 ---
 
-import metadata from './useShare.meta.json';
+import metadata from './useSpeechRecognition.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useShare.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useShare
+    npx useverse@latest add useSpeechRecognition
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useShare.meta.json';
 ## Usage
 
 ```tsx
-const { share, supported } = useShare();
+const { supported, value, recognition, listening, error, start, stop, toggle  } = useSpeechRecognition();
 ```
 
 ## Type Declarations

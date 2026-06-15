@@ -1,15 +1,15 @@
 ---
-title: useShare
-description: Hook that utilizes the share api
-category: browser
-usage: medium
+title: useSize
+description: Hook that observes and returns the width and height of element
+category: elements
+usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781450802000
+lastModifiedTime: 1768833790000
 ---
 
-import metadata from './useShare.meta.json';
+import metadata from './useSize.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useShare.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useShare
+    npx useverse@latest add useSize
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,9 @@ import metadata from './useShare.meta.json';
 ## Usage
 
 ```tsx
-const { share, supported } = useShare();
+const { snapshot, watch, observer } = useSize(ref);
+// or
+const { ref, snapshot, watch, observer } = useSize();
 ```
 
 ## Type Declarations

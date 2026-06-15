@@ -60,7 +60,8 @@ const Demo = () => {
 
         <button
           aria-label='Reset to defaults'
-          className='size-9! p-0!'
+          className='size-9! rounded-full! p-0!'
+          data-size='icon'
           data-variant='outline'
           disabled={isDefault}
           type='button'

@@ -1,3 +1,5 @@
+'use client'
+
 import { useSpeechRecognition } from '@siberiacancode/reactuse';
 import { MicIcon, SearchIcon } from 'lucide-react';
 import { useRef, useState } from 'react';

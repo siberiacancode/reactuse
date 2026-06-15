@@ -214,3 +214,12 @@ it('Should handle error events', () => {
   expect(result.current.listening).toBeFalsy();
   expect(result.current.error).toBe(event);
 });
+
+it('Should cleanup on unmount', () => {
+  const { result, unmount } = renderHook(useSpeechRecognition);
+  const stopSpy = vi.spyOn(result.current.recognition!, 'stop');
+
+  unmount();
+
+  expect(stopSpy).toHaveBeenCalledOnce();
+});

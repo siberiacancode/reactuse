@@ -58,6 +58,8 @@
 - [usePostMessage](https://reactuse.org/functions/hooks/usePostMessage): Hook that allows you to receive messages from other origins
 - [useRaf](https://reactuse.org/functions/hooks/useRaf): Hook that defines the logic for raf callback
 - [useShare](https://reactuse.org/functions/hooks/useShare): Hook that utilizes the share api
+- [useSpeechRecognition](https://reactuse.org/functions/hooks/useSpeechRecognition): Hook that provides a streamlined interface for incorporating speech-to-text functionality
+- [useSpeechSynthesis](https://reactuse.org/functions/hooks/useSpeechSynthesis): Hook that provides speech synthesis functionality
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
@@ -81,6 +83,7 @@
 - [useLongPress](https://reactuse.org/functions/hooks/useLongPress): Hook that defines the logic when long pressing an element
 - [usePaint](https://reactuse.org/functions/hooks/usePaint): Hook that allows you to draw in a specific area
 - [useScript](https://reactuse.org/functions/hooks/useScript): Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
+- [useSize](https://reactuse.org/functions/hooks/useSize): Hook that observes and returns the width and height of element
 ### Humors
 
 - [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful
