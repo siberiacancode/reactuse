@@ -8,7 +8,7 @@
   "usage": "low",
   "description": "Hook that observes and returns the width and height of element",
   "category": "Elements",
-  "lastModified": 1768833790000,
+  "lastModified": 1781528880000,
   "examples": [
     "const { snapshot, watch, observer } = useSize(ref);",
     "const { ref, snapshot, watch, observer } = useSize();"

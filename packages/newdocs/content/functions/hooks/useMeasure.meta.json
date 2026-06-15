@@ -8,7 +8,7 @@
   "usage": "low",
   "description": "Hook to measure the size and position of an element",
   "category": "Browser",
-  "lastModified": 1768553242000,
+  "lastModified": 1781528880000,
   "examples": [
     "const { snapshot, watch } = useMeasure(ref);",
     "const { ref, snapshot, watch } = useMeasure();"

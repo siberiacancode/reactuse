@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1768411966000
+lastModifiedTime: 1781528880000
 ---
 
 import metadata from './useSpeechRecognition.meta.json';

@@ -1,4 +1,5 @@
-'use client';
+'use client'
+
 import { useSpeechSynthesis } from '@siberiacancode/reactuse';
 import { PauseIcon, PlayIcon } from 'lucide-react';
 
@@ -8,9 +9,7 @@ const ARTICLE = {
 };
 
 const Demo = () => {
-  const speechSynthesis = useSpeechSynthesis({
-    text: ARTICLE.text
-  });
+  const speechSynthesis = useSpeechSynthesis();
 
   const onToggle = () => {
     if (speechSynthesis.playing) return speechSynthesis.pause();
@@ -40,18 +39,18 @@ const Demo = () => {
           <div data-slot='card-title'>{ARTICLE.title}</div>
         </div>
 
-        <div data-slot='card-content' className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4' data-slot='card-content'>
           <p className='text-muted-foreground text-sm leading-relaxed'>{ARTICLE.text}</p>
 
-          <div data-slot='separator' data-orientation='horizontal' />
+          <div data-orientation='horizontal' data-slot='separator' />
 
           <div className='flex items-center gap-3'>
             <button
-              type='button'
+              aria-label={speechSynthesis.playing ? 'Pause' : 'Listen'}
+              className='rounded-full!'
               data-size='icon'
               data-variant='secondary'
-              className='rounded-full!'
-              aria-label={speechSynthesis.playing ? 'Pause' : 'Listen'}
+              type='button'
               onClick={onToggle}
             >
               {speechSynthesis.playing ? (
@@ -63,11 +62,8 @@ const Demo = () => {
 
             <div className='flex flex-col leading-tight'>
               <span className='text-foreground text-sm font-medium'>
-                {speechSynthesis.playing
-                  ? 'Playing…'
-                  : speechSynthesis.status === 'pause'
-                    ? 'Paused'
-                    : 'Listen to this article'}
+                {speechSynthesis.playing && 'Playing…'}
+                {speechSynthesis.status === 'pause' ? 'Paused' : 'Listen to this article'}
               </span>
               <span className='text-muted-foreground text-xs'>
                 Prefer to listen? Press play to hear it.

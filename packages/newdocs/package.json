@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@siberiacancode/fetches": "^1.14.1",
-    "@siberiacancode/reactuse": "^0.3.45",
+    "@siberiacancode/reactuse": "^0.3.46",
     "@tabler/icons-react": "^3.37.1",
     "@types/mdx": "^2.0.13",
     "algoliasearch": "^5.51.0",

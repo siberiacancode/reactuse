@@ -54,7 +54,7 @@
   },
   "description": "Hook that provides a streamlined interface for incorporating speech-to-text functionality",
   "category": "Browser",
-  "lastModified": 1768411966000,
+  "lastModified": 1781528880000,
   "examples": [
     "const { supported, value, recognition, listening, error, start, stop, toggle  } = useSpeechRecognition();"
   ],
