@@ -8,7 +8,7 @@
   "usage": "low",
   "description": "Hook that allows you to detect that your sticky component is stuck",
   "category": "Browser",
-  "lastModified": 1773052863000,
+  "lastModified": 1781625261000,
   "examples": [
     "const { stuck } = useSticky(ref, { axis: 'vertical' });",
     "const { stuck, ref } = useSticky();"

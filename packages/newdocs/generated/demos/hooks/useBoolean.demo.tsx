@@ -28,10 +28,6 @@ const Demo = () => {
           {visible ? <EyeOff className='size-4' /> : <Eye className='size-4' />}
         </button>
       </div>
-
-      <p className='text-xs'>
-        The current state is <b>{visible ? 'shown' : 'hidden'}</b>
-      </p>
     </section>
   );
 };

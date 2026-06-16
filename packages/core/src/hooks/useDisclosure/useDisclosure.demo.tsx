@@ -15,7 +15,7 @@ const Demo = () => {
 
   return (
     <section className='flex justify-center p-4'>
-      <div className='border-border bg-card relative flex w-full max-w-md flex-col gap-4 rounded-xl border p-4'>
+      <div className='bg-card relative flex w-full max-w-md flex-col gap-4 rounded-xl p-4'>
         <div className='flex items-start justify-between gap-3'>
           <div className='flex items-center gap-3'>
             <div className='border-border bg-muted flex size-10 items-center justify-center rounded-lg border'>
@@ -90,27 +90,6 @@ const Demo = () => {
           <span className='border-border bg-card text-foreground rounded-full border px-2.5 py-0.5 text-xs font-medium'>
             Vite
           </span>
-        </div>
-
-        <div className='border-border grid grid-cols-3 gap-2 border-t pt-3'>
-          <div className='flex flex-col gap-0.5'>
-            <span className='text-muted-foreground text-[10px] font-medium tracking-wider uppercase'>
-              Commits
-            </span>
-            <span className='text-foreground text-lg font-semibold tabular-nums'>248</span>
-          </div>
-          <div className='flex flex-col gap-0.5'>
-            <span className='text-muted-foreground text-[10px] font-medium tracking-wider uppercase'>
-              Branches
-            </span>
-            <span className='text-foreground text-lg font-semibold tabular-nums'>7</span>
-          </div>
-          <div className='flex flex-col gap-0.5'>
-            <span className='text-muted-foreground text-[10px] font-medium tracking-wider uppercase'>
-              Issues
-            </span>
-            <span className='text-foreground text-lg font-semibold tabular-nums'>12</span>
-          </div>
         </div>
       </div>
 

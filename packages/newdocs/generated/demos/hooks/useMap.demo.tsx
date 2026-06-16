@@ -110,10 +110,7 @@ const Demo = () => {
         {CATALOG.map((product) => {
           const inCart = cart.has(product.id);
           return (
-            <div
-              key={product.id}
-              className='border-border bg-card flex flex-col gap-1.5 rounded-xl border p-2'
-            >
+            <div key={product.id} className='bg-card flex flex-col gap-1.5 rounded-xl p-2'>
               <div className='bg-muted/40 flex h-12 items-center justify-center rounded-lg text-2xl'>
                 {product.emoji}
               </div>

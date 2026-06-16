@@ -90,7 +90,7 @@ const Demo = () => {
         {active.pokemon.map((pokemon) => (
           <div
             key={pokemon.id}
-            className='border-border bg-card flex items-center gap-2 rounded-lg border p-2 shadow-sm'
+            className='bg-card flex items-center gap-2 rounded-lg p-2 shadow-sm'
           >
             <div className='bg-muted/40 flex size-12 shrink-0 items-center justify-center rounded-md'>
               <img
