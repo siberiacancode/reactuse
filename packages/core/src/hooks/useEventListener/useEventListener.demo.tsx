@@ -33,7 +33,7 @@ const Demo = () => {
     <section className='flex w-full max-w-2xl flex-col p-4'>
       <div
         ref={containerRef}
-        className='border-border bg-card relative h-[320px] w-full cursor-crosshair overflow-hidden rounded-xl border shadow-sm select-none'
+        className='bg-card relative h-[320px] w-full cursor-crosshair overflow-hidden rounded-xl shadow-sm select-none'
       >
         <div className='pointer-events-none absolute top-3 right-3 z-10 flex items-baseline gap-1.5 font-mono tabular-nums'>
           <span className='text-muted-foreground text-[10px] tracking-[0.15em] uppercase'>

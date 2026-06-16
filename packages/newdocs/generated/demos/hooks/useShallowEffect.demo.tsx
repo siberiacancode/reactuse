@@ -22,7 +22,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-sm flex-col p-4'>
-      <div className='border-border bg-card flex flex-col gap-4 rounded-xl border p-5 shadow-sm'>
+      <div className='bg-card flex flex-col gap-4 rounded-xl p-5 shadow-sm'>
         <div className='flex items-start gap-3'>
           <div className='bg-primary/15 text-primary flex size-10 shrink-0 items-center justify-center rounded-full'>
             <LayersIcon className='size-5' />

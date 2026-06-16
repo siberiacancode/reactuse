@@ -64,8 +64,8 @@ const Demo = () => {
     setAttachments((prevFiles) => prevFiles.filter((_, fileIndex) => fileIndex !== index));
 
   return (
-    <section className='flex w-full max-w-2xl flex-col p-4'>
-      <div className='border-border bg-card overflow-hidden rounded-2xl border shadow-sm'>
+    <section className='flex w-full max-w-xl flex-col'>
+      <div className='bg-card overflow-hidden rounded-2xl p-4 shadow-sm'>
         <div className='px-4 py-3'>
           <h3 className='text-sm font-semibold'>Compose</h3>
         </div>

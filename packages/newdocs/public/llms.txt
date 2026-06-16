@@ -141,6 +141,8 @@
 - [useRefState](https://reactuse.org/functions/hooks/useRefState): Hook that returns the state reference of the value
 - [useSessionStorage](https://reactuse.org/functions/hooks/useSessionStorage): Hook that manages session storage value
 - [useSet](https://reactuse.org/functions/hooks/useSet): Hook that manages a set structure
+- [useStateHistory](https://reactuse.org/functions/hooks/useStateHistory): Hook that manages state with history functionality
+- [useStep](https://reactuse.org/functions/hooks/useStep): Hook that create stepper
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions

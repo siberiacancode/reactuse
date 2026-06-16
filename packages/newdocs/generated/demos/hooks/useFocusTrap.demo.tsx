@@ -27,7 +27,7 @@ const Demo = () => {
     <section className='flex w-full max-w-md flex-col p-4'>
       <div
         ref={focusTrap.ref}
-        className='border-border bg-card flex w-full flex-col gap-4 rounded-xl border p-4 shadow-sm'
+        className='bg-card flex w-full flex-col gap-4 rounded-xl p-4 shadow-sm'
       >
         <div className='flex items-start justify-between gap-2'>
           <div className='flex flex-col gap-0.5'>

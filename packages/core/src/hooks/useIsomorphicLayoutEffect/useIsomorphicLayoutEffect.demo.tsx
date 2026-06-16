@@ -7,7 +7,7 @@ const Demo = () => {
 
   return (
     <div>
-      I am <code>useLayoutEffect</code>
+      I am <b>useLayoutEffect</b>
     </div>
   );
 };

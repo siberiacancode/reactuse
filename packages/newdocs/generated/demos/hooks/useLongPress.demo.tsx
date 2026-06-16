@@ -34,7 +34,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-sm flex-col p-4'>
-      <div className='border-border bg-card flex flex-col gap-5 rounded-2xl border p-6 shadow-sm'>
+      <div className='bg-card flex flex-col gap-5 rounded-2xl p-6 shadow-sm'>
         <div className='flex flex-col gap-2'>
           <div className='flex items-center justify-between'>
             <span className='text-muted-foreground text-[10px] tracking-[0.15em] uppercase'>

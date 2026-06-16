@@ -71,7 +71,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-sm flex-col gap-2 p-4'>
-      <span className='text-muted-foreground text-xs'>Voice search · English (US)</span>
+      <span className='text-muted-foreground text-xs'>Voice search use English (US)</span>
 
       <div className='relative'>
         <SearchIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2' />

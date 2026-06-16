@@ -75,13 +75,14 @@ export const useSpeechSynthesis = (options = {}) => {
   ]);
   const speak = (text) => {
     if (!supported) return;
+    let target = utterance;
     if (text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      setUtterance(utterance);
-      bindSpeechSynthesisUtterance(utterance);
+      target = new SpeechSynthesisUtterance(text);
+      bindSpeechSynthesisUtterance(target);
+      setUtterance(target);
     }
     window.speechSynthesis?.cancel();
-    if (utterance) window.speechSynthesis?.speak(utterance);
+    if (target) window.speechSynthesis?.speak(target);
     setPlaying(true);
   };
   const stop = () => {

@@ -1,5 +1,5 @@
 import { useSpeechSynthesis } from '@siberiacancode/reactuse';
-import { PauseIcon, PlayIcon } from 'lucide-react';
+import { PlayIcon, SquareIcon } from 'lucide-react';
 
 const ARTICLE = {
   title: 'Why hooks won',
@@ -7,13 +7,7 @@ const ARTICLE = {
 };
 
 const Demo = () => {
-  const speechSynthesis = useSpeechSynthesis();
-
-  const onToggle = () => {
-    if (speechSynthesis.playing) return speechSynthesis.pause();
-    if (speechSynthesis.status === 'pause') return speechSynthesis.resume();
-    speechSynthesis.speak(ARTICLE.text);
-  };
+  const speechSynthesis = useSpeechSynthesis({ text: ARTICLE.text });
 
   if (!speechSynthesis.supported)
     return (
@@ -44,15 +38,17 @@ const Demo = () => {
 
           <div className='flex items-center gap-3'>
             <button
-              aria-label={speechSynthesis.playing ? 'Pause' : 'Listen'}
+              aria-label={speechSynthesis.playing ? 'Stop' : 'Listen'}
               className='rounded-full!'
               data-size='icon'
               data-variant='secondary'
               type='button'
-              onClick={onToggle}
+              onClick={() =>
+                speechSynthesis.playing ? speechSynthesis.stop() : speechSynthesis.speak()
+              }
             >
               {speechSynthesis.playing ? (
-                <PauseIcon className='size-4' />
+                <SquareIcon className='size-4' />
               ) : (
                 <PlayIcon className='size-4' />
               )}
@@ -60,8 +56,7 @@ const Demo = () => {
 
             <div className='flex flex-col leading-tight'>
               <span className='text-foreground text-sm font-medium'>
-                {speechSynthesis.playing && 'Playing…'}
-                {speechSynthesis.status === 'pause' ? 'Paused' : 'Listen to this article'}
+                {speechSynthesis.playing ? 'Playing…' : 'Listen to this article'}
               </span>
               <span className='text-muted-foreground text-xs'>
                 Prefer to listen? Press play to hear it.

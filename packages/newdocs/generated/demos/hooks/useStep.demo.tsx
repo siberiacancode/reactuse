@@ -1,3 +1,5 @@
+'use client'
+
 import type { UseStepReturn } from '@siberiacancode/reactuse';
 
 import { useStep } from '@siberiacancode/reactuse';

@@ -45,7 +45,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-md flex-col p-4'>
-      <div className='border-border bg-card relative flex h-[240px] items-center justify-center overflow-hidden rounded-xl border shadow-sm'>
+      <div className='bg-card relative flex h-[240px] items-center justify-center overflow-hidden rounded-xl shadow-sm'>
         {isLoading && (
           <div className='bg-card/70 absolute inset-0 z-10 flex items-center justify-center backdrop-blur-[1px]'>
             <Loader2Icon className='text-muted-foreground size-8 animate-spin' />

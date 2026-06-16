@@ -139,3 +139,5 @@ A quick list of available functions.
 - [useSize](/functions/hooks/useSize): Hook that observes and returns the width and height of element
 - [useSpeechRecognition](/functions/hooks/useSpeechRecognition): Hook that provides a streamlined interface for incorporating speech-to-text functionality
 - [useSpeechSynthesis](/functions/hooks/useSpeechSynthesis): Hook that provides speech synthesis functionality
+- [useStateHistory](/functions/hooks/useStateHistory): Hook that manages state with history functionality
+- [useStep](/functions/hooks/useStep): Hook that create stepper

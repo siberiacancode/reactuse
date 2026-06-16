@@ -86,7 +86,7 @@ const Demo = () => {
         </div>
       </div>
 
-      <div className='bg-card flex flex-col overflow-hidden rounded-[var(--demo-radius)] border'>
+      <div className='bg-card flex flex-col overflow-hidden rounded-[var(--demo-radius)]'>
         <div className='flex flex-col gap-5 p-5'>
           <div className='flex items-start justify-between gap-4'>
             <div className='flex flex-col gap-1'>

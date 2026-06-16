@@ -19,7 +19,7 @@ const Demo = () => {
     <section className='flex flex-col items-center p-4'>
       <div
         ref={contextMenu.ref}
-        className='border-border bg-card w-full max-w-sm cursor-context-menu overflow-hidden rounded-2xl border select-none'
+        className='bg-card w-full max-w-sm cursor-context-menu overflow-hidden rounded-2xl select-none'
       >
         <div className='flex items-center gap-3 px-4 py-3'>
           <div data-size='lg' data-slot='avatar'>
