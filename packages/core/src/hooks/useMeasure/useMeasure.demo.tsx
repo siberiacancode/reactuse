@@ -15,7 +15,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-sm flex-col gap-2 p-4'>
-      <div className='border-border bg-card flex flex-col gap-2 rounded-xl border p-4 shadow-sm'>
+      <div className='bg-card flex flex-col gap-2 rounded-xl p-4 shadow-sm'>
         <span className='text-foreground text-sm font-semibold'>About reactuse</span>
 
         <div

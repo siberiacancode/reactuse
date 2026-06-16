@@ -141,3 +141,4 @@ A quick list of available functions.
 - [useSpeechSynthesis](/functions/hooks/useSpeechSynthesis): Hook that provides speech synthesis functionality
 - [useStateHistory](/functions/hooks/useStateHistory): Hook that manages state with history functionality
 - [useStep](/functions/hooks/useStep): Hook that create stepper
+- [useSticky](/functions/hooks/useSticky): Hook that allows you to detect that your sticky component is stuck

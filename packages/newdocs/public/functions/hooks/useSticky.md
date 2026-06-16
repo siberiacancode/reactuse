@@ -1,15 +1,15 @@
 ---
-title: useSpeechSynthesis
-description: Hook that provides speech synthesis functionality
+title: useSticky
+description: Hook that allows you to detect that your sticky component is stuck
 category: browser
 usage: low
 type: hook
-isTest: true
+isTest: false
 isDemo: true
-lastModifiedTime: 1781603339000
+lastModifiedTime: 1773052863000
 ---
 
-import metadata from './useSpeechSynthesis.meta.json';
+import metadata from './useSticky.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useSpeechSynthesis.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useSpeechSynthesis
+    npx useverse@latest add useSticky
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,9 @@ import metadata from './useSpeechSynthesis.meta.json';
 ## Usage
 
 ```tsx
-const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } = useSpeechSynthesis();
+const { stuck } = useSticky(ref, { axis: 'vertical' });
+// or
+const { stuck, ref } = useSticky();
 ```
 
 ## Type Declarations

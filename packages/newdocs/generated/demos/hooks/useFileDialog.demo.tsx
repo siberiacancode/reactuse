@@ -65,12 +65,10 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-xl flex-col'>
-      <div className='bg-card overflow-hidden rounded-2xl p-4 shadow-sm'>
-        <div className='px-4 py-3'>
-          <h3 className='text-sm font-semibold'>Compose</h3>
-        </div>
+      <div className='bg-card flex flex-col gap-3 overflow-hidden rounded-2xl p-4 shadow-sm'>
+        <h3 className='text-sm font-semibold'>Compose</h3>
 
-        <div className='flex items-center gap-2 px-4 py-2.5'>
+        <div className='flex items-center gap-2'>
           <span className='text-muted-foreground w-14 shrink-0 text-xs'>To</span>
           <input
             className='text-foreground placeholder:text-muted-foreground w-full bg-transparent text-sm outline-none'
@@ -79,7 +77,7 @@ const Demo = () => {
           />
         </div>
 
-        <div className='flex items-center gap-2 px-4 py-2.5'>
+        <div className='flex items-center gap-2'>
           <span className='text-muted-foreground w-14 shrink-0 text-xs'>Subject</span>
           <input
             className='text-foreground placeholder:text-muted-foreground w-full bg-transparent text-sm outline-none'
@@ -89,46 +87,42 @@ const Demo = () => {
           />
         </div>
 
-        <div className='px-4 py-3'>
-          <textarea
-            className='text-foreground placeholder:text-muted-foreground no-scrollbar min-h-[140px] w-full resize-none bg-transparent text-sm leading-relaxed outline-none'
-            id='description'
-            placeholder='Add your message...'
-            rows={8}
-            {...messageField.register()}
-          />
-        </div>
+        <textarea
+          className='text-foreground placeholder:text-muted-foreground no-scrollbar min-h-[140px] w-full resize-none bg-transparent text-sm leading-relaxed outline-none'
+          id='description'
+          placeholder='Add your message...'
+          rows={8}
+          {...messageField.register()}
+        />
 
         {!!attachments.length && (
-          <div className='px-4 py-3'>
-            <div className='flex flex-wrap gap-2'>
-              {attachments.map((file, index) => {
-                const Icon = ATTACHMENT_ICONS[file.type.startsWith('image/') ? 'image' : 'file'];
+          <div className='flex flex-wrap gap-2'>
+            {attachments.map((file, index) => {
+              const Icon = ATTACHMENT_ICONS[file.type.startsWith('image/') ? 'image' : 'file'];
 
-                return (
-                  <div
-                    key={`${file.name}-${index}`}
-                    className='border-border bg-muted/60 flex w-full max-w-full items-center gap-2 rounded-full border px-2.5 py-1 text-xs md:w-auto'
+              return (
+                <div
+                  key={`${file.name}-${index}`}
+                  className='border-border bg-muted/60 flex w-full max-w-full items-center gap-2 rounded-full border px-2.5 py-1 text-xs md:w-auto'
+                >
+                  <Icon className='text-muted-foreground size-3.5 shrink-0' />
+                  <span className='max-w-44 truncate'>{file.name}</span>
+                  <button
+                    aria-label={`Remove ${file.name}`}
+                    className='text-muted-foreground hover:text-foreground inline-flex items-center justify-center'
+                    data-variant='ghost'
+                    type='button'
+                    onClick={() => onRemoveAttachment(index)}
                   >
-                    <Icon className='text-muted-foreground size-3.5 shrink-0' />
-                    <span className='max-w-44 truncate'>{file.name}</span>
-                    <button
-                      aria-label={`Remove ${file.name}`}
-                      className='text-muted-foreground hover:text-foreground inline-flex items-center justify-center'
-                      data-variant='ghost'
-                      type='button'
-                      onClick={() => onRemoveAttachment(index)}
-                    >
-                      <XIcon className='size-3.5' />
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
+                    <XIcon className='size-3.5' />
+                  </button>
+                </div>
+              );
+            })}
           </div>
         )}
 
-        <div className='bg-card/80 flex items-center justify-between px-4 py-3'>
+        <div className='bg-card/80 flex items-center justify-between'>
           <div ref={attachMenuRef} className='relative'>
             <button data-variant='ghost' type='button' onClick={() => attachMenu.toggle()}>
               <PaperclipIcon className='size-4' />

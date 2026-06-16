@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781528880000
+lastModifiedTime: 1781603339000
 ---
 
 import metadata from './useSpeechSynthesis.meta.json';

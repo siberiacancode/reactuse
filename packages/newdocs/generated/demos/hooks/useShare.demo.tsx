@@ -31,7 +31,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-sm flex-col p-4'>
-      <div className='bg-card text-card-foreground ring-foreground/10 flex flex-col gap-4 overflow-hidden rounded-xl py-4 text-sm ring-1'>
+      <div className='bg-card text-card-foreground flex flex-col gap-4 overflow-hidden rounded-xl py-4 text-sm'>
         <div className='flex flex-col gap-1 px-4'>
           <div className='bg-muted text-foreground mb-3 flex size-10 items-center justify-center rounded-lg'>
             <GiftIcon className='size-5' />

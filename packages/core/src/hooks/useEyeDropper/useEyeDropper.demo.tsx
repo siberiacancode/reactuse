@@ -24,7 +24,7 @@ const Demo = () => {
 
   return (
     <section className='flex flex-col items-center gap-3 p-4'>
-      <div className='border-border bg-card flex aspect-square w-[280px] items-center justify-center overflow-hidden rounded-2xl border shadow-sm'>
+      <div className='bg-card flex aspect-square w-[280px] items-center justify-center overflow-hidden rounded-2xl shadow-sm'>
         <img
           alt='Pick a color from this image'
           className='size-full object-contain p-4'
@@ -33,7 +33,7 @@ const Demo = () => {
         />
       </div>
 
-      <div className='border-border bg-card flex w-[280px] items-center gap-3 rounded-xl border p-2.5 shadow-sm'>
+      <div className='bg-card flex w-[280px] items-center gap-3 rounded-xl p-2.5 shadow-sm'>
         <div
           className='border-border size-10 shrink-0 rounded-lg border'
           style={{ backgroundColor: color ?? 'transparent' }}

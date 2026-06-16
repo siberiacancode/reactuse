@@ -25,7 +25,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-xl flex-col p-4'>
-      <div className='border-border bg-card relative h-[360px] overflow-hidden rounded-2xl border shadow-sm'>
+      <div className='bg-card relative h-[360px] overflow-hidden rounded-2xl shadow-sm'>
         <iframe
           allow='geolocation'
           className='size-full border-0'

@@ -60,6 +60,7 @@
 - [useShare](https://reactuse.org/functions/hooks/useShare): Hook that utilizes the share api
 - [useSpeechRecognition](https://reactuse.org/functions/hooks/useSpeechRecognition): Hook that provides a streamlined interface for incorporating speech-to-text functionality
 - [useSpeechSynthesis](https://reactuse.org/functions/hooks/useSpeechSynthesis): Hook that provides speech synthesis functionality
+- [useSticky](https://reactuse.org/functions/hooks/useSticky): Hook that allows you to detect that your sticky component is stuck
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
