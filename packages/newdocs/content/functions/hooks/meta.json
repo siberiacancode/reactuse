@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll","useClickOutside","useContextMenu","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress","usePaint","useScript","useSize",
+      "useActiveElement","useAutoScroll","useClickOutside","useContextMenu","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress","usePaint","useScript","useSize","useTextareaAutosize",
 
       "---async---",
       "useAsync","useLockCallback","useMutation","useOptimistic","useQuery",
@@ -17,19 +17,19 @@
       "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent","useLastChanged","useLatest","usePrevious",
 
       "---state---",
-      "useBoolean","useControllableState","useCookie","useCookies","useCounter","useDefault","useDisclosure","useField","useHash","useList","useLocalStorage","useMap","useMask","useMergedRef","useObject","useOffsetPagination","useQueue","useRafState","useRefState","useSessionStorage","useSet","useStateHistory","useStep",
+      "useBoolean","useControllableState","useCookie","useCookies","useCounter","useDefault","useDisclosure","useField","useHash","useList","useLocalStorage","useMap","useMask","useMergedRef","useObject","useOffsetPagination","useQueue","useRafState","useRefState","useSessionStorage","useSet","useStateHistory","useStep","useStorage",
 
       "---user---",
       "useBrowserLanguage","useOperatingSystem","usePreferredColorScheme","usePreferredContrast","usePreferredDark","usePreferredLanguages","usePreferredReducedMotion",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver","useResizeObserver","useScroll","useScrollIntoView","useScrollTo",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver","useResizeObserver","useScroll","useScrollIntoView","useScrollTo","useSwipe",
 
       "---humor---",
       "useFul","useLess","useOnce",
 
       "---time---",
-      "useInterval","useProgress",
+      "useInterval","useProgress","useStopwatch",
 
       "---debug---",
       "useLogger","useRenderCount","useRenderInfo","useRerender"

@@ -31,7 +31,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full justify-center p-6'>
-      <div className='border-border bg-card flex w-full max-w-xs flex-col gap-4 rounded-xl border p-5'>
+      <div className='bg-card flex w-full max-w-xs flex-col gap-4 rounded-xl p-5'>
         <span className='text-muted-foreground text-xs tabular-nums'>{formattedDate}</span>
 
         <div className='flex items-center justify-between gap-3'>

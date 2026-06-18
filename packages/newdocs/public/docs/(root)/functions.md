@@ -142,3 +142,7 @@ A quick list of available functions.
 - [useStateHistory](/functions/hooks/useStateHistory): Hook that manages state with history functionality
 - [useStep](/functions/hooks/useStep): Hook that create stepper
 - [useSticky](/functions/hooks/useSticky): Hook that allows you to detect that your sticky component is stuck
+- [useStopwatch](/functions/hooks/useStopwatch): Hook that creates a stopwatch functionality
+- [useStorage](/functions/hooks/useStorage): Hook that manages storage value
+- [useSwipe](/functions/hooks/useSwipe): Hook that tracks swipe gestures for touch and pointer events
+- [useTextareaAutosize](/functions/hooks/useTextareaAutosize): Hook that automatically adjusts textarea height based on content

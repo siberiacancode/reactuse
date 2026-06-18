@@ -1,15 +1,15 @@
 ---
-title: useSticky
-description: Hook that allows you to detect that your sticky component is stuck
-category: browser
+title: useSwipe
+description: Hook that tracks swipe gestures for touch and pointer events
+category: sensors
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781625261000
+lastModifiedTime: 1776345632000
 ---
 
-import metadata from './useSticky.meta.json';
+import metadata from './useSwipe.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useSticky.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useSticky
+    npx useverse@latest add useSwipe
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,13 @@ import metadata from './useSticky.meta.json';
 ## Usage
 
 ```tsx
-const { stuck } = useSticky(ref, { axis: 'vertical' });
+const swipe = useSwipe(ref, (value) => console.log(value.direction));
 // or
-const { stuck, ref } = useSticky();
+const swipe = useSwipe<HTMLDivElement>((value) => console.log(value.direction));
+// or
+const swipe = useSwipe(ref);
+// or
+const swipe = useSwipe<HTMLDivElement>();
 ```
 
 ## Type Declarations

@@ -1,0 +1,557 @@
+{
+  "code": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useEffect, useRef, useState } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { HookTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { isTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { StateRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useRefState } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/** The use textarea autosize options */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The initial value for the textarea */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Callback function called when the textarea size changes */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  onResize</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/** The use textarea autosize return type */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The current value of the textarea */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  value</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Function to clear the textarea value */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  clear</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Function to set the textarea value */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  set</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">value</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosize</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">/**</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@name</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useTextareaAutosize</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@description</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> - Hook that automatically adjusts textarea height based on content</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@category</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Elements</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@usage</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> medium</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {HookTarget}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target textarea element</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.initialValue]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The initial value for the textarea</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {Function}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onResize]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Callback function called when the textarea size changes</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseTextareaAutosizeReturn}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object containing value, setValue and clear</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { value, setValue, clear } = useTextareaAutosize(ref);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {HookTarget}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The target textarea element</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> initialValue</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The initial value for the textarea</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseTextareaAutosizeReturn}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object containing value, setValue and clear</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { value, setValue, clear } = useTextareaAutosize(ref, 'initial');</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@template</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The textarea element type</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> initialValue</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The initial value for the textarea</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseTextareaAutosizeReturn &#x26; { ref: StateRef&#x3C;Target> }}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object containing ref, value, setValue and clear</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { ref, value, setValue, clear } = useTextareaAutosize('initial');</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@overload</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@template</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Target</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The textarea element type</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {string}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.initialValue]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> The initial value for the textarea</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@param</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {Function}</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [options.onResize]</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> Callback function called when the textarea size changes</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@returns</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> {UseTextareaAutosizeReturn &#x26; { ref: StateRef&#x3C;Target> }}</span><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> An object containing ref, value, setValue and clear</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> *</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">@example</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> * const { ref, value, setValue, clear } = useTextareaAutosize();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\"> */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> useTextareaAutosize</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> ((</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">...</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">params</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> any</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">[]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">isTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> undefined</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> undefined</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">      ?</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> typeof</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">===</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'object'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        ?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        :</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { initialValue: params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">1</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] }</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">      :</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> typeof</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">===</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'object'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        ?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">]</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">        :</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { initialValue: params[</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] }</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  ) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeOptions</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> undefined</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> [</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">value</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">setValue</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">] </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(options?.initialValue </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">??</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> ''</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> internalRef</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRefState</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">HTMLTextAreaElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> textareaRef</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">HTMLTextAreaElement</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> |</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> null</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">null</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> scrollHeightRef</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">0</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onTextareaResize</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> textarea</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> textareaRef.current;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">textarea) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> originalMinHeight</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> textarea.style.minHeight;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> originalMaxHeight</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> textarea.style.maxHeight;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    textarea.style.height </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'auto'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    textarea.style.minHeight </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'auto'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    textarea.style.maxHeight </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'none'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> scrollHeight</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> textarea.scrollHeight;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    textarea.style.height </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> `${</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">scrollHeight</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">}px`</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    textarea.style.minHeight </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> originalMinHeight;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    textarea.style.maxHeight </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> originalMaxHeight;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (scrollHeight </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!==</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> scrollHeightRef.current) options?.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">onResize</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">?.();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    scrollHeightRef.current </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> scrollHeight;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> setTextareaValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">newValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    setValue</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(newValue);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> textarea</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> textareaRef.current;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">textarea) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    textarea.value </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> newValue;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    requestAnimationFrame</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">      onTextareaResize</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    });</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  useEffect</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> !</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">internalRef.state) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> element</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> isTarget.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">getElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(target) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> internalRef.current</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    ) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">element) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    textareaRef.current </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> element;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (options?.initialValue) element.value </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> options.initialValue;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">    onTextareaResize</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onInput</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> InputEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">      const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> newValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (event.target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">).value;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">      setTextareaValue</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(newValue);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">      requestAnimationFrame</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">        onTextareaResize</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      });</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onResize</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">      requestAnimationFrame</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(() </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">        onTextareaResize</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      });</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    element.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">addEventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'input'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, onInput </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> EventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    element.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">addEventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'resize'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, onResize </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> EventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      element.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">removeEventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'input'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, onInput </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> EventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      element.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">removeEventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'resize'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, onResize </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> EventListener</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  }, [target </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">&#x26;&#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> isTarget.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">getRawElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(target), internalRef.state]);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> clear</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> setValue</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">''</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  if</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (target)</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">    return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      value,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      set: setTextareaValue,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      clear</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    ref: internalRef,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    value,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    set: setTextareaValue,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    clear</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">as</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosize</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>",
+  "id": "useTextareaAutosize",
+  "isTest": true,
+  "isDemo": true,
+  "type": "hook",
+  "name": "useTextareaAutosize",
+  "usage": "medium",
+  "description": "Hook that automatically adjusts textarea height based on content",
+  "category": "Elements",
+  "lastModified": 1768553242000,
+  "examples": [
+    "const { value, setValue, clear } = useTextareaAutosize(ref);",
+    "const { value, setValue, clear } = useTextareaAutosize(ref, 'initial');",
+    "const { ref, value, setValue, clear } = useTextareaAutosize('initial');",
+    "const { ref, value, setValue, clear } = useTextareaAutosize();"
+  ],
+  "apiParameters": [
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 6,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "target",
+      "type": "HookTarget",
+      "optional": false,
+      "description": "The target textarea element",
+      "problems": [],
+      "source": [
+        {
+          "number": 7,
+          "source": " * @param {HookTarget} target The target textarea element",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "target",
+            "postName": " ",
+            "type": "{HookTarget}",
+            "postType": " ",
+            "description": "The target textarea element",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.initialValue",
+      "type": "string",
+      "optional": true,
+      "description": "The initial value for the textarea",
+      "problems": [],
+      "source": [
+        {
+          "number": 8,
+          "source": " * @param {string} [options.initialValue] The initial value for the textarea",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.initialValue]",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The initial value for the textarea",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.onResize",
+      "type": "Function",
+      "optional": true,
+      "description": "Callback function called when the textarea size changes",
+      "problems": [],
+      "source": [
+        {
+          "number": 9,
+          "source": " * @param {Function} [options.onResize] Callback function called when the textarea size changes",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onResize]",
+            "postName": " ",
+            "type": "{Function}",
+            "postType": " ",
+            "description": "Callback function called when the textarea size changes",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseTextareaAutosizeReturn",
+      "optional": false,
+      "description": "object containing value, setValue and clear",
+      "problems": [],
+      "source": [
+        {
+          "number": 10,
+          "source": " * @returns {UseTextareaAutosizeReturn} An object containing value, setValue and clear",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseTextareaAutosizeReturn}",
+            "postType": " ",
+            "description": "object containing value, setValue and clear",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 11,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 15,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "target",
+      "type": "HookTarget",
+      "optional": false,
+      "description": "The target textarea element",
+      "problems": [],
+      "source": [
+        {
+          "number": 16,
+          "source": " * @param {HookTarget} target The target textarea element",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "target",
+            "postName": " ",
+            "type": "{HookTarget}",
+            "postType": " ",
+            "description": "The target textarea element",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "initialValue",
+      "type": "string",
+      "optional": false,
+      "description": "The initial value for the textarea",
+      "problems": [],
+      "source": [
+        {
+          "number": 17,
+          "source": " * @param {string} initialValue The initial value for the textarea",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "initialValue",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The initial value for the textarea",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseTextareaAutosizeReturn",
+      "optional": false,
+      "description": "object containing value, setValue and clear",
+      "problems": [],
+      "source": [
+        {
+          "number": 18,
+          "source": " * @returns {UseTextareaAutosizeReturn} An object containing value, setValue and clear",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseTextareaAutosizeReturn}",
+            "postType": " ",
+            "description": "object containing value, setValue and clear",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 19,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 23,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "initialValue",
+      "type": "string",
+      "optional": false,
+      "description": "The initial value for the textarea",
+      "problems": [],
+      "source": [
+        {
+          "number": 25,
+          "source": " * @param {string} initialValue The initial value for the textarea",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "initialValue",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The initial value for the textarea",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseTextareaAutosizeReturn & { ref: StateRef<Target> }",
+      "optional": false,
+      "description": "object containing ref, value, setValue and clear",
+      "problems": [],
+      "source": [
+        {
+          "number": 26,
+          "source": " * @returns {UseTextareaAutosizeReturn & { ref: StateRef<Target> }} An object containing ref, value, setValue and clear",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseTextareaAutosizeReturn & { ref: StateRef<Target> }}",
+            "postType": " ",
+            "description": "object containing ref, value, setValue and clear",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 27,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "overload",
+      "name": "",
+      "type": "",
+      "optional": false,
+      "description": "",
+      "problems": [],
+      "source": [
+        {
+          "number": 31,
+          "source": " * @overload",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@overload",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.initialValue",
+      "type": "string",
+      "optional": true,
+      "description": "The initial value for the textarea",
+      "problems": [],
+      "source": [
+        {
+          "number": 33,
+          "source": " * @param {string} [options.initialValue] The initial value for the textarea",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.initialValue]",
+            "postName": " ",
+            "type": "{string}",
+            "postType": " ",
+            "description": "The initial value for the textarea",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "param",
+      "name": "options.onResize",
+      "type": "Function",
+      "optional": true,
+      "description": "Callback function called when the textarea size changes",
+      "problems": [],
+      "source": [
+        {
+          "number": 34,
+          "source": " * @param {Function} [options.onResize] Callback function called when the textarea size changes",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@param",
+            "postTag": " ",
+            "name": "[options.onResize]",
+            "postName": " ",
+            "type": "{Function}",
+            "postType": " ",
+            "description": "Callback function called when the textarea size changes",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    },
+    {
+      "tag": "returns",
+      "name": "An",
+      "type": "UseTextareaAutosizeReturn & { ref: StateRef<Target> }",
+      "optional": false,
+      "description": "object containing ref, value, setValue and clear",
+      "problems": [],
+      "source": [
+        {
+          "number": 35,
+          "source": " * @returns {UseTextareaAutosizeReturn & { ref: StateRef<Target> }} An object containing ref, value, setValue and clear",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": " ",
+            "tag": "@returns",
+            "postTag": " ",
+            "name": "An",
+            "postName": " ",
+            "type": "{UseTextareaAutosizeReturn & { ref: StateRef<Target> }}",
+            "postType": " ",
+            "description": "object containing ref, value, setValue and clear",
+            "end": "",
+            "lineEnd": ""
+          }
+        },
+        {
+          "number": 36,
+          "source": " *",
+          "tokens": {
+            "start": " ",
+            "delimiter": "*",
+            "postDelimiter": "",
+            "tag": "",
+            "postTag": "",
+            "name": "",
+            "postName": "",
+            "type": "",
+            "postType": "",
+            "description": "",
+            "end": "",
+            "lineEnd": ""
+          }
+        }
+      ]
+    }
+  ],
+  "typeDeclarations": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { HookTarget } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@/utils/helpers'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { StateRef } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '../useRefState/useRefState'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The initial value for the textarea */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Callback function called when the textarea size changes */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  onResize</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** The current value of the textarea */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">  value</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Function to clear the textarea value */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  clear</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6A737D;--shiki-dark:#6A737D\">  /** Function to set the textarea value */</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">  set</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">value</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> void</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> interface</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosize</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HookTarget</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, </span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">)</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    initialValue</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> string</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  &#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> extends</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> HTMLTextAreaElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>(</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    options</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeOptions</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">,</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    target</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">?:</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> never</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  )</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> UseTextareaAutosizeReturn</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> &#x26;</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#E36209;--shiki-dark:#FFAB70\">    ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> StateRef</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">Target</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">}</span></span></code></pre>",
+  "dependencies": {
+    "hooks": [
+      "useRefState"
+    ],
+    "utils": [
+      "isTarget"
+    ],
+    "packages": []
+  },
+  "contributors": [
+    {
+      "name": "debabin",
+      "avatar": "https://gravatar.com/avatar/0d80b3fd9c97adcdd11b8c18ecef1054?d=retro"
+    }
+  ],
+  "demo": "<pre class=\"no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent\" style=\"background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8\" tabindex=\"0\"><code data-line-numbers=\"\"><span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> type</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { SubmitEvent } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { useField, useTextareaAutosize } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> '@siberiacancode/reactuse'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">import</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> { UserIcon } </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">from</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\"> 'lucide-react'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">;</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> Demo</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> () </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> nameField</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useField</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">(</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">''</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">);</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\"> message</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> useTextareaAutosize</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  const</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onSubmit</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> =</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span><span style=\"color:#E36209;--shiki-dark:#FFAB70\">event</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">:</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> SubmitEvent</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">&#x3C;</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">HTMLFormElement</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>) </span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=></span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> {</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    event.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">preventDefault</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">();</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  };</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">  return</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> (</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex w-full max-w-md flex-col p-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex w-full flex-col gap-4'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex flex-col gap-0.5'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">h3</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground text-sm font-semibold'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">>Feedback&#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">h3</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">p</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-muted-foreground text-xs'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            Tell us what's working, what's not, or what you'd love to see.</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">p</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">form</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex flex-col gap-3'</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> onSubmit</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{onSubmit}></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex flex-col gap-1.5'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">label</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground text-xs font-medium'</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> htmlFor</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'name'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              Name</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">label</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'relative'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              &#x3C;</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">UserIcon</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-muted-foreground pointer-events-none absolute top-1/2 left-3 z-10 size-4 -translate-y-1/2'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">input</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">                className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'pl-9!'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">                id</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'name'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">                placeholder</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Your name'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">                {</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">...</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">nameField.</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">register</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">()}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex flex-col gap-1.5'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">label</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'text-foreground text-xs font-medium'</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> htmlFor</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'message'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              Feedback</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">label</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">textarea</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              ref</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{message.ref}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'no-scrollbar resize-none'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              id</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'message'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              placeholder</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'Share your thoughts — this box grows as you type…'</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">              style</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{{ minHeight: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'72px'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">, maxHeight: </span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'200px'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> }}</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            /></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> className</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'flex items-center justify-end'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> data-size</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'sm'</span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\"> disabled</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">{</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">!</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">message.value.</span><span style=\"color:#005CC5;--shiki-dark:#79B8FF\">length</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">} </span><span style=\"color:#6F42C1;--shiki-dark:#B392F0\">type</span><span style=\"color:#D73A49;--shiki-dark:#F97583\">=</span><span style=\"color:#032F62;--shiki-dark:#9ECBFF\">'submit'</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">              Send</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">            &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">button</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">          &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">        &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">form</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">      &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">div</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">    &#x3C;/</span><span style=\"color:#22863A;--shiki-dark:#85E89D\">section</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">></span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">  );</span></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#24292E;--shiki-dark:#E1E4E8\">};</span></span>\n<span class=\"line\" data-line=\"\"></span>\n<span class=\"line\" data-line=\"\"><span style=\"color:#D73A49;--shiki-dark:#F97583\">export</span><span style=\"color:#D73A49;--shiki-dark:#F97583\"> default</span><span style=\"color:#24292E;--shiki-dark:#E1E4E8\"> Demo;</span></span>\n<span class=\"line\" data-line=\"\"></span></code></pre>"
+}

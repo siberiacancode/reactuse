@@ -85,6 +85,7 @@
 - [usePaint](https://reactuse.org/functions/hooks/usePaint): Hook that allows you to draw in a specific area
 - [useScript](https://reactuse.org/functions/hooks/useScript): Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
 - [useSize](https://reactuse.org/functions/hooks/useSize): Hook that observes and returns the width and height of element
+- [useTextareaAutosize](https://reactuse.org/functions/hooks/useTextareaAutosize): Hook that automatically adjusts textarea height based on content
 ### Humors
 
 - [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful
@@ -119,6 +120,7 @@
 - [useScroll](https://reactuse.org/functions/hooks/useScroll): Hook that allows you to control scroll a element
 - [useScrollIntoView](https://reactuse.org/functions/hooks/useScrollIntoView): Hook that provides functionality to scroll an element into view
 - [useScrollTo](https://reactuse.org/functions/hooks/useScrollTo): Hook for scrolling to a specific element
+- [useSwipe](https://reactuse.org/functions/hooks/useSwipe): Hook that tracks swipe gestures for touch and pointer events
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state
@@ -144,10 +146,12 @@
 - [useSet](https://reactuse.org/functions/hooks/useSet): Hook that manages a set structure
 - [useStateHistory](https://reactuse.org/functions/hooks/useStateHistory): Hook that manages state with history functionality
 - [useStep](https://reactuse.org/functions/hooks/useStep): Hook that create stepper
+- [useStorage](https://reactuse.org/functions/hooks/useStorage): Hook that manages storage value
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions
 - [useProgress](https://reactuse.org/functions/hooks/useProgress): Hook that creates a lightweight progress bar
+- [useStopwatch](https://reactuse.org/functions/hooks/useStopwatch): Hook that creates a stopwatch functionality
 ### Users
 
 - [useBrowserLanguage](https://reactuse.org/functions/hooks/useBrowserLanguage): Hook that returns the current browser language

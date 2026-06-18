@@ -1,15 +1,15 @@
 ---
-title: useSticky
-description: Hook that allows you to detect that your sticky component is stuck
-category: browser
-usage: low
+title: useStopwatch
+description: Hook that creates a stopwatch functionality
+category: time
+usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781625261000
+lastModifiedTime: 1776172602000
 ---
 
-import metadata from './useSticky.meta.json';
+import metadata from './useStopwatch.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useSticky.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useSticky
+    npx useverse@latest add useStopwatch
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,9 @@ import metadata from './useSticky.meta.json';
 ## Usage
 
 ```tsx
-const { stuck } = useSticky(ref, { axis: 'vertical' });
+const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { immediately: false });
 // or
-const { stuck, ref } = useSticky();
+const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, immediately: false });
 ```
 
 ## Type Declarations

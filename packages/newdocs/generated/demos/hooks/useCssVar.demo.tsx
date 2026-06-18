@@ -5,6 +5,7 @@ import { ChevronDownIcon } from 'lucide-react';
 import { useRef } from 'react';
 
 const ACCENT_COLORS = [
+  { value: 'oklch(1 0 0)', label: 'White' },
   { value: 'oklch(0.55 0.18 250)', label: 'Blue' },
   { value: 'oklch(0.55 0.22 300)', label: 'Violet' },
   { value: 'oklch(0.65 0.22 0)', label: 'Pink' },

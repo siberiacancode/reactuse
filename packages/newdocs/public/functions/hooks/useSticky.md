@@ -4,7 +4,7 @@ description: Hook that allows you to detect that your sticky component is stuck
 category: browser
 usage: low
 type: hook
-isTest: false
+isTest: true
 isDemo: true
 lastModifiedTime: 1781625261000
 ---

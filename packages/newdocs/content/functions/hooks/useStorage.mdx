@@ -1,15 +1,15 @@
 ---
-title: useSticky
-description: Hook that allows you to detect that your sticky component is stuck
-category: browser
-usage: low
+title: useStorage
+description: Hook that manages storage value
+category: state
+usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781625261000
+lastModifiedTime: 1767164032000
 ---
 
-import metadata from './useSticky.meta.json';
+import metadata from './useStorage.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useSticky.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useSticky
+    npx useverse@latest add useStorage
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './useSticky.meta.json';
 ## Usage
 
 ```tsx
-const { stuck } = useSticky(ref, { axis: 'vertical' });
-// or
-const { stuck, ref } = useSticky();
+const { value, set, remove } = useStorage('key', 'value');
 ```
 
 ## Type Declarations

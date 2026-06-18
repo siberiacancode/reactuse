@@ -24,7 +24,7 @@ const Demo = () => {
 
         <div className='relative'>
           <select
-            value={settingLocalStorage.value ?? 'daily'}
+            value={settingLocalStorage.value}
             onChange={(event) => settingLocalStorage.set(event.target.value)}
           >
             {FREQUENCY_OPTIONS.map((option) => (
