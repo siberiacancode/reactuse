@@ -23,16 +23,16 @@ const Demo = () => {
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
 
   return (
-    <section className='flex min-w-md flex-col gap-2'>
+    <section className='flex min-w-0 w-full max-w-md flex-col gap-2'>
       <textarea
-        className='border-border bg-card text-foreground placeholder:text-muted-foreground resize-none overflow-hidden rounded-lg border p-3 text-sm outline-none'
+        className='border-border bg-card text-foreground placeholder:text-muted-foreground w-full resize-none overflow-hidden rounded-lg border p-3 text-sm outline-none'
         placeholder='Start typing...'
         rows={10}
         value={content}
         onChange={(event) => setContent(event.target.value)}
       />
 
-      <div className='flex items-center justify-between'>
+      <div className='flex flex-wrap items-center justify-between gap-2'>
         {status === 'idle' && <span className='text-muted-foreground text-xs'>Not saved yet</span>}
 
         {status === 'saving' && (

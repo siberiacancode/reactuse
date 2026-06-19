@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll","useClickOutside","useContextMenu","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress","usePaint","useScript","useSize","useTextareaAutosize",
+      "useActiveElement","useAutoScroll","useClickOutside","useContextMenu","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress","usePaint","useScript","useSize","useTextareaAutosize","useTextDirection",
 
       "---async---",
       "useAsync","useLockCallback","useMutation","useOptimistic","useQuery",
@@ -14,7 +14,7 @@
       "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls","useMediaQuery","useMemory","useNetwork","useObjectUrl","useOnline","useOtpCredential","usePermission","usePictureInPicture","usePointerLock","usePostMessage","useRaf","useShare","useSpeechRecognition","useSpeechSynthesis","useSticky",
 
       "---utilities---",
-      "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent","useLastChanged","useLatest","usePrevious",
+      "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent","useLastChanged","useLatest","usePrevious","useThrottleCallback","useThrottleEffect",
 
       "---state---",
       "useBoolean","useControllableState","useCookie","useCookies","useCounter","useDefault","useDisclosure","useField","useHash","useList","useLocalStorage","useMap","useMask","useMergedRef","useObject","useOffsetPagination","useQueue","useRafState","useRefState","useSessionStorage","useSet","useStateHistory","useStep","useStorage",
@@ -23,7 +23,7 @@
       "useBrowserLanguage","useOperatingSystem","usePreferredColorScheme","usePreferredContrast","usePreferredDark","usePreferredLanguages","usePreferredReducedMotion",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver","useResizeObserver","useScroll","useScrollIntoView","useScrollTo","useSwipe",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver","useResizeObserver","useScroll","useScrollIntoView","useScrollTo","useSwipe","useTextSelection",
 
       "---humor---",
       "useFul","useLess","useOnce",

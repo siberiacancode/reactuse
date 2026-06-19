@@ -5,14 +5,17 @@ const Demo = () => {
   const [visible, toggle] = useBoolean();
 
   return (
-    <section className='flex max-w-sm flex-col gap-4'>
-      <p>Toggle password visibility</p>
+    <section className='flex max-w-sm flex-col gap-3'>
+      <label className='text-sm font-medium' htmlFor='password'>
+        New password
+      </label>
 
       <div className='relative'>
         <input
           className='pr-10'
           data-id='password'
           defaultValue='mysecretpassword'
+          id='password'
           placeholder='Enter your password'
           type={visible ? 'text' : 'password'}
         />

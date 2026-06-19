@@ -14,18 +14,19 @@ const Demo = () => {
   const settingLocalStorage = useLocalStorage('reactuse-demo-notify', 'daily');
 
   return (
-    <section className='border-border flex min-w-md flex-col gap-2 rounded-xl border p-2'>
-      <div className='flex w-full max-w-md items-start justify-between gap-4 p-4'>
-        <div className='flex items-center gap-3'>
+    <section className='border-border flex min-w-0 w-full flex-col gap-2 rounded-xl border p-2'>
+      <div className='flex w-full min-w-0 flex-col gap-4 p-4 sm:flex-row sm:items-start sm:justify-between'>
+        <div className='flex min-w-0 items-center gap-3'>
           <BellIcon className='text-muted-foreground size-6 shrink-0' />
-          <div className='flex flex-col gap-0.5'>
+          <div className='min-w-0 flex flex-col gap-0.5'>
             <span className='text-sm font-medium'>Email notifications</span>
             <span className='text-muted-foreground text-xs'>How often you get updates</span>
           </div>
         </div>
 
-        <div className='relative'>
+        <div className='relative w-full sm:w-auto'>
           <select
+            className='w-full sm:min-w-44'
             value={settingLocalStorage.value}
             onChange={(event) => settingLocalStorage.set(event.target.value)}
           >

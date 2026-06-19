@@ -55,7 +55,7 @@ const Demo = () => {
   const onCompletePayment = () => updateSearch({ step: 2, method: selectedMethod, email });
 
   return (
-    <section className='flex min-w-sm flex-col gap-5 p-4 md:min-w-md'>
+    <section className='flex w-full max-w-md min-w-0 flex-col gap-5 p-4'>
       {step === 1 && (
         <>
           <div className='flex flex-col gap-1'>
@@ -71,7 +71,7 @@ const Demo = () => {
               return (
                 <label
                   key={method.id}
-                  className='border-border hover:bg-muted/50 has-[:checked]:border-foreground/30 has-[:checked]:bg-muted/50 relative flex cursor-pointer items-center gap-3 rounded-xl border p-4 text-left transition-colors'
+                  className='border-border hover:bg-muted/50 has-[:checked]:border-foreground/30 has-[:checked]:bg-muted/50 relative flex min-w-0 cursor-pointer items-center gap-3 rounded-xl border p-4 text-left transition-colors'
                 >
                   <input
                     checked={isSelected}
@@ -85,9 +85,11 @@ const Demo = () => {
                     <Icon className='size-4' />
                   </div>
 
-                  <span className='flex flex-1 flex-col gap-1'>
+                  <span className='flex min-w-0 flex-1 flex-col gap-1 pr-6'>
                     <span className='text-sm'>{method.title}</span>
-                    <span className='text-muted-foreground text-xs'>{method.description}</span>
+                    <span className='text-muted-foreground text-xs break-words'>
+                      {method.description}
+                    </span>
                   </span>
                 </label>
               );
@@ -97,7 +99,7 @@ const Demo = () => {
           <div className='relative'>
             <AtSignIcon className='pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-50' />
             <input
-              className='pl-8!'
+              className='w-full pl-8!'
               placeholder='you@example.com'
               type='email'
               value={email}
@@ -122,19 +124,21 @@ const Demo = () => {
 
             <div className='flex flex-col items-center gap-2'>
               <h4>Payment successful</h4>
-              <p className='text-muted-foreground max-w-xs text-sm'>
+              <p className='text-muted-foreground max-w-xs text-sm break-words'>
                 Your order is confirmed and the receipt has been sent to {email}.
               </p>
             </div>
 
-            <div className='bg-muted/50 flex w-full max-w-xs flex-col gap-2 rounded-xl p-4 text-left'>
+            <div className='bg-muted/50 flex w-full min-w-0 flex-col gap-2 rounded-xl p-4 text-left'>
               <div className='flex items-center justify-between gap-3 text-sm'>
                 <span className='text-muted-foreground'>Payment method</span>
                 <span className='text-foreground font-medium'>{currentMethod.title}</span>
               </div>
               <div className='flex items-center justify-between gap-3 text-sm'>
                 <span className='text-muted-foreground'>Email</span>
-                <span className='text-foreground font-medium'>{email}</span>
+                <span className='text-foreground min-w-0 text-right font-medium break-all'>
+                  {email}
+                </span>
               </div>
             </div>
           </div>

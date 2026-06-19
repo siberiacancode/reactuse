@@ -31,7 +31,7 @@ const Demo = () => {
   return (
     <section className='flex w-full max-w-xs flex-col items-center gap-8 p-6'>
       <div className='relative' style={{ width: SIZE, height: SIZE }}>
-        <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`} className='-rotate-90'>
+        <svg className='-rotate-90' height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`} width={SIZE}>
           {Array.from({ length: TICKS }).map((_, i) => {
             const angle = (i / TICKS) * 2 * Math.PI;
             const major = i % 5 === 0;
@@ -44,39 +44,39 @@ const Demo = () => {
             return (
               <line
                 key={i}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
                 className='stroke-muted-foreground/25'
-                strokeWidth={major ? 2.5 : 1.5}
                 strokeLinecap='round'
+                strokeWidth={major ? 2.5 : 1.5}
+                x1={x1}
+                x2={x2}
+                y1={y1}
+                y2={y2}
               />
             );
           })}
 
           <circle
+            className='stroke-muted/60'
             cx={CENTER}
             cy={CENTER}
-            r={RADIUS}
             fill='none'
-            className='stroke-muted/60'
+            r={RADIUS}
             strokeWidth={9}
           />
 
           <circle
-            cx={CENTER}
-            cy={CENTER}
-            r={RADIUS}
-            fill='none'
-            strokeWidth={9}
-            strokeLinecap='round'
-            strokeDasharray={CIRCUMFERENCE}
-            strokeDashoffset={dashoffset}
             className={cn(
               'stroke-primary',
               animate && 'transition-[stroke-dashoffset] duration-1000 ease-linear'
             )}
+            cx={CENTER}
+            cy={CENTER}
+            fill='none'
+            r={RADIUS}
+            strokeDasharray={CIRCUMFERENCE}
+            strokeDashoffset={dashoffset}
+            strokeLinecap='round'
+            strokeWidth={9}
           />
         </svg>
 
@@ -92,23 +92,23 @@ const Demo = () => {
 
       <div className='flex items-center gap-4'>
         <button
-          type='button'
+          aria-label='Reset'
+          className='rounded-full!'
           data-size='icon-lg'
           data-variant='ghost'
-          className='rounded-full!'
-          aria-label='Reset'
           disabled={stopwatch.count === 0 && stopwatch.paused}
+          type='button'
           onClick={onReset}
         >
           <RotateCcwIcon className='size-5' />
         </button>
 
         <button
-          type='button'
+          aria-label={running ? 'Pause' : 'Start'}
+          className='size-14! rounded-full!'
           data-size='icon-lg'
           data-variant={running ? 'secondary' : 'default'}
-          className='size-14! rounded-full!'
-          aria-label={running ? 'Pause' : 'Start'}
+          type='button'
           onClick={() => stopwatch.toggle()}
         >
           {running ? (
@@ -118,7 +118,7 @@ const Demo = () => {
           )}
         </button>
 
-        <span className='size-9' aria-hidden />
+        <span aria-hidden className='size-9' />
       </div>
     </section>
   );

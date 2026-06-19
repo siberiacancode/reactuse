@@ -32,7 +32,7 @@ const Demo = () => {
   });
 
   return (
-    <section className='flex w-full max-w-2xl flex-col p-4'>
+    <section className='w-full'>
       <div
         ref={containerRef}
         className='bg-card relative h-[320px] w-full cursor-crosshair overflow-hidden rounded-xl shadow-sm select-none'

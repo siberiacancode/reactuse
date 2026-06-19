@@ -91,7 +91,7 @@ const Demo = () => {
   const [preferences, setPreferences] = useState<Preferences>(ALL_OFF);
 
   return (
-    <section className='flex min-w-sm flex-col gap-6 md:min-w-md'>
+    <section className='flex w-full max-w-md min-w-0 flex-col gap-6'>
       <div className='flex flex-col gap-2'>
         <h3>Preferences</h3>
         <p className='text-muted-foreground'>Manage how the app behaves.</p>
@@ -112,9 +112,9 @@ const Demo = () => {
       <div className='flex flex-col'>
         {SETTINGS.map((setting) => (
           <div key={setting.key} className='flex items-center justify-between gap-4 py-3'>
-            <div className='flex flex-col gap-1'>
+            <div className='flex min-w-0 flex-1 flex-col gap-1'>
               <label htmlFor={setting.key}>{setting.label}</label>
-              <p className='text-muted-foreground text-xs'>{setting.description}</p>
+              <p className='text-muted-foreground text-xs break-words'>{setting.description}</p>
             </div>
 
             <Switch
@@ -129,10 +129,10 @@ const Demo = () => {
 
         <div className='border-border mt-2 border-t pt-2'>
           <div className='flex items-center justify-between gap-4 py-3'>
-            <div className='flex flex-col gap-1'>
+            <div className='flex min-w-0 flex-1 flex-col gap-1'>
               <label htmlFor='beta'>Beta features</label>
               <p className='text-muted-foreground text-xs'>
-                Independent toggle — managed inside the component
+                Independent toggle - managed inside the component
               </p>
             </div>
 

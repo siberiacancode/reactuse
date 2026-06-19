@@ -1,10 +1,8 @@
 'use client'
 
 import { useAsyncEffect, useBoolean, useToggle } from '@siberiacancode/reactuse';
-import { Loader2Icon } from 'lucide-react';
+import { ChevronRightIcon, Loader2Icon } from 'lucide-react';
 import { Fragment, useState } from 'react';
-
-import { cn } from '@/utils/lib';
 
 interface Pokemon {
   id: number;
@@ -17,7 +15,7 @@ const CHAINS = {
   squirtle: [7, 8, 9]
 };
 
-const getPokemons = async (ids: number[]) => {
+const getPokemons = async (ids: number[]): Promise<Pokemon[]> => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return Promise.all(
     ids.map((id) => fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()))
@@ -42,13 +40,13 @@ const Demo = () => {
   }, [chain]);
 
   return (
-    <section className='flex min-w-xs flex-col gap-4 md:min-w-md'>
-      <div data-slot='tabs'>
-        <div className='mb-6' data-slot='tabs-list'>
+    <section className='flex min-w-xs flex-col gap-2 md:min-w-md'>
+      <div className='gap-2' data-slot='tabs'>
+        <div data-slot='tabs-list'>
           {Object.keys(CHAINS).map((name) => (
             <button
               key={name}
-              data-state={cn(chain === name && 'active')}
+              data-state={chain === name ? 'active' : undefined}
               data-variant='tabs-trigger'
               type='button'
               onClick={() => toggleChain(name as keyof typeof CHAINS)}
@@ -58,36 +56,35 @@ const Demo = () => {
           ))}
         </div>
 
-        <div data-slot='tabs-content rounded-lg border'>
-          {isLoading && (
-            <div className='flex h-36 flex-col items-center justify-center gap-2'>
-              <Loader2Icon className='size-6 animate-spin' />
-              <p>
-                Loading <code>evolution</code> chain
-              </p>
-            </div>
-          )}
-
-          {!isLoading && (
-            <div className='flex h-36 flex-row items-center justify-between gap-2'>
-              {pokemons.map((pokemon, index) => (
-                <Fragment key={pokemon.id}>
-                  <div className='flex flex-col items-center gap-2'>
-                    <div className='flex size-20 items-center justify-center md:size-28'>
-                      <img
-                        alt={pokemon.name}
-                        className='h-20 md:h-28'
-                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
-                      />
-                    </div>
-
-                    <p className='text-sm capitalize'>{pokemon.name}</p>
+        <div
+          className='border-border bg-card flex h-40 items-center justify-around gap-2 overflow-hidden rounded-xl border p-4'
+          data-slot='tabs-content'
+        >
+          {isLoading ? (
+            <Loader2Icon className='text-muted-foreground size-6 animate-spin' />
+          ) : (
+            pokemons.map((pokemon, index) => (
+              <Fragment key={pokemon.id}>
+                <div className='flex h-full w-24 shrink-0 flex-col items-center justify-center gap-2'>
+                  <div className='size-20 shrink-0 md:size-24'>
+                    <img
+                      alt={pokemon.name}
+                      className='size-full object-contain'
+                      height={96}
+                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+                      width={96}
+                    />
                   </div>
+                  <p className='text-foreground h-5 text-sm font-medium capitalize'>
+                    {pokemon.name}
+                  </p>
+                </div>
 
-                  {index < pokemons.length - 1 && <div className='text-xl'>{'>'}</div>}
-                </Fragment>
-              ))}
-            </div>
+                {index < pokemons.length - 1 && (
+                  <ChevronRightIcon className='text-muted-foreground size-5 shrink-0' />
+                )}
+              </Fragment>
+            ))
           )}
         </div>
       </div>

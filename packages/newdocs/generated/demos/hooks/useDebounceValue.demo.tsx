@@ -5,39 +5,21 @@ import { SearchIcon, StarIcon } from 'lucide-react';
 import { useMemo } from 'react';
 
 const BOOKS = [
+  { cover: 'PP', title: 'The Pragmatic Programmer', author: 'David Thomas', year: 1999, rating: 4.6 },
+  { cover: 'CC', title: 'Clean Code', author: 'Robert Martin', year: 2008, rating: 4.3 },
   {
-    cover: '📕',
-    title: 'The Pragmatic Programmer',
-    author: 'David Thomas',
-    year: 1999,
-    rating: 4.6
-  },
-  { cover: '📗', title: 'Clean Code', author: 'Robert Martin', year: 2008, rating: 4.3 },
-  {
-    cover: '📘',
+    cover: 'RU',
     title: 'Reactuse first release',
     author: 'siberiacancode',
     year: 2026,
     rating: 4.9,
     href: 'https://reactuse.com'
   },
-  { cover: '📙', title: 'Design Patterns', author: 'Gang of Four', year: 1994, rating: 4.4 },
-  { cover: '📓', title: 'You Don\u2019t Know JS', author: 'Kyle Simpson', year: 2014, rating: 4.7 },
-  {
-    cover: '📔',
-    title: 'Eloquent JavaScript',
-    author: 'Marijn Haverbeke',
-    year: 2018,
-    rating: 4.4
-  },
-  {
-    cover: '📒',
-    title: 'JavaScript: The Good Parts',
-    author: 'Douglas Crockford',
-    year: 2008,
-    rating: 4.1
-  },
-  { cover: '📚', title: 'Domain-Driven Design', author: 'Eric Evans', year: 2003, rating: 4.2 }
+  { cover: 'DP', title: 'Design Patterns', author: 'Gang of Four', year: 1994, rating: 4.4 },
+  { cover: 'JS', title: "You Don't Know JS", author: 'Kyle Simpson', year: 2014, rating: 4.7 },
+  { cover: 'EJ', title: 'Eloquent JavaScript', author: 'Marijn Haverbeke', year: 2018, rating: 4.4 },
+  { cover: 'GP', title: 'JavaScript: The Good Parts', author: 'Douglas Crockford', year: 2008, rating: 4.1 },
+  { cover: 'DD', title: 'Domain-Driven Design', author: 'Eric Evans', year: 2003, rating: 4.2 }
 ];
 
 const Demo = () => {
@@ -60,7 +42,7 @@ const Demo = () => {
       <div className='flex flex-col gap-1'>
         <h3>Your library</h3>
         <p className='text-muted-foreground text-sm'>
-          Browse and search across your collection — results settle in shortly after you stop
+          Browse and search across your collection - results settle in shortly after you stop
           typing.
         </p>
       </div>
@@ -68,7 +50,7 @@ const Demo = () => {
       <div className='relative w-full md:max-w-xs'>
         <SearchIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2' />
         <input
-          className='pl-9!'
+          className='rounded-full! pl-9!'
           placeholder='Search by book info'
           type='text'
           {...searchField.register()}
@@ -94,12 +76,14 @@ const Demo = () => {
                 target: '_blank'
               })}
             >
-              <span className='text-3xl leading-none'>{book.cover}</span>
+              <span className='bg-background text-muted-foreground flex size-10 items-center justify-center rounded-full text-[11px] font-semibold leading-none'>
+                {book.cover}
+              </span>
 
               <div className='flex min-w-0 flex-1 flex-col'>
                 <span className='truncate text-sm font-medium'>{book.title}</span>
                 <span className='text-muted-foreground truncate text-xs'>
-                  {book.author} · {book.year}
+                  {book.author} - {book.year}
                 </span>
               </div>
 

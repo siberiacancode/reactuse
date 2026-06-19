@@ -7,12 +7,12 @@ const BREAKPOINTS = {
 };
 
 const PRODUCTS = [
-  { emoji: '🌿', name: 'Monstera', price: '$24' },
-  { emoji: '🌵', name: 'Cactus', price: '$12' },
-  { emoji: '🌸', name: 'Cherry Blossom', price: '$18' },
-  { emoji: '🌻', name: 'Sunflower', price: '$9' },
-  { emoji: '🍄', name: 'Mushroom', price: '$14' },
-  { emoji: '🌴', name: 'Palm', price: '$32' }
+  { badge: 'MN', name: 'Monstera', price: '$24' },
+  { badge: 'CA', name: 'Cactus', price: '$12' },
+  { badge: 'BL', name: 'Blossom', price: '$18' },
+  { badge: 'SF', name: 'Sunflower', price: '$9' },
+  { badge: 'MS', name: 'Mushroom', price: '$14' },
+  { badge: 'PM', name: 'Palm', price: '$32' }
 ];
 
 const Demo = () => {
@@ -43,7 +43,9 @@ const Demo = () => {
                   key={product.name}
                   className='bg-muted flex items-center gap-3 rounded-2xl px-3 py-2'
                 >
-                  <span className='text-2xl'>{product.emoji}</span>
+                  <span className='bg-background text-muted-foreground flex size-9 items-center justify-center rounded-full text-[11px] font-semibold'>
+                    {product.badge}
+                  </span>
                   <div className='flex-1'>
                     <p className='text-sm font-medium'>{product.name}</p>
                     <p className='text-muted-foreground text-xs'>{product.price}</p>
@@ -74,7 +76,9 @@ const Demo = () => {
           <div className='grid grid-cols-2 gap-2'>
             {PRODUCTS.slice(0, 4).map((product) => (
               <div key={product.name} className='bg-muted flex flex-col gap-1.5 rounded-2xl p-3'>
-                <span className='text-3xl'>{product.emoji}</span>
+                <span className='bg-background text-muted-foreground flex size-10 items-center justify-center rounded-full text-xs font-semibold'>
+                  {product.badge}
+                </span>
                 <div>
                   <p className='text-sm font-medium'>{product.name}</p>
                   <p className='text-muted-foreground text-xs'>{product.price}</p>
@@ -105,7 +109,9 @@ const Demo = () => {
             <div className='mt-5 grid grid-cols-3 gap-2'>
               {PRODUCTS.map((product) => (
                 <div key={product.name} className='bg-muted flex flex-col gap-1.5 rounded-xl p-2.5'>
-                  <span className='text-2xl'>{product.emoji}</span>
+                  <span className='bg-background text-muted-foreground flex size-8 items-center justify-center rounded-full text-[10px] font-semibold'>
+                    {product.badge}
+                  </span>
                   <div>
                     <p className='text-xs font-medium'>{product.name}</p>
                     <p className='text-muted-foreground text-[10px]'>{product.price}</p>

@@ -7,7 +7,7 @@ const VOLUME = 0.1;
 
 const Demo = () => {
   const fullscreen = useFullscreen<HTMLDivElement>();
-  const media = useMediaControls<HTMLVideoElement>('/new/videos/waves.mp4');
+  const media = useMediaControls<HTMLVideoElement>('/videos/waves.mp4');
 
   const onMute = () => {
     if (media.muted) {
@@ -22,15 +22,16 @@ const Demo = () => {
     <section className='flex w-full max-w-md flex-col p-4'>
       <div
         ref={fullscreen.ref}
-        className='border-border group relative overflow-hidden rounded-xl border'
+        className='border-border group relative overflow-hidden rounded-xl border bg-black'
       >
         <video
+          autoPlay
           loop
           muted
           playsInline
           ref={media.ref}
           className='aspect-video w-full bg-black object-cover'
-          preload='none'
+          preload='metadata'
         />
 
         <div className='pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100' />
@@ -45,8 +46,11 @@ const Demo = () => {
               type='button'
               onClick={() => media.toggle()}
             >
-              {media.playing && <PauseIcon className='size-3.5' />}
-              {!media.playing && <PlayIcon className='size-3.5' />}
+              {media.playing ? (
+                <PauseIcon className='size-3.5' />
+              ) : (
+                <PlayIcon className='size-3.5' />
+              )}
             </button>
             <button
               aria-label={media.muted ? 'Unmute' : 'Mute'}
@@ -56,13 +60,16 @@ const Demo = () => {
               type='button'
               onClick={onMute}
             >
-              {media.muted && <VolumeXIcon className='size-3.5' />}
-              {!media.muted && <Volume2Icon className='size-3.5' />}
+              {media.muted ? (
+                <VolumeXIcon className='size-3.5' />
+              ) : (
+                <Volume2Icon className='size-3.5' />
+              )}
             </button>
           </div>
 
           <button
-            aria-label='Fullscreen'
+            aria-label={fullscreen.value ? 'Exit fullscreen' : 'Enter fullscreen'}
             className='bg-white/15 text-white backdrop-blur-md hover:bg-white/25'
             data-size='icon-sm'
             data-variant='unstyled'
@@ -75,7 +82,7 @@ const Demo = () => {
       </div>
 
       <div className='mt-3 flex flex-col gap-0.5'>
-        <h2 className='text-foreground text-sm font-semibold'>Ocean waves at sunset 🌊</h2>
+        <h2 className='text-foreground text-sm font-semibold'>Ocean waves at sunset</h2>
         <p className='text-muted-foreground text-xs'>
           A calm, slow-motion clip of waves rolling in over the open sea.
         </p>

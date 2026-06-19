@@ -1,17 +1,5 @@
 import { useClickOutside, useDisclosure, usePictureInPicture } from '@siberiacancode/reactuse';
-import {
-  FlagIcon,
-  MessageCircleIcon,
-  MoreHorizontalIcon,
-  PictureInPicture2Icon,
-  Share2Icon,
-  ThumbsUpIcon
-} from 'lucide-react';
-
-const formatCount = (count: number) => {
-  if (count < 1000) return count.toString();
-  return `${(count / 1000).toFixed(1)}K`;
-};
+import { FlagIcon, MoreHorizontalIcon, PictureInPicture2Icon, Share2Icon } from 'lucide-react';
 
 const Demo = () => {
   const pictureInPicture = usePictureInPicture();
@@ -20,7 +8,7 @@ const Demo = () => {
 
   const onPictureInPicture = () => {
     menu.close();
-    pictureInPicture.toggle();
+    void pictureInPicture.toggle();
   };
 
   return (
@@ -30,12 +18,12 @@ const Demo = () => {
           controls
           ref={pictureInPicture.ref}
           className='aspect-video w-full'
-          src='/new/videos/waves.mp4'
+          src='/videos/waves.mp4'
         />
       </div>
 
       <h3 className='text-foreground text-sm leading-snug font-semibold'>
-        Building open-source React hooks — the reactuse demo reel
+        Building open-source React hooks - the reactuse demo reel
       </h3>
 
       <div className='flex items-center justify-between gap-3'>
@@ -49,51 +37,39 @@ const Demo = () => {
           </div>
         </div>
 
-        <div className='flex items-center gap-2'>
-          <button className='rounded-full!' data-size='sm' data-variant='secondary' type='button'>
-            <ThumbsUpIcon className='size-4' />
-            {formatCount(1284)}
+        <div ref={menuRef} className='relative'>
+          <button
+            aria-label='More'
+            className='rounded-full!'
+            data-size='icon-sm'
+            data-variant='secondary'
+            type='button'
+            onClick={() => menu.toggle()}
+          >
+            <MoreHorizontalIcon className='size-4' />
           </button>
 
-          <button className='rounded-full!' data-size='sm' data-variant='secondary' type='button'>
-            <MessageCircleIcon className='size-4' />
-            {formatCount(96)}
-          </button>
-
-          <div ref={menuRef} className='relative'>
-            <button
-              aria-label='More'
-              className='rounded-full!'
-              data-size='icon-sm'
-              data-variant='secondary'
-              type='button'
-              onClick={() => menu.toggle()}
+          {menu.opened && (
+            <div
+              className='absolute right-0 bottom-full mb-1.5 w-44'
+              data-slot='dropdown-menu-content'
             >
-              <MoreHorizontalIcon className='size-4' />
-            </button>
-
-            {menu.opened && (
-              <div
-                className='absolute right-0 bottom-full mb-1.5 w-44'
-                data-slot='dropdown-menu-content'
-              >
-                {pictureInPicture.supported && (
-                  <div data-slot='dropdown-menu-item' onClick={onPictureInPicture}>
-                    <PictureInPicture2Icon />
-                    {pictureInPicture.opened ? 'Exit Picture-in-Picture' : 'Picture-in-Picture'}
-                  </div>
-                )}
-                <div data-slot='dropdown-menu-item' onClick={menu.close}>
-                  <Share2Icon />
-                  Share
+              {pictureInPicture.supported && (
+                <div data-slot='dropdown-menu-item' onClick={onPictureInPicture}>
+                  <PictureInPicture2Icon />
+                  {pictureInPicture.opened ? 'Exit Picture-in-Picture' : 'Picture-in-Picture'}
                 </div>
-                <div data-slot='dropdown-menu-item' data-variant='destructive' onClick={menu.close}>
-                  <FlagIcon />
-                  Report
-                </div>
+              )}
+              <div data-slot='dropdown-menu-item' onClick={menu.close}>
+                <Share2Icon />
+                Share
               </div>
-            )}
-          </div>
+              <div data-slot='dropdown-menu-item' data-variant='destructive' onClick={menu.close}>
+                <FlagIcon />
+                Report
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -32,9 +32,9 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-sm flex-col gap-4 p-6'>
-      <div className='flex items-center justify-between'>
-        <div className='flex items-center gap-2'>
-          <div className='bg-muted flex size-9 items-center justify-center rounded-lg'>
+      <div className='flex items-start justify-between gap-3'>
+        <div className='flex items-start gap-2'>
+          <div className='bg-muted flex size-9 shrink-0 items-center justify-center rounded-lg'>
             <GaugeIcon className='size-5' />
           </div>
           <div className='flex flex-col'>
@@ -45,7 +45,7 @@ const Demo = () => {
 
         <button
           aria-label='Refresh'
-          className='rounded-full!'
+          className='self-start rounded-full!'
           data-size='icon'
           data-variant='outline'
           type='button'
@@ -56,7 +56,7 @@ const Demo = () => {
       </div>
 
       {!performance.entries.length && (
-        <p className='text-muted-foreground text-sm'>Waiting for paint entries…</p>
+        <p className='text-muted-foreground text-sm'>Waiting for paint entries...</p>
       )}
 
       {!!performance.entries.length && (

@@ -86,6 +86,7 @@
 - [useScript](https://reactuse.org/functions/hooks/useScript): Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities
 - [useSize](https://reactuse.org/functions/hooks/useSize): Hook that observes and returns the width and height of element
 - [useTextareaAutosize](https://reactuse.org/functions/hooks/useTextareaAutosize): Hook that automatically adjusts textarea height based on content
+- [useTextDirection](https://reactuse.org/functions/hooks/useTextDirection): Hook that can get and set the direction of the element
 ### Humors
 
 - [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful
@@ -121,6 +122,7 @@
 - [useScrollIntoView](https://reactuse.org/functions/hooks/useScrollIntoView): Hook that provides functionality to scroll an element into view
 - [useScrollTo](https://reactuse.org/functions/hooks/useScrollTo): Hook for scrolling to a specific element
 - [useSwipe](https://reactuse.org/functions/hooks/useSwipe): Hook that tracks swipe gestures for touch and pointer events
+- [useTextSelection](https://reactuse.org/functions/hooks/useTextSelection): Hook that manages the text selection
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state
@@ -174,3 +176,5 @@
 - [useLastChanged](https://reactuse.org/functions/hooks/useLastChanged): Hook for records the timestamp of the last change
 - [useLatest](https://reactuse.org/functions/hooks/useLatest): Hook that returns the stable reference of the value
 - [usePrevious](https://reactuse.org/functions/hooks/usePrevious): Hook that returns the previous value
+- [useThrottleCallback](https://reactuse.org/functions/hooks/useThrottleCallback): Hook that creates a throttled callback
+- [useThrottleEffect](https://reactuse.org/functions/hooks/useThrottleEffect): Hook that runs an effect at most once per delay period when dependencies change

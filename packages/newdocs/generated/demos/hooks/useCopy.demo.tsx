@@ -26,7 +26,7 @@ const Demo = () => {
       <div className='flex flex-col gap-1'>
         <h3>Installation</h3>
         <p className='text-muted-foreground text-sm'>
-          Add <code>reactuse</code> to your project with your preferred package manager.
+          Add <b>reactuse</b> to your project with your preferred package manager.
         </p>
       </div>
 
@@ -58,12 +58,11 @@ const Demo = () => {
               type='button'
               onClick={() => copy(COMMANDS[selectedManager])}
             >
-              {copied && (
+              {copied ? (
                 <>
                   <CheckIcon className='size-4' /> Copied
                 </>
-              )}
-              {!copied && (
+              ) : (
                 <>
                   <CopyIcon className='size-4' /> Copy
                 </>

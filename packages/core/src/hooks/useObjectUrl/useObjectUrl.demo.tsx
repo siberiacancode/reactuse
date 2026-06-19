@@ -51,7 +51,7 @@ const Demo = () => {
       <canvas ref={canvasRef} className='hidden' height={HEIGHT} width={WIDTH} />
 
       {!objectUrl.value && (
-        <div className='border-border bg-card flex aspect-[8/5] w-full flex-col items-center justify-center gap-4 rounded-2xl border p-8 text-center'>
+        <div className='bg-card flex aspect-[8/5] w-full flex-col items-center justify-center gap-4 rounded-2xl p-8 text-center'>
           <div className='bg-muted flex size-14 items-center justify-center rounded-full'>
             <SparklesIcon className='text-foreground size-7' />
           </div>
@@ -71,7 +71,7 @@ const Demo = () => {
       )}
 
       {objectUrl.value && (
-        <div className='border-border relative aspect-[8/5] w-full overflow-hidden rounded-2xl border'>
+        <div className='relative aspect-[8/5] w-full overflow-hidden rounded-2xl'>
           <img
             alt='Generated pixel art'
             className='size-full object-cover'

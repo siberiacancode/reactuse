@@ -15,15 +15,15 @@ interface Animal {
 }
 
 const ANIMALS: Animal[] = [
-  { emoji: '🐶', name: 'Dog' },
-  { emoji: '🐱', name: 'Cat' },
-  { emoji: '🐸', name: 'Frog' },
-  { emoji: '🐙', name: 'Octopus' },
-  { emoji: '🦀', name: 'Crab' },
-  { emoji: '🐠', name: 'Fish' },
-  { emoji: '🐧', name: 'Penguin' },
-  { emoji: '🦅', name: 'Eagle' },
-  { emoji: '🦆', name: 'Duck' }
+  { emoji: '\u{1F436}', name: 'Dog' },
+  { emoji: '\u{1F431}', name: 'Cat' },
+  { emoji: '\u{1F438}', name: 'Frog' },
+  { emoji: '\u{1F419}', name: 'Octopus' },
+  { emoji: '\u{1F980}', name: 'Crab' },
+  { emoji: '\u{1F420}', name: 'Fish' },
+  { emoji: '\u{1F427}', name: 'Penguin' },
+  { emoji: '\u{1F985}', name: 'Eagle' },
+  { emoji: '\u{1F986}', name: 'Duck' }
 ];
 
 const searchAnimals = (query: string): Promise<Animal[]> =>
@@ -72,23 +72,24 @@ const Demo = () => {
       <div className='flex flex-col gap-2'>
         <h3>Find your spirit animal</h3>
         <p className='text-muted-foreground text-sm'>
-          The search waits <code>delay</code> after you stop typing before firing a request — no
-          spam, no jank.
+          The search waits <b>delay</b> after you stop typing before firing a request - no spam, no
+          jank.
         </p>
       </div>
 
       <div ref={dropdownRef} className='relative'>
         <div
-          className='border-input bg-background flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border px-3 text-sm transition-colors'
+          className='border-input bg-background flex h-10 w-full cursor-pointer items-center justify-between rounded-full border px-3 text-sm transition-colors'
           onClick={() => dropdown.toggle()}
         >
-          {selected && (
+          {selected ? (
             <span className='flex items-center gap-2'>
-              <span className='text-lg'>{selected.emoji}</span>
+              <span className='text-lg leading-none'>{selected.emoji}</span>
               <span>{selected.name}</span>
             </span>
+          ) : (
+            <span className='text-muted-foreground'>Select an animal...</span>
           )}
-          {!selected && <span className='text-muted-foreground'>Select an animal...</span>}
           <ChevronDownIcon
             className={cn('text-muted-foreground size-4', dropdown.opened && 'rotate-180')}
           />
@@ -96,18 +97,18 @@ const Demo = () => {
 
         {dropdown.opened && (
           <div className='bg-popover text-popover-foreground absolute top-full right-0 left-0 z-50 mt-2 overflow-hidden rounded-lg border shadow-md'>
-            <div className='relative'>
-              <SearchIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2' />
+            <div className='relative p-1'>
+              <SearchIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2' />
               <input
                 autoFocus
-                className='h-10! w-full border-0! bg-inherit! pl-9! focus-visible:ring-0!'
+                className='h-10! w-full rounded-full! border-0! bg-inherit! pl-9! focus-visible:ring-0!'
                 placeholder='Search animals...'
                 type='text'
                 value={search}
                 onChange={onSearch}
               />
               {isLoading && (
-                <Loader2Icon className='text-muted-foreground pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 animate-spin' />
+                <Loader2Icon className='text-muted-foreground pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2 animate-spin' />
               )}
             </div>
 
@@ -125,7 +126,7 @@ const Demo = () => {
                     onClick={() => onSelect(animal)}
                   >
                     <span className='flex items-center gap-2'>
-                      <span className='text-lg'>{animal.emoji}</span>
+                      <span className='text-lg leading-none'>{animal.emoji}</span>
                       <span>{animal.name}</span>
                     </span>
                     {isSelected && <CheckIcon className='size-4' />}

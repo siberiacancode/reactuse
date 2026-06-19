@@ -10,8 +10,8 @@ const Demo = () => {
       <div className='flex flex-col items-center gap-1 text-center'>
         <h2 className='text-foreground text-sm font-semibold'>This effect ran once</h2>
         <p className='text-muted-foreground text-xs'>
-          With <code>useOnce</code> the effect fires a single time, even in Strict Mode where a
-          regular effect would run twice. Open the console to see the log.
+          With <b>useOnce</b> the effect fires a single time, even in Strict Mode where a regular
+          effect would run twice. Open the console to see the log.
         </p>
       </div>
     </section>

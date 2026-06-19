@@ -9,11 +9,11 @@ const TRANSLATIONS = {
     subtitle: 'Welcome to reactuse'
   },
   ru: {
-    greeting: 'Привет!',
-    subtitle: 'Добро пожаловать в reactuse'
+    greeting: 'Privet!',
+    subtitle: 'Dobro pozhalovat v reactuse'
   },
   es: {
-    greeting: '¡Hola!',
+    greeting: 'Hola!',
     subtitle: 'Bienvenido a reactuse'
   },
   de: {
@@ -21,7 +21,7 @@ const TRANSLATIONS = {
     subtitle: 'Willkommen bei reactuse'
   },
   fr: {
-    greeting: 'Bonjour !',
+    greeting: 'Bonjour!',
     subtitle: 'Bienvenue sur reactuse'
   },
   it: {
@@ -29,15 +29,15 @@ const TRANSLATIONS = {
     subtitle: 'Benvenuto su reactuse'
   },
   ja: {
-    greeting: 'こんにちは！',
-    subtitle: 'reactuseへようこそ'
+    greeting: 'Konnichiwa!',
+    subtitle: 'Welcome to reactuse'
   },
   zh: {
-    greeting: '你好！',
-    subtitle: '欢迎使用 reactuse'
+    greeting: 'Ni hao!',
+    subtitle: 'Welcome to reactuse'
   },
   pt: {
-    greeting: 'Olá!',
+    greeting: 'Ola!',
     subtitle: 'Bem-vindo ao reactuse'
   }
 };
@@ -71,37 +71,37 @@ const Demo = () => {
   );
 
   return (
-    <section className='flex flex-col items-center p-4 md:min-w-md'>
-      <div className='flex w-full max-w-md flex-col gap-5 p-6'>
+    <section className='flex min-w-0 w-full flex-col items-center p-4'>
+      <div className='flex w-full min-w-0 max-w-md flex-col gap-5 p-6'>
         <div className='flex flex-col gap-2'>
           <div>
             <h3>{translation.greeting}</h3>
             <p className='text-muted-foreground text-sm'>{translation.subtitle}</p>
           </div>
           <div className='text-muted-foreground flex items-center gap-2 text-xs'>
-            <GlobeIcon className='size-4' />
-            <span>
+            <GlobeIcon className='size-4 shrink-0' />
+            <span className='min-w-0 break-all'>
               Detected: <code>{language}</code>
             </span>
           </div>
         </div>
 
-        <div className='flex flex-col gap-2 border-t py-3 text-sm'>
+        <div className='flex min-w-0 flex-col gap-2 border-t py-3 text-sm'>
           <div className='flex items-center justify-between gap-4'>
             <span className='text-muted-foreground'>Today</span>
-            <strong>{formattedDate}</strong>
+            <strong className='min-w-0 break-words text-right'>{formattedDate}</strong>
           </div>
           <div className='flex items-center justify-between gap-4'>
             <span className='text-muted-foreground'>Last seen</span>
-            <strong>{formattedRelative}</strong>
+            <strong className='min-w-0 break-words text-right'>{formattedRelative}</strong>
           </div>
           <div className='flex items-center justify-between gap-4'>
             <span className='text-muted-foreground'>Number</span>
-            <strong>{formattedNumber}</strong>
+            <strong className='min-w-0 break-words text-right'>{formattedNumber}</strong>
           </div>
           <div className='flex items-center justify-between gap-4'>
             <span className='text-muted-foreground'>Price</span>
-            <strong>{formattedPrice}</strong>
+            <strong className='min-w-0 break-words text-right'>{formattedPrice}</strong>
           </div>
         </div>
       </div>

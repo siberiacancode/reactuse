@@ -30,6 +30,7 @@ it('Should set initial selection', () => {
   const selection = document.getSelection()!;
 
   act(() => {
+    selection.removeAllRanges();
     selection.addRange(range);
     document.dispatchEvent(new Event('selectionchange'));
   });
@@ -51,6 +52,7 @@ it('Should handle selection change', () => {
   const selection = document.getSelection()!;
 
   act(() => {
+    selection.removeAllRanges();
     selection.addRange(range);
     document.dispatchEvent(new Event('selectionchange'));
   });
@@ -58,6 +60,34 @@ it('Should handle selection change', () => {
   expect(result.current.text).toBe('target');
   expect(result.current.ranges.length).toBe(1);
   expect(result.current.rects.length).toBe(1);
+});
+
+it('Should call callback on selection change', () => {
+  const callback = vi.fn();
+  renderHook(() => useTextSelection(callback));
+
+  const range = document.createRange();
+  range.selectNodeContents(document.getElementById('target')!);
+  range.getBoundingClientRect = vi.fn();
+
+  const selection = document.getSelection()!;
+
+  act(() => {
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+
+  expect(callback).toHaveBeenCalledOnce();
+  expect(callback).toHaveBeenCalledWith(
+    expect.objectContaining({
+      text: 'target',
+      selection,
+      ranges: [range],
+      rects: [undefined]
+    }),
+    expect.any(Event)
+  );
 });
 
 it('Should cleanup on unmount', () => {

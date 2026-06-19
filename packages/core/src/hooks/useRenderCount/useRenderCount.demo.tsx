@@ -7,13 +7,13 @@ const Demo = () => {
 
   return (
     <section className='flex flex-col items-center gap-4 p-8'>
-      <div className='relative rounded-xl border-2 border-green-500 p-3 transition-colors duration-300'>
-        <span className='absolute -top-3 left-3 rounded-full bg-green-500 px-2 py-0.5 font-mono text-[10px] font-semibold text-white tabular-nums'>
-          ×{renderCount}
+      <div className='border-primary relative rounded-xl border-2 p-3 transition-colors duration-300'>
+        <span className='bg-primary text-primary-foreground absolute -top-3 left-3 rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold tabular-nums'>
+          x{renderCount}
         </span>
 
         <input
-          placeholder='Type to re-render…'
+          placeholder='Type to re-render...'
           value={value}
           onChange={(event) => setValue(event.target.value)}
         />

@@ -146,3 +146,7 @@ A quick list of available functions.
 - [useStorage](/functions/hooks/useStorage): Hook that manages storage value
 - [useSwipe](/functions/hooks/useSwipe): Hook that tracks swipe gestures for touch and pointer events
 - [useTextareaAutosize](/functions/hooks/useTextareaAutosize): Hook that automatically adjusts textarea height based on content
+- [useTextDirection](/functions/hooks/useTextDirection): Hook that can get and set the direction of the element
+- [useTextSelection](/functions/hooks/useTextSelection): Hook that manages the text selection
+- [useThrottleCallback](/functions/hooks/useThrottleCallback): Hook that creates a throttled callback
+- [useThrottleEffect](/functions/hooks/useThrottleEffect): Hook that runs an effect at most once per delay period when dependencies change

@@ -1013,6 +1013,66 @@
   @apply text-muted-foreground mt-4 text-sm;
 }
 
+.demo-ui input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.demo-ui input[type='range']::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    var(--primary) 0 var(--range-progress, 50%),
+    var(--muted) var(--range-progress, 50%) 100%
+  );
+}
+
+.demo-ui input[type='range']::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--muted);
+}
+
+.demo-ui input[type='range']::-moz-range-progress {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--primary);
+}
+
+.demo-ui input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: white;
+  border: 1px solid var(--ring);
+  transition: box-shadow 150ms;
+}
+
+.demo-ui input[type='range']::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: white;
+  border: 1px solid var(--ring);
+}
+
+.demo-ui input[type='range']:hover::-webkit-slider-thumb,
+.demo-ui input[type='range']:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+}
+
+.demo-ui input[type='range']:focus-visible {
+  outline: none;
+}
+
 @keyframes landing-getting-started-progress {
   from {
     transform: scaleX(0);
@@ -1022,3 +1082,4 @@
     transform: scaleX(1);
   }
 }
+
