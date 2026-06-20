@@ -62,7 +62,7 @@ const Demo = () => {
             {isLoading ? (
               <Loader2Icon className='text-muted-foreground size-6 animate-spin' />
             ) : (
-              <div className='flex h-full items-center justify-center gap-2'>
+              <div className='flex h-full items-center justify-center gap-5'>
                 {pokemons.map((pokemon, index) => (
                   <Fragment key={pokemon.id}>
                     <div className='flex h-full w-24 shrink-0 flex-col items-center justify-center gap-2'>
