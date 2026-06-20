@@ -26,39 +26,38 @@ const Demo = () => {
   });
 
   return (
-    <section className='flex min-w-xs flex-col gap-4 md:min-w-md'>
-      <div className='relative overflow-hidden rounded-xl'>
-        <div className='bg-muted absolute top-0 right-0 left-0 z-10 h-1'>
-          <div
-            ref={barRef}
-            className='bg-primary h-full w-0 transition-[width] duration-100 ease-out'
-          />
-        </div>
+    <section className='flex min-w-xs flex-col gap-3 md:min-w-md'>
+      <div className='bg-muted h-1 w-full overflow-hidden rounded-full'>
+        <div
+          ref={barRef}
+          className='bg-primary h-full rounded-full transition-[width] duration-100 ease-out'
+          style={{ width: 0 }}
+        />
+      </div>
 
-        <div ref={scroll.ref} className='no-scrollbar flex h-96 flex-col gap-5 overflow-y-auto p-5'>
-          <header className='flex flex-col gap-2'>
-            <h1 className='text-foreground text-2xl leading-tight font-semibold'>
-              Meet reactuse — a hooks library you will love
-            </h1>
-            <div className='text-muted-foreground flex items-center gap-3 text-sm'>
-              <span className='flex items-center gap-1.5'>
-                <UserIcon className='size-3.5' />
-                reactuse
-              </span>
-              <span className='flex items-center gap-1.5'>
-                <ClockIcon className='size-3.5' />3 min read
-              </span>
-            </div>
-          </header>
+      <div ref={scroll.ref} className='no-scrollbar flex h-96 flex-col gap-5 overflow-y-auto'>
+        <header className='flex flex-col gap-2'>
+          <h1 className='text-foreground text-2xl leading-tight font-semibold'>
+            Meet reactuse — a hooks library you will love
+          </h1>
+          <div className='text-muted-foreground flex items-center gap-3 text-sm'>
+            <span className='flex items-center gap-1.5'>
+              <UserIcon className='size-3.5' />
+              reactuse
+            </span>
+            <span className='flex items-center gap-1.5'>
+              <ClockIcon className='size-3.5' />3 min read
+            </span>
+          </div>
+        </header>
 
-          <article className='flex flex-col gap-4'>
-            {PARAGRAPHS.map((text, index) => (
-              <p key={index} className='text-foreground text-base leading-relaxed'>
-                {text}
-              </p>
-            ))}
-          </article>
-        </div>
+        <article className='flex flex-col gap-4'>
+          {PARAGRAPHS.map((text, index) => (
+            <p key={index} className='text-foreground text-base leading-relaxed'>
+              {text}
+            </p>
+          ))}
+        </article>
       </div>
     </section>
   );
