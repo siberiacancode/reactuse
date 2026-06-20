@@ -57,14 +57,11 @@ const HomePage = async () => {
   };
   const hooksCount = formatMetricCount(hooks.length);
   const contributorsCount = formatMetricCount(contributors.length);
-  const weeklyDownloadsCount = npmDownloadsResponse?.data?.downloads
-    ? formatMetricCount(npmDownloadsResponse.data.downloads)
-    : '50K+';
   const stats = [
     { label: 'Hooks', value: hooksCount },
     { label: 'Contributors', value: contributorsCount },
     { label: 'GitHub Stars', value: formatMetricCount(repository.stargazersCount) },
-    { label: 'Weekly Downloads', value: weeklyDownloadsCount },
+    { label: 'Weekly Downloads', value: formatMetricCount(npmDownloadsResponse.data.downloads) },
     { label: 'TypeScript', value: '100%' },
     { label: 'Dependencies', value: '0' }
   ];

@@ -82,7 +82,8 @@ const Demo = () => {
           <button
             className={cn(
               'flex-1 sm:flex-none',
-              filters.value.inStock && 'border-primary bg-primary text-primary-foreground hover:bg-primary/90'
+              filters.value.inStock &&
+                'border-primary bg-primary text-primary-foreground hover:bg-primary/90'
             )}
             data-variant='outline'
             type='button'

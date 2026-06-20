@@ -13,7 +13,7 @@ const Demo = () => {
   const densitySessionStorage = useSessionStorage('reactuse-demo-density', 'comfortable');
 
   return (
-    <section className='border-border flex w-full min-w-0 max-w-sm flex-col gap-2 rounded-xl border p-2 md:max-w-md'>
+    <section className='border-border flex w-full max-w-sm min-w-0 flex-col gap-2 rounded-xl border p-2 md:max-w-md'>
       <div className='flex w-full min-w-0 flex-col gap-4 p-4 sm:flex-row sm:items-start sm:justify-between'>
         <div className='flex min-w-0 items-center gap-3'>
           <LayoutGridIcon className='text-muted-foreground size-6 shrink-0' />
