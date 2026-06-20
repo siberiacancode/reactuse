@@ -25,7 +25,7 @@ export const Burger = ({ groups, className, ...props }: BurgerProps) => {
       <PopoverTrigger asChild>
         <Button
           className={cn(
-            'extend-touch-target h-8 touch-manipulation items-center justify-start gap-2.5 !p-0 hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent dark:hover:bg-transparent',
+            'extend-touch-target h-8 touch-manipulation items-center justify-start gap-2.5 !p-0 hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent aria-expanded:bg-transparent aria-expanded:text-inherit dark:hover:bg-transparent dark:aria-expanded:bg-transparent',
             className
           )}
           {...props}
@@ -62,7 +62,7 @@ export const Burger = ({ groups, className, ...props }: BurgerProps) => {
           <div className='flex flex-col gap-4'>
             <div className='text-muted-foreground text-sm font-medium'>Menu</div>
             <div className='flex flex-col gap-3'>
-              <Link className='text-2xl font-medium' href='/' onClick={burger.close}>
+              <Link href='/' onClick={burger.close}>
                 Home
               </Link>
             </div>

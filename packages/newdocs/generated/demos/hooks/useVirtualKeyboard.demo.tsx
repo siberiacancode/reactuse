@@ -35,7 +35,7 @@ const Demo = () => {
         )}
       >
         <input
-          className='flex-1 border-none! bg-transparent px-3 text-sm shadow-none! ring-0! outline-none'
+          className='flex-1 rounded-full! border-none! bg-transparent px-3 text-sm shadow-none! ring-0! outline-none'
           placeholder='Message…'
           {...messageField.register()}
         />

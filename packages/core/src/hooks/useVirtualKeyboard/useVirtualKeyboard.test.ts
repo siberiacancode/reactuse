@@ -39,10 +39,6 @@ class MockVisualViewport extends EventTarget {
   }
 }
 
-const originalNavigator = globalThis.navigator;
-const originalVisualViewport = window.visualViewport;
-const originalScreenHeight = window.screen.height;
-
 let virtualKeyboard: MockVirtualKeyboard;
 let visualViewport: MockVisualViewport;
 
@@ -52,7 +48,7 @@ beforeEach(() => {
 
   Object.defineProperty(globalThis, 'navigator', {
     value: {
-      ...originalNavigator,
+      ...globalThis.navigator,
       virtualKeyboard
     },
     configurable: true,
@@ -72,23 +68,6 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  Object.defineProperty(globalThis, 'navigator', {
-    value: originalNavigator,
-    configurable: true,
-    writable: true
-  });
-
-  Object.defineProperty(window, 'visualViewport', {
-    value: originalVisualViewport,
-    configurable: true,
-    writable: true
-  });
-
-  Object.defineProperty(window.screen, 'height', {
-    value: originalScreenHeight,
-    configurable: true
-  });
-
   vi.restoreAllMocks();
 });
 
@@ -113,13 +92,15 @@ it('Should use virtual keyboard on server side', () => {
 });
 
 it('Should use virtual keyboard for unsupported', () => {
-  Object.defineProperty(globalThis, 'navigator', {
-    value: originalNavigator,
-    configurable: true,
+  Object.defineProperty(globalThis.navigator, 'virtualKeyboard', {
+    value: undefined,
     writable: true
   });
 
-  delete (window as Partial<Window>).visualViewport;
+  Object.defineProperty(window, 'visualViewport', {
+    value: undefined,
+    writable: true
+  });
 
   const { result } = renderHook(() => useVirtualKeyboard());
 

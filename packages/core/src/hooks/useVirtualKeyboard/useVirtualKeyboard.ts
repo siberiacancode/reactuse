@@ -45,8 +45,10 @@ export interface UseVirtualKeyboardReturn {
  */
 export const useVirtualKeyboard = (initialValue = false): UseVirtualKeyboardReturn => {
   const supported =
-    (typeof window !== 'undefined' && 'visualViewport' in window) ||
-    (typeof navigator !== 'undefined' && 'virtualKeyboard' in navigator);
+    (typeof window !== 'undefined' && 'visualViewport' in window && !!window.visualViewport) ||
+    (typeof navigator !== 'undefined' &&
+      'virtualKeyboard' in navigator &&
+      !!navigator.virtualKeyboard);
 
   const [opened, setOpened] = useState(initialValue);
 

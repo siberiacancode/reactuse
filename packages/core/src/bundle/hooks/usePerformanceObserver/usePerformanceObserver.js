@@ -15,7 +15,10 @@ import { useEffect, useRef, useState } from 'react';
  * const { supported, entries, start, stop } = usePerformanceObserver();
  */
 export const usePerformanceObserver = (options, callback) => {
-  const supported = typeof window !== 'undefined' && !!window.PerformanceObserver;
+  const supported =
+    typeof window !== 'undefined' &&
+    'PerformanceObserver' in window &&
+    !!window.PerformanceObserver;
   const [entries, setEntries] = useState([]);
   const observerRef = useRef(undefined);
   const internalCallback = useRef(callback);

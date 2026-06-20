@@ -16,7 +16,8 @@ export const usePointerLock = () => {
   const supported =
     typeof document !== 'undefined' &&
     'pointerLockElement' in document &&
-    typeof document.exitPointerLock === 'function';
+    'exitPointerLock' in document &&
+    !!document.exitPointerLock;
   const [element, setElement] = useState();
   useEffect(() => {
     if (!supported) return;

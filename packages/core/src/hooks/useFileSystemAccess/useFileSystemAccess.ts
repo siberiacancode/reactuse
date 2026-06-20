@@ -129,8 +129,8 @@ export const useFileSystemAccess = ((
     typeof window !== 'undefined' &&
     'showOpenFilePicker' in window &&
     'showSaveFilePicker' in window &&
-    typeof window.showOpenFilePicker === 'function' &&
-    typeof window.showSaveFilePicker === 'function';
+    !!window.showOpenFilePicker &&
+    !!window.showSaveFilePicker;
 
   const dataType = options.dataType ?? 'Text';
 

@@ -14,9 +14,7 @@ import { useEffect, useState } from 'react';
  */
 export const useBattery = () => {
   const supported =
-    typeof navigator !== 'undefined' &&
-    'getBattery' in navigator &&
-    typeof navigator.getBattery === 'function';
+    typeof navigator !== 'undefined' && 'getBattery' in navigator && !!navigator.getBattery;
   const [value, setValue] = useState({
     loading: supported,
     level: 0,

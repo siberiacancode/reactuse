@@ -30,7 +30,9 @@ export const useDevicePixelRatio = (
 ): UseDevicePixelRatioReturn => {
   const supported =
     typeof window !== 'undefined' &&
-    typeof window.matchMedia === 'function' &&
+    'matchMedia' in window &&
+    !!window.matchMedia &&
+    'devicePixelRatio' in window &&
     typeof window.devicePixelRatio === 'number';
 
   const [value, setValue] = useState(supported ? window.devicePixelRatio : 1);

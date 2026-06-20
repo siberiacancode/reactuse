@@ -74,7 +74,8 @@ export const useDisplayMedia = ((...params: any[]) => {
     typeof navigator !== 'undefined' &&
     'mediaDevices' in navigator &&
     !!navigator.mediaDevices &&
-    'getDisplayMedia' in navigator.mediaDevices;
+    'getDisplayMedia' in navigator.mediaDevices &&
+    !!navigator.mediaDevices.getDisplayMedia;
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = (params[1] ? params[1] : params[0]) as UseDisplayMediaOptions | undefined;
   const immediately = options?.immediately ?? false;

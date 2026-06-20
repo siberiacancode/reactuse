@@ -55,7 +55,10 @@ export const useOrientation = (
   callback?: (value: UseOrientationValue) => void
 ): useOrientationReturn => {
   const supported =
-    typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
+    typeof window !== 'undefined' &&
+    'screen' in window &&
+    'orientation' in window.screen &&
+    !!window.screen.orientation;
   const orientation = (supported ? window.screen.orientation : {}) as ScreenOrientation;
 
   const [value, setValue] = useState<UseOrientationValue>({

@@ -67,7 +67,9 @@ export const usePictureInPicture = ((...params: any[]) => {
   const supported =
     typeof document !== 'undefined' &&
     'pictureInPictureEnabled' in document &&
-    !!document.pictureInPictureEnabled;
+    !!document.pictureInPictureEnabled &&
+    'exitPictureInPicture' in document &&
+    !!document.exitPictureInPicture;
 
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
   const options = ((target ? params[1] : params[0]) as UsePictureInPictureOptions) ?? {};

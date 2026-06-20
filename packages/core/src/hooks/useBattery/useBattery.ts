@@ -50,9 +50,7 @@ export interface UseBatteryReturn {
  */
 export const useBattery = (): UseBatteryReturn => {
   const supported =
-    typeof navigator !== 'undefined' &&
-    'getBattery' in navigator &&
-    typeof navigator.getBattery === 'function';
+    typeof navigator !== 'undefined' && 'getBattery' in navigator && !!navigator.getBattery;
 
   const [value, setValue] = useState<UseBatteryValue>({
     loading: supported,

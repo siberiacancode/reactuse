@@ -15,7 +15,10 @@ import { useEffect, useRef, useState } from 'react';
  */
 export const useOrientation = (callback) => {
   const supported =
-    typeof window !== 'undefined' && 'screen' in window && 'orientation' in window.screen;
+    typeof window !== 'undefined' &&
+    'screen' in window &&
+    'orientation' in window.screen &&
+    !!window.screen.orientation;
   const orientation = supported ? window.screen.orientation : {};
   const [value, setValue] = useState({
     angle: orientation.angle ?? 0,

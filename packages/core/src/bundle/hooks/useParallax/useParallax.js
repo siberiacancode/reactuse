@@ -79,7 +79,8 @@ export const useParallax = (...params) => {
     'DeviceOrientationEvent' in window &&
     !!window.DeviceOrientationEvent &&
     'screen' in window &&
-    'orientation' in window.screen;
+    'orientation' in window.screen &&
+    !!window.screen.orientation;
   const orientation = supported ? window.screen.orientation : undefined;
   const internalRef = useRefState();
   const internalOptionsRef = useRef(options);
