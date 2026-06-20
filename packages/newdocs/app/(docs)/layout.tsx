@@ -4,10 +4,39 @@ import type { CSSProperties, ReactNode } from 'react';
 
 import { functionsSource, source } from '@docs/lib/source';
 import { SidebarProvider } from '@docs/src/components/ui/sidebar';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import process from 'node:process';
+
+import type { FunctionBadges } from '@/src/constants';
 
 import { FunctionHeader, FunctionSidebar } from './_components';
 
-const getHooksSidebarGroups = () => {
+const DEFAULT_BADGES = {
+  firstCommitAt: 0,
+  isApiUpdated: false,
+  isNew: false,
+  lastCommitAt: 0
+};
+
+const getFunctionsBadges = async () => {
+  const hooksPath = path.join(process.cwd(), 'content', 'functions', 'hooks');
+  const files = await fs.readdir(hooksPath);
+  const metaFiles = files.filter((file) => file.endsWith('.meta.json') && file !== 'meta.json');
+  const entries = await Promise.all(
+    metaFiles.map(async (file) => {
+      const content = await fs.readFile(path.join(hooksPath, file), 'utf-8');
+      const metadata = JSON.parse(content) as { badges?: FunctionBadges; name: string };
+
+      return [metadata.name, metadata.badges ?? DEFAULT_BADGES] as const;
+    })
+  );
+
+  return new Map(entries);
+};
+
+const getHooksSidebarGroups = async () => {
+  const functionsBadges = await getFunctionsBadges();
   const groups = {} as any;
   let currentGroup: string | undefined;
 
@@ -26,7 +55,10 @@ const getHooksSidebarGroups = () => {
       };
     }
     if (element.type === 'page') {
-      groups[currentGroup!]!.children.push(element);
+      groups[currentGroup!]!.children.push({
+        ...element,
+        badge: functionsBadges.get(element.name!.toString()) ?? DEFAULT_BADGES
+      });
     }
   });
 
@@ -38,7 +70,8 @@ interface DocsLayoutProps {
 }
 
 export const DocsLayout = async ({ children }: DocsLayoutProps) => {
-  const functionsSidebarGroups = getHooksSidebarGroups();
+  const functionsBadges = await getFunctionsBadges();
+  const functionsSidebarGroups = await getHooksSidebarGroups();
   const docsLayoutStyle = {
     '--docs-content-width': '58rem',
     '--docs-layout-gap': '1.5rem',
@@ -52,11 +85,13 @@ export const DocsLayout = async ({ children }: DocsLayoutProps) => {
         const name = child.name?.toString() ?? 'unknown';
         if (name === 'llms.txt') {
           return {
+            badge: DEFAULT_BADGES,
             name: 'llms.txt',
             url: '/llms.txt'
           };
         }
         return {
+          badge: functionsBadges.get(name) ?? DEFAULT_BADGES,
           name: child.name?.toString() ?? 'unknown',
           url: child.url
         };

@@ -11,7 +11,7 @@ const Demo = () => {
 
   return (
     <section className='flex flex-col items-center gap-4 p-4'>
-      <div className='border-border bg-background inline-flex items-center gap-3 rounded-full border px-3 py-2'>
+      <div className='border-border bg-background inline-flex w-fit items-center gap-3 rounded-full border px-3 py-2'>
         <div className='relative shrink-0'>
           <div className='flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-neutral-700 to-neutral-900 text-sm font-semibold text-white'>
             SC

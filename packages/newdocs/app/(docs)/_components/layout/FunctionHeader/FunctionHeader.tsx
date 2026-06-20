@@ -3,7 +3,7 @@ import type { ComponentProps } from 'react';
 import { Icons } from '@docs/components/icons';
 import { functionsSource, source } from '@docs/lib/source';
 import { CONFIG, LINKS } from '@docs/src/constants';
-import fetches from '@siberiacancode/fetches';
+import { getRepository } from '@/src/utils/api/github';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -26,14 +26,8 @@ export interface FunctionHeaderProps extends ComponentProps<'header'> {
 }
 
 export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) => {
-  const repositoryResponse = await fetches.get<{ stargazers_count: number }>(
-    'https://api.github.com/repos/siberiacancode/reactuse',
-    {
-      cache: 'force-cache'
-    }
-  );
-
-  const formattedCount = formatStarsCount(repositoryResponse.data.stargazers_count);
+  const repository = await getRepository();
+  const formattedCount = formatStarsCount(repository.stargazers_count);
 
   return (
     <header className='bg-background/95 sticky top-0 z-50 w-full' {...props}>

@@ -7,15 +7,8 @@ import { Fragment } from 'react';
 
 import { Button } from '@/src/components/ui';
 import { CONFIG, LINKS } from '@/src/constants';
-import { Badge } from '@/ui/badge';
 
 import { ThemeButton } from '../ThemeButton/ThemeButton';
-
-const LATEST_RELEASE = {
-  href: 'https://github.com/siberiacancode/reactuse/releases/tag/v0.3.8',
-  version: '0.3.8',
-  notes: 'useQuery improvements & bug fixes'
-};
 
 interface MarqueeItem {
   id: string;
@@ -48,32 +41,11 @@ export interface LandingHeaderProps extends ComponentProps<'header'> {
 export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProps) => {
   const formattedCount = formatStarsCount(repository.stargazersCount);
   const items = createMarqueeItems(
-    hooks
-      .map((hook) => hook.name)
-      .sort((a, b) => a.localeCompare(b))
+    hooks.map((hook) => hook.name).sort((a, b) => a.localeCompare(b))
   );
 
   return (
     <>
-      <div className='border-border relative flex h-9 items-center justify-center border-b py-6'>
-        <Link
-          className='group text-foreground inline-flex items-center gap-2 text-xs sm:text-sm'
-          href={LATEST_RELEASE.href}
-          rel='noreferrer'
-          target='_blank'
-        >
-          <Badge className='h-5 rounded-md px-1.5 py-0 text-[10px] tracking-[0.06em] uppercase'>
-            New
-          </Badge>
-          <span className='text-muted-foreground truncate'>
-            <span className='text-foreground font-medium'>v{LATEST_RELEASE.version}</span> -{' '}
-            {LATEST_RELEASE.notes}
-          </span>
-          <span className='text-muted-foreground transition-transform group-hover:translate-x-0.5'>
-            -&gt;
-          </span>
-        </Link>
-      </div>
       <header
         className='bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 w-full backdrop-blur'
         {...props}

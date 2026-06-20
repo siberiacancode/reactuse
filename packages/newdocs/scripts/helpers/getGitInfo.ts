@@ -2,19 +2,30 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import simpleGit from 'simple-git';
 
-import type { FunctionType } from '../constants';
+import type { FunctionType } from '@/src/constants';
 
 import { CORE_ROOT } from '../constants';
 
 const git = simpleGit();
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
+const NEW_DAYS_THRESHOLD = 30;
+const API_UPDATED_DAYS_THRESHOLD = 7;
 
 export const getGitInfo = async (name: string, type: FunctionType) => {
   const log = await git.log({
     file: path.join(CORE_ROOT, `${type}s`, name, `${name}.ts`)
   });
+  const commits = log.all;
+  const lastCommit = log.latest!;
+  const firstCommit = commits.at(-1)!;
+  const now = Date.now();
+  const firstCommitAt = new Date(firstCommit.date).getTime();
+  const lastCommitAt = new Date(lastCommit.date).getTime();
+  const isNew = now - firstCommitAt <= NEW_DAYS_THRESHOLD * DAY_IN_MS;
+  const isApiUpdated = !isNew && now - lastCommitAt <= API_UPDATED_DAYS_THRESHOLD * DAY_IN_MS;
 
   const contributorsMap = new Map(
-    log.all.map((commit) => [
+    commits.map((commit) => [
       commit.author_email,
       { name: commit.author_name, email: commit.author_email }
     ])
@@ -26,7 +37,10 @@ export const getGitInfo = async (name: string, type: FunctionType) => {
   }));
 
   return {
+    firstCommit,
     contributors,
-    lastCommit: log.latest!
+    isApiUpdated,
+    isNew,
+    lastCommit
   };
 };

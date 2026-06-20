@@ -16,7 +16,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 interface FunctionSidebarGroup {
-  items: { name: string; url: string }[];
+  items: {
+    badge: {
+      isApiUpdated: boolean;
+      isNew: boolean;
+    };
+    name: string;
+    url: string;
+  }[];
   name: string;
 }
 
@@ -52,7 +59,23 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
                     >
                       <Link href={item.url}>
                         <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
-                        <span className='relative block min-w-0 truncate'>{item.name}</span>
+                        <span className='relative flex min-w-0 items-center gap-2'>
+                          <span className='block min-w-0 truncate'>{item.name}</span>
+                          {item.badge.isNew && (
+                            <span
+                              aria-label='New function'
+                              className='size-2 shrink-0 rounded-full bg-sky-500'
+                              title='New function'
+                            />
+                          )}
+                          {!item.badge.isNew && item.badge.isApiUpdated && (
+                            <span
+                              aria-label='Recently updated API'
+                              className='size-2 shrink-0 rounded-full bg-amber-400'
+                              title='Recently updated API'
+                            />
+                          )}
+                        </span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

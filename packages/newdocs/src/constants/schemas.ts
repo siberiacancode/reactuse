@@ -37,8 +37,16 @@ export interface FunctionContributor {
   name: string;
 }
 
+export interface FunctionBadges {
+  firstCommitAt: number;
+  isApiUpdated: boolean;
+  isNew: boolean;
+  lastCommitAt: number;
+}
+
 export interface FunctionMetadata {
   apiParameters: FunctionApiParameter[];
+  badges: FunctionBadges;
   browserapi?: {
     name: string;
     description: string;

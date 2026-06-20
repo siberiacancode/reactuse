@@ -151,6 +151,8 @@
 - [useStep](https://reactuse.org/functions/hooks/useStep): Hook that create stepper
 - [useStorage](https://reactuse.org/functions/hooks/useStorage): Hook that manages storage value
 - [useToggle](https://reactuse.org/functions/hooks/useToggle): Hook that create toggle
+- [useUrlSearchParam](https://reactuse.org/functions/hooks/useUrlSearchParam): Hook that provides reactive URLSearchParams for a single key
+- [useUrlSearchParams](https://reactuse.org/functions/hooks/useUrlSearchParams): Hook that provides reactive URLSearchParams
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions

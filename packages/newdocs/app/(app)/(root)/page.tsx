@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
 
 import fetches from '@siberiacancode/fetches';
+import { Badge } from 'lucide-react';
+import Link from 'next/link';
 
 import { getContributors } from '@/lib/contributors';
 import { getElements } from '@/scripts/helpers';
 import { CONFIG } from '@/src/constants';
+import { getLatestReleases, getRepository } from '@/src/utils/api/github';
 
 import {
   LandingAdvantages,
@@ -29,46 +32,66 @@ const formatMetricCount = (count: number) => {
   return `${Math.round(count / 1000)}K+`;
 };
 
-interface RepositoryResponse {
-  stargazers_count: number;
-}
-
 interface NpmDownloadsResponse {
   downloads: number;
 }
 
 const HomePage = async () => {
-  const [hooks, contributors, repositoryResponse, npmDownloadsResponse] = await Promise.all([
-    getElements('hook'),
-    getContributors(),
-    fetches.get<RepositoryResponse>('https://api.github.com/repos/siberiacancode/reactuse', {
-      cache: 'force-cache'
-    }),
-    fetches.get<NpmDownloadsResponse>(
-      `https://api.npmjs.org/downloads/point/last-week/${encodeURIComponent('@siberiacancode/reactuse')}`,
-      {
-        cache: 'force-cache'
-      }
-    )
-  ]);
+  const [hooks, contributors, repositoryResponse, latestReleasesResponse, npmDownloadsResponse] =
+    await Promise.all([
+      getElements('hook'),
+      getContributors(),
+      getRepository(),
+      getLatestReleases(),
+      fetches.get<NpmDownloadsResponse>(
+        `https://api.npmjs.org/downloads/point/last-week/${encodeURIComponent('@siberiacancode/reactuse')}`,
+        {
+          cache: 'force-cache'
+        }
+      )
+    ]);
 
-  const repository = {
-    stargazersCount: repositoryResponse.data.stargazers_count
-  };
   const hooksCount = formatMetricCount(hooks.length);
   const contributorsCount = formatMetricCount(contributors.length);
   const stats = [
     { label: 'Hooks', value: hooksCount },
     { label: 'Contributors', value: contributorsCount },
-    { label: 'GitHub Stars', value: formatMetricCount(repository.stargazersCount) },
+    { label: 'GitHub Stars', value: formatMetricCount(repositoryResponse.data.stargazers_count) },
     { label: 'Weekly Downloads', value: formatMetricCount(npmDownloadsResponse.data.downloads) },
     { label: 'TypeScript', value: '100%' },
     { label: 'Dependencies', value: '0' }
   ];
 
+  const lastRelease = latestReleasesResponse.data[0];
+
   return (
     <div>
-      <LandingHeader hooks={hooks} repository={repository} />
+      {latestReleasesResponse.data[0] && (
+        <div className='border-border relative flex h-9 items-center justify-center border-b py-6'>
+          <Link
+            className='group text-foreground inline-flex items-center gap-2 text-xs sm:text-sm'
+            href={lastRelease.html_url}
+            rel='noreferrer'
+            target='_blank'
+          >
+            <Badge className='h-5 rounded-md px-1.5 py-0 text-[10px] tracking-[0.06em] uppercase'>
+              New
+            </Badge>
+            <span className='text-muted-foreground truncate'>
+              <span className='text-foreground font-medium'>v{lastRelease.tag_name}</span>
+              {lastRelease.tag_name && ` - ${lastRelease.tag_name}`}
+            </span>
+            <span className='text-muted-foreground transition-transform group-hover:translate-x-0.5'>
+              -&gt;
+            </span>
+          </Link>
+        </div>
+      )}
+
+      <LandingHeader
+        hooks={hooks}
+        repository={{ stargazersCount: repositoryResponse.data.stargazers_count }}
+      />
 
       <main>
         <LandingHero hooksCount={hooksCount} />

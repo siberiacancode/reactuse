@@ -274,7 +274,7 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 150).map(async (element) => {
+    content.slice(0, 152).map(async (element) => {
       const content = await getContentFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);
@@ -307,7 +307,10 @@ const init = async () => {
       const isTest = await checkFileContent(element.type, element.name, 'test');
       const isDemo = await checkFileContent(element.type, element.name, 'demo');
 
-      const { contributors, lastCommit } = await getGitInfo(element.name, element.type);
+      const { contributors, firstCommit, isApiUpdated, isNew, lastCommit } = await getGitInfo(
+        element.name,
+        element.type
+      );
 
       const sourceFile = ts.createSourceFile('temp.ts', content, ts.ScriptTarget.Latest, true);
       const typeDeclarations = extractTypeInfo(sourceFile);
@@ -315,6 +318,12 @@ const init = async () => {
       const dependencies = extractDependencies(content);
 
       return {
+        badges: {
+          firstCommitAt: new Date(firstCommit.date).getTime(),
+          isApiUpdated,
+          isNew,
+          lastCommitAt: new Date(lastCommit.date).getTime()
+        },
         code: await createHtmlCode(content, 'tsx'),
         id: element.name,
         isTest,

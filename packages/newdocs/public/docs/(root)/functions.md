@@ -157,3 +157,5 @@ A quick list of available functions.
 - [useTimer](/functions/hooks/useTimer): Hook that creates a timer functionality
 - [useToggle](/functions/hooks/useToggle): Hook that create toggle
 - [useUnmount](/functions/hooks/useUnmount): Hook that defines the logic when unmounting a component
+- [useUrlSearchParam](/functions/hooks/useUrlSearchParam): Hook that provides reactive URLSearchParams for a single key
+- [useUrlSearchParams](/functions/hooks/useUrlSearchParams): Hook that provides reactive URLSearchParams
