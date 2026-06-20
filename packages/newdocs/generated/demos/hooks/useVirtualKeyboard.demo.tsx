@@ -1,3 +1,5 @@
+'use client'
+
 import { useField, useVirtualKeyboard } from '@siberiacancode/reactuse';
 import { SendIcon } from 'lucide-react';
 
@@ -35,7 +37,7 @@ const Demo = () => {
         )}
       >
         <input
-          className='flex-1 rounded-full! bg-transparent px-3 text-sm outline-none'
+          className='flex-1 bg-transparent px-3 text-sm outline-none'
           placeholder='Message…'
           {...messageField.register()}
         />

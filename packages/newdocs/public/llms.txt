@@ -61,6 +61,8 @@
 - [useSpeechRecognition](https://reactuse.org/functions/hooks/useSpeechRecognition): Hook that provides a streamlined interface for incorporating speech-to-text functionality
 - [useSpeechSynthesis](https://reactuse.org/functions/hooks/useSpeechSynthesis): Hook that provides speech synthesis functionality
 - [useSticky](https://reactuse.org/functions/hooks/useSticky): Hook that allows you to detect that your sticky component is stuck
+- [useVibrate](https://reactuse.org/functions/hooks/useVibrate): Hook that provides vibrate api
+- [useVirtualKeyboard](https://reactuse.org/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
