@@ -28,14 +28,12 @@ const Demo = () => {
     <section className='flex w-full max-w-sm flex-col p-4'>
       <div
         className={cn(
-          'flex items-center gap-2 rounded-full border p-1.5 transition-all duration-200',
-          virtualKeyboard.opened
-            ? 'border-primary ring-primary/20 bg-card ring-4'
-            : 'border-border bg-card'
+          'bg-card border-border flex items-center gap-2 rounded-full border p-1.5 transition-all duration-200',
+          virtualKeyboard.opened && 'border-ring ring-ring/50 ring-3'
         )}
       >
         <input
-          className='flex-1 rounded-full! bg-transparent px-3 text-sm outline-none'
+          className='flex-1 rounded-full! border-none! bg-transparent px-3 text-sm shadow-none! ring-0! outline-none'
           placeholder='Message…'
           {...messageField.register()}
         />
