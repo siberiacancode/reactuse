@@ -1,7 +1,7 @@
 import type { FunctionApiParameter } from '@/src/constants';
 
 import { MARKDOWN_COMPONENTS } from '@/src/components';
-import { Separator } from '@/ui/separator';
+import { Separator } from '@/src/components/ui/separator';
 
 interface FunctionApiProps {
   apiParameters: FunctionApiParameter[];

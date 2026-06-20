@@ -3,7 +3,7 @@ title: Next.js
 description: Install and configure reactuse for Next.js.
 ---
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@docs/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@docs/src/components/ui/tabs';
 
 ## Create project
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { useRafState } from '@siberiacancode/reactuse';
+import type { UIEvent } from 'react';
 
 const getStatus = (progress: number) => {
   if (progress >= 100)
@@ -22,7 +23,7 @@ const getStatus = (progress: number) => {
 const Demo = () => {
   const [progress, setProgress] = useRafState(0);
 
-  const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
+  const onScroll = (event: UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
     const max = scrollHeight - clientHeight;
     setProgress(max > 0 ? Math.round((scrollTop / max) * 100) : 0);

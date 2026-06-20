@@ -1,3 +1,5 @@
+import type { PointerEvent } from 'react';
+
 import { useBoolean, useDoubleClick } from '@siberiacancode/reactuse';
 import { HandIcon, RotateCcwIcon, ZoomInIcon, ZoomOutIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
@@ -66,7 +68,7 @@ const Demo = () => {
     setOffset({ x: 0, y: 0 });
   };
 
-  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+  const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (tool !== 'pan') return;
     event.currentTarget.setPointerCapture(event.pointerId);
     dragStateRef.current = {
@@ -80,7 +82,7 @@ const Demo = () => {
     setDragging(true);
   };
 
-  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+  const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const state = dragStateRef.current;
     if (!state || !imgRef.current) return;
     const dx = event.clientX - state.startX;
@@ -90,7 +92,7 @@ const Demo = () => {
     imgRef.current.style.transform = buildTransform(state.currentX, state.currentY, zoom);
   };
 
-  const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+  const onPointerUp = (event: PointerEvent<HTMLDivElement>) => {
     const state = dragStateRef.current;
     if (!state) return;
     event.currentTarget.releasePointerCapture(event.pointerId);

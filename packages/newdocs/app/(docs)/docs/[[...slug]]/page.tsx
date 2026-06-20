@@ -1,6 +1,6 @@
 import { source } from '@docs/lib/source';
 import { mdxComponents } from '@docs/mdx-components';
-import { Button } from '@docs/ui/button';
+import { Button } from '@docs/src/components/ui/button';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { findNeighbour } from 'fumadocs-core/page-tree';
 import Link from 'next/link';

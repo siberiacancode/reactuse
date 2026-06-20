@@ -150,3 +150,10 @@ A quick list of available functions.
 - [useTextSelection](/functions/hooks/useTextSelection): Hook that manages the text selection
 - [useThrottleCallback](/functions/hooks/useThrottleCallback): Hook that creates a throttled callback
 - [useThrottleEffect](/functions/hooks/useThrottleEffect): Hook that runs an effect at most once per delay period when dependencies change
+- [useThrottleState](/functions/hooks/useThrottleState): Hook that creates a throttled state
+- [useThrottleValue](/functions/hooks/useThrottleValue): Hook that creates a throttled value
+- [useTime](/functions/hooks/useTime): Hook that gives you current time in different values
+- [useTimeout](/functions/hooks/useTimeout): Hook that executes a callback function after a specified delay
+- [useTimer](/functions/hooks/useTimer): Hook that creates a timer functionality
+- [useToggle](/functions/hooks/useToggle): Hook that create toggle
+- [useUnmount](/functions/hooks/useUnmount): Hook that defines the logic when unmounting a component

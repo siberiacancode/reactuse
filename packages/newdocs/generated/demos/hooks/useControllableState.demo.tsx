@@ -93,7 +93,7 @@ const Demo = () => {
   const [preferences, setPreferences] = useState<Preferences>(ALL_OFF);
 
   return (
-    <section className='flex min-w-0 w-full max-w-md flex-col gap-6'>
+    <section className='flex w-full max-w-md min-w-0 flex-col gap-6'>
       <div className='flex flex-col gap-2'>
         <h3>Preferences</h3>
         <p className='text-muted-foreground'>Manage how the app behaves.</p>
@@ -116,7 +116,7 @@ const Demo = () => {
           <div key={setting.key} className='flex items-center justify-between gap-4 py-3'>
             <div className='flex min-w-0 flex-1 flex-col gap-1'>
               <label htmlFor={setting.key}>{setting.label}</label>
-              <p className='text-muted-foreground break-words text-xs'>{setting.description}</p>
+              <p className='text-muted-foreground text-xs break-words'>{setting.description}</p>
             </div>
 
             <Switch

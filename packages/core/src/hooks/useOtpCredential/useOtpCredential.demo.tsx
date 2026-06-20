@@ -1,3 +1,5 @@
+import type { ClipboardEvent, KeyboardEvent, MouseEvent } from 'react';
+
 import { useOtpCredential } from '@siberiacancode/reactuse';
 import { MessageSquareTextIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
@@ -14,7 +16,7 @@ const Demo = () => {
     }
   });
 
-  const focusLastEmpty = (event: React.MouseEvent<HTMLInputElement>) => {
+  const focusLastEmpty = (event: MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
     const lastEmpty = code.findIndex((digit) => !digit);
     const target = lastEmpty === -1 ? LENGTH - 1 : lastEmpty;
@@ -33,13 +35,13 @@ const Demo = () => {
     if (digit && index < LENGTH - 1) inputsRef.current[index + 1]?.focus();
   };
 
-  const onKeyDown = (index: number, event: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (index: number, event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Backspace' && !code[index] && index > 0) {
       inputsRef.current[index - 1]?.focus();
     }
   };
 
-  const onPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+  const onPaste = (event: ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault();
     const digits = event.clipboardData
       .getData('text')

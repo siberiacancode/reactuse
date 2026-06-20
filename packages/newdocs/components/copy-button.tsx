@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@docs/lib/utils';
-import { Button } from '@docs/ui/button';
+import { Button } from '@docs/src/components/ui/button';
 import { IconCheck, IconCopy } from '@tabler/icons-react';
 import * as React from 'react';
 

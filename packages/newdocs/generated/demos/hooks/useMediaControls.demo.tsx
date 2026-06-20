@@ -11,6 +11,7 @@ import {
   SkipForwardIcon
 } from 'lucide-react';
 import { useState } from 'react';
+import type { MouseEvent } from 'react';
 
 import { cn } from '@/utils/lib';
 
@@ -63,7 +64,7 @@ const Demo = () => {
 
   const progress = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
 
-  const onSeek = (event: React.MouseEvent<HTMLDivElement>) => {
+  const onSeek = (event: MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const ratio = (event.clientX - rect.left) / rect.width;
     audio.seek(ratio * audio.duration);

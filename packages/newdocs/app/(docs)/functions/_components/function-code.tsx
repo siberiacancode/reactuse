@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@docs/ui/button';
+import { Button } from '@docs/src/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@docs/ui/collapsible';
-import { Separator } from '@docs/ui/separator';
+import { Separator } from '@docs/src/components/ui/separator';
 import { useCopy } from '@siberiacancode/reactuse';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 import { useRef, useState } from 'react';

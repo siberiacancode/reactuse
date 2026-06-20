@@ -23,7 +23,7 @@ const Demo = () => {
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
 
   return (
-    <section className='flex min-w-0 w-full max-w-md flex-col gap-2'>
+    <section className='flex w-full max-w-md min-w-0 flex-col gap-2'>
       <textarea
         className='border-border bg-card text-foreground placeholder:text-muted-foreground w-full resize-none overflow-hidden rounded-lg border p-3 text-sm outline-none'
         placeholder='Start typing...'

@@ -3,7 +3,7 @@
 import type { ComponentProps } from 'react';
 
 import { cn } from '@docs/lib/utils';
-import { Button } from '@docs/ui/button';
+import { Button } from '@docs/src/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@docs/ui/popover';
 import { useDisclosure } from '@siberiacancode/reactuse';
 import Link from 'next/link';

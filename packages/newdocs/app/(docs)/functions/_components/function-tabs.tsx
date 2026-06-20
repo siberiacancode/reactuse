@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from 'react';
 
-import { Tabs } from '@docs/ui/tabs';
+import { Tabs } from '@docs/src/components/ui/tabs';
 import { useLocalStorage } from '@siberiacancode/reactuse';
 
 type FunctionTabsProps = ComponentProps<typeof Tabs>;

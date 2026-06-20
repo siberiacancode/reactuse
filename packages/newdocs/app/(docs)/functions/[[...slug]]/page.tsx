@@ -1,5 +1,5 @@
 import { functionsSource } from '@docs/lib/source';
-import { Button } from '@docs/ui/button';
+import { Button } from '@docs/src/components/ui/button';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { findNeighbour } from 'fumadocs-core/page-tree';
 import { PageLastUpdate } from 'fumadocs-ui/layouts/docs/page';

@@ -3,8 +3,8 @@ import { getIconForLanguageExtension } from '@docs/components/icons';
 import { cn } from '@docs/lib/utils';
 import { Badge } from '@docs/ui/badge';
 import { Kbd } from '@docs/ui/kbd';
-import { Separator } from '@docs/ui/separator';
-import { Step, Steps } from '@docs/ui/steps';
+import { Separator } from '@docs/src/components/ui/separator';
+import { Step, Steps } from '@docs/src/components/ui/steps';
 import Link from 'next/link';
 import * as React from 'react';
 
@@ -31,7 +31,7 @@ import {
   AvatarGroup,
   AvatarGroupCount,
   AvatarImage
-} from './ui/avatar';
+} from './src/components/ui/avatar';
 import {
   Table,
   TableBody,
@@ -41,8 +41,8 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from './ui/table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+} from './src/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './src/components/ui/tabs';
 
 export const CUSTOM_COMPONENTS = {
   FunctionCode,

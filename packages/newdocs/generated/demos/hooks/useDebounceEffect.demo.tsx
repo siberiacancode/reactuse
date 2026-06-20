@@ -72,8 +72,8 @@ const Demo = () => {
       <div className='flex flex-col gap-2'>
         <h3>Find your spirit animal</h3>
         <p className='text-muted-foreground text-sm'>
-          The search waits <b>delay</b> after you stop typing before firing a request - no spam,
-          no jank.
+          The search waits <b>delay</b> after you stop typing before firing a request - no spam, no
+          jank.
         </p>
       </div>
 

@@ -71,8 +71,8 @@ const Demo = () => {
   );
 
   return (
-    <section className='flex min-w-0 w-full flex-col items-center p-4'>
-      <div className='flex w-full min-w-0 max-w-md flex-col gap-5 p-6'>
+    <section className='flex w-full min-w-0 flex-col items-center p-4'>
+      <div className='flex w-full max-w-md min-w-0 flex-col gap-5 p-6'>
         <div className='flex flex-col gap-2'>
           <div>
             <h3>{translation.greeting}</h3>
@@ -89,19 +89,19 @@ const Demo = () => {
         <div className='flex min-w-0 flex-col gap-2 border-t py-3 text-sm'>
           <div className='flex items-center justify-between gap-4'>
             <span className='text-muted-foreground'>Today</span>
-            <strong className='min-w-0 break-words text-right'>{formattedDate}</strong>
+            <strong className='min-w-0 text-right break-words'>{formattedDate}</strong>
           </div>
           <div className='flex items-center justify-between gap-4'>
             <span className='text-muted-foreground'>Last seen</span>
-            <strong className='min-w-0 break-words text-right'>{formattedRelative}</strong>
+            <strong className='min-w-0 text-right break-words'>{formattedRelative}</strong>
           </div>
           <div className='flex items-center justify-between gap-4'>
             <span className='text-muted-foreground'>Number</span>
-            <strong className='min-w-0 break-words text-right'>{formattedNumber}</strong>
+            <strong className='min-w-0 text-right break-words'>{formattedNumber}</strong>
           </div>
           <div className='flex items-center justify-between gap-4'>
             <span className='text-muted-foreground'>Price</span>
-            <strong className='min-w-0 break-words text-right'>{formattedPrice}</strong>
+            <strong className='min-w-0 text-right break-words'>{formattedPrice}</strong>
           </div>
         </div>
       </div>

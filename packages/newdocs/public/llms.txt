@@ -100,6 +100,7 @@
 - [useIsomorphicLayoutEffect](https://reactuse.org/functions/hooks/useIsomorphicLayoutEffect): Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
 - [useMount](https://reactuse.org/functions/hooks/useMount): Hook that executes a callback when the component mounts
 - [useShallowEffect](https://reactuse.org/functions/hooks/useShallowEffect): Hook that executes an effect only when dependencies change shallowly or deeply
+- [useUnmount](https://reactuse.org/functions/hooks/useUnmount): Hook that defines the logic when unmounting a component
 ### Sensorss
 
 - [useDeviceMotion](https://reactuse.org/functions/hooks/useDeviceMotion): Hook that work with device motion
@@ -149,11 +150,15 @@
 - [useStateHistory](https://reactuse.org/functions/hooks/useStateHistory): Hook that manages state with history functionality
 - [useStep](https://reactuse.org/functions/hooks/useStep): Hook that create stepper
 - [useStorage](https://reactuse.org/functions/hooks/useStorage): Hook that manages storage value
+- [useToggle](https://reactuse.org/functions/hooks/useToggle): Hook that create toggle
 ### Times
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions
 - [useProgress](https://reactuse.org/functions/hooks/useProgress): Hook that creates a lightweight progress bar
 - [useStopwatch](https://reactuse.org/functions/hooks/useStopwatch): Hook that creates a stopwatch functionality
+- [useTime](https://reactuse.org/functions/hooks/useTime): Hook that gives you current time in different values
+- [useTimeout](https://reactuse.org/functions/hooks/useTimeout): Hook that executes a callback function after a specified delay
+- [useTimer](https://reactuse.org/functions/hooks/useTimer): Hook that creates a timer functionality
 ### Users
 
 - [useBrowserLanguage](https://reactuse.org/functions/hooks/useBrowserLanguage): Hook that returns the current browser language
@@ -178,3 +183,5 @@
 - [usePrevious](https://reactuse.org/functions/hooks/usePrevious): Hook that returns the previous value
 - [useThrottleCallback](https://reactuse.org/functions/hooks/useThrottleCallback): Hook that creates a throttled callback
 - [useThrottleEffect](https://reactuse.org/functions/hooks/useThrottleEffect): Hook that runs an effect at most once per delay period when dependencies change
+- [useThrottleState](https://reactuse.org/functions/hooks/useThrottleState): Hook that creates a throttled state
+- [useThrottleValue](https://reactuse.org/functions/hooks/useThrottleValue): Hook that creates a throttled value

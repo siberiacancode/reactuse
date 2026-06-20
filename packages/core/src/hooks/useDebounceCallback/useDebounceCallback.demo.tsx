@@ -1,3 +1,5 @@
+import type { ChangeEvent } from 'react';
+
 import {
   useAsync,
   useClickOutside,
@@ -51,7 +53,7 @@ const Demo = () => {
     setDebouncedQuery(value);
   }, 500);
 
-  const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearch(value);
     debouncedSearch(value);

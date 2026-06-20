@@ -1,7 +1,7 @@
 import type { VariantProps } from 'class-variance-authority';
 
 import { cn } from '@docs/lib/utils';
-import { Separator } from '@docs/ui/separator';
+import { Separator } from '@docs/src/components/ui/separator';
 import { cva } from 'class-variance-authority';
 import { Slot } from 'radix-ui';
 

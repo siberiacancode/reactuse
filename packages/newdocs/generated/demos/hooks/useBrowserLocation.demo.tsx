@@ -57,7 +57,7 @@ const Demo = () => {
   const onCompletePayment = () => updateSearch({ step: 2, method: selectedMethod, email });
 
   return (
-    <section className='flex min-w-0 w-full max-w-md flex-col gap-5 p-4'>
+    <section className='flex w-full max-w-md min-w-0 flex-col gap-5 p-4'>
       {step === 1 && (
         <>
           <div className='flex flex-col gap-1'>
@@ -89,7 +89,7 @@ const Demo = () => {
 
                   <span className='flex min-w-0 flex-1 flex-col gap-1 pr-6'>
                     <span className='text-sm'>{method.title}</span>
-                    <span className='text-muted-foreground break-words text-xs'>
+                    <span className='text-muted-foreground text-xs break-words'>
                       {method.description}
                     </span>
                   </span>
@@ -126,7 +126,7 @@ const Demo = () => {
 
             <div className='flex flex-col items-center gap-2'>
               <h4>Payment successful</h4>
-              <p className='text-muted-foreground max-w-xs break-words text-sm'>
+              <p className='text-muted-foreground max-w-xs text-sm break-words'>
                 Your order is confirmed and the receipt has been sent to {email}.
               </p>
             </div>
@@ -138,7 +138,7 @@ const Demo = () => {
               </div>
               <div className='flex items-center justify-between gap-3 text-sm'>
                 <span className='text-muted-foreground'>Email</span>
-                <span className='text-foreground min-w-0 break-all text-right font-medium'>
+                <span className='text-foreground min-w-0 text-right font-medium break-all'>
                   {email}
                 </span>
               </div>

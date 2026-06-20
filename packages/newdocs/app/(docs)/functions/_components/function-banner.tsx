@@ -1,7 +1,7 @@
-import { Separator } from '@docs/ui/separator';
+import { Separator } from '@docs/src/components/ui/separator';
 import dynamic from 'next/dynamic';
 
-import { Button } from '@/ui/button';
+import { Button } from '@/src/components/ui/button';
 
 import { FunctionDemo } from './function-demo';
 

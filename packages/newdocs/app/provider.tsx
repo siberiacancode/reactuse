@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { TooltipProvider } from '@/ui/tooltip';
+import { TooltipProvider } from '@/src/components/ui/tooltip';
 
 import { ThemeProvider } from './_contexts/theme/ThemeProvider';
 

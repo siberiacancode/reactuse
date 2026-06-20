@@ -47,7 +47,7 @@ const Demo = () => {
 
         <button
           aria-label='Refresh'
-          className='rounded-full! self-start'
+          className='self-start rounded-full!'
           data-size='icon'
           data-variant='outline'
           type='button'

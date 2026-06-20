@@ -3,8 +3,13 @@
 import type { ReactNode } from 'react';
 
 import { cn } from '@docs/lib/utils';
-import { Button } from '@docs/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@docs/ui/tabs';
+import { Button } from '@docs/src/components/ui/button';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@docs/src/components/ui/tabs';
 import { useCopy, useLocalStorage } from '@siberiacancode/reactuse';
 import { IconCheck, IconCopy, IconTerminal } from '@tabler/icons-react';
 import { Children, useRef } from 'react';

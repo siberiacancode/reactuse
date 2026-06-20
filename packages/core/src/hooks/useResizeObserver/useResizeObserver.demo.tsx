@@ -1,3 +1,5 @@
+import type { PointerEvent } from 'react';
+
 import { useResizeObserver } from '@siberiacancode/reactuse';
 import { GripVerticalIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
@@ -61,7 +63,7 @@ const Demo = () => {
     onChange: ([entry]) => setExpanded(getEntryWidth(entry) >= EXPANDED_MIN)
   });
 
-  const onPointerDown = (event: React.PointerEvent) => {
+  const onPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
     draggingRef.current = true;
     dragRef.current = {
       startWidth: width,
@@ -70,7 +72,7 @@ const Demo = () => {
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
-  const onPointerMove = (event: React.PointerEvent) => {
+  const onPointerMove = (event: PointerEvent<HTMLButtonElement>) => {
     if (!draggingRef.current) return;
 
     const rawWidth = Math.min(
@@ -81,7 +83,7 @@ const Demo = () => {
     setWidth(rawWidth < SNAP_POINT ? COLLAPSED_WIDTH : Math.max(EXPANDED_MIN, rawWidth));
   };
 
-  const onPointerUp = (event: React.PointerEvent) => {
+  const onPointerUp = (event: PointerEvent<HTMLButtonElement>) => {
     draggingRef.current = false;
     event.currentTarget.releasePointerCapture(event.pointerId);
   };
@@ -91,7 +93,7 @@ const Demo = () => {
       <div className='relative'>
         <div
           ref={resizeObserver.ref}
-          className='border-border bg-card no-scrollbar flex flex-col overflow-hidden rounded-2xl border'
+          className='bg-card no-scrollbar flex flex-col overflow-hidden rounded-2xl'
           style={{ width }}
         >
           {CHATS.map((chat) => (

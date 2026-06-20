@@ -1,26 +1,31 @@
+import type { MouseEvent } from 'react';
+
 import { useThrottleState } from '@siberiacancode/reactuse';
 
 const Demo = () => {
-  const [throttledValue, setThrottledValue] = useThrottleState('', 500);
+  const [point, setPoint] = useThrottleState({ x: 0, y: 0 }, 100);
+
+  const onMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setPoint({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+  };
 
   return (
-    <>
-      <div>
-        <label className='mb-2 block text-sm font-medium'>Enter value to see throttle effect</label>
-        <input
-          className='w-full'
-          defaultValue={throttledValue}
-          placeholder='Enter value to see throttle effect'
-          type='text'
-          onChange={(event) => setThrottledValue(event.target.value)}
+    <section className='flex w-full max-w-md flex-col p-4'>
+      <div
+        className='border-border bg-card relative h-72 w-full overflow-hidden rounded-xl border'
+        onMouseMove={onMouseMove}
+      >
+        <span
+          className='bg-primary pointer-events-none absolute size-4 -translate-x-1/2 -translate-y-1/2 rounded-full transition-[left,top] duration-100 ease-out'
+          style={{ left: point.x, top: point.y }}
         />
-      </div>
-      <div className='flex flex-col gap-1'>
-        <div className='text-sm'>
-          Throttled value: <code>{throttledValue || 'empty string'}</code>
+
+        <div className='text-muted-foreground pointer-events-none absolute inset-x-0 bottom-3 text-center text-xs'>
+          Move your cursor — the dot follows, throttled
         </div>
       </div>
-    </>
+    </section>
   );
 };
 

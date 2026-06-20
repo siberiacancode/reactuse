@@ -1,7 +1,7 @@
 'use client';
 
 import { Badge } from '@docs/ui/badge';
-import { Button } from '@docs/ui/button';
+import { Button } from '@docs/src/components/ui/button';
 import { ButtonGroup } from '@docs/ui/button-group';
 import {
   DropdownMenu,
@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@docs/ui/dropdown-menu';
+} from '@docs/src/components/ui/dropdown-menu';
 import { useCopy } from '@siberiacancode/reactuse';
 import {
   IconArrowLeft,

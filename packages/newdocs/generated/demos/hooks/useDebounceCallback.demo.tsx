@@ -8,6 +8,7 @@ import {
 } from '@siberiacancode/reactuse';
 import { CheckIcon, ChevronDownIcon, Loader2Icon, SearchIcon } from 'lucide-react';
 import { useState } from 'react';
+import type { ChangeEvent } from 'react';
 
 import { cn } from '@/utils/lib';
 
@@ -53,7 +54,7 @@ const Demo = () => {
     setDebouncedQuery(value);
   }, 500);
 
-  const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearch(value);
     debouncedSearch(value);
@@ -74,8 +75,8 @@ const Demo = () => {
       <div className='flex flex-col gap-2'>
         <h3>Find your spirit animal</h3>
         <p className='text-muted-foreground text-sm'>
-          The search waits <b>delay</b> after you stop typing before firing a request - no spam,
-          no jank.
+          The search waits <b>delay</b> after you stop typing before firing a request - no spam, no
+          jank.
         </p>
       </div>
 

@@ -3,7 +3,7 @@ import type { Folder, Item } from 'fumadocs-core/page-tree';
 import type { CSSProperties, ReactNode } from 'react';
 
 import { functionsSource, source } from '@docs/lib/source';
-import { SidebarProvider } from '@docs/ui/sidebar';
+import { SidebarProvider } from '@docs/src/components/ui/sidebar';
 
 import { FunctionHeader, FunctionSidebar } from './_components';
 
