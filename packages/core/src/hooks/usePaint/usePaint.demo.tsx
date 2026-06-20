@@ -1,5 +1,3 @@
-import type { Line } from '@siberiacancode/reactuse';
-
 import { useHotkeys, usePaint } from '@siberiacancode/reactuse';
 import { Redo2Icon, Undo2Icon } from 'lucide-react';
 
@@ -11,36 +9,14 @@ const SIZES = [
   { label: 'L', value: 18 }
 ];
 
-const LINES_KEY = 'paint-lines';
-const getStoredLines = () => {
-  if (typeof localStorage === 'undefined') return '[]' as unknown as Line[];
-  JSON.parse(localStorage.getItem(LINES_KEY) ?? '[]') as Line[];
-};
-
 const Demo = () => {
-  const paint = usePaint(
-    { color: '#3b82f6', radius: 10, lines: getStoredLines() },
-    {
-      smooth: true,
-      onMouseUp: (_event, instance) =>
-        localStorage.setItem(LINES_KEY, JSON.stringify(instance.lines))
-    }
-  );
+  const paint = usePaint({ color: '#ffffff', radius: 10 }, { smooth: true });
 
-  const onUndo = () => {
-    paint.undo();
-    localStorage.setItem(LINES_KEY, JSON.stringify(paint.lines));
-  };
+  const onUndo = () => paint.undo();
 
-  const onRedo = () => {
-    paint.redo();
-    localStorage.setItem(LINES_KEY, JSON.stringify(paint.lines));
-  };
+  const onRedo = () => paint.redo();
 
-  const onClear = () => {
-    paint.clear();
-    localStorage.removeItem(LINES_KEY);
-  };
+  const onClear = () => paint.clear();
 
   useHotkeys('control+keyz', (event) => {
     event.preventDefault();

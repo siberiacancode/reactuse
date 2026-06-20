@@ -3,8 +3,6 @@ import type { SubmitEvent } from 'react';
 import { useField } from '@siberiacancode/reactuse';
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';
 
-import { cn } from '@/utils/lib';
-
 const LANGUAGES = [
   { value: 'en', label: 'English' },
   { value: 'ru', label: 'Russian' },
@@ -16,7 +14,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/;
 const Demo = () => {
   const nameField = useField('siberiacancode', { validateOnBlur: true });
   const emailField = useField('hello@reactuse.org', { validateOnBlur: true });
-  const bioField = useField('Building open-source React hooks ✨');
+  const bioField = useField('Building open-source React hooks');
   const languageField = useField('en');
   const notificationsField = useField(true);
   const publicField = useField(false);
@@ -87,12 +85,7 @@ const Demo = () => {
                 Receive product updates and release notes
               </span>
             </div>
-            <span className='inline-flex h-5 w-9 shrink-0 cursor-pointer items-center'>
-              <input className='peer sr-only' type='checkbox' {...notificationsField.register()} />
-              <span className='border-border bg-muted peer-checked:border-foreground peer-checked:bg-foreground relative inline-flex h-5 w-9 rounded-full border transition-colors'>
-                <span className='bg-background absolute top-0.5 left-0.5 size-3.5 rounded-full transition-transform peer-checked:translate-x-4' />
-              </span>
-            </span>
+            <input role='switch' type='checkbox' {...notificationsField.register()} />
           </label>
 
           <div className='flex items-center justify-between gap-3'>
@@ -124,11 +117,7 @@ const Demo = () => {
         <label className='flex cursor-pointer items-start gap-3'>
           <span className='mt-0.5 flex shrink-0 items-center'>
             <input className='peer sr-only' type='checkbox' {...publicField.register()} />
-            <span
-              className={cn(
-                'border-border peer-checked:border-foreground peer-checked:bg-foreground flex size-4 items-center justify-center rounded-[5px] border transition-colors'
-              )}
-            >
+            <span className='border-border peer-checked:border-foreground peer-checked:bg-foreground flex size-4 items-center justify-center rounded-[5px] border transition-colors'>
               {isPublic && <CheckIcon className='text-background size-3' strokeWidth={3.5} />}
             </span>
           </span>

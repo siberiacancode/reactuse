@@ -58,7 +58,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-md flex-col p-4'>
-      <div className='h-32 w-full rounded-2xl bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-600' />
+      <div className='h-32 w-full rounded-2xl bg-gradient-to-br from-zinc-100 via-stone-200 to-neutral-300' />
 
       <div className='flex items-end justify-between'>
         <div className='ring-background -mt-12 ml-1 flex size-24 items-center justify-center rounded-full bg-gradient-to-br from-neutral-700 to-neutral-900 text-2xl font-bold text-white ring-4'>

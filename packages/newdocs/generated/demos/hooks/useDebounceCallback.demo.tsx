@@ -1,5 +1,7 @@
 'use client'
 
+import type { ChangeEvent } from 'react';
+
 import {
   useAsync,
   useClickOutside,
@@ -8,7 +10,6 @@ import {
 } from '@siberiacancode/reactuse';
 import { CheckIcon, ChevronDownIcon, Loader2Icon, SearchIcon } from 'lucide-react';
 import { useState } from 'react';
-import type { ChangeEvent } from 'react';
 
 import { cn } from '@/utils/lib';
 

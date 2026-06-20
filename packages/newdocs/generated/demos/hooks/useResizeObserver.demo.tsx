@@ -1,9 +1,10 @@
 'use client'
 
+import type { PointerEvent } from 'react';
+
 import { useResizeObserver } from '@siberiacancode/reactuse';
 import { GripVerticalIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
-import type { PointerEvent } from 'react';
 
 import { cn } from '@/utils/lib';
 

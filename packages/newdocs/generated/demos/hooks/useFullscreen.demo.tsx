@@ -7,7 +7,7 @@ const VOLUME = 0.1;
 
 const Demo = () => {
   const fullscreen = useFullscreen<HTMLDivElement>();
-  const media = useMediaControls<HTMLVideoElement>('/videos/waves.mp4');
+  const media = useMediaControls<HTMLVideoElement>('/new/videos/waves.mp4');
 
   const onMute = () => {
     if (media.muted) {

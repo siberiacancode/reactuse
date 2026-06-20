@@ -29,12 +29,23 @@ const formatMetricCount = (count: number) => {
   return `${Math.round(count / 1000)}K+`;
 };
 
+interface RepositoryResponse {
+  stargazers_count: number;
+}
+
+interface NpmDownloadsResponse {
+  downloads: number;
+}
+
 const HomePage = async () => {
-  const [hooks, contributors, repositoryResponse] = await Promise.all([
+  const [hooks, contributors, repositoryResponse, npmDownloadsResponse] = await Promise.all([
     getElements('hook'),
     getContributors(),
-    fetches.get<{ stargazers_count: number }>(
-      'https://api.github.com/repos/siberiacancode/reactuse',
+    fetches.get<RepositoryResponse>('https://api.github.com/repos/siberiacancode/reactuse', {
+      cache: 'force-cache'
+    }),
+    fetches.get<NpmDownloadsResponse>(
+      `https://api.npmjs.org/downloads/point/last-week/${encodeURIComponent('@siberiacancode/reactuse')}`,
       {
         cache: 'force-cache'
       }
@@ -46,11 +57,14 @@ const HomePage = async () => {
   };
   const hooksCount = formatMetricCount(hooks.length);
   const contributorsCount = formatMetricCount(contributors.length);
+  const weeklyDownloadsCount = npmDownloadsResponse?.data?.downloads
+    ? formatMetricCount(npmDownloadsResponse.data.downloads)
+    : '50K+';
   const stats = [
     { label: 'Hooks', value: hooksCount },
     { label: 'Contributors', value: contributorsCount },
     { label: 'GitHub Stars', value: formatMetricCount(repository.stargazersCount) },
-    { label: 'Weekly Downloads', value: '50K+' },
+    { label: 'Weekly Downloads', value: weeklyDownloadsCount },
     { label: 'TypeScript', value: '100%' },
     { label: 'Dependencies', value: '0' }
   ];

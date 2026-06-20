@@ -34,7 +34,7 @@ const formatMoney = (value: number, currency: string) =>
 const Demo = () => {
   const containerRef = useRef<HTMLElement>(null);
 
-  const primary = useCssVar(containerRef, '--demo-primary', 'oklch(0.55 0.18 250)');
+  const primary = useCssVar(containerRef, '--demo-primary', 'oklch(1 0 0)');
   const radius = useCssVar(containerRef, '--demo-radius', '0.625rem');
 
   const activeColor =
@@ -116,7 +116,7 @@ const Demo = () => {
                     {formatMoney(item.amount, item.label)}
                   </span>
                 </div>
-                <div className='bg-background/60 ип h-1 w-full overflow-hidden rounded-full'>
+                <div className='bg-background/60 h-1 w-full overflow-hidden rounded-full'>
                   <div
                     style={{
                       width: `${item.achieved}%`

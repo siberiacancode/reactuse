@@ -80,8 +80,11 @@ const Demo = () => {
           </select>
 
           <button
-            className='flex-1 sm:flex-none'
-            data-variant={filters.value.inStock ? 'default' : 'outline'}
+            className={cn(
+              'flex-1 sm:flex-none',
+              filters.value.inStock && 'border-primary bg-primary text-primary-foreground hover:bg-primary/90'
+            )}
+            data-variant='outline'
             type='button'
             onClick={() => filters.set({ inStock: !filters.value.inStock })}
           >
@@ -107,7 +110,9 @@ const Demo = () => {
               <tr key={product.name} data-slot='table-row'>
                 <td data-slot='table-cell'>
                   <div className='flex items-center gap-2'>
-                    <span className='text-lg'>{product.emoji}</span>
+                    <div data-slot='avatar'>
+                      <span data-slot='avatar-fallback'>{product.emoji}</span>
+                    </div>
                     <span className='text-foreground font-medium'>{product.name}</span>
                   </div>
                 </td>
@@ -118,13 +123,13 @@ const Demo = () => {
                   <span
                     className={cn(
                       'inline-flex items-center gap-1.5 text-xs font-medium',
-                      product.stock ? 'text-green-500' : 'text-muted-foreground'
+                      product.stock ? 'text-primary' : 'text-muted-foreground'
                     )}
                   >
                     <span
                       className={cn(
                         'size-1.5 rounded-full',
-                        product.stock ? 'bg-green-500' : 'bg-muted-foreground'
+                        product.stock ? 'bg-primary' : 'bg-muted-foreground'
                       )}
                     />
                     {product.stock ? 'In stock' : 'Out'}

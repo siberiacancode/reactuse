@@ -20,7 +20,7 @@ const Demo = () => {
           controls
           ref={pictureInPicture.ref}
           className='aspect-video w-full'
-          src='/videos/waves.mp4'
+          src='/new/videos/waves.mp4'
         />
       </div>
 

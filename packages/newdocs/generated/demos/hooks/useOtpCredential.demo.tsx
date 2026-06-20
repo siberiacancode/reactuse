@@ -1,9 +1,10 @@
 'use client'
 
+import type { ClipboardEvent, KeyboardEvent, MouseEvent } from 'react';
+
 import { useOtpCredential } from '@siberiacancode/reactuse';
 import { MessageSquareTextIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
-import type { ClipboardEvent, KeyboardEvent, MouseEvent } from 'react';
 
 const LENGTH = 6;
 

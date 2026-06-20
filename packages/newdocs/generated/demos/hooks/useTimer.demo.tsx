@@ -1,9 +1,10 @@
 'use client'
 
+import type { ClipboardEvent, KeyboardEvent, MouseEvent } from 'react';
+
 import { useMutation, useTimer } from '@siberiacancode/reactuse';
 import { Loader2Icon, ShieldCheckIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
-import type { ClipboardEvent, KeyboardEvent, MouseEvent } from 'react';
 
 const LENGTH = 6;
 

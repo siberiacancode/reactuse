@@ -1,7 +1,8 @@
 'use client'
 
-import { useRafState } from '@siberiacancode/reactuse';
 import type { UIEvent } from 'react';
+
+import { useRafState } from '@siberiacancode/reactuse';
 
 const getStatus = (progress: number) => {
   if (progress >= 100)

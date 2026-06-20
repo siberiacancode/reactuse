@@ -45,10 +45,6 @@ const Demo = () => {
           </div>
         </div>
 
-        <div className='min-h-[64px]'>
-          {mounted && <LiveComponent onUnmount={() => unmountCount.inc()} />}
-        </div>
-
         <div className='border-border flex items-center justify-between border-t pt-3'>
           <div className='flex flex-col leading-tight'>
             <span className='text-muted-foreground text-[10px] tracking-wider uppercase'>
@@ -70,6 +66,8 @@ const Demo = () => {
           </button>
         </div>
       </div>
+
+      {mounted && <LiveComponent onUnmount={() => unmountCount.inc()} />}
     </section>
   );
 };

@@ -1,9 +1,10 @@
 'use client'
 
+import type { PointerEvent } from 'react';
+
 import { useBoolean, useDoubleClick } from '@siberiacancode/reactuse';
 import { HandIcon, RotateCcwIcon, ZoomInIcon, ZoomOutIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
-import type { PointerEvent } from 'react';
 
 import { cn } from '@/utils/lib';
 

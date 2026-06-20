@@ -94,8 +94,8 @@ const SwipeRow = ({
           style={{ transform: 'translateX(0)' }}
         >
           <div className='flex items-center gap-3'>
-            <div className='bg-muted/40 flex size-10 shrink-0 items-center justify-center rounded-lg text-xl'>
-              {plant.emoji}
+            <div data-size='lg' data-slot='avatar'>
+              <span data-slot='avatar-fallback'>{plant.emoji}</span>
             </div>
             <div className='flex min-w-0 flex-1 flex-col leading-tight'>
               <span className='text-foreground truncate text-sm'>{plant.name}</span>
