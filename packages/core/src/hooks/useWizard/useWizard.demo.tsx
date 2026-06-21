@@ -27,8 +27,8 @@ const STEP_NUMBER = {
 
 const WIZARD_MAP = [
   { id: 'nickname', nodes: ['preferences', 'email'] },
-  { id: 'preferences', nodes: ['email'] },
-  { id: 'email', nodes: ['done'] },
+  { id: 'preferences', nodes: ['nickname', 'email'] },
+  { id: 'email', nodes: ['nickname', 'preferences', 'done'] },
   { id: 'done' }
 ];
 
