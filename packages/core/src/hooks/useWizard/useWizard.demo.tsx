@@ -18,6 +18,13 @@ interface OnboardingContextValue {
 const OnboardingContext = createContext<OnboardingContextValue | null>(null);
 const useOnboarding = () => use(OnboardingContext)!;
 
+const STEP_NUMBER = {
+  nickname: 1,
+  preferences: 2,
+  email: 3,
+  done: 4
+};
+
 const WIZARD_MAP = [
   { id: 'nickname', nodes: ['preferences', 'email'] },
   { id: 'preferences', nodes: ['email'] },
@@ -35,7 +42,7 @@ const StepHeader = ({ title, description }: StepHeaderProps) => {
   return (
     <div className='flex flex-col gap-1'>
       <span className='text-muted-foreground text-xs tabular-nums'>
-        Step {wizard.history.length} of 4
+        Step {STEP_NUMBER[wizard.currentStepId]} of 4
       </span>
       <span className='text-foreground text-xl font-semibold tracking-tight'>{title}</span>
       <span className='text-muted-foreground text-sm leading-snug'>{description}</span>
@@ -50,7 +57,6 @@ const NicknameStep = () => {
 
   const onNext = () => {
     if (!value.trim()) return;
-    // randomly decide whether the preferences step is needed
     const needsPreferences = Math.random() > 0.5;
     wizard.set(needsPreferences ? 'preferences' : 'email');
   };
