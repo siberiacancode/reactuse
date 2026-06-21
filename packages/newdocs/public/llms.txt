@@ -63,6 +63,7 @@
 - [useSticky](https://reactuse.org/functions/hooks/useSticky): Hook that allows you to detect that your sticky component is stuck
 - [useVibrate](https://reactuse.org/functions/hooks/useVibrate): Hook that provides vibrate api
 - [useVirtualKeyboard](https://reactuse.org/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
+- [useWakeLock](https://reactuse.org/functions/hooks/useWakeLock): Hook that provides a wake lock functionality
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
@@ -126,6 +127,7 @@
 - [useScrollTo](https://reactuse.org/functions/hooks/useScrollTo): Hook for scrolling to a specific element
 - [useSwipe](https://reactuse.org/functions/hooks/useSwipe): Hook that tracks swipe gestures for touch and pointer events
 - [useTextSelection](https://reactuse.org/functions/hooks/useTextSelection): Hook that manages the text selection
+- [useVisibility](https://reactuse.org/functions/hooks/useVisibility): Hook that gives you visibility observer state
 ### States
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state

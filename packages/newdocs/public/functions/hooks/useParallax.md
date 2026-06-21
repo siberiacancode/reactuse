@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: false
 isDemo: true
-lastModifiedTime: 1781005040000
+lastModifiedTime: 1781981977000
 ---
 
 import metadata from './useParallax.meta.json';

@@ -1,4 +1,5 @@
-'use client';
+'use client'
+
 import type { MouseEvent } from 'react';
 
 import { useThrottleValue } from '@siberiacancode/reactuse';
@@ -45,43 +46,45 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-sm flex-col p-4'>
-      <div className='bg-card flex w-full flex-col gap-4 rounded-xl p-4'>
-        <div className='flex flex-col gap-0.5'>
-          <h3 className='text-foreground text-sm font-semibold'>Color picker</h3>
-          <p className='text-muted-foreground text-xs'>Drag across the palette to pick a color.</p>
+      <div data-slot='card'>
+        <div data-slot='card-header'>
+          <div data-slot='card-title'>Color picker</div>
+          <div data-slot='card-description'>Drag across the palette to pick a color.</div>
         </div>
 
-        <div
-          style={{
-            background:
-              'linear-gradient(to bottom, hsl(0,0%,90%), transparent, hsl(0,0%,10%)), linear-gradient(to right, hsl(0,70%,50%), hsl(60,70%,50%), hsl(120,70%,50%), hsl(180,70%,50%), hsl(240,70%,50%), hsl(300,70%,50%), hsl(360,70%,50%))'
-          }}
-          className='relative h-44 w-full cursor-crosshair overflow-hidden rounded-lg select-none'
-          onMouseDown={onMouseDown}
-          onMouseLeave={() => (draggingRef.current = false)}
-          onMouseMove={onMouseMove}
-          onMouseUp={() => (draggingRef.current = false)}
-        >
+        <div className='flex flex-col gap-4' data-slot='card-content'>
           <div
             style={{
-              left: `${(hsl.h / 360) * 100}%`,
-              top: `${((90 - hsl.l) / 80) * 100}%`,
-              background: hslToHex(hsl.h, 70, hsl.l)
+              background:
+                'linear-gradient(to bottom, hsl(0,0%,90%), transparent, hsl(0,0%,10%)), linear-gradient(to right, hsl(0,70%,50%), hsl(60,70%,50%), hsl(120,70%,50%), hsl(180,70%,50%), hsl(240,70%,50%), hsl(300,70%,50%), hsl(360,70%,50%))'
             }}
-            className='pointer-events-none absolute size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-md'
-          />
-        </div>
+            className='relative h-44 w-full cursor-crosshair overflow-hidden rounded-lg select-none'
+            onMouseDown={onMouseDown}
+            onMouseLeave={() => (draggingRef.current = false)}
+            onMouseMove={onMouseMove}
+            onMouseUp={() => (draggingRef.current = false)}
+          >
+            <div
+              style={{
+                left: `${(hsl.h / 360) * 100}%`,
+                top: `${((90 - hsl.l) / 80) * 100}%`,
+                background: hslToHex(hsl.h, 70, hsl.l)
+              }}
+              className='pointer-events-none absolute size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-md'
+            />
+          </div>
 
-        <div className='flex items-center gap-3'>
-          <div
-            style={{ background: hex }}
-            className='border-border size-11 shrink-0 rounded-lg border transition-colors duration-100'
-          />
-          <div className='flex flex-1 flex-col leading-tight'>
-            <span className='text-muted-foreground text-xs'>Selected</span>
-            <span className='text-foreground font-mono text-base font-semibold tabular-nums'>
-              {hex}
-            </span>
+          <div className='flex items-center gap-3'>
+            <div
+              className='border-border size-11 shrink-0 rounded-lg border transition-colors duration-100'
+              style={{ background: hex }}
+            />
+            <div className='flex flex-1 flex-col leading-tight'>
+              <span className='text-muted-foreground text-xs'>Selected</span>
+              <span className='text-foreground font-mono text-base font-semibold tabular-nums'>
+                {hex}
+              </span>
+            </div>
           </div>
         </div>
       </div>

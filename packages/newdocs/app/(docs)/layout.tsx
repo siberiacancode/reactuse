@@ -8,16 +8,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 
-import type { FunctionBadges } from '@/src/constants';
-
 import { FunctionHeader, FunctionSidebar } from './_components';
-
-const DEFAULT_BADGES = {
-  firstCommitAt: 0,
-  isApiUpdated: false,
-  isNew: false,
-  lastCommitAt: 0
-};
 
 const getFunctionsBadges = async () => {
   const hooksPath = path.join(process.cwd(), 'content', 'functions', 'hooks');
@@ -26,9 +17,9 @@ const getFunctionsBadges = async () => {
   const entries = await Promise.all(
     metaFiles.map(async (file) => {
       const content = await fs.readFile(path.join(hooksPath, file), 'utf-8');
-      const metadata = JSON.parse(content) as { badges?: FunctionBadges; name: string };
+      const metadata = JSON.parse(content) as { badges?: { isNew?: boolean }; name: string };
 
-      return [metadata.name, metadata.badges ?? DEFAULT_BADGES] as const;
+      return [metadata.name, metadata.badges?.isNew ?? false] as const;
     })
   );
 
@@ -57,7 +48,7 @@ const getHooksSidebarGroups = async () => {
     if (element.type === 'page') {
       groups[currentGroup!]!.children.push({
         ...element,
-        badge: functionsBadges.get(element.name!.toString()) ?? DEFAULT_BADGES
+        isNew: functionsBadges.get(element.name!.toString()) ?? false
       });
     }
   });
@@ -85,13 +76,13 @@ export const DocsLayout = async ({ children }: DocsLayoutProps) => {
         const name = child.name?.toString() ?? 'unknown';
         if (name === 'llms.txt') {
           return {
-            badge: DEFAULT_BADGES,
+            isNew: false,
             name: 'llms.txt',
             url: '/llms.txt'
           };
         }
         return {
-          badge: functionsBadges.get(name) ?? DEFAULT_BADGES,
+          isNew: functionsBadges.get(name) ?? false,
           name: child.name?.toString() ?? 'unknown',
           url: child.url
         };

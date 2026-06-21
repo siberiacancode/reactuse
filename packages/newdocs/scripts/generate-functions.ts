@@ -274,7 +274,7 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 154).map(async (element) => {
+    content.slice(0, 156).map(async (element) => {
       const content = await getContentFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);
@@ -307,7 +307,7 @@ const init = async () => {
       const isTest = await checkFileContent(element.type, element.name, 'test');
       const isDemo = await checkFileContent(element.type, element.name, 'demo');
 
-      const { contributors, firstCommit, isApiUpdated, isNew, lastCommit } = await getGitInfo(
+      const { contributors, firstCommit, isNew, lastCommit } = await getGitInfo(
         element.name,
         element.type
       );
@@ -320,7 +320,6 @@ const init = async () => {
       return {
         badges: {
           firstCommitAt: new Date(firstCommit.date).getTime(),
-          isApiUpdated,
           isNew,
           lastCommitAt: new Date(lastCommit.date).getTime()
         },

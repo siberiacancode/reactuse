@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781083610000
+lastModifiedTime: 1781981977000
 ---
 
 import metadata from './usePointerLock.meta.json';

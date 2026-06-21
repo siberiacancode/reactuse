@@ -9,7 +9,6 @@ import { CORE_ROOT } from '../constants';
 const git = simpleGit();
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 const NEW_DAYS_THRESHOLD = 30;
-const API_UPDATED_DAYS_THRESHOLD = 7;
 
 export const getGitInfo = async (name: string, type: FunctionType) => {
   const log = await git.log({
@@ -20,9 +19,7 @@ export const getGitInfo = async (name: string, type: FunctionType) => {
   const firstCommit = commits.at(-1)!;
   const now = Date.now();
   const firstCommitAt = new Date(firstCommit.date).getTime();
-  const lastCommitAt = new Date(lastCommit.date).getTime();
   const isNew = now - firstCommitAt <= NEW_DAYS_THRESHOLD * DAY_IN_MS;
-  const isApiUpdated = !isNew && now - lastCommitAt <= API_UPDATED_DAYS_THRESHOLD * DAY_IN_MS;
 
   const contributorsMap = new Map(
     commits.map((commit) => [
@@ -39,7 +36,6 @@ export const getGitInfo = async (name: string, type: FunctionType) => {
   return {
     firstCommit,
     contributors,
-    isApiUpdated,
     isNew,
     lastCommit
   };

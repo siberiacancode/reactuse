@@ -39,7 +39,6 @@ export interface FunctionContributor {
 
 export interface FunctionBadges {
   firstCommitAt: number;
-  isApiUpdated: boolean;
   isNew: boolean;
   lastCommitAt: number;
 }

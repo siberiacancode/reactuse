@@ -17,10 +17,7 @@ import { usePathname } from 'next/navigation';
 
 interface FunctionSidebarGroup {
   items: {
-    badge: {
-      isApiUpdated: boolean;
-      isNew: boolean;
-    };
+    isNew: boolean;
     name: string;
     url: string;
   }[];
@@ -61,18 +58,11 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
                         <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
                         <span className='relative flex min-w-0 items-center gap-2'>
                           <span className='block min-w-0 truncate'>{item.name}</span>
-                          {item.badge.isNew && (
+                          {item.isNew && (
                             <span
                               aria-label='New function'
                               className='size-2 shrink-0 rounded-full bg-sky-500'
                               title='New function'
-                            />
-                          )}
-                          {!item.badge.isNew && item.badge.isApiUpdated && (
-                            <span
-                              aria-label='Recently updated API'
-                              className='size-2 shrink-0 rounded-full bg-amber-400'
-                              title='Recently updated API'
                             />
                           )}
                         </span>

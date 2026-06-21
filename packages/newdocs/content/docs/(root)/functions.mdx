@@ -161,3 +161,5 @@ A quick list of available functions.
 - [useUrlSearchParams](/functions/hooks/useUrlSearchParams): Hook that provides reactive URLSearchParams
 - [useVibrate](/functions/hooks/useVibrate): Hook that provides vibrate api
 - [useVirtualKeyboard](/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
+- [useVisibility](/functions/hooks/useVisibility): Hook that gives you visibility observer state
+- [useWakeLock](/functions/hooks/useWakeLock): Hook that provides a wake lock functionality

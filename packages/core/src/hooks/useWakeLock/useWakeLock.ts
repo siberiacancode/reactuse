@@ -17,7 +17,7 @@ export interface UseWakeLockReturn {
   /** Function to release the wake lock. */
   release: () => Promise<void>;
   /** Function to request the wake lock. */
-  request: () => Promise<void>;
+  request: (type?: WakeLockType) => Promise<void>;
 }
 
 /**
@@ -28,7 +28,8 @@ export interface UseWakeLockReturn {
  *
  * @browserapi navigator.wakeLock https://developer.mozilla.org/en-US/docs/Web/API/WakeLock
  *
- * @param {immediately} [options] Configuration options for the hook.
+ * @param {boolean} [options.immediately=false] Determines if the wake lock should be automatically reacquired when the document becomes visible
+ * @param {WakeLockType} [options.type='screen'] A string specifying the wake lock type
  * @returns {UseWakeLockReturn} An object containing the wake lock state and control methods.
  *
  * @example
