@@ -1,15 +1,15 @@
 ---
-title: useWebSocket
-description: Hook that connects to a WebSocket server and handles incoming and outgoing messages
-category: browser
-usage: medium
+title: useWindowScroll
+description: Hook that manages the window scroll position
+category: sensors
+usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1782052667000
+lastModifiedTime: 1770651919000
 ---
 
-import metadata from './useWebSocket.meta.json';
+import metadata from './useWindowScroll.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useWebSocket.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useWebSocket
+    npx useverse@latest add useWindowScroll
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useWebSocket.meta.json';
 ## Usage
 
 ```tsx
-const { status, close, send, open, client } = useWebSocket('url');
+const { snapshot, scrollTo, watch } = useWindowScroll();
 ```
 
 ## Type Declarations

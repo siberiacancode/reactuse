@@ -13,19 +13,21 @@ it('Should use window size', () => {
 
   const { result } = renderHook(useWindowSize);
 
-  expect(result.current).toEqual({ width: 100, height: 100 });
+  expect(result.current.watch).toBeTypeOf('function');
+  expect(result.current.snapshot).toEqual({ width: 100, height: 100 });
 });
 
 it('Should use window size on server side', () => {
   const { result } = renderHookServer(useWindowSize);
 
-  expect(result.current).toEqual({
+  expect(result.current.watch).toBeTypeOf('function');
+  expect(result.current.snapshot).toEqual({
     width: Number.POSITIVE_INFINITY,
     height: Number.POSITIVE_INFINITY
   });
 });
 
-it('Should change state upon resize events', () => {
+it('Should return reactive value on watch', () => {
   const mockWindowInnerHeight = vi.spyOn(window, 'innerHeight', 'get');
   const mockWindowInnerWidth = vi.spyOn(window, 'innerWidth', 'get');
 
@@ -33,7 +35,7 @@ it('Should change state upon resize events', () => {
   mockWindowInnerWidth.mockReturnValue(100);
   const { result } = renderHook(useWindowSize);
 
-  expect(result.current).toEqual({ width: 100, height: 100 });
+  act(() => result.current.watch());
 
   act(() => {
     mockWindowInnerHeight.mockReturnValue(50);
@@ -41,7 +43,27 @@ it('Should change state upon resize events', () => {
     window.dispatchEvent(new Event('resize'));
   });
 
-  expect(result.current).toEqual({ width: 50, height: 50 });
+  expect(result.current.snapshot).toEqual({ width: 50, height: 50 });
+});
+
+it('Should call callback on resize', () => {
+  const callback = vi.fn();
+  const mockWindowInnerHeight = vi.spyOn(window, 'innerHeight', 'get');
+  const mockWindowInnerWidth = vi.spyOn(window, 'innerWidth', 'get');
+
+  mockWindowInnerHeight.mockReturnValue(100);
+  mockWindowInnerWidth.mockReturnValue(100);
+
+  renderHook(() => useWindowSize(callback));
+
+  act(() => {
+    mockWindowInnerHeight.mockReturnValue(50);
+    mockWindowInnerWidth.mockReturnValue(50);
+    window.dispatchEvent(new Event('resize'));
+  });
+
+  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledWith({ width: 50, height: 50 }, expect.any(Event));
 });
 
 it('Should not include scrollbar', () => {
@@ -52,13 +74,14 @@ it('Should not include scrollbar', () => {
   mockWindowClientWidth.mockReturnValue(100);
   const { result } = renderHook(() => useWindowSize({ includeScrollbar: false }));
 
-  expect(result.current).toEqual({ width: 100, height: 100 });
+  act(() => result.current.watch());
+  expect(result.current.snapshot).toEqual({ width: 100, height: 100 });
   act(() => {
     mockWindowClientHeight.mockReturnValue(50);
     mockWindowClientWidth.mockReturnValue(50);
     window.dispatchEvent(new Event('resize'));
   });
-  expect(result.current).toEqual({ width: 50, height: 50 });
+  expect(result.current.snapshot).toEqual({ width: 50, height: 50 });
 });
 
 it('Should cleanup up on unmount', () => {

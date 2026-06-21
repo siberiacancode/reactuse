@@ -1,3 +1,5 @@
+'use client'
+
 import type { UseWizardReturn } from '@siberiacancode/reactuse';
 import type { ReactNode } from 'react';
 

@@ -1,3 +1,5 @@
+'use client'
+
 import { useWindowFocus } from '@siberiacancode/reactuse';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 

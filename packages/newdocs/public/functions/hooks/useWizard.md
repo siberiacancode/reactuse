@@ -1,15 +1,15 @@
 ---
-title: useWebSocket
-description: Hook that connects to a WebSocket server and handles incoming and outgoing messages
-category: browser
+title: useWizard
+description: Hook that manages a wizard
+category: state
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1782052667000
+lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useWebSocket.meta.json';
+import metadata from './useWizard.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useWebSocket.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useWebSocket
+    npx useverse@latest add useWizard
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useWebSocket.meta.json';
 ## Usage
 
 ```tsx
-const { status, close, send, open, client } = useWebSocket('url');
+const { currentStepId, set, reset, back, history } = useWizard([ { id: 'step1', nodes: ['step2', 'step3'] }, { id: 'step2', nodes: ['step3'] }, { id: 'step3', nodes: [] }, ])
 ```
 
 ## Type Declarations

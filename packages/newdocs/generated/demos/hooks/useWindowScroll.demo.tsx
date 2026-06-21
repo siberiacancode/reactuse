@@ -1,3 +1,5 @@
+'use client'
+
 import { useWindowScroll } from '@siberiacancode/reactuse';
 import { ArrowUpIcon, ClockIcon, UserIcon } from 'lucide-react';
 

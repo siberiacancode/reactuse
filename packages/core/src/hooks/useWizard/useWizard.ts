@@ -5,6 +5,20 @@ export interface WizardItem<WizardStepId> {
   nodes?: WizardStepId[];
 }
 
+/** The use wizard return type */
+export interface UseWizardReturn<WizardStepId> {
+  /** Current wizard step id */
+  currentStepId: WizardStepId;
+  /** History of visited wizard step ids */
+  history: WizardStepId[];
+  /** Go one step back in wizard history */
+  back: () => void;
+  /** Reset wizard to initial step */
+  reset: () => void;
+  /** Go to custom available step */
+  set: (id: WizardStepId) => void;
+}
+
 /**
  * @name useWizard
  * @description - Hook that manages a wizard
@@ -16,7 +30,7 @@ export interface WizardItem<WizardStepId> {
  * @returns {UseWizardReturn<WizardStepId>} An object containing the current step id and functions to interact with the wizard
  *
  * @example
- * const { currentStepId, set, reset, back, next, history } = useWizard([
+ * const { currentStepId, set, reset, back, history } = useWizard([
  *  { id: 'step1', nodes: ['step2', 'step3'] },
  *  { id: 'step2', nodes: ['step3'] },
  *  { id: 'step3', nodes: [] },
@@ -25,7 +39,7 @@ export interface WizardItem<WizardStepId> {
 export const useWizard = <WizardStepId extends string>(
   map: WizardItem<WizardStepId>[],
   initialStepId?: WizardStepId
-) => {
+): UseWizardReturn<WizardStepId> => {
   const initialId = initialStepId ?? map[0].id;
   const wizardMap = new Map(map.map((wizardItem) => [wizardItem.id, wizardItem]));
   const [currentStepId, setCurrentStepId] = useState(initialId);

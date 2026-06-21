@@ -51,9 +51,9 @@ export const FunctionCode = ({ code, collapsible, title, language }: FunctionCod
         </div>
         <CollapsibleContent
           forceMount
-          className='relative my-6 overflow-hidden data-[state=closed]:max-h-64 data-[state=closed]:[content-visibility:auto] [&>figure]:mt-0 [&>figure]:md:mx-0!'
+          className='relative my-6 origin-bottom overflow-hidden rounded-xl transition-[max-height] duration-300 ease-out data-[state=closed]:max-h-64 data-[state=closed]:[content-visibility:auto] [&>figure]:mt-0 [&>figure]:md:mx-0!'
         >
-          <figure className='' data-rehype-pretty-code-figure=''>
+          <figure className='rounded-xl!' data-rehype-pretty-code-figure=''>
             {title && (
               <figcaption
                 className='text-code-foreground [&_svg]:text-code-foreground flex items-center gap-2 [&_svg]:size-4 [&_svg]:opacity-70'
@@ -65,7 +65,7 @@ export const FunctionCode = ({ code, collapsible, title, language }: FunctionCod
             <div ref={contentRef} dangerouslySetInnerHTML={{ __html: code }} />
           </figure>
         </CollapsibleContent>
-        <CollapsibleTrigger className='from-code/70 to-code text-muted-foreground absolute inset-x-0 -bottom-2 flex h-20 items-center justify-center rounded-b-lg bg-gradient-to-b text-sm group-data-[state=open]/collapsible:hidden'>
+        <CollapsibleTrigger className='from-code/70 to-code text-muted-foreground absolute inset-x-0 bottom-0 flex h-20 items-end justify-center rounded-b-xl bg-gradient-to-b pb-4 text-sm group-data-[state=open]/collapsible:hidden'>
           <Button asChild size='sm' variant='ghost'>
             <div>{isOpen ? 'Collapse' : 'Expand'}</div>
           </Button>

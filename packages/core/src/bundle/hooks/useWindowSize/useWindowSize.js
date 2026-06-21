@@ -1,20 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useRerender } from '../useRerender/useRerender';
 /**
  * @name useWindowSize
  * @description - Hook that manages a window size
- * @category Elements
+ * @category Sensors
  * @usage low
  *
- * @param {number} [params.initialWidth=Number.POSITIVE_INFINITY] The initial window width
- * @param {number} [params.initialHeight=Number.POSITIVE_INFINITY] The initial window height
- * @returns {UseWindowSizeReturn} An object containing the current window width and height
+ * @overload
+ * @param {(value: UseWindowSizeValue, event: Event) => void} [callback] The callback to invoke on window size updates
+ * @param {boolean} [options.includeScrollbar=true] Whether to include the scrollbar in the window size calculation
+ * @returns {UseWindowSizeReturn} An object containing the latest window size snapshot and watch function
  *
  * @example
- * const { width, height } = useWindowSize();
+ * const { snapshot, watch } = useWindowSize((value) => console.log(value));
+ *
+ * @overload
+ * @param {boolean} [options.includeScrollbar=true] Whether to include the scrollbar in the window size calculation
+ * @returns {UseWindowSizeReturn} An object containing the latest window size snapshot and watch function
+ *
+ * @example
+ * const { snapshot, watch } = useWindowSize();
  */
-export const useWindowSize = (params) => {
-  const includeScrollbar = params?.includeScrollbar ?? true;
-  const [size, setSize] = useState(() => {
+export const useWindowSize = (...params) => {
+  const callback = typeof params[0] === 'function' ? params[0] : undefined;
+  const options = callback ? params[1] : params[0];
+  const includeScrollbar = options?.includeScrollbar ?? true;
+  const getSize = () => {
     if (typeof window === 'undefined') {
       return {
         width: Number.POSITIVE_INFINITY,
@@ -25,18 +36,29 @@ export const useWindowSize = (params) => {
       width: includeScrollbar ? window.innerWidth : window.document.documentElement.clientWidth,
       height: includeScrollbar ? window.innerHeight : window.document.documentElement.clientHeight
     };
-  });
+  };
+  const snapshotRef = useRef(getSize());
+  const callbackRef = useRef(callback);
+  const watchingRef = useRef(false);
+  const rerender = useRerender();
+  callbackRef.current = callback;
+  const watch = () => {
+    watchingRef.current = true;
+    return snapshotRef.current;
+  };
   useEffect(() => {
-    const onResize = () => {
-      const { innerWidth, innerHeight, document } = window;
-      const { clientWidth, clientHeight } = document.documentElement;
-      setSize({
-        width: includeScrollbar ? innerWidth : clientWidth,
-        height: includeScrollbar ? innerHeight : clientHeight
-      });
+    const updateValue = () => {
+      snapshotRef.current = getSize();
+      if (watchingRef.current) rerender();
+    };
+    updateValue();
+    if (typeof window === 'undefined') return;
+    const onResize = (event) => {
+      updateValue();
+      callbackRef.current?.(snapshotRef.current, event);
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, [params?.includeScrollbar]);
-  return size;
+  }, [includeScrollbar]);
+  return { snapshot: snapshotRef.current, watch };
 };

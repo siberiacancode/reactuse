@@ -1,9 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
+
+import { useRerender } from '../useRerender/useRerender';
 
 export interface ScrollPosition {
   x: number;
   y: number;
 }
+
+export interface UseWindowScrollReturn {
+  /** Function to scroll window to a specific position */
+  scrollTo: typeof scrollTo;
+  /** The latest window scroll position snapshot */
+  snapshot: ScrollPosition;
+  /** Function to enable subscriptions and rerender on next updates */
+  watch: () => ScrollPosition;
+}
+
+export type UseWindowScrollCallback = (value: ScrollPosition, event: Event) => void;
 
 export const scrollTo = ({
   x,
@@ -22,20 +35,46 @@ export const scrollTo = ({
  * @category Sensors
  * @usage low
  *
- * @returns {UseWindowScrollReturn} An object containing the current window scroll position
+ * @param {(value: ScrollPosition, event: Event) => void} [callback] The callback to invoke on window scroll updates
+ * @returns {UseWindowScrollReturn} An object containing the latest window scroll snapshot, watch function, and scrollTo helper
  *
  * @example
- * const { value, scrollTo } = useWindowScroll();
+ * const { snapshot, scrollTo, watch } = useWindowScroll((value) => console.log(value));
  */
-export const useWindowScroll = () => {
-  const [value, setValue] = useState<ScrollPosition>(() => {
+export const useWindowScroll = (callback?: UseWindowScrollCallback): UseWindowScrollReturn => {
+  const getValue = (): ScrollPosition => {
     if (typeof window === 'undefined')
       return { x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY };
     return { x: window.scrollX, y: window.scrollY };
-  });
+  };
+
+  const snapshotRef = useRef<ScrollPosition>(getValue());
+  const callbackRef = useRef(callback);
+  const watchingRef = useRef(false);
+  const rerender = useRerender();
+
+  callbackRef.current = callback;
+
+  const watch = () => {
+    watchingRef.current = true;
+    return snapshotRef.current;
+  };
 
   useEffect(() => {
-    const onChange = () => setValue({ x: window.scrollX, y: window.scrollY });
+    const updateValue = () => {
+      snapshotRef.current = getValue();
+      if (watchingRef.current) rerender();
+    };
+
+    const onChange = (event: Event) => {
+      updateValue();
+      callbackRef.current?.(snapshotRef.current, event);
+    };
+
+    updateValue();
+
+    if (typeof window === 'undefined') return;
+
     window.addEventListener('scroll', onChange);
     window.addEventListener('resize', onChange);
     return () => {
@@ -44,5 +83,5 @@ export const useWindowScroll = () => {
     };
   }, []);
 
-  return { value, scrollTo };
+  return { snapshot: snapshotRef.current, scrollTo, watch };
 };
