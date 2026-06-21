@@ -41,8 +41,8 @@ const PERKS = ['50+ premium hooks', 'Priority support', 'Early access to new rel
 const Demo = () => (
   <section className='flex w-full max-w-sm flex-col p-4'>
     <div
-      id={ROOT_ID}
       className='no-scrollbar flex h-96 flex-col gap-12 overflow-y-auto scroll-smooth px-1 py-6'
+      id={ROOT_ID}
     >
       <RevealSection>
         <div className='flex flex-col items-center gap-3 text-center'>
@@ -55,7 +55,7 @@ const Demo = () => (
           <p className='text-muted-foreground text-sm leading-relaxed'>
             A collection of hooks for everyday development. Typed, tested and tree-shakeable.
           </p>
-          <button type='button' data-size='sm' className='mt-1'>
+          <button className='mt-1' data-size='sm' type='button'>
             Get started
           </button>
         </div>
@@ -122,7 +122,7 @@ const Demo = () => (
             ))}
           </div>
 
-          <button type='button' className='w-full!'>
+          <button className='w-full!' type='button'>
             Upgrade to Pro
           </button>
         </div>

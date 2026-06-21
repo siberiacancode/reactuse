@@ -163,3 +163,5 @@ A quick list of available functions.
 - [useVirtualKeyboard](/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
 - [useVisibility](/functions/hooks/useVisibility): Hook that gives you visibility observer state
 - [useWakeLock](/functions/hooks/useWakeLock): Hook that provides a wake lock functionality
+- [useWebSocket](/functions/hooks/useWebSocket): Hook that connects to a WebSocket server and handles incoming and outgoing messages
+- [useWindowEvent](/functions/hooks/useWindowEvent): Hook attaches an event listener to the window object for the specified event

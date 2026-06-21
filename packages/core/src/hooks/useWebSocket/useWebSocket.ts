@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 import { getRetry } from '@/utils/helpers';
 
-import { useEvent } from '../useEvent/useEvent';
-
 /** The use web socket url type */
 export type UseWebSocketUrl = (() => string) | string;
 
@@ -79,7 +77,7 @@ export const useWebSocket = (
     webSocketRef.current?.close();
   };
 
-  const init = useEvent(() => {
+  const init = () => {
     webSocketRef.current = new WebSocket(
       typeof url === 'function' ? url() : url,
       options?.protocols
@@ -112,7 +110,7 @@ export const useWebSocket = (
       }
       retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
     };
-  });
+  };
 
   useEffect(() => {
     init();

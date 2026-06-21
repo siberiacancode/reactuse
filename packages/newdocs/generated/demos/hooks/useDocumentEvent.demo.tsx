@@ -6,7 +6,6 @@ import { useState } from 'react';
 const Demo = () => {
   const cookies = useCounter();
   const [pops, setPops] = useState<{ id: number; x: number; y: number }[]>([]);
-  const [popId, setPopId] = useState(0);
 
   useDocumentEvent('click', (event) => {
     const target = event.target;
@@ -15,8 +14,7 @@ const Demo = () => {
 
     cookies.inc();
 
-    const id = popId;
-    setPopId((value) => value + 1);
+    const id = Math.random();
     setPops((current) => [...current, { id, x: event.clientX, y: event.clientY }]);
 
     setTimeout(() => {

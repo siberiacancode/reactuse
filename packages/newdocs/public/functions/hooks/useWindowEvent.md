@@ -1,15 +1,15 @@
 ---
-title: useWakeLock
-description: Hook that provides a wake lock functionality
-category: browser
+title: useWindowEvent
+description: Hook attaches an event listener to the window object for the specified event
+category: sensors
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1782026158000
+lastModifiedTime: 1779456202000
 ---
 
-import metadata from './useWakeLock.meta.json';
+import metadata from './useWindowEvent.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useWakeLock.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useWakeLock
+    npx useverse@latest add useWindowEvent
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useWakeLock.meta.json';
 ## Usage
 
 ```tsx
-const { supported, active, request, release } = useWakeLock();
+useWindowEvent('click', () => console.log('clicked'));
 ```
 
 ## Type Declarations

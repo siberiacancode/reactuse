@@ -1,9 +1,16 @@
-import { useIsFirstRender, useTime } from '@siberiacancode/reactuse';
+import { usePrevious, useTime } from '@siberiacancode/reactuse';
+import { memo } from 'react';
 
 import { cn } from '@/utils/lib';
 
-const Digit = ({ value }: { value: string }) => {
-  const isFirstRender = useIsFirstRender();
+interface DigitProps {
+  value: string;
+}
+
+const Digit = memo(({ value }: DigitProps) => {
+  const previousValue = usePrevious(value);
+
+  const shouldAnimate = previousValue !== undefined && previousValue !== value;
 
   return (
     <span className='relative inline-flex h-14 w-9 overflow-hidden'>
@@ -11,15 +18,14 @@ const Digit = ({ value }: { value: string }) => {
         key={value}
         className={cn(
           'text-foreground absolute inset-0 flex items-center justify-center font-mono text-5xl font-bold tabular-nums',
-          !isFirstRender && 'animate-in slide-in-from-bottom-full duration-300'
+          shouldAnimate && 'animate-in slide-in-from-bottom-full duration-300'
         )}
       >
         {value}
       </span>
     </span>
   );
-};
-
+});
 const Demo = () => {
   const { hours, minutes, seconds, meridiemHours, day, month, year } = useTime();
 

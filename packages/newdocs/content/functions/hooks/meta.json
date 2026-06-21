@@ -11,7 +11,7 @@
       "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect","useMount","useShallowEffect","useUnmount",
 
       "---browser---",
-      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls","useMediaQuery","useMemory","useNetwork","useObjectUrl","useOnline","useOtpCredential","usePermission","usePictureInPicture","usePointerLock","usePostMessage","useRaf","useShare","useSpeechRecognition","useSpeechSynthesis","useSticky","useVibrate","useVirtualKeyboard","useWakeLock",
+      "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls","useMediaQuery","useMemory","useNetwork","useObjectUrl","useOnline","useOtpCredential","usePermission","usePictureInPicture","usePointerLock","usePostMessage","useRaf","useShare","useSpeechRecognition","useSpeechSynthesis","useSticky","useVibrate","useVirtualKeyboard","useWakeLock","useWebSocket",
 
       "---utilities---",
       "useBatchedCallback","useConst","useDebounceCallback","useDebounceEffect","useDebounceState","useDebounceValue","useDevicePixelRatio","useEvent","useLastChanged","useLatest","usePrevious","useThrottleCallback","useThrottleEffect","useThrottleState","useThrottleValue",
@@ -23,7 +23,7 @@
       "useBrowserLanguage","useOperatingSystem","usePreferredColorScheme","usePreferredContrast","usePreferredDark","usePreferredLanguages","usePreferredReducedMotion",
 
       "---sensors---",
-      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver","useResizeObserver","useScroll","useScrollIntoView","useScrollTo","useSwipe","useTextSelection","useVisibility",
+      "useDeviceMotion","useDeviceOrientation","useHotkeys","useIdle","useInfiniteScroll","useIntersectionObserver","useKeyboard","useKeyPress","useKeysPressed","useMouse","useMutationObserver","useOrientation","usePageLeave","useParallax","usePerformanceObserver","useResizeObserver","useScroll","useScrollIntoView","useScrollTo","useSwipe","useTextSelection","useVisibility","useWindowEvent",
 
       "---humor---",
       "useFul","useLess","useOnce",

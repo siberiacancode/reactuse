@@ -1,8 +1,8 @@
 import type { SubmitEvent } from 'react';
 
-import { useAutoScroll, useEventListener, useField } from '@siberiacancode/reactuse';
+import { useAutoScroll, useEventListener, useField, useInterval } from '@siberiacancode/reactuse';
 import { ArrowDownIcon, SendIcon } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { cn } from '@/utils/lib';
 
@@ -85,7 +85,6 @@ const Demo = () => {
   const [showNewMessage, setShowNewMessage] = useState(false);
 
   const autoScrollRef = useAutoScroll<HTMLDivElement>();
-  const idRef = useRef(INITIAL_MESSAGES.length + 1);
 
   useEventListener(autoScrollRef, 'scroll', () => {
     const container = autoScrollRef.current;
@@ -95,38 +94,27 @@ const Demo = () => {
     if (isAtBottom) setShowNewMessage(false);
   });
 
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
+  useInterval(() => {
+    const container = autoScrollRef.current;
+    const isAtBottom = container
+      ? container.scrollHeight - container.scrollTop - container.clientHeight < SCROLL_THRESHOLD
+      : true;
 
-    const scheduleNext = () => {
-      const delay = 2500 + Math.random() * 3500;
-      timeoutId = setTimeout(() => {
-        const container = autoScrollRef.current;
-        if (!container) return;
-        const isAtBottom =
-          container.scrollHeight - container.scrollTop - container.clientHeight < SCROLL_THRESHOLD;
+    setMessages((currentMessages) =>
+      [
+        ...currentMessages,
+        {
+          id: Math.random(),
+          author: 'reactuse' as const,
+          text: random(REACTUSE_REPLIES),
+          time: formatTime(),
+          avatar: getRandomPokemonAvatar()
+        }
+      ].slice(-MAX_MESSAGES)
+    );
 
-        setMessages((currentMessages) =>
-          [
-            ...currentMessages,
-            {
-              id: idRef.current++,
-              author: 'reactuse' as const,
-              text: random(REACTUSE_REPLIES),
-              time: formatTime(),
-              avatar: getRandomPokemonAvatar()
-            }
-          ].slice(-MAX_MESSAGES)
-        );
-        if (!isAtBottom) setShowNewMessage(true);
-
-        scheduleNext();
-      }, delay);
-    };
-
-    scheduleNext();
-    return () => clearTimeout(timeoutId);
-  }, []);
+    if (!isAtBottom) setShowNewMessage(true);
+  }, 4000);
 
   const onScrollToBottom = () => {
     const container = autoScrollRef.current;
@@ -143,11 +131,11 @@ const Demo = () => {
     const trimmed = message.trim();
     if (!trimmed) return;
 
-    setMessages(
+    setMessages((prev) =>
       [
-        ...messages,
+        ...prev,
         {
-          id: idRef.current++,
+          id: Math.random(),
           author: 'siberiacancode' as const,
           text: trimmed,
           time: formatTime()
@@ -157,13 +145,6 @@ const Demo = () => {
 
     messageField.setValue('');
     setShowNewMessage(false);
-
-    const container = autoScrollRef.current;
-    if (!container) return;
-    container.scrollTo({
-      top: container.scrollHeight + 50,
-      behavior: 'smooth'
-    });
   };
 
   return (

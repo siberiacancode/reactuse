@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { getRetry } from '@/utils/helpers';
-import { useEvent } from '../useEvent/useEvent';
 /**
  * @name useWebSocket
  * @description - Hook that connects to a WebSocket server and handles incoming and outgoing messages
@@ -33,7 +32,7 @@ export const useWebSocket = (url, options) => {
     explicityCloseRef.current = true;
     webSocketRef.current?.close();
   };
-  const init = useEvent(() => {
+  const init = () => {
     webSocketRef.current = new WebSocket(
       typeof url === 'function' ? url() : url,
       options?.protocols
@@ -60,7 +59,7 @@ export const useWebSocket = (url, options) => {
       }
       retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
     };
-  });
+  };
   useEffect(() => {
     init();
     return () => {

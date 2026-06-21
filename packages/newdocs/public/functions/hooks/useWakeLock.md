@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1755262808000
+lastModifiedTime: 1782026158000
 ---
 
 import metadata from './useWakeLock.meta.json';

@@ -1,16 +1,18 @@
-import { useCounter, useDocumentEvent } from '@siberiacancode/reactuse';
+'use client'
+
+import { useCounter, useWindowEvent } from '@siberiacancode/reactuse';
 import { useState } from 'react';
 
 const Demo = () => {
-  const cookies = useCounter();
+  const coins = useCounter();
   const [pops, setPops] = useState<{ id: number; x: number; y: number }[]>([]);
 
-  useDocumentEvent('click', (event) => {
+  useWindowEvent('click', (event) => {
     const target = event.target;
 
-    if (!(target instanceof Element) || !target.closest('[data-cookie-target]')) return;
+    if (!(target instanceof Element) || !target.closest('[data-frog-target]')) return;
 
-    cookies.inc();
+    coins.inc();
 
     const id = Math.random();
     setPops((current) => [...current, { id, x: event.clientX, y: event.clientY }]);
@@ -23,17 +25,17 @@ const Demo = () => {
   return (
     <section className='flex flex-col items-center gap-4 p-8 select-none'>
       <span
-        data-cookie-target
-        className='cursor-pointer text-7xl transition-transform duration-100 active:scale-95'
+        data-frog-target
+        className='cursor-pointer text-7xl transition-transform duration-100 active:scale-90'
       >
-        🍪
+        🐸
       </span>
 
       <div className='flex flex-col items-center gap-1'>
         <span className='text-foreground font-mono text-5xl font-semibold tabular-nums'>
-          {cookies.value.toLocaleString()}
+          {coins.value.toLocaleString()}
         </span>
-        <span className='text-muted-foreground text-xs tracking-wider uppercase'>cookies</span>
+        <span className='text-muted-foreground text-xs tracking-wider uppercase'>flies caught</span>
       </div>
 
       {pops.map((pop) => (
@@ -42,16 +44,16 @@ const Demo = () => {
           style={{
             left: pop.x,
             top: pop.y,
-            animation: 'yummy-cookie-pop 800ms ease-out forwards'
+            animation: 'froggy-pop 800ms ease-out forwards'
           }}
           className='pointer-events-none fixed z-50 text-2xl'
         >
-          +1
+          🪰
         </span>
       ))}
 
       <style>{`
-        @keyframes yummy-cookie-pop {
+        @keyframes froggy-pop {
           0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
           20% { transform: translate(-50%, -60%) scale(1.1); opacity: 1; }
           100% { transform: translate(-50%, -120%) scale(0.9); opacity: 0; }
