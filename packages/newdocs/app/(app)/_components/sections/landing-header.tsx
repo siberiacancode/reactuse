@@ -77,12 +77,6 @@ export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProp
             </Button>
 
             <div className='flex items-center gap-1'>
-              <Button asChild className='rounded-full' size='icon' variant='ghost'>
-                <Link href={LINKS.NPM} rel='noreferrer' target='_blank'>
-                  <Icons.npm className='size-4.5' />
-                </Link>
-              </Button>
-
               <Button asChild className='rounded-full' variant='ghost'>
                 <Link href={LINKS.GITHUB} rel='noreferrer' target='_blank'>
                   <Icons.gitHub className='size-4.5' />
@@ -90,6 +84,12 @@ export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProp
                   <span className='text-muted-foreground text-xs tabular-nums'>
                     {formattedCount}
                   </span>
+                </Link>
+              </Button>
+
+              <Button asChild className='rounded-full' size='icon' variant='ghost'>
+                <Link href={LINKS.NPM} rel='noreferrer' target='_blank'>
+                  <Icons.npm className='size-4.5' />
                 </Link>
               </Button>
 
