@@ -49,7 +49,7 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
             </Button>
 
             <Button asChild className='rounded-full' size='sm' variant='ghost'>
-              <Link href='/functions'>Functions</Link>
+              <Link href='/docs/functions'>Functions</Link>
             </Button>
           </div>
         </div>

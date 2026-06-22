@@ -50,7 +50,7 @@ export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProp
         className='bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 w-full backdrop-blur'
         {...props}
       >
-        <div className='container-wrapper container flex h-(--header-height) items-center justify-between gap-3 px-8'>
+        <div className='container flex h-(--header-height) items-center justify-between gap-3 px-6'>
           <div className='hidden min-w-0 items-center justify-between gap-3 lg:flex'>
             <Link className='inline-flex items-center gap-2' href='/'>
               <Image alt='ReactUse' height={12} src='/logo.svg' width={12} />
@@ -77,6 +77,12 @@ export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProp
             </Button>
 
             <div className='flex items-center gap-1'>
+              <Button asChild className='rounded-full' size='icon' variant='ghost'>
+                <Link href={LINKS.NPM} rel='noreferrer' target='_blank'>
+                  <Icons.npm className='size-4.5' />
+                </Link>
+              </Button>
+
               <Button asChild className='rounded-full' variant='ghost'>
                 <Link href={LINKS.GITHUB} rel='noreferrer' target='_blank'>
                   <Icons.gitHub className='size-4.5' />
