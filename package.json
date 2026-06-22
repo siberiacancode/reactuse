@@ -24,10 +24,10 @@
     "access": "public"
   },
   "scripts": {
-    "cli:build": "pnpm --filter @siberiacancode/cli build && pnpm --filter @siberiacancode/cli generate-registry",
-    "cli:build:registry": "pnpm --filter useverse build:registry",
-    "docs:build": "pnpm --filter @siberiacancode/docs build",
-    "core:build:js": "pnpm --filter @siberiacancode/reactuse build:js",
+    "cli:build": "pnpm --dir packages/cli build && pnpm --dir packages/cli generate-registry",
+    "cli:build:registry": "pnpm --dir packages/cli build:registry",
+    "docs:build": "pnpm --dir packages/newdocs build",
+    "core:build:js": "pnpm --dir packages/core build:js",
     "lint": "pnpm --recursive lint",
     "format": "prettier --write .",
     "unit-test": "pnpm --recursive run unit-test",

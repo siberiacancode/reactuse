@@ -44,7 +44,7 @@ const Demo = () => {
             <img
               alt='Tokyo'
               className='size-full object-cover transition-[filter] duration-200'
-              src='/new/images/tokyo.png'
+              src='/images/tokyo.png'
               style={{ filter }}
             />
             <span className='bg-background/85 text-foreground absolute top-2.5 left-2.5 rounded-md px-2 py-1 font-mono text-xs tabular-nums shadow-sm backdrop-blur'>

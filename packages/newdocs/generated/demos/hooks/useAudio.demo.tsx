@@ -49,7 +49,7 @@ const Demo = () => {
   const [current, setCurrent] = useState<'O' | 'X'>('X');
   const [result, setResult] = useState<GameResult | null>(null);
 
-  const audio = useAudio('/new/sounds/pop-down.mp3', {
+  const audio = useAudio('/sounds/pop-down.mp3', {
     interrupt: true,
     volume: 0.6
   });

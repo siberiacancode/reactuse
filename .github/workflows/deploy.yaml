@@ -42,7 +42,7 @@ jobs:
         uses: oven-sh/setup-bun@v2
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: Install dependencies
         run: pnpm install
@@ -50,19 +50,13 @@ jobs:
       - name: Build registry
         run: pnpm run cli:build:registry
 
-      - name: Build docs (vitepress)
-        run: pnpm --dir packages/docs build
-
-      - name: Build new docs (next export)
+      - name: Build docs
         run: pnpm --dir packages/newdocs build
-
-      - name: Prepare Pages artifact
-        run: pnpm --dir packages/docs prepare:pages-artifact
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: packages/newdocs/out
 
   # Deployment job
   deploy:

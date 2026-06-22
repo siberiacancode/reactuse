@@ -44,7 +44,7 @@ export const LandingFooter = () => (
           {/* ── Brand (left) ── */}
           <div className='max-w-sm'>
             <Link className='inline-flex items-center gap-2' href='/'>
-              <Image alt='ReactUse' height={12} src='/new/logo.svg' width={12} />
+              <Image alt='ReactUse' height={12} src='/logo.svg' width={12} />
 
               <span className='text-foreground text-lg font-semibold tracking-tight'>
                 {CONFIG.NAME}

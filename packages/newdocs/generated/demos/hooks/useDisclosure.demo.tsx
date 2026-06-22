@@ -21,7 +21,7 @@ const Demo = () => {
         <div className='flex items-start justify-between gap-3'>
           <div className='flex items-center gap-3'>
             <div className='border-border bg-muted flex size-10 items-center justify-center rounded-lg border'>
-              <img alt='reactuse' className='size-5' src='/new/logo.svg' />
+              <img alt='reactuse' className='size-5' src='/logo.svg' />
             </div>
             <div className='flex flex-col'>
               <h3 className='text-foreground text-base leading-tight font-semibold'>reactuse</h3>

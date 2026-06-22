@@ -65,7 +65,7 @@ export const DocHeader = ({
                   <DropdownMenuContent align='end' className='w-56 min-w-56'>
                     <DropdownMenuItem asChild>
                       <a
-                        href={`/new/docs/${path.replace('.mdx', '.md')}`}
+                        href={`/docs/${path.replace('.mdx', '.md')}`}
                         rel='noopener noreferrer'
                         target='_blank'
                       >

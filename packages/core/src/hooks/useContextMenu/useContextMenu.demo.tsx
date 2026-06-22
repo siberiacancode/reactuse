@@ -33,7 +33,7 @@ const Demo = () => {
         </div>
 
         <div className='relative aspect-square'>
-          <img alt='Tokyo' className='size-full object-cover' src='/new/images/tokyo.png' />
+          <img alt='Tokyo' className='size-full object-cover' src='/images/tokyo.png' />
         </div>
 
         <div className='flex items-center gap-4 px-4 pt-3'>

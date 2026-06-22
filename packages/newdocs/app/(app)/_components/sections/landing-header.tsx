@@ -53,7 +53,7 @@ export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProp
         <div className='container-wrapper container flex h-(--header-height) items-center justify-between gap-3 px-8'>
           <div className='hidden min-w-0 items-center justify-between gap-3 lg:flex'>
             <Link className='inline-flex items-center gap-2' href='/'>
-              <Image alt='ReactUse' height={12} src='/new/logo.svg' width={12} />
+              <Image alt='ReactUse' height={12} src='/logo.svg' width={12} />
 
               <span className='text-foreground text-lg font-semibold tracking-tight'>
                 {CONFIG.NAME}

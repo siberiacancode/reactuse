@@ -27,7 +27,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-xl flex-col items-center gap-6 p-8 text-center'>
-      <img alt='Juniors Bootcamp' className='h-14' src='/new/images/jb.png' />
+      <img alt='Juniors Bootcamp' className='h-14' src='/images/jb.png' />
 
       <div className='flex flex-col gap-3'>
         <h1 className='text-foreground text-4xl font-bold tracking-tight sm:text-5xl'>

@@ -15,7 +15,7 @@ const Demo = () => {
           check{' '}
           <a
             className='text-primary underline'
-            href='/new/functions/hooks/useLess'
+            href='/functions/hooks/useLess'
             rel='noreferrer'
             target='_blank'
           >

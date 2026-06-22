@@ -11,7 +11,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/siberiacancode/reactuse.git",
-    "directory": "packages/docs"
+    "directory": "packages/newdocs"
   },
   "bugs": "https://github.com/siberiacancode/reactuse/issues",
   "keywords": [
