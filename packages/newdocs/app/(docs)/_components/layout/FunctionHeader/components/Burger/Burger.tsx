@@ -9,7 +9,7 @@ import { useDisclosure } from '@siberiacancode/reactuse';
 import Link from 'next/link';
 
 interface BurgerItemGroup {
-  items: { name: string; url: string }[];
+  items: { external: boolean; name: string; url: string }[];
   name: string;
 }
 
@@ -71,11 +71,14 @@ export const Burger = ({ groups, className, ...props }: BurgerProps) => {
             <div key={group.name} className='flex flex-col gap-4'>
               <div className='text-muted-foreground text-sm font-medium'>{group.name}</div>
               <div className='flex flex-col gap-3'>
-                {group.items.map((item) => (
-                  <Link key={item.url} href={item.url} onClick={burger.close}>
-                    {item.name}
-                  </Link>
-                ))}
+                {group.items.map((item) => {
+                  const Component = item.external ? 'a' : Link;
+                  return (
+                    <Component key={item.url} href={item.url}>
+                      {item.name}
+                    </Component>
+                  );
+                })}
               </div>
             </div>
           ))}

@@ -17,6 +17,7 @@ import { usePathname } from 'next/navigation';
 
 interface FunctionSidebarGroup {
   items: {
+    external: boolean;
     isNew: boolean;
     name: string;
     url: string;
@@ -47,29 +48,33 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu className='gap-0.5'>
-                {group.items.map((item) => (
-                  <SidebarMenuItem key={item.url}>
-                    <SidebarMenuButton
-                      asChild
-                      className='data-[active=true]:bg-accent data-[active=true]:border-accent relative h-[30px] w-full overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-0 after:z-0 after:rounded-md'
-                      isActive={pathname === item.url}
-                    >
-                      <Link href={item.url}>
-                        <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
-                        <span className='relative flex min-w-0 items-center gap-2'>
-                          <span className='block min-w-0 truncate'>{item.name}</span>
-                          {item.isNew && (
-                            <span
-                              aria-label='New function'
-                              className='size-2 shrink-0 rounded-full bg-sky-500'
-                              title='New function'
-                            />
-                          )}
-                        </span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {group.items.map((item) => {
+                  const Component = item.external ? 'a' : Link;
+
+                  return (
+                    <SidebarMenuItem key={item.url}>
+                      <SidebarMenuButton
+                        asChild
+                        className='data-[active=true]:bg-accent data-[active=true]:border-accent relative h-[30px] w-full overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-0 after:z-0 after:rounded-md'
+                        isActive={pathname === item.url}
+                      >
+                        <Component href={item.url}>
+                          <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
+                          <span className='relative flex min-w-0 items-center gap-2'>
+                            <span className='block min-w-0 truncate'>{item.name}</span>
+                            {item.isNew && (
+                              <span
+                                aria-label='New function'
+                                className='size-2 shrink-0 rounded-full bg-sky-500'
+                                title='New function'
+                              />
+                            )}
+                          </span>
+                        </Component>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

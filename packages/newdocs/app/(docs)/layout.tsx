@@ -108,12 +108,14 @@ export const DocsLayout = async ({ children }: DocsLayoutProps) => {
         const name = child.name?.toString() ?? 'unknown';
         if (name === 'llms.txt') {
           return {
+            external: true,
             isNew: false,
             name: 'llms.txt',
             url: '/llms.txt'
           };
         }
         return {
+          external: false,
           isNew: functionsBadges.get(name) ?? false,
           name: child.name?.toString() ?? 'unknown',
           url: child.url
