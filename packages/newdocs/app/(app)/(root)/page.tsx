@@ -24,7 +24,25 @@ import {
 
 export const metadata: Metadata = {
   title: CONFIG.NAME,
-  description: CONFIG.DESCRIPTION
+  description: CONFIG.DESCRIPTION,
+  openGraph: {
+    title: CONFIG.NAME,
+    description: CONFIG.DESCRIPTION,
+    type: 'website',
+    url: '/',
+    images: [
+      {
+        url: '/og.png'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: CONFIG.NAME,
+    description: CONFIG.DESCRIPTION,
+    images: ['/og.png'],
+    creator: '@siberiacancode'
+  }
 };
 
 const formatMetricCount = (count: number) => {

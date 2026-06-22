@@ -66,16 +66,14 @@ export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProp
               </Button>
 
               <Button asChild className='rounded-full' size='sm' variant='ghost'>
-                <Link href='/functions'>Functions</Link>
+                <Link href='/docs/functions'>Functions</Link>
               </Button>
             </div>
           </div>
 
           <div className='flex min-w-0 items-center justify-end gap-2'>
             <Button asChild className='rounded-full' size='sm'>
-              <Link href='/docs/installation' rel='noreferrer' target='_blank'>
-                Getting Started
-              </Link>
+              <Link href='/docs/installation'>Getting Started</Link>
             </Button>
 
             <div className='flex items-center gap-1'>
