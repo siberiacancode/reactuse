@@ -28,9 +28,6 @@ const Demo = () => {
         </label>
 
         <div className='relative'>
-          <span className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 -translate-y-1/2'>
-            @
-          </span>
           <input
             aria-describedby='email-hint email-status'
             autoCapitalize='none'
@@ -70,7 +67,7 @@ const Demo = () => {
 
         <div className='bg-muted/50 flex min-w-0 flex-col gap-1 rounded-xl p-3'>
           <span className='text-muted-foreground text-xs font-medium'>Last valid value</span>
-          <span className='text-foreground flex min-w-0 items-center gap-1.5 truncate font-mono text-sm'>
+          <span className='text-foreground block min-w-0 truncate font-mono text-sm'>
             {email.lastValidValue ?? <span className='text-muted-foreground'>—</span>}
           </span>
         </div>
