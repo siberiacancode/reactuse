@@ -4,15 +4,10 @@ import type { ReactNode } from 'react';
 
 import { cn } from '@docs/lib/utils';
 import { Button } from '@docs/src/components/ui/button';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-} from '@docs/src/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@docs/src/components/ui/tabs';
 import { useCopy, useLocalStorage } from '@siberiacancode/reactuse';
-import { Children, useRef } from 'react';
 import { CheckIcon, CopyIcon, TerminalIcon } from 'lucide-react';
+import { Children, useRef } from 'react';
 
 export const PACKAGE_MANAGERS = ['pnpm', 'npm', 'yarn', 'bun'] as const;
 export type PackageManager = (typeof PACKAGE_MANAGERS)[number];

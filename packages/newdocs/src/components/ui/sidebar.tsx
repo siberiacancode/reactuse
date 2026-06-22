@@ -2,14 +2,13 @@
 
 import type { VariantProps } from 'class-variance-authority';
 
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@docs/ui/sheet';
+import { Skeleton } from '@docs/ui/skeleton';
 import { useMediaQuery } from '@siberiacancode/reactuse';
 import { cva } from 'class-variance-authority';
 import { PanelLeftIcon } from 'lucide-react';
 import { Slot } from 'radix-ui';
 import * as React from 'react';
-
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@docs/ui/sheet';
-import { Skeleton } from '@docs/ui/skeleton';
 
 import { cn } from '@/lib/utils';
 
@@ -80,7 +79,10 @@ const SidebarProvider = ({
   );
 
   const toggleSidebar = React.useCallback(
-    () => (isMobile ? setOpenMobile((currentOpen) => !currentOpen) : setOpen((currentOpen) => !currentOpen)),
+    () =>
+      isMobile
+        ? setOpenMobile((currentOpen) => !currentOpen)
+        : setOpen((currentOpen) => !currentOpen),
     [isMobile, setOpen]
   );
 

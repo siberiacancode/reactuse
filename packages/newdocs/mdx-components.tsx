@@ -1,10 +1,10 @@
 import { CopyButton } from '@docs/components/copy-button';
 import { getIconForLanguageExtension } from '@docs/components/icons';
 import { cn } from '@docs/lib/utils';
-import { Badge } from '@docs/ui/badge';
-import { Kbd } from '@docs/ui/kbd';
 import { Separator } from '@docs/src/components/ui/separator';
 import { Step, Steps } from '@docs/src/components/ui/steps';
+import { Badge } from '@docs/ui/badge';
+import { Kbd } from '@docs/ui/kbd';
 import Link from 'next/link';
 import * as React from 'react';
 
@@ -15,6 +15,7 @@ import { FunctionContributors } from './app/(docs)/functions/_components/functio
 import { FunctionDemo } from './app/(docs)/functions/_components/function-demo';
 import { FunctionTabs } from './app/(docs)/functions/_components/function-tabs';
 import { Callout, MARKDOWN_COMPONENTS } from './src/components';
+import { PackageManagerTab, PackageManagerTabs } from './src/components/code-block-command';
 import {
   AstroIcon,
   NextjsIcon,
@@ -23,7 +24,6 @@ import {
   TanStackIcon,
   ViteIcon
 } from './src/components/icons';
-import { PackageManagerTab, PackageManagerTabs } from './src/components/code-block-command';
 import {
   Avatar,
   AvatarBadge,
@@ -125,7 +125,7 @@ export const mdxComponents = {
       </figcaption>
     );
   },
-  code: (props: React.ComponentProps<'code'>) => (
+  code: (props: any) => (
     <>
       {props.__copy__ === 'copy' && <CopyButton src={props.__src__} value={props.__raw__} />}
       <code {...props} />

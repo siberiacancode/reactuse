@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { flushSync } from 'react-dom';
 /**
  * @name useQueue
  * @description - Hook that manages a queue
@@ -18,14 +17,9 @@ export const useQueue = (initialValue = []) => {
   const add = (element) => setQueue((queue) => [...queue, element]);
   const clear = () => setQueue([]);
   const remove = () => {
-    let removed;
-    flushSync(() => {
-      setQueue(([first, ...rest]) => {
-        removed = first;
-        return rest;
-      });
-    });
-    return removed;
+    const [first] = queue;
+    setQueue((rest) => rest.slice(1));
+    return first;
   };
   return {
     add,

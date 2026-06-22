@@ -1,7 +1,5 @@
 'use client';
 
-import type { CSSProperties } from 'react';
-
 import { useIsomorphicLayoutEffect } from '@siberiacancode/reactuse';
 import { useRef } from 'react';
 
@@ -133,7 +131,6 @@ const ANIMATION_DELAY_MS = 600;
 
 interface DitherCanvasProps {
   backgroundColor: [number, number, number];
-  staticBackground: CSSProperties['background'];
   waveColor: [number, number, number];
 }
 

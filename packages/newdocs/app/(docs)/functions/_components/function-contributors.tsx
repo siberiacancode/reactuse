@@ -1,4 +1,4 @@
-import type { FunctionContributor } from '@/src/utils/constants';
+import type { FunctionContributor } from '@/src/constants';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
 import { Badge } from '@/ui/badge';

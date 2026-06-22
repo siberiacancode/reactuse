@@ -18,7 +18,8 @@ export default eslint(
     name: 'siberiacancode/docs/rewrites',
     files: ['**/*.{ts,tsx,md}'],
     rules: {
-      'react-hooks/rules-of-hooks': 'off'
+      'react/rules-of-hooks': 'off',
+      'react/static-components': 'off'
     }
   }
 );

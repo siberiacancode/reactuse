@@ -8,9 +8,9 @@ import {
   PictureInPictureIcon,
   RecycleIcon,
   TelescopeIcon,
-  WrenchIcon,
   UserIcon,
-  WandSparklesIcon
+  WandSparklesIcon,
+  WrenchIcon
 } from 'lucide-react';
 
 export const CATEGORIES = {

@@ -17,7 +17,7 @@ import { createContext, useContext } from 'react';
  * const { Provider, use } = createContextHook(useMediaQuery);
  * <Provider params={["(max-width: 768px)"]}>
  *   <Component />
- * </Provider>
+ * </Provider>;
  * const matches = use();
  */
 export const createContextHook = <Hook extends (...args: any[]) => any>(useHook: Hook) => {

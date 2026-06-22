@@ -28,7 +28,9 @@
     "start": "next start --port 4000",
     "preview": "next build && next start --port 4000",
     "lint": "eslint . --fix",
+    "lint-inspector": "npx @eslint/config-inspector@latest",
     "format": "prettier --write .",
+    "type": "tsc --noEmit",
     "pretty": "pnpm type && pnpm lint && pnpm format",
     "predev": "pnpm run generate:functions && pnpm run generate:static && fumadocs-mdx",
     "prebuild": "pnpm run generate:functions && pnpm run generate:static && pnpm run generate:registry && fumadocs-mdx",
@@ -36,7 +38,8 @@
     "generate:functions": "bun run scripts/generate-functions.ts",
     "generate:static": "bun run scripts/generate-static.ts",
     "generate:registry": "bun run scripts/generate-registry.ts",
-    "sync:content": "bun run scripts/sync-content.ts"
+    "sync:content": "bun run scripts/sync-content.ts",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@siberiacancode/fetches": "^1.14.3",
@@ -87,5 +90,11 @@
     "ora": "^9.4.0",
     "tailwindcss": "^4.3.1",
     "tsconfig-paths": "^4.2.0"
+  },
+  "lint-staged": {
+    "*.{md,mdx,*ts,*js,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

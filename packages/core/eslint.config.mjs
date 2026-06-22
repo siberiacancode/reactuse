@@ -23,9 +23,8 @@ export default eslint(
     name: 'siberiacancode/core/hooks',
     files: ['**/{hooks,helpers}/**/*.{ts,tsx}'],
     rules: {
-      'react-dom/no-flush-sync': 'warn',
       'jsdoc/no-defaults': 'off',
-      'react-hooks/rules-of-hooks': 'warn',
+      'react/rules-of-hooks': 'warn',
       'react/no-use-context': 'off',
       'react/no-context-provider': 'off'
     }

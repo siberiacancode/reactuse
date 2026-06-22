@@ -5,6 +5,7 @@ publicHoistPattern:
   - prettier
 minimumReleaseAgeExclude:
   - '@siberiacancode/reactuse'
+  - '@siberiacancode/eslint'
 allowBuilds:
   core-js: true
   esbuild: true

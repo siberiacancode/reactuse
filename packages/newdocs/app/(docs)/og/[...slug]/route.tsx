@@ -130,50 +130,48 @@ export const GET = async (_request: Request, props: OgRouteProps) => {
   const logoUrl = `${process.env.NEXT_PUBLIC_APP_URL}/logo.svg`;
 
   return new ImageResponse(
-    (
-      <div
-        style={{ fontFamily: 'Geist' }}
-        tw='relative flex h-full w-full overflow-hidden bg-black text-white'
-      >
-        <div tw='relative flex h-full w-full flex-col justify-center px-24'>
-          <img
-            style={{
-              objectFit: 'contain',
-              marginTop: -64
-            }}
-            height={120}
-            src={logoUrl}
-            width={120}
-          />
+    <div
+      style={{ fontFamily: 'Geist' }}
+      tw='relative flex h-full w-full overflow-hidden bg-black text-white'
+    >
+      <div tw='relative flex h-full w-full flex-col justify-center px-24'>
+        <img
+          style={{
+            objectFit: 'contain',
+            marginTop: -64
+          }}
+          height={120}
+          src={logoUrl}
+          width={120}
+        />
 
-          <div
-            style={{
-              textWrap: 'balance',
-              fontSize: page.title.length > 28 ? 64 : 80,
-              lineHeight: 0.95
-            }}
-            tw='mt-16 max-w-[880px] font-semibold'
-          >
-            {page.title}
-          </div>
+        <div
+          style={{
+            textWrap: 'balance',
+            fontSize: page.title.length > 28 ? 64 : 80,
+            lineHeight: 0.95
+          }}
+          tw='mt-16 max-w-[880px] font-semibold'
+        >
+          {page.title}
+        </div>
 
-          <div
-            style={{
-              textWrap: 'balance',
-              fontSize: page.description.length > 90 ? 30 : 38,
-              lineHeight: 1.25
-            }}
-            tw='mt-8 max-w-[820px] text-stone-400'
-          >
-            {page.description}
-          </div>
+        <div
+          style={{
+            textWrap: 'balance',
+            fontSize: page.description.length > 90 ? 30 : 38,
+            lineHeight: 1.25
+          }}
+          tw='mt-8 max-w-[820px] text-stone-400'
+        >
+          {page.description}
         </div>
       </div>
-    ),
+    </div>,
     {
       width: 1200,
       height: 628,
-      fonts
+      fonts: fonts as any
     }
   );
 };
