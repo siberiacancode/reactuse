@@ -7,6 +7,11 @@ description: A simple catalog of package functions.
 
 A quick list of available functions.
 
+- [createContext](/functions/helpers/createContext): Creates a typed context with additional utilities
+- [createEventEmitter](/functions/helpers/createEventEmitter): Creates a type-safe event emitter
+- [createReactiveContext](/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection
+- [createStore](/functions/helpers/createStore): Creates a store with state management capabilities
+- [makeDestructurable](/functions/helpers/makeDestructurable): Makes an object also iterable for array-style destructuring
 - [useActiveElement](/functions/hooks/useActiveElement): Hook for tracking the active element
 - [useAsync](/functions/hooks/useAsync): Hook that provides the state of an async callback
 - [useAsyncEffect](/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates

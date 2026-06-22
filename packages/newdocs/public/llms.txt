@@ -13,6 +13,13 @@
 
 ## Functions
 
+### Helperss
+
+- [createContext](https://reactuse.org/functions/helpers/createContext): Creates a typed context with additional utilities
+- [createEventEmitter](https://reactuse.org/functions/helpers/createEventEmitter): Creates a type-safe event emitter
+- [createReactiveContext](https://reactuse.org/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection
+- [createStore](https://reactuse.org/functions/helpers/createStore): Creates a store with state management capabilities
+- [makeDestructurable](https://reactuse.org/functions/helpers/makeDestructurable): Makes an object also iterable for array-style destructuring
 ### Asyncs
 
 - [useAsync](https://reactuse.org/functions/hooks/useAsync): Hook that provides the state of an async callback

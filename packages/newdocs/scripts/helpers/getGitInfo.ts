@@ -10,9 +10,10 @@ const git = simpleGit();
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 const NEW_DAYS_THRESHOLD = 30;
 
-export const getGitInfo = async (name: string, type: FunctionType) => {
+export const getGitInfo = async (name: string, type: FunctionType, extension: string) => {
+  const filePath = path.join(CORE_ROOT, `${type}s`, name, `${name}.${extension}`);
   const log = await git.log({
-    file: path.join(CORE_ROOT, `${type}s`, name, `${name}.ts`)
+    file: path.relative(process.cwd(), filePath)
   });
   const commits = log.all;
   const lastCommit = log.latest!;

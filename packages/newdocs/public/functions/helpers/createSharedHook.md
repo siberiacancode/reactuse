@@ -1,16 +1,20 @@
 ---
-title: useWindowFocus
-description: Hook that provides the current focus state of the window
-category: sensors
+title: createSharedHook
+description: One shared instance of the hook globally. First subscriber's args are used; when subscribers hit zero, the runner unmounts.
+category: helpers
 usage: low
-type: hook
-isTest: true
-isDemo: true
-lastModifiedTime: 1782054576000
+type: helper
+isTest: false
+isDemo: false
+lastModifiedTime: 1772547351000
 ---
 
-import metadata from './useWindowFocus.meta.json';
+import metadata from './createSharedHook.meta.json';
 
+
+<Callout title='Warning' variant='warning' className='my-5'>
+  {metadata.warning}
+</Callout>
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
 ## Installation
@@ -28,7 +32,7 @@ import metadata from './useWindowFocus.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useWindowFocus
+    npx useverse@latest add createSharedHook
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,8 +51,12 @@ import metadata from './useWindowFocus.meta.json';
 ## Usage
 
 ```tsx
-const focused = useWindowFocus();
+const useSharedMediaQuery = createSharedHook(useMediaQuery); const matches = useSharedMediaQuery("(max-width: 768px)");
 ```
+
+## Type Declarations
+
+<FunctionCode code={metadata.typeDeclarations} language="tsx" />
 
 ## API
 

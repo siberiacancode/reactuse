@@ -1,16 +1,20 @@
 ---
-title: useWindowFocus
-description: Hook that provides the current focus state of the window
-category: sensors
+title: createContextHook
+description: Hook that runs inside a Provider; Provider accepts params (the hook's arguments). Use when you need a scoped instance per subtree.
+category: helpers
 usage: low
-type: hook
-isTest: true
-isDemo: true
-lastModifiedTime: 1782054576000
+type: helper
+isTest: false
+isDemo: false
+lastModifiedTime: 1772547351000
 ---
 
-import metadata from './useWindowFocus.meta.json';
+import metadata from './createContextHook.meta.json';
 
+
+<Callout title='Warning' variant='warning' className='my-5'>
+  {metadata.warning}
+</Callout>
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
 ## Installation
@@ -28,7 +32,7 @@ import metadata from './useWindowFocus.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useWindowFocus
+    npx useverse@latest add createContextHook
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,8 +51,12 @@ import metadata from './useWindowFocus.meta.json';
 ## Usage
 
 ```tsx
-const focused = useWindowFocus();
+const { Provider, use } = createContextHook(useMediaQuery); <Provider params={["(max-width: 768px)"]}> <Component /> </Provider> const matches = use();
 ```
+
+## Type Declarations
+
+<FunctionCode code={metadata.typeDeclarations} language="tsx" />
 
 ## API
 

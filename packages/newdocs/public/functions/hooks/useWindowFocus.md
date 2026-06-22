@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1767164032000
+lastModifiedTime: 1782054576000
 ---
 
 import metadata from './useWindowFocus.meta.json';

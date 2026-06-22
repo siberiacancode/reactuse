@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1770651919000
+lastModifiedTime: 1782054576000
 ---
 
 import metadata from './useWindowScroll.meta.json';
@@ -47,7 +47,7 @@ import metadata from './useWindowScroll.meta.json';
 ## Usage
 
 ```tsx
-const { snapshot, scrollTo, watch } = useWindowScroll();
+const { snapshot, scrollTo, watch } = useWindowScroll((value) => console.log(value));
 ```
 
 ## Type Declarations

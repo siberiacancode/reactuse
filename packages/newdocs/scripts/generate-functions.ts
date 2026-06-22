@@ -13,6 +13,7 @@ import {
   extractTypeInfo,
   getContentFile,
   getElements,
+  getExtensionFile,
   getGitInfo,
   matchJsdoc
 } from './helpers';
@@ -274,8 +275,9 @@ const init = async () => {
   const content = [...hooks, ...helpers];
 
   const metadata = await Promise.all(
-    content.slice(0, 162).map(async (element) => {
+    content.map(async (element) => {
       const content = await getContentFile(element.type, element.name);
+      const extension = await getExtensionFile(element.type, element.name);
 
       const jsdocMatch = matchJsdoc(content);
 
@@ -307,9 +309,15 @@ const init = async () => {
       const isTest = await checkFileContent(element.type, element.name, 'test');
       const isDemo = await checkFileContent(element.type, element.name, 'demo');
 
+      if (!isTest && !isDemo) {
+        console.warn(`Skipped ${element.name}: no demo and no test`);
+        return null;
+      }
+
       const { contributors, firstCommit, isNew, lastCommit } = await getGitInfo(
         element.name,
-        element.type
+        element.type,
+        extension
       );
 
       const sourceFile = ts.createSourceFile('temp.ts', content, ts.ScriptTarget.Latest, true);
@@ -380,6 +388,7 @@ const init = async () => {
   console.log(`\nTotal: ${content.length} functions`);
 
   console.log('\n[generate-functions] Writing files...');
+
   for (const page of pages) {
     const mdx = createMdxTemplate(page);
     await fs.promises.writeFile(
@@ -394,12 +403,14 @@ const init = async () => {
       'utf-8'
     );
 
-    const demo = await createDemo(page);
-    await fs.promises.writeFile(
-      path.join('generated', 'demos', `${page.type}s`, `${page.name}.demo.tsx`),
-      demo,
-      'utf-8'
-    );
+    if (page.demo) {
+      const demo = await createDemo(page);
+      await fs.promises.writeFile(
+        path.join('generated', 'demos', `${page.type}s`, `${page.name}.demo.tsx`),
+        demo,
+        'utf-8'
+      );
+    }
   }
 
   for (const type of ['hook', 'helper'] as const) {

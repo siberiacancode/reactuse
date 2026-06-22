@@ -1,60 +1,65 @@
 import {
-  IconBug,
-  IconClock,
-  IconCube,
-  IconHorseToy,
-  IconLoader,
-  IconPictureInPictureOff,
-  IconRecycle,
-  IconTelescope,
-  IconTools,
-  IconUser,
-  IconWorld
-} from '@tabler/icons-react';
+  BugIcon,
+  ClockIcon,
+  CuboidIcon,
+  DramaIcon,
+  GlobeIcon,
+  LoaderIcon,
+  PictureInPictureIcon,
+  RecycleIcon,
+  TelescopeIcon,
+  WrenchIcon,
+  UserIcon,
+  WandSparklesIcon
+} from 'lucide-react';
 
 export const CATEGORIES = {
   async: {
-    Icon: IconLoader,
+    Icon: LoaderIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   browser: {
-    Icon: IconWorld,
+    Icon: GlobeIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   time: {
-    Icon: IconClock,
+    Icon: ClockIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   elements: {
-    Icon: IconPictureInPictureOff,
+    Icon: PictureInPictureIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   humor: {
-    Icon: IconHorseToy,
+    Icon: DramaIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   state: {
-    Icon: IconCube,
+    Icon: CuboidIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   debug: {
-    Icon: IconBug,
+    Icon: BugIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   sensors: {
-    Icon: IconTelescope,
+    Icon: TelescopeIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   lifecycle: {
-    Icon: IconRecycle,
+    Icon: RecycleIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   utilities: {
-    Icon: IconTools,
+    Icon: WrenchIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   },
   user: {
-    Icon: IconUser,
+    Icon: UserIcon,
+    className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+  },
+  helpers: {
+    Icon: WandSparklesIcon,
     className: 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
   }
 };

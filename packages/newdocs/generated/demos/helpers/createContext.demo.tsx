@@ -1,8 +1,10 @@
+'use client'
+
 import type { SubmitEvent } from 'react';
 
-import { createStore, useDidUpdate } from '@siberiacancode/reactuse';
+import { createContext, useField } from '@siberiacancode/reactuse';
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';
-import { memo, useRef } from 'react';
+import { memo } from 'react';
 
 interface Profile {
   bio: string;
@@ -30,46 +32,14 @@ const LANGUAGES = [
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/;
 
-const profileStore = createStore(() => DEFAULT_PROFILE);
-
-interface RerenderInfoProps {
-  componentName: string;
-}
-
-const RerenderInfo = ({ componentName }: RerenderInfoProps) => {
-  const countRef = useRef(0);
-  const badgeRef = useRef<HTMLSpanElement>(null);
-
-  useDidUpdate(() => {
-    countRef.current++;
-    if (badgeRef.current) {
-      badgeRef.current.textContent = `${componentName} x${countRef.current}`;
-      badgeRef.current.style.opacity = '1';
-    }
-
-    const timer = setTimeout(() => {
-      if (badgeRef.current) badgeRef.current.style.opacity = '0';
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  });
-
-  return (
-    <span
-      ref={badgeRef}
-      className='bg-primary text-primary-foreground absolute -top-2.5 right-0 z-10 rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold tabular-nums transition-opacity duration-300'
-      style={{ opacity: 0 }}
-    />
-  );
-};
+const profileContext = createContext<Profile>(DEFAULT_PROFILE);
 
 const NameField = memo(() => {
-  const name = profileStore.use((state) => state.name);
-  const error = name.trim().length < 2 ? 'At least 2 characters' : '';
+  const profile = profileContext.useSelect();
+  const nameField = useField(DEFAULT_PROFILE.name, { validateOnBlur: true });
 
   return (
-    <div className='relative flex flex-col gap-1.5'>
-      <RerenderInfo componentName='NameField' />
+    <div className='flex flex-col gap-1.5'>
       <label className='text-foreground text-xs font-medium' htmlFor='name'>
         Display name
       </label>
@@ -77,22 +47,27 @@ const NameField = memo(() => {
         className='border-border bg-card text-foreground rounded-md border px-3 py-2 text-sm outline-none'
         id='name'
         placeholder='Your name'
-        value={name}
-        onChange={(event) => profileStore.set({ name: event.target.value })}
+        {...nameField.register({
+          required: 'Name is required',
+          minLength: { value: 2, message: 'At least 2 characters' }
+        })}
+        onChange={(event) => {
+          nameField.register().onChange(event);
+          profile.set({ ...(profile.value as Profile), name: event.target.value });
+        }}
       />
-      {error && <span className='text-destructive text-xs'>{error}</span>}
+      {nameField.error && <span className='text-destructive text-xs'>{nameField.error}</span>}
     </div>
   );
 });
 NameField.displayName = 'NameField';
 
 const EmailField = memo(() => {
-  const email = profileStore.use((state) => state.email);
-  const error = !EMAIL_PATTERN.test(email) ? 'Invalid email format' : '';
+  const profile = profileContext.useSelect();
+  const emailField = useField(DEFAULT_PROFILE.email, { validateOnBlur: true });
 
   return (
-    <div className='relative flex flex-col gap-1.5'>
-      <RerenderInfo componentName='EmailField' />
+    <div className='flex flex-col gap-1.5'>
       <label className='text-foreground text-xs font-medium' htmlFor='email'>
         Email
       </label>
@@ -101,21 +76,27 @@ const EmailField = memo(() => {
         id='email'
         placeholder='you@example.com'
         type='email'
-        value={email}
-        onChange={(event) => profileStore.set({ email: event.target.value })}
+        {...emailField.register({
+          required: 'Email is required',
+          pattern: { value: EMAIL_PATTERN, message: 'Invalid email format' }
+        })}
+        onChange={(event) => {
+          emailField.register().onChange(event);
+          profile.set({ ...(profile.value as Profile), email: event.target.value });
+        }}
       />
-      {error && <span className='text-destructive text-xs'>{error}</span>}
+      {emailField.error && <span className='text-destructive text-xs'>{emailField.error}</span>}
     </div>
   );
 });
 EmailField.displayName = 'EmailField';
 
 const BioField = memo(() => {
-  const bio = profileStore.use((state) => state.bio);
+  const profile = profileContext.useSelect();
+  const bioField = useField(DEFAULT_PROFILE.bio);
 
   return (
-    <div className='relative flex flex-col gap-1.5'>
-      <RerenderInfo componentName='BioField' />
+    <div className='flex flex-col gap-1.5'>
       <label className='text-foreground text-xs font-medium' htmlFor='bio'>
         Bio
       </label>
@@ -123,8 +104,11 @@ const BioField = memo(() => {
         className='border-border bg-card text-foreground min-h-[72px] resize-none rounded-md border px-3 py-2 text-sm outline-none'
         id='bio'
         placeholder='Tell something about yourself...'
-        value={bio}
-        onChange={(event) => profileStore.set({ bio: event.target.value })}
+        {...bioField.register()}
+        onChange={(event) => {
+          bioField.register().onChange(event);
+          profile.set({ ...(profile.value as Profile), bio: event.target.value });
+        }}
       />
     </div>
   );
@@ -132,11 +116,11 @@ const BioField = memo(() => {
 BioField.displayName = 'BioField';
 
 const NotificationsField = memo(() => {
-  const notifications = profileStore.use((state) => state.notifications);
+  const profile = profileContext.useSelect();
+  const notificationsField = useField(DEFAULT_PROFILE.notifications);
 
   return (
-    <label className='relative flex cursor-pointer items-start justify-between gap-3'>
-      <RerenderInfo componentName='NotificationsField' />
+    <label className='flex cursor-pointer items-start justify-between gap-3'>
       <div className='flex flex-col gap-0.5'>
         <span className='text-foreground text-xs font-medium'>Email notifications</span>
         <span className='text-muted-foreground text-[11px]'>
@@ -144,10 +128,13 @@ const NotificationsField = memo(() => {
         </span>
       </div>
       <input
-        checked={notifications}
         role='switch'
         type='checkbox'
-        onChange={(event) => profileStore.set({ notifications: event.target.checked })}
+        {...notificationsField.register()}
+        onChange={(event) => {
+          notificationsField.register().onChange(event);
+          profile.set({ ...(profile.value as Profile), notifications: event.target.checked });
+        }}
       />
     </label>
   );
@@ -155,11 +142,11 @@ const NotificationsField = memo(() => {
 NotificationsField.displayName = 'NotificationsField';
 
 const LanguageField = memo(() => {
-  const language = profileStore.use((state) => state.language);
+  const profile = profileContext.useSelect();
+  const languageField = useField(DEFAULT_PROFILE.language);
 
   return (
-    <div className='relative flex items-center justify-between gap-3'>
-      <RerenderInfo componentName='LanguageField' />
+    <div className='flex items-center justify-between gap-3'>
       <div className='flex flex-col gap-0.5'>
         <label className='text-foreground text-xs font-medium' htmlFor='language'>
           Language
@@ -170,12 +157,15 @@ const LanguageField = memo(() => {
         <select
           className='border-border bg-card text-foreground w-32 appearance-none rounded-md border py-1.5 pr-7 pl-3 text-xs outline-none'
           id='language'
-          value={language}
-          onChange={(event) => profileStore.set({ language: event.target.value })}
+          {...languageField.register()}
+          onChange={(event) => {
+            languageField.register().onChange(event);
+            profile.set({ ...(profile.value as Profile), language: event.target.value });
+          }}
         >
-          {LANGUAGES.map((item) => (
-            <option key={item.value} value={item.value}>
-              {item.label}
+          {LANGUAGES.map((language) => (
+            <option key={language.value} value={language.value}>
+              {language.label}
             </option>
           ))}
         </select>
@@ -187,17 +177,21 @@ const LanguageField = memo(() => {
 LanguageField.displayName = 'LanguageField';
 
 const PublicField = memo(() => {
-  const isPublic = profileStore.use((state) => state.isPublic);
+  const profile = profileContext.useSelect();
+  const publicField = useField(DEFAULT_PROFILE.isPublic);
+  const isPublic = publicField.watch();
 
   return (
-    <label className='relative flex cursor-pointer items-start gap-3'>
-      <RerenderInfo componentName='PublicField' />
+    <label className='flex cursor-pointer items-start gap-3'>
       <span className='mt-0.5 flex shrink-0 items-center'>
         <input
-          checked={isPublic}
           className='peer sr-only'
           type='checkbox'
-          onChange={(event) => profileStore.set({ isPublic: event.target.checked })}
+          {...publicField.register()}
+          onChange={(event) => {
+            publicField.register().onChange(event);
+            profile.set({ ...(profile.value as Profile), isPublic: event.target.checked });
+          }}
         />
         <span className='border-border peer-checked:border-foreground peer-checked:bg-foreground flex size-4 items-center justify-center rounded-[5px] border transition-colors'>
           {isPublic && <CheckIcon className='text-background size-3' strokeWidth={3.5} />}
@@ -214,28 +208,42 @@ const PublicField = memo(() => {
 });
 PublicField.displayName = 'PublicField';
 
-const Demo = () => {
-  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => event.preventDefault();
+const ProfileForm = () => {
+  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
 
   return (
-    <section className='flex w-full max-w-md flex-col gap-4 p-4'>
-      <div className='flex flex-col gap-1'>
-        <h2 className='text-foreground text-sm font-semibold'>Account settings</h2>
-        <p className='text-muted-foreground text-xs'>
-          Each field subscribes to its own slice — only the changed field re-renders.
-        </p>
-      </div>
+    <form className='flex flex-col gap-4' onSubmit={onSubmit}>
+      <NameField />
+      <EmailField />
+      <BioField />
 
-      <form className='flex flex-col gap-4' onSubmit={onSubmit}>
-        <NameField />
-        <EmailField />
-        <BioField />
+      <div className='border-border flex flex-col gap-3 border-t pt-4'>
         <NotificationsField />
         <LanguageField />
-        <PublicField />
-      </form>
-    </section>
+      </div>
+
+      <PublicField />
+
+      <div className='flex justify-end'>
+        <button type='submit'>Save changes</button>
+      </div>
+    </form>
   );
 };
+
+const Demo = () => (
+  <profileContext.Provider initialValue={DEFAULT_PROFILE}>
+    <section className='flex w-full max-w-md flex-col gap-3 p-4'>
+      <div className='flex flex-col gap-1'>
+        <h2 className='text-foreground text-sm font-semibold'>Account settings</h2>
+        <p className='text-muted-foreground text-xs'>Update your public profile and preferences.</p>
+      </div>
+
+      <ProfileForm />
+    </section>
+  </profileContext.Provider>
+);
 
 export default Demo;

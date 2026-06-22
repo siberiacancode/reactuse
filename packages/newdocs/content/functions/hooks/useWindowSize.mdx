@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1760196566000
+lastModifiedTime: 1782054576000
 ---
 
 import metadata from './useWindowSize.meta.json';
@@ -47,6 +47,8 @@ import metadata from './useWindowSize.meta.json';
 ## Usage
 
 ```tsx
+const { snapshot, watch } = useWindowSize((value) => console.log(value));
+// or
 const { snapshot, watch } = useWindowSize();
 ```
 

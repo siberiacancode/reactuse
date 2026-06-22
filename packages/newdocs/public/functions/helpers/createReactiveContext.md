@@ -1,16 +1,20 @@
 ---
-title: useWindowFocus
-description: Hook that provides the current focus state of the window
-category: sensors
+title: createReactiveContext
+description: Creates a typed context selector with optimized updates for state selection
+category: helpers
 usage: low
-type: hook
+type: helper
 isTest: true
 isDemo: true
-lastModifiedTime: 1782054576000
+lastModifiedTime: 1755150117000
 ---
 
-import metadata from './useWindowFocus.meta.json';
+import metadata from './createReactiveContext.meta.json';
 
+
+<Callout title='Warning' variant='warning' className='my-5'>
+  {metadata.warning}
+</Callout>
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
 ## Installation
@@ -28,7 +32,7 @@ import metadata from './useWindowFocus.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useWindowFocus
+    npx useverse@latest add createReactiveContext
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,8 +51,12 @@ import metadata from './useWindowFocus.meta.json';
 ## Usage
 
 ```tsx
-const focused = useWindowFocus();
+const { Provider, useSelector, instance } = createReactiveContext<number>(0);
 ```
+
+## Type Declarations
+
+<FunctionCode code={metadata.typeDeclarations} language="tsx" />
 
 ## API
 

@@ -2,6 +2,7 @@ export * from './checkFileContent';
 export * from './extractDependencies';
 export * from './extractTypeInfo';
 export * from './getContentFile';
+export * from './getExtensionFile';
 export * from './getElements';
 export * from './getGitInfo';
 export * from './getTimeAgo';

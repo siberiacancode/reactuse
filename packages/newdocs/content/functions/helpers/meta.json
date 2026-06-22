@@ -1,5 +1,7 @@
 {
     "pages": [
       
+      "---helpers---",
+      "createContext","createEventEmitter","createReactiveContext","createStore","makeDestructurable"
     ]
   }

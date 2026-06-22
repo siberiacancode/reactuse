@@ -1,3 +1,5 @@
+'use client'
+
 import type { SubmitEvent } from 'react';
 
 import { createStore, useDidUpdate } from '@siberiacancode/reactuse';

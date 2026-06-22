@@ -1,15 +1,15 @@
 ---
-title: useWindowFocus
-description: Hook that provides the current focus state of the window
-category: sensors
+title: makeDestructurable
+description: Makes an object also iterable for array-style destructuring
+category: helpers
 usage: low
-type: hook
+type: helper
 isTest: true
 isDemo: true
-lastModifiedTime: 1782054576000
+lastModifiedTime: 1774777329000
 ---
 
-import metadata from './useWindowFocus.meta.json';
+import metadata from './makeDestructurable.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useWindowFocus.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useWindowFocus
+    npx useverse@latest add makeDestructurable
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useWindowFocus.meta.json';
 ## Usage
 
 ```tsx
-const focused = useWindowFocus();
+const result = makeDestructurable({ x: 10, y: 20 }, [10, 20] as const);
 ```
 
 ## API

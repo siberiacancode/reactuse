@@ -1,6 +1,8 @@
+'use client'
+
 import type { SubmitEvent } from 'react';
 
-import { createStore, useDidUpdate } from '@siberiacancode/reactuse';
+import { createEventEmitter, useDidUpdate } from '@siberiacancode/reactuse';
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';
 import { memo, useRef } from 'react';
 
@@ -30,7 +32,33 @@ const LANGUAGES = [
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/;
 
-const profileStore = createStore(() => DEFAULT_PROFILE);
+interface ProfileEvents {
+  'profile:bio': string;
+  'profile:email': string;
+  'profile:isPublic': boolean;
+  'profile:language': string;
+  'profile:name': string;
+  'profile:notifications': boolean;
+}
+
+const profileEmitter = createEventEmitter<ProfileEvents>();
+const profileSnapshot: Profile = { ...DEFAULT_PROFILE };
+
+const getProfile = () => profileSnapshot;
+
+const updateProfile = (partial: Partial<Profile>) => {
+  Object.assign(profileSnapshot, partial);
+
+  if (partial.name !== undefined) profileEmitter.push('profile:name', profileSnapshot.name);
+  if (partial.email !== undefined) profileEmitter.push('profile:email', profileSnapshot.email);
+  if (partial.bio !== undefined) profileEmitter.push('profile:bio', profileSnapshot.bio);
+  if (partial.notifications !== undefined)
+    profileEmitter.push('profile:notifications', profileSnapshot.notifications);
+  if (partial.language !== undefined)
+    profileEmitter.push('profile:language', profileSnapshot.language);
+  if (partial.isPublic !== undefined)
+    profileEmitter.push('profile:isPublic', profileSnapshot.isPublic);
+};
 
 interface RerenderInfoProps {
   componentName: string;
@@ -64,7 +92,7 @@ const RerenderInfo = ({ componentName }: RerenderInfoProps) => {
 };
 
 const NameField = memo(() => {
-  const name = profileStore.use((state) => state.name);
+  const name = profileEmitter.useSubscribe('profile:name') ?? getProfile().name;
   const error = name.trim().length < 2 ? 'At least 2 characters' : '';
 
   return (
@@ -78,7 +106,7 @@ const NameField = memo(() => {
         id='name'
         placeholder='Your name'
         value={name}
-        onChange={(event) => profileStore.set({ name: event.target.value })}
+        onChange={(event) => updateProfile({ name: event.target.value })}
       />
       {error && <span className='text-destructive text-xs'>{error}</span>}
     </div>
@@ -87,7 +115,7 @@ const NameField = memo(() => {
 NameField.displayName = 'NameField';
 
 const EmailField = memo(() => {
-  const email = profileStore.use((state) => state.email);
+  const email = profileEmitter.useSubscribe('profile:email') ?? getProfile().email;
   const error = !EMAIL_PATTERN.test(email) ? 'Invalid email format' : '';
 
   return (
@@ -102,7 +130,7 @@ const EmailField = memo(() => {
         placeholder='you@example.com'
         type='email'
         value={email}
-        onChange={(event) => profileStore.set({ email: event.target.value })}
+        onChange={(event) => updateProfile({ email: event.target.value })}
       />
       {error && <span className='text-destructive text-xs'>{error}</span>}
     </div>
@@ -111,7 +139,7 @@ const EmailField = memo(() => {
 EmailField.displayName = 'EmailField';
 
 const BioField = memo(() => {
-  const bio = profileStore.use((state) => state.bio);
+  const bio = profileEmitter.useSubscribe('profile:bio') ?? getProfile().bio;
 
   return (
     <div className='relative flex flex-col gap-1.5'>
@@ -124,7 +152,7 @@ const BioField = memo(() => {
         id='bio'
         placeholder='Tell something about yourself...'
         value={bio}
-        onChange={(event) => profileStore.set({ bio: event.target.value })}
+        onChange={(event) => updateProfile({ bio: event.target.value })}
       />
     </div>
   );
@@ -132,7 +160,8 @@ const BioField = memo(() => {
 BioField.displayName = 'BioField';
 
 const NotificationsField = memo(() => {
-  const notifications = profileStore.use((state) => state.notifications);
+  const notifications =
+    profileEmitter.useSubscribe('profile:notifications') ?? getProfile().notifications;
 
   return (
     <label className='relative flex cursor-pointer items-start justify-between gap-3'>
@@ -147,7 +176,7 @@ const NotificationsField = memo(() => {
         checked={notifications}
         role='switch'
         type='checkbox'
-        onChange={(event) => profileStore.set({ notifications: event.target.checked })}
+        onChange={(event) => updateProfile({ notifications: event.target.checked })}
       />
     </label>
   );
@@ -155,7 +184,7 @@ const NotificationsField = memo(() => {
 NotificationsField.displayName = 'NotificationsField';
 
 const LanguageField = memo(() => {
-  const language = profileStore.use((state) => state.language);
+  const language = profileEmitter.useSubscribe('profile:language') ?? getProfile().language;
 
   return (
     <div className='relative flex items-center justify-between gap-3'>
@@ -171,7 +200,7 @@ const LanguageField = memo(() => {
           className='border-border bg-card text-foreground w-32 appearance-none rounded-md border py-1.5 pr-7 pl-3 text-xs outline-none'
           id='language'
           value={language}
-          onChange={(event) => profileStore.set({ language: event.target.value })}
+          onChange={(event) => updateProfile({ language: event.target.value })}
         >
           {LANGUAGES.map((item) => (
             <option key={item.value} value={item.value}>
@@ -187,7 +216,7 @@ const LanguageField = memo(() => {
 LanguageField.displayName = 'LanguageField';
 
 const PublicField = memo(() => {
-  const isPublic = profileStore.use((state) => state.isPublic);
+  const isPublic = profileEmitter.useSubscribe('profile:isPublic') ?? getProfile().isPublic;
 
   return (
     <label className='relative flex cursor-pointer items-start gap-3'>
@@ -197,7 +226,7 @@ const PublicField = memo(() => {
           checked={isPublic}
           className='peer sr-only'
           type='checkbox'
-          onChange={(event) => profileStore.set({ isPublic: event.target.checked })}
+          onChange={(event) => updateProfile({ isPublic: event.target.checked })}
         />
         <span className='border-border peer-checked:border-foreground peer-checked:bg-foreground flex size-4 items-center justify-center rounded-[5px] border transition-colors'>
           {isPublic && <CheckIcon className='text-background size-3' strokeWidth={3.5} />}
@@ -222,7 +251,7 @@ const Demo = () => {
       <div className='flex flex-col gap-1'>
         <h2 className='text-foreground text-sm font-semibold'>Account settings</h2>
         <p className='text-muted-foreground text-xs'>
-          Each field subscribes to its own slice — only the changed field re-renders.
+          Each field subscribes to its own event - only the changed field re-renders.
         </p>
       </div>
 

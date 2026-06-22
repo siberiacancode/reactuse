@@ -1,147 +1,261 @@
+import type { SubmitEvent } from 'react';
+
 import { createReactiveContext, useDidUpdate, useEvent } from '@siberiacancode/reactuse';
+import { CheckIcon, ChevronDownIcon } from 'lucide-react';
 import { memo, useRef, useState } from 'react';
 
 interface Profile {
-  age: number;
+  bio: string;
+  email: string;
+  isPublic: boolean;
+  language: string;
   name: string;
+  notifications: boolean;
 }
 
-const DEFAULT_PROFILE = { name: 'John Doe', age: 30 };
-const { Provider, useSelector } = createReactiveContext<{
+const DEFAULT_PROFILE: Profile = {
+  name: 'siberiacancode',
+  email: 'hello@reactuse.org',
+  bio: 'Building open-source React hooks',
+  language: 'en',
+  notifications: true,
+  isPublic: false
+};
+
+const LANGUAGES = [
+  { value: 'en', label: 'English' },
+  { value: 'ru', label: 'Russian' },
+  { value: 'de', label: 'German' }
+];
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/;
+
+interface ProfileContext {
   profile: Profile;
   set: (profile: Partial<Profile>) => void;
-}>({ profile: DEFAULT_PROFILE, set: () => {} });
+}
 
-const RerenderInfo = ({ componentName }: { componentName: string }) => {
-  const showRef = useRef(false);
-  const countRef = useRef(1);
-  const codeRef = useRef<HTMLModElement>(null);
+const { Provider, useSelector } = createReactiveContext<ProfileContext>({
+  profile: DEFAULT_PROFILE,
+  set: () => {}
+});
+
+interface RerenderInfoProps {
+  componentName: string;
+}
+
+const RerenderInfo = ({ componentName }: RerenderInfoProps) => {
+  const countRef = useRef(0);
+  const badgeRef = useRef<HTMLSpanElement>(null);
 
   useDidUpdate(() => {
     countRef.current++;
-    showRef.current = true;
-    codeRef.current!.classList.remove('hidden');
+    if (badgeRef.current) {
+      badgeRef.current.textContent = `${componentName} x${countRef.current}`;
+      badgeRef.current.style.opacity = '1';
+    }
 
     const timer = setTimeout(() => {
-      codeRef.current!.classList.add('hidden');
-      countRef.current = 0;
+      if (badgeRef.current) badgeRef.current.style.opacity = '0';
     }, 1000);
 
     return () => clearTimeout(timer);
   });
 
   return (
-    <code ref={codeRef} className='absolute top-0 right-0 hidden rounded px-2 text-xs text-white'>
-      {componentName} x{countRef.current}
-    </code>
+    <span
+      ref={badgeRef}
+      className='bg-primary text-primary-foreground absolute -top-2.5 right-0 z-10 rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold tabular-nums transition-opacity duration-300'
+      style={{ opacity: 0 }}
+    />
   );
 };
 
-const NameFieldInfo = memo(() => {
-  const name = useSelector((state) => state.profile.name);
-
-  return (
-    <div className='relative'>
-      <strong>Name:</strong> <span>{name}</span>
-      <RerenderInfo componentName='NameFieldInfo' />
-    </div>
-  );
-});
-NameFieldInfo.displayName = 'NameFieldInfo';
-
-const AgeFieldInfo = memo(() => {
-  const age = useSelector((state) => state.profile.age);
-  return (
-    <div className='relative'>
-      <strong>Age:</strong> <span>{age}</span>
-      <RerenderInfo componentName='AgeFieldInfo' />
-    </div>
-  );
-});
-AgeFieldInfo.displayName = 'AgeFieldInfo';
-
 const NameField = memo(() => {
   const name = useSelector((state) => state.profile.name);
-  const setProfile = useSelector((state) => state.set);
+  const set = useSelector((state) => state.set);
+  const error = name.trim().length < 2 ? 'At least 2 characters' : '';
 
   return (
-    <div className='relative mb-2'>
-      <strong className='font-semibold'>Name:</strong>
-      <input
-        type='text'
-        value={name}
-        onChange={(event) =>
-          setProfile({
-            name: event.target.value
-          })
-        }
-      />
+    <div className='relative flex flex-col gap-1.5'>
       <RerenderInfo componentName='NameField' />
+      <label className='text-foreground text-xs font-medium' htmlFor='name'>
+        Display name
+      </label>
+      <input
+        className='border-border bg-card text-foreground rounded-md border px-3 py-2 text-sm outline-none'
+        id='name'
+        placeholder='Your name'
+        value={name}
+        onChange={(event) => set({ name: event.target.value })}
+      />
+      {error && <span className='text-destructive text-xs'>{error}</span>}
     </div>
   );
 });
 NameField.displayName = 'NameField';
 
-const AgeField = memo(() => {
-  const age = useSelector((state) => state.profile.age);
-  const setProfile = useSelector((state) => state.set);
+const EmailField = memo(() => {
+  const email = useSelector((state) => state.profile.email);
+  const set = useSelector((state) => state.set);
+  const error = !EMAIL_PATTERN.test(email) ? 'Invalid email format' : '';
 
   return (
-    <div className='relative mb-2'>
-      <strong className='font-semibold'>Age:</strong>
+    <div className='relative flex flex-col gap-1.5'>
+      <RerenderInfo componentName='EmailField' />
+      <label className='text-foreground text-xs font-medium' htmlFor='email'>
+        Email
+      </label>
       <input
-        type='number'
-        value={age}
-        onChange={(event) =>
-          setProfile({
-            age: +event.target.value
-          })
-        }
+        className='border-border bg-card text-foreground rounded-md border px-3 py-2 text-sm outline-none'
+        id='email'
+        placeholder='you@example.com'
+        type='email'
+        value={email}
+        onChange={(event) => set({ email: event.target.value })}
       />
-      <RerenderInfo componentName='AgeField' />
+      {error && <span className='text-destructive text-xs'>{error}</span>}
     </div>
   );
 });
-AgeField.displayName = 'AgeField';
+EmailField.displayName = 'EmailField';
 
-const ResetButton = memo(() => {
-  const setProfile = useSelector((state) => state.set);
+const BioField = memo(() => {
+  const bio = useSelector((state) => state.profile.bio);
+  const set = useSelector((state) => state.set);
 
   return (
-    <div className='relative flex gap-2'>
-      <button
-        className='rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600'
-        onClick={() => setProfile(DEFAULT_PROFILE)}
-      >
-        Reset Form
-      </button>
-      <RerenderInfo componentName='ResetButton' />
+    <div className='relative flex flex-col gap-1.5'>
+      <RerenderInfo componentName='BioField' />
+      <label className='text-foreground text-xs font-medium' htmlFor='bio'>
+        Bio
+      </label>
+      <textarea
+        className='border-border bg-card text-foreground min-h-[72px] resize-none rounded-md border px-3 py-2 text-sm outline-none'
+        id='bio'
+        placeholder='Tell something about yourself...'
+        value={bio}
+        onChange={(event) => set({ bio: event.target.value })}
+      />
     </div>
   );
 });
-ResetButton.displayName = 'ResetButton';
+BioField.displayName = 'BioField';
 
-const Demo = () => (
-  <div className='p-4'>
-    <div className='mb-6'>
-      <h3 className='font-semibold'>Current Profile:</h3>
-      <NameFieldInfo />
-      <AgeFieldInfo />
+const NotificationsField = memo(() => {
+  const notifications = useSelector((state) => state.profile.notifications);
+  const set = useSelector((state) => state.set);
+
+  return (
+    <label className='relative flex cursor-pointer items-start justify-between gap-3'>
+      <RerenderInfo componentName='NotificationsField' />
+      <div className='flex flex-col gap-0.5'>
+        <span className='text-foreground text-xs font-medium'>Email notifications</span>
+        <span className='text-muted-foreground text-[11px]'>
+          Receive product updates and release notes
+        </span>
+      </div>
+      <input
+        checked={notifications}
+        role='switch'
+        type='checkbox'
+        onChange={(event) => set({ notifications: event.target.checked })}
+      />
+    </label>
+  );
+});
+NotificationsField.displayName = 'NotificationsField';
+
+const LanguageField = memo(() => {
+  const language = useSelector((state) => state.profile.language);
+  const set = useSelector((state) => state.set);
+
+  return (
+    <div className='relative flex items-center justify-between gap-3'>
+      <RerenderInfo componentName='LanguageField' />
+      <div className='flex flex-col gap-0.5'>
+        <label className='text-foreground text-xs font-medium' htmlFor='language'>
+          Language
+        </label>
+        <span className='text-muted-foreground text-[11px]'>Choose your preferred language</span>
+      </div>
+      <div className='relative'>
+        <select
+          className='border-border bg-card text-foreground w-32 appearance-none rounded-md border py-1.5 pr-7 pl-3 text-xs outline-none'
+          id='language'
+          value={language}
+          onChange={(event) => set({ language: event.target.value })}
+        >
+          {LANGUAGES.map((item) => (
+            <option key={item.value} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDownIcon className='text-muted-foreground pointer-events-none absolute top-1/2 right-2 size-3.5 -translate-y-1/2' />
+      </div>
     </div>
+  );
+});
+LanguageField.displayName = 'LanguageField';
 
-    <div className='mb-4'>
-      <NameField />
-      <AgeField />
-    </div>
+const PublicField = memo(() => {
+  const isPublic = useSelector((state) => state.profile.isPublic);
+  const set = useSelector((state) => state.set);
 
-    <ResetButton />
-  </div>
-);
+  return (
+    <label className='relative flex cursor-pointer items-start gap-3'>
+      <RerenderInfo componentName='PublicField' />
+      <span className='mt-0.5 flex shrink-0 items-center'>
+        <input
+          checked={isPublic}
+          className='peer sr-only'
+          type='checkbox'
+          onChange={(event) => set({ isPublic: event.target.checked })}
+        />
+        <span className='border-border peer-checked:border-foreground peer-checked:bg-foreground flex size-4 items-center justify-center rounded-[5px] border transition-colors'>
+          {isPublic && <CheckIcon className='text-background size-3' strokeWidth={3.5} />}
+        </span>
+      </span>
+      <div className='flex flex-col gap-0.5'>
+        <span className='text-foreground text-xs font-medium'>Make profile public</span>
+        <span className='text-muted-foreground text-[11px]'>
+          Anyone on the internet can see your profile
+        </span>
+      </div>
+    </label>
+  );
+});
+PublicField.displayName = 'PublicField';
+
+const Demo = () => {
+  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => event.preventDefault();
+
+  return (
+    <section className='flex w-full max-w-md flex-col gap-4 p-4'>
+      <div className='flex flex-col gap-1'>
+        <h2 className='text-foreground text-sm font-semibold'>Account settings</h2>
+        <p className='text-muted-foreground text-xs'>
+          Each field subscribes to its own slice - only the changed field re-renders.
+        </p>
+      </div>
+
+      <form className='flex flex-col gap-4' onSubmit={onSubmit}>
+        <NameField />
+        <EmailField />
+        <BioField />
+        <NotificationsField />
+        <LanguageField />
+        <PublicField />
+      </form>
+    </section>
+  );
+};
 
 const App = () => {
   const [profile, setProfile] = useState<Profile>(DEFAULT_PROFILE);
-  const set = useEvent((updatedProfile: Partial<Profile>) =>
-    setProfile({ ...profile, ...updatedProfile })
+  const set = useEvent((updated: Partial<Profile>) =>
+    setProfile((prev) => ({ ...prev, ...updated }))
   );
 
   return (

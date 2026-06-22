@@ -12,22 +12,38 @@ import { FunctionHeader, FunctionSidebar } from './_components';
 
 const getFunctionsBadges = async () => {
   const hooksPath = path.join(process.cwd(), 'content', 'functions', 'hooks');
-  const files = await fs.readdir(hooksPath);
-  const metaFiles = files.filter((file) => file.endsWith('.meta.json') && file !== 'meta.json');
-  const entries = await Promise.all(
-    metaFiles.map(async (file) => {
+  const hooksFiles = await fs.readdir(hooksPath);
+
+  const hooksMetaFiles = hooksFiles.filter(
+    (file) => file.endsWith('.meta.json') && file !== 'meta.json'
+  );
+
+  const helpersPath = path.join(process.cwd(), 'content', 'functions', 'helpers');
+  const helpersFiles = await fs.readdir(helpersPath);
+
+  const helpersMetaFiles = helpersFiles.filter(
+    (file) => file.endsWith('.meta.json') && file !== 'meta.json'
+  );
+
+  const entries = await Promise.all([
+    ...hooksMetaFiles.map(async (file) => {
       const content = await fs.readFile(path.join(hooksPath, file), 'utf-8');
       const metadata = JSON.parse(content) as { badges?: { isNew?: boolean }; name: string };
 
       return [metadata.name, metadata.badges?.isNew ?? false] as const;
+    }),
+    ...helpersMetaFiles.map(async (file) => {
+      const content = await fs.readFile(path.join(helpersPath, file), 'utf-8');
+      const metadata = JSON.parse(content) as { badges?: { isNew?: boolean }; name: string };
+
+      return [metadata.name, metadata.badges?.isNew ?? false] as const;
     })
-  );
+  ]);
 
   return new Map(entries);
 };
 
-const getHooksSidebarGroups = async () => {
-  const functionsBadges = await getFunctionsBadges();
+const getFunctionsSidebarGroups = async () => {
   const groups = {} as any;
   let currentGroup: string | undefined;
 
@@ -46,10 +62,26 @@ const getHooksSidebarGroups = async () => {
       };
     }
     if (element.type === 'page') {
-      groups[currentGroup!]!.children.push({
-        ...element,
-        isNew: functionsBadges.get(element.name!.toString()) ?? false
-      });
+      groups[currentGroup!]!.children.push(element);
+    }
+  });
+
+  const helpersFolder = functionsSource.pageTree.children.find(
+    (element) => element.type === 'folder' && element.$id === 'helpers'
+  ) as PageTreeFolder;
+
+  helpersFolder.children.forEach((element) => {
+    if (element.type === 'separator') {
+      currentGroup = element.name!.toString();
+      groups[currentGroup] = {
+        $id: element.name,
+        children: [],
+        name: element.name,
+        type: 'folder'
+      };
+    }
+    if (element.type === 'page') {
+      groups[currentGroup!]!.children.push(element);
     }
   });
 
@@ -62,7 +94,7 @@ interface DocsLayoutProps {
 
 export const DocsLayout = async ({ children }: DocsLayoutProps) => {
   const functionsBadges = await getFunctionsBadges();
-  const functionsSidebarGroups = await getHooksSidebarGroups();
+  const functionsSidebarGroups = await getFunctionsSidebarGroups();
   const docsLayoutStyle = {
     '--docs-content-width': '58rem',
     '--docs-layout-gap': '1.5rem',

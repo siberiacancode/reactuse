@@ -12,7 +12,8 @@ export const categorySchema = z.enum([
   'sensors',
   'lifecycle',
   'utilities',
-  'user'
+  'user',
+  'helpers'
 ]);
 export const typeSchema = z.enum(['hook', 'helper']);
 
