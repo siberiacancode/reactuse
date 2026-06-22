@@ -27,4 +27,5 @@ export * from './useStorage/useStorage';
 export * from './useToggle/useToggle';
 export * from './useUrlSearchParam/useUrlSearchParam';
 export * from './useUrlSearchParams/useUrlSearchParams';
+export * from './useValidatedState/useValidatedState';
 export * from './useWizard/useWizard';
