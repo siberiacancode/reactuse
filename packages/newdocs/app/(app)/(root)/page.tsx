@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 import fetches from '@siberiacancode/fetches';
-import { Badge } from 'lucide-react';
 import Link from 'next/link';
 
 import { getContributors } from '@/lib/contributors';
 import { getElements } from '@/scripts/helpers';
+import { Badge } from '@/src/components/ui';
 import { CONFIG } from '@/src/constants';
 import { getLatestReleases, getRepository } from '@/src/utils/api/github';
 
@@ -81,6 +81,8 @@ const HomePage = async () => {
   ];
 
   const lastRelease = latestReleasesResponse.data[0];
+  // eslint-disable-next-line regexp/no-super-linear-backtracking
+  const releaseTitle = lastRelease.body.match(/^#\s+(.+)$/m)?.[1]?.trim();
 
   return (
     <div>
@@ -96,8 +98,8 @@ const HomePage = async () => {
               New
             </Badge>
             <span className='text-muted-foreground truncate'>
-              <span className='text-foreground font-medium'>v{lastRelease.tag_name}</span>
-              {lastRelease.tag_name && ` - ${lastRelease.tag_name}`}
+              <span className='text-foreground font-medium'>{lastRelease.tag_name}</span>
+              {releaseTitle && ` - ${releaseTitle}`}
             </span>
             <span className='text-muted-foreground transition-transform group-hover:translate-x-0.5'>
               -&gt;

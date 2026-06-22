@@ -7,6 +7,7 @@ export interface GitHubRepository {
 }
 
 export interface GitHubRelease {
+  body: string;
   html_url: string;
   name?: string;
   tag_name: string;
