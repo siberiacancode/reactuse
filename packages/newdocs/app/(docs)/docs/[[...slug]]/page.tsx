@@ -1,8 +1,8 @@
 import { source } from '@docs/lib/source';
 import { mdxComponents } from '@docs/mdx-components';
 import { Button } from '@docs/src/components/ui/button';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { findNeighbour } from 'fumadocs-core/page-tree';
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import process from 'node:process';
@@ -90,14 +90,14 @@ export const DocsPage = async (props: DocsPageProps) => {
             {neighbours.previous && (
               <Button asChild className='shadow-none' size='sm' variant='secondary'>
                 <Link href={neighbours.previous.url}>
-                  <IconArrowLeft /> {neighbours.previous.name}
+                  <ArrowLeftIcon /> {neighbours.previous.name}
                 </Link>
               </Button>
             )}
             {neighbours.next && (
               <Button asChild className='ml-auto shadow-none' size='sm' variant='secondary'>
                 <Link href={neighbours.next.url}>
-                  {neighbours.next.name} <IconArrowRight />
+                  {neighbours.next.name} <ArrowRightIcon />
                 </Link>
               </Button>
             )}

@@ -1,4 +1,4 @@
-import { docs, functions } from '@docs/.source';
+import { docs, functions } from '@docs/.source/server';
 import { loader } from 'fumadocs-core/source';
 
 export const source = loader({

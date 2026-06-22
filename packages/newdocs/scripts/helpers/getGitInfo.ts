@@ -12,6 +12,7 @@ const NEW_DAYS_THRESHOLD = 30;
 
 export const getGitInfo = async (name: string, type: FunctionType, extension: string) => {
   const filePath = path.join(CORE_ROOT, `${type}s`, name, `${name}.${extension}`);
+
   const log = await git.log({
     file: path.relative(process.cwd(), filePath)
   });

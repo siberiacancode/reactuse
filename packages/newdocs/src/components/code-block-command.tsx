@@ -11,8 +11,8 @@ import {
   TabsTrigger
 } from '@docs/src/components/ui/tabs';
 import { useCopy, useLocalStorage } from '@siberiacancode/reactuse';
-import { IconCheck, IconCopy, IconTerminal } from '@tabler/icons-react';
 import { Children, useRef } from 'react';
+import { CheckIcon, CopyIcon, TerminalIcon } from 'lucide-react';
 
 export const PACKAGE_MANAGERS = ['pnpm', 'npm', 'yarn', 'bun'] as const;
 export type PackageManager = (typeof PACKAGE_MANAGERS)[number];
@@ -56,7 +56,7 @@ export const PackageManagerTabs = ({ children, className }: PackageManagerTabsPr
       >
         <div className='border-border/50 flex items-center gap-2 border-b px-3 py-1'>
           <div className='bg-foreground flex size-4 items-center justify-center rounded-[1px] opacity-70'>
-            <IconTerminal className='text-code size-3' />
+            <TerminalIcon className='text-code size-3' />
           </div>
 
           <TabsList className='rounded-none bg-transparent p-0'>
@@ -92,7 +92,7 @@ export const PackageManagerTabs = ({ children, className }: PackageManagerTabsPr
         onClick={onCopy}
       >
         <span className='sr-only'>Copy</span>
-        {copied ? <IconCheck /> : <IconCopy />}
+        {copied ? <CheckIcon /> : <CopyIcon />}
       </Button>
     </div>
   );

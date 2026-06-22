@@ -1,8 +1,6 @@
 'use client';
 
-import { Badge } from '@docs/ui/badge';
 import { Button } from '@docs/src/components/ui/button';
-import { ButtonGroup } from '@docs/ui/button-group';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,18 +8,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@docs/src/components/ui/dropdown-menu';
+import { Badge } from '@docs/ui/badge';
+import { ButtonGroup } from '@docs/ui/button-group';
 import { useCopy } from '@siberiacancode/reactuse';
 import {
-  IconArrowLeft,
-  IconArrowRight,
-  IconCheck,
-  IconChevronDown,
-  IconCopy,
-  IconFlame,
-  IconMarkdown,
-  IconRosetteDiscountCheck,
-  IconRosetteDiscountCheckOff
-} from '@tabler/icons-react';
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  BadgeCheckIcon,
+  BadgeXIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CopyIcon,
+  FileTextIcon,
+  FlameIcon
+} from 'lucide-react';
 import Link from 'next/link';
 
 import { LINKS } from '@/src/constants';
@@ -66,14 +66,14 @@ export const FunctionHeader = ({
               <div className='bg-secondary relative flex rounded-lg *:[[data-slot=button]]:focus-visible:relative *:[[data-slot=button]]:focus-visible:z-10'>
                 <ButtonGroup>
                   <Button size='sm' variant='secondary' onClick={() => copy(markdown)}>
-                    {copied ? <IconCheck /> : <IconCopy />}
+                    {copied ? <CheckIcon /> : <CopyIcon />}
                     Copy Page
                   </Button>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button aria-label='Open actions' size='icon-sm' variant='secondary'>
-                        <IconChevronDown />
+                        <ChevronDownIcon />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align='end' className='w-56 min-w-56'>
@@ -83,7 +83,7 @@ export const FunctionHeader = ({
                           rel='noopener noreferrer'
                           target='_blank'
                         >
-                          <IconMarkdown />
+                          <FileTextIcon />
                           View as Markdown
                         </a>
                       </DropdownMenuItem>
@@ -112,7 +112,7 @@ export const FunctionHeader = ({
               {previous && (
                 <Button asChild size='icon-sm' variant='secondary'>
                   <Link href={previous}>
-                    <IconArrowLeft />
+                    <ArrowLeftIcon />
                     <span className='sr-only'>Previous</span>
                   </Link>
                 </Button>
@@ -121,7 +121,7 @@ export const FunctionHeader = ({
                 <Button asChild size='icon-sm' variant='secondary'>
                   <Link href={next}>
                     <span className='sr-only'>Next</span>
-                    <IconArrowRight />
+                    <ArrowRightIcon />
                   </Link>
                 </Button>
               )}
@@ -141,11 +141,11 @@ export const FunctionHeader = ({
           {<categoryMeta.Icon />} {category}
         </Badge>
         <Badge>
-          <IconFlame />
+          <FlameIcon />
           {usage}
         </Badge>
         <Badge>
-          {isTest ? <IconRosetteDiscountCheck /> : <IconRosetteDiscountCheckOff />}
+          {isTest ? <BadgeCheckIcon /> : <BadgeXIcon />}
           test coverage
         </Badge>
       </div>

@@ -11,13 +11,13 @@ import {
 } from '@docs/src/components/ui/dropdown-menu';
 import { useCopy } from '@siberiacancode/reactuse';
 import {
-  IconArrowLeft,
-  IconArrowRight,
-  IconCheck,
-  IconChevronDown,
-  IconCopy,
-  IconMarkdown
-} from '@tabler/icons-react';
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CopyIcon,
+  FileTextIcon
+} from 'lucide-react';
 import Link from 'next/link';
 
 import { LINKS } from '@/src/constants';
@@ -52,14 +52,14 @@ export const DocHeader = ({
             <div className='bg-secondary relative flex rounded-lg *:[[data-slot=button]]:focus-visible:relative *:[[data-slot=button]]:focus-visible:z-10'>
               <ButtonGroup>
                 <Button size='sm' variant='secondary' onClick={() => copy(markdown)}>
-                  {copied ? <IconCheck /> : <IconCopy />}
+                  {copied ? <CheckIcon /> : <CopyIcon />}
                   Copy Page
                 </Button>
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button aria-label='Open actions' size='icon-sm' variant='secondary'>
-                      <IconChevronDown />
+                      <ChevronDownIcon />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align='end' className='w-56 min-w-56'>
@@ -69,7 +69,7 @@ export const DocHeader = ({
                         rel='noopener noreferrer'
                         target='_blank'
                       >
-                        <IconMarkdown />
+                        <FileTextIcon />
                         View as Markdown
                       </a>
                     </DropdownMenuItem>
@@ -98,7 +98,7 @@ export const DocHeader = ({
             {previous && (
               <Button asChild size='icon-sm' variant='secondary'>
                 <Link href={previous}>
-                  <IconArrowLeft />
+                  <ArrowLeftIcon />
                   <span className='sr-only'>Previous</span>
                 </Link>
               </Button>
@@ -107,7 +107,7 @@ export const DocHeader = ({
               <Button asChild size='icon-sm' variant='secondary'>
                 <Link href={next}>
                   <span className='sr-only'>Next</span>
-                  <IconArrowRight />
+                  <ArrowRightIcon />
                 </Link>
               </Button>
             )}

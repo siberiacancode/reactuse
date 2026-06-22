@@ -2,7 +2,7 @@
 
 import { cn } from '@docs/lib/utils';
 import { Button } from '@docs/src/components/ui/button';
-import { IconCheck, IconCopy } from '@tabler/icons-react';
+import { CheckIcon, CopyIcon } from 'lucide-react';
 import * as React from 'react';
 
 export function copyToClipboardWithMeta(value: string) {
@@ -45,7 +45,7 @@ export const CopyButton = ({
       {...props}
     >
       <span className='sr-only'>Copy</span>
-      {hasCopied ? <IconCheck /> : <IconCopy />}
+      {hasCopied ? <CheckIcon /> : <CopyIcon />}
     </Button>
   );
 };

@@ -56,7 +56,7 @@ export const DocsToc = ({ path, items }: DocsTocProps) => {
   return (
     <nav className='sticky top-0 flex flex-col gap-2 p-4 pt-0 text-sm'>
       <p className='text-md text-foreground font-semibold'>On this page</p>
-      <ul className='flex flex-col gap-2'>
+      <ul className='mt-2 flex flex-col gap-2'>
         {items.map((item) => (
           <li key={item.url}>
             <Link

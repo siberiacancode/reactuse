@@ -1,8 +1,8 @@
 import { functionsSource } from '@docs/lib/source';
 import { Button } from '@docs/src/components/ui/button';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { findNeighbour } from 'fumadocs-core/page-tree';
 import { PageLastUpdate } from 'fumadocs-ui/layouts/docs/page';
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import fs from 'node:fs/promises';
@@ -108,14 +108,14 @@ const FunctionPage = async (props: FunctionPageProps) => {
             {neighbours.previous && (
               <Button asChild size='sm' variant='secondary'>
                 <Link href={neighbours.previous.url}>
-                  <IconArrowLeft /> {neighbours.previous.name}
+                  <ArrowLeftIcon /> {neighbours.previous.name}
                 </Link>
               </Button>
             )}
             {neighbours.next && (
               <Button asChild size='sm' variant='secondary'>
                 <Link href={neighbours.next.url}>
-                  {neighbours.next.name} <IconArrowRight />
+                  {neighbours.next.name} <ArrowRightIcon />
                 </Link>
               </Button>
             )}

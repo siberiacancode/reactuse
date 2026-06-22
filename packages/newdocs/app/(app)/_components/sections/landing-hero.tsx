@@ -1,9 +1,10 @@
 import { Button } from '@docs/src/components/ui/button';
-import { ArrowRight, Github } from 'lucide-react';
+import { ArrowRightIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import {
   AstroIcon,
+  GithubIcon,
   NextjsIcon,
   ReactRouterIcon,
   TanStackIcon,
@@ -101,12 +102,12 @@ export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
           <Button asChild className='group h-11 rounded-full px-7 text-sm'>
             <Link href='/docs/installation'>
               Get started
-              <ArrowRight className='size-4 transition-transform group-hover:translate-x-0.5' />
+              <ArrowRightIcon className='size-4 transition-transform group-hover:translate-x-0.5' />
             </Link>
           </Button>
           <Button asChild className='h-11 rounded-full px-7 text-sm' variant='secondary'>
             <Link href={LINKS.GITHUB} rel='noreferrer' target='_blank'>
-              <Github className='size-4' />
+              <GithubIcon aria-hidden='true' className='size-4' />
               GitHub
             </Link>
           </Button>
