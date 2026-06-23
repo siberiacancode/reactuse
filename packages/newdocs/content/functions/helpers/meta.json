@@ -2,6 +2,6 @@
     "pages": [
       
       "---helpers---",
-      "createContext","createEventEmitter","createReactiveContext","createStore","makeDestructurable"
+      "cn","createContext","createEventEmitter","createReactiveContext","createStore","makeDestructurable"
     ]
   }

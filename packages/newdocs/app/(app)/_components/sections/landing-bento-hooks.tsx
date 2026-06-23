@@ -1113,7 +1113,7 @@ export const LandingBentoHooks = ({ hooks }: LandingBentoHooksProps) => (
             className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
             variant='secondary'
           >
-            <Link href='/functions'>
+            <Link href='/docs/functions'>
               <span>Browse all functions</span>
               <ArrowRight className='size-4' />
             </Link>

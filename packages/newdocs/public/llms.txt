@@ -15,6 +15,7 @@
 
 ### Helperss
 
+- [cn](https://reactuse.org/functions/helpers/cn): Combines class names from strings, arrays and objects into a single string
 - [createContext](https://reactuse.org/functions/helpers/createContext): Creates a typed context with additional utilities
 - [createEventEmitter](https://reactuse.org/functions/helpers/createEventEmitter): Creates a type-safe event emitter
 - [createReactiveContext](https://reactuse.org/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection

@@ -7,6 +7,7 @@ description: A simple catalog of package functions.
 
 A quick list of available functions.
 
+- [cn](/functions/helpers/cn): Combines class names from strings, arrays and objects into a single string
 - [createContext](/functions/helpers/createContext): Creates a typed context with additional utilities
 - [createEventEmitter](/functions/helpers/createEventEmitter): Creates a type-safe event emitter
 - [createReactiveContext](/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection

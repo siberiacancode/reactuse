@@ -18,8 +18,8 @@ export const getGitInfo = async (name: string, type: FunctionType, extension: st
     file: path.relative(process.cwd(), filePath)
   });
   const commits = log.all;
-  const lastCommit = log.latest!;
-  const firstCommit = commits.at(-1)!;
+  const lastCommit = log.latest ?? new Date().toISOString();
+  const firstCommit = commits.at(-1) ?? lastCommit;
   const now = Date.now();
   const firstCommitAt = new Date(firstCommit.date).getTime();
   const isNew = now - firstCommitAt <= NEW_DAYS_THRESHOLD * DAY_IN_MS;

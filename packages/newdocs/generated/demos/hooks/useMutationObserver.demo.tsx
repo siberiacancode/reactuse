@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import type { ClipboardEvent } from 'react';
 
@@ -10,9 +10,9 @@ const INITIAL_TEXT =
   'reactuse is a collection of essential React hooks. Start typing here and watch the stats update as the content changes.';
 
 const getStats = (text: string) => {
-  const trimmed = text.trim();
-  const words = trimmed ? trimmed.split(/\s+/).length : 0;
-  const characters = text.length;
+  const normalizedText = text.replace(/\s+/g, ' ').trim();
+  const words = normalizedText.match(/[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*/gu)?.length ?? 0;
+  const characters = Array.from(text).length;
   const minutes = Math.max(1, Math.ceil(words / 200));
   return { words, characters, minutes };
 };

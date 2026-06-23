@@ -1,4 +1,3 @@
-export * from './cn';
 export * from './copy';
 export * from './getDate';
 export * from './getRetry';
