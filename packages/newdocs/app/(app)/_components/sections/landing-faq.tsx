@@ -40,7 +40,7 @@ const FAQ = [
 export const LandingFaq = () => (
   <section>
     <div className='container mx-auto px-6 py-12 md:py-24'>
-      <div className='grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16'>
+      <div className='grid items-start gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16'>
         {/* ── Heading ── */}
         <motion.div
           className='max-w-md'

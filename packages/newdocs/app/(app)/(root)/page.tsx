@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 
 import fetches from '@siberiacancode/fetches';
-import Link from 'next/link';
 
 import { getContributors } from '@/lib/contributors';
 import { getElements } from '@/scripts/helpers';
-import { Badge } from '@/src/components/ui';
 import { CONFIG } from '@/src/constants';
 import { getLatestReleases, getRepository } from '@/src/utils/api/github';
 
@@ -19,6 +17,7 @@ import {
   LandingGettingStarted,
   LandingHeader,
   LandingHero,
+  LandingRelease,
   LandingStats
 } from '../_components/sections';
 
@@ -87,25 +86,7 @@ const HomePage = async () => {
   return (
     <div>
       {latestReleasesResponse.data[0] && (
-        <div className='border-border relative flex h-9 items-center justify-center border-b py-6'>
-          <Link
-            className='group text-foreground inline-flex items-center gap-2 text-xs sm:text-sm'
-            href={lastRelease.html_url}
-            rel='noreferrer'
-            target='_blank'
-          >
-            <Badge className='h-5 rounded-md px-1.5 py-0 text-[10px] tracking-[0.06em] uppercase'>
-              New
-            </Badge>
-            <span className='text-muted-foreground truncate'>
-              <span className='text-foreground font-medium'>{lastRelease.tag_name}</span>
-              {releaseTitle && ` - ${releaseTitle}`}
-            </span>
-            <span className='text-muted-foreground transition-transform group-hover:translate-x-0.5'>
-              -&gt;
-            </span>
-          </Link>
-        </div>
+        <LandingRelease lastRelease={lastRelease} releaseTitle={releaseTitle} />
       )}
 
       <LandingHeader

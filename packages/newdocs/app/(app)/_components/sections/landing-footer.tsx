@@ -7,16 +7,15 @@ const columns = [
   {
     links: [
       { href: '/docs/installation', label: 'Installation' },
-      { href: '/docs/getting-started', label: 'Getting started' },
-      { href: '/docs/cli', label: 'CLI' },
-      { href: '/docs/contributing', label: 'Contributing' }
+      { href: '/docs/introduction', label: 'Introduction' },
+      { href: '/docs/cli', label: 'CLI' }
     ],
     title: 'Docs'
   },
   {
     links: [
       { href: '/functions/hooks/useActiveElement', label: 'Hooks' },
-      { href: '/functions/helpers/createContext', label: 'Helpers' }
+      { href: '/functions/helpers/cn', label: 'Helpers' }
     ],
     title: 'Functions'
   },
@@ -98,8 +97,7 @@ export const LandingFooter = () => (
         {/* ── Bottom bar ── */}
         <div className='mt-16 flex flex-col items-start gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between'>
           <p className='text-muted-foreground text-xs'>
-            © {new Date().getFullYear()} reactuse. Released under the MIT License. Made with care
-            by{' '}
+            © {new Date().getFullYear()} reactuse. Released under the MIT License. Made with care by{' '}
             <Link
               className='text-foreground hover:text-muted-foreground transition-colors'
               href='https://github.com/siberiacancode'

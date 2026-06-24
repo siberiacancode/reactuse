@@ -7,4 +7,5 @@ export * from './landing-footer';
 export * from './landing-getting-started';
 export * from './landing-header';
 export * from './landing-hero';
+export * from './landing-realese';
 export * from './landing-stats';
