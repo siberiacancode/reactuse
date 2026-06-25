@@ -1,21 +1,4 @@
 import { useState } from 'react';
-
-/** The use validated state value type */
-export interface UseValidatedStateValue<Value> {
-  /** Last valid value */
-  lastValidValue?: Value;
-  /** True if the current value is valid, false otherwise */
-  valid: boolean;
-  /** Current value */
-  value: Value;
-}
-
-/** The use validated state return type */
-export type UseValidatedStateReturn<Value> = [
-  state: UseValidatedStateValue<Value>,
-  setValue: (value: Value) => void
-];
-
 /**
  * @name useValidatedState
  * @description - Hook that manages a state value together with its validation result
@@ -34,12 +17,8 @@ export type UseValidatedStateReturn<Value> = [
  *   (value) => value.length >= 3
  * );
  */
-export const useValidatedState = <Value>(
-  initialValue: Value,
-  validate: (value: Value) => boolean,
-  initialValidationState?: boolean
-): UseValidatedStateReturn<Value> => {
-  const [state, setState] = useState<UseValidatedStateValue<Value>>(() => {
+export const useValidatedState = (initialValue, validate, initialValidationState) => {
+  const [state, setState] = useState(() => {
     const isValid = validate(initialValue);
     return {
       value: initialValue,
@@ -47,11 +26,9 @@ export const useValidatedState = <Value>(
       valid: typeof initialValidationState === 'boolean' ? initialValidationState : isValid
     };
   });
-
-  const setValidatedValue = (value: Value) => {
+  const setValidatedValue = (value) => {
     setState((previousState) => {
       const isValid = validate(value);
-
       return {
         value,
         valid: isValid,
@@ -59,6 +36,5 @@ export const useValidatedState = <Value>(
       };
     });
   };
-
   return [state, setValidatedValue];
 };

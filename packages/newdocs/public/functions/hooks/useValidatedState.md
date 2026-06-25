@@ -1,15 +1,15 @@
 ---
-title: useInfiniteScroll
-description: Hook that defines the logic for infinite scroll
-category: sensors
+title: useValidatedState
+description: Hook that manages a state value together with its validation result
+category: state
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1782391434000
+lastModifiedTime: 1782143838000
 ---
 
-import metadata from './useInfiniteScroll.meta.json';
+import metadata from './useValidatedState.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useInfiniteScroll.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useInfiniteScroll
+    npx useverse@latest add useValidatedState
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,10 @@ import metadata from './useInfiniteScroll.meta.json';
 ## Usage
 
 ```tsx
-const { ref, loading } = useInfiniteScroll(() => console.log('infinite scroll'));
-// or
-const { loading } = useInfiniteScroll(ref, () => console.log('infinite scroll'));
+const [{ value, lastValidValue, valid }, setValue] = useValidatedState(
+  '',
+  (value) => value.length >= 3
+);
 ```
 
 ## Type Declarations

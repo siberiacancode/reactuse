@@ -170,6 +170,7 @@
 - [useToggle](https://reactuse.org/functions/hooks/useToggle): Hook that create toggle
 - [useUrlSearchParam](https://reactuse.org/functions/hooks/useUrlSearchParam): Hook that provides reactive URLSearchParams for a single key
 - [useUrlSearchParams](https://reactuse.org/functions/hooks/useUrlSearchParams): Hook that provides reactive URLSearchParams
+- [useValidatedState](https://reactuse.org/functions/hooks/useValidatedState): Hook that manages a state value together with its validation result
 - [useWizard](https://reactuse.org/functions/hooks/useWizard): Hook that manages a wizard
 ### Times
 

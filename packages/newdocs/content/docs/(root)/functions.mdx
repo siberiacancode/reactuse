@@ -165,6 +165,7 @@ A quick list of available functions.
 - [useUnmount](/functions/hooks/useUnmount): Hook that defines the logic when unmounting a component
 - [useUrlSearchParam](/functions/hooks/useUrlSearchParam): Hook that provides reactive URLSearchParams for a single key
 - [useUrlSearchParams](/functions/hooks/useUrlSearchParams): Hook that provides reactive URLSearchParams
+- [useValidatedState](/functions/hooks/useValidatedState): Hook that manages a state value together with its validation result
 - [useVibrate](/functions/hooks/useVibrate): Hook that provides vibrate api
 - [useVirtualKeyboard](/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
 - [useVisibility](/functions/hooks/useVisibility): Hook that gives you visibility observer state

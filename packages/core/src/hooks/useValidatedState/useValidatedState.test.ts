@@ -4,55 +4,56 @@ import { renderHookServer } from '@/tests';
 
 import { useValidatedState } from './useValidatedState';
 
-it('Should return the initial valid state', () => {
+it('Should use validated state', () => {
   const { result } = renderHook(() => useValidatedState('test', (value) => value === 'test'));
+  const [state, setValue] = result.current;
 
-  expect(result.current[0]).toEqual({
+  expect(state).toEqual({
     lastValidValue: 'test',
     valid: true,
     value: 'test'
   });
-  expect(result.current[1]).toBeTypeOf('function');
-});
-
-it('Should return the initial invalid state', () => {
-  const { result } = renderHook(() => useValidatedState('test', (value) => value === 'tests'));
-
-  expect(result.current[0]).toEqual({
-    lastValidValue: undefined,
-    valid: false,
-    value: 'test'
-  });
-  expect(result.current[1]).toBeTypeOf('function');
+  expect(setValue).toBeTypeOf('function');
 });
 
 it('Should use validated state on server side', () => {
   const { result } = renderHookServer(() => useValidatedState('test', (value) => value === 'test'));
+  const [state, setValue] = result.current;
 
-  expect(result.current[0]).toEqual({
+  expect(state).toEqual({
     lastValidValue: 'test',
     valid: true,
     value: 'test'
   });
-  expect(result.current[1]).toBeTypeOf('function');
+  expect(setValue).toBeTypeOf('function');
+});
+
+it('Should set initial invalid state', () => {
+  const { result } = renderHook(() => useValidatedState('test', (value) => value === 'tests'));
+  const [state, setValue] = result.current;
+
+  expect(state).toEqual({
+    lastValidValue: undefined,
+    valid: false,
+    value: 'test'
+  });
+  expect(setValue).toBeTypeOf('function');
 });
 
 it('Should use the initial validation state when provided', () => {
-  const { result: invalidResult } = renderHook(() =>
-    useValidatedState('test', (value) => value === 'other', false)
-  );
-  const { result: validResult } = renderHook(() =>
+  const { result } = renderHook(() =>
     useValidatedState('test', (value) => value === 'other', true)
   );
+  const [validState] = result.current;
 
-  expect(invalidResult.current[0].valid).toBeFalsy();
-  expect(validResult.current[0].valid).toBeTruthy();
+  expect(validState.valid).toBeTruthy();
 });
 
-it('Should update the last valid value after invalid values', () => {
+it('Should update the last valid value', () => {
   const { result } = renderHook(() => useValidatedState('start', (value) => value.length > 3));
+  const [, setValue] = result.current;
 
-  act(() => result.current[1]('no'));
+  act(() => setValue('no'));
 
   expect(result.current[0]).toEqual({
     lastValidValue: 'start',
@@ -60,7 +61,7 @@ it('Should update the last valid value after invalid values', () => {
     value: 'no'
   });
 
-  act(() => result.current[1]('valid-again'));
+  act(() => setValue('valid-again'));
 
   expect(result.current[0]).toEqual({
     lastValidValue: 'valid-again',
@@ -71,13 +72,13 @@ it('Should update the last valid value after invalid values', () => {
 
 it('Should preserve the last valid value through invalid updates', () => {
   const { result } = renderHook(() => useValidatedState('good', (value) => value === 'good'));
+  const [, setValue] = result.current;
 
-  act(() => result.current[1]('bad-1'));
-  act(() => result.current[1]('bad-2'));
+  act(() => setValue('bad'));
 
   expect(result.current[0]).toEqual({
     lastValidValue: 'good',
     valid: false,
-    value: 'bad-2'
+    value: 'bad'
   });
 });

@@ -13,7 +13,7 @@
       "@siberiacancode/docs": ["."],
       "@siberiacancode/docs/*": ["./*"],
       "@docs/*": ["./*"],
-      "@siberiacancode/reactuse": ["../core/dist/esm/index.dts"]
+      "@siberiacancode/reactuse": ["../core/dist/esm/index.mjs"]
     },
     "resolveJsonModule": true,
     "types": ["@types/web-bluetooth", "@types/dom-speech-recognition"],
