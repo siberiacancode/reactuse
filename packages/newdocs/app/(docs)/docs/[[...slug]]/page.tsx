@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import process from 'node:process';
 
-import { DocHeader } from '../_components/doc-header';
+import { DocsHeader } from '../_components/docs-header';
 import { DocsToc } from '../_components/docs-toc';
 
 export const revalidate = false;
@@ -70,12 +70,12 @@ export const DocsPage = async (props: DocsPageProps) => {
 
   return (
     <div
-      className='scroll-mt-24 pb-8 text-[1.05rem] sm:text-[15px] xl:grid xl:w-full xl:grid-cols-[minmax(0,var(--docs-content-width))_var(--sidebar-width)] xl:gap-[var(--docs-layout-gap)]'
+      className='scroll-mt-24 pb-8 text-[1.05rem] sm:text-[15px] xl:grid xl:w-full xl:grid-cols-[minmax(0,var(--docs-content-width))_var(--sidebar-width)] xl:items-start xl:gap-[var(--docs-layout-gap)]'
       data-slot='docs'
     >
       <div className='mt-12 min-w-0 flex-col pb-24 xl:flex xl:px-16 2xl:px-22'>
         <div className='mb-6 flex w-full min-w-0 flex-col gap-6 text-neutral-800 md:px-0 dark:text-neutral-300'>
-          <DocHeader
+          <DocsHeader
             description={doc.description}
             markdown={raw}
             next={neighbours.next?.url}
@@ -104,9 +104,9 @@ export const DocsPage = async (props: DocsPageProps) => {
           </div>
         </div>
       </div>
-      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex xl:pl-2'>
+      <div className='pointer-events-none sticky top-[calc(var(--header-height)+1px)] z-30 hidden w-(--sidebar-width) flex-col gap-4 self-start pb-8 xl:flex xl:pl-2'>
         {!!doc.toc.length && (
-          <div className='no-scrollbar h-full overflow-y-auto overscroll-contain pt-12'>
+          <div className='no-scrollbar pointer-events-auto max-h-[calc(100svh-var(--header-height)-4rem)] overflow-y-auto overscroll-contain pt-12'>
             <DocsToc items={doc.toc} path={page.data.info.path} />
           </div>
         )}

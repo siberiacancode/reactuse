@@ -2,7 +2,8 @@
 
 import type { ReactNode } from 'react';
 
-import { ExternalLinkIcon } from 'lucide-react';
+import { useBoolean, useWindowScroll } from '@siberiacancode/reactuse';
+import { ArrowUpIcon, ExternalLinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -23,6 +24,10 @@ interface DocsTocProps {
 export const DocsToc = ({ path, items }: DocsTocProps) => {
   const itemIds = useMemo(() => items.map((item) => item.url.replace('#', '')), [items]);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [showScrollToTop, toggleShowScrollToTop] = useBoolean(false);
+  const windowScroll = useWindowScroll(({ y }) => {
+    toggleShowScrollToTop(y > 200);
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -83,6 +88,23 @@ export const DocsToc = ({ path, items }: DocsTocProps) => {
               <div>Edit page on GitHub</div> <ExternalLinkIcon className='size-4' />
             </div>
           </a>
+        </li>
+
+        <li
+          aria-hidden={!showScrollToTop}
+          className='transition-opacity duration-100 ease-out'
+          data-visible={showScrollToTop}
+        >
+          <button
+            className='text-muted-foreground hover:text-foreground text-md flex items-center gap-2 no-underline transition-opacity duration-100 ease-out data-[visible=false]:pointer-events-none data-[visible=false]:opacity-0'
+            data-visible={showScrollToTop}
+            tabIndex={showScrollToTop ? 0 : -1}
+            type='button'
+            onClick={() => windowScroll.scrollTo({ y: 0, behavior: 'smooth' })}
+          >
+            <span>Scroll to top</span>
+            <ArrowUpIcon className='size-4' />
+          </button>
         </li>
       </ul>
     </nav>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useVisibility } from '@siberiacancode/reactuse';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
@@ -135,9 +136,19 @@ const segmentsToText = (segments: Segment[]) => segments.map((s) => s.text).join
 export const LandingCli = () => {
   const [lineIndex, setLineIndex] = useState(0);
   const [charCount, setCharCount] = useState(0);
+  const [started, setStarted] = useState(false);
+
+  const { ref } = useVisibility<HTMLElement>({
+    threshold: 0.35,
+    enabled: !started,
+    onChange: (entry) => {
+      if (entry.isIntersecting) setStarted(true);
+    }
+  });
 
   // sequential terminal player — runs once, then stops
   useEffect(() => {
+    if (!started) return;
     if (lineIndex >= script.length) return;
 
     const line = script[lineIndex];
@@ -165,7 +176,7 @@ export const LandingCli = () => {
     }, OUTPUT_DELAY);
 
     return () => clearTimeout(next);
-  }, [lineIndex, charCount]);
+  }, [started, lineIndex, charCount]);
 
   // render a command line respecting the typed char count (preserves colors)
   const renderTypedSegments = (segments: Segment[], count: number) => {
@@ -185,7 +196,7 @@ export const LandingCli = () => {
   };
 
   return (
-    <section>
+    <section ref={ref}>
       <div className='container mx-auto px-6 pb-12 md:pb-24'>
         <h2 className='font-display text-foreground text-xl font-bold tracking-tight uppercase md:text-2xl'>
           or install by cli
@@ -254,37 +265,38 @@ export const LandingCli = () => {
             {/* body */}
             <div className='relative h-80 overflow-hidden px-5 py-4 font-mono text-sm leading-relaxed'>
               <div>
-                {script.slice(0, lineIndex + 1).map((line) => {
-                  const isCurrent = line.id === script[lineIndex]?.id;
-                  const isTyping = isCurrent && line.kind === 'command';
-                  const full = segmentsToText(line.segments);
+                {started &&
+                  script.slice(0, lineIndex + 1).map((line) => {
+                    const isCurrent = line.id === script[lineIndex]?.id;
+                    const isTyping = isCurrent && line.kind === 'command';
+                    const full = segmentsToText(line.segments);
 
-                  return (
-                    <div key={line.id} className='whitespace-pre'>
-                      {isTyping ? (
-                        <>
-                          {renderTypedSegments(line.segments, charCount)}
-                          {charCount < full.length && (
-                            <span className='landing-cli-cursor text-foreground dark:text-white'>
-                              ▋
+                    return (
+                      <div key={line.id} className='whitespace-pre'>
+                        {isTyping ? (
+                          <>
+                            {renderTypedSegments(line.segments, charCount)}
+                            {charCount < full.length && (
+                              <span className='landing-cli-cursor text-foreground dark:text-white'>
+                                ▋
+                              </span>
+                            )}
+                          </>
+                        ) : line.segments.length === 1 && line.segments[0].text === '' ? (
+                          '\u00A0'
+                        ) : (
+                          line.segments.map((segment) => (
+                            <span
+                              key={`${segment.className ?? 'plain'}-${segment.text}`}
+                              className={segment.className}
+                            >
+                              {segment.text}
                             </span>
-                          )}
-                        </>
-                      ) : line.segments.length === 1 && line.segments[0].text === '' ? (
-                        '\u00A0'
-                      ) : (
-                        line.segments.map((segment) => (
-                          <span
-                            key={`${segment.className ?? 'plain'}-${segment.text}`}
-                            className={segment.className}
-                          >
-                            {segment.text}
-                          </span>
-                        ))
-                      )}
-                    </div>
-                  );
-                })}
+                          ))
+                        )}
+                      </div>
+                    );
+                  })}
               </div>
 
               {/* right-side fade */}

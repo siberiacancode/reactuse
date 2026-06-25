@@ -81,7 +81,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
 
   return (
     <div
-      className='scroll-mt-24 pb-8 text-[1.05rem] sm:text-[15px] xl:grid xl:w-full xl:grid-cols-[minmax(0,var(--docs-content-width))_var(--sidebar-width)] xl:gap-[var(--docs-layout-gap)]'
+      className='scroll-mt-24 pb-8 text-[1.05rem] sm:text-[15px] xl:grid xl:w-full xl:grid-cols-[minmax(0,var(--docs-content-width))_var(--sidebar-width)] xl:items-start xl:gap-[var(--docs-layout-gap)]'
       data-slot='docs'
     >
       <div className='mt-12 min-w-0 flex-col pb-24 xl:flex xl:px-16 2xl:px-22'>
@@ -123,9 +123,9 @@ const FunctionPage = async (props: FunctionPageProps) => {
         </div>
       </div>
 
-      <div className='sticky top-[calc(var(--header-height)+1px)] z-30 hidden h-[80svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex xl:pl-2'>
+      <div className='pointer-events-none sticky top-[calc(var(--header-height)+1px)] z-30 hidden w-(--sidebar-width) flex-col gap-4 self-start pb-8 xl:flex xl:pl-2'>
         {!!doc.toc.length && (
-          <div className='no-scrollbar h-full overflow-y-auto overscroll-contain pt-12'>
+          <div className='no-scrollbar pointer-events-auto max-h-[calc(100svh-var(--header-height)-4rem)] overflow-y-auto overscroll-contain pt-12'>
             <FunctionToc
               hooks={metadata.dependencies.hooks}
               items={doc.toc}

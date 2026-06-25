@@ -46,7 +46,7 @@ export interface UseInfiniteScroll {
  *
  * @overload
  * @template Target The target element
- * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
+ * @param {(event: Event) => void} callback The callback to execute when the scroll reaches the configured threshold
  * @param {number} [options.distance=10] The distance in pixels to trigger the callback
  * @param {string} [options.direction='bottom'] The direction to trigger the callback
  * @returns {UseInfiniteScrollReturn & { ref: StateRef<Target> }} An object containing the ref and loading
@@ -56,7 +56,7 @@ export interface UseInfiniteScroll {
  *
  * @overload
  * @param {HookTarget} target The target element to detect infinite scroll for
- * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
+ * @param {(event: Event) => void} callback The callback to execute when the scroll reaches the configured threshold
  * @param {number} [options.distance=10] The distance in pixels to trigger the callback
  * @param {string} [options.direction='bottom'] The direction to trigger the callback
  * @returns {UseInfiniteScrollReturn} An object containing the ref and loading

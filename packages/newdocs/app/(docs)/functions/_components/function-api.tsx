@@ -78,11 +78,7 @@ export const FunctionApi = ({ apiParameters }: FunctionApiProps) => {
                     <MARKDOWN_COMPONENTS.tr key={parameter.name} className='m-0 border-b'>
                       <MARKDOWN_COMPONENTS.td>{parameter.name}</MARKDOWN_COMPONENTS.td>
                       <MARKDOWN_COMPONENTS.td>
-                        {isDefaultType(parameter.type) ? (
-                          parameter.type
-                        ) : (
-                          <code className='text-[var(--brand-hex)]'>{parameter.type}</code>
-                        )}
+                        {isDefaultType(parameter.type) ? parameter.type : <b>{parameter.type}</b>}
                       </MARKDOWN_COMPONENTS.td>
                       <MARKDOWN_COMPONENTS.td>{parameter.default ?? '-'}</MARKDOWN_COMPONENTS.td>
                       <MARKDOWN_COMPONENTS.td>{parameter.description}</MARKDOWN_COMPONENTS.td>
@@ -96,7 +92,7 @@ export const FunctionApi = ({ apiParameters }: FunctionApiProps) => {
           {!!group.returns && (
             <div className='flex flex-col gap-2'>
               <MARKDOWN_COMPONENTS.h3 className='mt-0'>Returns</MARKDOWN_COMPONENTS.h3>
-              <code className='text-sm text-[var(--brand-hex)]'>{group.returns.type}</code>
+              <b>{group.returns.type}</b>
             </div>
           )}
 

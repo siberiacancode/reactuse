@@ -24,7 +24,7 @@ import { LINKS } from '@/src/constants';
 
 import { getPromptUrl, PROMPT_LINKS } from '../../_helpers';
 
-interface DocHeaderProps {
+interface DocsHeaderProps {
   description?: string;
   markdown: string;
   next?: string;
@@ -33,14 +33,14 @@ interface DocHeaderProps {
   title: string;
 }
 
-export const DocHeader = ({
+export const DocsHeader = ({
   description,
   markdown,
   next,
   previous,
   path,
   title
-}: DocHeaderProps) => {
+}: DocsHeaderProps) => {
   const { copy, copied } = useCopy();
 
   return (
