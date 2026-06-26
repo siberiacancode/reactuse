@@ -4,6 +4,7 @@ export * from './useControllableState/useControllableState';
 export * from './useCookie/useCookie';
 export * from './useCookies/useCookies';
 export * from './useCounter/useCounter';
+export * from './useCycleList/useCycleList';
 export * from './useDefault/useDefault';
 export * from './useDisclosure/useDisclosure';
 export * from './useField/useField';
