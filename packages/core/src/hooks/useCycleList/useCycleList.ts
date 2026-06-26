@@ -1,15 +1,5 @@
 import { useState } from 'react';
 
-/** The use cycle list options type */
-export interface UseCycleListOptions<Value> {
-  /** The fallback index if the initial value is not found in the list */
-  fallbackIndex?: number;
-  /** The initial value */
-  initialValue?: Value;
-  /** The function to get the index of the initial value */
-  getIndexOf?: (value: Value, list: Value[]) => number;
-}
-
 /** The use cycle list return type */
 export interface UseCycleListReturn<Value> {
   /** The current index */
@@ -33,36 +23,20 @@ const normalizeIndex = (index: number, length: number) => ((index % length) + le
  * @usage medium
  *
  * @template Value The type of the item
- * @param {Value[]} list The list of items to cycle through
- * @param {UseCycleListOptions<Value>} [options] The options for the hook
+ * @param {[Value, ...Value[]]} list The non-empty list of items to cycle through
+ * @param {number} [initialIndex=0] The initial index in the list
  * @returns {UseCycleListReturn<Value>} An object containing the current item, current index, and functions to cycle through the list
  *
  * @example
  * const { value, index, next, prev, go } = useCycleList(['Dog', 'Cat', 'Lizard']);
  */
-export const useCycleList = <Value>(
-  list: Value[],
-  options: UseCycleListOptions<Value> = {}
-): UseCycleListReturn<Value> => {
-  const { initialValue = list[0], fallbackIndex = 0, getIndexOf } = options;
+export const useCycleList = <Value>(list: Value[], initialIndex = 0): UseCycleListReturn<Value> => {
+  const [index, setIndex] = useState(() => normalizeIndex(initialIndex, list.length));
 
-  const [index, setIndex] = useState(() => {
-    if (!list.length) return 0;
-
-    const index = getIndexOf ? getIndexOf(initialValue, list) : list.indexOf(initialValue);
-
-    return index < 0 ? fallbackIndex : index;
-  });
-
-  const normalizedIndex = list.length ? normalizeIndex(index, list.length) : 0;
+  const normalizedIndex = normalizeIndex(index, list.length);
   const value = list[normalizedIndex];
 
   const go = (targetIndex: number) => {
-    if (!list.length) {
-      setIndex(0);
-      return undefined as Value;
-    }
-
     const nextIndex = normalizeIndex(targetIndex, list.length);
     setIndex(nextIndex);
 

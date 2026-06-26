@@ -148,6 +148,7 @@
 - [useCookie](https://reactuse.org/functions/hooks/useCookie): Hook that manages cookie value
 - [useCookies](https://reactuse.org/functions/hooks/useCookies): Hook that manages cookie values
 - [useCounter](https://reactuse.org/functions/hooks/useCounter): Hook that manages a counter
+- [useCycleList](https://reactuse.org/functions/hooks/useCycleList): Hook that cycles through a list of items
 - [useDefault](https://reactuse.org/functions/hooks/useDefault): Hook that returns the default value
 - [useDisclosure](https://reactuse.org/functions/hooks/useDisclosure): Hook that allows you to open and close a modal
 - [useField](https://reactuse.org/functions/hooks/useField): Hook to manage a form field

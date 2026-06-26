@@ -66,6 +66,19 @@
   --color-code-number: var(--code-number);
   --color-selection: var(--selection);
   --color-selection-foreground: var(--selection-foreground);
+
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-100% - var(--gap))); }
+  }
+  
+  @keyframes marquee-vertical {
+    from { transform: translateY(0); }
+    to   { transform: translateY(calc(-100% - var(--gap))); }
+  }
 }
 
 :root {
@@ -396,16 +409,6 @@
   --header-height: 60px;
 }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-25%);
-  }
-}
-
 @keyframes float {
   0%,
   100% {
@@ -415,10 +418,6 @@
   50% {
     transform: translateY(-8px);
   }
-}
-
-.animate-marquee {
-  animation: marquee 120s linear infinite;
 }
 
 .animate-float {

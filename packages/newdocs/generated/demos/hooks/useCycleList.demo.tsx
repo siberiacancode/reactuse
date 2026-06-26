@@ -1,3 +1,5 @@
+'use client';
+
 import { useCycleList } from '@siberiacancode/reactuse';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useRef } from 'react';
