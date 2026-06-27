@@ -208,6 +208,85 @@ targets.forEach((target) => {
       expect(removeEventListenerSpy).toHaveBeenCalledTimes(1);
     });
 
+    it('Should not call callback when no has more data', async () => {
+      const callback = vi.fn();
+
+      const { result } = renderHook(() => {
+        if (target)
+          return useInfiniteScroll(target, callback, {
+            distance: 10,
+            hasMore: false
+          }) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseInfiniteScrollReturn;
+        return useInfiniteScroll<HTMLDivElement>(callback, {
+          distance: 10,
+          hasMore: false
+        });
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      await act(async () => {
+        element.scrollTop = 790;
+        element.dispatchEvent(new Event('scroll'));
+      });
+
+      expect(callback).not.toHaveBeenCalled();
+    });
+
+    it('Should call callback when has more data', async () => {
+      const callback = vi.fn();
+
+      const { result } = renderHook(() => {
+        if (target)
+          return useInfiniteScroll(target, callback, {
+            distance: 10,
+            hasMore: true
+          }) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseInfiniteScrollReturn;
+        return useInfiniteScroll<HTMLDivElement>(callback, {
+          distance: 10,
+          hasMore: true
+        });
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      await act(async () => {
+        element.scrollTop = 790;
+        element.dispatchEvent(new Event('scroll'));
+      });
+
+      expect(callback).toHaveBeenCalledOnce();
+    });
+
+    it('Should call callback immediately when content does not overflow', async () => {
+      Object.defineProperty(element, 'scrollHeight', {
+        value: 200,
+        configurable: true
+      });
+
+      const callback = vi.fn();
+
+      const { result } = renderHook(() => {
+        if (target)
+          return useInfiniteScroll(target, callback, {
+            immediately: true
+          }) as unknown as {
+            ref: StateRef<HTMLDivElement>;
+          } & UseInfiniteScrollReturn;
+        return useInfiniteScroll<HTMLDivElement>(callback, {
+          immediately: true
+        });
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      await waitFor(() => expect(callback).toHaveBeenCalledOnce());
+    });
+
     it('Should cleanup on unmount', () => {
       const callback = vi.fn();
       const removeEventListenerSpy = vi.spyOn(element, 'removeEventListener');
