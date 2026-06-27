@@ -1,7 +1,7 @@
 {
   "name": "useverse",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Add reactuse hooks to your apps",
   "license": "MIT",
   "homepage": "https://siberiacancode.github.io/reactuse/",
@@ -20,9 +20,9 @@
     "use",
     "hooks"
   ],
-  "exports": "./dist/bin.js",
+  "exports": "./dist/bin.mjs",
   "bin": {
-    "useverse": "dist/bin.js"
+    "useverse": "dist/bin.mjs"
   },
   "files": [
     "dist"
