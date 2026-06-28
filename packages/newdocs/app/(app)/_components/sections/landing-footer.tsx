@@ -42,7 +42,7 @@ export const LandingFooter = () => (
         <div className='grid gap-12 lg:grid-cols-[1.4fr_2fr] lg:gap-16'>
           {/* ── Brand (left) ── */}
           <div className='max-w-sm'>
-            <Link className='inline-flex items-center gap-2' href='/'>
+            <Link className='inline-flex items-center gap-2' href='/' prefetch={false}>
               <Image alt='ReactUse' height={12} src='/logo.svg' width={12} />
 
               <span className='text-foreground text-lg font-semibold tracking-tight'>
@@ -61,6 +61,7 @@ export const LandingFooter = () => (
                   key={social.label}
                   className='text-muted-foreground hover:text-foreground text-sm transition-colors'
                   href={social.href}
+                  prefetch={false}
                   rel='noreferrer'
                   target='_blank'
                 >
@@ -81,6 +82,7 @@ export const LandingFooter = () => (
                       <Link
                         className='text-muted-foreground hover:text-foreground text-sm transition-colors'
                         href={link.href}
+                        prefetch={false}
                         rel={column.external ? 'noreferrer' : undefined}
                         target={column.external ? '_blank' : undefined}
                       >
@@ -101,6 +103,7 @@ export const LandingFooter = () => (
             <Link
               className='text-foreground hover:text-muted-foreground transition-colors'
               href='https://github.com/siberiacancode'
+              prefetch={false}
               rel='noreferrer'
               target='_blank'
             >

@@ -71,6 +71,7 @@ export const FunctionToc = ({ type, name, items, hooks }: FunctionTocProps) => {
               data-active={item.url === `#${activeId}`}
               data-depth={item.depth}
               href={item.url}
+              prefetch={false}
             >
               {item.title}
             </Link>
@@ -149,6 +150,7 @@ export const FunctionToc = ({ type, name, items, hooks }: FunctionTocProps) => {
                     key={hook}
                     className='text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-md no-underline transition-colors data-[active=true]:font-medium data-[depth=3]:pl-4 data-[depth=4]:pl-6'
                     href={`/functions/hooks/${hook}`}
+                    prefetch={false}
                   >
                     <div className='flex items-center gap-1'>
                       {hook}

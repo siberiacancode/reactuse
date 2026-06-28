@@ -88,7 +88,13 @@ export const Search = (props: Props) => {
                   {group.children
                     .filter((child) => child.type === 'page')
                     .map((item) => (
-                      <Link key={item.url} className='block' href={item.url} onClick={dialog.close}>
+                      <Link
+                        key={item.url}
+                        className='block'
+                        href={item.url}
+                        prefetch={false}
+                        onClick={dialog.close}
+                      >
                         <CommandItem className='cursor-pointer' value={item.name!.toString()}>
                           <div className='flex items-center justify-center gap-2'>
                             {!isFunction && <ArrowRightIcon />}
@@ -105,7 +111,13 @@ export const Search = (props: Props) => {
             <CommandGroup className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'>
               {Array.isArray(query.data) &&
                 query.data.map((item) => (
-                  <Link key={item.id} className='block' href={item.url} onClick={dialog.close}>
+                  <Link
+                    key={item.id}
+                    className='block'
+                    href={item.url}
+                    prefetch={false}
+                    onClick={dialog.close}
+                  >
                     <CommandItem
                       className='cursor-pointer'
                       keywords={['nav', 'navigation', item.content.toLowerCase()]}

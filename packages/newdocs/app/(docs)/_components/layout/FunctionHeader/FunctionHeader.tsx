@@ -35,7 +35,7 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
         <Burger className='lg:hidden' groups={groups} />
 
         <div className='hidden min-w-0 items-center justify-between gap-3 lg:flex'>
-          <Link className='inline-flex items-center gap-2' href='/'>
+          <Link className='inline-flex items-center gap-2' href='/' prefetch={false}>
             <Image alt='ReactUse' height={12} src='/logo.svg' width={12} />
 
             <span className='text-foreground text-lg font-semibold tracking-tight'>
@@ -45,11 +45,15 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
 
           <div className='flex items-center gap-2'>
             <Button asChild className='rounded-full' size='sm' variant='ghost'>
-              <Link href='/docs/installation'>Docs</Link>
+              <Link href='/docs/installation' prefetch={false}>
+                Docs
+              </Link>
             </Button>
 
             <Button asChild className='rounded-full' size='sm' variant='ghost'>
-              <Link href='/docs/functions'>Functions</Link>
+              <Link href='/docs/functions' prefetch={false}>
+                Functions
+              </Link>
             </Button>
           </div>
         </div>
@@ -61,7 +65,7 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
 
           <div className='flex items-center gap-1'>
             <Button asChild className='rounded-full' variant='ghost'>
-              <Link href={LINKS.GITHUB} rel='noreferrer' target='_blank'>
+              <Link href={LINKS.GITHUB} prefetch={false} rel='noreferrer' target='_blank'>
                 <Icons.gitHub className='size-4.5' />
 
                 <span className='text-muted-foreground text-xs tabular-nums'>{formattedCount}</span>
@@ -69,7 +73,7 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
             </Button>
 
             <Button asChild className='rounded-full' size='icon' variant='ghost'>
-              <Link href={LINKS.NPM} rel='noreferrer' target='_blank'>
+              <Link href={LINKS.NPM} prefetch={false} rel='noreferrer' target='_blank'>
                 <Icons.npm className='size-4.5' />
               </Link>
             </Button>

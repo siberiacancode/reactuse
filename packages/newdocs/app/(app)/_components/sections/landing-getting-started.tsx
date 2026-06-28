@@ -102,6 +102,7 @@ export const LandingGettingStarted = () => {
             <Link
               className='text-foreground underline underline-offset-4'
               href='/docs/installation/nextjs'
+              prefetch={false}
             >
               Next.js
             </Link>
@@ -109,6 +110,7 @@ export const LandingGettingStarted = () => {
             <Link
               className='text-foreground underline underline-offset-4'
               href='/docs/installation/vite'
+              prefetch={false}
             >
               Vite
             </Link>
@@ -116,6 +118,7 @@ export const LandingGettingStarted = () => {
             <Link
               className='text-foreground underline underline-offset-4'
               href='/docs/installation/react-router'
+              prefetch={false}
             >
               React Router
             </Link>{' '}
@@ -123,7 +126,7 @@ export const LandingGettingStarted = () => {
           </p>
 
           <Button asChild className='mt-3 rounded-full px-0' variant='link'>
-            <Link href='/docs/installation/manual'>
+            <Link href='/docs/installation/manual' prefetch={false}>
               <span>Add to a manual project</span>
               <ArrowRight className='size-4' />
             </Link>
@@ -147,6 +150,7 @@ export const LandingGettingStarted = () => {
                 aria-label={activeFramework.name}
                 className='w-fit transition-opacity hover:opacity-70'
                 href={activeFramework.site}
+                prefetch={false}
                 rel='noreferrer'
                 target='_blank'
               >
@@ -173,7 +177,7 @@ export const LandingGettingStarted = () => {
             {/* ── Button, then loader bars under it ── */}
             <div className='mt-10'>
               <Button asChild className='rounded-full px-6'>
-                <Link href={activeFramework.href}>
+                <Link href={activeFramework.href} prefetch={false}>
                   <span>Install</span>
                   <ArrowRight className='size-4' />
                 </Link>
@@ -252,6 +256,7 @@ export const LandingGettingStarted = () => {
                     )}
                     aria-label={`Open ${framework.name} installation`}
                     href={framework.href}
+                    prefetch={false}
                   >
                     <ArrowUpRight className='size-4' />
                   </Link>

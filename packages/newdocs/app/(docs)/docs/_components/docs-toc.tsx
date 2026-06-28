@@ -69,6 +69,7 @@ export const DocsToc = ({ path, items }: DocsTocProps) => {
               data-active={item.url === `#${activeId}`}
               data-depth={item.depth}
               href={item.url}
+              prefetch={false}
             >
               {item.title}
             </Link>

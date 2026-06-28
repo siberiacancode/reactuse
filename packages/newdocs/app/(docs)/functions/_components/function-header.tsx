@@ -111,7 +111,7 @@ export const FunctionHeader = ({
             <div className='ml-auto flex gap-2'>
               {previous && (
                 <Button asChild size='icon-sm' variant='secondary'>
-                  <Link href={previous}>
+                  <Link href={previous} prefetch={false}>
                     <ArrowLeftIcon />
                     <span className='sr-only'>Previous</span>
                   </Link>
@@ -119,7 +119,7 @@ export const FunctionHeader = ({
               )}
               {next && (
                 <Button asChild size='icon-sm' variant='secondary'>
-                  <Link href={next}>
+                  <Link href={next} prefetch={false}>
                     <span className='sr-only'>Next</span>
                     <ArrowRightIcon />
                   </Link>

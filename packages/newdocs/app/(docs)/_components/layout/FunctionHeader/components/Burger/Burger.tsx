@@ -62,7 +62,7 @@ export const Burger = ({ groups, className, ...props }: BurgerProps) => {
           <div className='flex flex-col gap-4'>
             <div className='text-muted-foreground text-sm font-medium'>Menu</div>
             <div className='flex flex-col gap-3'>
-              <Link href='/' onClick={burger.close}>
+              <Link href='/' prefetch={false} onClick={burger.close}>
                 Home
               </Link>
             </div>
@@ -74,7 +74,11 @@ export const Burger = ({ groups, className, ...props }: BurgerProps) => {
                 {group.items.map((item) => {
                   const Component = item.external ? 'a' : Link;
                   return (
-                    <Component key={item.url} href={item.url}>
+                    <Component
+                      key={item.url}
+                      href={item.url}
+                      {...(item.external ? {} : { prefetch: false })}
+                    >
                       {item.name}
                     </Component>
                   );

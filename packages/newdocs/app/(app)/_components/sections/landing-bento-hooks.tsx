@@ -1103,7 +1103,7 @@ export const LandingBentoHooks = ({ hooks }: LandingBentoHooksProps) => (
         </p>
         <div className='flex flex-wrap items-center gap-2'>
           <Button asChild className='rounded-full px-7 py-6 font-mono text-lg font-semibold'>
-            <Link href='/functions/hooks/useActiveElement'>
+            <Link href='/functions/hooks/useActiveElement' prefetch={false}>
               <span>View all</span>
               <ArrowRight className='size-4' />
             </Link>
@@ -1113,7 +1113,7 @@ export const LandingBentoHooks = ({ hooks }: LandingBentoHooksProps) => (
             className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
             variant='secondary'
           >
-            <Link href='/docs/functions'>
+            <Link href='/docs/functions' prefetch={false}>
               <span>Browse all functions</span>
               <ArrowRight className='size-4' />
             </Link>

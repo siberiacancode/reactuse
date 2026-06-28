@@ -100,13 +100,13 @@ export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
         {/* actions */}
         <div className='mt-8 flex flex-col items-start gap-3 sm:flex-row'>
           <Button asChild className='group h-11 rounded-full px-7 text-sm'>
-            <Link href='/docs/installation'>
+            <Link href='/docs/installation' prefetch={false}>
               Get started
               <ArrowRightIcon className='size-4 transition-transform group-hover:translate-x-0.5' />
             </Link>
           </Button>
           <Button asChild className='h-11 rounded-full px-7 text-sm' variant='secondary'>
-            <Link href={LINKS.GITHUB} rel='noreferrer' target='_blank'>
+            <Link href={LINKS.GITHUB} prefetch={false} rel='noreferrer' target='_blank'>
               <GithubIcon aria-hidden='true' className='size-4' />
               GitHub
             </Link>

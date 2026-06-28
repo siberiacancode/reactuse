@@ -230,6 +230,7 @@ export const LandingCli = () => {
                         <Link
                           className='text-foreground inline-flex items-center gap-0.5 font-medium underline underline-offset-4'
                           href={step.link.href}
+                          prefetch={false}
                           rel='noreferrer'
                           target='_blank'
                         >

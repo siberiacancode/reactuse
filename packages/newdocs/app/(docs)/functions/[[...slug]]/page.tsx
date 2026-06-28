@@ -107,14 +107,14 @@ const FunctionPage = async (props: FunctionPageProps) => {
           <div className='mt-2 hidden w-full flex-wrap justify-between gap-2 px-4 sm:flex sm:px-0'>
             {neighbours.previous && (
               <Button asChild size='sm' variant='secondary'>
-                <Link href={neighbours.previous.url}>
+                <Link href={neighbours.previous.url} prefetch={false}>
                   <ArrowLeftIcon /> {neighbours.previous.name}
                 </Link>
               </Button>
             )}
             {neighbours.next && (
               <Button asChild size='sm' variant='secondary'>
-                <Link href={neighbours.next.url}>
+                <Link href={neighbours.next.url} prefetch={false}>
                   {neighbours.next.name} <ArrowRightIcon />
                 </Link>
               </Button>

@@ -89,14 +89,14 @@ export const DocsPage = async (props: DocsPageProps) => {
           <div className='hidden h-16 w-full items-center gap-2 px-4 sm:flex sm:px-0'>
             {neighbours.previous && (
               <Button asChild className='shadow-none' size='sm' variant='secondary'>
-                <Link href={neighbours.previous.url}>
+                <Link href={neighbours.previous.url} prefetch={false}>
                   <ArrowLeftIcon /> {neighbours.previous.name}
                 </Link>
               </Button>
             )}
             {neighbours.next && (
               <Button asChild className='ml-auto shadow-none' size='sm' variant='secondary'>
-                <Link href={neighbours.next.url}>
+                <Link href={neighbours.next.url} prefetch={false}>
                   {neighbours.next.name} <ArrowRightIcon />
                 </Link>
               </Button>

@@ -57,6 +57,7 @@ export const LandingContributors = ({ contributors }: LandingContributorsProps) 
           <Link
             className='text-foreground mt-5 inline-flex items-center gap-1 font-medium underline underline-offset-4'
             href={LINKS.CONTRIBUTING}
+            prefetch={false}
             rel='noreferrer'
             target='_blank'
           >

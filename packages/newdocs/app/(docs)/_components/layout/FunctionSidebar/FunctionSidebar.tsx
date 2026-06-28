@@ -58,7 +58,7 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
                         className='data-[active=true]:bg-accent data-[active=true]:border-accent relative h-[30px] w-full overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-0 after:z-0 after:rounded-md'
                         isActive={pathname === item.url}
                       >
-                        <Component href={item.url}>
+                        <Component href={item.url} {...(item.external ? {} : { prefetch: false })}>
                           <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
                           <span className='relative flex min-w-0 items-center gap-2'>
                             <span className='block min-w-0 truncate'>{item.name}</span>
