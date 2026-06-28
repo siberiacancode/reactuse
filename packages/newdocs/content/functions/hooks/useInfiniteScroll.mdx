@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1782391434000
+lastModifiedTime: 1782543795000
 ---
 
 import metadata from './useInfiniteScroll.meta.json';

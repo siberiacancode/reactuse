@@ -4,7 +4,7 @@ import { createMDX } from 'fumadocs-mdx/next';
 
 const nextConfig: NextConfig = {
   output: 'export',
-  pageExtensions: ['jsx', 'mdx', 'tsx'],
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
   typescript: {
     ignoreBuildErrors: true
   },
