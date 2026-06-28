@@ -9,7 +9,7 @@ const mockNotificationClose = vi.fn();
 
 class MockNotification {
   static permission: NotificationPermission = 'default';
-  static requestPermission = vi.fn<Promise<NotificationPermission>>();
+  static requestPermission = vi.fn<() => Promise<NotificationPermission>>();
 
   title: string;
   options: NotificationOptions;

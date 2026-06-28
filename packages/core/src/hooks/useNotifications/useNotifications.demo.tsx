@@ -1,115 +1,80 @@
 import { useNotifications } from '@siberiacancode/reactuse';
-import { BellIcon, CheckIcon, PackageCheckIcon, ShieldAlertIcon, XIcon } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 
-const UPDATES = [
-  {
-    title: 'ReactUse release',
-    body: 'SiberiaCanCode published a new hook pack for your project.',
-    icon: PackageCheckIcon
-  },
-  {
-    title: 'Demo copied',
-    body: 'The reactuse example is ready to paste into your app.',
-    icon: CheckIcon
-  },
-  {
-    title: 'Community ping',
-    body: 'A new issue on SiberiaCanCode/reactuse needs a quick look.',
-    icon: ShieldAlertIcon
-  }
-];
+const PERMISSION_LABELS: Record<NotificationPermission, string> = {
+  default: 'Not requested',
+  denied: 'Blocked',
+  granted: 'Allowed'
+};
 
 const Demo = () => {
   const notifications = useNotifications({
-    tag: 'reactuse-update',
+    title: 'siberiacancode/reactuse',
+    body: 'New reactuse version released.',
+    tag: 'reactuse-notification',
     onClick: () => window.focus()
   });
 
   const disabled = !notifications.supported || notifications.permission === 'denied';
 
-  const notify = async (update: (typeof UPDATES)[number]) => {
+  const notify = async () => {
     const granted =
       notifications.permission === 'granted' || (await notifications.requestPermission());
 
     if (!granted) return;
 
-    await notifications.show({
-      title: update.title,
-      body: update.body
-    });
+    await notifications.show();
+  };
+
+  const closeNotification = () => {
+    notifications.notification?.close();
+    notifications.close();
   };
 
   if (!notifications.supported)
     return (
-      <p>
-        API not supported, make sure to check for compatibility with different browsers when using
-        this{' '}
-        <a
-          href='https://developer.mozilla.org/en-US/docs/Web/API/Notification'
-          rel='noreferrer'
-          target='_blank'
-        >
-          api
-        </a>
-      </p>
+      <section className='border-border bg-card flex w-full max-w-sm flex-col gap-3 rounded-xl border p-4'>
+        <div className='flex flex-col gap-1'>
+          <h3 className='text-foreground text-base font-semibold'>Notifications unavailable</h3>
+          <p className='text-muted-foreground text-sm leading-relaxed'>
+            This browser does not support the Notification API.
+          </p>
+        </div>
+      </section>
     );
 
   return (
-    <section className='flex w-full max-w-md flex-col gap-5 p-4'>
-      <header className='flex items-start justify-between gap-4'>
-        <div className='flex flex-col gap-1'>
-          <h3 className='text-foreground text-xl font-semibold'>reactuse alerts</h3>
-          <p className='text-muted-foreground text-sm'>
-            Send small desktop updates from the siberiacancode toolkit while working with reactuse.
-          </p>
-        </div>
+    <section className='border-border bg-card text-card-foreground flex w-full max-w-sm flex-col gap-4 rounded-xl border p-4 shadow-sm'>
+      <header className='flex items-start gap-3'>
+        <div className='flex min-w-0 flex-1 flex-col gap-1'>
+          <div className='flex flex-wrap items-center gap-2'>
+            <h3 className='text-foreground text-base font-semibold'>[use]Notifications</h3>
+            <span className='text-muted-foreground' data-slot='badge' data-variant='secondary'>
+              {PERMISSION_LABELS[notifications.permission]}
+            </span>
+          </div>
 
-        <div className='bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg'>
-          <BellIcon className='size-5' />
+          <p className='text-muted-foreground text-sm leading-relaxed'>
+            Request permission and show a desktop notification.
+          </p>
         </div>
       </header>
 
-      <div className='flex flex-col gap-2'>
-        {UPDATES.map((update) => {
-          const Icon = update.icon;
-
-          return (
-            <button
-              key={update.title}
-              className='border-border bg-card text-card-foreground hover:bg-muted/60 flex h-auto w-full items-center justify-start gap-3 rounded-lg border px-3 py-3 text-left'
-              disabled={disabled}
-              type='button'
-              onClick={() => notify(update)}
-            >
-              <span className='bg-muted flex size-9 shrink-0 items-center justify-center rounded-md'>
-                <Icon className='size-4' />
-              </span>
-              <span className='flex min-w-0 flex-col gap-0.5'>
-                <span className='truncate text-sm font-medium'>{update.title}</span>
-                <span className='text-muted-foreground line-clamp-2 text-xs leading-relaxed'>
-                  {update.body}
-                </span>
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
-      <footer className='text-muted-foreground flex items-center justify-between gap-3 border-t pt-4 text-xs'>
-        <span>
-          Permission: <b className='text-foreground'>{notifications.permission}</b>
-        </span>
-
+      <div className='flex gap-2'>
+        <button className='flex-1' disabled={disabled} type='button' onClick={notify}>
+          Show notification
+        </button>
         <button
-          className='h-8! rounded-lg px-3 text-xs'
+          aria-label='Close notification'
+          data-size='icon'
+          data-variant='outline'
           disabled={!notifications.notification}
           type='button'
-          onClick={notifications.close}
+          onClick={closeNotification}
         >
-          <XIcon className='size-3.5' />
-          Close
+          <XIcon className='size-4' />
         </button>
-      </footer>
+      </div>
     </section>
   );
 };
