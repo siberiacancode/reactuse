@@ -84,8 +84,8 @@ const Demo = () => {
     search.setValue('');
   };
 
-  useHotkeys('control+k', () => palette.open());
-  useKeyPress('escape', () => palette.close());
+  useHotkeys('Control+C', () => palette.open());
+  useKeyPress('Escape', () => palette.close());
 
   const query = search.watch().trim().toLowerCase();
   const filtered = COMMANDS.filter((command) => matchesCommand(command, query));
@@ -102,7 +102,7 @@ const Demo = () => {
           <span className='text-muted-foreground text-sm'>Search commands...</span>
         </div>
 
-        <button type='button'>CtrlK</button>
+        <button type='button'>CtrlC</button>
       </div>
 
       {palette.opened && (

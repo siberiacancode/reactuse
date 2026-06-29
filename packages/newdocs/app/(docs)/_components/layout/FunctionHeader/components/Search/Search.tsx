@@ -2,7 +2,7 @@
 
 import type { source } from '@docs/lib/source';
 
-import { useDisclosure } from '@siberiacancode/reactuse';
+import { useDisclosure, useHotkeys, useKeyPress } from '@siberiacancode/reactuse';
 import { liteClient } from 'algoliasearch/lite';
 import { useDocsSearch } from 'fumadocs-core/search/client';
 import { ArrowRightIcon, CircleDashedIcon, Loader2Icon } from 'lucide-react';
@@ -40,6 +40,9 @@ export const Search = (props: Props) => {
     indexName: CONFIG.ALGOLIA.INDEX_NAME,
     locale: 'en'
   });
+
+  useHotkeys('Control+K', () => dialog.open());
+  useKeyPress('Escape', () => dialog.close());
 
   return (
     <Dialog open={dialog.opened} onOpenChange={dialog.toggle}>
