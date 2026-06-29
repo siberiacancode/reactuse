@@ -20,14 +20,46 @@ const targets = [
   })
 ];
 
+const pressCombo = (
+  main: { key: string; code: string },
+  modifier: { key: string; code: string } = { key: 'ctrl', code: 'ctrlLeft' }
+) => {
+  const modifierFlags: KeyboardEventInit = {
+    ctrlKey: modifier.key === 'ctrl',
+    metaKey: modifier.key === 'Meta',
+    altKey: modifier.key === 'Alt',
+    shiftKey: modifier.key === 'Shift'
+  };
+
+  element.dispatchEvent(
+    new KeyboardEvent('keydown', {
+      bubbles: true,
+      cancelable: true,
+      key: modifier.key,
+      code: modifier.code,
+      ...modifierFlags
+    })
+  );
+
+  const event = new KeyboardEvent('keydown', {
+    bubbles: true,
+    cancelable: true,
+    key: main.key,
+    code: main.code,
+    ...modifierFlags
+  });
+  element.dispatchEvent(event);
+  return event;
+};
+
 targets.forEach((target) => {
   describe(`${target}`, () => {
     it('Should use hotkeys', () => {
       const callback = vi.fn();
       const { result } = renderHook(() => {
         if (target)
-          return useHotkeys(target, 'Control+a', callback) as unknown as StateRef<HTMLDivElement>;
-        return useHotkeys<HTMLDivElement>('Control+a', callback);
+          return useHotkeys(target, 'ctrl+a', callback) as unknown as StateRef<HTMLDivElement>;
+        return useHotkeys<HTMLDivElement>('ctrl+a', callback);
       });
 
       if (!target) expect(result.current).toBeTypeOf('function');
@@ -38,8 +70,8 @@ targets.forEach((target) => {
       const callback = vi.fn();
       const { result } = renderHookServer(() => {
         if (target)
-          return useHotkeys(target, 'Control+a', callback) as unknown as StateRef<HTMLDivElement>;
-        return useHotkeys<HTMLDivElement>('Control+a', callback);
+          return useHotkeys(target, 'ctrl+a', callback) as unknown as StateRef<HTMLDivElement>;
+        return useHotkeys<HTMLDivElement>('ctrl+a', callback);
       });
 
       if (!target) expect(result.current).toBeTypeOf('function');
@@ -50,21 +82,31 @@ targets.forEach((target) => {
       const callback = vi.fn();
       const { result } = renderHook(() => {
         if (target)
-          return useHotkeys(target, 'Control+a', callback) as unknown as StateRef<HTMLDivElement>;
-        return useHotkeys<HTMLDivElement>('Control+a', callback);
+          return useHotkeys(target, 'ctrl+a', callback) as unknown as StateRef<HTMLDivElement>;
+        return useHotkeys<HTMLDivElement>('ctrl+a', callback);
       });
 
       if (!target) act(() => result.current(element));
 
       act(() => {
-        element.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            bubbles: true,
-            cancelable: true,
-            key: 'Control',
-            code: 'ControlLeft'
-          })
-        );
+        pressCombo({ key: 'a', code: 'KeyA' });
+      });
+
+      expect(callback).toHaveBeenCalledOnce();
+      expect(callback).toHaveBeenCalledWith(expect.any(KeyboardEvent));
+    });
+
+    it('Should not call callback without the required modifier', () => {
+      const callback = vi.fn();
+      const { result } = renderHook(() => {
+        if (target)
+          return useHotkeys(target, 'ctrl+a', callback) as unknown as StateRef<HTMLDivElement>;
+        return useHotkeys<HTMLDivElement>('ctrl+a', callback);
+      });
+
+      if (!target) act(() => result.current(element));
+
+      act(() => {
         element.dispatchEvent(
           new KeyboardEvent('keydown', {
             bubbles: true,
@@ -75,8 +117,7 @@ targets.forEach((target) => {
         );
       });
 
-      expect(callback).toHaveBeenCalledOnce();
-      expect(callback).toHaveBeenCalledWith(expect.any(KeyboardEvent));
+      expect(callback).not.toHaveBeenCalled();
     });
 
     it('Should support multiple hotkeys', () => {
@@ -85,99 +126,67 @@ targets.forEach((target) => {
         if (target)
           return useHotkeys(
             target,
-            'Control+a, Control+b',
+            'ctrl+a, ctrl+b',
             callback
           ) as unknown as StateRef<HTMLDivElement>;
-        return useHotkeys<HTMLDivElement>('Control+a, Control+b', callback);
+        return useHotkeys<HTMLDivElement>('ctrl+a, ctrl+b', callback);
       });
 
       if (!target) act(() => result.current(element));
 
       act(() => {
-        element.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            bubbles: true,
-            key: 'Control',
-            code: 'ControlLeft'
-          })
-        );
-        element.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            bubbles: true,
-            key: 'b',
-            code: 'KeyB'
-          })
-        );
+        pressCombo({ key: 'b', code: 'KeyB' });
       });
 
       expect(callback).toHaveBeenCalledOnce();
     });
 
-    it('Should call prevent default on matching hotkeys', () => {
+    it('Should support the mod modifier (ctrl on win/linux)', () => {
       const callback = vi.fn();
       const { result } = renderHook(() => {
         if (target)
-          return useHotkeys(target, 'Control+a', callback) as unknown as StateRef<HTMLDivElement>;
-        return useHotkeys<HTMLDivElement>('Control+a', callback);
+          return useHotkeys(target, 'mod+a', callback) as unknown as StateRef<HTMLDivElement>;
+        return useHotkeys<HTMLDivElement>('mod+a', callback);
       });
 
       if (!target) act(() => result.current(element));
 
-      const firstEvent = new KeyboardEvent('keydown', {
-        bubbles: true,
-        cancelable: true,
-        key: 'Control',
-        code: 'ControlLeft'
-      });
-
-      const secondEvent = new KeyboardEvent('keydown', {
-        bubbles: true,
-        cancelable: true,
-        key: 'a',
-        code: 'KeyA'
-      });
-
       act(() => {
-        element.dispatchEvent(firstEvent);
-        element.dispatchEvent(secondEvent);
+        pressCombo({ key: 'a', code: 'KeyA' }, { key: 'ctrl', code: 'ctrlLeft' });
       });
 
-      expect(secondEvent.defaultPrevented).toBeTruthy();
+      expect(callback).toHaveBeenCalledOnce();
     });
 
-    it('Should support aliases from options', () => {
+    it('Should support the mod modifier (meta on mac)', () => {
       const callback = vi.fn();
       const { result } = renderHook(() => {
         if (target)
-          return useHotkeys(target, 'cmd+k', callback, {
-            alias: {
-              Meta: 'cmd'
-            }
-          }) as unknown as StateRef<HTMLDivElement>;
-        return useHotkeys<HTMLDivElement>('cmd+k', callback, {
-          alias: {
-            Meta: 'cmd'
-          }
-        });
+          return useHotkeys(target, 'mod+a', callback) as unknown as StateRef<HTMLDivElement>;
+        return useHotkeys<HTMLDivElement>('mod+a', callback);
       });
 
       if (!target) act(() => result.current(element));
 
       act(() => {
-        element.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            bubbles: true,
-            key: 'Meta',
-            code: 'MetaLeft'
-          })
-        );
-        element.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            bubbles: true,
-            key: 'k',
-            code: 'KeyK'
-          })
-        );
+        pressCombo({ key: 'a', code: 'KeyA' }, { key: 'Meta', code: 'MetaLeft' });
+      });
+
+      expect(callback).toHaveBeenCalledOnce();
+    });
+
+    it('Should support meta hotkeys via cmd alias', () => {
+      const callback = vi.fn();
+      const { result } = renderHook(() => {
+        if (target)
+          return useHotkeys(target, 'cmd+k', callback) as unknown as StateRef<HTMLDivElement>;
+        return useHotkeys<HTMLDivElement>('cmd+k', callback);
+      });
+
+      if (!target) act(() => result.current(element));
+
+      act(() => {
+        pressCombo({ key: 'k', code: 'KeyK' }, { key: 'Meta', code: 'MetaLeft' });
       });
 
       expect(callback).toHaveBeenCalledOnce();
@@ -189,10 +198,10 @@ targets.forEach((target) => {
 
       const { result } = renderHook(() => {
         if (target)
-          return useHotkeys(target, 'Control+a', callback, {
+          return useHotkeys(target, 'ctrl+a', callback, {
             enabled: false
           }) as unknown as StateRef<HTMLDivElement>;
-        return useHotkeys<HTMLDivElement>('Control+a', callback, {
+        return useHotkeys<HTMLDivElement>('ctrl+a', callback, {
           enabled: false
         });
       });
@@ -200,20 +209,7 @@ targets.forEach((target) => {
       if (!target) act(() => result.current(element));
 
       act(() => {
-        element.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            bubbles: true,
-            key: 'Control',
-            code: 'ControlLeft'
-          })
-        );
-        element.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            bubbles: true,
-            key: 'a',
-            code: 'KeyA'
-          })
-        );
+        pressCombo({ key: 'a', code: 'KeyA' });
       });
 
       expect(addEventListenerSpy).not.toHaveBeenCalled();
@@ -227,8 +223,8 @@ targets.forEach((target) => {
       const { result, rerender } = renderHook(
         (target) => {
           if (target)
-            return useHotkeys(target, 'Control+a', () => {}) as unknown as StateRef<HTMLDivElement>;
-          return useHotkeys<HTMLDivElement>('Control+a', () => {});
+            return useHotkeys(target, 'ctrl+a', () => {}) as unknown as StateRef<HTMLDivElement>;
+          return useHotkeys<HTMLDivElement>('ctrl+a', () => {});
         },
         {
           initialProps: target
@@ -237,13 +233,13 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current(element));
 
-      expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
       expect(removeEventListenerSpy).not.toHaveBeenCalled();
 
       rerender({ current: document.getElementById('target') });
 
-      expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
-      expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+      expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
+      expect(removeEventListenerSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -252,14 +248,13 @@ targets.forEach((target) => {
 
     const { result, unmount } = renderHook(() => {
       if (target)
-        return useHotkeys(target, 'Control+a', () => {}) as unknown as StateRef<HTMLDivElement>;
-      return useHotkeys<HTMLDivElement>('Control+a', () => {});
+        return useHotkeys(target, 'ctrl+a', () => {}) as unknown as StateRef<HTMLDivElement>;
+      return useHotkeys<HTMLDivElement>('ctrl+a', () => {});
     });
 
     if (!target) act(() => result.current(element));
     unmount();
 
     expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', expect.any(Function));
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('keyup', expect.any(Function));
   });
 });

@@ -84,7 +84,7 @@ const Demo = () => {
     search.setValue('');
   };
 
-  useHotkeys('Control+C', () => palette.open());
+  useHotkeys('ctrl+C', () => palette.open());
   useKeyPress('Escape', () => palette.close());
 
   const query = search.watch().trim().toLowerCase();

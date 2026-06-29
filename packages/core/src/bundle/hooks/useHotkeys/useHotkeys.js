@@ -1,19 +1,82 @@
 import { useEffect, useRef } from 'react';
 import { isTarget } from '@/utils/helpers';
 import { useRefState } from '../useRefState/useRefState';
-export const isHotkeyMatch = (hotkey, keys) =>
-  hotkey
+const KEY_NAME_MAP = {
+  ' ': 'space',
+  arrowleft: 'arrowleft',
+  arrowright: 'arrowright',
+  arrowup: 'arrowup',
+  arrowdown: 'arrowdown',
+  escape: 'escape',
+  esc: 'escape',
+  enter: 'enter',
+  return: 'enter',
+  tab: 'tab',
+  backspace: 'backspace',
+  delete: 'delete',
+  insert: 'insert',
+  home: 'home',
+  end: 'end',
+  pageup: 'pageup',
+  pagedown: 'pagedown',
+  '+': 'plus',
+  '-': 'minus',
+  '*': 'asterisk',
+  '/': 'slash'
+};
+const normalizeKey = (key) => {
+  const lowerKey = key
+    .replace(/^Key/, '')
+    .replace(/^Digit/, '')
+    .toLowerCase();
+  return KEY_NAME_MAP[lowerKey] ?? lowerKey;
+};
+export const parseHotkey = (hotkey) => {
+  const keys = hotkey
     .toLowerCase()
-    .split(/[+_,\-]/g)
-    .map((key) => key.trim())
-    .every((key) =>
-      keys.find(
-        (updatedKey) =>
-          key === updatedKey.code.toLocaleLowerCase() ||
-          key === updatedKey.key.toLocaleLowerCase() ||
-          key === updatedKey.alias.toLocaleLowerCase()
-      )
-    );
+    .split('+')
+    .map((part) => part.trim());
+  const modifiers = {
+    alt: keys.includes('alt'),
+    ctrl: keys.includes('ctrl') || keys.includes('control'),
+    meta: keys.includes('meta') || keys.includes('cmd') || keys.includes('command'),
+    mod: keys.includes('mod'),
+    shift: keys.includes('shift')
+  };
+  const reservedKeys = ['alt', 'ctrl', 'control', 'meta', 'cmd', 'command', 'shift', 'mod'];
+  const freeKey = keys.find((key) => key && !reservedKeys.includes(key));
+  return {
+    ...modifiers,
+    key: freeKey
+  };
+};
+const isHotkeyMatch = (hotkey, event) => {
+  const { alt, ctrl, meta, mod, shift, key } = hotkey;
+  const { altKey, ctrlKey, metaKey, shiftKey, key: pressedKey, code: pressedCode } = event;
+  if (alt !== altKey) {
+    return false;
+  }
+  if (mod) {
+    if (!ctrlKey && !metaKey) {
+      return false;
+    }
+  } else {
+    if (ctrl !== ctrlKey) {
+      return false;
+    }
+    if (meta !== metaKey) {
+      return false;
+    }
+  }
+  if (shift !== shiftKey) {
+    return false;
+  }
+  if (key && normalizeKey(pressedKey ?? pressedCode) === normalizeKey(key)) {
+    return true;
+  }
+  return false;
+};
+export const getHotkeyMatcher = (hotkey) => (event) => isHotkeyMatch(parseHotkey(hotkey), event);
 /**
  * @name useHotkeys
  * @description - Hook that listens for hotkeys
@@ -24,6 +87,8 @@ export const isHotkeyMatch = (hotkey, keys) =>
  * @param {HookTarget} [target=window] The target element to attach the event listener to
  * @param {string} hotkeys The hotkey to listen for
  * @param {UseHotkeysOptions} [options] The options for the hook
+ * @param {boolean} [options.enabled=true] Enable or disable the event listeners
+ * @param {(event: KeyboardEvent) => void} [options.onChange] The callback function to execute when hotkey is pressed
  * @returns {void}
  *
  * @example
@@ -33,7 +98,6 @@ export const isHotkeyMatch = (hotkey, keys) =>
  * @param {HookTarget} [target=window] The target element to attach the event listener to
  * @param {string} hotkeys The hotkey to listen for
  * @param {(event: KeyboardEvent) => void} callback The callback function to execute when hotkey is pressed
- * @param {Record<string, string>} [options.alias] Alias map for hotkeys
  * @param {boolean} [options.enabled=true] Enable or disable the event listeners
  * @returns {void}
  *
@@ -44,6 +108,8 @@ export const isHotkeyMatch = (hotkey, keys) =>
  * @template Target The target element
  * @param {string} hotkeys The hotkey to listen for
  * @param {UseHotkeysOptions} [options] The options for the hook
+ * @param {boolean} [options.enabled=true] Enable or disable the event listeners
+ * @param {(event: KeyboardEvent) => void} [options.onChange] The callback function to execute when hotkey is pressed
  * @returns {StateRef<Target>} A reference to the target element
  *
  * @example
@@ -53,7 +119,6 @@ export const isHotkeyMatch = (hotkey, keys) =>
  * @template Target The target element
  * @param {string} hotkeys The hotkey to listen for
  * @param {(event: KeyboardEvent) => void} callback The callback function to execute when hotkey is pressed
- * @param {Record<string, string>} [options.alias] Alias map for hotkeys
  * @param {boolean} [options.enabled=true] Enable or disable the event listeners
  * @returns {StateRef<Target>} A reference to the target element
  *
@@ -73,34 +138,26 @@ export const useHotkeys = (...params) => {
   const optionsRef = useRef(options);
   optionsRef.current = options;
   const internalRef = useRefState();
-  const keysRef = useRef([]);
   const enabled = options?.enabled ?? true;
   useEffect(() => {
-    keysRef.current = [];
     if (!enabled) return;
     const eventTarget = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     if (!eventTarget) return;
+    const matchers = hotkeys
+      .split(',')
+      .map((h) => h.trim())
+      .filter(Boolean)
+      .map(getHotkeyMatcher);
     const onKeyDown = (event) => {
       if (!enabled) return;
-      if (keysRef.current.some(({ code }) => code === event.code)) return;
-      const alias = options?.alias?.[event.key] ?? event.code;
-      const updatedKeys = [...keysRef.current, { key: event.key, code: event.code, alias }];
-      keysRef.current = updatedKeys;
-      const hotkeysList = hotkeys.split(',').map((h) => h.trim());
-      const isMatch = hotkeysList.some((hotkey) => isHotkeyMatch(hotkey, updatedKeys));
+      const isMatch = matchers.some((matcher) => matcher(event));
       if (!isMatch) return;
       event.preventDefault();
       optionsRef.current?.onChange?.(event);
     };
-    const onKeyUp = (event) => {
-      if (!enabled) return;
-      keysRef.current = keysRef.current.filter(({ code }) => code !== event.code);
-    };
     eventTarget.addEventListener('keydown', onKeyDown);
-    eventTarget.addEventListener('keyup', onKeyUp);
     return () => {
       eventTarget.removeEventListener('keydown', onKeyDown);
-      eventTarget.removeEventListener('keyup', onKeyUp);
     };
   }, [target && isTarget.getRawElement(target), internalRef.state, enabled, hotkeys]);
   if (target) return;
