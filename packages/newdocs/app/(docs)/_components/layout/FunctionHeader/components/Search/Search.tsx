@@ -2,7 +2,12 @@
 
 import type { source } from '@docs/lib/source';
 
-import { useDisclosure, useHotkeys, useKeyPress } from '@siberiacancode/reactuse';
+import {
+  useDisclosure,
+  useHotkeys,
+  useKeyPress,
+  useOperatingSystem
+} from '@siberiacancode/reactuse';
 import { liteClient } from 'algoliasearch/lite';
 import { useDocsSearch } from 'fumadocs-core/search/client';
 import { ArrowRightIcon, CircleDashedIcon, Loader2Icon } from 'lucide-react';
@@ -35,6 +40,7 @@ interface Props {
 export const Search = (props: Props) => {
   const dialog = useDisclosure();
   const router = useRouter();
+  const operatingSystem = useOperatingSystem();
   const { setSearch, query } = useDocsSearch({
     type: 'algolia',
     client,
@@ -47,7 +53,7 @@ export const Search = (props: Props) => {
     router.push(url);
   };
 
-  useHotkeys('Control+K, Meta+K', () => dialog.open());
+  useHotkeys(operatingSystem === 'macos' ? 'meta+K' : 'ctrl+K', () => dialog.open());
   useKeyPress('Escape', () => dialog.close());
 
   return (
