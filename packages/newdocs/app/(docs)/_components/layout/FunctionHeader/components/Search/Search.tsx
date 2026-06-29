@@ -2,7 +2,12 @@
 
 import type { source } from '@docs/lib/source';
 
-import { useDisclosure, useHotkeys, useKeyPress } from '@siberiacancode/reactuse';
+import {
+  useDisclosure,
+  useHotkeys,
+  useKeyPress,
+  useOperatingSystem
+} from '@siberiacancode/reactuse';
 import { liteClient } from 'algoliasearch/lite';
 import { useDocsSearch } from 'fumadocs-core/search/client';
 import { ArrowRightIcon, CircleDashedIcon, Loader2Icon } from 'lucide-react';
@@ -34,6 +39,7 @@ interface Props {
 
 export const Search = (props: Props) => {
   const dialog = useDisclosure();
+  const operatingSystem = useOperatingSystem();
   const { setSearch, query } = useDocsSearch({
     type: 'algolia',
     client,
@@ -41,7 +47,9 @@ export const Search = (props: Props) => {
     locale: 'en'
   });
 
-  useHotkeys('Control+K', () => dialog.open());
+  const shortcut = operatingSystem === 'macos' ? '⌘K' : 'Ctrl K';
+
+  useHotkeys('Control+K, Meta+K', () => dialog.open());
   useKeyPress('Escape', () => dialog.close());
 
   return (
@@ -55,6 +63,7 @@ export const Search = (props: Props) => {
           onClick={() => dialog.toggle()}
         >
           <span className='truncate text-sm'>Search docs...</span>
+          <span className='text-muted-foreground ml-auto hidden text-xs md:inline'>{shortcut}</span>
         </Button>
       </DialogTrigger>
       <DialogContent
