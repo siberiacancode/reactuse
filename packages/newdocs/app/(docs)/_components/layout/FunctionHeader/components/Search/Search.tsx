@@ -2,16 +2,11 @@
 
 import type { source } from '@docs/lib/source';
 
-import {
-  useDisclosure,
-  useHotkeys,
-  useKeyPress,
-  useOperatingSystem
-} from '@siberiacancode/reactuse';
+import { useDisclosure, useHotkeys, useKeyPress } from '@siberiacancode/reactuse';
 import { liteClient } from 'algoliasearch/lite';
 import { useDocsSearch } from 'fumadocs-core/search/client';
 import { ArrowRightIcon, CircleDashedIcon, Loader2Icon } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import {
   Button,
@@ -39,7 +34,7 @@ interface Props {
 
 export const Search = (props: Props) => {
   const dialog = useDisclosure();
-  const operatingSystem = useOperatingSystem();
+  const router = useRouter();
   const { setSearch, query } = useDocsSearch({
     type: 'algolia',
     client,
@@ -47,7 +42,10 @@ export const Search = (props: Props) => {
     locale: 'en'
   });
 
-  const shortcut = operatingSystem === 'macos' ? '⌘K' : 'Ctrl K';
+  const onSelect = (url: string) => {
+    dialog.close();
+    router.push(url);
+  };
 
   useHotkeys('Control+K, Meta+K', () => dialog.open());
   useKeyPress('Escape', () => dialog.close());
@@ -63,7 +61,6 @@ export const Search = (props: Props) => {
           onClick={() => dialog.toggle()}
         >
           <span className='truncate text-sm'>Search docs...</span>
-          <span className='text-muted-foreground ml-auto hidden text-xs md:inline'>{shortcut}</span>
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -100,21 +97,18 @@ export const Search = (props: Props) => {
                   {group.children
                     .filter((child) => child.type === 'page')
                     .map((item) => (
-                      <Link
+                      <CommandItem
                         key={item.url}
-                        className='block'
-                        href={item.url}
-                        prefetch={false}
-                        onClick={dialog.close}
+                        className='cursor-pointer'
+                        value={item.name!.toString()}
+                        onSelect={() => onSelect(item.url)}
                       >
-                        <CommandItem className='cursor-pointer' value={item.name!.toString()}>
-                          <div className='flex items-center justify-center gap-2'>
-                            {!isFunction && <ArrowRightIcon />}
-                            {isFunction && <CircleDashedIcon />}
-                            <span>{item.name!.toString()}</span>
-                          </div>
-                        </CommandItem>
-                      </Link>
+                        <div className='flex items-center justify-center gap-2'>
+                          {!isFunction && <ArrowRightIcon />}
+                          {isFunction && <CircleDashedIcon />}
+                          <span>{item.name!.toString()}</span>
+                        </div>
+                      </CommandItem>
                     ))}
                 </CommandGroup>
               );
@@ -123,21 +117,15 @@ export const Search = (props: Props) => {
             <CommandGroup className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'>
               {Array.isArray(query.data) &&
                 query.data.map((item) => (
-                  <Link
+                  <CommandItem
                     key={item.id}
-                    className='block'
-                    href={item.url}
-                    prefetch={false}
-                    onClick={dialog.close}
+                    className='cursor-pointer'
+                    keywords={['nav', 'navigation', item.content.toLowerCase()]}
+                    value={`Navigation ${item.content}`}
+                    onSelect={() => onSelect(item.url)}
                   >
-                    <CommandItem
-                      className='cursor-pointer'
-                      keywords={['nav', 'navigation', item.content.toLowerCase()]}
-                      value={`Navigation ${item.content}`}
-                    >
-                      {item.content}
-                    </CommandItem>
-                  </Link>
+                    {item.content}
+                  </CommandItem>
                 ))}
             </CommandGroup>
           </CommandList>
