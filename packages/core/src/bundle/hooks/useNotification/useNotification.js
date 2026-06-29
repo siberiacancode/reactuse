@@ -1,23 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 /**
- * @name useNotifications
+ * @name useNotification
  * @description - Hook that provides a reactive wrapper around the browser Notifications API
  * @category Browser
  * @usage medium
  *
  * @browserapi Notification https://developer.mozilla.org/en-US/docs/Web/API/Notification
  *
- * @param {UseNotificationsParams} [params] Default notification options and lifecycle callbacks
- * @returns {UseNotificationsReturn} An object containing permission state and notification controls
+ * @param {useNotificationParams} [params] Default notification options and lifecycle callbacks
+ * @returns {useNotificationReturn} An object containing permission state and notification controls
  *
  * @example
- * const { supported, permission, requestPermission, show, close } = useNotifications({
+ * const { supported, permission, requestPermission, show, close } = useNotification({
  *   title: 'Hello',
  *   body: 'World',
  *   onClick: (event) => console.log('clicked', event),
  * });
  */
-export const useNotifications = (params) => {
+export const useNotification = (params) => {
   const supported =
     typeof window !== 'undefined' && 'Notification' in window && !!window.Notification;
   const [permission, setPermission] = useState(() =>
