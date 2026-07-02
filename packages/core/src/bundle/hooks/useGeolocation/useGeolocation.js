@@ -9,16 +9,18 @@ import { useEffect, useRef, useState } from 'react';
  *
  * @overload
  * @param {UseGeolocationCallback} [callback] The callback function to be invoked when geolocation changes
+ * @param {boolean} [params.immediately=true] Start watching immediately
  * @param {boolean} [params.enableHighAccuracy] Enable high accuracy
  * @param {number} [params.maximumAge] Maximum age
  * @param {number} [params.timeout] Timeout
  * @returns {UseGeolocationReturn}
  *
  * @example
- * const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation((position) => console.log(position));
+ * const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation((position) => console.log(position));
  *
  * @overload
  * @param {UseGeolocationOptions} [options] Configuration options
+ * @param {boolean} [options.immediately=true] Start watching immediately on mount
  * @param {(position: GeolocationPosition) => void} [options.onChange] The callback function to be invoked when geolocation changes
  * @param {(error: GeolocationPositionError) => void} [options.onError] The callback function to be invoked on geolocation error
  * @param {boolean} [options.enableHighAccuracy] Enable high accuracy
@@ -27,13 +29,14 @@ import { useEffect, useRef, useState } from 'react';
  * @returns {UseGeolocationReturn}
  *
  * @example
- * const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();
+ * const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation({ immediately: false });
  */
 export const useGeolocation = (...params) => {
   const options =
     typeof params[0] === 'function' ? { ...params[1], onChange: params[0] } : params[0];
+  const immediately = options?.immediately ?? true;
   const [value, setValue] = useState({
-    loading: true,
+    loading: immediately,
     error: null,
     timestamp: Date.now(),
     accuracy: 0,
@@ -44,39 +47,58 @@ export const useGeolocation = (...params) => {
     heading: null,
     speed: null
   });
+  const [watching, setWatching] = useState(false);
   const optionsRef = useRef(options);
   optionsRef.current = options;
+  const watchIdRef = useRef(null);
+  const onEvent = (position) => {
+    const { coords, timestamp } = position;
+    setValue((currentValue) => ({
+      ...currentValue,
+      loading: false,
+      error: null,
+      timestamp,
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      altitude: coords.altitude,
+      accuracy: coords.accuracy,
+      altitudeAccuracy: coords.altitudeAccuracy,
+      heading: coords.heading,
+      speed: coords.speed
+    }));
+    optionsRef.current?.onChange?.(position);
+  };
+  const onError = (error) => {
+    setValue((currentValue) => ({
+      ...currentValue,
+      loading: false,
+      error
+    }));
+    optionsRef.current?.onError?.(error);
+  };
+  const get = () => {
+    setValue((currentValue) => ({ ...currentValue, loading: true }));
+    navigator.geolocation.getCurrentPosition(onEvent, onError, optionsRef.current);
+  };
+  const start = () => {
+    if (watchIdRef.current !== null) return;
+    setValue((currentValue) => ({ ...currentValue, loading: true }));
+    navigator.geolocation.getCurrentPosition(onEvent, onError, optionsRef.current);
+    watchIdRef.current = navigator.geolocation.watchPosition(onEvent, onError, optionsRef.current);
+    setWatching(true);
+  };
+  const stop = () => {
+    if (!watchIdRef.current) return;
+    navigator.geolocation.clearWatch(watchIdRef.current);
+    watchIdRef.current = null;
+    setWatching(false);
+  };
   useEffect(() => {
-    const onEvent = (position) => {
-      const { coords, timestamp } = position;
-      setValue((currentValue) => ({
-        ...currentValue,
-        loading: false,
-        error: null,
-        timestamp,
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-        altitude: coords.altitude,
-        accuracy: coords.accuracy,
-        altitudeAccuracy: coords.altitudeAccuracy,
-        heading: coords.heading,
-        speed: coords.speed
-      }));
-      optionsRef.current?.onChange?.(position);
-    };
-    const onEventError = (error) => {
-      setValue((currentValue) => ({
-        ...currentValue,
-        loading: false,
-        error
-      }));
-      optionsRef.current?.onError?.(error);
-    };
-    navigator.geolocation.getCurrentPosition(onEvent, onEventError, optionsRef.current);
-    const watchId = navigator.geolocation.watchPosition(onEvent, onEventError, optionsRef.current);
+    if (!immediately) return;
+    start();
     return () => {
-      navigator.geolocation.clearWatch(watchId);
+      stop();
     };
-  }, [options?.enableHighAccuracy, options?.maximumAge, options?.timeout]);
-  return value;
+  }, [options?.enableHighAccuracy, options?.maximumAge, options?.timeout, immediately]);
+  return { value, watching, start, stop, get };
 };

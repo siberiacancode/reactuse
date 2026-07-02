@@ -1,15 +1,15 @@
 ---
-title: useGeolocation
-description: Hook that returns the current geolocation
+title: useMediaStream
+description: Hook that provides reactive access to a `mediaDevices.getUserMedia` stream
 category: browser
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780065515000
+lastModifiedTime: 1783015099495
 ---
 
-import metadata from './useGeolocation.meta.json';
+import metadata from './useMediaStream.meta.json';
 
 <FunctionBanner
   browserapi={metadata.browserapi}
@@ -31,7 +31,7 @@ import metadata from './useGeolocation.meta.json';
     ```packages-install npm install @siberiacancode/reactuse ```
   </TabsContent>
   <TabsContent value='cli'>
-    ```packages-install npx useverse@latest add useGeolocation ```
+    ```packages-install npx useverse@latest add useMediaStream ```
   </TabsContent>
   <TabsContent value='manual'>
     <Steps>
@@ -45,13 +45,9 @@ import metadata from './useGeolocation.meta.json';
 ## Usage
 
 ```tsx
-const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation(
-  (position) => console.log(position)
-);
+const { stream, start, apply, stop } = useMediaStream(videoRef, { immediately: true });
 // or
-const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation({
-  immediately: false
-});
+const { ref, stream, start, apply, stop } = useMediaStream({ immediately: true });
 ```
 
 ## Type Declarations

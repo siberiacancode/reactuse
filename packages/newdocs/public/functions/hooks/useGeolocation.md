@@ -47,9 +47,13 @@ import metadata from './useGeolocation.meta.json';
 ## Usage
 
 ```tsx
-const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation((position) => console.log(position));
+const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation(
+  (position) => console.log(position)
+);
 // or
-const { loading, error, timestamp, accuracy, latitude, longitude, altitude, altitudeAccuracy, heading, speed } = useGeolocation();
+const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation({
+  immediately: false
+});
 ```
 
 ## Type Declarations
