@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useCopy, useGeolocation } from '@siberiacancode/reactuse';
 import { CheckIcon, CopyIcon, MapPinIcon } from 'lucide-react';
@@ -10,18 +10,19 @@ const getMapEmbedUrl = (latitude: number, longitude: number) =>
 
 const formatCoordinates = (latitude: number, longitude: number) =>
   `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+
 const Demo = () => {
   const geolocation = useGeolocation();
   const { copy, copied } = useCopy();
 
   const hasLocation =
-    !geolocation.loading &&
-    !geolocation.error &&
-    geolocation.latitude !== null &&
-    geolocation.longitude !== null;
+    !geolocation.value.loading &&
+    !geolocation.value.error &&
+    geolocation.value.latitude !== null &&
+    geolocation.value.longitude !== null;
 
-  const latitude = hasLocation ? geolocation.latitude! : FALLBACK_COORDINATES.latitude;
-  const longitude = hasLocation ? geolocation.longitude! : FALLBACK_COORDINATES.longitude;
+  const latitude = hasLocation ? geolocation.value.latitude! : FALLBACK_COORDINATES.latitude;
+  const longitude = hasLocation ? geolocation.value.longitude! : FALLBACK_COORDINATES.longitude;
 
   return (
     <section className='flex w-full max-w-xl flex-col p-4'>
@@ -61,7 +62,7 @@ const Demo = () => {
             <>
               <MapPinIcon className='size-3.5 text-white/70' />
               <span className='pr-2 text-[10px] tracking-[0.15em] text-white/90 uppercase'>
-                {geolocation.error ? 'Location unavailable' : 'Locating...'}
+                {geolocation.value.error ? 'Location unavailable' : 'Locating...'}
               </span>
             </>
           )}

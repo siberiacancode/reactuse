@@ -1,15 +1,15 @@
 ---
-title: useGeolocation
-description: Hook that returns the current geolocation
+title: useDeviceList
+description: Hook that returns the list of available media devices
 category: browser
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780065515000
+lastModifiedTime: 1783015097206
 ---
 
-import metadata from './useGeolocation.meta.json';
+import metadata from './useDeviceList.meta.json';
 
 <FunctionBanner
   browserapi={metadata.browserapi}
@@ -31,7 +31,7 @@ import metadata from './useGeolocation.meta.json';
     ```packages-install npm install @siberiacancode/reactuse ```
   </TabsContent>
   <TabsContent value='cli'>
-    ```packages-install npx useverse@latest add useGeolocation ```
+    ```packages-install npx useverse@latest add useDeviceList ```
   </TabsContent>
   <TabsContent value='manual'>
     <Steps>
@@ -45,12 +45,12 @@ import metadata from './useGeolocation.meta.json';
 ## Usage
 
 ```tsx
-const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation(
-  (position) => console.log(position)
+const { devices, videoInputs, audioInputs, audioOutputs, update } = useDeviceList((devices) =>
+  console.log(devices)
 );
 // or
-const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation({
-  immediately: false
+const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList({
+  immediately: true
 });
 ```
 

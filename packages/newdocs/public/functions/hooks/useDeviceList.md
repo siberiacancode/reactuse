@@ -1,15 +1,15 @@
 ---
-title: useHotkeys
-description: Hook that listens for hotkeys
-category: sensors
+title: useDeviceList
+description: Hook that returns the list of available media devices
+category: browser
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1782722064000
+lastModifiedTime: 1783015097206
 ---
 
-import metadata from './useHotkeys.meta.json';
+import metadata from './useDeviceList.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useHotkeys.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useHotkeys
+    npx useverse@latest add useDeviceList
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,13 +47,13 @@ import metadata from './useHotkeys.meta.json';
 ## Usage
 
 ```tsx
-useHotkeys(ref, 'ctrl+a', { onChange: () => console.log('hotkey pressed') });
+const { devices, videoInputs, audioInputs, audioOutputs, update } = useDeviceList((devices) =>
+  console.log(devices)
+);
 // or
-useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed'));
-// or
-const ref = useHotkeys('ctrl+a', { onChange: () => console.log('hotkey pressed') });
-// or
-const ref = useHotkeys('ctrl+a', () => console.log('hotkey pressed'));
+const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList({
+  immediately: true
+});
 ```
 
 ## Type Declarations

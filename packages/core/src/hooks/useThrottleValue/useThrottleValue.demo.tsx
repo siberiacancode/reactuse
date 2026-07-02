@@ -44,13 +44,13 @@ const Demo = () => {
 
   return (
     <section className='flex w-full max-w-sm flex-col p-4'>
-      <div data-slot='card'>
-        <div data-slot='card-header'>
-          <div data-slot='card-title'>Color picker</div>
-          <div data-slot='card-description'>Drag across the palette to pick a color.</div>
+      <div>
+        <div className='flex flex-col gap-2'>
+          <h3>Color picker</h3>
+          <p className='text-muted-foreground'>Drag across the palette to pick a color.</p>
         </div>
 
-        <div className='flex flex-col gap-4' data-slot='card-content'>
+        <div className='flex flex-col gap-4'>
           <div
             style={{
               background:

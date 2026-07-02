@@ -39,6 +39,7 @@
 - [useClipboard](https://reactuse.org/functions/hooks/useClipboard): Hook that manages a copy to clipboard
 - [useCopy](https://reactuse.org/functions/hooks/useCopy): Hook that manages copying text with status reset
 - [useCssVar](https://reactuse.org/functions/hooks/useCssVar): Hook that returns the value of a css variable
+- [useDeviceList](https://reactuse.org/functions/hooks/useDeviceList): Hook that returns the list of available media devices
 - [useDisplayMedia](https://reactuse.org/functions/hooks/useDisplayMedia): Hook that provides screen sharing functionality
 - [useDocumentEvent](https://reactuse.org/functions/hooks/useDocumentEvent): Hook attaches an event listener to the document object for the specified event
 - [useDocumentTitle](https://reactuse.org/functions/hooks/useDocumentTitle): Hook that manages the document title and allows updating it
@@ -55,6 +56,7 @@
 - [useMeasure](https://reactuse.org/functions/hooks/useMeasure): Hook to measure the size and position of an element
 - [useMediaControls](https://reactuse.org/functions/hooks/useMediaControls): Hook that provides controls for HTML media elements (audio/video)
 - [useMediaQuery](https://reactuse.org/functions/hooks/useMediaQuery): Hook that manages a media query
+- [useMediaStream](https://reactuse.org/functions/hooks/useMediaStream): Hook that provides reactive access to a `mediaDevices.getUserMedia` stream
 - [useMemory](https://reactuse.org/functions/hooks/useMemory): Hook that gives you current memory usage
 - [useNetwork](https://reactuse.org/functions/hooks/useNetwork): Hook to track network status
 - [useObjectUrl](https://reactuse.org/functions/hooks/useObjectUrl): Hook that creates and revokes an object URL for a Blob or MediaSource

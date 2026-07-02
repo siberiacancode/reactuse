@@ -42,6 +42,7 @@ A quick list of available functions.
 - [useDebounceState](/functions/hooks/useDebounceState): Hook that creates a debounced state
 - [useDebounceValue](/functions/hooks/useDebounceValue): Hook that creates a debounced value
 - [useDefault](/functions/hooks/useDefault): Hook that returns the default value
+- [useDeviceList](/functions/hooks/useDeviceList): Hook that returns the list of available media devices
 - [useDeviceMotion](/functions/hooks/useDeviceMotion): Hook that work with device motion
 - [useDeviceOrientation](/functions/hooks/useDeviceOrientation): Hook that provides the current device orientation
 - [useDevicePixelRatio](/functions/hooks/useDevicePixelRatio): Hook that returns the device's pixel ratio
@@ -95,6 +96,7 @@ A quick list of available functions.
 - [useMeasure](/functions/hooks/useMeasure): Hook to measure the size and position of an element
 - [useMediaControls](/functions/hooks/useMediaControls): Hook that provides controls for HTML media elements (audio/video)
 - [useMediaQuery](/functions/hooks/useMediaQuery): Hook that manages a media query
+- [useMediaStream](/functions/hooks/useMediaStream): Hook that provides reactive access to a `mediaDevices.getUserMedia` stream
 - [useMemory](/functions/hooks/useMemory): Hook that gives you current memory usage
 - [useMergedRef](/functions/hooks/useMergedRef): Hook that merges multiple refs into a single ref
 - [useMount](/functions/hooks/useMount): Hook that executes a callback when the component mounts

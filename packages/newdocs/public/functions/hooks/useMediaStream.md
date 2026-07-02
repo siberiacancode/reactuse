@@ -1,15 +1,15 @@
 ---
-title: useHotkeys
-description: Hook that listens for hotkeys
-category: sensors
+title: useMediaStream
+description: Hook that provides reactive access to a `mediaDevices.getUserMedia` stream
+category: browser
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1782722064000
+lastModifiedTime: 1783015099495
 ---
 
-import metadata from './useHotkeys.meta.json';
+import metadata from './useMediaStream.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useHotkeys.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useHotkeys
+    npx useverse@latest add useMediaStream
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,13 +47,9 @@ import metadata from './useHotkeys.meta.json';
 ## Usage
 
 ```tsx
-useHotkeys(ref, 'ctrl+a', { onChange: () => console.log('hotkey pressed') });
+const { stream, start, apply, stop } = useMediaStream(videoRef, { immediately: true });
 // or
-useHotkeys(ref, 'ctrl+a', () => console.log('hotkey pressed'));
-// or
-const ref = useHotkeys('ctrl+a', { onChange: () => console.log('hotkey pressed') });
-// or
-const ref = useHotkeys('ctrl+a', () => console.log('hotkey pressed'));
+const { ref, stream, start, apply, stop } = useMediaStream({ immediately: true });
 ```
 
 ## Type Declarations
