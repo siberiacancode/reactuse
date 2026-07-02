@@ -68,7 +68,7 @@ export interface UseMediaStream {
  * @returns {UseMediaStreamReturn} An object containing the media stream state and controls
  *
  * @example
- * const { stream, start, apply, stop } = useMediaStream(videoRef, { immediately: true });
+ * const { stream, start, apply, stop } = useMediaStream(videoRef);
  *
  * @overload
  * @param {boolean} [options.immediately=false] Whether the stream should be requested immediately
@@ -79,7 +79,7 @@ export interface UseMediaStream {
  * @returns {UseMediaStreamReturn & { ref: StateRef<HTMLVideoElement> }} An object containing the media stream state, controls and ref
  *
  * @example
- * const { ref, stream, start, apply, stop } = useMediaStream({ immediately: true });
+ * const { ref, stream, start, apply, stop } = useMediaStream();
  */
 export const useMediaStream = ((...params: any[]) => {
   const supported =

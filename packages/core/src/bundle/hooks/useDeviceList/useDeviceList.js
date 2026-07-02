@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react';
  * @returns {UseDeviceListReturn} An object containing the available devices
  *
  * @example
- * const { devices, videoInputs, audioInputs, audioOutputs, update } = useDeviceList((devices) => console.log(devices));
+ * const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList((devices) => console.log(devices));
  *
  * @overload
  * @param {boolean} [options.immediately=true] Whether the device list should be requested immediately

@@ -13,10 +13,10 @@ import { useEffect, useRef, useState } from 'react';
  * @param {boolean} [params.enableHighAccuracy] Enable high accuracy
  * @param {number} [params.maximumAge] Maximum age
  * @param {number} [params.timeout] Timeout
- * @returns {UseGeolocationReturn}
+ * @returns {UseGeolocationReturn} An object containing the geolocation state and controls
  *
  * @example
- * const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation((position) => console.log(position));
+ * const { value, start, stop, watching } = useGeolocation(() => console.log('callback'));
  *
  * @overload
  * @param {UseGeolocationOptions} [options] Configuration options
@@ -26,10 +26,10 @@ import { useEffect, useRef, useState } from 'react';
  * @param {boolean} [options.enableHighAccuracy] Enable high accuracy
  * @param {number} [options.maximumAge] Maximum age
  * @param {number} [options.timeout] Timeout
- * @returns {UseGeolocationReturn}
+ * @returns {UseGeolocationReturn} An object containing the geolocation state and controls
  *
  * @example
- * const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation({ immediately: false });
+ * const { value, start, stop, watching } = useGeolocation({ immediately: false });
  */
 export const useGeolocation = (...params) => {
   const options =
