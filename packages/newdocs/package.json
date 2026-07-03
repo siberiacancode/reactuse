@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@siberiacancode/fetches": "^1.14.3",
-    "@siberiacancode/reactuse": "^1.0.3",
+    "@siberiacancode/reactuse": "^1.0.4",
     "@types/mdx": "^2.0.14",
     "algoliasearch": "^5.55.0",
     "class-variance-authority": "^0.7.1",
