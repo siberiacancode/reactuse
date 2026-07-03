@@ -81,8 +81,8 @@ const Demo = () => {
 
   return (
     <section className='flex w-[350px] flex-col gap-3 p-4'>
-      <div className='border-border flex flex-col overflow-hidden rounded-xl border bg-neutral-950'>
-        <div className='relative flex aspect-[16/9] items-center justify-center overflow-hidden bg-black p-2'>
+      <div className='bg-card/70 flex flex-col overflow-hidden'>
+        <div className='relative flex aspect-[16/9] items-center justify-center overflow-hidden p-2'>
           <div className='relative size-full overflow-hidden rounded-lg'>
             <video
               autoPlay
@@ -96,19 +96,19 @@ const Demo = () => {
             />
 
             {!mediaStream.active && (
-              <div className='absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-lg bg-neutral-900 p-4 text-center'>
+              <div className='bg-card absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-lg p-4 text-center'>
                 {mediaStream.loading ? (
-                  <LoaderCircleIcon className='size-8 animate-spin text-white' />
+                  <LoaderCircleIcon className='text-foreground size-8 animate-spin' />
                 ) : (
                   <div className='flex flex-col items-center gap-3'>
                     <div
-                      className='size-14 bg-neutral-800 text-white'
+                      className='bg-muted text-foreground size-14'
                       data-size='lg'
                       data-slot='avatar'
                     >
                       <span data-slot='avatar-fallback'>YN</span>
                     </div>
-                    <span className='text-sm font-medium text-white'>Your Name</span>
+                    <span className='text-foreground text-sm font-medium'>Your Name</span>
                   </div>
                 )}
               </div>

@@ -209,6 +209,29 @@ targets.forEach((target) => {
     expect(result.current.loading).toBeFalsy();
   });
 
+  it('Should accept audio and video constraints', async () => {
+    const { result } = renderHook(() => {
+      if (target)
+        return useMediaStream(target, {
+          constraints: { audio: false, video: false }
+        }) as {
+          ref: StateRef<HTMLVideoElement>;
+        } & UseMediaStreamReturn;
+      return useMediaStream({
+        constraints: { audio: false, video: false }
+      });
+    });
+
+    if (!target) act(() => result.current.ref(element));
+
+    await act(result.current.start);
+
+    expect(mockGetUserMedia).toHaveBeenCalledWith({
+      audio: false,
+      video: false
+    });
+  });
+
   it('Should call onStart callback', async () => {
     const onStart = vi.fn();
 

@@ -47,9 +47,11 @@ import metadata from './useDisplayMedia.meta.json';
 ## Usage
 
 ```tsx
-const { stream, sharing, start, stop } = useDisplayMedia(ref);
+const { stream, active, start, stop } = useDisplayMedia(ref);
+start({ video: false, audio: true });
 // or
-const { ref, stream, sharing, start, stop } = useDisplayMedia<HTMLVideoElement>();
+const { ref, stream, active, start, stop } = useDisplayMedia<HTMLVideoElement>();
+start({ video: { displaySurface: 'browser' } });
 ```
 
 ## Type Declarations

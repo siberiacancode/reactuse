@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1780065515000
+lastModifiedTime: 1783015681000
 ---
 
 import metadata from './useGeolocation.meta.json';
@@ -45,13 +45,9 @@ import metadata from './useGeolocation.meta.json';
 ## Usage
 
 ```tsx
-const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation(
-  (position) => console.log(position)
-);
+const { value, start, stop, watching } = useGeolocation(() => console.log('callback'));
 // or
-const { loading, error, latitude, longitude, start, stop, isWatching } = useGeolocation({
-  immediately: false
-});
+const { value, start, stop, watching } = useGeolocation({ immediately: false });
 ```
 
 ## Type Declarations

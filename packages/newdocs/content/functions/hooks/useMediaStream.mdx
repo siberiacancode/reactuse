@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1783015099495
+lastModifiedTime: 1783015681000
 ---
 
 import metadata from './useMediaStream.meta.json';
@@ -45,9 +45,9 @@ import metadata from './useMediaStream.meta.json';
 ## Usage
 
 ```tsx
-const { stream, start, apply, stop } = useMediaStream(videoRef, { immediately: true });
+const { stream, start, apply, stop } = useMediaStream(videoRef);
 // or
-const { ref, stream, start, apply, stop } = useMediaStream({ immediately: true });
+const { ref, stream, start, apply, stop } = useMediaStream<HTMLVideoElement>();
 ```
 
 ## Type Declarations

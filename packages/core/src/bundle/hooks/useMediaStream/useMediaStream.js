@@ -30,7 +30,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @returns {UseMediaStreamReturn & { ref: StateRef<HTMLVideoElement> }} An object containing the media stream state, controls and ref
  *
  * @example
- * const { ref, stream, start, apply, stop } = useMediaStream();
+ * const { ref, stream, start, apply, stop } = useMediaStream<HTMLVideoElement>();
  */
 export const useMediaStream = (...params) => {
   const supported =
@@ -41,6 +41,7 @@ export const useMediaStream = (...params) => {
     !!navigator.mediaDevices.getUserMedia;
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = (target ? params[1] : params[0]) ?? {};
+  const immediately = options?.immediately ?? false;
   const [active, setActive] = useState(options.immediately ?? false);
   const [loading, setLoading] = useState(false);
   const internalRef = useRefState();
@@ -135,8 +136,7 @@ export const useMediaStream = (...params) => {
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     elementRef.current = element;
-    if (!options.immediately) return;
-    start();
+    if (immediately) start();
     return () => {
       cleanup();
     };

@@ -11,23 +11,27 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @overload
  * @param {HookTarget} target The target video element to display the media stream
- * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing
+ * @param {UseDisplayMediaConstraints} [options.constraints] Default constraints passed to `getDisplayMedia`
  * @param {boolean} [options.immediately=false] Whether to start immediately
- * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing
- * @returns {UseDisplayMediaReturn} Object containing stream, sharing status and control methods
+ * @param {(stream: MediaStream) => void} [options.onStart] Callback fired when screen sharing starts
+ * @param {(stream?: MediaStream) => void} [options.onStop] Callback fired when screen sharing stops
+ * @returns {UseDisplayMediaReturn} Object containing stream, active status and control methods
  *
  * @example
- * const { stream, sharing, start, stop } = useDisplayMedia(ref);
+ * const { stream, active, start, stop } = useDisplayMedia(ref);
+ * start({ video: false, audio: true });
  *
  * @overload
  * @template Target The target video element
- * @param {boolean | MediaTrackConstraints} [options.audio] Whether to enable audio sharing
+ * @param {UseDisplayMediaConstraints} [options.constraints] Default constraints passed to `getDisplayMedia`
  * @param {boolean} [options.immediately=false] Whether to start immediately
- * @param {boolean | MediaTrackConstraints} [options.video] Whether to enable video sharing
- * @returns {UseDisplayMediaReturn & { ref: StateRef<HTMLVideoElement> }} Object containing stream, sharing status, control methods and ref
+ * @param {(stream: MediaStream) => void} [options.onStart] Callback fired when screen sharing starts
+ * @param {(stream?: MediaStream) => void} [options.onStop] Callback fired when screen sharing stops
+ * @returns {UseDisplayMediaReturn & { ref: StateRef<HTMLVideoElement> }} Object containing stream, active status, control methods and ref
  *
  * @example
- * const { ref, stream, sharing, start, stop } = useDisplayMedia<HTMLVideoElement>();
+ * const { ref, stream, active, start, stop } = useDisplayMedia<HTMLVideoElement>();
+ * start({ video: { displaySurface: 'browser' } });
  */
 export const useDisplayMedia = (...params) => {
   const supported =
@@ -39,26 +43,46 @@ export const useDisplayMedia = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
   const options = params[1] ? params[1] : params[0];
   const immediately = options?.immediately ?? false;
-  const [sharing, setSharing] = useState(false);
+  const [active, setActive] = useState(false);
   const elementRef = useRef(null);
   const streamRef = useRef(null);
   const internalRef = useRefState();
-  const stop = () => {
-    if (!streamRef.current || !supported || !elementRef.current) return;
-    setSharing(false);
-    elementRef.current.srcObject = null;
-    streamRef.current.getTracks().forEach((track) => track.stop());
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
+  const constraintsRef = useRef({
+    video: options?.constraints?.video ?? true,
+    audio: options?.constraints?.audio ?? false
+  });
+  const cleanup = () => {
+    if (elementRef.current) elementRef.current.srcObject = null;
+    if (!streamRef.current) return;
+    streamRef.current.getTracks().forEach((track) => {
+      track.onended = null;
+      track.stop();
+    });
     streamRef.current = null;
   };
-  const start = async () => {
+  const stop = () => {
+    if (!supported || !streamRef.current) return;
+    const stream = streamRef.current;
+    setActive(false);
+    optionsRef.current?.onStop?.(stream);
+    cleanup();
+  };
+  const start = async (constraints) => {
     if (!supported || !elementRef.current) return;
+    if (constraints) {
+      constraintsRef.current = constraints;
+      cleanup();
+    }
     const displayMedia = await navigator.mediaDevices.getDisplayMedia({
-      video: options?.video,
-      audio: options?.audio
+      video: constraintsRef.current.video,
+      audio: constraintsRef.current.audio
     });
-    setSharing(true);
+    setActive(true);
     streamRef.current = displayMedia;
     elementRef.current.srcObject = displayMedia;
+    optionsRef.current?.onStart?.(displayMedia);
     displayMedia.getTracks().forEach((track) => (track.onended = stop));
     return displayMedia;
   };
@@ -67,23 +91,22 @@ export const useDisplayMedia = (...params) => {
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     elementRef.current = element;
-    if (!immediately) return;
-    start();
+    if (immediately) start();
     return () => {
-      stop();
+      cleanup();
     };
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target)
     return {
       stream: streamRef.current,
-      sharing,
+      active,
       supported,
       start,
       stop
     };
   return {
     stream: streamRef.current,
-    sharing,
+    active,
     supported,
     start,
     stop,

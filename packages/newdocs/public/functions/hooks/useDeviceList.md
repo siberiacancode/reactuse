@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1783015097206
+lastModifiedTime: 1783015681000
 ---
 
 import metadata from './useDeviceList.meta.json';
@@ -47,8 +47,8 @@ import metadata from './useDeviceList.meta.json';
 ## Usage
 
 ```tsx
-const { devices, videoInputs, audioInputs, audioOutputs, update } = useDeviceList((devices) =>
-  console.log(devices)
+const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList(
+  (devices) => console.log(devices)
 );
 // or
 const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList({
