@@ -43,12 +43,18 @@ export const useDeviceList = (...params) => {
   };
   const trigger = async () => {
     if (!supported) return;
+    const list = await navigator.mediaDevices.enumerateDevices();
+    const hasCamera = list.some((device) => device.kind === 'videoinput');
+    const hasMicrophone = list.some((device) => device.kind === 'audioinput');
+    if (!hasCamera && !hasMicrophone) return update();
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true
+      video: hasCamera,
+      audio: hasMicrophone
     });
     stream?.getTracks().forEach((track) => track.stop());
-    return update();
+    setDevices(list);
+    optionsRef.current?.onUpdate?.(list);
+    return list;
   };
   useEffect(() => {
     if (!supported) return;

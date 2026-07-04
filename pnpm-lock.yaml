@@ -201,6 +201,9 @@ importers:
       '@types/mdx':
         specifier: ^2.0.14
         version: 2.0.14
+      '@webcam/react':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       algoliasearch:
         specifier: ^5.55.0
         version: 5.55.0
@@ -3971,6 +3974,20 @@ packages:
 
   '@vueuse/shared@12.8.2':
     resolution: {integrity: sha512-dznP38YzxZoNloI0qpEfpkms8knDtaoQ6Y/sfS0L7Yki4zh40LFHEhur0odJC6xTHG5dxWVPiUWBXn+wCG2s5w==}
+
+  '@webcam/core@1.0.1':
+    resolution: {integrity: sha512-N422fDE1iJ5pc5IiLh2NhvxQPFYTMLDbw+x0YtREGMDg4S05qvRgD8Au0N0/JoQUVvS7Vw+ns16/jYPUDgljtQ==}
+    engines: {node: '>=14'}
+
+  '@webcam/react@1.1.0':
+    resolution: {integrity: sha512-CiVIStx4uraGQnXfcx9wMyNkEKeZpQ16oiMODsaxJG/ZOSgivW9urBZvLmdRNl9Y9qnxwds8MiG6vsDYeiyb8Q==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@types/react': ^18.0.0
+      react: ^17.0.2 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   '@webcontainer/env@1.1.1':
     resolution: {integrity: sha512-6aN99yL695Hi9SuIk1oC88l9o0gmxL1nGWWQ/kNy81HigJ0FoaoTXpytCj6ItzgyCEwA9kF1wixsTuv5cjsgng==}
@@ -11587,6 +11604,18 @@ snapshots:
       vue: 3.5.38(typescript@6.0.3)
     transitivePeerDependencies:
       - typescript
+
+  '@webcam/core@1.0.1': {}
+
+  '@webcam/react@1.1.0(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      '@siberiacancode/reactuse': 1.0.4(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@webcam/core': 1.0.1
+      react: 19.2.7
+    optionalDependencies:
+      '@types/react': 19.2.17
+    transitivePeerDependencies:
+      - react-dom
 
   '@webcontainer/env@1.1.1': {}
 

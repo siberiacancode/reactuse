@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useInterval, useQueue } from '@siberiacancode/reactuse';
 import { CheckIcon } from 'lucide-react';
@@ -14,7 +14,7 @@ const EMOJIS = ['🍔', '🍟', '🌭', '🥤', '🍕', '🌮', '🍗', '🍦'];
 
 const createOrder = (number: number): Order => {
   const count = 1 + Math.floor(Math.random() * 3);
-  // eslint-disable-next-line e18e/prefer-array-fill
+
   const items = Array.from(
     { length: count },
     () => EMOJIS[Math.floor(Math.random() * EMOJIS.length)]

@@ -30,6 +30,10 @@ export const docs = defineDocs({
   dir: 'content/docs'
 });
 
+export const integrations = defineDocs({
+  dir: 'content/integrations'
+});
+
 export const functions = defineDocs({
   dir: 'content/functions',
   docs: {

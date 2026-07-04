@@ -72,3 +72,11 @@ export interface FunctionMetadata {
   usage: string;
   warning?: string;
 }
+
+export interface IntegrationMetadata {
+  dependency: number;
+  description: string;
+  lastModified: number;
+  name: string;
+  type: 'integration';
+}

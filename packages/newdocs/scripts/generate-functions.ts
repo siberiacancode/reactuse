@@ -310,11 +310,11 @@ const init = async () => {
       const isDemo = await checkFileContent(element.type, element.name, 'demo');
 
       if (!isTest && !isDemo) {
-        console.warn(`Skipped ${element.name}: no demo and no test`);
+        console.error(`No files found for ${element.name}`);
         return null;
       }
 
-      const { contributors, firstCommit, isNew, lastCommit } = await getGitInfo(
+      const { contributors, firstCommitAt, isNew, lastCommitAt } = await getGitInfo(
         element.name,
         element.type,
         extension
@@ -327,9 +327,9 @@ const init = async () => {
 
       return {
         badges: {
-          firstCommitAt: new Date(firstCommit.date).getTime(),
+          firstCommitAt: new Date(firstCommitAt).getTime(),
           isNew,
-          lastCommitAt: new Date(lastCommit.date).getTime()
+          lastCommitAt: new Date(lastCommitAt).getTime()
         },
         code: await createHtmlCode(content, 'tsx'),
         id: element.name,
@@ -344,7 +344,7 @@ const init = async () => {
         browserapi: jsdoc.browserapi,
         description: jsdoc.description.description,
         category: jsdoc.category!.name,
-        lastModified: new Date(lastCommit?.date ?? new Date()).getTime(),
+        lastModified: lastCommitAt,
         examples: jsdoc.examples.map((example) => example.description),
         apiParameters: jsdoc.apiParameters ?? [],
         ...(typeDeclarations && {

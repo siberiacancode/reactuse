@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781981977000
+lastModifiedTime: 1783064047000
 ---
 
 import metadata from './useDisplayMedia.meta.json';

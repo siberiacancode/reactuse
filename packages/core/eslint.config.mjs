@@ -40,7 +40,8 @@ export default eslint(
     name: 'siberiacancode/core/demo',
     files: ['**/*.demo.tsx'],
     rules: {
-      'no-alert': 'off'
+      'no-alert': 'off',
+      'react/static-components': 'off'
     }
   }
 );
