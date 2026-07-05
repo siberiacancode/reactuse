@@ -47,10 +47,7 @@ import metadata from './useValidatedState.meta.json';
 ## Usage
 
 ```tsx
-const [{ value, lastValidValue, valid }, setValue] = useValidatedState(
-  '',
-  (value) => value.length >= 3
-);
+const [{ value, lastValidValue, valid }, setValue] = useValidatedState( '', (value) => value.length >= 3 );
 ```
 
 ## Type Declarations

@@ -47,13 +47,9 @@ import metadata from './useDeviceList.meta.json';
 ## Usage
 
 ```tsx
-const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList(
-  (devices) => console.log(devices)
-);
+const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList((devices) => console.log(devices));
 // or
-const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList({
-  immediately: true
-});
+const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList({ immediately: true });
 ```
 
 ## Type Declarations
