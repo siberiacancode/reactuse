@@ -133,12 +133,12 @@ const Demo = () => {
             <div ref={dropdownRef} className='relative'>
               <button
                 aria-label='Select camera'
-                className='flex items-center gap-2'
+                className='flex w-44 items-center gap-2'
                 data-variant='secondary'
                 type='button'
                 onClick={() => dropdownMenu.toggle()}
               >
-                <span className='max-w-[120px] truncate text-xs'>
+                <span className='min-w-0 flex-1 truncate text-left text-xs'>
                   {activeCamera?.label || 'Default camera'}
                 </span>
                 <ChevronDownIcon className='size-4' />
