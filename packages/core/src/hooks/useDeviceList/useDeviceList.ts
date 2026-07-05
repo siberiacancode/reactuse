@@ -95,12 +95,13 @@ export const useDeviceList = ((...params: any[]) => {
     const hasMicrophone = list.some((device) => device.kind === 'audioinput');
     if (!hasCamera && !hasMicrophone) return update();
 
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: hasCamera,
-      audio: hasMicrophone
-    });
-
-    stream?.getTracks().forEach((track) => track.stop());
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: hasCamera,
+        audio: hasMicrophone
+      });
+      stream.getTracks().forEach((track) => track.stop());
+    } catch {}
 
     setDevices(list);
     optionsRef.current?.onUpdate?.(list);
