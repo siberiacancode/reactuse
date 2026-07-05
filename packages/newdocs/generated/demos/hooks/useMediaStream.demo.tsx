@@ -81,7 +81,7 @@ const Demo = () => {
 
   return (
     <section className='flex w-[350px] flex-col gap-3 p-4'>
-      <div className='bg-card/70 flex flex-col overflow-hidden rounded-xl'>
+      <div className='bg-card/70 relative flex flex-col rounded-xl'>
         <div className='relative flex aspect-[16/9] items-center justify-center overflow-hidden p-2'>
           <div className='relative size-full overflow-hidden rounded-lg'>
             <video
@@ -148,7 +148,7 @@ const Demo = () => {
 
               {dropdownMenu.opened && (
                 <div
-                  className='absolute bottom-full left-0 mb-2 w-56'
+                  className='absolute bottom-full left-0 z-20 mb-2 w-56'
                   data-slot='dropdown-menu-content'
                 >
                   {!deviceList.videoInputs.length && (
