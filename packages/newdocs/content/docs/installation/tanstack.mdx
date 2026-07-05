@@ -49,14 +49,14 @@ The command above will add the `useBoolean` hook to your project. You can then i
 import { useBoolean } from '@/shared/hooks';
 
 const Home = () => {
-  const [on, toggle] = useBoolean();
+  const [visible, toggle] = useBoolean();
 
   return (
     <div>
       <button type='button' onClick={() => toggle()}>
         Click me
       </button>
-      <p>{on.toString()}</p>
+      <p>{visible ? 'visible' : 'hidden'}</p>
     </div>
   );
 };

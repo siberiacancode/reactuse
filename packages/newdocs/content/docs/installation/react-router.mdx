@@ -50,14 +50,14 @@ export const meta = () => [
 ];
 
 const Home = () => {
-  const [on, toggle] = useBoolean();
+  const [visible, toggle] = useBoolean();
 
   return (
     <div className='flex min-h-svh flex-col items-center justify-center'>
       <button type='button' onClick={() => toggle()}>
         Click me
       </button>
-      <p>{on.toString()}</p>
+      <p>{visible ? 'visible' : 'hidden'}</p>
     </div>
   );
 };

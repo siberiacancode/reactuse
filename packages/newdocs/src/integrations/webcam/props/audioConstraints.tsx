@@ -1,0 +1,1 @@
+<Webcam audioConstraints={{ echoCancellation: true }} />;

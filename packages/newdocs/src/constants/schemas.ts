@@ -74,9 +74,17 @@ export interface FunctionMetadata {
 }
 
 export interface IntegrationMetadata {
-  dependency: number;
+  dependency: {
+    name: string;
+    link: string;
+  };
   description: string;
   lastModified: number;
   name: string;
+  props: {
+    name: string;
+    description: string;
+    code: string;
+  }[];
   type: 'integration';
 }

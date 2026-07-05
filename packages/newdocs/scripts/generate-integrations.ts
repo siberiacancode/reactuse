@@ -55,6 +55,29 @@ const createMetaJson = (integrations: IntegrationMetadata[]) => {
   return result;
 };
 
+const loadPropDocs = async (name: string, props: IntegrationMetadata['props']) => {
+  const propsDir = path.join(INTEGRATIONS_ROOT, name, 'props');
+
+  return Promise.all(
+    props.map(async (prop) => {
+      const filePath = path.join(propsDir, `${prop.name}.tsx`);
+
+      if (!fs.existsSync(filePath)) {
+        console.warn(`Missing prop snippet: ${name}/props/${prop.name}.tsx`);
+        return { name: prop.name, description: prop.description, code: '' };
+      }
+
+      const source = (await fs.promises.readFile(filePath, 'utf-8')).trim();
+
+      return {
+        name: prop.name,
+        description: prop.description,
+        code: source ? await createHtmlCode(source, 'tsx') : ''
+      };
+    })
+  );
+};
+
 const createMdxTemplate = (metadata: IntegrationMetadata) => {
   const result: string[] = [];
 
@@ -77,19 +100,38 @@ const createMdxTemplate = (metadata: IntegrationMetadata) => {
   result.push('## Installation');
   result.push('');
   result.push('```packages-install');
-  result.push(`npm install ${metadata.dependency}`);
+  result.push(`npm install ${metadata.dependency.name}`);
   result.push('```');
+
+  if (metadata.props?.length) {
+    result.push('');
+    result.push('## Examples');
+    metadata.props.forEach((prop, index) => {
+      result.push('');
+      result.push(`### ${prop.name}`);
+
+      if (prop.description) {
+        result.push('');
+        result.push(prop.description);
+      }
+
+      if (prop.code) {
+        result.push('');
+        result.push(`<FunctionCode code={metadata.props[${index}].code} language="tsx" />`);
+      }
+    });
+  }
+
+  result.push('## API Reference');
+  result.push(
+    `See the (${metadata.name} API Reference)[${metadata.dependency.link}] for more information`
+  );
+  result.push('');
 
   return result.join('\n');
 };
 
-interface IntegrationMeta {
-  dependency: string;
-  description: string;
-  name: string;
-}
-
-const loadMeta = async (name: string): Promise<IntegrationMeta> => {
+const loadMeta = async (name: string): Promise<IntegrationMetadata> => {
   const metaPath = path.resolve(INTEGRATIONS_ROOT, name, 'meta.ts');
   const module = await import(pathToFileURL(metaPath).href);
   return module.default;
@@ -122,7 +164,8 @@ const init = async () => {
         dependencies,
         lastModified,
         type: 'integration',
-        demo: await createHtmlCode(demoContent, 'tsx')
+        demo: await createHtmlCode(demoContent, 'tsx'),
+        props: await loadPropDocs(meta.name ?? name, meta.props)
       };
     })
   );

@@ -56,11 +56,5 @@
     "cross-env": "^10.1.0",
     "tsdown": "^0.20.3",
     "tsx": "^4.21.0"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
   }
 }

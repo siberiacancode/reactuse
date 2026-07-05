@@ -62,8 +62,8 @@ npm install -D @types/node
 ```
 
 ```typescript title="vite.config.ts" showLineNumbers {1,2,8-13}
-import path from 'node:path';
 import react from '@vitejs/plugin-react';
+import path from 'node:path';
 import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
@@ -101,12 +101,12 @@ Then import and use the hook in your app:
 import { useBoolean } from '@/shared/hooks';
 
 const App = () => {
-  const [on, toggle] = useBoolean();
+  const [visible, toggle] = useBoolean();
 
   return (
     <div>
       <button onClick={() => toggle()}>Click me</button>
-      <p>{on.toString()}</p>
+      <p>{visible ? 'visible' : 'hidden'}</p>
     </div>
   );
 };

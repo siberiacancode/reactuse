@@ -46,22 +46,23 @@ npx useverse@latest add useBoolean
 The command above will add the `useBoolean` hook to your project. You can then import it like this:
 
 ```tsx title="src/routes/index.tsx" showLineNumbers
-import { useBoolean } from '@/shared/hooks';
 import { createFileRoute } from '@tanstack/react-router';
+
+import { useBoolean } from '@/shared/hooks';
 
 export const Route = createFileRoute('/')({
   component: Home
 });
 
 const Home = () => {
-  const [on, toggle] = useBoolean();
+  const [visible, toggle] = useBoolean();
 
   return (
     <div>
       <button type='button' onClick={() => toggle()}>
         Click me
       </button>
-      <p>{on.toString()}</p>
+      <p>{visible ? 'visible' : 'hidden'}</p>
     </div>
   );
 };

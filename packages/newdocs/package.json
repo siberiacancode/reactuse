@@ -39,8 +39,7 @@
     "generate:integrations": "bun run scripts/generate-integrations.ts",
     "generate:static": "bun run scripts/generate-static.ts",
     "generate:registry": "bun run scripts/generate-registry.ts",
-    "sync:content": "bun run scripts/sync-content.ts",
-    "lint-staged": "lint-staged"
+    "sync:content": "bun run scripts/sync-content.ts"
   },
   "dependencies": {
     "@siberiacancode/fetches": "^1.14.3",
@@ -92,11 +91,5 @@
     "ora": "^9.4.0",
     "tailwindcss": "^4.3.1",
     "tsconfig-paths": "^4.2.0"
-  },
-  "lint-staged": {
-    "*.{md,mdx,*ts,*js,jsx,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
   }
 }

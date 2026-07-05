@@ -1,0 +1,20 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint-core:
+      glob: 'packages/core/**/*.{js,ts,tsx}'
+      run: sh .lefthook/lint {staged_files}
+      stage_fixed: true
+
+    lint-cli:
+      glob: 'packages/cli/**/*.{js,ts}'
+      run: pnpm --dir packages/cli run type && sh .lefthook/lint {staged_files}
+      stage_fixed: true
+
+    core-checks:
+      run: sh .lefthook/core-checks
+
+commit-msg:
+  commands:
+    branch-prefix:
+      run: sh .lefthook/commit-msg {1}

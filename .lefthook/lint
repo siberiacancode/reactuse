@@ -1,0 +1,3 @@
+#!/bin/sh
+[ $# -eq 0 ] && exit 0
+pnpm exec eslint --fix "$@" && pnpm exec prettier --write "$@"

@@ -1,7 +1,7 @@
 import type { FunctionContributor } from '@/src/constants';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
-import { Badge } from '@/ui/badge';
+import { Badge } from '@/src/components/ui/badge';
 
 interface FunctionContributorsProps {
   contributors: FunctionContributor[];

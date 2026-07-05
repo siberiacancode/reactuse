@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react';
 
 import { Icons } from '@docs/components/icons';
+import { StarIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
@@ -70,9 +71,10 @@ export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProp
           </Button>
 
           <div className='flex items-center gap-1'>
-            <Button asChild className='rounded-full' variant='ghost'>
+            <Button asChild className='rounded-full' variant='outline'>
               <Link href={LINKS.GITHUB} prefetch={false} rel='noreferrer' target='_blank'>
                 <Icons.gitHub className='size-4.5' />
+                <StarIcon className='size-3.5' />
 
                 <span className='text-muted-foreground text-xs tabular-nums'>{formattedCount}</span>
               </Link>

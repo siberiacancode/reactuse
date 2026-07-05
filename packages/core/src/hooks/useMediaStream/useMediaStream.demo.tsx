@@ -79,8 +79,8 @@ const Demo = () => {
 
   return (
     <section className='flex w-[350px] flex-col gap-3 p-4'>
-      <div className='bg-card/70 flex flex-col overflow-hidden'>
-        <div className='relative flex aspect-[16/9] items-center justify-center overflow-hidden rounded-xl p-2'>
+      <div className='bg-card/70 flex flex-col overflow-hidden rounded-xl'>
+        <div className='relative flex aspect-[16/9] items-center justify-center overflow-hidden p-2'>
           <div className='relative size-full overflow-hidden rounded-lg'>
             <video
               autoPlay

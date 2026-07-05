@@ -1,9 +1,9 @@
 import { CopyButton } from '@docs/components/copy-button';
 import { getIconForLanguageExtension } from '@docs/components/icons';
 import { cn } from '@docs/lib/utils';
+import { Badge } from '@docs/src/components/ui/badge';
 import { Separator } from '@docs/src/components/ui/separator';
 import { Step, Steps } from '@docs/src/components/ui/steps';
-import { Badge } from '@docs/ui/badge';
 import { Kbd } from '@docs/ui/kbd';
 import Link from 'next/link';
 import * as React from 'react';

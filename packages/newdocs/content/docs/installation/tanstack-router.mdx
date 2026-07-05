@@ -54,14 +54,14 @@ export const Route = createFileRoute('/')({
 });
 
 const Home = () => {
-  const [on, toggle] = useBoolean();
+  const [visible, toggle] = useBoolean();
 
   return (
     <div>
       <button type='button' onClick={() => toggle()}>
         Click me
       </button>
-      <p>{on.toString()}</p>
+      <p>{visible ? 'visible' : 'hidden'}</p>
     </div>
   );
 };

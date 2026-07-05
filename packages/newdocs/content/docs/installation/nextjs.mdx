@@ -53,12 +53,12 @@ Then import and use the hook (e.g. in `app/page.tsx`). Use `'use client'` when t
 import { useBoolean } from '@/shared/hooks';
 
 const Home = () => {
-  const [on, toggle] = useBoolean();
+  const [visible, toggle] = useBoolean();
 
   return (
     <div>
       <button onClick={() => toggle()}>Click me</button>
-      <p>{on.toString()}</p>
+      <p>{visible ? 'visible' : 'hidden'}</p>
     </div>
   );
 };

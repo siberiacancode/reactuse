@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if git diff --quiet HEAD -- packages/core; then
+    echo "No changes in packages/core. Skipping build."
+    exit 0
+fi
+
+echo "Running tests for packages/core..."
+pnpm --dir packages/core exec vitest run || exit 1
+
+echo "Running build:js..."
+pnpm core:build:js || exit 1
+
+git add packages/core/src/bundle
+git add packages/cli/src/registry
+echo "Built files added to git."

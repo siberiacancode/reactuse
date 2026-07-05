@@ -3,6 +3,7 @@ import type { ComponentProps } from 'react';
 import { Icons } from '@docs/components/icons';
 import { functionsSource, source } from '@docs/lib/source';
 import { CONFIG, LINKS } from '@docs/src/constants';
+import { StarIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -64,10 +65,10 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
           </div>
 
           <div className='flex items-center gap-1'>
-            <Button asChild className='rounded-full' variant='ghost'>
+            <Button asChild className='rounded-full' variant='outline'>
               <Link href={LINKS.GITHUB} prefetch={false} rel='noreferrer' target='_blank'>
                 <Icons.gitHub className='size-4.5' />
-
+                <StarIcon className='size-3.5' />
                 <span className='text-muted-foreground text-xs tabular-nums'>{formattedCount}</span>
               </Link>
             </Button>

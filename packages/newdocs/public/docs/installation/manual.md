@@ -49,14 +49,14 @@ Then import and use them:
 import { useBoolean } from '@/shared/hooks';
 
 const App = () => {
-  const [on, toggle] = useBoolean();
+  const [visible, toggle] = useBoolean();
 
   return (
     <div>
       <button type='button' onClick={() => toggle()}>
         Toggle
       </button>
-      <p>{on.toString()}</p>
+      <p>{visible ? 'visible' : 'hidden'}</p>
     </div>
   );
 };

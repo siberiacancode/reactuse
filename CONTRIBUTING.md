@@ -58,7 +58,7 @@ pnpm unit-test       # run unit tests across all packages
 pnpm format          # format with prettier
 ```
 
-7. commit your changes (a `husky` + `lint-staged` pre-commit hook will lint and format staged files automatically)
+7. commit your changes (the `lefthook` pre-commit hook will lint and format staged files automatically)
 8. push your feature branch and open a [Pull Request](https://github.com/siberiacancode/reactuse/compare) targeting `main`
 9. link your PR to the issue using a [closing keyword](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) or describe the motivation and changes in the comment (example: `fix #74`)
 10. wait until a maintainer reviews it

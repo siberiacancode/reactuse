@@ -101,12 +101,12 @@ Then import and use the hook in your app:
 import { useBoolean } from '@/shared/hooks';
 
 const App = () => {
-  const [on, toggle] = useBoolean();
+  const [visible, toggle] = useBoolean();
 
   return (
     <div>
       <button onClick={() => toggle()}>Click me</button>
-      <p>{on.toString()}</p>
+      <p>{visible ? 'visible' : 'hidden'}</p>
     </div>
   );
 };

@@ -10,5 +10,6 @@ minimumReleaseAgeExclude:
 allowBuilds:
   core-js: true
   esbuild: true
+  lefthook: true
   msw: true
   sharp: true

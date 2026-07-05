@@ -55,14 +55,14 @@ Then import and use the hook in a React component:
 import { useBoolean } from '@/shared/hooks';
 
 export const Counter = () => {
-  const [on, toggle] = useBoolean();
+  const [visible, toggle] = useBoolean();
 
   return (
     <div>
       <button type='button' onClick={() => toggle()}>
         Click me
       </button>
-      <p>{on.toString()}</p>
+      <p>{visible ? 'visible' : 'hidden'}</p>
     </div>
   );
 };
