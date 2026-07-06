@@ -3,34 +3,32 @@ import Link from 'next/link';
 
 import { CONFIG, LINKS } from '@/src/constants';
 
-const columns = [
+const COLUMNS = [
   {
     links: [
-      { href: '/docs/installation', label: 'Installation' },
-      { href: '/docs/introduction', label: 'Introduction' },
-      { href: '/docs/cli', label: 'CLI' }
+      { href: '/docs/installation', label: 'Installation', external: false },
+      { href: '/docs/introduction', label: 'Introduction', external: false },
+      { href: '/docs/cli', label: 'CLI', external: false }
     ],
     title: 'Docs'
   },
   {
     links: [
-      { href: '/functions/hooks/useActiveElement', label: 'Hooks' },
-      { href: '/functions/helpers/cn', label: 'Helpers' }
+      { href: '/functions/hooks/useActiveElement', label: 'Hooks', external: false },
+      { href: '/functions/helpers/cn', label: 'Helpers', external: false }
     ],
     title: 'Functions'
   },
   {
-    external: true,
     links: [
-      { href: LINKS.GITHUB, label: 'GitHub' },
-      { href: LINKS.NPM, label: 'npm' },
-      { href: 'https://github.com/siberiacancode', label: 'siberiacancode' }
+      { href: LINKS.GITHUB, label: 'GitHub', external: true },
+      { href: LINKS.NPM, label: 'npm', external: true }
     ],
     title: 'Community'
   }
-];
+] as const;
 
-const socials = [
+const SOCIALS = [
   { external: true, href: LINKS.GITHUB, label: 'GitHub' },
   { external: true, href: LINKS.NPM, label: 'npm' }
 ];
@@ -40,7 +38,6 @@ export const LandingFooter = () => (
     <div className='container mx-auto px-6 py-16'>
       <div>
         <div className='grid gap-12 lg:grid-cols-[1.4fr_2fr] lg:gap-16'>
-          {/* ── Brand (left) ── */}
           <div className='max-w-sm'>
             <Link className='inline-flex items-center gap-2' href='/' prefetch={false}>
               <Image alt='ReactUse' height={12} src='/logo.svg' width={12} />
@@ -56,7 +53,7 @@ export const LandingFooter = () => (
             </p>
 
             <div className='mt-6 flex items-center gap-4'>
-              {socials.map((social) => (
+              {SOCIALS.map((social) => (
                 <Link
                   key={social.label}
                   className='text-muted-foreground hover:text-foreground text-sm transition-colors'
@@ -71,9 +68,8 @@ export const LandingFooter = () => (
             </div>
           </div>
 
-          {/* ── Link columns (right) ── */}
           <div className='grid grid-cols-2 gap-8 sm:grid-cols-4'>
-            {columns.map((column) => (
+            {COLUMNS.map((column) => (
               <div key={column.title}>
                 <p className='text-foreground text-sm font-semibold'>{column.title}</p>
                 <ul className='mt-4 space-y-3'>
@@ -83,8 +79,10 @@ export const LandingFooter = () => (
                         className='text-muted-foreground hover:text-foreground text-sm transition-colors'
                         href={link.href}
                         prefetch={false}
-                        rel={column.external ? 'noreferrer' : undefined}
-                        target={column.external ? '_blank' : undefined}
+                        {...(link.external && {
+                          rel: 'noreferrer',
+                          target: '_blank'
+                        })}
                       >
                         {link.label}
                       </Link>
@@ -96,13 +94,12 @@ export const LandingFooter = () => (
           </div>
         </div>
 
-        {/* ── Bottom bar ── */}
         <div className='mt-16 flex flex-col items-start gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between'>
           <p className='text-muted-foreground text-xs'>
             © {new Date().getFullYear()} reactuse. Released under the MIT License. Made with care by{' '}
             <Link
               className='text-foreground hover:text-muted-foreground transition-colors'
-              href='https://github.com/siberiacancode'
+              href={LINKS.GITHUB}
               prefetch={false}
               rel='noreferrer'
               target='_blank'

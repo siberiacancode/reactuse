@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 
-import fetches from '@siberiacancode/fetches';
-
 import { getContributors } from '@/lib/contributors';
 import { getElements } from '@/scripts/helpers';
 import { CONFIG } from '@/src/constants';
-import { getLatestReleases, getRepository } from '@/src/utils/api/github';
+import { getLatestReleases, getNpmDownloads, getRepository } from '@/src/utils/api';
+import { formatCount } from '@/src/utils/helpers';
 
 import {
   LandingAdvantages,
@@ -44,15 +43,6 @@ export const metadata: Metadata = {
   }
 };
 
-const formatMetricCount = (count: number) => {
-  if (count < 1000) return `${count}+`;
-  return `${Math.round(count / 1000)}K+`;
-};
-
-interface NpmDownloadsResponse {
-  downloads: number;
-}
-
 const HomePage = async () => {
   const [hooks, contributors, repositoryResponse, latestReleasesResponse, npmDownloadsResponse] =
     await Promise.all([
@@ -60,21 +50,16 @@ const HomePage = async () => {
       getContributors(),
       getRepository(),
       getLatestReleases(),
-      fetches.get<NpmDownloadsResponse>(
-        `https://api.npmjs.org/downloads/point/last-week/${encodeURIComponent('@siberiacancode/reactuse')}`,
-        {
-          cache: 'force-cache'
-        }
-      )
+      getNpmDownloads()
     ]);
 
-  const hooksCount = formatMetricCount(hooks.length);
-  const contributorsCount = formatMetricCount(contributors.length);
+  const hooksCount = formatCount(hooks.length);
+  const contributorsCount = formatCount(contributors.length, true);
   const stats = [
     { label: 'Hooks', value: hooksCount },
     { label: 'Contributors', value: contributorsCount },
-    { label: 'GitHub Stars', value: formatMetricCount(repositoryResponse.data.stargazers_count) },
-    { label: 'Weekly Downloads', value: formatMetricCount(npmDownloadsResponse.data.downloads) },
+    { label: 'GitHub Stars', value: formatCount(repositoryResponse.data.stargazers_count) },
+    { label: 'Weekly Downloads', value: formatCount(npmDownloadsResponse.data.downloads, true) },
     { label: 'TypeScript', value: '100%' },
     { label: 'Dependencies', value: '0' }
   ];
@@ -85,8 +70,12 @@ const HomePage = async () => {
 
   return (
     <div>
-      {latestReleasesResponse.data[0] && (
-        <LandingRelease lastRelease={lastRelease} releaseTitle={releaseTitle} />
+      {lastRelease && (
+        <LandingRelease
+          name={lastRelease.tag_name}
+          title={releaseTitle!}
+          url={lastRelease.html_url}
+        />
       )}
 
       <LandingHeader

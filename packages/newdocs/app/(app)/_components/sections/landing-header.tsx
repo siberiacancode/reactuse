@@ -8,13 +8,9 @@ import { Fragment } from 'react';
 
 import { Button, Marquee } from '@/src/components/ui';
 import { CONFIG, LINKS } from '@/src/constants';
+import { formatCount } from '@/src/utils/helpers';
 
 import { ThemeButton } from '../ThemeButton/ThemeButton';
-
-const formatStarsCount = (count: number) => {
-  if (count < 1000) return count;
-  return `${Math.round(count / 1000)}${count >= 1000 ? 'k' : ''}`;
-};
 
 export interface LandingHeaderHook {
   name: string;
@@ -30,8 +26,7 @@ export interface LandingHeaderProps extends ComponentProps<'header'> {
 }
 
 export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProps) => {
-  const formattedCount = formatStarsCount(repository.stargazersCount);
-  const sortedHooks = hooks.map((hook) => hook.name).sort((a, b) => a.localeCompare(b));
+  const formattedCount = formatCount(repository.stargazersCount);
 
   return (
     <header
@@ -91,20 +86,12 @@ export const LandingHeader = ({ hooks, repository, ...props }: LandingHeaderProp
         </div>
       </div>
 
-      <div
-        style={{
-          maskImage:
-            'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
-          WebkitMaskImage:
-            'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)'
-        }}
-        className='border-border h-8 overflow-hidden border-t'
-      >
+      <div className='border-border h-8 overflow-hidden border-t [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]'>
         <Marquee className='h-full p-0 [--duration:250s] [--gap:0.25rem]'>
-          {sortedHooks.map((name) => (
-            <Fragment key={name}>
+          {hooks.map((hook) => (
+            <Fragment key={hook.name}>
               <div className='text-muted-foreground inline-flex items-center gap-4 px-[18px] font-mono text-xs tracking-tight'>
-                {name}
+                {hook.name}
               </div>
               <div className='flex items-center text-[10px]'>•</div>
             </Fragment>

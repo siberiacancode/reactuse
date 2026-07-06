@@ -3,18 +3,16 @@
 import { Badge } from '@/src/components/ui';
 
 interface LandingReleaseProps {
-  lastRelease: {
-    html_url: string;
-    tag_name: string;
-  };
-  releaseTitle?: string;
+  name: string;
+  title: string;
+  url: string;
 }
 
-export const LandingRelease = ({ lastRelease, releaseTitle }: LandingReleaseProps) => (
+export const LandingRelease = ({ name, title, url }: LandingReleaseProps) => (
   <div className='border-border relative flex h-9 items-center justify-center border-b py-6'>
     <a
       className='group text-foreground inline-flex items-center gap-2 text-xs sm:text-sm'
-      href={lastRelease.html_url}
+      href={url}
       rel='noreferrer'
       target='_blank'
     >
@@ -22,8 +20,8 @@ export const LandingRelease = ({ lastRelease, releaseTitle }: LandingReleaseProp
         New
       </Badge>
       <span className='text-muted-foreground truncate'>
-        <span className='text-foreground font-medium'>{lastRelease.tag_name}</span>
-        {releaseTitle && ` - ${releaseTitle}`}
+        <span className='text-foreground font-medium'>{name}</span>
+        {` - ${title}`}
       </span>
       <span className='text-muted-foreground transition-transform group-hover:translate-x-0.5'>
         -&gt;

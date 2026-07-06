@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/src/components/ui';
-import { getRepository } from '@/src/utils/api/github';
+import { getRepository } from '@/src/utils/api';
 
 import { Burger, Search, ThemeButton } from './components';
 
