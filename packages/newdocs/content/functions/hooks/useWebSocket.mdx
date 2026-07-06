@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1782052667000
+lastModifiedTime: 1783329679000
 ---
 
 import metadata from './useWebSocket.meta.json';

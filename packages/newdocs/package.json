@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@siberiacancode/fetches": "^1.14.3",
-    "@siberiacancode/reactuse": "^1.0.6",
+    "@siberiacancode/reactuse": "^1.0.7",
     "@types/mdx": "^2.0.14",
     "@webcam/react": "^1.1.0",
     "algoliasearch": "^5.55.0",

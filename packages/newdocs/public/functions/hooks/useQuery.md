@@ -6,7 +6,7 @@ usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781098447000
+lastModifiedTime: 1783329679000
 ---
 
 import metadata from './useQuery.meta.json';
@@ -47,7 +47,7 @@ import metadata from './useQuery.meta.json';
 ## Usage
 
 ```tsx
-const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));
+const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort } = useQuery(() => fetch('url'));
 ```
 
 ## Type Declarations
