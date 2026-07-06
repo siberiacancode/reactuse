@@ -7,14 +7,16 @@ export type UseWebSocketUrl = (() => string) | string;
 
 /** The use web socket options type */
 export interface UseWebSocketOptions {
+  /** Immediately open the connection when calling this hook */
+  immediately?: boolean;
   /** The list of protocols to use */
   protocols?: Array<'soap' | 'wasm'>;
-  /** The number of times to retry the connection */
-  retry?: boolean | number;
+  /** The number of times to retry the connection, or a function to decide whether to retry */
+  retry?: ((failureCount: number, event: CloseEvent) => boolean) | boolean | number;
+  /** The callback function that is called when the WebSocket connection is closed */
+  onClose?: (event: CloseEvent, webSocket: WebSocket) => void;
   /** The callback function that is called when the WebSocket connection is established */
   onConnected?: (webSocket: WebSocket) => void;
-  /** The callback function that is called when the WebSocket connection is closed */
-  onDisconnected?: (event: CloseEvent, webSocket: WebSocket) => void;
   /** The callback function that is called when an error occurs */
   onError?: (event: Event, webSocket: WebSocket) => void;
   /** The callback function that is called when a message is received */
@@ -48,12 +50,13 @@ export interface UseWebSocketReturn {
  *
  * @param {UseWebSocketUrl} url The URL of the WebSocket server
  * @param {(webSocket: WebSocket) => void} [options.onConnected] The callback function that is called when the WebSocket connection is established
- * @param {(event: CloseEvent, webSocket: WebSocket) => void} [options.onDisconnected] The callback function that is called when the WebSocket connection is closed
+ * @param {(event: CloseEvent, webSocket: WebSocket) => void} [options.onClose] The callback function that is called when the WebSocket connection is closed
  * @param {(event: Event, webSocket: WebSocket) => void} [options.onError] The callback function that is called when an error occurs
  * @param {(event: MessageEvent, webSocket: WebSocket) => void} [options.onMessage] The callback function that is called when a message is received
- * @param {boolean | number} [options.retry] The number of times to retry the connection
+ * @param {boolean} [options.immediately=true] Immediately open the connection when calling this hook
+ * @param {boolean | number | ((failureCount: number, event: CloseEvent) => boolean)} [options.retry] The number of times to retry the connection, or a function to decide whether to retry
  * @param {Array<'soap' | 'wasm'>} [options.protocols] The list of protocols to use
- * @returns {UseWebSocketReturn} An object with the status, close, send, open, and ws properties
+ * @returns {UseWebSocketReturn} An object with the status, close, send, open, and client properties
  *
  * @example
  * const { status, close, send, open, client } = useWebSocket('url');
@@ -62,11 +65,14 @@ export const useWebSocket = (
   url: UseWebSocketUrl,
   options?: UseWebSocketOptions
 ): UseWebSocketReturn => {
+  const immediately = options?.immediately ?? true;
   const webSocketRef = useRef<WebSocket>(undefined);
-  const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
+  const failureCountRef = useRef(0);
   const explicityCloseRef = useRef(false);
 
-  const [status, setStatus] = useState<UseWebSocketStatus>('connecting');
+  const [status, setStatus] = useState<UseWebSocketStatus>(
+    immediately ? 'connecting' : 'disconnected'
+  );
 
   const send = (data: string | Blob | BufferSource) => {
     webSocketRef.current?.send(data);
@@ -75,6 +81,7 @@ export const useWebSocket = (
   const close = () => {
     explicityCloseRef.current = true;
     webSocketRef.current?.close();
+    webSocketRef.current = undefined;
   };
 
   const init = () => {
@@ -88,6 +95,7 @@ export const useWebSocket = (
     if (!webSocket) return;
 
     webSocket.onopen = () => {
+      failureCountRef.current = 0;
       setStatus('connected');
       options?.onConnected?.(webSocket);
     };
@@ -101,31 +109,42 @@ export const useWebSocket = (
 
     webSocket.onclose = (event) => {
       setStatus('disconnected');
-      options?.onDisconnected?.(event, webSocket);
+      options?.onClose?.(event, webSocket);
       if (explicityCloseRef.current) return;
 
-      if (retryCountRef.current > 0) {
-        retryCountRef.current -= 1;
+      const shouldRetry =
+        typeof options?.retry === 'function'
+          ? options.retry(failureCountRef.current, event)
+          : failureCountRef.current < getRetry(options?.retry ?? 0);
+
+      if (shouldRetry) {
+        failureCountRef.current += 1;
         return init();
       }
-      retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
+      failureCountRef.current = 0;
     };
   };
 
-  useEffect(() => {
+  const open = () => {
+    explicityCloseRef.current = false;
+    if (webSocketRef.current) {
+      webSocketRef.current.onclose = null;
+      webSocketRef.current.close();
+      webSocketRef.current = undefined;
+    }
     init();
+  };
+
+  useEffect(() => {
+    if (immediately) init();
 
     return () => {
       if (!webSocketRef.current) return;
+      webSocketRef.current.onclose = null;
       webSocketRef.current.close();
       webSocketRef.current = undefined;
     };
   }, [url]);
-
-  const open = () => {
-    explicityCloseRef.current = false;
-    init();
-  };
 
   return { client: webSocketRef.current, close, open, send, status };
 };

@@ -5,6 +5,8 @@ export type UseDeviceListCallback = (devices: MediaDeviceInfo[]) => void;
 
 /** The use device list options type */
 export interface UseDeviceListOptions {
+  /** The constraints passed to `getUserMedia` when requesting permissions */
+  constraints?: MediaStreamConstraints;
   /** Whether the device list should be requested immediately */
   immediately?: boolean;
   /** The callback fired when the device list updates */
@@ -87,25 +89,26 @@ export const useDeviceList = ((...params: any[]) => {
     return list;
   };
 
-  const trigger = async () => {
+  const trigger = async (constraints?: MediaStreamConstraints) => {
     if (!supported) return;
 
     const list = await navigator.mediaDevices.enumerateDevices();
     const hasCamera = list.some((device) => device.kind === 'videoinput');
-    const hasMicrophone = list.some((device) => device.kind === 'audioinput');
-    if (!hasCamera && !hasMicrophone) return update();
+    const hasMicrophone = list.some(
+      (device) => device.kind === 'audioinput' || device.kind === 'audiooutput'
+    );
 
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: hasCamera,
-        audio: hasMicrophone
-      });
-      stream.getTracks().forEach((track) => track.stop());
-    } catch {}
+    const video = constraints?.video ?? optionsRef.current?.constraints?.video ?? hasCamera;
+    const audio = constraints?.video ?? optionsRef.current?.constraints?.audio ?? hasMicrophone;
 
-    setDevices(list);
-    optionsRef.current?.onUpdate?.(list);
-    return list;
+    if (video || audio) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video, audio });
+        stream.getTracks().forEach((track) => track.stop());
+      } catch {}
+    }
+
+    return update();
   };
 
   useEffect(() => {

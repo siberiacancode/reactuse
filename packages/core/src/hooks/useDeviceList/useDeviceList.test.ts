@@ -112,7 +112,7 @@ it('Should load devices immediately', async () => {
     audio: true,
     video: true
   });
-  expect(mockEnumerateDevices).toHaveBeenCalledOnce();
+  expect(mockEnumerateDevices).toHaveBeenCalledTimes(2);
   expect(mockStop).toHaveBeenCalledTimes(1);
 });
 
@@ -151,7 +151,7 @@ it('Should trigger device permissions and update devices by action', async () =>
     audio: true,
     video: true
   });
-  expect(mockEnumerateDevices).toHaveBeenCalledOnce();
+  expect(mockEnumerateDevices).toHaveBeenCalledTimes(2);
   expect(result.current.devices).toEqual(devices);
   expect(mockStop).toHaveBeenCalledTimes(1);
 });

@@ -40,6 +40,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.clearAllMocks();
+  vi.useRealTimers();
   vi.unstubAllGlobals();
 });
 
@@ -67,6 +68,13 @@ it('Should handle protocols option', () => {
   renderHook(() => useWebSocket('wss://example.com', { protocols: ['soap', 'wasm'] }));
 
   expect(getLastWebSocket().protocols).toEqual(['soap', 'wasm']);
+});
+
+it('Should not connect immediately when disabled', () => {
+  const { result } = renderHook(() => useWebSocket('wss://example.com', { immediately: false }));
+
+  expect(MockWebSocket.instances).toHaveLength(0);
+  expect(result.current.status).toBe('disconnected');
 });
 
 it('Should handle function url', () => {
@@ -115,16 +123,16 @@ it('Should handle onmessage event', () => {
 });
 
 it('Should handle onclose event', () => {
-  const onDisconnected = vi.fn();
-  const { result } = renderHook(() => useWebSocket('wss://example.com', { onDisconnected }));
+  const onClose = vi.fn();
+  const { result } = renderHook(() => useWebSocket('wss://example.com', { onClose }));
 
   const closeEvent = new CloseEvent('close');
 
   act(() => getLastWebSocket().onclose!(closeEvent));
 
   expect(result.current.status).toBe('disconnected');
-  expect(onDisconnected).toHaveBeenCalledOnce();
-  expect(onDisconnected).toHaveBeenCalledWith(closeEvent, getLastWebSocket());
+  expect(onClose).toHaveBeenCalledOnce();
+  expect(onClose).toHaveBeenCalledWith(closeEvent, getLastWebSocket());
 });
 
 it('Should handle send', () => {
@@ -146,15 +154,13 @@ it('Should handle close', () => {
 });
 
 it('Should handle open', () => {
-  const { result } = renderHook(() => useWebSocket('wss://example.com'));
-
-  act(() => result.current.close());
+  const { result } = renderHook(() => useWebSocket('wss://example.com', { immediately: false }));
 
   expect(result.current.status).toBe('disconnected');
 
   act(() => result.current.open());
 
-  expect(MockWebSocket.instances).toHaveLength(2);
+  expect(MockWebSocket.instances).toHaveLength(1);
   expect(result.current.status).toBe('connecting');
 });
 
@@ -188,6 +194,51 @@ it('Should retry on disconnected multiple times', () => {
   act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
 
   expect(MockWebSocket.instances).toHaveLength(3);
+  expect(result.current.status).toBe('disconnected');
+});
+
+it('Should retry on disconnected with function', () => {
+  const retry = vi.fn((failureCount: number) => failureCount < 2);
+  const { result } = renderHook(() => useWebSocket('wss://example.com', { retry }));
+
+  act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
+
+  expect(MockWebSocket.instances).toHaveLength(2);
+  expect(result.current.status).toBe('connecting');
+
+  act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
+
+  expect(MockWebSocket.instances).toHaveLength(3);
+  expect(result.current.status).toBe('connecting');
+
+  act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
+
+  expect(MockWebSocket.instances).toHaveLength(3);
+  expect(result.current.status).toBe('disconnected');
+
+  expect(retry).toHaveBeenNthCalledWith(1, 0, expect.any(CloseEvent));
+  expect(retry).toHaveBeenNthCalledWith(2, 1, expect.any(CloseEvent));
+  expect(retry).toHaveBeenNthCalledWith(3, 2, expect.any(CloseEvent));
+});
+
+it('Should not retry when retry function returns false', () => {
+  const retry = vi.fn(() => false);
+  const { result } = renderHook(() => useWebSocket('wss://example.com', { retry }));
+
+  act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
+
+  expect(retry).toHaveBeenCalledOnce();
+  expect(retry).toHaveBeenNthCalledWith(1, 0, expect.any(CloseEvent));
+  expect(MockWebSocket.instances).toHaveLength(1);
+  expect(result.current.status).toBe('disconnected');
+});
+
+it('Should not retry when explicitly closed', () => {
+  const { result } = renderHook(() => useWebSocket('wss://example.com', { retry: true }));
+
+  act(() => result.current.close());
+
+  expect(MockWebSocket.instances).toHaveLength(1);
   expect(result.current.status).toBe('disconnected');
 });
 

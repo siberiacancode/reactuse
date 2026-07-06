@@ -15,12 +15,10 @@ export interface UseQueryOptions<QueryData, Data> {
   keys?: DependencyList;
   /* The placeholder data for the hook */
   placeholderData?: (() => Data) | Data;
-  /* The refetch interval */
-  refetchInterval?: number;
-  /* The retry count of requests */
-  retry?: boolean | number;
-  /* The retry delay of requests */
-  retryDelay?: ((retry: number, error: Error) => number) | number;
+  /* The refetch interval, or a function returning the interval (false to stop) */
+  refetchInterval?: (() => number | false) | number | false;
+  /* The retry count of requests, or a function to decide whether to retry */
+  retry?: ((failureCount: number, error: Error) => boolean) | boolean | number;
   /* The callback function to be invoked on error */
   onError?: (error: Error) => void;
   /* The callback function to be invoked on success */
@@ -72,14 +70,13 @@ export interface UseQueryReturn<Data> {
  * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success
  * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error
  * @param {UseQueryOptionsSelect<Data>} [options.select] The select function to be invoked
- * @param {Data | (() => Data)} [options.initialData] The initial data for the hook
  * @param {Data | (() => Data)} [options.placeholderData] The placeholder data for the hook
  * @param {number} [options.refetchInterval] The refetch interval
- * @param {boolean | number} [options.retry] The retry count of requests
+ * @param {boolean | number | ((failureCount: number, error: Error) => boolean)} [options.retry] The retry count of requests, or a function to decide whether to retry
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
- * const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));
+ * const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort } = useQuery(() => fetch('url'));
  */
 export const useQuery = <QueryData, Data = QueryData>(
   callback: (params: UseQueryCallbackParams) => Promise<QueryData>,
@@ -87,7 +84,7 @@ export const useQuery = <QueryData, Data = QueryData>(
 ): UseQueryReturn<Data> => {
   const enabled = options?.enabled ?? true;
   const canRequestOnMount = enabled && typeof window !== 'undefined';
-  const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
+  const failureCountRef = useRef(0);
   const alreadyRequestedRef = useRef(false);
 
   const [isFetching, setIsFetching] = useState(canRequestOnMount);
@@ -122,6 +119,7 @@ export const useQuery = <QueryData, Data = QueryData>(
       .then((response) => {
         const data = options?.select ? options?.select(response) : response;
         options?.onSuccess?.(data as Data);
+        failureCountRef.current = 0;
         setData(data as Data);
         setIsSuccess(true);
         setError(undefined);
@@ -131,21 +129,17 @@ export const useQuery = <QueryData, Data = QueryData>(
         if (action === 'refetch') setIsRefetching(false);
       })
       .catch((error: Error) => {
-        if (retryCountRef.current > 0) {
-          retryCountRef.current -= 1;
-          const retryDelay =
-            typeof options?.retryDelay === 'function'
-              ? options?.retryDelay(retryCountRef.current, error)
-              : options?.retryDelay;
-
-          if (retryDelay) {
-            setTimeout(request, retryDelay, action);
-            return;
-          }
+        if (
+          typeof options?.retry === 'function'
+            ? options.retry(failureCountRef.current, error)
+            : failureCountRef.current < getRetry(options?.retry ?? 0)
+        ) {
+          failureCountRef.current += 1;
           request(action);
           return;
         }
         options?.onError?.(error);
+        failureCountRef.current = 0;
         setData(undefined);
         setIsSuccess(false);
         setError(error);
@@ -153,14 +147,18 @@ export const useQuery = <QueryData, Data = QueryData>(
         setIsFetching(false);
         if (action === 'init') setIsLoading(false);
         if (action === 'refetch') setIsRefetching(false);
-        retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
       })
       .finally(() => {
-        if (options?.refetchInterval) {
+        const refetchInterval =
+          typeof options?.refetchInterval === 'function'
+            ? options.refetchInterval()
+            : options?.refetchInterval;
+
+        if (refetchInterval) {
           const interval = setInterval(() => {
             clearInterval(interval);
             request('refetch');
-          }, options?.refetchInterval);
+          }, refetchInterval);
           intervalIdRef.current = interval;
         }
       });
@@ -180,7 +178,7 @@ export const useQuery = <QueryData, Data = QueryData>(
     () => () => {
       clearInterval(intervalIdRef.current);
     },
-    [enabled, options?.refetchInterval, options?.retry, ...keys]
+    [enabled, options?.retry, ...keys]
   );
 
   const refetch = () => {

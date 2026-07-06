@@ -184,36 +184,36 @@ it('Should set placeholder data', async () => {
   await waitFor(() => expect(result.current.data).toBe('data'));
 });
 
-it('Should retry on error once', async () => {
-  let retries = 0;
-
+it('Should retry on error', async () => {
+  let callCount = 0;
   const { result } = renderHook(() =>
     useQuery(
-      () =>
-        new Promise((resolve, reject) => {
-          if (retries === 1) resolve('data');
-          retries++;
-          reject(new Error('error'));
-        }),
+      () => {
+        callCount++;
+        if (callCount < 2) {
+          return Promise.reject(new Error('error'));
+        }
+        return Promise.resolve('data');
+      },
       {
-        retry: true
+        retry: 1
       }
     )
   );
 
-  expect(result.current.data).toBeUndefined();
+  expect(result.current.isLoading).toBeTruthy();
 
   await waitFor(() => expect(result.current.data).toBe('data'));
 });
 
 it('Should retry on error multiple times', async () => {
-  let retries = 0;
+  let callCount = 0;
 
   const { result } = renderHook(() =>
     useQuery(
       () => {
-        retries++;
-        if (retries < 2) {
+        callCount++;
+        if (callCount < 2) {
           return Promise.reject(new Error('error'));
         }
         return Promise.resolve('data');
@@ -311,6 +311,37 @@ it('Should refetch with interval', async () => {
   });
 });
 
+it('Should refetch with interval as function', async () => {
+  let callCount = 0;
+  const { result } = renderHook(() =>
+    useQuery(() => Promise.resolve(`data-${++callCount}`), {
+      refetchInterval: () => 100
+    })
+  );
+
+  await waitFor(() => expect(result.current.data).toBe('data-1'));
+  await waitFor(() => expect(result.current.data).toBe('data-2'), {
+    timeout: 200
+  });
+});
+
+it('Should stop refetch when interval function returns false', async () => {
+  let callCount = 0;
+  const { result } = renderHook(() =>
+    useQuery(() => Promise.resolve(`data-${++callCount}`), {
+      refetchInterval: () => (callCount >= 2 ? false : 100)
+    })
+  );
+
+  await waitFor(() => expect(result.current.data).toBe('data-1'));
+  await waitFor(() => expect(result.current.data).toBe('data-2'), {
+    timeout: 200
+  });
+
+  await new Promise((resolve) => setTimeout(resolve, 200));
+  expect(result.current.data).toBe('data-2');
+});
+
 it('Should retry with delay', async () => {
   let callCount = 0;
   const { result } = renderHook(() =>
@@ -323,8 +354,7 @@ it('Should retry with delay', async () => {
         return Promise.resolve('data');
       },
       {
-        retry: 1,
-        retryDelay: 100
+        retry: 1
       }
     )
   );
@@ -334,8 +364,8 @@ it('Should retry with delay', async () => {
   await waitFor(() => expect(result.current.data).toBe('data'));
 });
 
-it('Should retry with function delay', async () => {
-  const retryDelay = vi.fn(() => 100);
+it('Should retry with function', async () => {
+  const retry = vi.fn((failureCount: number) => failureCount < 1);
   let retries = 0;
 
   const { result } = renderHook(() =>
@@ -348,14 +378,31 @@ it('Should retry with function delay', async () => {
         return Promise.resolve('data');
       },
       {
-        retry: 1,
-        retryDelay
+        retry
       }
     )
   );
 
   await waitFor(() => expect(result.current.data).toBe('data'));
-  expect(retryDelay).toHaveBeenCalledTimes(1);
+  expect(retry).toHaveBeenCalledTimes(1);
+});
+
+it('Should not retry when retry function returns false', async () => {
+  const retry = vi.fn(() => false);
+
+  const { result } = renderHook(() =>
+    useQuery(() => Promise.reject(new Error('error')), {
+      retry
+    })
+  );
+
+  await waitFor(() => {
+    expect(result.current.isError).toBeTruthy();
+    expect(result.current.error).toEqual(new Error('error'));
+  });
+
+  expect(retry).toHaveBeenCalledTimes(1);
+  expect(result.current.data).toBeUndefined();
 });
 
 it('Should use placeholder data as function', () => {
@@ -389,8 +436,7 @@ it('Should cleanup interval on unmount', () => {
 it('Should abort during retry', async () => {
   const { result } = renderHook(() =>
     useQuery(() => Promise.reject(new Error('error')), {
-      retry: 2,
-      retryDelay: 100
+      retry: 2
     })
   );
 

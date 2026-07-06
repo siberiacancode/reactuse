@@ -14,19 +14,18 @@ import { useMount } from '../useMount/useMount';
  * @param {(data: Data) => void} [options.onSuccess] The callback function to be invoked on success
  * @param {(error: Error) => void} [options.onError] The callback function to be invoked on error
  * @param {UseQueryOptionsSelect<Data>} [options.select] The select function to be invoked
- * @param {Data | (() => Data)} [options.initialData] The initial data for the hook
  * @param {Data | (() => Data)} [options.placeholderData] The placeholder data for the hook
  * @param {number} [options.refetchInterval] The refetch interval
- * @param {boolean | number} [options.retry] The retry count of requests
+ * @param {boolean | number | ((failureCount: number, error: Error) => boolean)} [options.retry] The retry count of requests, or a function to decide whether to retry
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
- * const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort, aborted } = useQuery(() => fetch('url'));
+ * const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort } = useQuery(() => fetch('url'));
  */
 export const useQuery = (callback, options) => {
   const enabled = options?.enabled ?? true;
   const canRequestOnMount = enabled && typeof window !== 'undefined';
-  const retryCountRef = useRef(options?.retry ? getRetry(options.retry) : 0);
+  const failureCountRef = useRef(0);
   const alreadyRequestedRef = useRef(false);
   const [isFetching, setIsFetching] = useState(canRequestOnMount);
   const [isLoading, setIsLoading] = useState(canRequestOnMount);
@@ -54,6 +53,7 @@ export const useQuery = (callback, options) => {
       .then((response) => {
         const data = options?.select ? options?.select(response) : response;
         options?.onSuccess?.(data);
+        failureCountRef.current = 0;
         setData(data);
         setIsSuccess(true);
         setError(undefined);
@@ -63,20 +63,17 @@ export const useQuery = (callback, options) => {
         if (action === 'refetch') setIsRefetching(false);
       })
       .catch((error) => {
-        if (retryCountRef.current > 0) {
-          retryCountRef.current -= 1;
-          const retryDelay =
-            typeof options?.retryDelay === 'function'
-              ? options?.retryDelay(retryCountRef.current, error)
-              : options?.retryDelay;
-          if (retryDelay) {
-            setTimeout(request, retryDelay, action);
-            return;
-          }
+        if (
+          typeof options?.retry === 'function'
+            ? options.retry(failureCountRef.current, error)
+            : failureCountRef.current < getRetry(options?.retry ?? 0)
+        ) {
+          failureCountRef.current += 1;
           request(action);
           return;
         }
         options?.onError?.(error);
+        failureCountRef.current = 0;
         setData(undefined);
         setIsSuccess(false);
         setError(error);
@@ -84,14 +81,17 @@ export const useQuery = (callback, options) => {
         setIsFetching(false);
         if (action === 'init') setIsLoading(false);
         if (action === 'refetch') setIsRefetching(false);
-        retryCountRef.current = options?.retry ? getRetry(options.retry) : 0;
       })
       .finally(() => {
-        if (options?.refetchInterval) {
+        const refetchInterval =
+          typeof options?.refetchInterval === 'function'
+            ? options.refetchInterval()
+            : options?.refetchInterval;
+        if (refetchInterval) {
           const interval = setInterval(() => {
             clearInterval(interval);
             request('refetch');
-          }, options?.refetchInterval);
+          }, refetchInterval);
           intervalIdRef.current = interval;
         }
       });
@@ -108,7 +108,7 @@ export const useQuery = (callback, options) => {
     () => () => {
       clearInterval(intervalIdRef.current);
     },
-    [enabled, options?.refetchInterval, options?.retry, ...keys]
+    [enabled, options?.retry, ...keys]
   );
   const refetch = () => {
     request('refetch');
