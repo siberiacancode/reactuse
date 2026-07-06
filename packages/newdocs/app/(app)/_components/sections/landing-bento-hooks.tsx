@@ -1,6 +1,6 @@
 'use client';
 
-import type { ReactNode, SubmitEvent } from 'react';
+import type { ReactNode, RefObject, SubmitEvent } from 'react';
 
 import {
   useBoolean,
@@ -12,10 +12,12 @@ import {
   useDropZone,
   useField,
   useFileDialog,
+  useHover,
   useInterval,
   useLongPress,
   useMask,
   useMeasure,
+  useMediaQuery,
   useMergedRef,
   useOffsetPagination,
   useOnline,
@@ -47,7 +49,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import {
   Avatar,
@@ -80,11 +82,238 @@ import {
 } from '@/src/components/ui';
 import { cn } from '@/utils/lib';
 
-const Cell = ({ children, className }: { children: ReactNode; className?: string }) => (
-  <div className={cn('bg-card flex items-center justify-center rounded-2xl p-6', className)}>
-    {children}
-  </div>
-);
+const CURSOR_DOT_SIZE = 10;
+const CURSOR_OFFSET_X = 16;
+const CURSOR_OFFSET_Y = 20;
+const CURSOR_TRAIL_LERP = 0.15;
+
+interface Point {
+  x: number;
+  y: number;
+}
+
+/* ──────────────────────────────────────────────────────────────
+ * Cursor context — cards report which hook is active via useHover,
+ * the controller reads it and only tracks the pointer position.
+ * ────────────────────────────────────────────────────────────── */
+
+interface HookCursorContextValue {
+  setActiveHook: (hookName: string | null) => void;
+  clearActiveHook: (hookName: string) => void;
+  enabled: boolean;
+}
+
+const HookCursorContext = createContext<HookCursorContextValue | null>(null);
+
+const useHookCursor = () => useContext(HookCursorContext);
+
+const Cell = ({
+  children,
+  className,
+  hookName
+}: {
+  children: ReactNode;
+  className?: string;
+  hookName: string;
+}) => {
+  const cursor = useHookCursor();
+
+  // reactuse useHover — attaches mouseenter/mouseleave internally,
+  // fires onEntry/onLeave and returns { ref, value }.
+  const hover = useHover<HTMLDivElement>({
+    enabled: cursor?.enabled ?? true,
+    onEntry: () => cursor?.setActiveHook(hookName),
+    onLeave: () => cursor?.clearActiveHook(hookName)
+  });
+
+  return (
+    <div
+      ref={hover.ref}
+      className={cn(
+        'landing-bento-hook-card bg-card relative flex items-center justify-center overflow-hidden rounded-2xl p-6',
+        className
+      )}
+      data-hook={hookName}
+    >
+      {children}
+    </div>
+  );
+};
+
+const HookCursorController = ({
+  containerRef,
+  children
+}: {
+  containerRef: RefObject<HTMLElement | null>;
+  children: ReactNode;
+}) => {
+  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const hasCoarsePointer = useMediaQuery('(hover: none), (pointer: coarse)');
+  const enabled = !hasCoarsePointer;
+
+  const animationFrameRef = useRef<number | null>(null);
+  const activeHookRef = useRef<string | null>(null);
+  const cursorTargetRef = useRef<Point>({ x: 0, y: 0 });
+  const cursorCurrentRef = useRef<Point>({ x: 0, y: 0 });
+  const labelCurrentRef = useRef<Point>({ x: 0, y: 0 });
+
+  const [cursorPoint, setCursorPoint] = useState<Point>({ x: 0, y: 0 });
+  const [labelPoint, setLabelPoint] = useState<Point>({ x: 0, y: 0 });
+  const [hookName, setHookName] = useState<string | null>(null);
+  // cursorVisible → the dot, driven by the container (stays visible over gaps).
+  // hookName → the label, driven by the hovered card (null over gaps).
+  const [cursorVisible, setCursorVisible] = useState(false);
+
+  // Card → controller communication. useHover on each card drives this.
+  const setActiveHook = (nextHookName: string | null) => {
+    activeHookRef.current = nextHookName;
+    setHookName(nextHookName);
+    setCursorVisible(true);
+  };
+
+  // Only clear the label if the leaving card is still the active one (guards
+  // against enter-B firing before leave-A when moving between adjacent cards).
+  // The dot itself stays — it's tied to the container, not the card.
+  const clearActiveHook = (leavingHookName: string) => {
+    if (activeHookRef.current !== leavingHookName) return;
+    activeHookRef.current = null;
+    setHookName(null);
+  };
+
+  // Pointer tracking. The dot is tied to the container: visible on enter,
+  // hidden on leave, position updated on move (label state comes from useHover).
+  useEffect(() => {
+    if (!enabled) {
+      setCursorVisible(false);
+      setHookName(null);
+      activeHookRef.current = null;
+      return;
+    }
+
+    const container = containerRef.current;
+    if (!container) return;
+
+    const snapTo = (point: Point) => {
+      cursorTargetRef.current = point;
+      cursorCurrentRef.current = point;
+      labelCurrentRef.current = point;
+      setCursorPoint(point);
+      setLabelPoint(point);
+    };
+
+    const handlePointerEnter = (event: PointerEvent) => {
+      snapTo({ x: event.clientX, y: event.clientY });
+      setCursorVisible(true);
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      const nextPoint = { x: event.clientX, y: event.clientY };
+      cursorTargetRef.current = nextPoint;
+
+      // Snap on first appearance so the cursor doesn't fly in from origin.
+      if (!cursorVisible) {
+        snapTo(nextPoint);
+        setCursorVisible(true);
+      }
+    };
+
+    const handlePointerLeave = () => {
+      setCursorVisible(false);
+      setHookName(null);
+      activeHookRef.current = null;
+    };
+
+    container.addEventListener('pointerenter', handlePointerEnter);
+    container.addEventListener('pointermove', handlePointerMove);
+    container.addEventListener('pointerleave', handlePointerLeave);
+
+    return () => {
+      container.removeEventListener('pointerenter', handlePointerEnter);
+      container.removeEventListener('pointermove', handlePointerMove);
+      container.removeEventListener('pointerleave', handlePointerLeave);
+    };
+  }, [containerRef, enabled, cursorVisible]);
+
+  // Inertia loop.
+  useEffect(() => {
+    if (!enabled) return;
+
+    const tick = () => {
+      const target = cursorTargetRef.current;
+
+      const nextCursor = prefersReducedMotion
+        ? target
+        : {
+            x:
+              cursorCurrentRef.current.x +
+              (target.x - cursorCurrentRef.current.x) * CURSOR_TRAIL_LERP,
+            y:
+              cursorCurrentRef.current.y +
+              (target.y - cursorCurrentRef.current.y) * CURSOR_TRAIL_LERP
+          };
+
+      const nextLabel = prefersReducedMotion
+        ? target
+        : {
+            x:
+              labelCurrentRef.current.x +
+              (target.x - labelCurrentRef.current.x) * CURSOR_TRAIL_LERP,
+            y:
+              labelCurrentRef.current.y + (target.y - labelCurrentRef.current.y) * CURSOR_TRAIL_LERP
+          };
+
+      cursorCurrentRef.current = nextCursor;
+      labelCurrentRef.current = nextLabel;
+
+      setCursorPoint(nextCursor);
+      setLabelPoint(nextLabel);
+
+      animationFrameRef.current = window.requestAnimationFrame(tick);
+    };
+
+    animationFrameRef.current = window.requestAnimationFrame(tick);
+
+    return () => {
+      if (animationFrameRef.current !== null) {
+        window.cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [enabled, prefersReducedMotion]);
+
+  return (
+    <HookCursorContext.Provider value={{ setActiveHook, clearActiveHook, enabled }}>
+      {children}
+
+      {enabled && cursorVisible && (
+        <div
+          aria-hidden='true'
+          className='pointer-events-none fixed inset-0 z-[120] overflow-hidden'
+        >
+          <div
+            className='bg-foreground/80 dark:bg-foreground/70 absolute rounded-full shadow-[0_0_0_6px_color-mix(in_oklab,var(--foreground)_8%,transparent)] transition-opacity duration-200'
+            style={{
+              height: CURSOR_DOT_SIZE,
+              width: CURSOR_DOT_SIZE,
+              opacity: cursorVisible ? 1 : 0,
+              transform: `translate3d(${cursorPoint.x - CURSOR_DOT_SIZE / 2}px, ${cursorPoint.y - CURSOR_DOT_SIZE / 2}px, 0)`
+            }}
+          />
+          <div
+            className='absolute transition-[opacity,transform] duration-200 ease-out'
+            style={{
+              opacity: hookName ? 1 : 0,
+              transform: `translate3d(${labelPoint.x + CURSOR_OFFSET_X + (hookName ? 0 : 12)}px, ${labelPoint.y + CURSOR_OFFSET_Y + (hookName ? 0 : 12)}px, 0)`
+            }}
+          >
+            <span className='text-muted-foreground bg-background/88 border-border/70 dark:bg-card/88 inline-flex items-center rounded-full border px-2.5 py-1 font-mono text-[12px] leading-none whitespace-nowrap shadow-sm backdrop-blur-md'>
+              {hookName}
+            </span>
+          </div>
+        </div>
+      )}
+    </HookCursorContext.Provider>
+  );
+};
 
 /* ── useCounter ── */
 
@@ -631,7 +860,7 @@ const IntervalDemo = () => {
 /* ── useCssVar ── */
 
 const ACCENT_COLORS = [
-  { value: 'oklch(1 0 0)', label: 'White' },
+  { value: 'var(--primary)', label: 'Primary' },
   { value: 'oklch(0.55 0.18 250)', label: 'Blue' },
   { value: 'oklch(0.55 0.22 300)', label: 'Violet' },
   { value: 'oklch(0.65 0.22 0)', label: 'Pink' },
@@ -645,10 +874,21 @@ const RADIUS_OPTIONS = [
   { value: '1rem', label: 'Large' }
 ];
 
+// Pick a readable foreground for a given accent background.
+// For the theme primary, use its paired token. For raw oklch colors,
+// parse the lightness channel: dark text on light accents, light on dark.
+const getReadableForeground = (accentColor: string) => {
+  if (accentColor.includes('--primary')) return 'var(--primary-foreground)';
+  const match = accentColor.match(/oklch\(\s*([\d.]+)/);
+  const lightness = match ? Number(match[1]) : 1;
+  return lightness > 0.6 ? 'oklch(0.15 0 0)' : 'oklch(0.98 0 0)';
+};
+
 const CssVarDemo = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const primary = useCssVar(containerRef, '--demo-primary', 'oklch(1 0 0)');
+  const primary = useCssVar(containerRef, '--demo-primary', 'var(--primary)');
   const radius = useCssVar(containerRef, '--demo-radius', '0.5rem');
+  const previewForeground = getReadableForeground(primary.value ?? 'var(--primary)');
 
   return (
     <div ref={containerRef} className='flex w-full flex-col gap-4'>
@@ -692,8 +932,12 @@ const CssVarDemo = () => {
       </div>
 
       <button
-        className='border-border h-11 w-full rounded-full border text-sm font-medium text-neutral-900 transition-all'
-        style={{ backgroundColor: 'var(--demo-primary)', borderRadius: 'var(--demo-radius)' }}
+        className='border-border h-11 w-full rounded-full border text-sm font-medium transition-all'
+        style={{
+          backgroundColor: 'var(--demo-primary)',
+          borderRadius: 'var(--demo-radius)',
+          color: previewForeground
+        }}
         type='button'
       >
         Live preview
@@ -1084,111 +1328,118 @@ interface LandingBentoHooksProps {
   hooks: LandingBentoHook[];
 }
 
-export const LandingBentoHooks = ({ hooks }: LandingBentoHooksProps) => (
-  <section>
-    <div className='container mx-auto px-6 py-24 md:py-32'>
-      <motion.div
-        className='flex max-w-3xl flex-col gap-6'
-        initial={{ opacity: 0, y: -28 }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        viewport={{ once: true, amount: 0.45 }}
-        whileInView={{ opacity: 1, y: 0 }}
-      >
-        <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
-          Explore hooks
-        </h2>
-        <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
-          Everything you keep rebuilding on every project — {hooks.length}+ production-ready hooks,
-          already typed and tested.
-        </p>
-        <div className='flex flex-wrap items-center gap-2'>
-          <Button asChild className='rounded-full px-7 py-6 font-mono text-lg font-semibold'>
-            <Link href='/functions/hooks/useActiveElement' prefetch={false}>
-              <span>View all</span>
-              <ArrowRight className='size-4' />
-            </Link>
-          </Button>
-          <Button
-            asChild
-            className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
-            variant='secondary'
-          >
-            <Link href='/docs/functions' prefetch={false}>
-              <span>Browse all functions</span>
-              <ArrowRight className='size-4' />
-            </Link>
-          </Button>
-        </div>
-      </motion.div>
+export const LandingBentoHooks = ({ hooks }: LandingBentoHooksProps) => {
+  const gridRef = useRef<HTMLDivElement>(null);
 
-      <motion.div
-        className='relative mt-14 max-h-[1100px] overflow-hidden'
-        initial={{ opacity: 0, y: -32 }}
-        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        viewport={{ once: true, amount: 0.2 }}
-        whileInView={{ opacity: 1, y: 0 }}
-      >
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-          {/* Column 1 */}
-          <div className='flex flex-col gap-4'>
-            <Cell>
-              <FieldDemo />
-            </Cell>
-            <Cell>
-              <CounterDemo />
-            </Cell>
-            <Cell>
-              <CssVarDemo />
-            </Cell>
-            <Cell>
-              <ColorSchemeDemo />
-            </Cell>
-            <Cell>
-              <OnlineDemo />
-            </Cell>
+  return (
+    <section>
+      <div className='container mx-auto px-6 py-24 md:py-32'>
+        <motion.div
+          className='flex max-w-3xl flex-col gap-6'
+          initial={{ opacity: 0, y: -28 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.45 }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
+          <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
+            Explore hooks
+          </h2>
+          <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
+            Everything you keep rebuilding on every project — {hooks.length}+ production-ready
+            hooks, already typed and tested.
+          </p>
+          <div className='flex flex-wrap items-center gap-2'>
+            <Button asChild className='rounded-full px-7 py-6 font-mono text-lg font-semibold'>
+              <Link href='/functions/hooks/useActiveElement' prefetch={false}>
+                <span>View all</span>
+                <ArrowRight className='size-4' />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
+              variant='secondary'
+            >
+              <Link href='/docs/functions' prefetch={false}>
+                <span>Browse all functions</span>
+                <ArrowRight className='size-4' />
+              </Link>
+            </Button>
           </div>
+        </motion.div>
 
-          {/* Column 2 */}
-          <div className='flex flex-col gap-4'>
-            <Cell>
-              <MaskDemo />
-            </Cell>
-            <Cell className='p-3'>
-              <DropZoneDemo />
-            </Cell>
-            <Cell>
-              <CopyDemo />
-            </Cell>
-            <Cell>
-              <DropdownDemo />
-            </Cell>
-            <Cell>
-              <IntervalDemo />
-            </Cell>
-            <Cell>
-              <BooleanDemo />
-            </Cell>
-          </div>
+        <motion.div
+          ref={gridRef}
+          className='landing-bento-hooks-grid relative mt-14 max-h-[1100px] overflow-hidden'
+          initial={{ opacity: 0, y: -32 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.2 }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
+          <HookCursorController containerRef={gridRef}>
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+              {/* Column 1 */}
+              <div className='flex flex-col gap-4'>
+                <Cell hookName='useField'>
+                  <FieldDemo />
+                </Cell>
+                <Cell hookName='useCounter'>
+                  <CounterDemo />
+                </Cell>
+                <Cell hookName='useCssVar'>
+                  <CssVarDemo />
+                </Cell>
+                <Cell hookName='usePreferredColorScheme'>
+                  <ColorSchemeDemo />
+                </Cell>
+                <Cell hookName='useOnline'>
+                  <OnlineDemo />
+                </Cell>
+              </div>
 
-          {/* Column 3 */}
-          <div className='flex flex-col gap-4'>
-            <Cell>
-              <LongPressDemo />
-            </Cell>
-            <Cell>
-              <PaginationDemo />
-            </Cell>
-            <Cell className='p-3'>
-              <QueryDemo />
-            </Cell>
-            <Cell>
-              <MergedRefDemo />
-            </Cell>
-          </div>
-        </div>
+              {/* Column 2 */}
+              <div className='flex flex-col gap-4'>
+                <Cell hookName='useMask'>
+                  <MaskDemo />
+                </Cell>
+                <Cell className='p-3' hookName='useDropZone'>
+                  <DropZoneDemo />
+                </Cell>
+                <Cell hookName='useCopy'>
+                  <CopyDemo />
+                </Cell>
+                <Cell hookName='useClickOutside'>
+                  <DropdownDemo />
+                </Cell>
+                <Cell hookName='useInterval'>
+                  <IntervalDemo />
+                </Cell>
+                <Cell hookName='useBoolean'>
+                  <BooleanDemo />
+                </Cell>
+              </div>
 
-        <div className='from-background pointer-events-none absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t to-transparent' />
-      </motion.div>
-    </div>
-  </section>
-);
+              {/* Column 3 */}
+              <div className='flex flex-col gap-4'>
+                <Cell hookName='useLongPress'>
+                  <LongPressDemo />
+                </Cell>
+                <Cell hookName='useOffsetPagination'>
+                  <PaginationDemo />
+                </Cell>
+                <Cell className='p-3' hookName='useQuery'>
+                  <QueryDemo />
+                </Cell>
+                <Cell hookName='useMergedRef'>
+                  <MergedRefDemo />
+                </Cell>
+              </div>
+            </div>
+          </HookCursorController>
+
+          <div className='from-background pointer-events-none absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t to-transparent' />
+        </motion.div>
+      </div>
+    </section>
+  );
+};

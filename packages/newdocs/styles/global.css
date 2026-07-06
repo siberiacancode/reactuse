@@ -1078,3 +1078,20 @@
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .landing-bento-hooks-grid:hover,
+  .landing-bento-hooks-grid:hover * {
+    cursor: none !important;
+  }
+
+  .landing-bento-hook-label {
+    opacity: 0;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .landing-bento-hook-label {
+    opacity: 1;
+  }
+}
+
