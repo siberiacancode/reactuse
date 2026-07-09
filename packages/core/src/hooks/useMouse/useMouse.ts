@@ -64,7 +64,7 @@ export interface UseMouse {
  * @returns {UseMouseReturn} An object with mouse value controls
  *
  * @example
- * const mouse = useMouse(ref);
+ * const { snapshot, watch } = useMouse(ref);
  *
  * @overload
  * @template Target The target element
@@ -72,7 +72,7 @@ export interface UseMouse {
  * @returns {UseMouseReturn & { ref: StateRef<Target> }} An object with mouse value controls and a ref
  *
  * @example
- * const mouse = useMouse<HTMLDivElement>();
+ * const { ref, snapshot, watch } = useMouse<HTMLDivElement>();
  */
 export const useMouse = ((...params: any[]) => {
   const target = isTarget(params[0]) ? params[0] : undefined;
