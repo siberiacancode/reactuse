@@ -47,9 +47,9 @@ import metadata from './useMouse.meta.json';
 ## Usage
 
 ```tsx
-const mouse = useMouse(ref);
+const { snapshot, watch } = useMouse(ref);
 // or
-const mouse = useMouse<HTMLDivElement>();
+const { ref, snapshot, watch } = useMouse<HTMLDivElement>();
 ```
 
 ## Type Declarations
