@@ -10,7 +10,7 @@ import { useState } from 'react';
  * @returns {UseObjectReturn<Value>} An object containing the current state and functions to interact with the object
  *
  * @example
- * const { value, set, reset, remove, update, merge, clear, toggle, has, keys, isEmpty, size } = useObject({ name: 'John', age: 30, isActive: true });
+ * const { value, set, reset, remove, clear, has, keys, empty, size } = useObject({ name: 'John', age: 30, isActive: true });
  */
 export function useObject(initialValue) {
   const [value, setValue] = useState(initialValue);

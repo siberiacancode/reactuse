@@ -6,7 +6,9 @@ import { BellIcon, CheckIcon } from 'lucide-react';
 const Demo = () => {
   const notifications = usePermission('notifications');
 
-  const onSubscribe = async () => notifications.query();
+  const onSubscribe = async () => {
+    await Notification.requestPermission();
+  };
 
   return (
     <section className='flex w-full justify-center p-4'>
