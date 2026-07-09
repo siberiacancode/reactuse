@@ -20,27 +20,31 @@ import {
   LandingStats
 } from '../_components/sections';
 
-export const metadata: Metadata = {
-  title: CONFIG.NAME,
-  description: CONFIG.DESCRIPTION,
-  openGraph: {
-    title: CONFIG.NAME,
+export const generateMetadata = async (): Promise<Metadata> => {
+  const hooks = await getElements('hook');
+
+  return {
+    title: `reactuse ${hooks.length}+ The largest React hooks library.`,
     description: CONFIG.DESCRIPTION,
-    type: 'website',
-    url: '/',
-    images: [
-      {
-        url: '/og.png'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: CONFIG.NAME,
-    description: CONFIG.DESCRIPTION,
-    images: ['/og.png'],
-    creator: '@siberiacancode'
-  }
+    openGraph: {
+      title: `reactuse ${hooks.length}+ The largest React hooks library.`,
+      description: CONFIG.DESCRIPTION,
+      type: 'website',
+      url: '/',
+      images: [
+        {
+          url: '/og.png'
+        }
+      ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `reactuse ${hooks.length}+ The largest React hooks library.`,
+      description: CONFIG.DESCRIPTION,
+      images: ['/og.png'],
+      creator: '@siberiacancode'
+    }
+  };
 };
 
 const HomePage = async () => {
