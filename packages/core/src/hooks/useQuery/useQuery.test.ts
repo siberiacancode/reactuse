@@ -343,66 +343,118 @@ it('Should stop refetch when interval function returns false', async () => {
 });
 
 it('Should retry with delay', async () => {
-  let callCount = 0;
-  const { result } = renderHook(() =>
-    useQuery(
-      () => {
-        callCount++;
-        if (callCount < 2) {
-          return Promise.reject(new Error('error'));
-        }
-        return Promise.resolve('data');
-      },
-      {
-        retry: 1
-      }
-    )
-  );
+  vi.useFakeTimers();
+  const callback = vi.fn(() => Promise.reject(new Error('error')));
 
-  expect(result.current.isLoading).toBeTruthy();
+  renderHook(() => useQuery(callback, { retry: 1, retryDelay: 1000 }));
 
-  await waitFor(() => expect(result.current.data).toBe('data'));
+  await vi.advanceTimersByTimeAsync(0);
+  expect(callback).toHaveBeenCalledOnce();
+
+  await vi.advanceTimersByTimeAsync(999);
+  expect(callback).toHaveBeenCalledOnce();
+
+  await vi.advanceTimersByTimeAsync(1);
+  expect(callback).toHaveBeenCalledTimes(2);
+
+  vi.useRealTimers();
 });
 
-it('Should retry with function', async () => {
-  const retry = vi.fn((failureCount: number) => failureCount < 1);
-  let retries = 0;
+it('Should retry with delay multiple times', async () => {
+  vi.useFakeTimers();
+  const callback = vi.fn(() => Promise.reject(new Error('error')));
 
-  const { result } = renderHook(() =>
-    useQuery(
-      () => {
-        retries++;
-        if (retries < 2) {
-          return Promise.reject(new Error('error'));
-        }
-        return Promise.resolve('data');
-      },
-      {
-        retry
-      }
-    )
-  );
+  renderHook(() => useQuery(callback, { retry: 2, retryDelay: 1000 }));
 
-  await waitFor(() => expect(result.current.data).toBe('data'));
-  expect(retry).toHaveBeenCalledTimes(1);
+  await vi.advanceTimersByTimeAsync(0);
+  expect(callback).toHaveBeenCalledOnce();
+
+  await vi.advanceTimersByTimeAsync(1000);
+  expect(callback).toHaveBeenCalledTimes(2);
+
+  await vi.advanceTimersByTimeAsync(1000);
+  expect(callback).toHaveBeenCalledTimes(3);
+
+  await vi.advanceTimersByTimeAsync(1000);
+  expect(callback).toHaveBeenCalledTimes(3);
+
+  vi.useRealTimers();
 });
 
-it('Should not retry when retry function returns false', async () => {
-  const retry = vi.fn(() => false);
+it('Should retry without delay by default', async () => {
+  vi.useFakeTimers();
+  const callback = vi.fn(() => Promise.reject(new Error('error')));
 
-  const { result } = renderHook(() =>
-    useQuery(() => Promise.reject(new Error('error')), {
-      retry
-    })
+  renderHook(() => useQuery(callback, { retry: 1 }));
+
+  await vi.advanceTimersByTimeAsync(0);
+
+  expect(callback).toHaveBeenCalledTimes(2);
+
+  vi.useRealTimers();
+});
+
+it('Should not retry after delay when aborted', async () => {
+  vi.useFakeTimers();
+  const callback = vi.fn(() => Promise.reject(new Error('error')));
+
+  const { result } = renderHook(() => useQuery(callback, { retry: 2, retryDelay: 1000 }));
+
+  await vi.advanceTimersByTimeAsync(0);
+  expect(callback).toHaveBeenCalledOnce();
+
+  act(() => result.current.abort());
+  await vi.advanceTimersByTimeAsync(2000);
+
+  expect(callback).toHaveBeenCalledOnce();
+
+  vi.useRealTimers();
+});
+
+it('Should not retry after delay when refetched', async () => {
+  vi.useFakeTimers();
+  const callback = vi.fn(() => Promise.reject(new Error('error')));
+
+  const { result } = renderHook(() => useQuery(callback, { retry: 2, retryDelay: 1000 }));
+
+  await vi.advanceTimersByTimeAsync(0);
+  expect(callback).toHaveBeenCalledOnce();
+
+  act(() => result.current.refetch());
+  await vi.advanceTimersByTimeAsync(0);
+
+  expect(callback).toHaveBeenCalledTimes(2);
+
+  vi.useRealTimers();
+});
+
+it('Should not retry after delay on unmount', async () => {
+  vi.useFakeTimers();
+  const callback = vi.fn(() => Promise.reject(new Error('error')));
+
+  const { unmount } = renderHook(() => useQuery(callback, { retry: 2, retryDelay: 1000 }));
+
+  await vi.advanceTimersByTimeAsync(0);
+  expect(callback).toHaveBeenCalledOnce();
+
+  unmount();
+  await vi.advanceTimersByTimeAsync(2000);
+
+  expect(callback).toHaveBeenCalledOnce();
+
+  vi.useRealTimers();
+});
+
+it('Should cleanup retry timeout on unmount', () => {
+  const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
+
+  const { unmount } = renderHook(() =>
+    useQuery(() => Promise.resolve('data'), { retry: 1, retryDelay: 1000 })
   );
 
-  await waitFor(() => {
-    expect(result.current.isError).toBeTruthy();
-    expect(result.current.error).toEqual(new Error('error'));
-  });
+  unmount();
 
-  expect(retry).toHaveBeenCalledTimes(1);
-  expect(result.current.data).toBeUndefined();
+  expect(clearTimeoutSpy).toHaveBeenCalled();
 });
 
 it('Should use placeholder data as function', () => {

@@ -6,7 +6,8 @@ publicHoistPattern:
 minimumReleaseAgeExclude:
   - '@siberiacancode/reactuse'
   - '@siberiacancode/eslint'
-  - '@webcam/react@1.1.0'
+  - '@siberiacancode/prettier'
+  - '@webcam/react'
 allowBuilds:
   core-js: true
   esbuild: true

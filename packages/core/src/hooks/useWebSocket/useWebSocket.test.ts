@@ -9,9 +9,12 @@ const mockWebSocketClose = vi.fn();
 
 class MockWebSocket {
   static instances: MockWebSocket[] = [];
+  static OPEN = 1;
+  static CLOSED = 3;
 
   url: string;
   protocols?: string | string[];
+  readyState = MockWebSocket.OPEN;
   onopen: ((event: Event) => void) | null = null;
   onerror: ((event: Event) => void) | null = null;
   onmessage: ((event: MessageEvent) => void) | null = null;
@@ -27,6 +30,7 @@ class MockWebSocket {
 
   close = () => {
     mockWebSocketClose();
+    this.readyState = MockWebSocket.CLOSED;
     this.onclose?.(new CloseEvent('close'));
   };
 }
@@ -74,7 +78,7 @@ it('Should not connect immediately when disabled', () => {
   const { result } = renderHook(() => useWebSocket('wss://example.com', { immediately: false }));
 
   expect(MockWebSocket.instances).toHaveLength(0);
-  expect(result.current.status).toBe('disconnected');
+  expect(result.current.status).toBe('closed');
 });
 
 it('Should handle function url', () => {
@@ -130,7 +134,7 @@ it('Should handle onclose event', () => {
 
   act(() => getLastWebSocket().onclose!(closeEvent));
 
-  expect(result.current.status).toBe('disconnected');
+  expect(result.current.status).toBe('closed');
   expect(onClose).toHaveBeenCalledOnce();
   expect(onClose).toHaveBeenCalledWith(closeEvent, getLastWebSocket());
 });
@@ -150,13 +154,13 @@ it('Should handle close', () => {
   act(() => result.current.close());
 
   expect(mockWebSocketClose).toHaveBeenCalledOnce();
-  expect(result.current.status).toBe('disconnected');
+  expect(result.current.status).toBe('closed');
 });
 
 it('Should handle open', () => {
   const { result } = renderHook(() => useWebSocket('wss://example.com', { immediately: false }));
 
-  expect(result.current.status).toBe('disconnected');
+  expect(result.current.status).toBe('closed');
 
   act(() => result.current.open());
 
@@ -164,7 +168,7 @@ it('Should handle open', () => {
   expect(result.current.status).toBe('connecting');
 });
 
-it('Should retry on disconnected once', () => {
+it('Should retry on closed once', () => {
   const { result } = renderHook(() => useWebSocket('wss://example.com', { retry: true }));
 
   act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
@@ -175,10 +179,10 @@ it('Should retry on disconnected once', () => {
   act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
 
   expect(MockWebSocket.instances).toHaveLength(2);
-  expect(result.current.status).toBe('disconnected');
+  expect(result.current.status).toBe('closed');
 });
 
-it('Should retry on disconnected multiple times', () => {
+it('Should retry on closed multiple times', () => {
   const { result } = renderHook(() => useWebSocket('wss://example.com', { retry: 2 }));
 
   act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
@@ -194,10 +198,10 @@ it('Should retry on disconnected multiple times', () => {
   act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
 
   expect(MockWebSocket.instances).toHaveLength(3);
-  expect(result.current.status).toBe('disconnected');
+  expect(result.current.status).toBe('closed');
 });
 
-it('Should retry on disconnected with function', () => {
+it('Should retry on closed with function', () => {
   const retry = vi.fn((failureCount: number) => failureCount < 2);
   const { result } = renderHook(() => useWebSocket('wss://example.com', { retry }));
 
@@ -214,7 +218,7 @@ it('Should retry on disconnected with function', () => {
   act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
 
   expect(MockWebSocket.instances).toHaveLength(3);
-  expect(result.current.status).toBe('disconnected');
+  expect(result.current.status).toBe('closed');
 
   expect(retry).toHaveBeenNthCalledWith(1, 0, expect.any(CloseEvent));
   expect(retry).toHaveBeenNthCalledWith(2, 1, expect.any(CloseEvent));
@@ -230,7 +234,7 @@ it('Should not retry when retry function returns false', () => {
   expect(retry).toHaveBeenCalledOnce();
   expect(retry).toHaveBeenNthCalledWith(1, 0, expect.any(CloseEvent));
   expect(MockWebSocket.instances).toHaveLength(1);
-  expect(result.current.status).toBe('disconnected');
+  expect(result.current.status).toBe('closed');
 });
 
 it('Should not retry when explicitly closed', () => {
@@ -239,7 +243,150 @@ it('Should not retry when explicitly closed', () => {
   act(() => result.current.close());
 
   expect(MockWebSocket.instances).toHaveLength(1);
-  expect(result.current.status).toBe('disconnected');
+  expect(result.current.status).toBe('closed');
+});
+
+it('Should retry after delay', () => {
+  vi.useFakeTimers();
+  const { result } = renderHook(() =>
+    useWebSocket('wss://example.com', { retry: true, retryDelay: 1000 })
+  );
+
+  act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
+
+  expect(MockWebSocket.instances).toHaveLength(1);
+  expect(result.current.status).toBe('closed');
+
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(MockWebSocket.instances).toHaveLength(2);
+  expect(result.current.status).toBe('connecting');
+});
+
+it('Should not retry after delay when explicitly closed', () => {
+  vi.useFakeTimers();
+  const { result } = renderHook(() =>
+    useWebSocket('wss://example.com', { retry: true, retryDelay: 1000 })
+  );
+
+  act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
+  act(() => result.current.close());
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(MockWebSocket.instances).toHaveLength(1);
+});
+
+it('Should not retry after delay when reopened', () => {
+  vi.useFakeTimers();
+  const { result } = renderHook(() =>
+    useWebSocket('wss://example.com', { retry: true, retryDelay: 1000 })
+  );
+
+  act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
+  act(() => result.current.open());
+
+  expect(MockWebSocket.instances).toHaveLength(2);
+
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(MockWebSocket.instances).toHaveLength(2);
+});
+
+it('Should not retry after delay on unmount', () => {
+  vi.useFakeTimers();
+  const { unmount } = renderHook(() =>
+    useWebSocket('wss://example.com', { retry: true, retryDelay: 1000 })
+  );
+
+  act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
+  unmount();
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(MockWebSocket.instances).toHaveLength(1);
+});
+
+it('Should send heartbeat on interval', () => {
+  vi.useFakeTimers();
+  const heartbeat = vi.fn();
+  renderHook(() => useWebSocket('wss://example.com', { heartbeat, heartbeatDelay: 1000 }));
+
+  act(() => getLastWebSocket().onopen!(new Event('open')));
+
+  expect(heartbeat).not.toHaveBeenCalled();
+
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(heartbeat).toHaveBeenCalledOnce();
+  expect(heartbeat).toHaveBeenCalledWith(getLastWebSocket());
+
+  act(() => vi.advanceTimersByTime(2000));
+
+  expect(heartbeat).toHaveBeenCalledTimes(3);
+});
+
+it('Should not send heartbeat before connected', () => {
+  vi.useFakeTimers();
+  const heartbeat = vi.fn();
+  renderHook(() => useWebSocket('wss://example.com', { heartbeat, heartbeatDelay: 1000 }));
+
+  act(() => vi.advanceTimersByTime(5000));
+
+  expect(heartbeat).not.toHaveBeenCalled();
+});
+
+it('Should stop heartbeat on close', () => {
+  vi.useFakeTimers();
+  const heartbeat = vi.fn();
+  const { result } = renderHook(() =>
+    useWebSocket('wss://example.com', { heartbeat, heartbeatDelay: 1000 })
+  );
+
+  act(() => getLastWebSocket().onopen!(new Event('open')));
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(heartbeat).toHaveBeenCalledOnce();
+
+  act(() => result.current.close());
+  act(() => vi.advanceTimersByTime(3000));
+
+  expect(heartbeat).toHaveBeenCalledOnce();
+});
+
+it('Should stop heartbeat on unmount', () => {
+  vi.useFakeTimers();
+  const heartbeat = vi.fn();
+  const { unmount } = renderHook(() =>
+    useWebSocket('wss://example.com', { heartbeat, heartbeatDelay: 1000 })
+  );
+
+  act(() => getLastWebSocket().onopen!(new Event('open')));
+  unmount();
+  act(() => vi.advanceTimersByTime(3000));
+
+  expect(heartbeat).not.toHaveBeenCalled();
+});
+
+it('Should restart heartbeat after retry', () => {
+  vi.useFakeTimers();
+  const heartbeat = vi.fn();
+  renderHook(() =>
+    useWebSocket('wss://example.com', { heartbeat, heartbeatDelay: 1000, retry: true })
+  );
+
+  act(() => getLastWebSocket().onopen!(new Event('open')));
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(heartbeat).toHaveBeenCalledOnce();
+
+  act(() => getLastWebSocket().onclose!(new CloseEvent('close')));
+  act(() => vi.advanceTimersByTime(3000));
+
+  expect(heartbeat).toHaveBeenCalledOnce();
+
+  act(() => getLastWebSocket().onopen!(new Event('open')));
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(heartbeat).toHaveBeenCalledTimes(2);
 });
 
 it('Should handle url changes', () => {

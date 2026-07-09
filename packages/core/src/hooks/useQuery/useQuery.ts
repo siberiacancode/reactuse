@@ -19,6 +19,8 @@ export interface UseQueryOptions<QueryData, Data> {
   refetchInterval?: (() => number | false) | number | false;
   /* The retry count of requests, or a function to decide whether to retry */
   retry?: ((failureCount: number, error: Error) => boolean) | boolean | number;
+  /* The delay in milliseconds before retrying the request */
+  retryDelay?: number;
   /* The callback function to be invoked on error */
   onError?: (error: Error) => void;
   /* The callback function to be invoked on success */
@@ -73,6 +75,7 @@ export interface UseQueryReturn<Data> {
  * @param {Data | (() => Data)} [options.placeholderData] The placeholder data for the hook
  * @param {number} [options.refetchInterval] The refetch interval
  * @param {boolean | number | ((failureCount: number, error: Error) => boolean)} [options.retry] The retry count of requests, or a function to decide whether to retry
+ * @param {number} [options.retryDelay=0] The delay in milliseconds before retrying the request
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
@@ -98,10 +101,12 @@ export const useQuery = <QueryData, Data = QueryData>(
 
   const abortControllerRef = useRef<AbortController>(new AbortController());
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);
+  const retryTimeoutIdRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const keys = options?.keys ?? [];
 
   const abort = () => {
+    clearTimeout(retryTimeoutIdRef.current);
     abortControllerRef.current.abort();
     abortControllerRef.current = new AbortController();
   };
@@ -135,7 +140,12 @@ export const useQuery = <QueryData, Data = QueryData>(
             : failureCountRef.current < getRetry(options?.retry ?? 0)
         ) {
           failureCountRef.current += 1;
-          request(action);
+          const delay = options?.retryDelay ?? 0;
+          if (!delay) {
+            request(action);
+            return;
+          }
+          retryTimeoutIdRef.current = setTimeout(request, delay, action);
           return;
         }
         options?.onError?.(error);
@@ -177,6 +187,7 @@ export const useQuery = <QueryData, Data = QueryData>(
   useEffect(
     () => () => {
       clearInterval(intervalIdRef.current);
+      clearTimeout(retryTimeoutIdRef.current);
     },
     [enabled, options?.retry, ...keys]
   );

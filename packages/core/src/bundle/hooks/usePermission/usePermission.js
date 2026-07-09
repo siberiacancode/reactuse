@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useEvent } from '../useEvent/useEvent';
+import { useEffect, useRef, useState } from 'react';
 /**
  *  @name usePermission
  *  @description - Hook that gives you the state of permission
@@ -8,8 +7,8 @@ import { useEvent } from '../useEvent/useEvent';
  *
  *  @browserapi navigator.permissions https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions
  *
- *  @param {UsePermissionName} permissionDescriptorName - The permission name
- *  @param {boolean} [options.enabled=true] - Whether the permission is enabled
+ *  @param {UsePermissionName} name - The permission name
+ *  @param {boolean} [options.immediately=true] - Whether the permission should be queried immediately
  *  @returns {UsePermissionReturn} An object containing the state and the supported status
  *
  *  @example
@@ -18,27 +17,30 @@ import { useEvent } from '../useEvent/useEvent';
 export const usePermission = (name, options) => {
   const supported =
     typeof navigator !== 'undefined' && 'permissions' in navigator && !!navigator.permissions;
+  const immediately = options?.immediately ?? true;
   const [state, setState] = useState('prompt');
-  const enabled = options?.enabled ?? true;
-  const permissionDescriptor = { name };
-  const query = useEvent(async () => {
+  const statusRef = useRef(null);
+  const onChange = () => setState(statusRef.current.state);
+  const query = async () => {
+    if (!supported) return 'prompt';
     try {
-      const permissionStatus = await navigator.permissions.query(permissionDescriptor);
-      setState(permissionStatus.state);
-      return permissionStatus.state;
+      const status = await navigator.permissions.query({ name });
+      statusRef.current = status;
+      status.addEventListener('change', onChange);
+      setState(status.state);
+      return status.state;
     } catch {
       setState('prompt');
       return 'prompt';
     }
-  });
+  };
   useEffect(() => {
-    if (!supported || !enabled) return;
-    query();
-    window.addEventListener('change', query);
+    if (immediately) query();
     return () => {
-      window.removeEventListener('change', query);
+      if (!statusRef.current) return;
+      statusRef.current.removeEventListener('change', onChange);
     };
-  }, [name, enabled]);
+  }, [name]);
   return {
     state,
     supported,

@@ -198,7 +198,7 @@ const Demo = () => {
     setSms
   };
 
-  const Step = STEPS[wizard.currentStepId as StepId];
+  const Step = STEPS[wizard.currentStepId];
 
   return (
     <OnboardingContext value={value}>

@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
-
-import { useEvent } from '../useEvent/useEvent';
+import { useEffect, useRef, useState } from 'react';
 
 /** The permission name */
 export type UsePermissionName =
@@ -12,6 +10,7 @@ export type UsePermissionName =
   | 'clipboard-read'
   | 'clipboard-write'
   | 'gyroscope'
+  | 'local-fonts'
   | 'magnetometer'
   | 'microphone'
   | 'notifications'
@@ -23,8 +22,8 @@ export type UsePermissionName =
 
 /** The use permission options type */
 export interface UsePermissionOptions {
-  /** Whether the permission is enabled */
-  enabled: boolean;
+  /** Whether the permission should be queried immediately */
+  immediately?: boolean;
 }
 
 /** The use permission return type */
@@ -45,42 +44,50 @@ export interface UsePermissionReturn {
  *
  *  @browserapi navigator.permissions https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions
  *
- *  @param {UsePermissionName} permissionDescriptorName - The permission name
- *  @param {boolean} [options.enabled=true] - Whether the permission is enabled
+ *  @param {UsePermissionName} name - The permission name
+ *  @param {boolean} [options.immediately=true] - Whether the permission should be queried immediately
  *  @returns {UsePermissionReturn} An object containing the state and the supported status
  *
  *  @example
  *  const { state, supported, query } = usePermission('microphone');
  */
-export const usePermission = (name: UsePermissionName, options?: UsePermissionOptions) => {
+export const usePermission = (
+  name: UsePermissionName,
+  options?: UsePermissionOptions
+): UsePermissionReturn => {
   const supported =
     typeof navigator !== 'undefined' && 'permissions' in navigator && !!navigator.permissions;
+
+  const immediately = options?.immediately ?? true;
+
   const [state, setState] = useState<PermissionState>('prompt');
-  const enabled = options?.enabled ?? true;
 
-  const permissionDescriptor = { name };
+  const statusRef = useRef<PermissionStatus | null>(null);
 
-  const query = useEvent(async () => {
+  const onChange = () => setState(statusRef.current!.state);
+
+  const query = async () => {
+    if (!supported) return 'prompt' as const;
     try {
-      const permissionStatus = await navigator.permissions.query(
-        permissionDescriptor as PermissionDescriptor
-      );
-      setState(permissionStatus.state);
-      return permissionStatus.state;
+      const status = await navigator.permissions.query({ name } as PermissionDescriptor);
+      statusRef.current = status;
+      status.addEventListener('change', onChange);
+      setState(status.state);
+      return status.state;
     } catch {
       setState('prompt');
-      return 'prompt';
+      return 'prompt' as const;
     }
-  });
+  };
 
   useEffect(() => {
-    if (!supported || !enabled) return;
-    query();
-    window.addEventListener('change', query);
+    if (immediately) query();
+
     return () => {
-      window.removeEventListener('change', query);
+      if (!statusRef.current) return;
+      statusRef.current.removeEventListener('change', onChange);
     };
-  }, [name, enabled]);
+  }, [name]);
 
   return {
     state,

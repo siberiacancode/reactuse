@@ -1,6 +1,6 @@
 {
   "name": "@siberiacancode/reactuse",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "The ultimate collection of react hooks",
   "author": {
     "name": "SIBERIA CAN CODE 🧊",
@@ -54,7 +54,7 @@
     "lint-inspector": "npx @eslint/config-inspector@latest",
     "format": "prettier --write .",
     "type": "tsc --noEmit",
-    "pretty": "pnpm type && pnpm lint && pnpm format",
+    "pretty": "pnpm lint && pnpm format",
     "unit-test": "vitest"
   },
   "peerDependencies": {

@@ -17,6 +17,7 @@ import { useMount } from '../useMount/useMount';
  * @param {Data | (() => Data)} [options.placeholderData] The placeholder data for the hook
  * @param {number} [options.refetchInterval] The refetch interval
  * @param {boolean | number | ((failureCount: number, error: Error) => boolean)} [options.retry] The retry count of requests, or a function to decide whether to retry
+ * @param {number} [options.retryDelay=0] The delay in milliseconds before retrying the request
  * @returns {UseQueryReturn<Data>} An object with the state of the query
  *
  * @example
@@ -36,8 +37,10 @@ export const useQuery = (callback, options) => {
   const [data, setData] = useState(options?.placeholderData);
   const abortControllerRef = useRef(new AbortController());
   const intervalIdRef = useRef(undefined);
+  const retryTimeoutIdRef = useRef(undefined);
   const keys = options?.keys ?? [];
   const abort = () => {
+    clearTimeout(retryTimeoutIdRef.current);
     abortControllerRef.current.abort();
     abortControllerRef.current = new AbortController();
   };
@@ -69,7 +72,12 @@ export const useQuery = (callback, options) => {
             : failureCountRef.current < getRetry(options?.retry ?? 0)
         ) {
           failureCountRef.current += 1;
-          request(action);
+          const delay = options?.retryDelay ?? 0;
+          if (!delay) {
+            request(action);
+            return;
+          }
+          retryTimeoutIdRef.current = setTimeout(request, delay, action);
           return;
         }
         options?.onError?.(error);
@@ -107,6 +115,7 @@ export const useQuery = (callback, options) => {
   useEffect(
     () => () => {
       clearInterval(intervalIdRef.current);
+      clearTimeout(retryTimeoutIdRef.current);
     },
     [enabled, options?.retry, ...keys]
   );
