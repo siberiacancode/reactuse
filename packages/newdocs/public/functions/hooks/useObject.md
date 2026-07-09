@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1783351443000
 ---
 
 import metadata from './useObject.meta.json';
@@ -47,7 +47,7 @@ import metadata from './useObject.meta.json';
 ## Usage
 
 ```tsx
-const { value, set, reset, remove, update, merge, clear, toggle, has, keys, isEmpty, size } = useObject({ name: 'John', age: 30, isActive: true });
+const { value, set, reset, remove, clear, has, keys, empty, size } = useObject({ name: 'John', age: 30, isActive: true });
 ```
 
 ## Type Declarations
