@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1783666924000
+lastModifiedTime: 1783690580000
 ---
 
 import metadata from './useNotification.meta.json';
@@ -47,7 +47,7 @@ import metadata from './useNotification.meta.json';
 ## Usage
 
 ```tsx
-const { supported, granted, notification, trigger, show, close } = useNotification();
+const { supported, notification, trigger, show, close } = useNotification();
 ```
 
 ## Type Declarations

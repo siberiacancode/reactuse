@@ -1,6 +1,6 @@
 'use client'
 
-import { useNotification } from '@siberiacancode/reactuse';
+import { useNotification, usePermission } from '@siberiacancode/reactuse';
 import { BellIcon, CheckIcon } from 'lucide-react';
 
 const NOTIFICATION = {
@@ -12,6 +12,7 @@ const NOTIFICATION = {
 
 const Demo = () => {
   const notification = useNotification();
+  const permission = usePermission('notifications');
 
   const onSubscribe = async () => {
     const granted = await notification.trigger();
@@ -55,7 +56,7 @@ const Demo = () => {
           </div>
         </div>
 
-        {notification.granted === 'granted' && (
+        {permission.state === 'granted' && (
           <div className='flex w-full flex-col items-center gap-3'>
             <div className='border-border text-foreground flex w-full items-center justify-center gap-2 rounded-full border py-2.5 text-sm font-medium'>
               <CheckIcon className='text-primary size-4' />
@@ -73,13 +74,13 @@ const Demo = () => {
           </div>
         )}
 
-        {notification.granted === 'prompt' && (
+        {permission.state === 'prompt' && (
           <button className='w-full rounded-full!' type='button' onClick={onSubscribe}>
             Subscribe
           </button>
         )}
 
-        {notification.granted === 'denied' && (
+        {permission.state === 'denied' && (
           <p className='text-muted-foreground text-center text-xs leading-relaxed'>
             Notifications are turned off. You can enable them again from your browser settings.
           </p>
