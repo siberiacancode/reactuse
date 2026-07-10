@@ -1,12 +1,9 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { createTrigger, renderHookServer } from '@/tests';
+import { renderHookServer } from '@/tests';
 
 import { useNotification } from './useNotification';
-
-const PERMISSION_KEY = 'notifications';
-const trigger = createTrigger<string, () => void>();
 
 const mockNotificationClose = vi.fn();
 const mockNotificationRequestPermission = vi.fn<() => Promise<NotificationPermission>>();
@@ -31,23 +28,14 @@ class MockNotification {
   close = mockNotificationClose;
 }
 
-const createMockPermissionStatus = (state: PermissionState) => ({
-  state,
-  addEventListener: (_: string, listener: () => void) => trigger.add(PERMISSION_KEY, listener),
-  removeEventListener: () => trigger.delete(PERMISSION_KEY)
-});
-
-const mockNavigatorPermissionsQuery = vi.fn();
-
 beforeEach(() => {
-  trigger.clear();
   vi.clearAllMocks();
 
   MockNotification.permission = 'default';
   mockNotificationRequestPermission.mockResolvedValue('default');
 
   Object.defineProperty(document, 'visibilityState', {
-    value: 'visible',
+    value: 'hidden',
     writable: true,
     configurable: true
   });
@@ -57,18 +45,12 @@ beforeEach(() => {
     writable: true,
     configurable: true
   });
-
-  mockNavigatorPermissionsQuery.mockResolvedValue(createMockPermissionStatus('prompt'));
-  Object.assign(navigator, {
-    permissions: { query: mockNavigatorPermissionsQuery }
-  });
 });
 
 it('Should use notification', () => {
   const { result } = renderHook(useNotification);
 
   expect(result.current.supported).toBeTruthy();
-  expect(result.current.granted).toBe('prompt');
   expect(result.current.notification).toBeUndefined();
   expect(result.current.trigger).toBeTypeOf('function');
   expect(result.current.show).toBeTypeOf('function');
@@ -79,7 +61,6 @@ it('Should use notification on server side', () => {
   const { result } = renderHookServer(useNotification);
 
   expect(result.current.supported).toBeFalsy();
-  expect(result.current.granted).toBe('prompt');
   expect(result.current.notification).toBeUndefined();
   expect(result.current.trigger).toBeTypeOf('function');
   expect(result.current.show).toBeTypeOf('function');
@@ -96,15 +77,7 @@ it('Should use notification for unsupported', () => {
   const { result } = renderHook(useNotification);
 
   expect(result.current.supported).toBeFalsy();
-  expect(result.current.granted).toBe('prompt');
-});
-
-it('Should read granted from permission status', async () => {
-  mockNavigatorPermissionsQuery.mockResolvedValue(createMockPermissionStatus('granted'));
-
-  const { result } = renderHook(useNotification);
-
-  await waitFor(() => expect(result.current.granted).toBe('granted'));
+  expect(result.current.notification).toBeUndefined();
 });
 
 it('Should trigger permission', async () => {
@@ -154,7 +127,7 @@ it('Should not trigger permission for unsupported', async () => {
   await expect(act(result.current.trigger)).resolves.toBe(false);
 });
 
-it('Should show notification when permission is granted', () => {
+it('Should show notification', () => {
   MockNotification.permission = 'granted';
 
   const { result } = renderHook(useNotification);
@@ -166,6 +139,37 @@ it('Should show notification when permission is granted', () => {
   expect(notification).toBeInstanceOf(MockNotification);
   expect(notification.title).toBe('Hello');
   expect(notification.options.body).toBe('World');
+});
+
+it('Should show notification with empty title by default', () => {
+  MockNotification.permission = 'granted';
+
+  const { result } = renderHook(useNotification);
+
+  act(() => result.current.show());
+
+  expect((result.current.notification as unknown as MockNotification).title).toBe('');
+});
+
+it('Should not pass callbacks to notification options', () => {
+  MockNotification.permission = 'granted';
+
+  const { result } = renderHook(useNotification);
+
+  act(() =>
+    result.current.show({
+      title: 'Hello',
+      body: 'World',
+      onClick: vi.fn(),
+      onClose: vi.fn(),
+      onError: vi.fn(),
+      onShow: vi.fn()
+    })
+  );
+
+  expect((result.current.notification as unknown as MockNotification).options).toEqual({
+    body: 'World'
+  });
 });
 
 it('Should show notification after trigger', async () => {
@@ -284,6 +288,22 @@ it('Should call onClose and clear notification when closed', () => {
   expect(result.current.notification).toBeUndefined();
 });
 
+it('Should not clear notification when stale instance closes', () => {
+  MockNotification.permission = 'granted';
+
+  const { result } = renderHook(useNotification);
+
+  act(() => result.current.show({ title: 'First' }));
+
+  const first = result.current.notification as unknown as MockNotification;
+
+  act(() => result.current.show({ title: 'Second' }));
+
+  act(() => first.onclose?.(new Event('close')));
+
+  expect((result.current.notification as unknown as MockNotification).title).toBe('Second');
+});
+
 it('Should close notification', () => {
   MockNotification.permission = 'granted';
 
@@ -291,7 +311,7 @@ it('Should close notification', () => {
 
   act(() => result.current.show({ title: 'Hello' }));
 
-  expect(result.current.notification).not.toBeUndefined();
+  expect(result.current.notification).toBeDefined();
 
   act(result.current.close);
 
@@ -299,14 +319,25 @@ it('Should close notification', () => {
   expect(result.current.notification).toBeUndefined();
 });
 
+it('Should not close notification when tab becomes hidden', () => {
+  MockNotification.permission = 'granted';
+
+  const { result } = renderHook(useNotification);
+
+  act(() => result.current.show({ title: 'Hello' }));
+
+  act(() => document.dispatchEvent(new Event('visibilitychange')));
+
+  expect(mockNotificationClose).not.toHaveBeenCalled();
+  expect(result.current.notification).toBeDefined();
+});
+
 it('Should close notification when tab becomes visible', () => {
   MockNotification.permission = 'granted';
 
   const { result } = renderHook(useNotification);
 
-  act(() => {
-    result.current.show({ title: 'Hello' });
-  });
+  act(() => result.current.show({ title: 'Hello' }));
 
   Object.defineProperty(document, 'visibilityState', {
     value: 'visible',
@@ -314,12 +345,20 @@ it('Should close notification when tab becomes visible', () => {
     configurable: true
   });
 
-  act(() => {
-    document.dispatchEvent(new Event('visibilitychange'));
-  });
+  act(() => document.dispatchEvent(new Event('visibilitychange')));
 
   expect(mockNotificationClose).toHaveBeenCalledOnce();
   expect(result.current.notification).toBeUndefined();
+});
+
+it('Should not clear on unmount when not shown', () => {
+  MockNotification.permission = 'granted';
+
+  const { unmount } = renderHook(useNotification);
+
+  unmount();
+
+  expect(mockNotificationClose).not.toHaveBeenCalled();
 });
 
 it('Should clear on unmount', () => {
@@ -329,9 +368,7 @@ it('Should clear on unmount', () => {
 
   const { result, unmount } = renderHook(useNotification);
 
-  act(() => {
-    result.current.show({ title: 'Hello' });
-  });
+  act(() => result.current.show({ title: 'Hello' }));
 
   unmount();
 

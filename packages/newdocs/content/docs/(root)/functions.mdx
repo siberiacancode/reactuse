@@ -64,6 +64,7 @@ A quick list of available functions.
 - [useFileSystemAccess](/functions/hooks/useFileSystemAccess): Hook for reading and writing local files via the File System Access API
 - [useFocus](/functions/hooks/useFocus): Hook that allows you to focus on a specific element
 - [useFocusTrap](/functions/hooks/useFocusTrap): Hook that traps focus within a given element
+- [useForm](/functions/hooks/useForm): Hook to manage a form
 - [useFps](/functions/hooks/useFps): Hook that measures frames per second
 - [useFul](/functions/hooks/useFul): Hook that can be so useful
 - [useFullscreen](/functions/hooks/useFullscreen): Hook to handle fullscreen events

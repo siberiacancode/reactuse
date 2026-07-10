@@ -7,20 +7,6 @@ import { useRerender } from '../useRerender/useRerender';
 /** The use field element type */
 type UseFieldElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
-/** The use field params type */
-export interface UseFieldOptions {
-  /** The auto focus */
-  autoFocus?: boolean;
-  /** The initial touched */
-  initialTouched?: boolean;
-  /** The validate on blur */
-  validateOnBlur?: boolean;
-  /** The validate on mount */
-  validateOnChange?: boolean;
-  /** The validate on mount */
-  validateOnMount?: boolean;
-}
-
 /** The use field register params type */
 export interface UseFieldRegisterParams {
   /** The min value validation */
@@ -58,6 +44,20 @@ export interface UseFieldRegisterParams {
   validate?: (value: string) => string | true | Promise<string | true>;
 }
 
+/** The use field params type */
+export interface UseFieldOptions extends UseFieldRegisterParams {
+  /** The auto focus */
+  autoFocus?: boolean;
+  /** The initial touched */
+  initialTouched?: boolean;
+  /** The validate on blur */
+  validateOnBlur?: boolean;
+  /** The validate on change */
+  validateOnChange?: boolean;
+  /** The validate on mount */
+  validateOnMount?: boolean;
+}
+
 /** The use field return type */
 export interface UseFieldReturn<Value> {
   /** The dirty state */
@@ -66,9 +66,9 @@ export interface UseFieldReturn<Value> {
   error?: string;
   /** The input ref */
   ref: RefObject<UseFieldElement | null>;
-  /** The set error function */
+  /** The touched state */
   touched: boolean;
-  /** The set error function */
+  /** The clear error function */
   clearError: () => void;
   /** The focus function */
   focus: () => void;
@@ -84,7 +84,7 @@ export interface UseFieldReturn<Value> {
   reset: () => void;
   /** The set error function */
   setError: (error: string) => void;
-  /** The  set value function */
+  /** The set value function */
   setValue: (value: Value) => void;
   /** The watch function */
   watch: () => Value;
@@ -98,12 +98,19 @@ export interface UseFieldReturn<Value> {
  *
  * @template Value The input value
  * @template Type The input value type
- * @param {Value} [params.initialValue = ""] Initial value
- * @param {boolean} [params.initialTouched=false] Initial touched state
- * @param {boolean} [params.autoFocus=false] Auto focus
- * @param {boolean} [params.validateOnChange=false] Validate on change
- * @param {boolean} [params.validateOnBlur=false] Validate on blur
- * @param {boolean} [params.validateOnMount=false] Validate on mount
+ * @param {Value} [initialValue = ""] Initial value
+ * @param {boolean} [options.initialTouched=false] Initial touched state
+ * @param {boolean} [options.autoFocus=false] Auto focus
+ * @param {boolean} [options.validateOnChange=false] Validate on change
+ * @param {boolean} [options.validateOnBlur=false] Validate on blur
+ * @param {boolean} [options.validateOnMount=false] Validate on mount
+ * @param {string} [options.required] Required validation message
+ * @param {object} [options.min] Min value validation
+ * @param {object} [options.max] Max value validation
+ * @param {object} [options.minLength] Min length validation
+ * @param {object} [options.maxLength] Max length validation
+ * @param {object} [options.pattern] Pattern validation
+ * @param {Function} [options.validate] Custom validation
  * @returns {UseFieldReturn<Value>} An object containing input information
  *
  * @example
@@ -117,12 +124,16 @@ export const useField = <
   options?: UseFieldOptions
 ): UseFieldReturn<Type> => {
   const inputRef = useRef<UseFieldElement | null>(null);
+  const initializedRef = useRef<UseFieldElement | null>(null);
   const watchingRef = useRef(false);
   const rerender = useRerender();
 
   const [dirty, setDirty] = useState(false);
   const [touched, setTouched] = useState(options?.initialTouched ?? false);
   const [error, setError] = useState<string | undefined>(undefined);
+
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
 
   const getValue = () => {
     if (
@@ -158,78 +169,88 @@ export const useField = <
 
   const focus = () => inputRef.current!.focus();
 
-  const validate = (params: UseFieldRegisterParams) => {
-    if (params.required && !inputRef.current!.value) {
-      return setError(params.required);
-    }
+  const validate = async (params: UseFieldRegisterParams) => {
+    const hasRules =
+      params.required ||
+      params.min ||
+      params.max ||
+      params.minLength ||
+      params.maxLength ||
+      params.pattern ||
+      params.validate;
 
-    if (params.min && Number(inputRef.current!.value) < params.min.value) {
-      return setError(params.min.message);
-    }
+    if (!hasRules) return;
 
-    if (params.max && Number(inputRef.current!.value) > params.max.value) {
-      return setError(params.max.message);
-    }
+    const value = inputRef.current!.value;
 
-    if (params.minLength && inputRef.current!.value.length < params.minLength.value) {
+    if (params.required && !value) return setError(params.required);
+    if (params.min && Number(value) < params.min.value) return setError(params.min.message);
+    if (params.max && Number(value) > params.max.value) return setError(params.max.message);
+    if (params.minLength && value.length < params.minLength.value)
       return setError(params.minLength.message);
-    }
-
-    if (params.maxLength && inputRef.current!.value.length > params.maxLength.value) {
+    if (params.maxLength && value.length > params.maxLength.value)
       return setError(params.maxLength.message);
-    }
-
-    if (params.pattern && !params.pattern.value.test(inputRef.current!.value)) {
+    if (params.pattern && !params.pattern.value.test(value))
       return setError(params.pattern.message);
-    }
 
     if (params.validate) {
-      const error = params.validate(inputRef.current!.value);
-      if (typeof error === 'string') return setError(error);
+      const result = await params.validate(value);
+      if (typeof result === 'string') return setError(result);
     }
 
     setError(undefined);
   };
 
-  const register = (registerParams?: UseFieldRegisterParams) => ({
+  const register = (params?: UseFieldRegisterParams) => ({
     ref: (node: UseFieldElement | null | undefined) => {
+      const registerParams = { ...optionsRef.current, ...params };
+
       if (!node) {
         inputRef.current = null;
         return;
       }
 
-      if (inputRef.current !== node) {
-        if (options?.autoFocus) node.focus();
-        inputRef.current = node;
-        if ('checked' in node && node.type === 'radio') {
+      inputRef.current = node;
+
+      if (initializedRef.current === node) return;
+      initializedRef.current = node;
+
+      if (registerParams.autoFocus) node.focus();
+      if (registerParams.validateOnMount) validate(registerParams);
+
+      if (node instanceof HTMLInputElement) {
+        if (node.type === 'radio') {
           node.defaultChecked = initialValue === node.value;
           return;
         }
-        if ('checked' in node && node.type === 'checkbox') {
-          node.defaultChecked = !!initialValue;
+        if (node.type === 'checkbox') {
+          node.defaultChecked = Boolean(initialValue);
           return;
         }
-        if ('defaultValue' in node) {
-          node.defaultValue = String(initialValue);
-        } else {
-          node.value = String(initialValue);
-        }
-
-        if (registerParams && options?.validateOnMount) validate(registerParams);
+        node.defaultValue = String(initialValue);
+        return;
       }
+
+      node.value = String(initialValue);
     },
     onChange: (async (event) => {
+      const registerParams = { ...optionsRef.current, ...params };
+
       if (watchingRef.current) rerender();
-      if (inputRef.current!.value !== initialValue) setDirty(true);
-      if (inputRef.current!.value === initialValue) setDirty(false);
-      if (registerParams && options?.validateOnChange) await validate(registerParams);
-      if (registerParams && options?.validateOnBlur) setError(undefined);
-      registerParams?.onChange?.(event);
+      setDirty(getValue() !== (initialValue as unknown as Type));
+
+      if (registerParams.validateOnChange) await validate(registerParams);
+      if (registerParams.validateOnBlur) setError(undefined);
+
+      registerParams.onChange?.(event);
     }) as ChangeEventHandler<UseFieldElement>,
     onBlur: (async (event) => {
-      if (registerParams && options?.validateOnBlur) await validate(registerParams);
+      const registerParams = { ...optionsRef.current, ...params };
+
+      if (registerParams.validateOnBlur) await validate(registerParams);
       setTouched(true);
-      registerParams?.onBlur?.(event);
+
+      registerParams.onBlur?.(event);
     }) as FocusEventHandler<UseFieldElement>
   });
 

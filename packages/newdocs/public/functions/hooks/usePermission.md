@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1783581480000
+lastModifiedTime: 1783666924000
 ---
 
 import metadata from './usePermission.meta.json';

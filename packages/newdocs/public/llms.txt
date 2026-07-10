@@ -155,6 +155,7 @@
 - [useDefault](https://reactuse.org/functions/hooks/useDefault): Hook that returns the default value
 - [useDisclosure](https://reactuse.org/functions/hooks/useDisclosure): Hook that allows you to open and close a modal
 - [useField](https://reactuse.org/functions/hooks/useField): Hook to manage a form field
+- [useForm](https://reactuse.org/functions/hooks/useForm): Hook to manage a form
 - [useHash](https://reactuse.org/functions/hooks/useHash): Hook that manages the hash value
 - [useList](https://reactuse.org/functions/hooks/useList): Hook that provides state and helper methods to manage a list of items
 - [useLocalStorage](https://reactuse.org/functions/hooks/useLocalStorage): Hook that manages local storage value

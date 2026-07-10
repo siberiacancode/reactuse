@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { usePermission } from '../usePermission/usePermission';
-
 /** The use notification params type */
 export interface UseNotificationParams extends NotificationOptions {
   /** The title of the notification */
@@ -18,8 +16,6 @@ export interface UseNotificationParams extends NotificationOptions {
 
 /** The use notification return type */
 export interface UseNotificationReturn {
-  /** The current notification permission state */
-  granted: PermissionState;
   /** The current Notification instance, if any */
   notification: Notification | undefined;
   /** Whether the Notifications API is supported in the current environment */
@@ -40,16 +36,14 @@ export interface UseNotificationReturn {
  *
  * @browserapi Notification https://developer.mozilla.org/en-US/docs/Web/API/Notification
  *
- * @returns {UseNotificationReturn} An object containing the permission state and notification controls
+ * @returns {UseNotificationReturn} An object containing the notification instance and controls
  *
  * @example
- * const { supported, granted, notification, trigger, show, close } = useNotification();
+ * const { supported, notification, trigger, show, close } = useNotification();
  */
 export const useNotification = (): UseNotificationReturn => {
   const supported =
     typeof window !== 'undefined' && 'Notification' in window && !!window.Notification;
-
-  const { state: granted } = usePermission('notifications');
 
   const [notification, setNotification] = useState<Notification>();
 
@@ -57,6 +51,7 @@ export const useNotification = (): UseNotificationReturn => {
 
   const close = () => {
     if (!notificationRef.current) return;
+
     notificationRef.current.close();
     notificationRef.current = undefined;
     setNotification(undefined);
@@ -112,11 +107,12 @@ export const useNotification = (): UseNotificationReturn => {
     document.addEventListener('visibilitychange', onVisibilityChange);
     return () => {
       document.removeEventListener('visibilitychange', onVisibilityChange);
+
       if (!notificationRef.current) return;
       notificationRef.current.close();
       notificationRef.current = undefined;
     };
   }, [supported]);
 
-  return { supported, granted, notification, trigger, show, close };
+  return { supported, notification, trigger, show, close };
 };

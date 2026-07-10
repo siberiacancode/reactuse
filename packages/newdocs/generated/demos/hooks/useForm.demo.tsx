@@ -1,6 +1,6 @@
-import type { SubmitEvent } from 'react';
+'use client'
 
-import { useField } from '@siberiacancode/reactuse';
+import { useForm } from '@siberiacancode/reactuse';
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';
 
 const LANGUAGES = [
@@ -12,26 +12,23 @@ const LANGUAGES = [
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/;
 
 const Demo = () => {
-  const nameField = useField('siberiacancode', {
-    validateOnBlur: true,
-    required: 'Name is required',
-    minLength: { value: 2, message: 'At least 2 characters' }
+  const form = useForm({
+    initialValues: {
+      name: 'siberiacancode',
+      email: 'hello@reactuse.org',
+      bio: 'Building open-source React hooks',
+      language: 'en',
+      notifications: true,
+      public: false
+    },
+    validateOnBlur: true
   });
-  const emailField = useField('hello@reactuse.org', {
-    validateOnBlur: true,
-    required: 'Email is required',
-    pattern: { value: EMAIL_PATTERN, message: 'Invalid email format' }
-  });
-  const bioField = useField('Building open-source React hooks');
-  const languageField = useField('en');
-  const notificationsField = useField(true);
-  const publicField = useField(false);
-  const isPublic = publicField.watch();
 
-  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log('submit', languageField.getValue());
-  };
+  const values = form.watch();
+
+  const onSubmit = form.handleSubmit((values) => {
+    console.log('submit', values);
+  });
 
   return (
     <section className='flex w-full max-w-md flex-col gap-1 p-4'>
@@ -49,9 +46,12 @@ const Demo = () => {
             className='border-border bg-card text-foreground rounded-md border px-3 py-2 text-sm outline-none'
             id='name'
             placeholder='Your name'
-            {...nameField.register()}
+            {...form.register('name', {
+              required: 'Name is required',
+              minLength: { value: 2, message: 'At least 2 characters' }
+            })}
           />
-          {nameField.error && <span className='text-destructive text-xs'>{nameField.error}</span>}
+          {form.errors.name && <span className='text-destructive text-xs'>{form.errors.name}</span>}
         </div>
 
         <div className='flex flex-col gap-1.5'>
@@ -63,9 +63,14 @@ const Demo = () => {
             id='email'
             placeholder='you@example.com'
             type='email'
-            {...emailField.register()}
+            {...form.register('email', {
+              required: 'Email is required',
+              pattern: { value: EMAIL_PATTERN, message: 'Invalid email format' }
+            })}
           />
-          {emailField.error && <span className='text-destructive text-xs'>{emailField.error}</span>}
+          {form.errors.email && (
+            <span className='text-destructive text-xs'>{form.errors.email}</span>
+          )}
         </div>
 
         <div className='flex flex-col gap-1.5'>
@@ -76,7 +81,7 @@ const Demo = () => {
             className='border-border bg-card text-foreground min-h-[72px] resize-none rounded-md border px-3 py-2 text-sm outline-none'
             id='bio'
             placeholder='Tell something about yourself...'
-            {...bioField.register()}
+            {...form.register('bio')}
           />
         </div>
 
@@ -88,7 +93,7 @@ const Demo = () => {
                 Receive product updates and release notes
               </span>
             </div>
-            <input role='switch' type='checkbox' {...notificationsField.register()} />
+            <input role='switch' type='checkbox' {...form.register('notifications')} />
           </label>
 
           <div className='flex items-center justify-between gap-3'>
@@ -104,7 +109,7 @@ const Demo = () => {
               <select
                 className='border-border bg-card text-foreground w-32 appearance-none rounded-md border py-1.5 pr-7 pl-3 text-xs outline-none'
                 id='language'
-                {...languageField.register()}
+                {...form.register('language')}
               >
                 {LANGUAGES.map((language) => (
                   <option key={language.value} value={language.value}>
@@ -119,9 +124,9 @@ const Demo = () => {
 
         <label className='flex cursor-pointer items-start gap-3'>
           <span className='mt-0.5 flex shrink-0 items-center'>
-            <input className='peer sr-only' type='checkbox' {...publicField.register()} />
+            <input className='peer sr-only' type='checkbox' {...form.register('public')} />
             <span className='border-border peer-checked:border-foreground peer-checked:bg-foreground flex size-4 items-center justify-center rounded-[5px] border transition-colors'>
-              {isPublic && <CheckIcon className='text-background size-3' strokeWidth={3.5} />}
+              {values.public && <CheckIcon className='text-background size-3' strokeWidth={3.5} />}
             </span>
           </span>
           <div className='flex flex-col gap-0.5'>
@@ -133,7 +138,9 @@ const Demo = () => {
         </label>
 
         <div className='flex justify-end'>
-          <button type='submit'>Save changes</button>
+          <button disabled={form.submitting} type='submit'>
+            {form.submitting ? 'Saving...' : 'Save changes'}
+          </button>
         </div>
       </form>
     </section>

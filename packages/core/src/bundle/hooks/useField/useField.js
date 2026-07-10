@@ -8,12 +8,19 @@ import { useRerender } from '../useRerender/useRerender';
  *
  * @template Value The input value
  * @template Type The input value type
- * @param {Value} [params.initialValue = ""] Initial value
- * @param {boolean} [params.initialTouched=false] Initial touched state
- * @param {boolean} [params.autoFocus=false] Auto focus
- * @param {boolean} [params.validateOnChange=false] Validate on change
- * @param {boolean} [params.validateOnBlur=false] Validate on blur
- * @param {boolean} [params.validateOnMount=false] Validate on mount
+ * @param {Value} [initialValue = ""] Initial value
+ * @param {boolean} [options.initialTouched=false] Initial touched state
+ * @param {boolean} [options.autoFocus=false] Auto focus
+ * @param {boolean} [options.validateOnChange=false] Validate on change
+ * @param {boolean} [options.validateOnBlur=false] Validate on blur
+ * @param {boolean} [options.validateOnMount=false] Validate on mount
+ * @param {string} [options.required] Required validation message
+ * @param {object} [options.min] Min value validation
+ * @param {object} [options.max] Max value validation
+ * @param {object} [options.minLength] Min length validation
+ * @param {object} [options.maxLength] Max length validation
+ * @param {object} [options.pattern] Pattern validation
+ * @param {Function} [options.validate] Custom validation
  * @returns {UseFieldReturn<Value>} An object containing input information
  *
  * @example
@@ -21,11 +28,14 @@ import { useRerender } from '../useRerender/useRerender';
  */
 export const useField = (initialValue = '', options) => {
   const inputRef = useRef(null);
+  const initializedRef = useRef(null);
   const watchingRef = useRef(false);
   const rerender = useRerender();
   const [dirty, setDirty] = useState(false);
   const [touched, setTouched] = useState(options?.initialTouched ?? false);
   const [error, setError] = useState(undefined);
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
   const getValue = () => {
     if (
       inputRef.current &&
@@ -55,68 +65,71 @@ export const useField = (initialValue = '', options) => {
     setError(undefined);
   };
   const focus = () => inputRef.current.focus();
-  const validate = (params) => {
-    if (params.required && !inputRef.current.value) {
-      return setError(params.required);
-    }
-    if (params.min && Number(inputRef.current.value) < params.min.value) {
-      return setError(params.min.message);
-    }
-    if (params.max && Number(inputRef.current.value) > params.max.value) {
-      return setError(params.max.message);
-    }
-    if (params.minLength && inputRef.current.value.length < params.minLength.value) {
+  const validate = async (params) => {
+    const hasRules =
+      params.required ||
+      params.min ||
+      params.max ||
+      params.minLength ||
+      params.maxLength ||
+      params.pattern ||
+      params.validate;
+    if (!hasRules) return;
+    const value = inputRef.current.value;
+    if (params.required && !value) return setError(params.required);
+    if (params.min && Number(value) < params.min.value) return setError(params.min.message);
+    if (params.max && Number(value) > params.max.value) return setError(params.max.message);
+    if (params.minLength && value.length < params.minLength.value)
       return setError(params.minLength.message);
-    }
-    if (params.maxLength && inputRef.current.value.length > params.maxLength.value) {
+    if (params.maxLength && value.length > params.maxLength.value)
       return setError(params.maxLength.message);
-    }
-    if (params.pattern && !params.pattern.value.test(inputRef.current.value)) {
+    if (params.pattern && !params.pattern.value.test(value))
       return setError(params.pattern.message);
-    }
     if (params.validate) {
-      const error = params.validate(inputRef.current.value);
-      if (typeof error === 'string') return setError(error);
+      const result = await params.validate(value);
+      if (typeof result === 'string') return setError(result);
     }
     setError(undefined);
   };
-  const register = (registerParams) => ({
+  const register = (params) => ({
     ref: (node) => {
+      const registerParams = { ...optionsRef.current, ...params };
       if (!node) {
         inputRef.current = null;
         return;
       }
-      if (inputRef.current !== node) {
-        if (options?.autoFocus) node.focus();
-        inputRef.current = node;
-        if ('checked' in node && node.type === 'radio') {
+      inputRef.current = node;
+      if (initializedRef.current === node) return;
+      initializedRef.current = node;
+      if (registerParams.autoFocus) node.focus();
+      if (registerParams.validateOnMount) validate(registerParams);
+      if (node instanceof HTMLInputElement) {
+        if (node.type === 'radio') {
           node.defaultChecked = initialValue === node.value;
           return;
         }
-        if ('checked' in node && node.type === 'checkbox') {
-          node.defaultChecked = !!initialValue;
+        if (node.type === 'checkbox') {
+          node.defaultChecked = Boolean(initialValue);
           return;
         }
-        if ('defaultValue' in node) {
-          node.defaultValue = String(initialValue);
-        } else {
-          node.value = String(initialValue);
-        }
-        if (registerParams && options?.validateOnMount) validate(registerParams);
+        node.defaultValue = String(initialValue);
+        return;
       }
+      node.value = String(initialValue);
     },
     onChange: async (event) => {
+      const registerParams = { ...optionsRef.current, ...params };
       if (watchingRef.current) rerender();
-      if (inputRef.current.value !== initialValue) setDirty(true);
-      if (inputRef.current.value === initialValue) setDirty(false);
-      if (registerParams && options?.validateOnChange) await validate(registerParams);
-      if (registerParams && options?.validateOnBlur) setError(undefined);
-      registerParams?.onChange?.(event);
+      setDirty(getValue() !== initialValue);
+      if (registerParams.validateOnChange) await validate(registerParams);
+      if (registerParams.validateOnBlur) setError(undefined);
+      registerParams.onChange?.(event);
     },
     onBlur: async (event) => {
-      if (registerParams && options?.validateOnBlur) await validate(registerParams);
+      const registerParams = { ...optionsRef.current, ...params };
+      if (registerParams.validateOnBlur) await validate(registerParams);
       setTouched(true);
-      registerParams?.onBlur?.(event);
+      registerParams.onBlur?.(event);
     }
   });
   const watch = () => {

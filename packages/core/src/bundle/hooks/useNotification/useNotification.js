@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { usePermission } from '../usePermission/usePermission';
 /**
  * @name useNotification
  * @description - Hook that provides a reactive wrapper around the browser Notifications API
@@ -8,15 +7,14 @@ import { usePermission } from '../usePermission/usePermission';
  *
  * @browserapi Notification https://developer.mozilla.org/en-US/docs/Web/API/Notification
  *
- * @returns {UseNotificationReturn} An object containing the permission state and notification controls
+ * @returns {UseNotificationReturn} An object containing the notification instance and controls
  *
  * @example
- * const { supported, granted, notification, trigger, show, close } = useNotification();
+ * const { supported, notification, trigger, show, close } = useNotification();
  */
 export const useNotification = () => {
   const supported =
     typeof window !== 'undefined' && 'Notification' in window && !!window.Notification;
-  const { state: granted } = usePermission('notifications');
   const [notification, setNotification] = useState();
   const notificationRef = useRef(undefined);
   const close = () => {
@@ -68,5 +66,5 @@ export const useNotification = () => {
       notificationRef.current = undefined;
     };
   }, [supported]);
-  return { supported, granted, notification, trigger, show, close };
+  return { supported, notification, trigger, show, close };
 };

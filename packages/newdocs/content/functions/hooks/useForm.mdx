@@ -1,15 +1,15 @@
 ---
-title: usePermission
-description: Hook that gives you the state of permission
-category: browser
+title: useForm
+description: Hook to manage a form
+category: state
 usage: medium
 type: hook
-isTest: true
+isTest: false
 isDemo: true
-lastModifiedTime: 1783666924000
+lastModifiedTime: 1783684565236
 ---
 
-import metadata from './usePermission.meta.json';
+import metadata from './useForm.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './usePermission.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add usePermission
+    npx useverse@latest add useForm
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './usePermission.meta.json';
 ## Usage
 
 ```tsx
-const { state, supported, query } = usePermission('microphone', (state) => console.log(state));
-// or
-const { state, supported, query } = usePermission('microphone');
+const form = useForm({ initialValues: { email: '' } });
 ```
 
 ## Type Declarations

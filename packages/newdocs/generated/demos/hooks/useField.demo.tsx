@@ -14,8 +14,16 @@ const LANGUAGES = [
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/;
 
 const Demo = () => {
-  const nameField = useField('siberiacancode', { validateOnBlur: true });
-  const emailField = useField('hello@reactuse.org', { validateOnBlur: true });
+  const nameField = useField('siberiacancode', {
+    validateOnBlur: true,
+    required: 'Name is required',
+    minLength: { value: 2, message: 'At least 2 characters' }
+  });
+  const emailField = useField('hello@reactuse.org', {
+    validateOnBlur: true,
+    required: 'Email is required',
+    pattern: { value: EMAIL_PATTERN, message: 'Invalid email format' }
+  });
   const bioField = useField('Building open-source React hooks');
   const languageField = useField('en');
   const notificationsField = useField(true);
@@ -24,6 +32,7 @@ const Demo = () => {
 
   const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log('submit', languageField.getValue());
   };
 
   return (
@@ -42,10 +51,7 @@ const Demo = () => {
             className='border-border bg-card text-foreground rounded-md border px-3 py-2 text-sm outline-none'
             id='name'
             placeholder='Your name'
-            {...nameField.register({
-              required: 'Name is required',
-              minLength: { value: 2, message: 'At least 2 characters' }
-            })}
+            {...nameField.register()}
           />
           {nameField.error && <span className='text-destructive text-xs'>{nameField.error}</span>}
         </div>
@@ -59,10 +65,7 @@ const Demo = () => {
             id='email'
             placeholder='you@example.com'
             type='email'
-            {...emailField.register({
-              required: 'Email is required',
-              pattern: { value: EMAIL_PATTERN, message: 'Invalid email format' }
-            })}
+            {...emailField.register()}
           />
           {emailField.error && <span className='text-destructive text-xs'>{emailField.error}</span>}
         </div>

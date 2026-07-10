@@ -8,6 +8,7 @@ export * from './useCycleList/useCycleList';
 export * from './useDefault/useDefault';
 export * from './useDisclosure/useDisclosure';
 export * from './useField/useField';
+export * from './useForm/useForm';
 export * from './useHash/useHash';
 export * from './useList/useList';
 export * from './useLocalStorage/useLocalStorage';

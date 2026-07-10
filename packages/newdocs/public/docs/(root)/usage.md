@@ -67,6 +67,7 @@ Situational building blocks for recurring patterns and product-specific workflow
 - [useField](/functions/hooks/useField): Hook to manage a form field
 - [useFocus](/functions/hooks/useFocus): Hook that allows you to focus on a specific element
 - [useFocusTrap](/functions/hooks/useFocusTrap): Hook that traps focus within a given element
+- [useForm](/functions/hooks/useForm): Hook to manage a form
 - [useGeolocation](/functions/hooks/useGeolocation): Hook that returns the current geolocation
 - [useHotkeys](/functions/hooks/useHotkeys): Hook that listens for hotkeys
 - [useHover](/functions/hooks/useHover): Hook that defines the logic when hovering an element
