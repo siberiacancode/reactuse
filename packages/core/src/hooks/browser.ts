@@ -21,6 +21,7 @@ export * from './useMediaControls/useMediaControls';
 export * from './useMediaStream/useMediaStream';
 export * from './useMemory/useMemory';
 export * from './useNetwork/useNetwork';
+export * from './useNotification/useNotification';
 export * from './useObjectUrl/useObjectUrl';
 export * from './useOnline/useOnline';
 export * from './useOtpCredential/useOtpCredential';
