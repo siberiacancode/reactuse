@@ -1,3 +1,5 @@
+'use client';
+
 import { useNotification } from '@siberiacancode/reactuse';
 import { BellIcon, CheckIcon } from 'lucide-react';
 
@@ -61,8 +63,7 @@ const Demo = () => {
             </div>
 
             <button
-              className='text-muted-foreground text-xs underline underline-offset-4'
-              data-variant='ghost'
+              data-variant='link'
               type='button'
               onClick={() => notification.show(NOTIFICATION)}
             >

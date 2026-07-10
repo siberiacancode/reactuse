@@ -47,6 +47,8 @@ import metadata from './usePermission.meta.json';
 ## Usage
 
 ```tsx
+const { state, supported, query } = usePermission('microphone', (state) => console.log(state));
+// or
 const { state, supported, query } = usePermission('microphone');
 ```
 

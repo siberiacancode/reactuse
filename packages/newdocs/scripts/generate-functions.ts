@@ -20,7 +20,6 @@ import {
 
 const SITE_URL = 'https://reactuse.org';
 const SKILLS_URL = 'https://skills.sh/siberiacancode/agent-skills/reactuse';
-const ROOT_DOCS_META_PATH = path.join(CONTENT_ROOT, 'docs', '(root)', 'meta.json');
 
 const createDemo = async (metadata: FunctionMetadata) => {
   const demoPath = path.join(
@@ -256,16 +255,62 @@ const createFunctionsMd = (pages: FunctionMetadata[]) => {
   return result.join('\n');
 };
 
-const placeFunctionsOnSecondPosition = async () => {
-  const content = await fs.promises.readFile(ROOT_DOCS_META_PATH, 'utf-8');
-  const meta = JSON.parse(content) as { title?: string; pages?: string[] };
+const createUsageMd = (pages: FunctionMetadata[]) => {
+  const usageGroups = [
+    {
+      key: 'necessary',
+      title: 'Necessary',
+      description: 'Core everyday primitives that cover the most common React tasks.'
+    },
+    {
+      key: 'high',
+      title: 'High',
+      description: 'Frequently useful functions that fit naturally into many production features.'
+    },
+    {
+      key: 'medium',
+      title: 'Medium',
+      description:
+        'Situational building blocks for recurring patterns and product-specific workflows.'
+    },
+    {
+      key: 'low',
+      title: 'Low',
+      description:
+        'Niche utilities for targeted browser APIs, edge cases, and specialized interactions.'
+    }
+  ] as const;
 
-  const currentPages = meta.pages ?? [];
-  const pagesWithoutFunctions = currentPages.filter((page) => page !== 'functions');
-  pagesWithoutFunctions.splice(1, 0, 'functions');
-  meta.pages = pagesWithoutFunctions;
+  const result = [];
+  result.push('---');
+  result.push('title: Usage');
+  result.push('description: Browse functions by how commonly they are used in real projects.');
+  result.push('---');
+  result.push('');
+  result.push('## Groups');
+  result.push('');
+  result.push('Explore the catalog grouped by practical usage level.');
+  result.push('');
 
-  await fs.promises.writeFile(ROOT_DOCS_META_PATH, `${JSON.stringify(meta, null, 2)}\n`, 'utf-8');
+  for (const group of usageGroups) {
+    const items = pages
+      .filter((page) => page.usage.toLowerCase() === group.key)
+      .toSorted((a, b) => a.name.localeCompare(b.name))
+      .map(
+        (item) => `- [${item.name}](/functions/${item.type}s/${item.name}): ${item.description}`
+      );
+
+    if (!items.length) continue;
+
+    result.push(`### ${group.title}`);
+    result.push('');
+    result.push(group.description);
+    result.push('');
+    result.push(...items);
+    result.push('');
+  }
+
+  return result.join('\n').trimEnd();
 };
 
 const init = async () => {
@@ -423,12 +468,18 @@ const init = async () => {
   }
 
   const functionsMd = createFunctionsMd(pages);
+  const usageMd = createUsageMd(pages);
+
+  await fs.promises.writeFile(
+    path.join(CONTENT_ROOT, 'docs', '(root)', 'usage.mdx'),
+    usageMd,
+    'utf-8'
+  );
   await fs.promises.writeFile(
     path.join(CONTENT_ROOT, 'docs', '(root)', 'functions.mdx'),
     functionsMd,
     'utf-8'
   );
-  await placeFunctionsOnSecondPosition();
 
   const llmsTxt = createLlmsTxt(pages);
   await fs.promises.writeFile(path.join('public', 'llms.txt'), llmsTxt, 'utf-8');

@@ -1,15 +1,15 @@
 ---
-title: usePermission
-description: Hook that gives you the state of permission
+title: useNotification
+description: Hook that provides a reactive wrapper around the browser Notifications API
 category: browser
 usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1783581480000
+lastModifiedTime: 1782730884000
 ---
 
-import metadata from './usePermission.meta.json';
+import metadata from './useNotification.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './usePermission.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add usePermission
+    npx useverse@latest add useNotification
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './usePermission.meta.json';
 ## Usage
 
 ```tsx
-const { state, supported, query } = usePermission('microphone', (state) => console.log(state));
-// or
-const { state, supported, query } = usePermission('microphone');
+const { supported, granted, notification, trigger, show, close } = useNotification();
 ```
 
 ## Type Declarations

@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1773475680000
+lastModifiedTime: 1783538021000
 ---
 
 import metadata from './useMouse.meta.json';
@@ -47,9 +47,9 @@ import metadata from './useMouse.meta.json';
 ## Usage
 
 ```tsx
-const mouse = useMouse(ref);
+const { snapshot, watch } = useMouse(ref);
 // or
-const mouse = useMouse<HTMLDivElement>();
+const { ref, snapshot, watch } = useMouse<HTMLDivElement>();
 ```
 
 ## Type Declarations

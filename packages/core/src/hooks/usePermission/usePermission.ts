@@ -20,10 +20,13 @@ export type UsePermissionName =
   | 'speaker'
   | PermissionName;
 
+/** The use permission callback type */
+export type UsePermissionCallback = (state: PermissionState) => void;
+
 /** The use permission options type */
 export interface UsePermissionOptions {
-  /** Whether the permission should be queried immediately */
-  immediately?: boolean;
+  /** The callback fired when the permission state changes */
+  onChange?: UsePermissionCallback;
 }
 
 /** The use permission return type */
@@ -36,6 +39,12 @@ export interface UsePermissionReturn {
   query: () => Promise<PermissionState>;
 }
 
+export interface UsePermission {
+  (name: UsePermissionName, callback?: UsePermissionCallback): UsePermissionReturn;
+
+  (name: UsePermissionName, options?: UsePermissionOptions): UsePermissionReturn;
+}
+
 /**
  *  @name usePermission
  *  @description - Hook that gives you the state of permission
@@ -44,34 +53,43 @@ export interface UsePermissionReturn {
  *
  *  @browserapi navigator.permissions https://developer.mozilla.org/en-US/docs/Web/API/Navigator/permissions
  *
- *  @param {UsePermissionName} name - The permission name
- *  @param {boolean} [options.immediately=true] - Whether the permission should be queried immediately
+ *  @overload
+ *  @param {UsePermissionName} name The permission name
+ *  @param {(state: PermissionState) => void} [callback] The callback fired when the permission state changes
+ *  @returns {UsePermissionReturn} An object containing the state and the supported status
+ *
+ *  @example
+ *  const { state, supported, query } = usePermission('microphone', (state) => console.log(state));
+ *
+ *  @overload
+ *  @param {UsePermissionName} name The permission name
+ *  @param {(state: PermissionState) => void} [options.onChange] The callback fired when the permission state changes
  *  @returns {UsePermissionReturn} An object containing the state and the supported status
  *
  *  @example
  *  const { state, supported, query } = usePermission('microphone');
  */
-export const usePermission = (
-  name: UsePermissionName,
-  options?: UsePermissionOptions
-): UsePermissionReturn => {
+export const usePermission = ((...params: any[]) => {
+  const name = params[0] as UsePermissionName;
+
+  const options = (typeof params[1] === 'function' ? { onChange: params[1] } : params[1]) as
+    | UsePermissionOptions
+    | undefined;
+
   const supported =
     typeof navigator !== 'undefined' && 'permissions' in navigator && !!navigator.permissions;
 
-  const immediately = options?.immediately ?? true;
-
   const [state, setState] = useState<PermissionState>('prompt');
 
-  const statusRef = useRef<PermissionStatus | null>(null);
-
-  const onChange = () => setState(statusRef.current!.state);
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
 
   const query = async () => {
     if (!supported) return 'prompt' as const;
+
     try {
       const status = await navigator.permissions.query({ name } as PermissionDescriptor);
-      statusRef.current = status;
-      status.addEventListener('change', onChange);
+
       setState(status.state);
       return status.state;
     } catch {
@@ -81,11 +99,31 @@ export const usePermission = (
   };
 
   useEffect(() => {
-    if (immediately) query();
+    if (!supported) return;
+
+    let status: PermissionStatus | undefined;
+
+    const onChange = () => {
+      setState(status!.state);
+      optionsRef.current?.onChange?.(status!.state);
+    };
+
+    const subscribe = async () => {
+      try {
+        status = await navigator.permissions.query({ name } as PermissionDescriptor);
+
+        setState(status.state);
+        status.addEventListener('change', onChange);
+      } catch {
+        setState('prompt');
+      }
+    };
+
+    subscribe();
 
     return () => {
-      if (!statusRef.current) return;
-      statusRef.current.removeEventListener('change', onChange);
+      if (!status) return;
+      status.removeEventListener('change', onChange);
     };
   }, [name]);
 
@@ -94,4 +132,4 @@ export const usePermission = (
     supported,
     query
   };
-};
+}) as UsePermission;

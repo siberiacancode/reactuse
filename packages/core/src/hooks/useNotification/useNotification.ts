@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-/** The notification permission state */
-export type useNotificationPermission = 'default' | 'denied' | 'granted';
+import { usePermission } from '../usePermission/usePermission';
 
-/** Default notification options */
-export interface useNotificationParams extends NotificationOptions {
+/** The use notification params type */
+export interface UseNotificationParams extends NotificationOptions {
   /** The title of the notification */
   title?: string;
   /** Called when a notification is clicked */
@@ -17,20 +16,20 @@ export interface useNotificationParams extends NotificationOptions {
   onShow?: (event: Event) => void;
 }
 
-/** The use notifications return type */
-export interface useNotificationReturn {
+/** The use notification return type */
+export interface UseNotificationReturn {
+  /** The current notification permission state */
+  granted: PermissionState;
   /** The current Notification instance, if any */
-  notification: Notification | null;
-  /** Current notification permission state */
-  permission: useNotificationPermission;
+  notification: Notification | undefined;
   /** Whether the Notifications API is supported in the current environment */
   supported: boolean;
   /** Close the current notification */
   close: () => void;
+  /** Show a desktop notification */
+  show: (params?: UseNotificationParams) => Notification | undefined;
   /** Request notification permission from the user. Returns true if granted */
-  requestPermission: () => Promise<boolean>;
-  /** Show a desktop notification. Overrides merge with the params passed to the hook */
-  show: (overrides?: useNotificationParams) => Promise<Notification | undefined>;
+  trigger: () => Promise<boolean>;
 }
 
 /**
@@ -41,74 +40,60 @@ export interface useNotificationReturn {
  *
  * @browserapi Notification https://developer.mozilla.org/en-US/docs/Web/API/Notification
  *
- * @param {useNotificationParams} [params] Default notification options and lifecycle callbacks
- * @returns {useNotificationReturn} An object containing permission state and notification controls
+ * @returns {UseNotificationReturn} An object containing the permission state and notification controls
  *
  * @example
- * const { supported, permission, requestPermission, show, close } = useNotification({
- *   title: 'Hello',
- *   body: 'World',
- *   onClick: (event) => console.log('clicked', event),
- * });
+ * const { supported, granted, notification, trigger, show, close } = useNotification();
  */
-export const useNotification = (params?: useNotificationParams): useNotificationReturn => {
+export const useNotification = (): UseNotificationReturn => {
   const supported =
     typeof window !== 'undefined' && 'Notification' in window && !!window.Notification;
 
-  const [permission, setPermission] = useState<useNotificationPermission>(() =>
-    supported ? Notification.permission : 'default'
-  );
-  const [notification, setNotification] = useState<Notification | null>(null);
+  const { state: granted } = usePermission('notifications');
 
-  const permissionRef = useRef(permission);
-  permissionRef.current = permission;
+  const [notification, setNotification] = useState<Notification>();
 
-  const paramsRef = useRef(params);
-  paramsRef.current = params;
-
-  const notificationRef = useRef<Notification | null>(null);
-
-  const requestPermission = async (): Promise<boolean> => {
-    if (!supported) return false;
-    if (permission === 'granted') return true;
-    if (permission === 'denied') return false;
-
-    const result = await Notification.requestPermission();
-    permissionRef.current = result;
-    setPermission(result);
-    return result === 'granted';
-  };
+  const notificationRef = useRef<Notification | undefined>(undefined);
 
   const close = () => {
-    notificationRef.current?.close();
-    notificationRef.current = null;
-    setNotification(null);
+    if (!notificationRef.current) return;
+    notificationRef.current.close();
+    notificationRef.current = undefined;
+    setNotification(undefined);
   };
 
-  const show = async (overrides?: useNotificationParams): Promise<Notification | undefined> => {
-    if (!supported || permissionRef.current !== 'granted') return undefined;
+  const trigger = async () => {
+    if (!supported) return false;
+    if (window.Notification.permission !== 'default')
+      return window.Notification.permission === 'granted';
 
-    const {
-      title = '',
-      onClick,
-      onClose,
-      onError,
-      onShow,
-      ...notificationOptions
-    } = {
-      ...paramsRef.current,
-      ...overrides
-    };
+    const permission = await new Promise<NotificationPermission>((resolve) => {
+      // Safari < 16 only supports the callback form
+      const request = window.Notification.requestPermission(resolve);
+      if (request instanceof Promise) request.then(resolve);
+    });
 
-    const instance = new Notification(title, notificationOptions);
+    return permission === 'granted';
+  };
 
-    instance.onclick = (event) => (overrides?.onClick ?? paramsRef.current?.onClick)?.(event);
-    instance.onshow = (event) => (overrides?.onShow ?? paramsRef.current?.onShow)?.(event);
-    instance.onerror = (event) => (overrides?.onError ?? paramsRef.current?.onError)?.(event);
+  const show = (params?: UseNotificationParams) => {
+    if (!supported || window.Notification.permission !== 'granted') return;
+
+    close();
+
+    const { title = '', onClick, onClose, onError, onShow, ...options } = params ?? {};
+
+    const instance = new window.Notification(title, options);
+
+    instance.onclick = (event) => onClick?.(event);
+    instance.onshow = (event) => onShow?.(event);
+    instance.onerror = (event) => onError?.(event);
     instance.onclose = (event) => {
-      (overrides?.onClose ?? paramsRef.current?.onClose)?.(event);
-      notificationRef.current = null;
-      setNotification(null);
+      onClose?.(event);
+
+      if (notificationRef.current !== instance) return;
+      notificationRef.current = undefined;
+      setNotification(undefined);
     };
 
     notificationRef.current = instance;
@@ -116,21 +101,22 @@ export const useNotification = (params?: useNotificationParams): useNotification
     return instance;
   };
 
-  // Close current notification on unmount
-  useEffect(
-    () => () => {
-      notificationRef.current?.close();
-      notificationRef.current = null;
-    },
-    []
-  );
+  useEffect(() => {
+    if (!supported) return;
 
-  return {
-    supported,
-    permission,
-    notification,
-    requestPermission,
-    show,
-    close
-  };
+    const onVisibilityChange = () => {
+      if (document.visibilityState !== 'visible') return;
+      close();
+    };
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      if (!notificationRef.current) return;
+      notificationRef.current.close();
+      notificationRef.current = undefined;
+    };
+  }, [supported]);
+
+  return { supported, granted, notification, trigger, show, close };
 };

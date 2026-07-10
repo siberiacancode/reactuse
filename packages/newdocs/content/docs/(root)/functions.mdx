@@ -104,6 +104,7 @@ A quick list of available functions.
 - [useMutation](/functions/hooks/useMutation): Hook that defines the logic when mutate data
 - [useMutationObserver](/functions/hooks/useMutationObserver): Hook that gives you mutation observer state
 - [useNetwork](/functions/hooks/useNetwork): Hook to track network status
+- [useNotification](/functions/hooks/useNotification): Hook that provides a reactive wrapper around the browser Notifications API
 - [useObject](/functions/hooks/useObject): Hook that provides state and helper methods to manage an object
 - [useObjectUrl](/functions/hooks/useObjectUrl): Hook that creates and revokes an object URL for a Blob or MediaSource
 - [useOffsetPagination](/functions/hooks/useOffsetPagination): Hook that defines the logic when pagination

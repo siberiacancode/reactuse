@@ -67,7 +67,7 @@ it('Should use permission for unsupported', () => {
   expect(mockNavigatorPermissionsQuery).not.toHaveBeenCalled();
 });
 
-it('Should query permission when immediately', async () => {
+it('Should query permission on mount', async () => {
   mockNavigatorPermissionsQuery.mockResolvedValue(
     createMockPermissionStatus('notifications', 'granted')
   );
@@ -79,13 +79,6 @@ it('Should query permission when immediately', async () => {
   expect(mockNavigatorPermissionsQuery).toHaveBeenCalledWith({ name: 'notifications' });
 
   await waitFor(() => expect(result.current.state).toBe('granted'));
-});
-
-it('Should not query permission when not immediately', () => {
-  const { result } = renderHook(() => usePermission('microphone', { immediately: false }));
-
-  expect(mockNavigatorPermissionsQuery).not.toHaveBeenCalled();
-  expect(result.current.state).toBe('prompt');
 });
 
 it('Should query permission manually', async () => {
@@ -105,7 +98,7 @@ it('Should query permission manually', async () => {
 it('Should return prompt from query for unsupported', async () => {
   Object.assign(navigator, { permissions: undefined });
 
-  const { result } = renderHook(() => usePermission('microphone', { immediately: false }));
+  const { result } = renderHook(() => usePermission('microphone'));
 
   await expect(result.current.query()).resolves.toBe('prompt');
 });
@@ -133,6 +126,55 @@ it('Should update state when permission status changes', async () => {
   act(() => trigger.callback('notifications'));
 
   expect(result.current.state).toBe('denied');
+});
+
+it('Should call callback when permission status changes', async () => {
+  const callback = vi.fn();
+  const status = createMockPermissionStatus('camera', 'prompt');
+  mockNavigatorPermissionsQuery.mockResolvedValue(status);
+
+  renderHook(() => usePermission('camera', callback));
+
+  await waitFor(() => expect(mockPermissionStatusAddEventListener).toHaveBeenCalledOnce());
+
+  expect(callback).not.toHaveBeenCalled();
+
+  status.state = 'granted';
+
+  act(() => trigger.callback('camera'));
+
+  expect(callback).toHaveBeenCalledOnce();
+  expect(callback).toHaveBeenCalledWith('granted');
+});
+
+it('Should call onChange option when permission status changes', async () => {
+  const onChange = vi.fn();
+  const status = createMockPermissionStatus('microphone', 'prompt');
+  mockNavigatorPermissionsQuery.mockResolvedValue(status);
+
+  renderHook(() => usePermission('microphone', { onChange }));
+
+  await waitFor(() => expect(mockPermissionStatusAddEventListener).toHaveBeenCalledOnce());
+
+  status.state = 'denied';
+
+  act(() => trigger.callback('microphone'));
+
+  expect(onChange).toHaveBeenCalledOnce();
+  expect(onChange).toHaveBeenCalledWith('denied');
+});
+
+it('Should not call callback on manual query', async () => {
+  const callback = vi.fn();
+  mockNavigatorPermissionsQuery.mockResolvedValue(createMockPermissionStatus('camera', 'granted'));
+
+  const { result } = renderHook(() => usePermission('camera', callback));
+
+  await waitFor(() => expect(result.current.state).toBe('granted'));
+
+  await act(result.current.query);
+
+  expect(callback).not.toHaveBeenCalled();
 });
 
 it('Should requery permission on name change', async () => {
