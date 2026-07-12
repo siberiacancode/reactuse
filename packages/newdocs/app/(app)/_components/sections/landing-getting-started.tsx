@@ -78,11 +78,15 @@ const frameworks = [
 export const LandingGettingStarted = () => {
   const [activeFrameworkIndex, setActiveFrameworkIndex] = useState(0);
   const activeFramework = frameworks[activeFrameworkIndex];
-  const ActiveFrameworkIcon = activeFramework.icon;
+  const ActiveFrameworkIcon = frameworks[activeFrameworkIndex].icon;
 
-  const interval = useInterval(() => {
-    setActiveFrameworkIndex((current) => (current + 1) % frameworks.length);
-  }, INTERVAL);
+  const interval = useInterval(
+    () =>
+      setActiveFrameworkIndex(
+        (currentActiveFrameworkIndex) => (currentActiveFrameworkIndex + 1) % frameworks.length
+      ),
+    INTERVAL
+  );
 
   return (
     <section>
@@ -142,10 +146,8 @@ export const LandingGettingStarted = () => {
           onMouseEnter={interval.pause}
           onMouseLeave={interval.resume}
         >
-          {/* ── Main card ── */}
           <div className='bg-card flex flex-col overflow-hidden rounded-xl p-8 md:p-10'>
             <div className='flex flex-1 flex-col'>
-              {/* logo (link, no border, theme-aware) */}
               <Link
                 aria-label={activeFramework.name}
                 className='w-fit transition-opacity hover:opacity-70'
@@ -174,7 +176,6 @@ export const LandingGettingStarted = () => {
               </div>
             </div>
 
-            {/* ── Button, then loader bars under it ── */}
             <div className='mt-10'>
               <Button asChild className='rounded-full px-6'>
                 <Link href={activeFramework.href} prefetch={false}>
@@ -198,7 +199,7 @@ export const LandingGettingStarted = () => {
                       type='button'
                       onClick={() => setActiveFrameworkIndex(index)}
                     >
-                      {isActive ? (
+                      {isActive && (
                         <span
                           key={`${activeFrameworkIndex}-${interval.active}`}
                           style={{
@@ -208,7 +209,7 @@ export const LandingGettingStarted = () => {
                           }}
                           className='bg-primary block h-full origin-left rounded-full'
                         />
-                      ) : null}
+                      )}
                     </button>
                   );
                 })}
@@ -216,7 +217,6 @@ export const LandingGettingStarted = () => {
             </div>
           </div>
 
-          {/* ── Framework list: separate cards ── */}
           <div className='flex flex-col gap-3'>
             {frameworks.map((framework, index) => {
               const isActive = activeFrameworkIndex === index;

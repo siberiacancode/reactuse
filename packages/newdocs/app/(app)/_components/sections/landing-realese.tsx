@@ -1,5 +1,3 @@
-'use client';
-
 import { Badge } from '@/src/components/ui';
 
 interface LandingReleaseProps {

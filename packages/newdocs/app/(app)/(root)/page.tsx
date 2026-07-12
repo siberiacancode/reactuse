@@ -82,10 +82,7 @@ const HomePage = async () => {
         />
       )}
 
-      <LandingHeader
-        hooks={hooks}
-        repository={{ stargazersCount: repositoryResponse.data.stargazers_count }}
-      />
+      <LandingHeader hooks={hooks} stars={repositoryResponse.data.stargazers_count} />
 
       <main>
         <LandingHero hooksCount={hooksCount} />

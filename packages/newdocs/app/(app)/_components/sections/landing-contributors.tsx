@@ -1,6 +1,6 @@
 'use client';
 
-import { useBoolean } from '@siberiacancode/reactuse';
+import { useDisclosure } from '@siberiacancode/reactuse';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
@@ -20,8 +20,6 @@ import { cn } from '@/src/lib';
 
 const INITIAL_COUNT = 64;
 
-const getInitials = (name: string) => name.slice(0, 2).toUpperCase();
-
 export interface LandingContributor {
   avatar: string;
   name: string;
@@ -32,7 +30,7 @@ interface LandingContributorsProps {
 }
 
 export const LandingContributors = ({ contributors }: LandingContributorsProps) => {
-  const [showAll, toggleShowAll] = useBoolean();
+  const collapse = useDisclosure();
   const hasMore = contributors.length > INITIAL_COUNT;
 
   return (
@@ -76,7 +74,7 @@ export const LandingContributors = ({ contributors }: LandingContributorsProps) 
           <div
             className={cn(
               'overflow-hidden transition-[max-height] duration-700 ease-in-out',
-              showAll ? 'max-h-[4000px]' : 'max-h-44 md:max-h-72'
+              collapse.opened ? 'max-h-[4000px]' : 'max-h-44 md:max-h-72'
             )}
           >
             <TooltipProvider delayDuration={100}>
@@ -88,7 +86,7 @@ export const LandingContributors = ({ contributors }: LandingContributorsProps) 
                         <Avatar className='border-border size-12 border'>
                           <AvatarImage alt={contributor.name} src={contributor.avatar} />
                           <AvatarFallback className='bg-muted text-muted-foreground text-xs font-medium'>
-                            {getInitials(contributor.name)}
+                            {contributor.name.slice(0, 1).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
                       </div>
@@ -100,13 +98,13 @@ export const LandingContributors = ({ contributors }: LandingContributorsProps) 
             </TooltipProvider>
           </div>
 
-          {hasMore && !showAll && (
+          {hasMore && !collapse.opened && (
             <div className='absolute inset-x-0 bottom-0 flex h-20 items-center justify-center md:h-32'>
               <div className='from-background via-background/80 pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent' />
               <Button
                 className='relative rounded-full px-6'
                 variant='ghost'
-                onClick={() => toggleShowAll()}
+                onClick={() => collapse.toggle()}
               >
                 Show all {contributors.length}
               </Button>
@@ -114,9 +112,9 @@ export const LandingContributors = ({ contributors }: LandingContributorsProps) 
           )}
         </motion.div>
 
-        {showAll && (
+        {collapse.opened && (
           <div className='mt-8 flex justify-center'>
-            <Button className='rounded-full px-6' variant='ghost' onClick={() => toggleShowAll()}>
+            <Button className='rounded-full px-6' variant='ghost' onClick={() => collapse.toggle()}>
               Show less
             </Button>
           </div>

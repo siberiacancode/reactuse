@@ -2,6 +2,7 @@
 
 import { Badge } from '@docs/src/components/ui/badge';
 import { Button } from '@docs/src/components/ui/button';
+import { ButtonGroup } from '@docs/src/components/ui/button-group';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +10,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@docs/src/components/ui/dropdown-menu';
-import { ButtonGroup } from '@docs/ui/button-group';
 import { useCopy } from '@siberiacancode/reactuse';
 import {
   ArrowLeftIcon,

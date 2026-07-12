@@ -41,7 +41,6 @@ export const LandingFaq = () => (
   <section>
     <div className='container mx-auto px-6 py-12 md:py-24'>
       <div className='grid items-start gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16'>
-        {/* ── Heading ── */}
         <motion.div
           className='max-w-md'
           initial={{ opacity: 0, y: -28 }}
@@ -58,7 +57,6 @@ export const LandingFaq = () => (
           </p>
         </motion.div>
 
-        {/* ── Accordion ── */}
         <motion.div
           initial={{ opacity: 0, y: -28 }}
           transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -66,20 +64,16 @@ export const LandingFaq = () => (
           whileInView={{ opacity: 1, y: 0 }}
         >
           <Accordion collapsible className='w-full' defaultValue='item-0' type='single'>
-            {FAQ.map((faq, index) => {
-              const value = `item-${index}`;
-
-              return (
-                <AccordionItem key={value} value={value}>
-                  <AccordionTrigger className='py-6 text-left text-lg font-medium hover:no-underline md:text-xl'>
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className='text-muted-foreground max-w-2xl pb-6 text-base leading-relaxed md:text-lg'>
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              );
-            })}
+            {FAQ.map((faq, index) => (
+              <AccordionItem key={index} value={String(index)}>
+                <AccordionTrigger className='py-6 text-left text-lg font-medium hover:no-underline md:text-xl'>
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className='text-muted-foreground max-w-2xl pb-6 text-base leading-relaxed md:text-lg'>
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
         </motion.div>
       </div>

@@ -2,8 +2,8 @@
 
 import type { VariantProps } from 'class-variance-authority';
 
+import { Skeleton } from '@docs/src/components/ui/skeleton';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@docs/ui/sheet';
-import { Skeleton } from '@docs/ui/skeleton';
 import { useMediaQuery } from '@siberiacancode/reactuse';
 import { cva } from 'class-variance-authority';
 import { PanelLeftIcon } from 'lucide-react';

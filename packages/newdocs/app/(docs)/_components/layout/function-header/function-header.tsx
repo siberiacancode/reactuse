@@ -9,16 +9,12 @@ import Link from 'next/link';
 
 import { Button } from '@/src/components/ui';
 import { getRepository } from '@/src/utils/api';
+import { formatCount } from '@/src/utils/helpers';
 
 import { Burger, Search, ThemeButton } from './components';
 
-const formatStarsCount = (count: number) => {
-  if (count < 1000) return count;
-  return `${Math.round(count / 1000)}${count >= 1000 ? 'k' : ''}`;
-};
-
 interface FunctionHeaderGroup {
-  items: { name: string; url: string }[];
+  items: { name: string; url: string; external: boolean }[];
   name: string;
 }
 
@@ -28,7 +24,6 @@ export interface FunctionHeaderProps extends ComponentProps<'header'> {
 
 export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) => {
   const repositoryResponse = await getRepository();
-  const formattedCount = formatStarsCount(repositoryResponse.data.stargazers_count);
 
   return (
     <header className='bg-background/95 sticky top-0 z-50 w-full' {...props}>
@@ -69,7 +64,9 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
               <Link href={LINKS.GITHUB} prefetch={false} rel='noreferrer' target='_blank'>
                 <Icons.gitHub className='size-4.5' />
                 <StarIcon className='size-3.5' />
-                <span className='text-muted-foreground text-xs tabular-nums'>{formattedCount}</span>
+                <span className='text-muted-foreground text-xs tabular-nums'>
+                  {formatCount(repositoryResponse.data.stargazers_count)}
+                </span>
               </Link>
             </Button>
 
