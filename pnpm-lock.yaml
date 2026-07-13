@@ -136,8 +136,8 @@ importers:
         specifier: ^1.14.3
         version: 1.14.3
       '@siberiacancode/reactuse':
-        specifier: ^1.0.9
-        version: 1.0.9(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^1.0.10
+        version: 1.0.10(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@types/mdx':
         specifier: ^2.0.14
         version: 2.0.14
@@ -2943,8 +2943,8 @@ packages:
     peerDependencies:
       prettier: ^3.8.3
 
-  '@siberiacancode/reactuse@1.0.4':
-    resolution: {integrity: sha512-vJzVfCpFgHsANv/Y7RxGudOOp26VXMQBTiagxw4SGC3IlsoB2ytjNi5hkOxaEzRmyxgK3LFRjv1q2e0tQZV4gQ==}
+  '@siberiacancode/reactuse@1.0.10':
+    resolution: {integrity: sha512-j7JussE4WUpWRsefw5FvE78r+WrR597MV1bwOxzw83mYFxuQ/5XGKgwqP0ryTL4w0n5cO5QnOug16VgcAbMIoQ==}
     engines: {node: '>=14'}
     peerDependencies:
       '@types/react': ^18 || ^19
@@ -2954,8 +2954,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@siberiacancode/reactuse@1.0.9':
-    resolution: {integrity: sha512-HBdtKcFXv5sry7BZQ96L2z0eNr89nikHb0h8BiTBilpGpTgo5N3R53ZBlD02JqL2KQhB495o2qqdZyAs0o3FLw==}
+  '@siberiacancode/reactuse@1.0.4':
+    resolution: {integrity: sha512-vJzVfCpFgHsANv/Y7RxGudOOp26VXMQBTiagxw4SGC3IlsoB2ytjNi5hkOxaEzRmyxgK3LFRjv1q2e0tQZV4gQ==}
     engines: {node: '>=14'}
     peerDependencies:
       '@types/react': ^18 || ^19
@@ -9850,14 +9850,14 @@ snapshots:
     dependencies:
       prettier: 3.8.4
 
-  '@siberiacancode/reactuse@1.0.4(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@siberiacancode/reactuse@1.0.10(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
     optionalDependencies:
       '@types/react': 19.2.17
 
-  '@siberiacancode/reactuse@1.0.9(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@siberiacancode/reactuse@1.0.4(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
