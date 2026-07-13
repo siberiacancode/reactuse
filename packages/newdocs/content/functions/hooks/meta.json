@@ -2,7 +2,7 @@
     "pages": [
       
       "---elements---",
-      "useActiveElement","useAutoScroll","useClickOutside","useContextMenu","useDoubleClick","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress","usePaint","useScript","useSize","useTextareaAutosize","useTextDirection",
+      "useActiveElement","useAutoScroll","useClickOutside","useContextMenu","useDoubleClick","useDraggable","useDropZone","useFileDialog","useFocus","useFocusTrap","useHover","useImage","useLockScroll","useLongPress","usePaint","useScript","useSize","useTextareaAutosize","useTextDirection",
 
       "---async---",
       "useAsync","useLockCallback","useMutation","useOptimistic","useQuery",

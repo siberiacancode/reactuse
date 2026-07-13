@@ -139,6 +139,7 @@ Niche utilities for targeted browser APIs, edge cases, and specialized interacti
 - [useDocumentEvent](/functions/hooks/useDocumentEvent): Hook attaches an event listener to the document object for the specified event
 - [useDocumentTitle](/functions/hooks/useDocumentTitle): Hook that manages the document title and allows updating it
 - [useDocumentVisibility](/functions/hooks/useDocumentVisibility): Hook that provides the current visibility state of the document
+- [useDraggable](/functions/hooks/useDraggable): Hook that makes an element draggable
 - [useEventSource](/functions/hooks/useEventSource): Hook that provides a reactive wrapper for event source
 - [useEyeDropper](/functions/hooks/useEyeDropper): Hook that gives you access to the eye dropper
 - [useFavicon](/functions/hooks/useFavicon): Hook that manages the favicon

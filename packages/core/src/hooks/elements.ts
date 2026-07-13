@@ -3,6 +3,7 @@ export * from './useAutoScroll/useAutoScroll';
 export * from './useClickOutside/useClickOutside';
 export * from './useContextMenu/useContextMenu';
 export * from './useDoubleClick/useDoubleClick';
+export * from './useDraggable/useDraggable';
 export * from './useDropZone/useDropZone';
 export * from './useFileDialog/useFileDialog';
 export * from './useFocus/useFocus';

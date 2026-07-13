@@ -89,6 +89,7 @@
 - [useClickOutside](https://reactuse.org/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
 - [useContextMenu](https://reactuse.org/functions/hooks/useContextMenu): Hook that handles custom context menus on desktop and long press on touch devices
 - [useDoubleClick](https://reactuse.org/functions/hooks/useDoubleClick): Hook that defines the logic when double clicking an element
+- [useDraggable](https://reactuse.org/functions/hooks/useDraggable): Hook that makes an element draggable
 - [useDropZone](https://reactuse.org/functions/hooks/useDropZone): Hook that provides drop zone functionality
 - [useFileDialog](https://reactuse.org/functions/hooks/useFileDialog): Hook to handle file input
 - [useFocus](https://reactuse.org/functions/hooks/useFocus): Hook that allows you to focus on a specific element
