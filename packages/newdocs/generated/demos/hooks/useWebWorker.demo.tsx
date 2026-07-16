@@ -1,3 +1,5 @@
+'use client'
+
 import { useBoolean, useDropZone, useWebWorker } from '@siberiacancode/reactuse';
 import { Loader2Icon, PackageIcon, UploadIcon, XIcon } from 'lucide-react';
 

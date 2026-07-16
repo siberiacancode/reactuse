@@ -197,6 +197,7 @@ Niche utilities for targeted browser APIs, edge cases, and specialized interacti
 - [useVibrate](/functions/hooks/useVibrate): Hook that provides vibrate api
 - [useVirtualKeyboard](/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
 - [useWakeLock](/functions/hooks/useWakeLock): Hook that provides a wake lock functionality
+- [useWebWorker](/functions/hooks/useWebWorker): Hook that provides a reactive wrapper for a web worker
 - [useWindowEvent](/functions/hooks/useWindowEvent): Hook attaches an event listener to the window object for the specified event
 - [useWindowFocus](/functions/hooks/useWindowFocus): Hook that provides the current focus state of the window
 - [useWindowScroll](/functions/hooks/useWindowScroll): Hook that manages the window scroll position

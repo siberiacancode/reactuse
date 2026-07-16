@@ -1,15 +1,15 @@
 ---
-title: useDraggable
-description: Hook that makes an element draggable
-category: elements
+title: useWebWorker
+description: Hook that provides a reactive wrapper for a web worker
+category: browser
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1783929870000
+lastModifiedTime: 1784124610000
 ---
 
-import metadata from './useDraggable.meta.json';
+import metadata from './useWebWorker.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useDraggable.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useDraggable
+    npx useverse@latest add useWebWorker
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,9 +47,7 @@ import metadata from './useDraggable.meta.json';
 ## Usage
 
 ```tsx
-const { snapshot, watch, dragging, set } = useDraggable(ref);
-// or
-const { ref, snapshot, watch, dragging, set } = useDraggable<HTMLDivElement>();
+const { data, error, terminated, post, restart, terminate } = useWebWorker<number>('/worker.js');
 ```
 
 ## Type Declarations

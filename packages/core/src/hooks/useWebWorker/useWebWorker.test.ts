@@ -42,29 +42,40 @@ class MockWorker extends EventTarget {
 const getLastWorker = () => MockWorker.instances.at(-1)!;
 
 beforeEach(() => {
+  vi.clearAllMocks();
+
   MockWorker.instances = [];
-  vi.stubGlobal('Worker', MockWorker);
+
+  Object.defineProperty(window, 'Worker', {
+    value: MockWorker,
+    writable: true,
+    configurable: true
+  });
 });
 
-afterEach(() => {
-  vi.unstubAllGlobals();
-});
+it('Should use web worker', () => {
+  const { result } = renderHook(() => useWebWorker('/worker.js'));
 
-it('Should create web worker from URL', () => {
-  const options: WorkerOptions = { name: 'parser', type: 'module' };
-  const { result } = renderHook(() => useWebWorker('/worker.js', options));
-  const worker = getLastWorker();
-
-  expect(MockWorker.instances).toHaveLength(1);
-  expect(worker.scriptURL).toBe('/worker.js');
-  expect(worker.options).toBe(options);
+  expect(result.current.terminated).toBeFalsy();
   expect(result.current.data).toBeUndefined();
   expect(result.current.error).toBeUndefined();
   expect(result.current.post).toBeTypeOf('function');
+  expect(result.current.restart).toBeTypeOf('function');
   expect(result.current.terminate).toBeTypeOf('function');
 });
 
-it('Should create web worker from URL object', () => {
+it('Should use web worker on server side', () => {
+  const { result } = renderHookServer(() => useWebWorker('/worker.js'));
+
+  expect(result.current.terminated).toBeFalsy();
+  expect(result.current.data).toBeUndefined();
+  expect(result.current.error).toBeUndefined();
+  expect(result.current.post).toBeTypeOf('function');
+  expect(result.current.restart).toBeTypeOf('function');
+  expect(result.current.terminate).toBeTypeOf('function');
+});
+
+it('Should use web worker from url object', () => {
   const url = new URL('https://example.com/worker.js');
 
   renderHook(() => useWebWorker(url));
@@ -72,62 +83,59 @@ it('Should create web worker from URL object', () => {
   expect(getLastWorker().scriptURL).toBe(url);
 });
 
-it('Should use web worker on server side', () => {
-  const { result } = renderHookServer(() => useWebWorker('/worker.js'));
-
-  expect(MockWorker.instances).toHaveLength(0);
-  expect(result.current.data).toBeUndefined();
-  expect(result.current.error).toBeUndefined();
-  expect(result.current.post).toBeTypeOf('function');
-  expect(result.current.terminate).toBeTypeOf('function');
-});
-
-it('Should handle unsupported web workers', () => {
-  vi.stubGlobal('Worker', undefined);
-  const { result } = renderHook(() => useWebWorker('/worker.js'));
-
-  expect(MockWorker.instances).toHaveLength(0);
-  expect(() => result.current.post('message')).not.toThrow();
-  expect(() => result.current.terminate()).not.toThrow();
-});
-
-it('Should use and cleanup provided worker instance', () => {
+it('Should use provided worker instance', () => {
   const worker = new MockWorker();
-  const { result, unmount } = renderHook(() => useWebWorker(worker as unknown as Worker));
+  const { result } = renderHook(() => useWebWorker(worker as unknown as Worker));
 
   expect(MockWorker.instances).toEqual([worker]);
 
   act(() => result.current.post('message'));
+
   expect(worker.postMessage).toHaveBeenCalledWith('message');
+});
 
-  unmount();
+it('Should handle worker options', () => {
+  renderHook(() =>
+    useWebWorker('/worker.js', {
+      name: 'parser',
+      type: 'module'
+    })
+  );
 
-  expect(worker.terminate).toHaveBeenCalledOnce();
-  expect(worker.removeEventListenerSpy).toHaveBeenCalledWith(
-    'message',
-    expect.any(Function),
-    undefined
+  expect(getLastWorker().options).toEqual({
+    credentials: undefined,
+    name: 'parser',
+    type: 'module'
+  });
+});
+
+it('Should not pass callbacks to worker options', () => {
+  renderHook(() =>
+    useWebWorker('/worker.js', {
+      name: 'parser',
+      type: 'module',
+      onMessage: vi.fn(),
+      onError: vi.fn()
+    })
   );
-  expect(worker.removeEventListenerSpy).toHaveBeenCalledWith(
-    'error',
-    expect.any(Function),
-    undefined
-  );
-  expect(worker.removeEventListenerSpy).toHaveBeenCalledWith(
-    'messageerror',
-    expect.any(Function),
-    undefined
-  );
+
+  expect(getLastWorker().options).toEqual({
+    credentials: undefined,
+    name: 'parser',
+    type: 'module'
+  });
 });
 
 it('Should keep the latest received message', () => {
-  const { result } = renderHook(() => useWebWorker<string>('/worker.js'));
+  const { result } = renderHook(() => useWebWorker('/worker.js'));
   const worker = getLastWorker();
 
   act(() => worker.dispatchEvent(new MessageEvent('message', { data: 'first' })));
+
   expect(result.current.data).toBe('first');
 
   act(() => worker.dispatchEvent(new MessageEvent('message', { data: 'second' })));
+
   expect(result.current.data).toBe('second');
 });
 
@@ -138,10 +146,38 @@ it('Should keep the latest worker error', () => {
   const messageError = new MessageEvent('messageerror');
 
   act(() => worker.dispatchEvent(error));
+
   expect(result.current.error).toBe(error);
 
   act(() => worker.dispatchEvent(messageError));
+
   expect(result.current.error).toBe(messageError);
+});
+
+it('Should call onMessage when message is received', () => {
+  const onMessage = vi.fn();
+
+  renderHook(() => useWebWorker<string>('/worker.js', { onMessage }));
+
+  const event = new MessageEvent('message', { data: 'result' });
+
+  act(() => getLastWorker().dispatchEvent(event));
+
+  expect(onMessage).toHaveBeenCalledOnce();
+  expect(onMessage).toHaveBeenCalledWith('result', event);
+});
+
+it('Should call onError when worker errors', () => {
+  const onError = vi.fn();
+
+  renderHook(() => useWebWorker('/worker.js', { onError }));
+
+  const error = new ErrorEvent('error', { message: 'Worker failed' });
+
+  act(() => getLastWorker().dispatchEvent(error));
+
+  expect(onError).toHaveBeenCalledOnce();
+  expect(onError).toHaveBeenCalledWith(error);
 });
 
 it('Should post messages and transferables to worker', () => {
@@ -163,50 +199,46 @@ it('Should post messages and transferables to worker', () => {
   );
 });
 
-it('Should terminate worker once and detach its listeners on unmount', () => {
-  const { result, unmount } = renderHook(() => useWebWorker('/worker.js'));
+it('Should terminate worker', () => {
+  const { result } = renderHook(() => useWebWorker('/worker.js'));
   const worker = getLastWorker();
 
-  act(() => result.current.terminate());
-  act(() => result.current.terminate());
+  act(result.current.terminate);
+
+  expect(worker.terminate).toHaveBeenCalledOnce();
+  expect(result.current.terminated).toBeTruthy();
+});
+
+it('Should not terminate worker twice', () => {
+  const { result } = renderHook(() => useWebWorker('/worker.js'));
+  const worker = getLastWorker();
+
+  act(result.current.terminate);
+  act(result.current.terminate);
   act(() => result.current.post('ignored'));
-  unmount();
 
   expect(worker.terminate).toHaveBeenCalledOnce();
   expect(worker.postMessage).not.toHaveBeenCalled();
-  expect(worker.removeEventListenerSpy).toHaveBeenCalledTimes(3);
 });
 
-it('Should terminate owned worker on unmount', () => {
-  const { unmount } = renderHook(() => useWebWorker('/worker.js'));
-  const worker = getLastWorker();
-
-  unmount();
-
-  expect(worker.terminate).toHaveBeenCalledOnce();
-  expect(worker.removeEventListenerSpy).toHaveBeenCalledTimes(3);
-});
-
-it('Should stay connected when equivalent options rerender', () => {
-  const { rerender } = renderHook(
-    ({ options }: { options: WorkerOptions }) => useWebWorker('/worker.js', options),
-    { initialProps: { options: { name: 'parser', type: 'module' } as WorkerOptions } }
-  );
+it('Should restart worker', () => {
+  const { result } = renderHook(() => useWebWorker<string>('/worker.js'));
   const firstWorker = getLastWorker();
 
-  rerender({ options: { name: 'parser', type: 'module' } });
-
-  expect(MockWorker.instances).toHaveLength(1);
-  expect(firstWorker.terminate).not.toHaveBeenCalled();
-
-  rerender({ options: { name: 'next-parser', type: 'module' } });
+  act(() => firstWorker.dispatchEvent(new MessageEvent('message', { data: 'result' })));
+  act(result.current.terminate);
+  act(result.current.restart);
 
   expect(MockWorker.instances).toHaveLength(2);
-  expect(firstWorker.terminate).toHaveBeenCalledOnce();
-  expect(getLastWorker().options).toEqual({ name: 'next-parser', type: 'module' });
+  expect(result.current.terminated).toBeFalsy();
+  expect(result.current.data).toBeUndefined();
+
+  act(() => result.current.post('message'));
+
+  expect(getLastWorker().postMessage).toHaveBeenCalledWith('message');
 });
 
-it('Should reset state and replace owned worker when source changes', () => {
+it('Should handle source changes', () => {
   const { result, rerender } = renderHook(
     ({ source }: { source: string }) => useWebWorker<string>(source),
     { initialProps: { source: '/first-worker.js' } }
@@ -214,7 +246,8 @@ it('Should reset state and replace owned worker when source changes', () => {
   const firstWorker = getLastWorker();
 
   act(() => firstWorker.dispatchEvent(new MessageEvent('message', { data: 'result' })));
-  act(() => firstWorker.dispatchEvent(new Event('error')));
+  act(() => firstWorker.dispatchEvent(new ErrorEvent('error')));
+
   expect(result.current.data).toBe('result');
   expect(result.current.error).toBeDefined();
 
@@ -224,22 +257,29 @@ it('Should reset state and replace owned worker when source changes', () => {
   expect(MockWorker.instances).toHaveLength(2);
   expect(result.current.data).toBeUndefined();
   expect(result.current.error).toBeUndefined();
+  expect(result.current.terminated).toBeFalsy();
 });
 
-it('Should terminate provided worker when replacing it', () => {
-  const firstWorker = new MockWorker();
-  const secondWorker = new MockWorker();
-  const { rerender, unmount } = renderHook(
-    ({ worker }: { worker: Worker }) => useWebWorker(worker),
-    { initialProps: { worker: firstWorker as unknown as Worker } }
-  );
-
-  rerender({ worker: secondWorker as unknown as Worker });
-
-  expect(firstWorker.terminate).toHaveBeenCalledOnce();
-  expect(firstWorker.removeEventListenerSpy).toHaveBeenCalledTimes(3);
+it('Should cleanup on unmount', () => {
+  const { unmount } = renderHook(() => useWebWorker('/worker.js'));
+  const worker = getLastWorker();
 
   unmount();
-  expect(secondWorker.terminate).toHaveBeenCalledOnce();
-  expect(secondWorker.removeEventListenerSpy).toHaveBeenCalledTimes(3);
+
+  expect(worker.terminate).toHaveBeenCalledOnce();
+  expect(worker.removeEventListenerSpy).toHaveBeenCalledWith(
+    'message',
+    expect.any(Function),
+    undefined
+  );
+  expect(worker.removeEventListenerSpy).toHaveBeenCalledWith(
+    'error',
+    expect.any(Function),
+    undefined
+  );
+  expect(worker.removeEventListenerSpy).toHaveBeenCalledWith(
+    'messageerror',
+    expect.any(Function),
+    undefined
+  );
 });

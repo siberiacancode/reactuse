@@ -7,18 +7,22 @@ import { useEffect, useRef, useState } from 'react';
  *
  * @browserapi Worker https://developer.mozilla.org/en-US/docs/Web/API/Worker
  *
- * @param {UseWebWorkerSource} source The worker script URL or an existing Worker instance
- * @param {WorkerOptions} [options] Options used when creating a worker from a URL
+ * @param {UseWebWorkerSource} source The worker script URL or an existing Worker instance. Passing a Worker instance transfers its ownership to the hook, so it is terminated on unmount
+ * @param {WorkerOptions['name']} [options.name] The name of the worker
+ * @param {WorkerOptions['type']} [options.type] The type of the worker
+ * @param {WorkerOptions['credentials']} [options.credentials] The credentials of the worker
+ * @param {(data: Data, event: MessageEvent<Data>) => void} [options.onMessage] The callback to execute when a message is received from the worker
+ * @param {(event: Event) => void} [options.onError] The callback to execute when the worker fails
  * @returns {UseWebWorkerReturn<Data>} The latest worker state and controls
  *
- * @note Passing a Worker instance transfers its ownership to the hook. The worker is terminated on unmount.
- *
  * @example
- * const { data, error, post, terminate } = useWebWorker<number>('/worker.js');
+ * const { data, error, terminated, post, restart, terminate } = useWebWorker<number>('/worker.js');
  */
 export const useWebWorker = (source, options) => {
   const [data, setData] = useState();
   const [error, setError] = useState();
+  const [terminated, setTerminated] = useState(false);
+  const [version, setVersion] = useState(0);
   const workerRef = useRef(undefined);
   const optionsRef = useRef(options);
   optionsRef.current = options;
@@ -32,18 +36,30 @@ export const useWebWorker = (source, options) => {
     if (!worker) return;
     workerRef.current = undefined;
     worker.terminate();
+    setTerminated(true);
   };
-  const optionCredentials = options?.credentials;
-  const optionName = options?.name;
-  const optionType = options?.type;
+  const restart = () => setVersion((currentVersion) => currentVersion + 1);
   useEffect(() => {
-    if (typeof Worker === 'undefined') return;
     setData(undefined);
     setError(undefined);
-    const worker = source instanceof Worker ? source : new Worker(source, optionsRef.current);
+    setTerminated(false);
+    const worker =
+      source instanceof Worker
+        ? source
+        : new Worker(source, {
+            credentials: optionsRef.current?.credentials,
+            name: optionsRef.current?.name,
+            type: optionsRef.current?.type
+          });
     workerRef.current = worker;
-    const onMessage = (event) => setData(event.data);
-    const onError = (event) => setError(event);
+    const onMessage = (event) => {
+      setData(event.data);
+      optionsRef.current?.onMessage?.(event.data, event);
+    };
+    const onError = (event) => {
+      setError(event);
+      optionsRef.current?.onError?.(event);
+    };
     worker.addEventListener('message', onMessage);
     worker.addEventListener('error', onError);
     worker.addEventListener('messageerror', onError);
@@ -55,6 +71,6 @@ export const useWebWorker = (source, options) => {
       workerRef.current = undefined;
       worker.terminate();
     };
-  }, [source, optionCredentials, optionName, optionType]);
-  return { data, error, post, terminate };
+  }, [source, options?.credentials, options?.name, options?.type, version]);
+  return { data, error, terminated, post, restart, terminate };
 };
