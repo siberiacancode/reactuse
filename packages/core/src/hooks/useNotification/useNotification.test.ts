@@ -28,8 +28,6 @@ class MockNotification {
 }
 
 beforeEach(() => {
-  vi.clearAllMocks();
-
   MockNotification.permission = 'default';
   mockNotificationRequestPermission.mockResolvedValue('default');
 

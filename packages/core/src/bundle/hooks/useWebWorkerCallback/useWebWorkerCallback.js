@@ -1,18 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-
-/** The use web worker callback return type */
-export interface UseWebWorkerCallbackReturn<Callback extends (...args: any[]) => any> {
-  /** Whether the callback is currently running */
-  pending: boolean;
-  /** Function to run the callback in a web worker */
-  run: (...args: Parameters<Callback>) => Promise<Awaited<ReturnType<Callback>>>;
-  /** Function to stop the worker */
-  terminate: () => void;
-}
-
-type WorkerResponse<Result> = ['ERROR', unknown] | ['SUCCESS', Result];
-
-const createSource = (callback: string) => `
+const createSource = (callback) => `
 const callback = (${callback});
 
 self.addEventListener('message', (event) => {
@@ -25,7 +12,6 @@ self.addEventListener('message', (event) => {
     });
 });
 `;
-
 /**
  * @name useWebWorkerCallback
  * @description - Hook that runs a callback in a web worker without a separate worker file
@@ -41,89 +27,61 @@ self.addEventListener('message', (event) => {
  * @example
  * const { run, pending, terminate } = useWebWorkerCallback(() => {});
  */
-export const useWebWorkerCallback = <Callback extends (...args: any[]) => any>(
-  callback: Callback
-): UseWebWorkerCallbackReturn<Callback> => {
+export const useWebWorkerCallback = (callback) => {
   const [pending, setPending] = useState(false);
-
   const callbackRef = useRef(callback);
   callbackRef.current = callback;
-
-  const workerRef = useRef<Worker>(undefined);
-  const urlRef = useRef<string>(undefined);
-
+  const workerRef = useRef(undefined);
+  const urlRef = useRef(undefined);
   const cleanup = () => {
     workerRef.current?.terminate();
     workerRef.current = undefined;
-
     if (urlRef.current) {
       URL.revokeObjectURL(urlRef.current);
       urlRef.current = undefined;
     }
   };
-
   const terminate = () => {
     cleanup();
     setPending(false);
   };
-
-  const run = (...args: Parameters<Callback>) =>
-    new Promise<Awaited<ReturnType<Callback>>>((resolve, reject) => {
+  const run = (...args) =>
+    new Promise((resolve, reject) => {
       if (workerRef.current) {
         reject(new Error('The web worker callback is already running'));
         return;
       }
-
       const blob = new Blob([createSource(callbackRef.current.toString())], {
         type: 'text/javascript'
       });
-
       const url = URL.createObjectURL(blob);
       const worker = new Worker(url);
-
       workerRef.current = worker;
       urlRef.current = url;
-
       setPending(true);
-
       const settle = () => {
         if (workerRef.current !== worker) return false;
-
         cleanup();
         setPending(false);
-
         return true;
       };
-
-      worker.addEventListener(
-        'message',
-        (event: MessageEvent<WorkerResponse<Awaited<ReturnType<Callback>>>>) => {
-          if (!settle()) return;
-
-          const [status, result] = event.data;
-
-          if (status === 'SUCCESS') {
-            resolve(result);
-            return;
-          }
-
-          reject(result);
+      worker.addEventListener('message', (event) => {
+        if (!settle()) return;
+        const [status, result] = event.data;
+        if (status === 'SUCCESS') {
+          resolve(result);
+          return;
         }
-      );
-
+        reject(result);
+      });
       worker.addEventListener('error', (event) => {
         event.preventDefault();
-
         if (!settle()) return;
-
         reject(event);
       });
-
       worker.postMessage(args);
     });
-
   useEffect(() => cleanup, []);
-
   return {
     pending,
     run,

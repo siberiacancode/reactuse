@@ -77,6 +77,7 @@
 - [useWakeLock](https://reactuse.org/functions/hooks/useWakeLock): Hook that provides a wake lock functionality
 - [useWebSocket](https://reactuse.org/functions/hooks/useWebSocket): Hook that connects to a WebSocket server and handles incoming and outgoing messages
 - [useWebWorker](https://reactuse.org/functions/hooks/useWebWorker): Hook that provides a reactive wrapper for a web worker
+- [useWebWorkerCallback](https://reactuse.org/functions/hooks/useWebWorkerCallback): Hook that runs a callback in a web worker without a separate worker file
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle

@@ -42,8 +42,6 @@ class MockWorker extends EventTarget {
 const getLastWorker = () => MockWorker.instances.at(-1)!;
 
 beforeEach(() => {
-  vi.clearAllMocks();
-
   MockWorker.instances = [];
 
   Object.defineProperty(window, 'Worker', {

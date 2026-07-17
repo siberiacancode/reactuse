@@ -1,15 +1,15 @@
 ---
-title: useWebWorker
-description: Hook that provides a reactive wrapper for a web worker
+title: useWebWorkerCallback
+description: Hook that runs a callback in a web worker without a separate worker file
 category: browser
 usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1784214999000
+lastModifiedTime: 1784107771000
 ---
 
-import metadata from './useWebWorker.meta.json';
+import metadata from './useWebWorkerCallback.meta.json';
 
 <FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
@@ -28,7 +28,7 @@ import metadata from './useWebWorker.meta.json';
   </TabsContent>
   <TabsContent value='cli'>
     ```packages-install
-    npx useverse@latest add useWebWorker
+    npx useverse@latest add useWebWorkerCallback
     ```
   </TabsContent>
   <TabsContent value='manual'>
@@ -47,7 +47,7 @@ import metadata from './useWebWorker.meta.json';
 ## Usage
 
 ```tsx
-const { data, error, terminated, post, restart, terminate } = useWebWorker<number>('/worker.js');
+const { run, pending, terminate } = useWebWorkerCallback( (numbers: number[]) => numbers.sort((a, b) => a - b) );
 ```
 
 ## Type Declarations

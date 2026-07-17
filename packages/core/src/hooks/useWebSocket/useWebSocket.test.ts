@@ -43,7 +43,6 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  vi.clearAllMocks();
   vi.useRealTimers();
   vi.unstubAllGlobals();
 });

@@ -33,7 +33,7 @@ Object.assign(navigator, {
 
 beforeEach(() => {
   trigger.clear();
-  vi.clearAllMocks();
+
   Object.assign(navigator, {
     permissions: { query: mockNavigatorPermissionsQuery }
   });

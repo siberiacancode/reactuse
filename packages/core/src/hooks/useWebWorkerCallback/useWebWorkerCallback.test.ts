@@ -1,262 +1,237 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 
 import { renderHookServer } from '@/tests';
 
 import { useWebWorkerCallback } from './useWebWorkerCallback';
 
-type WorkerMessageHandler = ((event: MessageEvent) => void) | null;
-type WorkerErrorHandler = ((event: ErrorEvent) => void) | null;
-
-class MockBlob {
-  constructor(
-    readonly parts: BlobPart[],
-    readonly options?: BlobPropertyBag
-  ) {}
-}
-
-class MockWorker {
+class MockWorker extends EventTarget {
   static instances: MockWorker[] = [];
 
-  onerror: WorkerErrorHandler = null;
-  onmessage: WorkerMessageHandler = null;
-  onmessageerror: WorkerMessageHandler = null;
-  postMessage = vi.fn();
-  terminate = vi.fn();
+  readonly postMessage = vi.fn();
+  readonly terminate = vi.fn();
 
-  constructor(readonly url: string) {
+  constructor(readonly scriptURL?: string | URL) {
+    super();
     MockWorker.instances.push(this);
-  }
-
-  emit(data: unknown) {
-    this.onmessage?.({ data } as MessageEvent);
-  }
-
-  emitError(error: Error) {
-    this.onerror?.({
-      error,
-      message: error.message,
-      preventDefault: vi.fn()
-    } as unknown as ErrorEvent);
-  }
-
-  emitMessageError() {
-    this.onmessageerror?.({} as MessageEvent);
   }
 }
 
-const createObjectURL = vi.fn(() => 'blob:worker');
-const revokeObjectURL = vi.fn();
+const mockCreateObjectURL = vi.fn(() => 'blob:mock-url');
+const mockRevokeObjectURL = vi.fn();
+
+const getLastWorker = () => MockWorker.instances.at(-1)!;
+
+const callback = (value: number) => value * 2;
 
 beforeEach(() => {
-  MockWorker.instances = [];
-  createObjectURL.mockClear();
-  revokeObjectURL.mockClear();
-  vi.stubGlobal('Blob', MockBlob);
-  vi.stubGlobal('Worker', MockWorker);
-  Object.assign(URL, { createObjectURL, revokeObjectURL });
-});
+  vi.clearAllMocks();
 
-afterEach(() => {
-  vi.unstubAllGlobals();
+  MockWorker.instances = [];
+
+  Object.defineProperty(window, 'Worker', {
+    value: MockWorker,
+    writable: true,
+    configurable: true
+  });
+
+  Object.defineProperty(URL, 'createObjectURL', {
+    value: mockCreateObjectURL,
+    writable: true,
+    configurable: true
+  });
+
+  Object.defineProperty(URL, 'revokeObjectURL', {
+    value: mockRevokeObjectURL,
+    writable: true,
+    configurable: true
+  });
 });
 
 it('Should use web worker callback', () => {
-  const { result } = renderHook(() => useWebWorkerCallback((value: number) => value * 2));
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
 
-  expect(result.current.status).toBe('idle');
-  expect(result.current.callback).toBeTypeOf('function');
+  expect(MockWorker.instances).toHaveLength(0);
+  expect(result.current.pending).toBeFalsy();
+  expect(result.current.run).toBeTypeOf('function');
   expect(result.current.terminate).toBeTypeOf('function');
 });
 
-it('Should render on server side without accessing browser APIs', () => {
-  vi.stubGlobal('Blob', undefined);
-  vi.stubGlobal('Worker', undefined);
+it('Should use web worker callback on server side', () => {
+  const { result } = renderHookServer(() => useWebWorkerCallback(callback));
 
-  const { result } = renderHookServer(() => useWebWorkerCallback((value: number) => value * 2));
-
-  expect(result.current.status).toBe('idle');
-  expect(result.current.callback).toBeTypeOf('function');
+  expect(MockWorker.instances).toHaveLength(0);
+  expect(result.current.pending).toBeFalsy();
+  expect(result.current.run).toBeTypeOf('function');
   expect(result.current.terminate).toBeTypeOf('function');
 });
 
-it('Should serialize and run a callback in a worker', async () => {
-  const workerCallback = (value: number) => value * 2;
-  const { result } = renderHook(() => useWebWorkerCallback(workerCallback));
+it('Should create worker on run', () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
+
+  act(() => {
+    result.current.run(1);
+  });
+
+  expect(MockWorker.instances).toHaveLength(1);
+  expect(getLastWorker().scriptURL).toBe('blob:mock-url');
+  expect(mockCreateObjectURL).toHaveBeenCalledOnce();
+  expect(result.current.pending).toBeTruthy();
+});
+
+it('Should post arguments to worker', () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
+
+  act(() => {
+    result.current.run(1);
+  });
+
+  expect(getLastWorker().postMessage).toHaveBeenCalledWith([1]);
+});
+
+it('Should resolve with worker result', async () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
 
   let promise!: Promise<number>;
   act(() => {
-    promise = result.current.callback(21);
+    promise = result.current.run(2);
   });
 
-  const worker = MockWorker.instances[0];
-  const blob = createObjectURL.mock.calls[0][0] as unknown as MockBlob;
-  const source = blob.parts.join('');
+  act(() => {
+    getLastWorker().dispatchEvent(new MessageEvent('message', { data: ['SUCCESS', 4] }));
+  });
 
-  expect(result.current.status).toBe('running');
-  expect(source).toContain(workerCallback.toString());
-  expect(worker.postMessage).toHaveBeenCalledWith([21]);
+  await expect(promise).resolves.toBe(4);
+  await waitFor(() => expect(result.current.pending).toBeFalsy());
+});
 
-  act(() => worker.emit({ status: 'success', result: 42 }));
+it('Should reject with worker error', async () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
+  const error = new Error('Callback failed');
 
-  await expect(promise).resolves.toBe(42);
-  await waitFor(() => expect(result.current.status).toBe('success'));
+  let promise!: Promise<number>;
+  act(() => {
+    promise = result.current.run(2);
+  });
+
+  act(() => {
+    getLastWorker().dispatchEvent(new MessageEvent('message', { data: ['ERROR', error] }));
+  });
+
+  await expect(promise).rejects.toBe(error);
+  await waitFor(() => expect(result.current.pending).toBeFalsy());
+});
+
+it('Should reject when worker fails', async () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
+
+  let promise!: Promise<number>;
+  act(() => {
+    promise = result.current.run(2);
+  });
+
+  act(() => {
+    getLastWorker().dispatchEvent(new ErrorEvent('error', { message: 'Worker failed' }));
+  });
+
+  await expect(promise).rejects.toBeDefined();
+  await waitFor(() => expect(result.current.pending).toBeFalsy());
+});
+
+it('Should cleanup worker after settle', async () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
+
+  let promise!: Promise<number>;
+  act(() => {
+    promise = result.current.run(2);
+  });
+
+  const worker = getLastWorker();
+
+  act(() => {
+    worker.dispatchEvent(new MessageEvent('message', { data: ['SUCCESS', 4] }));
+  });
+
+  await promise;
+
   expect(worker.terminate).toHaveBeenCalledOnce();
-  expect(revokeObjectURL).toHaveBeenCalledWith('blob:worker');
+  expect(mockRevokeObjectURL).toHaveBeenCalledWith('blob:mock-url');
 });
 
-it('Should use the latest callback after rerender', async () => {
-  const { result, rerender } = renderHook(
-    (workerCallback: (value: number) => number) => useWebWorkerCallback(workerCallback),
-    { initialProps: (value: number) => value * 2 }
-  );
+it('Should not run callback twice', async () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
 
-  rerender((value: number) => value * 3);
+  act(() => {
+    result.current.run(1);
+  });
+
+  await expect(result.current.run(2)).rejects.toThrow('already running');
+  expect(MockWorker.instances).toHaveLength(1);
+});
+
+it('Should run callback again after settle', async () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
 
   let promise!: Promise<number>;
   act(() => {
-    promise = result.current.callback(2);
+    promise = result.current.run(2);
   });
 
-  const blob = createObjectURL.mock.calls[0][0] as unknown as MockBlob;
-  expect(blob.parts.join('')).toContain('value * 3');
-
-  act(() => MockWorker.instances[0].emit({ status: 'success', result: 6 }));
-  await expect(promise).resolves.toBe(6);
-});
-
-it('Should reject worker callback errors', async () => {
-  const { result } = renderHook(() =>
-    useWebWorkerCallback(() => {
-      throw new Error('failed');
-    })
-  );
-
-  let promise!: Promise<never>;
   act(() => {
-    promise = result.current.callback();
+    getLastWorker().dispatchEvent(new MessageEvent('message', { data: ['SUCCESS', 4] }));
   });
 
-  act(() =>
-    MockWorker.instances[0].emit({
-      status: 'error',
-      error: { message: 'failed', name: 'TypeError', stack: 'stack' }
-    })
-  );
+  await promise;
 
-  await expect(promise).rejects.toMatchObject({
-    message: 'failed',
-    name: 'TypeError',
-    stack: 'stack'
-  });
-  await waitFor(() => expect(result.current.status).toBe('error'));
-});
-
-it('Should revoke the object URL when worker construction fails', async () => {
-  class FailingWorker {
-    constructor() {
-      throw new Error('construction failed');
-    }
-  }
-
-  vi.stubGlobal('Worker', FailingWorker);
-  const { result } = renderHook(() => useWebWorkerCallback((value: number) => value));
-
-  await act(async () => {
-    await expect(result.current.callback(1)).rejects.toThrow('construction failed');
-  });
-
-  expect(result.current.status).toBe('error');
-  expect(revokeObjectURL).toHaveBeenCalledWith('blob:worker');
-});
-
-it('Should reject worker runtime errors', async () => {
-  const { result } = renderHook(() => useWebWorkerCallback((value: number) => value));
-
-  let promise!: Promise<number>;
   act(() => {
-    promise = result.current.callback(1);
+    result.current.run(8);
   });
 
-  act(() => MockWorker.instances[0].emitError(new Error('runtime failed')));
-
-  await expect(promise).rejects.toThrow('runtime failed');
-  await waitFor(() => expect(result.current.status).toBe('error'));
+  expect(MockWorker.instances).toHaveLength(2);
+  expect(getLastWorker().postMessage).toHaveBeenCalledWith([8]);
 });
 
-it('Should reject unreadable worker messages', async () => {
-  const { result } = renderHook(() => useWebWorkerCallback((value: number) => value));
+it('Should terminate worker', () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
 
-  let promise!: Promise<number>;
   act(() => {
-    promise = result.current.callback(1);
+    result.current.run(1);
   });
 
-  act(() => MockWorker.instances[0].emitMessageError());
+  const worker = getLastWorker();
 
-  await expect(promise).rejects.toThrow('unreadable message');
-  await waitFor(() => expect(result.current.status).toBe('error'));
-});
+  act(result.current.terminate);
 
-it('Should reject calls when web workers are unsupported', async () => {
-  vi.stubGlobal('Worker', undefined);
-  const { result } = renderHook(() => useWebWorkerCallback((value: number) => value));
-
-  await act(async () => {
-    await expect(result.current.callback(1)).rejects.toThrow('not supported');
-  });
-
-  expect(result.current.status).toBe('error');
-});
-
-it('Should reject overlapping calls', async () => {
-  const { result } = renderHook(() => useWebWorkerCallback((value: number) => value));
-
-  let first!: Promise<number>;
-  act(() => {
-    first = result.current.callback(1);
-  });
-
-  await expect(result.current.callback(2)).rejects.toThrow('already running');
-
-  const rejection = expect(first).rejects.toMatchObject({ name: 'AbortError' });
-  act(() => result.current.terminate());
-  await rejection;
-});
-
-it('Should terminate active work and reset the status', async () => {
-  const { result } = renderHook(() => useWebWorkerCallback((value: number) => value));
-
-  let promise!: Promise<number>;
-  act(() => {
-    promise = result.current.callback(1);
-  });
-
-  const worker = MockWorker.instances[0];
-  const rejection = expect(promise).rejects.toMatchObject({ name: 'AbortError' });
-
-  act(() => result.current.terminate());
-
-  await rejection;
-  expect(result.current.status).toBe('idle');
   expect(worker.terminate).toHaveBeenCalledOnce();
-  expect(revokeObjectURL).toHaveBeenCalledWith('blob:worker');
+  expect(mockRevokeObjectURL).toHaveBeenCalledWith('blob:mock-url');
+  expect(result.current.pending).toBeFalsy();
 });
 
-it('Should cleanup active work on unmount', async () => {
-  const { result, unmount } = renderHook(() => useWebWorkerCallback((value: number) => value));
+it('Should not terminate worker twice', () => {
+  const { result } = renderHook(() => useWebWorkerCallback(callback));
 
-  let promise!: Promise<number>;
   act(() => {
-    promise = result.current.callback(1);
+    result.current.run(1);
   });
 
-  const worker = MockWorker.instances[0];
-  const rejection = expect(promise).rejects.toMatchObject({ name: 'AbortError' });
+  const worker = getLastWorker();
+
+  act(result.current.terminate);
+  act(result.current.terminate);
+
+  expect(worker.terminate).toHaveBeenCalledOnce();
+});
+
+it('Should cleanup on unmount', () => {
+  const { result, unmount } = renderHook(() => useWebWorkerCallback(callback));
+
+  act(() => {
+    result.current.run(1);
+  });
+
+  const worker = getLastWorker();
 
   unmount();
 
-  await rejection;
   expect(worker.terminate).toHaveBeenCalledOnce();
-  expect(revokeObjectURL).toHaveBeenCalledWith('blob:worker');
+  expect(mockRevokeObjectURL).toHaveBeenCalledWith('blob:mock-url');
 });

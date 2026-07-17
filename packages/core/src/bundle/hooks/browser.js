@@ -37,4 +37,5 @@ export * from './useVibrate/useVibrate';
 export * from './useVirtualKeyboard/useVirtualKeyboard';
 export * from './useWakeLock/useWakeLock';
 export * from './useWebSocket/useWebSocket';
+export * from './useWebWorkerCallback/useWebWorkerCallback';
 export * from './useWebWorker/useWebWorker';

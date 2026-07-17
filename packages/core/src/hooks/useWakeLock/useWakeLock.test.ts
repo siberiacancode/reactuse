@@ -26,7 +26,6 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.restoreAllMocks();
-  vi.clearAllMocks();
 });
 
 it('Should use wake lock', () => {
