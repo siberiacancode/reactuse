@@ -4,9 +4,9 @@ description: Hook that makes an element draggable
 category: elements
 usage: low
 type: hook
-isTest: false
+isTest: true
 isDemo: true
-lastModifiedTime: 1783921249307
+lastModifiedTime: 1783929870000
 ---
 
 import metadata from './useDraggable.meta.json';

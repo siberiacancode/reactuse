@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useDraggable } from '@siberiacancode/reactuse';
 import { GripVerticalIcon } from 'lucide-react';
@@ -28,7 +28,7 @@ const Demo = () => {
   return (
     <section className='relative'>
       <div ref={cardRef} className='w-64 select-none' style={{ transform: 'translate(0px, 0px)' }}>
-        <div className='bg-card text-card-foreground border-border rounded-xl border shadow-2xl'>
+        <div className='bg-card text-card-foreground border-border rounded-xl border shadow-md'>
           <div
             data-drag-handle
             className='border-border bg-muted/50 flex cursor-grab items-center gap-2 rounded-t-xl border-b px-3 py-2 active:cursor-grabbing'
@@ -46,11 +46,6 @@ const Demo = () => {
             <p className='text-muted-foreground text-sm'>
               Finalize the dashboard mockups and hand off specs to engineering before Friday.
             </p>
-            <div className='border-border/50 text-muted-foreground flex items-center gap-2 border-t pt-3 text-xs'>
-              <span>Due Jul 18</span>
-              <span>·</span>
-              <span>3 subtasks</span>
-            </div>
           </div>
         </div>
       </div>

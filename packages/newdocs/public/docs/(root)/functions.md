@@ -177,6 +177,7 @@ A quick list of available functions.
 - [useVisibility](/functions/hooks/useVisibility): Hook that gives you visibility observer state
 - [useWakeLock](/functions/hooks/useWakeLock): Hook that provides a wake lock functionality
 - [useWebSocket](/functions/hooks/useWebSocket): Hook that connects to a WebSocket server and handles incoming and outgoing messages
+- [useWebWorker](/functions/hooks/useWebWorker): Hook that provides a reactive wrapper for a web worker
 - [useWindowEvent](/functions/hooks/useWindowEvent): Hook attaches an event listener to the window object for the specified event
 - [useWindowFocus](/functions/hooks/useWindowFocus): Hook that provides the current focus state of the window
 - [useWindowScroll](/functions/hooks/useWindowScroll): Hook that manages the window scroll position

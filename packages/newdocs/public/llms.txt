@@ -76,6 +76,7 @@
 - [useVirtualKeyboard](https://reactuse.org/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
 - [useWakeLock](https://reactuse.org/functions/hooks/useWakeLock): Hook that provides a wake lock functionality
 - [useWebSocket](https://reactuse.org/functions/hooks/useWebSocket): Hook that connects to a WebSocket server and handles incoming and outgoing messages
+- [useWebWorker](https://reactuse.org/functions/hooks/useWebWorker): Hook that provides a reactive wrapper for a web worker
 ### Debugs
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
