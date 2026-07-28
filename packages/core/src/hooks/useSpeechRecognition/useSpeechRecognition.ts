@@ -38,8 +38,10 @@ interface UseSpeechRecognitionReturn {
   transcript: string;
   /** Begins speech recognition */
   start: () => void;
-  /** Ends speech recognition, finalizing results */
+  /** Ends speech recognition, finalizing results (will trigger `onResult`) */
   stop: () => void;
+  /** Immediately interrupts speech recognition without a final result (will not trigger `onResult`). */
+  abort: () => void;
   /** Toggles the listening state */
   toggle: (value?: boolean) => void;
 }
@@ -67,7 +69,7 @@ export const getSpeechRecognition = () =>
  * @returns {UseSpeechRecognitionReturn} An object containing the speech recognition functionality
  *
  * @example
- * const { supported, value, recognition, listening, error, start, stop, toggle  } = useSpeechRecognition();
+ * const { supported, value, recognition, listening, error, start, stop, abort, toggle  } = useSpeechRecognition();
  */
 export const useSpeechRecognition = (
   options: UseSpeechRecognitionOptions = {}
@@ -133,6 +135,7 @@ export const useSpeechRecognition = (
 
   const start = () => recognition?.start();
   const stop = () => recognition?.stop();
+  const abort = () => recognition?.abort();
 
   const toggle = (value = !listening) => {
     if (value) return start();
@@ -148,6 +151,7 @@ export const useSpeechRecognition = (
     error,
     start,
     stop,
+    abort,
     toggle
   };
 };
