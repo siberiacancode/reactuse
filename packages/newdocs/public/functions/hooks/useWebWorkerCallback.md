@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1784107771000
+lastModifiedTime: 1784301938000
 ---
 
 import metadata from './useWebWorkerCallback.meta.json';
@@ -47,7 +47,7 @@ import metadata from './useWebWorkerCallback.meta.json';
 ## Usage
 
 ```tsx
-const { run, pending, terminate } = useWebWorkerCallback( (numbers: number[]) => numbers.sort((a, b) => a - b) );
+const { run, pending, terminate } = useWebWorkerCallback(() => {});
 ```
 
 ## Type Declarations

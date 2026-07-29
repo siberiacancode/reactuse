@@ -1,12 +1,22 @@
 import type { ComponentProps } from 'react';
 
 import { Icons } from '@docs/components/icons';
-import { StarIcon } from 'lucide-react';
+import { ArrowUpRightIcon, StarIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
-import { Button, Marquee } from '@/src/components/ui';
+import {
+  Button,
+  Marquee,
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle
+} from '@/src/components/ui';
 import { CONFIG, LINKS } from '@/src/constants';
 import { formatCount } from '@/src/utils/helpers';
 
@@ -22,10 +32,11 @@ export interface LandingHeaderRepository {
 
 export interface LandingHeaderProps extends ComponentProps<'header'> {
   hooks: LandingHeaderHook[];
+  releaseName: string;
   stars: number;
 }
 
-export const LandingHeader = ({ hooks, stars, ...props }: LandingHeaderProps) => (
+export const LandingHeader = ({ hooks, releaseName, stars, ...props }: LandingHeaderProps) => (
   <header
     className='bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 w-full backdrop-blur'
     {...props}
@@ -40,19 +51,64 @@ export const LandingHeader = ({ hooks, stars, ...props }: LandingHeaderProps) =>
           </span>
         </Link>
 
-        <div className='flex items-center gap-2'>
-          <Button asChild className='rounded-full' size='sm' variant='ghost'>
-            <Link href='/docs/installation' prefetch={false}>
-              Docs
-            </Link>
-          </Button>
+        <NavigationMenu viewport={false}>
+          <NavigationMenuList className='gap-2'>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <Link href='/docs/installation' prefetch={false}>
+                  Docs
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
 
-          <Button asChild className='rounded-full' size='sm' variant='ghost'>
-            <Link href='/docs/functions' prefetch={false}>
-              Functions
-            </Link>
-          </Button>
-        </div>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <Link href='/docs/functions' prefetch={false}>
+                  Functions
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>{releaseName}</NavigationMenuTrigger>
+              <NavigationMenuContent className='top-full left-auto z-50 mt-1.5'>
+                <ul className='w-40'>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className='group'
+                        href={LINKS.CHANGELOG}
+                        rel='noreferrer'
+                        target='_blank'
+                      >
+                        <div className='flex flex-row items-center justify-between gap-4'>
+                          <span className='font-medium'>Changelog</span>
+                          <ArrowUpRightIcon className='text-muted-foreground size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+                        </div>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className='group'
+                        href={LINKS.CONTRIBUTING}
+                        rel='noreferrer'
+                        target='_blank'
+                      >
+                        <div className='flex flex-row items-center justify-between gap-4'>
+                          <span className='font-medium'>Contributing</span>
+                          <ArrowUpRightIcon className='text-muted-foreground size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+                        </div>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
 
       <div className='flex min-w-0 items-center justify-end gap-2'>

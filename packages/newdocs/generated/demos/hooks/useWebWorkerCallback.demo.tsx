@@ -1,4 +1,5 @@
-'use client';
+'use client'
+
 import { useBoolean, useTime, useWebWorkerCallback } from '@siberiacancode/reactuse';
 import { CpuIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -109,7 +110,7 @@ const Demo = () => {
               data-variant={worker.pending ? 'destructive' : 'default'}
               disabled={blocking}
               type='button'
-              onClick={worker.pending ? worker.terminate : () => runWorker()}
+              onClick={worker.pending ? worker.terminate : () => void runWorker()}
             >
               {worker.pending ? 'Terminate' : 'Worker'}
             </button>

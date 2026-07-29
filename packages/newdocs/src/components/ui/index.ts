@@ -10,6 +10,7 @@ export * from './dropdown-menu';
 export * from './input';
 export * from './label';
 export * from './marquee';
+export * from './navigation-menu';
 export * from './select';
 export * from './separator';
 export * from './sidebar';
