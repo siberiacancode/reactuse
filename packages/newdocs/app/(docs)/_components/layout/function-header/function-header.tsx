@@ -3,12 +3,21 @@ import type { ComponentProps } from 'react';
 import { Icons } from '@docs/components/icons';
 import { functionsSource, source } from '@docs/lib/source';
 import { CONFIG, LINKS } from '@docs/src/constants';
-import { StarIcon } from 'lucide-react';
+import { ArrowUpRightIcon, StarIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Button } from '@/src/components/ui';
-import { getRepository } from '@/src/utils/api';
+import {
+  Button,
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle
+} from '@/src/components/ui';
+import { getLatestReleases, getRepository } from '@/src/utils/api';
 import { formatCount } from '@/src/utils/helpers';
 
 import { Burger, Search, ThemeButton } from './components';
@@ -23,7 +32,13 @@ export interface FunctionHeaderProps extends ComponentProps<'header'> {
 }
 
 export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) => {
-  const repositoryResponse = await getRepository();
+  const [repositoryResponse, releasesResponse] = await Promise.all([
+    getRepository(),
+    getLatestReleases()
+  ]);
+
+  const [release] = releasesResponse.data;
+  const releaseName = release?.name ?? release?.tag_name;
 
   return (
     <header className='bg-background/95 sticky top-0 z-50 w-full' {...props}>
@@ -39,19 +54,66 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
             </span>
           </Link>
 
-          <div className='flex items-center gap-2'>
-            <Button asChild className='rounded-full' size='sm' variant='ghost'>
-              <Link href='/docs/installation' prefetch={false}>
-                Docs
-              </Link>
-            </Button>
+          <NavigationMenu viewport={false}>
+            <NavigationMenuList className='gap-2'>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <Link href='/docs/installation' prefetch={false}>
+                    Docs
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
 
-            <Button asChild className='rounded-full' size='sm' variant='ghost'>
-              <Link href='/docs/functions' prefetch={false}>
-                Functions
-              </Link>
-            </Button>
-          </div>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <Link href='/docs/functions' prefetch={false}>
+                    Functions
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              {releaseName && (
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>{releaseName}</NavigationMenuTrigger>
+                  <NavigationMenuContent className='top-full left-auto z-50 mt-1.5'>
+                    <ul className='w-40'>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            className='group'
+                            href={LINKS.CHANGELOG}
+                            rel='noreferrer'
+                            target='_blank'
+                          >
+                            <div className='flex flex-row items-center justify-between gap-4'>
+                              <span className='font-medium'>Changelog</span>
+                              <ArrowUpRightIcon className='text-muted-foreground size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            className='group'
+                            href={LINKS.CONTRIBUTING}
+                            rel='noreferrer'
+                            target='_blank'
+                          >
+                            <div className='flex flex-row items-center justify-between gap-4'>
+                              <span className='font-medium'>Contributing</span>
+                              <ArrowUpRightIcon className='text-muted-foreground size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              )}
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
 
         <div className='flex min-w-0 items-center justify-end gap-2'>
