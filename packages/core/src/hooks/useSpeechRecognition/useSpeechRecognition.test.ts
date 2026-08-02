@@ -50,6 +50,7 @@ class MockSpeechRecognition {
   }
   start = () => this.onstart?.();
   stop = () => this.onend?.();
+  abort = () => this.onend?.();
 }
 
 const createResultEvent = (transcript: string) =>
@@ -87,6 +88,7 @@ it('Should use speech recognition', () => {
   expect(result.current.recognition).toBeInstanceOf(MockSpeechRecognition);
   expect(result.current.start).toBeTypeOf('function');
   expect(result.current.stop).toBeTypeOf('function');
+  expect(result.current.abort).toBeTypeOf('function');
   expect(result.current.toggle).toBeTypeOf('function');
 });
 
@@ -101,6 +103,7 @@ it('Should use speech recognition on server side', () => {
   expect(result.current.recognition).toBeUndefined();
   expect(result.current.start).toBeTypeOf('function');
   expect(result.current.stop).toBeTypeOf('function');
+  expect(result.current.abort).toBeTypeOf('function');
   expect(result.current.toggle).toBeTypeOf('function');
 });
 
@@ -159,6 +162,24 @@ it('Should stop listening', () => {
 
   expect(result.current.listening).toBeFalsy();
   expect(onEnd).toHaveBeenCalledTimes(1);
+  expect(result.current.recognition!.lang).toBe('en-US');
+});
+
+it('Should abort listening', () => {
+  const onEnd = vi.fn();
+  const onResult = vi.fn();
+  const { result } = renderHook(() => useSpeechRecognition({ onEnd, onResult }));
+
+  act(() => result.current.start());
+
+  expect(result.current.listening).toBeTruthy();
+  expect(result.current.final).toBeFalsy();
+
+  act(() => result.current.abort());
+
+  expect(result.current.listening).toBeFalsy();
+  expect(onEnd).toHaveBeenCalledTimes(1);
+  expect(onResult).toHaveBeenCalledTimes(0);
   expect(result.current.recognition!.lang).toBe('en-US');
 });
 
