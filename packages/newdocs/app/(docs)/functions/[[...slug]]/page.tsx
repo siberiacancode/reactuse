@@ -67,15 +67,20 @@ const FunctionPage = async (props: FunctionPageProps) => {
 
   const doc = page.data;
   const neighbours = findNeighbour(functionsSource.pageTree, page.url);
-  const raw = await doc.getText('raw');
   const lastModifiedTime = doc.lastModifiedTime;
 
-  const metadata = JSON.parse(
-    await fs.readFile(
-      path.join(process.cwd(), 'content', 'functions', `${doc.type}s`, `${doc.title}.meta.json`),
+  const [metadata, markdown] = await Promise.all([
+    fs
+      .readFile(
+        path.join(process.cwd(), 'content', 'functions', `${doc.type}s`, `${doc.title}.meta.json`),
+        'utf-8'
+      )
+      .then((content) => JSON.parse(content) as FunctionMetadata),
+    fs.readFile(
+      path.join(process.cwd(), 'public', 'functions', `${doc.type}s`, `${doc.title}.md`),
       'utf-8'
     )
-  ) as FunctionMetadata;
+  ]);
 
   const MDX = doc.body;
 
@@ -90,7 +95,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
             category={doc.category}
             description={doc.description}
             isTest={doc.isTest}
-            markdown={raw}
+            markdown={markdown}
             name={doc.title}
             next={neighbours.next?.url}
             previous={neighbours.previous?.url}

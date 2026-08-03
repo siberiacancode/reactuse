@@ -13,6 +13,11 @@ const init = () => {
   for (const file of files) {
     if (typeof file !== 'string' || !file.endsWith('.mdx')) continue;
 
+    // Function pages get a resolved markdown export from generate-functions.
+    // Copying the MDX shell would replace AI-ready content with internals.
+    const normalized = file.replaceAll('\\', '/');
+    if (normalized.startsWith('functions/')) continue;
+
     const sourcePath = path.join(CONTENT_ROOT, file);
     const targetPath = path.join(PUBLIC_ROOT, file.replace(/\.mdx$/i, '.md'));
 
