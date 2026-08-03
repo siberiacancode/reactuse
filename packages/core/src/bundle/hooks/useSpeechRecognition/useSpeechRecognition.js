@@ -21,7 +21,7 @@ export const getSpeechRecognition = () =>
  * @returns {UseSpeechRecognitionReturn} An object containing the speech recognition functionality
  *
  * @example
- * const { supported, value, recognition, listening, error, start, stop, toggle  } = useSpeechRecognition();
+ * const { supported, value, recognition, listening, error, start, stop, abort, toggle  } = useSpeechRecognition();
  */
 export const useSpeechRecognition = (options = {}) => {
   const supported = typeof window !== 'undefined' && !!getSpeechRecognition();
@@ -76,6 +76,7 @@ export const useSpeechRecognition = (options = {}) => {
   useEffect(() => () => recognition?.stop(), []);
   const start = () => recognition?.start();
   const stop = () => recognition?.stop();
+  const abort = () => recognition?.abort();
   const toggle = (value = !listening) => {
     if (value) return start();
     return stop();
@@ -89,6 +90,7 @@ export const useSpeechRecognition = (options = {}) => {
     error,
     start,
     stop,
+    abort,
     toggle
   };
 };

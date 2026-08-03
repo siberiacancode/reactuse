@@ -38,7 +38,8 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
       collapsible='none'
       {...props}
     >
-      <div className='from-background via-background/80 to-background/50 pointer-events-none absolute inset-x-0 top-0 z-10 h-12 shrink-0 bg-linear-to-b blur-xs' />
+      <div className='pointer-events-none absolute inset-x-0 top-0 z-10 h-10 shrink-0 [background:linear-gradient(to_bottom,var(--background)_0%,var(--background)_42%,color-mix(in_oklch,var(--background)_80%,transparent)_72%,transparent_100%)]' />
+      <div className='pointer-events-none absolute inset-x-0 bottom-0 z-10 h-10 shrink-0 [background:linear-gradient(to_top,var(--background)_0%,var(--background)_42%,color-mix(in_oklch,var(--background)_80%,transparent)_72%,transparent_100%)]' />
 
       <SidebarContent className='no-scrollbar h-full w-(--sidebar-menu-width) gap-5 overflow-x-hidden overflow-y-auto overscroll-contain pt-12 pb-12'>
         {groups.map((group, index) => (
@@ -55,11 +56,10 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
                     <SidebarMenuItem key={item.url}>
                       <SidebarMenuButton
                         asChild
-                        className='data-[active=true]:bg-accent data-[active=true]:border-accent relative h-[30px] w-full overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-0 after:z-0 after:rounded-md'
+                        className='data-[active=true]:bg-accent data-[active=true]:border-accent relative h-[30px] w-fit max-w-full overflow-hidden border border-transparent px-2 text-[0.8rem] font-medium'
                         isActive={pathname === item.url}
                       >
                         <Component href={item.url} {...(item.external ? {} : { prefetch: false })}>
-                          <span className='absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent' />
                           <span className='relative flex min-w-0 items-center gap-2'>
                             <span className='block min-w-0 truncate'>{item.name}</span>
                             {item.isNew && (

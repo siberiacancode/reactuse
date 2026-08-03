@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781528880000
+lastModifiedTime: 1785254357000
 ---
 
 import metadata from './useSpeechRecognition.meta.json';
@@ -47,7 +47,7 @@ import metadata from './useSpeechRecognition.meta.json';
 ## Usage
 
 ```tsx
-const { supported, value, recognition, listening, error, start, stop, toggle  } = useSpeechRecognition();
+const { supported, value, recognition, listening, error, start, stop, abort, toggle  } = useSpeechRecognition();
 ```
 
 ## Type Declarations

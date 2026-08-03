@@ -1,8 +1,8 @@
 export const CONFIG = {
   NAME: 'reactuse',
   ALGOLIA: {
-    APP_ID: '62LROXAB1F',
-    API_KEY: '87ab8dd07b4aba02814c082d98e4b8a7',
+    APP_ID: '2XW3QY934Y',
+    API_KEY: '7c74db842718595073b9240c1eb1949f',
     INDEX_NAME: 'reactuse'
   },
   URL: 'https://reactuse.org',

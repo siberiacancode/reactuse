@@ -120,9 +120,12 @@ export const Search = (props: Props) => {
               );
             })}
 
-            <CommandGroup className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'>
-              {Array.isArray(query.data) &&
-                query.data.map((item) => (
+            {Array.isArray(query.data) && (
+              <CommandGroup
+                className='!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1'
+                heading='Search'
+              >
+                {query.data.map((item) => (
                   <CommandItem
                     key={item.id}
                     className='cursor-pointer'
@@ -130,10 +133,17 @@ export const Search = (props: Props) => {
                     value={`Navigation ${item.content}`}
                     onSelect={() => onSelect(item.url)}
                   >
-                    {item.content}
+                    <div className='flex items-center gap-2'>
+                      <ArrowRightIcon className='size-4 shrink-0' />
+                      <span
+                        className='[&_mark]:text-primary [&_mark]:bg-transparent [&_mark]:font-medium'
+                        dangerouslySetInnerHTML={{ __html: item.content }}
+                      />
+                    </div>
                   </CommandItem>
                 ))}
-            </CommandGroup>
+              </CommandGroup>
+            )}
           </CommandList>
         </Command>
       </DialogContent>
