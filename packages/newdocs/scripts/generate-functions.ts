@@ -163,8 +163,8 @@ interface ShareMarkdownPage {
     name?: string;
   };
   category: string;
+  contributors: FunctionMetadata['contributors'];
   demo?: string;
-  dependencies: FunctionMetadata['dependencies'];
   description: string;
   examples: string[];
   isTest: boolean;
@@ -179,6 +179,8 @@ interface ShareMarkdownPage {
 const createCodeFence = (language: string, code: string) =>
   `\`\`\`${language}\n${code.trimEnd()}\n\`\`\``;
 
+// Mirrors the interactive function page section order (like shadcn share md):
+// banner/demo → Installation (library / cli / manual+source) → Usage → Type Declarations → API → Contributors
 const createShareMarkdown = (page: ShareMarkdownPage) => {
   const lines: string[] = [];
 
@@ -211,22 +213,23 @@ const createShareMarkdown = (page: ShareMarkdownPage) => {
     lines.push('');
   }
 
+  // FunctionBanner on the page: demo code first, no extra heading (shadcn-style).
+  if (page.demo?.trim()) {
+    lines.push(createCodeFence('tsx', page.demo));
+    lines.push('');
+  }
+
   lines.push('## Installation');
-  lines.push('');
-  lines.push('Library:');
   lines.push('');
   lines.push(createCodeFence('bash', 'npm install @siberiacancode/reactuse'));
   lines.push('');
-  lines.push('CLI:');
-  lines.push('');
   lines.push(createCodeFence('bash', `npx useverse@latest add ${page.name}`));
   lines.push('');
-  lines.push('Manual: copy the source below into your project and update import paths.');
-  lines.push('');
-
-  lines.push('## Source');
+  lines.push('Copy and paste the following code into your project.');
   lines.push('');
   lines.push(createCodeFence('ts', page.source));
+  lines.push('');
+  lines.push('Update the import paths to match your project setup.');
   lines.push('');
 
   lines.push('## Usage');
@@ -236,6 +239,13 @@ const createShareMarkdown = (page: ShareMarkdownPage) => {
     .join('\n');
   lines.push(createCodeFence('tsx', usage));
   lines.push('');
+
+  if (page.typeDeclarations?.trim()) {
+    lines.push('## Type Declarations');
+    lines.push('');
+    lines.push(createCodeFence('ts', page.typeDeclarations));
+    lines.push('');
+  }
 
   if (page.apiParameters.length) {
     lines.push('## API');
@@ -269,32 +279,11 @@ const createShareMarkdown = (page: ShareMarkdownPage) => {
     lines.push('');
   }
 
-  if (page.typeDeclarations?.trim()) {
-    lines.push('## Type Declarations');
+  if (page.contributors.length) {
+    lines.push('## Contributors');
     lines.push('');
-    lines.push(createCodeFence('ts', page.typeDeclarations));
-    lines.push('');
-  }
-
-  if (page.demo?.trim()) {
-    lines.push('## Demo');
-    lines.push('');
-    lines.push(createCodeFence('tsx', page.demo));
-    lines.push('');
-  }
-
-  const { hooks, utils, packages } = page.dependencies;
-  if (hooks.length || utils.length || packages.length) {
-    lines.push('## Dependencies');
-    lines.push('');
-    if (hooks.length) {
-      lines.push(`- **Hooks:** ${hooks.map((item) => `\`${item}\``).join(', ')}`);
-    }
-    if (utils.length) {
-      lines.push(`- **Utils:** ${utils.map((item) => `\`${item}\``).join(', ')}`);
-    }
-    if (packages.length) {
-      lines.push(`- **Packages:** ${packages.map((item) => `\`${item}\``).join(', ')}`);
+    for (const contributor of page.contributors) {
+      lines.push(`- ${contributor.name}`);
     }
     lines.push('');
   }
@@ -562,7 +551,7 @@ const init = async () => {
         isTest: page.isTest,
         examples: page.examples,
         apiParameters: page.apiParameters,
-        dependencies: page.dependencies,
+        contributors: page.contributors,
         source,
         ...(page.warning && { warning: page.warning }),
         ...(page.browserapi && {
