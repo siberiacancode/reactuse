@@ -179,6 +179,77 @@ interface ShareMarkdownPage {
 const createCodeFence = (language: string, code: string) =>
   `\`\`\`${language}\n${code.trimEnd()}\n\`\`\``;
 
+const escapeMarkdownTableCell = (value: string) =>
+  value.replaceAll('|', '\\|').replaceAll('\n', ' ');
+
+// Matches FunctionApi on the page: overload groups with Parameters table + Returns.
+const createShareApiMarkdown = (apiParameters: FunctionMetadata['apiParameters']) => {
+  let groupIndex = 0;
+  const groups: {
+    parameters: FunctionMetadata['apiParameters'];
+    returns: FunctionMetadata['apiParameters'][number] | null;
+  }[] = [{ parameters: [], returns: null }];
+
+  apiParameters.forEach((parameter, index) => {
+    if (parameter.tag === 'overload') {
+      const isFirstOverload = apiParameters.findIndex(({ tag }) => tag === 'overload') === index;
+
+      if (!isFirstOverload) {
+        groupIndex++;
+        groups.push({ parameters: [], returns: null });
+      }
+
+      return;
+    }
+
+    if (parameter.tag === 'returns') {
+      groups[groupIndex]!.returns = parameter;
+      return;
+    }
+
+    groups[groupIndex]!.parameters.push(parameter);
+  });
+
+  const lines: string[] = [];
+
+  groups.forEach((group, index) => {
+    if (group.parameters.length) {
+      lines.push('### Parameters');
+      lines.push('');
+      lines.push('| Name | Type | Default | Note |');
+      lines.push('| --- | --- | --- | --- |');
+
+      for (const parameter of group.parameters) {
+        const name = escapeMarkdownTableCell(parameter.name);
+        const type = escapeMarkdownTableCell(parameter.type || 'unknown');
+        const defaultValue = escapeMarkdownTableCell(parameter.default ?? '-');
+        const note = escapeMarkdownTableCell(parameter.description || '');
+        lines.push(`| ${name} | \`${type}\` | ${defaultValue} | ${note} |`);
+      }
+
+      lines.push('');
+    }
+
+    if (group.returns) {
+      lines.push('### Returns');
+      lines.push('');
+      lines.push('`' + (group.returns.type || 'unknown') + '`');
+      if (group.returns.description) {
+        lines.push('');
+        lines.push(group.returns.description);
+      }
+      lines.push('');
+    }
+
+    if (index < groups.length - 1) {
+      lines.push('---');
+      lines.push('');
+    }
+  });
+
+  return lines;
+};
+
 // Mirrors the interactive function page section order (like shadcn share md):
 // banner/demo → Installation (library / cli / manual+source) → Usage → Type Declarations → API → Contributors
 const createShareMarkdown = (page: ShareMarkdownPage) => {
@@ -250,33 +321,7 @@ const createShareMarkdown = (page: ShareMarkdownPage) => {
   if (page.apiParameters.length) {
     lines.push('## API');
     lines.push('');
-
-    for (const parameter of page.apiParameters) {
-      if (parameter.tag === 'overload') {
-        lines.push('- **Overload**');
-        continue;
-      }
-
-      if (parameter.tag === 'param') {
-        const optional = parameter.optional ? '?' : '';
-        const defaultValue =
-          parameter.default !== undefined && parameter.default !== ''
-            ? ` = ${parameter.default}`
-            : '';
-        const type = parameter.type || 'unknown';
-        const description = parameter.description ? ` — ${parameter.description}` : '';
-        lines.push(`- \`${parameter.name}${optional}: ${type}${defaultValue}\`${description}`);
-        continue;
-      }
-
-      if (parameter.tag === 'returns') {
-        const type = parameter.type || 'unknown';
-        const description = parameter.description ? ` — ${parameter.description}` : '';
-        lines.push(`- **Returns:** \`${type}\`${description}`);
-      }
-    }
-
-    lines.push('');
+    lines.push(...createShareApiMarkdown(page.apiParameters));
   }
 
   if (page.contributors.length) {
