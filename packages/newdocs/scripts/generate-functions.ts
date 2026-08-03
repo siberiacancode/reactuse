@@ -298,7 +298,7 @@ const createShareMarkdown = (page: ShareMarkdownPage) => {
   lines.push('');
   lines.push('Copy and paste the following code into your project.');
   lines.push('');
-  lines.push(createCodeFence('ts', page.source));
+  lines.push(createCodeFence('tsx', page.source));
   lines.push('');
   lines.push('Update the import paths to match your project setup.');
   lines.push('');
@@ -314,7 +314,7 @@ const createShareMarkdown = (page: ShareMarkdownPage) => {
   if (page.typeDeclarations?.trim()) {
     lines.push('## Type Declarations');
     lines.push('');
-    lines.push(createCodeFence('ts', page.typeDeclarations));
+    lines.push(createCodeFence('tsx', page.typeDeclarations));
     lines.push('');
   }
 
