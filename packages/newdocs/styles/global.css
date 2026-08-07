@@ -71,13 +71,21 @@
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
 
   @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(calc(-100% - var(--gap))); }
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
   }
-  
+
   @keyframes marquee-vertical {
-    from { transform: translateY(0); }
-    to   { transform: translateY(calc(-100% - var(--gap))); }
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
   }
 }
 
@@ -1095,3 +1103,19 @@
   }
 }
 
+@keyframes atom-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.atom-spin {
+  transform-origin: center;
+  animation: atom-spin 8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atom-spin {
+    animation: none;
+  }
+}

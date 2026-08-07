@@ -1324,50 +1324,12 @@ export interface LandingBentoHook {
   name: string;
 }
 
-interface LandingBentoHooksProps {
-  hooks: LandingBentoHook[];
-}
-
-export const LandingBentoHooks = ({ hooks }: LandingBentoHooksProps) => {
+export const LandingBentoHooks = () => {
   const gridRef = useRef<HTMLDivElement>(null);
 
   return (
     <section>
-      <div className='container mx-auto px-6 py-24 md:py-32'>
-        <motion.div
-          className='flex max-w-3xl flex-col gap-6'
-          initial={{ opacity: 0, y: -28 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          viewport={{ once: true, amount: 0.45 }}
-          whileInView={{ opacity: 1, y: 0 }}
-        >
-          <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
-            Explore hooks
-          </h2>
-          <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
-            Everything you keep rebuilding on every project — {hooks.length}+ production-ready
-            hooks, already typed and tested.
-          </p>
-          <div className='flex flex-wrap items-center gap-2'>
-            <Button asChild className='rounded-full px-7 py-6 font-mono text-lg font-semibold'>
-              <Link href='/functions/hooks/useActiveElement' prefetch={false}>
-                <span>View all</span>
-                <ArrowRight className='size-4' />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
-              variant='secondary'
-            >
-              <Link href='/docs/functions' prefetch={false}>
-                <span>Browse all functions</span>
-                <ArrowRight className='size-4' />
-              </Link>
-            </Button>
-          </div>
-        </motion.div>
-
+      <div className='container mx-auto px-6 py-6'>
         <motion.div
           ref={gridRef}
           className='landing-bento-hooks-grid relative mt-14 max-h-[1100px] overflow-hidden'

@@ -1,27 +1,88 @@
-interface Stat {
+'use client';
+
+import { ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
+import Link from 'next/link';
+
+import { Button } from '@/src/components/ui';
+
+export interface LandingStat {
+  /** Optional supporting line under the stat (as on the reference layout). */
+  description?: string;
+  /** Short uppercase-ish label under/next to the figure, e.g. "Hooks". */
   label: string;
+  /** Big bold figure, e.g. "171", "100%", "8K+". */
   value: string;
 }
 
 interface LandingStatsProps {
-  stats: Stat[];
+  stats: LandingStat[];
 }
 
 export const LandingStats = ({ stats }: LandingStatsProps) => (
-  <div className='border-border bg-card/30 relative overflow-hidden border-y py-6'>
-    <div className='flex whitespace-nowrap'>
-      {Array.from({ length: 4 }).map((_, index) =>
-        stats.map((stat) => (
-          <div key={`${index}-${stat.label}`} className='mx-12 flex items-center gap-3'>
-            <span className='font-display text-foreground text-3xl font-bold md:text-4xl'>
+  <section>
+    <div className='container mx-auto px-6 py-24 md:py-32'>
+      {/* header — typography + buttons borrowed from the bento section */}
+      <motion.div
+        className='flex max-w-3xl flex-col gap-6'
+        initial={{ opacity: 0, y: -28 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.45 }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
+        <h2 className='font-display text-foreground text-4xl font-bold tracking-tight uppercase md:text-8xl'>
+          Trusted at scale
+        </h2>
+
+        <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
+          The metrics behind the largest React hooks library — production-ready, fully typed, and
+          shipped with zero dependencies.
+        </p>
+
+        <div className='flex flex-wrap items-center gap-2'>
+          <Button asChild className='rounded-full px-7 py-6 font-mono text-lg font-semibold'>
+            <Link href='/docs/installation' prefetch={false}>
+              <span>Get started</span>
+              <ArrowRight className='size-4' />
+            </Link>
+          </Button>
+          <Button
+            asChild
+            className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
+            variant='secondary'
+          >
+            <Link href='/docs/functions' prefetch={false}>
+              <span>Browse all functions</span>
+              <ArrowRight className='size-4' />
+            </Link>
+          </Button>
+        </div>
+      </motion.div>
+
+      {/* stats grid — figure + label, optional description (as on the reference) */}
+      <motion.div
+        className='mt-16 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3'
+        initial={{ opacity: 0, y: -32 }}
+        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.2 }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
+        {stats.map((stat) => (
+          <div key={stat.label} className='flex flex-col gap-2'>
+            <span className='font-display text-foreground text-5xl font-bold tracking-tight tabular-nums md:text-6xl'>
               {stat.value}
             </span>
-            <span className='text-muted-foreground text-sm tracking-wider uppercase md:text-base'>
+            <span className='text-muted-foreground text-sm font-medium tracking-wider uppercase'>
               {stat.label}
             </span>
+            {stat.description && (
+              <p className='text-muted-foreground mt-1 text-sm leading-relaxed'>
+                {stat.description}
+              </p>
+            )}
           </div>
-        ))
-      )}
+        ))}
+      </motion.div>
     </div>
-  </div>
+  </section>
 );

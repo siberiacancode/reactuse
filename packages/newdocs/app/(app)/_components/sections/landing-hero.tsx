@@ -1,4 +1,4 @@
-import { Button } from '@docs/src/components/ui/button';
+import { Badge, Button } from '@/src/components/ui';
 import { ArrowRightIcon } from 'lucide-react';
 import Link from 'next/link';
 
@@ -22,90 +22,90 @@ const FRAMEWORKS = [
   { icon: ReactRouterIcon, name: 'React Router' }
 ];
 
+/**
+ * Bare, slowly spinning React atom in the brand color — the center accent of the
+ * headline. No chip or border: it sits inline before the word "ever".
+ * Spin keyframes live in globals.css (8s loop, disabled under prefers-reduced-motion).
+ */
+const AtomAccent = () => (
+  <span className='relative inline-flex align-middle'>
+    <svg
+      aria-hidden='true'
+      className='atom-spin text-foreground size-[0.78em] shrink-0'
+      fill='none'
+      viewBox='-11.5 -10.23 23 20.46'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <circle cx='0' cy='0' fill='currentColor' r='2.05' />
+      <g fill='none' stroke='currentColor' strokeWidth='1'>
+        <ellipse rx='11' ry='4.2' />
+        <ellipse rx='11' ry='4.2' transform='rotate(60)' />
+        <ellipse rx='11' ry='4.2' transform='rotate(120)' />
+      </g>
+    </svg>
+  </span>
+);
+
 interface LandingHeroProps {
   hooksCount: string;
+  release?: {
+    name: string;
+    title: string;
+    url: string;
+  };
 }
 
-export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
-  <section className='relative flex min-h-[70vh] items-center overflow-hidden py-20 md:min-h-[78vh]'>
-    {/* dithered wave canvas */}
+export const LandingHero = ({ hooksCount, release }: LandingHeroProps) => (
+  <section className='relative flex min-h-[66vh] items-center overflow-hidden py-20'>
+    {/* dithered wave canvas — untouched */}
     <LandingBackdrop />
 
-    {/* overall readability fades */}
-    <div className='from-background via-background/70 pointer-events-none absolute inset-0 bg-gradient-to-r to-transparent' />
-    <div className='from-background pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t to-transparent' />
+    {/* readability fades — stronger so the backdrop reads as a deep shadow */}
+    <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(65%_65%_at_50%_42%,transparent,var(--background))]' />
+    {/* bottom shadow — taller/denser blend into the section below */}
+    <div className='pointer-events-none absolute inset-x-0 bottom-0 h-400 bg-[linear-gradient(to_top,var(--background)_10%,transparent)]' />
 
-    <div className='relative container mx-auto w-full px-6'>
-      <div className='flex max-w-3xl flex-col items-start'>
-        {/* logo + name (no background, bigger) */}
-        <div className='flex flex-col items-start gap-3'>
-          <svg
-            className='text-foreground size-16 shrink-0 md:size-24 lg:size-28'
-            fill='none'
-            viewBox='0 0 221 261'
-            xmlns='http://www.w3.org/2000/svg'
+    <div className='relative container w-full'>
+      <div className='mx-auto flex max-w-4xl flex-col items-center text-center'>
+        {/* release — plain clickable line above the headline, no card wrapper */}
+        {release && (
+          <a
+            className='group text-foreground mb-8 inline-flex items-center gap-2 text-xs sm:text-sm'
+            href={release.url}
+            rel='noreferrer'
+            target='_blank'
           >
-            <path
-              clipRule='evenodd'
-              d='M159.999 7.69775C153.582 13.638 151.31 22.812 151.31 34.5C151.31 40.2428 151.381 51.3329 151.466 64.6287C151.7 101.123 152.039 154.236 151.31 159C150.317 165.5 145.206 197.5 110.31 197.5C75.4147 197.5 70.616 165 69.9994 159C69.7888 156.951 69.8296 133.467 69.8967 101.5C69.9005 97 64 94.9995 55.9995 103L5.49948 153.5C1.90816 157.091 0.338443 159.877 0.245557 165.836C0.245557 215.5 40.8086 260.5 110.31 260.5C186.206 260.5 220.81 205.5 220.81 159V34.5V9.81473e-07L186.06 9.81473e-07C173.707 3.18976e-06 165.39 2.70809 159.999 7.69775Z'
-              fill='url(#paint0_linear_557_677)'
-              fillRule='evenodd'
-            />
-            <path
-              d='M32.0003 9.81473e-07H0.000167727L-0.000488281 144.422L0.245557 165.836C0.338443 159.877 1.90816 157.091 5.49948 153.5L55.9995 103C64 94.9995 69.9005 97 69.8967 101.5C69.8967 101.5 69.9181 76.0305 69.9214 74.5C69.9605 56.4972 69.9994 48.4531 69.9994 34.5C69.9994 0 48.2542 9.81473e-07 32.0003 9.81473e-07Z'
-              fill='url(#paint1_linear_557_677)'
-            />
-            <path
-              d='M32.0003 9.81473e-07H0.000167727L-0.000488281 144.422L0.245557 165.836C0.338443 159.877 1.90816 157.091 5.49948 153.5L55.9995 103C64 94.9995 69.9005 97 69.8967 101.5C69.8967 101.5 69.9181 76.0305 69.9214 74.5C69.9605 56.4972 69.9994 48.4531 69.9994 34.5C69.9994 0 48.2542 9.81473e-07 32.0003 9.81473e-07Z'
-              fill='#61DAFB'
-            />
-            <defs>
-              <linearGradient
-                gradientUnits='userSpaceOnUse'
-                id='paint0_linear_557_677'
-                x1='0.000982455'
-                x2='149.001'
-                y1='-10'
-                y2='181'
-              >
-                <stop stopColor='#205DAE' />
-                <stop offset='1' stopColor='#61DAFB' />
-              </linearGradient>
-              <linearGradient
-                gradientUnits='userSpaceOnUse'
-                id='paint1_linear_557_677'
-                x1='0.000982455'
-                x2='149.001'
-                y1='-10'
-                y2='181'
-              >
-                <stop stopColor='#205DAE' />
-                <stop offset='1' stopColor='#61DAFB' />
-              </linearGradient>
-            </defs>
-          </svg>
-          <h1 className='font-display text-foreground text-6xl leading-none font-bold tracking-tight md:text-8xl lg:text-[10rem]'>
-            REACTUSE
-          </h1>
-        </div>
+            <Badge className='h-5 rounded-md px-1.5 py-0 text-[10px] tracking-[0.06em] uppercase'>
+              New
+            </Badge>
+            <span className='text-muted-foreground truncate'>
+              <span className='text-foreground font-medium'>{release.name}</span>
+              {` - ${release.title}`}
+            </span>
+            <ArrowRightIcon className='text-muted-foreground size-3.5 transition-transform group-hover:translate-x-0.5' />
+          </a>
+        )}
 
-        {/* subtitle — background hugs each line */}
-        <p className='mt-6 max-w-xl text-lg leading-relaxed md:text-xl'>
-          <span className='bg-background text-muted-foreground rounded-full box-decoration-clone px-3 leading-[2.1]'>
-            The largest React hooks library. {hooksCount} production-ready hooks — lightweight,
-            tree-shakeable, and TypeScript-first.
-          </span>
+        {/* serif headline — no backing plate */}
+        <h1 className='text-foreground font-serif text-5xl leading-[1.05] font-normal tracking-tight md:text-7xl lg:text-8xl'>
+          <span className='italic'>Every</span> hook your app will <AtomAccent /> ever need
+        </h1>
+
+        {/* subtitle — no backing plate */}
+        <p className='text-muted-foreground mt-6 max-w-xl text-base leading-relaxed md:text-lg'>
+          The largest React hooks library. {hooksCount} production-ready hooks — lightweight,
+          tree-shakeable, and TypeScript-first.
         </p>
 
-        {/* actions */}
-        <div className='mt-8 flex flex-col items-start gap-3 sm:flex-row'>
+        {/* actions — same shadcn buttons as before */}
+        <div className='mt-8 flex flex-col items-center gap-3 sm:flex-row'>
           <Button asChild className='group h-11 rounded-full px-7 text-sm'>
             <Link href='/docs/installation' prefetch={false}>
               Get started
               <ArrowRightIcon className='size-4 transition-transform group-hover:translate-x-0.5' />
             </Link>
           </Button>
-          <Button asChild className='h-11 rounded-full px-7 text-sm' variant='secondary'>
+          <Button asChild className='h-11 rounded-full px-7 text-sm' variant='outline'>
             <Link href={LINKS.GITHUB} prefetch={false} rel='noreferrer' target='_blank'>
               <GithubIcon aria-hidden='true' className='size-4' />
               GitHub
@@ -113,14 +113,12 @@ export const LandingHero = ({ hooksCount }: LandingHeroProps) => (
           </Button>
         </div>
 
-        {/* frameworks — label hugs the line, chips share one rounded container */}
-        <div className='mt-12'>
-          <p className='text-xs leading-[2.2] tracking-[0.2em] uppercase'>
-            <span className='bg-background text-muted-foreground rounded-full box-decoration-clone px-3 py-1.5 font-mono'>
-              Works with any React framework
-            </span>
+        {/* frameworks — plain row, no wrapper (as in the original) */}
+        <div className='mt-12 flex flex-col items-center'>
+          <p className='text-muted-foreground font-mono text-xs tracking-[0.2em] uppercase'>
+            Works with any React framework
           </p>
-          <div className='bg-background mt-3 flex w-fit flex-wrap items-center gap-x-6 gap-y-3 rounded-full px-3 py-2.5'>
+          <div className='mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-3'>
             {FRAMEWORKS.map((framework) => {
               const FrameworkIcon = framework.icon;
 

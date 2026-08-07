@@ -16,7 +16,6 @@ import {
   LandingGettingStarted,
   LandingHeader,
   LandingHero,
-  LandingRelease,
   LandingStats
 } from '../_components/sections';
 
@@ -74,24 +73,22 @@ const HomePage = async () => {
 
   return (
     <div>
-      {lastRelease && (
-        <LandingRelease
-          name={lastRelease.tag_name}
-          title={releaseTitle!}
-          url={lastRelease.html_url}
-        />
-      )}
-
       <LandingHeader
-        hooks={hooks}
         releaseName={lastRelease.tag_name}
         stars={repositoryResponse.data.stargazers_count}
       />
 
       <main>
-        <LandingHero hooksCount={hooksCount} />
+        <LandingHero
+          release={{
+            name: lastRelease.tag_name,
+            title: releaseTitle!,
+            url: lastRelease.html_url
+          }}
+          hooksCount={hooksCount}
+        />
+        <LandingBentoHooks />
         <LandingStats stats={stats} />
-        <LandingBentoHooks hooks={hooks} />
         <LandingAdvantages contributorsCount={contributorsCount} hooksCount={hooksCount} />
         <LandingGettingStarted />
         <LandingCli />

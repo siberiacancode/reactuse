@@ -49,6 +49,8 @@ export interface UseMaskOptions {
   onChangeRaw?: (rawValue: string, maskedValue: string) => void;
   /** Called when all required mask slots are filled */
   onFilled?: (maskedValue: string, rawValue: string) => void;
+  /** Normalize the entire raw value before masking on every change, paste and setValue */
+  sanitize?: (rawValue: string) => string;
   /** Transform each character before validation and insertion */
   transform?: (char: string) => string;
 }
@@ -427,6 +429,9 @@ const getResolvedOptions = (options: UseMaskOptions, rawValue: string) => {
   };
 };
 
+const applySanitize = (options: UseMaskOptions, rawValue: string) =>
+  options.sanitize ? options.sanitize(rawValue) : rawValue;
+
 const getInputSelection = (input: HTMLInputElement | null) => {
   if (!input) {
     return null;
@@ -670,6 +675,7 @@ export const generatePattern = (mode: 'full-inexact' | 'full', options: UseMaskO
  * @param {(rawValue: string, maskedValue: string) => void} [options.onChangeRaw] Called on every change with raw and display values
  * @param {(maskedValue: string, rawValue: string) => void} [options.onFilled] Called when all required mask slots are filled
  * @param {(char: string) => string} [options.transform] Transform each character before validation and insertion
+ * @param {(rawValue: string) => string} [options.sanitize] Normalize the entire raw value before masking on every change, paste and setValue
  * @returns {UseMaskReturn} An object with the masked input state
  *
  * @example
@@ -683,7 +689,7 @@ export const useMask = (
   const optionsRef = useRef(hookOptions);
   optionsRef.current = hookOptions;
 
-  const initialRawValue = hookOptions.initialValue ?? '';
+  const initialRawValue = applySanitize(hookOptions, hookOptions.initialValue ?? '');
   const initialResolvedOptions = getResolvedOptions(hookOptions, initialRawValue);
   const initialMaskedValue = applyMaskToRaw(
     initialRawValue,
@@ -851,8 +857,9 @@ export const useMask = (
   };
 
   const setValue = (value: string) => {
-    const { slots, transform } = getResolvedOptions(optionsRef.current, value);
-    const nextMaskedValue = applyMaskToRaw(value, slots, transform);
+    const sanitized = applySanitize(optionsRef.current, value);
+    const { slots, transform } = getResolvedOptions(optionsRef.current, sanitized);
+    const nextMaskedValue = applyMaskToRaw(sanitized, slots, transform);
 
     updateValue(nextMaskedValue);
   };
@@ -939,11 +946,15 @@ export const useMask = (
       );
       const afterRawValue = extractRaw(previousValue.slice(removedEnd), slots.slice(removedEnd));
       const reformattedValue = applyMaskToRaw(
-        beforeRawValue + insertedText + afterRawValue,
+        applySanitize(optionsRef.current, beforeRawValue + insertedText + afterRawValue),
         slots,
         transform
       );
-      const maskedPrefix = applyMaskToRaw(beforeRawValue + insertedText, slots, transform);
+      const maskedPrefix = applyMaskToRaw(
+        applySanitize(optionsRef.current, beforeRawValue + insertedText),
+        slots,
+        transform
+      );
 
       if (reformattedValue !== previousValue) {
         pushUndoState();
@@ -1209,13 +1220,33 @@ export const useMask = (
       const processedValue = processedRef.current;
       const start = input.selectionStart ?? 0;
       const end = input.selectionEnd ?? 0;
-      const edit = pasteText(processedValue, slots, start, end, pastedText, transform);
+
+      const clampedStart = Math.min(start, processedValue.length);
+      const clampedEnd = Math.min(end, processedValue.length);
+      const beforeRawValue = extractRaw(
+        processedValue.slice(0, clampedStart),
+        slots.slice(0, clampedStart)
+      );
+      const afterRawValue = extractRaw(processedValue.slice(clampedEnd), slots.slice(clampedEnd));
+      const reformattedValue = applyMaskToRaw(
+        applySanitize(optionsRef.current, beforeRawValue + pastedText + afterRawValue),
+        slots,
+        transform
+      );
+      const maskedPrefix = applyMaskToRaw(
+        applySanitize(optionsRef.current, beforeRawValue + pastedText),
+        slots,
+        transform
+      );
 
       pushUndoState();
-      updateValue(edit.value);
+      updateValue(reformattedValue, Math.min(maskedPrefix.length, slots.length));
 
       if (input === document.activeElement) {
-        input.setSelectionRange(edit.cursor, edit.cursor);
+        input.setSelectionRange(
+          Math.min(maskedPrefix.length, slots.length),
+          Math.min(maskedPrefix.length, slots.length)
+        );
       }
 
       registerParams?.onPaste?.(event);
@@ -1225,7 +1256,7 @@ export const useMask = (
   const reset = () => {
     const input = inputRef.current;
     const hookOptions = optionsRef.current;
-    const nextRawValue = hookOptions.initialValue ?? '';
+    const nextRawValue = applySanitize(hookOptions, hookOptions.initialValue ?? '');
     const { showMask, slots, slot, transform } = getResolvedOptions(hookOptions, nextRawValue);
     const nextMaskedValue = applyMaskToRaw(nextRawValue, slots, transform);
     const nextDisplayValue = buildDisplayValue(

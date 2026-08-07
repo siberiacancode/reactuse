@@ -36,12 +36,12 @@ interface UseSpeechRecognitionReturn {
   supported: boolean;
   /** The current transcript */
   transcript: string;
+  /** Immediately interrupts speech recognition without a final result (will not trigger `onResult`). */
+  abort: () => void;
   /** Begins speech recognition */
   start: () => void;
   /** Ends speech recognition, finalizing results (will trigger `onResult`) */
   stop: () => void;
-  /** Immediately interrupts speech recognition without a final result (will not trigger `onResult`). */
-  abort: () => void;
   /** Toggles the listening state */
   toggle: (value?: boolean) => void;
 }

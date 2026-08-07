@@ -1,4 +1,4 @@
-export type ClassDictionary = Record<string, unknown>;
+export type ClassDictionary = Record<string, any>;
 export type ClassArray = ClassValue[];
 export type ClassValue =
   | boolean
