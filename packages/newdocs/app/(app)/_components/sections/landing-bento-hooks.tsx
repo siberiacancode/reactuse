@@ -1275,9 +1275,7 @@ const LongPressDemo = () => {
           Lifetime plan
         </span>
         <div className='flex items-baseline gap-2'>
-          <span className='text-foreground text-5xl font-bold tracking-tight tabular-nums'>
-            FREE
-          </span>
+          <span className='text-foreground text-5xl font-bold tracking-tight tabular-nums'>0$</span>
           <span className='text-muted-foreground text-lg tabular-nums line-through'>$499</span>
         </div>
       </div>
@@ -1384,10 +1382,10 @@ export const LandingBentoHooks = () => {
               {/* Column 3 */}
               <div className='flex flex-col gap-4'>
                 <Cell hookName='useLongPress'>
-                  <LongPressDemo />
+                  <PaginationDemo />
                 </Cell>
                 <Cell hookName='useOffsetPagination'>
-                  <PaginationDemo />
+                  <LongPressDemo />
                 </Cell>
                 <Cell className='p-3' hookName='useQuery'>
                   <QueryDemo />
