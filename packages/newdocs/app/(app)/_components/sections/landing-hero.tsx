@@ -56,14 +56,14 @@ interface LandingHeroProps {
 }
 
 export const LandingHero = ({ hooksCount, release }: LandingHeroProps) => (
-  <section className='relative flex min-h-[75h] items-center overflow-hidden pt-20'>
+  <section className='relative flex min-h-[65vh] items-center overflow-hidden pt-25'>
     {/* dithered wave canvas — untouched */}
     <LandingBackdrop />
 
     {/* readability fades — stronger so the backdrop reads as a deep shadow */}
     <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(65%_65%_at_50%_42%,transparent,var(--background))]' />
     {/* bottom shadow — taller/denser blend into the section below */}
-    <div className='pointer-events-none absolute inset-x-0 bottom-0 h-400 bg-[linear-gradient(to_top,var(--background)_10%,transparent)]' />
+    <div className='pointer-events-none absolute inset-x-0 bottom-0 h-350 bg-[linear-gradient(to_top,var(--background)_10%,transparent)]' />
 
     <div className='relative container w-full'>
       <div className='mx-auto flex max-w-4xl flex-col items-center text-center'>

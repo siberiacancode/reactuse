@@ -1329,10 +1329,10 @@ export const LandingBentoHooks = () => {
 
   return (
     <section>
-      <div className='container mx-auto px-6 py-6'>
+      <div className='container mx-auto px-6 pb-6'>
         <motion.div
           ref={gridRef}
-          className='landing-bento-hooks-grid relative mt-14 max-h-[1100px] overflow-hidden'
+          className='landing-bento-hooks-grid relative max-h-[1100px] overflow-hidden'
           initial={{ opacity: 0, y: -32 }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true, amount: 0.2 }}
