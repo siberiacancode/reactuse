@@ -35,7 +35,7 @@ const pill =
   'bg-background/70 supports-[backdrop-filter]:bg-background/60 border-border/70 rounded-xl border backdrop-blur';
 
 export const LandingHeader = ({ releaseName, stars, className, ...props }: LandingHeaderProps) => (
-  <header className={cn('pointer-events-none absolute inset-x-0 top-6 z-50', className)} {...props}>
+  <header className={cn('pointer-events-none absolute inset-x-0 top-3 z-50', className)} {...props}>
     <div className='container flex items-center justify-between gap-3 px-6 pt-4'>
       {/* left cluster: brand + nav + version, each a floating card */}
       <div className='pointer-events-auto flex items-center gap-2'>

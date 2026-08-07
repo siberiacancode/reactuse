@@ -56,7 +56,7 @@ interface LandingHeroProps {
 }
 
 export const LandingHero = ({ hooksCount, release }: LandingHeroProps) => (
-  <section className='relative flex min-h-[66vh] items-center overflow-hidden py-20'>
+  <section className='relative flex min-h-[55vh] items-center overflow-hidden pt-25'>
     {/* dithered wave canvas — untouched */}
     <LandingBackdrop />
 
