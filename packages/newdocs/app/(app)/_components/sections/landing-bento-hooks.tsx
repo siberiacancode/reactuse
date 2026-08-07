@@ -677,7 +677,7 @@ const MaskDemo = () => {
     <div className='flex w-full flex-col gap-4'>
       <div className='flex flex-col gap-1'>
         <h3 className='text-foreground text-base font-semibold'>Checkout</h3>
-        <p className='text-muted-foreground text-xs'>Enter your details to pay $49.00.</p>
+        <p className='text-muted-foreground text-xs'>Enter your details to pay.</p>
       </div>
       <div className='flex flex-col gap-1.5'>
         <Label>Phone number</Label>
@@ -723,7 +723,7 @@ const MaskDemo = () => {
       </div>
 
       <Button className='rounded-full px-5' size='lg' type='button'>
-        Pay $49.00
+        Pay
       </Button>
     </div>
   );
@@ -1276,7 +1276,7 @@ const LongPressDemo = () => {
         </span>
         <div className='flex items-baseline gap-2'>
           <span className='text-foreground text-5xl font-bold tracking-tight tabular-nums'>
-            $49
+            FREE
           </span>
           <span className='text-muted-foreground text-lg tabular-nums line-through'>$499</span>
         </div>
