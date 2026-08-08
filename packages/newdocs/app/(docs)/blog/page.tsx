@@ -1,6 +1,7 @@
 import { blogSource } from '@docs/lib/source';
 import { RssIcon } from 'lucide-react';
 import Link from 'next/link';
+import process from 'node:process';
 
 import { Button } from '@/src/components/ui';
 
@@ -19,6 +20,20 @@ export const metadata = {
         }
       ]
     }
+  },
+  openGraph: {
+    title: 'Blog',
+    description: 'News, guides and updates about reactuse.',
+    type: 'website',
+    url: `${process.env.NEXT_PUBLIC_APP_URL}blog`,
+    images: [{ url: '/og.png', width: 1200, height: 630 }]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog',
+    description: 'News, guides and updates about reactuse.',
+    images: ['/og.png'],
+    creator: '@siberiacancode'
   }
 };
 
