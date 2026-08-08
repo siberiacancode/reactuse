@@ -1,11 +1,11 @@
 import type { DocumentRecord } from 'fumadocs-core/search/algolia';
 
-import { functionsSource, source } from '@/lib/source';
+import { blogSource, functionsSource, source } from '@/lib/source';
 
 export async function exportSearchIndexes() {
   const results: DocumentRecord[] = [];
 
-  for (const pageSource of [source, functionsSource]) {
+  for (const pageSource of [source, functionsSource, blogSource]) {
     for (const page of pageSource.getPages()) {
       results.push({
         _id: page.url,
