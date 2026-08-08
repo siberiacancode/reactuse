@@ -6,7 +6,7 @@ import ts from 'typescript';
 
 import type { CodeLanguage, FunctionMetadata } from '@/src/constants';
 
-import { CONTENT_ROOT, CORE_ROOT } from './constants';
+import { CONTENT_ROOT, CORE_ROOT, PUBLIC_ROOT } from './constants';
 import {
   checkFileContent,
   extractDependencies,
@@ -154,6 +154,186 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push(`<FunctionContributors contributors={metadata.contributors} />`);
 
   return result.join('\n');
+};
+
+interface ShareMarkdownPage {
+  apiParameters: FunctionMetadata['apiParameters'];
+  browserapi?: {
+    description?: string;
+    name?: string;
+  };
+  category: string;
+  contributors: FunctionMetadata['contributors'];
+  demo?: string;
+  description: string;
+  examples: string[];
+  isTest: boolean;
+  name: string;
+  source: string;
+  type: FunctionMetadata['type'];
+  typeDeclarations?: string;
+  usage: string;
+  warning?: string;
+}
+
+const createCodeFence = (language: string, code: string) =>
+  `\`\`\`${language}\n${code.trimEnd()}\n\`\`\``;
+
+const escapeMarkdownTableCell = (value: string) =>
+  value.replaceAll('|', '\\|').replaceAll('\n', ' ');
+
+// Matches FunctionApi on the page: overload groups with Parameters table + Returns.
+const createShareApiMarkdown = (apiParameters: FunctionMetadata['apiParameters']) => {
+  let groupIndex = 0;
+  const groups: {
+    parameters: FunctionMetadata['apiParameters'];
+    returns: FunctionMetadata['apiParameters'][number] | null;
+  }[] = [{ parameters: [], returns: null }];
+
+  apiParameters.forEach((parameter, index) => {
+    if (parameter.tag === 'overload') {
+      const isFirstOverload = apiParameters.findIndex(({ tag }) => tag === 'overload') === index;
+
+      if (!isFirstOverload) {
+        groupIndex++;
+        groups.push({ parameters: [], returns: null });
+      }
+
+      return;
+    }
+
+    if (parameter.tag === 'returns') {
+      groups[groupIndex]!.returns = parameter;
+      return;
+    }
+
+    groups[groupIndex]!.parameters.push(parameter);
+  });
+
+  const lines: string[] = [];
+
+  groups.forEach((group, index) => {
+    if (group.parameters.length) {
+      lines.push('### Parameters');
+      lines.push('');
+      lines.push('| Name | Type | Default | Note |');
+      lines.push('| --- | --- | --- | --- |');
+
+      for (const parameter of group.parameters) {
+        const name = escapeMarkdownTableCell(parameter.name);
+        const type = escapeMarkdownTableCell(parameter.type || 'unknown');
+        const defaultValue = escapeMarkdownTableCell(parameter.default ?? '-');
+        const note = escapeMarkdownTableCell(parameter.description || '');
+        lines.push(`| ${name} | \`${type}\` | ${defaultValue} | ${note} |`);
+      }
+
+      lines.push('');
+    }
+
+    if (group.returns) {
+      lines.push('### Returns');
+      lines.push('');
+      lines.push('`' + (group.returns.type || 'unknown') + '`');
+      if (group.returns.description) {
+        lines.push('');
+        lines.push(group.returns.description);
+      }
+      lines.push('');
+    }
+
+    if (index < groups.length - 1) {
+      lines.push('---');
+      lines.push('');
+    }
+  });
+
+  return lines;
+};
+
+// Mirrors the interactive function page section order (like shadcn share md):
+// banner/demo → Installation (library / cli / manual+source) → Usage → Type Declarations → API → Contributors
+const createShareMarkdown = (page: ShareMarkdownPage) => {
+  const lines: string[] = [];
+
+  lines.push('---');
+  lines.push(`title: ${page.name}`);
+  if (page.description) lines.push(`description: ${page.description}`);
+  lines.push(`category: ${page.category.toLowerCase()}`);
+  lines.push(`usage: ${page.usage.toLowerCase()}`);
+  lines.push(`type: ${page.type}`);
+  lines.push(`isTest: ${page.isTest}`);
+  if (page.browserapi?.name) {
+    lines.push(
+      page.browserapi.description
+        ? `browserapi: ${page.browserapi.name} ${page.browserapi.description}`
+        : `browserapi: ${page.browserapi.name}`
+    );
+  }
+  lines.push('---');
+  lines.push('');
+  lines.push(`# ${page.name}`);
+  lines.push('');
+
+  if (page.description) {
+    lines.push(page.description);
+    lines.push('');
+  }
+
+  if (page.warning) {
+    lines.push(`> **Warning:** ${page.warning}`);
+    lines.push('');
+  }
+
+  // FunctionBanner on the page: demo code first, no extra heading (shadcn-style).
+  if (page.demo?.trim()) {
+    lines.push(createCodeFence('tsx', page.demo));
+    lines.push('');
+  }
+
+  lines.push('## Installation');
+  lines.push('');
+  lines.push(createCodeFence('bash', 'npm install @siberiacancode/reactuse'));
+  lines.push('');
+  lines.push(createCodeFence('bash', `npx useverse@latest add ${page.name}`));
+  lines.push('');
+  lines.push('Copy and paste the following code into your project.');
+  lines.push('');
+  lines.push(createCodeFence('tsx', page.source));
+  lines.push('');
+  lines.push('Update the import paths to match your project setup.');
+  lines.push('');
+
+  lines.push('## Usage');
+  lines.push('');
+  const usage = page.examples
+    .map((example, index) => (index === 0 ? example : `// or\n${example}`))
+    .join('\n');
+  lines.push(createCodeFence('tsx', usage));
+  lines.push('');
+
+  if (page.typeDeclarations?.trim()) {
+    lines.push('## Type Declarations');
+    lines.push('');
+    lines.push(createCodeFence('tsx', page.typeDeclarations));
+    lines.push('');
+  }
+
+  if (page.apiParameters.length) {
+    lines.push('## API');
+    lines.push('');
+    lines.push(...createShareApiMarkdown(page.apiParameters));
+  }
+
+  if (page.contributors.length) {
+    lines.push('## Contributors');
+    lines.push('');
+    for (const contributor of page.contributors) {
+      lines.push(`- ${contributor.name}`);
+    }
+    lines.push('');
+  }
+
+  return `${lines.join('\n').trimEnd()}\n`;
 };
 
 const createHtmlCode = async (code: string, language: CodeLanguage) =>
@@ -321,10 +501,10 @@ const init = async () => {
 
   const metadata = await Promise.all(
     content.map(async (element) => {
-      const content = await getContentFile(element.type, element.name);
+      const source = await getContentFile(element.type, element.name);
       const extension = await getExtensionFile(element.type, element.name);
 
-      const jsdocMatch = matchJsdoc(content);
+      const jsdocMatch = matchJsdoc(source);
 
       if (!jsdocMatch) {
         console.error(`No jsdoc comment found for ${element.name}`);
@@ -365,18 +545,23 @@ const init = async () => {
         extension
       );
 
-      const sourceFile = ts.createSourceFile('temp.ts', content, ts.ScriptTarget.Latest, true);
-      const typeDeclarations = extractTypeInfo(sourceFile);
+      const sourceFile = ts.createSourceFile('temp.ts', source, ts.ScriptTarget.Latest, true);
+      const typeDeclarationsSource = extractTypeInfo(sourceFile);
+      const dependencies = extractDependencies(source);
+      const demoSource = isDemo
+        ? await fs.promises.readFile(
+            path.join(CORE_ROOT, `${element.type}s`, element.name, `${element.name}.demo.tsx`),
+            'utf-8'
+          )
+        : undefined;
 
-      const dependencies = extractDependencies(content);
-
-      return {
+      const page = {
         badges: {
           firstCommitAt: new Date(firstCommitAt).getTime(),
           isNew,
           lastCommitAt: new Date(lastCommitAt).getTime()
         },
-        code: await createHtmlCode(content, 'tsx'),
+        code: await createHtmlCode(source, 'tsx'),
         id: element.name,
         isTest,
         isDemo,
@@ -392,25 +577,47 @@ const init = async () => {
         lastModified: lastCommitAt,
         examples: jsdoc.examples.map((example) => example.description),
         apiParameters: jsdoc.apiParameters ?? [],
-        ...(typeDeclarations && {
-          typeDeclarations: await createHtmlCode(typeDeclarations, 'tsx')
+        ...(typeDeclarationsSource && {
+          typeDeclarations: await createHtmlCode(typeDeclarationsSource, 'tsx')
         }),
         dependencies,
         contributors,
-        ...(isDemo && {
-          demo: await createHtmlCode(
-            await fs.promises.readFile(
-              path.join(CORE_ROOT, `${element.type}s`, element.name, `${element.name}.demo.tsx`),
-              'utf-8'
-            ),
-            'tsx'
-          )
+        ...(demoSource && {
+          demo: await createHtmlCode(demoSource, 'tsx')
         })
       };
+
+      const share: ShareMarkdownPage = {
+        name: page.name,
+        type: page.type,
+        description: page.description,
+        category: page.category,
+        usage: page.usage,
+        isTest: page.isTest,
+        examples: page.examples,
+        apiParameters: page.apiParameters,
+        contributors: page.contributors,
+        source,
+        ...(page.warning && { warning: page.warning }),
+        ...(page.browserapi && {
+          browserapi: {
+            name: page.browserapi.name,
+            description: page.browserapi.description
+          }
+        }),
+        ...(typeDeclarationsSource && { typeDeclarations: typeDeclarationsSource }),
+        ...(demoSource && { demo: demoSource })
+      };
+
+      return { page, share };
     })
   );
 
-  const pages = metadata.filter(Boolean) as unknown as FunctionMetadata[];
+  const generated = metadata.filter(Boolean) as {
+    page: FunctionMetadata;
+    share: ShareMarkdownPage;
+  }[];
+  const pages = generated.map(({ page }) => page);
   const testCoverage = pages.reduce((acc, page) => acc + Number(page.isTest), 0);
 
   console.log('\nElements injection report\n');
@@ -434,7 +641,7 @@ const init = async () => {
 
   console.log('\n[generate-functions] Writing files...');
 
-  for (const page of pages) {
+  for (const { page, share } of generated) {
     const mdx = createMdxTemplate(page);
     await fs.promises.writeFile(
       path.join(CONTENT_ROOT, 'functions', `${page.type}s`, `${page.name}.mdx`),
@@ -447,6 +654,15 @@ const init = async () => {
       JSON.stringify(page, null, 2),
       'utf-8'
     );
+
+    const shareMarkdownPath = path.join(
+      PUBLIC_ROOT,
+      'functions',
+      `${page.type}s`,
+      `${page.name}.md`
+    );
+    await fs.promises.mkdir(path.dirname(shareMarkdownPath), { recursive: true });
+    await fs.promises.writeFile(shareMarkdownPath, createShareMarkdown(share), 'utf-8');
 
     if (page.demo) {
       const demo = await createDemo(page);
@@ -465,6 +681,18 @@ const init = async () => {
       metaJson,
       'utf-8'
     );
+
+    const shareDirectory = path.join(PUBLIC_ROOT, 'functions', `${type}s`);
+    const keep = new Set(
+      pages.filter((page) => page.type === type).map((page) => `${page.name}.md`)
+    );
+
+    if (!fs.existsSync(shareDirectory)) continue;
+
+    for (const file of await fs.promises.readdir(shareDirectory)) {
+      if (!file.endsWith('.md') || keep.has(file)) continue;
+      await fs.promises.unlink(path.join(shareDirectory, file));
+    }
   }
 
   const functionsMd = createFunctionsMd(pages);
