@@ -69,6 +69,14 @@ export const LandingHeader = ({ releaseName, stars, className, ...props }: Landi
             </NavigationMenuItem>
 
             <NavigationMenuItem>
+              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <Link href='/blog' prefetch={false}>
+                  Blog
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
               <NavigationMenuTrigger>{releaseName}</NavigationMenuTrigger>
               <NavigationMenuContent className='top-full left-auto z-50 mt-1.5'>
                 <ul className='w-40'>

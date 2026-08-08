@@ -72,6 +72,14 @@ export const FunctionHeader = async ({ groups, ...props }: FunctionHeaderProps) 
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <Link href='/blog' prefetch={false}>
+                    Blog
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
               {releaseName && (
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>{releaseName}</NavigationMenuTrigger>

@@ -2,7 +2,7 @@
 title: webcam
 type: integration
 description: Webcam React is a powerful library that provides easy integration of webcam.
-lastModifiedTime: 1783262470784
+lastModifiedTime: 1786167198143
 ---
 
 import metadata from './webcam.meta.json';

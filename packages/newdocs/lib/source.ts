@@ -1,4 +1,4 @@
-import { docs, functions } from '@docs/.source/server';
+import { blog, docs, functions } from '@docs/.source/server';
 import { loader } from 'fumadocs-core/source';
 
 export const source = loader({
@@ -9,4 +9,9 @@ export const source = loader({
 export const functionsSource = loader({
   baseUrl: '/functions',
   source: functions.toFumadocsSource()
+});
+
+export const blogSource = loader({
+  baseUrl: '/blog',
+  source: blog.toFumadocsSource()
 });

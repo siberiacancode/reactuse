@@ -47,3 +47,13 @@ export const functions = defineDocs({
     })
   }
 });
+
+export const blog = defineDocs({
+  dir: 'content/blog',
+  docs: {
+    schema: frontmatterSchema.extend({
+      date: z.string().date().or(z.date()).optional(),
+      author: z.string().optional()
+    })
+  }
+});
