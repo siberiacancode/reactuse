@@ -5,6 +5,7 @@ import { ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import process from 'node:process';
+
 import { BlogToc } from '../_components/blog-toc';
 
 export const revalidate = false;
@@ -43,12 +44,22 @@ export const generateMetadata = async (props: BlogPageProps) => {
       title: page.data.title,
       description: page.data.description,
       type: 'article',
-      url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`
+      url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`,
+      images: [
+        {
+          url: `/og${page.url}.png`
+        }
+      ]
     },
     twitter: {
       card: 'summary_large_image',
       title: page.data.title,
       description: page.data.description,
+      images: [
+        {
+          url: `/og${page.url}.png`
+        }
+      ],
       creator: '@siberiacancode'
     }
   };

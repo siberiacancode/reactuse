@@ -1,4 +1,4 @@
-import { functionsSource, source } from '@docs/lib/source';
+import { blogSource, functionsSource, source } from '@docs/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
 import { Buffer } from 'node:buffer';
@@ -66,7 +66,27 @@ export const getOgPages = (): OgPage[] => {
     ];
   });
 
-  return [...docsPages, ...functionsPages];
+  const blogPages = getAllPagesFromTree(blogSource.getPageTree()).flatMap((node) => {
+    const page = blogSource.getNodePage(node);
+
+    if (!page?.data.title || !page.data.description) return [];
+
+    return [
+      {
+        slug: normalizeUrlToSlug(node.url),
+        title: page.data.title,
+        description: page.data.description
+      }
+    ];
+  });
+
+  const blogListPage: OgPage = {
+    slug: ['blog'],
+    title: 'Blog',
+    description: 'News, guides and updates about reactuse.'
+  };
+
+  return [...docsPages, ...functionsPages, ...blogPages, blogListPage];
 };
 
 export const getOgPageBySlug = (slug: string[]) => {

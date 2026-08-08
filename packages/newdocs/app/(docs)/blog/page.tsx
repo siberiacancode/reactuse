@@ -26,13 +26,13 @@ export const metadata = {
     description: 'News, guides and updates about reactuse.',
     type: 'website',
     url: `${process.env.NEXT_PUBLIC_APP_URL}blog`,
-    images: [{ url: '/og.png', width: 1200, height: 630 }]
+    images: [{ url: '/og/blog.png', width: 1200, height: 628 }]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Blog',
     description: 'News, guides and updates about reactuse.',
-    images: ['/og.png'],
+    images: ['/og/blog.png'],
     creator: '@siberiacancode'
   }
 };
