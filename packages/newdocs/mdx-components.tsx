@@ -125,12 +125,23 @@ export const mdxComponents = {
       </figcaption>
     );
   },
-  code: (props: any) => (
-    <>
-      {props.__copy__ === 'copy' && <CopyButton src={props.__src__} value={props.__raw__} />}
-      <code {...props} />
-    </>
-  ),
+  code: ({ className, ...props }: any) => {
+    const isInline = props.__raw__ === undefined && props.__copy__ === undefined;
+
+    return (
+      <>
+        {props.__copy__ === 'copy' && <CopyButton src={props.__src__} value={props.__raw__} />}
+        <code
+          className={cn(
+            isInline &&
+              'bg-muted text-foreground rounded-md border px-[0.3rem] py-[0.15rem] font-mono text-[0.85em] font-normal',
+            className
+          )}
+          {...props}
+        />
+      </>
+    );
+  },
   Link: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
     <Link
       className={cn('font-medium underline underline-offset-4', className)}
