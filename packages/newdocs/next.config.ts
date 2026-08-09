@@ -5,6 +5,11 @@ import { createMDX } from 'fumadocs-mdx/next';
 const nextConfig: NextConfig = {
   output: 'export',
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
+  experimental: {
+    turbopackFileSystemCacheForDev: true,
+    turbopackFileSystemCacheForBuild: true,
+    turbopackMemoryEviction: 'full'
+  },
   typescript: {
     ignoreBuildErrors: true
   },
