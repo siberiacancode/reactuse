@@ -2,6 +2,7 @@ import { blogSource, functionsSource, source } from '@docs/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
 import { Buffer } from 'node:buffer';
+import process from 'node:process';
 
 import type { PageTreePage, PageTreeRoot } from '@/lib/page-tree';
 
@@ -137,7 +138,7 @@ interface OgRouteProps {
   }>;
 }
 
-export const GET = async (request: Request, props: OgRouteProps) => {
+export const GET = async (_request: Request, props: OgRouteProps) => {
   const { slug } = await props.params;
 
   const page = getOgPageBySlug(slug);
@@ -145,7 +146,7 @@ export const GET = async (request: Request, props: OgRouteProps) => {
   if (!page) notFound();
 
   const fonts = await loadAssets();
-  const logoImage = new URL('/logo.svg', request.url).toString();
+  const logoUrl = `${process.env.NEXT_PUBLIC_APP_URL}/logo.svg`;
 
   return new ImageResponse(
     <div
@@ -164,7 +165,7 @@ export const GET = async (request: Request, props: OgRouteProps) => {
           justifyContent: 'center'
         }}
       >
-        <img alt='reactuse' height={43} src={logoImage} width={50} />
+        <img alt='reactuse' height={43} src={logoUrl} width={50} />
       </div>
 
       <div tw='relative flex h-full w-full flex-col justify-center px-24'>
