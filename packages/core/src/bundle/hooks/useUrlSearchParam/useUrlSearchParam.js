@@ -105,10 +105,7 @@ export const useUrlSearchParam = (key, params) => {
   const [value, setValue] = useState(() => {
     const urlSearchParams = getUrlSearchParams(mode);
     const currentValue = urlSearchParams.get(key);
-    if (currentValue === null && initialValue !== undefined) {
-      setUrlSearchParam(key, initialValue, mode, writeMode);
-      return initialValue;
-    }
+    if (currentValue === null) return initialValue;
     return currentValue ? deserializer(currentValue) : undefined;
   });
   const set = (value, options) => {
@@ -117,12 +114,13 @@ export const useUrlSearchParam = (key, params) => {
   };
   const remove = (options) => {
     setUrlSearchParam(key, undefined, mode, options?.write ?? writeMode);
-    setValue(undefined);
+    setValue(initialValue);
   };
   useEffect(() => {
     const onParamsChange = () => {
       const urlSearchParams = getUrlSearchParams(mode);
       const newValue = urlSearchParams.get(key);
+      if (newValue === null) return setValue(initialValue);
       setValue(newValue ? deserializer(newValue) : undefined);
     };
     window.addEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
