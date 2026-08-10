@@ -1,0 +1,31 @@
+import type { ComponentProps } from 'react';
+
+export const LogoIcon = (props: ComponentProps<'span'>) => (
+  <span aria-hidden='true' {...props}>
+    <svg
+      className='block size-full'
+      fill='none'
+      viewBox='0 0 240 195'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M7.5 82.4351V186.435H34.5V115.435H68.5L102.5 162.435C134 205.935 232.5 189.435 232.5 128.935V11.9351L205.5 24.9351V118.935C205.5 162.435 146.5 170.935 119.5 138.435L84.5 82.4351H7.5Z'
+        fill='currentColor'
+      />
+      <path
+        d='M7.5 11.9351V37.9351H95.5C121.5 37.9351 128 70.4351 116.5 85.4351L130.5 106.935C159.5 76.4351 151 11.9351 95.5 11.9351H7.5Z'
+        fill='currentColor'
+      />
+      <path
+        d='M7.5 82.4351V186.435H34.5V115.435H68.5L102.5 162.435C134 205.935 232.5 189.435 232.5 128.935V11.9351L205.5 24.9351V118.935C205.5 162.435 146.5 170.935 119.5 138.435L84.5 82.4351H7.5Z'
+        stroke='currentColor'
+        strokeWidth='15'
+      />
+      <path
+        d='M7.5 11.9351V37.9351H95.5C121.5 37.9351 128 70.4351 116.5 85.4351L130.5 106.935C159.5 76.4351 151 11.9351 95.5 11.9351H7.5Z'
+        stroke='currentColor'
+        strokeWidth='15'
+      />
+    </svg>
+  </span>
+);

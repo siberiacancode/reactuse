@@ -11,9 +11,21 @@ import process from 'node:process';
 
 import type { FunctionMetadata } from '@/src/constants';
 
+import { LINKS } from '@/src/constants';
+
 import { mdxComponents } from '../../../../mdx-components';
+import {
+  Toc,
+  TocDependencies,
+  TocEditLink,
+  TocItems,
+  TocLink,
+  TocList,
+  TocScrollToTop,
+  TocSeparator,
+  TocTitle
+} from '../../_components';
 import { FunctionHeader } from '../_components/function-header';
-import { FunctionToc } from '../_components/function-toc';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -106,17 +118,23 @@ const FunctionPage = async (props: FunctionPageProps) => {
 
           <div className='mt-2 hidden w-full flex-wrap justify-between gap-2 px-4 sm:flex sm:px-0'>
             {neighbours.previous && (
-              <Button asChild size='sm' variant='secondary'>
-                <Link href={neighbours.previous.url} prefetch={false}>
-                  <ArrowLeftIcon /> {neighbours.previous.name}
-                </Link>
+              <Button
+                nativeButton={false}
+                render={<Link href={neighbours.previous.url} prefetch={false} />}
+                size='sm'
+                variant='secondary'
+              >
+                <ArrowLeftIcon /> {neighbours.previous.name}
               </Button>
             )}
             {neighbours.next && (
-              <Button asChild size='sm' variant='secondary'>
-                <Link href={neighbours.next.url} prefetch={false}>
-                  {neighbours.next.name} <ArrowRightIcon />
-                </Link>
+              <Button
+                nativeButton={false}
+                render={<Link href={neighbours.next.url} prefetch={false} />}
+                size='sm'
+                variant='secondary'
+              >
+                {neighbours.next.name} <ArrowRightIcon />
               </Button>
             )}
           </div>
@@ -126,12 +144,28 @@ const FunctionPage = async (props: FunctionPageProps) => {
       <div className='pointer-events-none sticky top-[calc(var(--header-height)+1px)] z-30 hidden w-(--sidebar-width) flex-col gap-4 self-start pb-8 xl:flex xl:pl-2'>
         {!!doc.toc.length && (
           <div className='no-scrollbar pointer-events-auto max-h-[calc(100svh-var(--header-height)-4rem)] overflow-y-auto overscroll-contain pt-12'>
-            <FunctionToc
-              hooks={metadata.dependencies.hooks}
-              items={doc.toc}
-              name={doc.title}
-              type={doc.type}
-            />
+            <Toc>
+              <TocTitle>On this page</TocTitle>
+              <TocList>
+                <TocItems items={doc.toc} />
+                <TocSeparator />
+                <TocEditLink
+                  href={`${LINKS.DOCS_REPOSITORY}/content/functions/${doc.type}s/${doc.title}.mdx`}
+                />
+                <TocLink
+                  href={`${LINKS.CORE_REPOSITORY}/${doc.type}s/${doc.title}/${doc.title}.demo.tsx`}
+                >
+                  Watch demo
+                </TocLink>
+                <TocLink
+                  href={`${LINKS.CORE_REPOSITORY}/${doc.type}s/${doc.title}/${doc.title}.ts`}
+                >
+                  <div className='flex items-center gap-2'>Source</div>
+                </TocLink>
+                <TocScrollToTop />
+              </TocList>
+              <TocDependencies hooks={metadata.dependencies.hooks} />
+            </Toc>
           </div>
         )}
       </div>

@@ -63,7 +63,7 @@ export const LandingFaq = () => (
           viewport={{ once: true, amount: 0.25 }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <Accordion collapsible className='w-full' defaultValue='item-0' type='single'>
+          <Accordion className='w-full' defaultValue={['item-0']}>
             {FAQ.map((faq, index) => (
               <AccordionItem key={index} value={String(index)}>
                 <AccordionTrigger className='py-6 text-left text-lg font-medium hover:no-underline md:text-xl'>

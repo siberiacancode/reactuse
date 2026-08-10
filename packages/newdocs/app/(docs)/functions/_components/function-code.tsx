@@ -39,10 +39,16 @@ export const FunctionCode = ({ code, collapsible, title, language }: FunctionCod
         onOpenChange={setIsOpen}
       >
         <div className='absolute top-1.5 right-2 z-10 flex items-center'>
-          <CollapsibleTrigger asChild>
-            <Button className='text-muted-foreground h-7 rounded-md px-2' size='sm' variant='ghost'>
-              {isOpen ? 'Collapse' : 'Expand'}
-            </Button>
+          <CollapsibleTrigger
+            render={
+              <Button
+                className='text-muted-foreground h-7 rounded-md px-2'
+                size='sm'
+                variant='ghost'
+              />
+            }
+          >
+            {isOpen ? 'Collapse' : 'Expand'}
           </CollapsibleTrigger>
           <Separator className='mx-1.5 h-4!' orientation='vertical' />
           <Button size='icon-sm' variant='ghost' onClick={onCopy}>
@@ -51,7 +57,8 @@ export const FunctionCode = ({ code, collapsible, title, language }: FunctionCod
         </div>
         <CollapsibleContent
           forceMount
-          className='relative my-6 origin-bottom overflow-hidden rounded-xl transition-[max-height] duration-300 ease-out data-[state=closed]:max-h-64 data-[state=closed]:[content-visibility:auto] [&>figure]:mt-0 [&>figure]:md:mx-0!'
+          hidden={false}
+          className='relative my-6 origin-bottom overflow-hidden rounded-xl transition-[max-height] duration-300 ease-out data-closed:max-h-64 data-closed:[content-visibility:auto] [&>figure]:mt-0 [&>figure]:md:mx-0!'
         >
           <figure className='rounded-xl!' data-rehype-pretty-code-figure=''>
             {title && (
@@ -65,10 +72,11 @@ export const FunctionCode = ({ code, collapsible, title, language }: FunctionCod
             <div ref={contentRef} dangerouslySetInnerHTML={{ __html: code }} />
           </figure>
         </CollapsibleContent>
-        <CollapsibleTrigger className='from-code/70 to-code text-muted-foreground absolute inset-x-0 bottom-0 flex h-20 items-end justify-center rounded-b-xl bg-gradient-to-b pb-4 text-sm group-data-[state=open]/collapsible:hidden'>
-          <Button asChild size='sm' variant='ghost'>
-            <div>{isOpen ? 'Collapse' : 'Expand'}</div>
-          </Button>
+        <CollapsibleTrigger
+          className='from-code/70 to-code text-muted-foreground absolute inset-x-0 bottom-0 flex h-20 items-end justify-center rounded-b-xl bg-gradient-to-b pb-4 text-sm group-data-open/collapsible:hidden'
+          render={<Button size='sm' variant='ghost' />}
+        >
+          {isOpen ? 'Collapse' : 'Expand'}
         </CollapsibleTrigger>
       </Collapsible>
     );

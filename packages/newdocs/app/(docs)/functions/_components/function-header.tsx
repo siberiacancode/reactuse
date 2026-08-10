@@ -71,36 +71,43 @@ export const FunctionHeader = ({
                   </Button>
 
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button aria-label='Open actions' size='icon-sm' variant='secondary'>
-                        <ChevronDownIcon />
-                      </Button>
+                    <DropdownMenuTrigger
+                      render={
+                        <Button aria-label='Open actions' size='icon-sm' variant='secondary' />
+                      }
+                    >
+                      <ChevronDownIcon />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align='end' className='w-56 min-w-56'>
-                      <DropdownMenuItem asChild>
-                        <a
-                          href={`${LINKS.SITE}/functions/${type}s/${name}.md`}
-                          rel='noopener noreferrer'
-                          target='_blank'
-                        >
-                          <FileTextIcon />
-                          View as Markdown
-                        </a>
+                      <DropdownMenuItem
+                        render={
+                          <a
+                            href={`${LINKS.SITE}/functions/${type}s/${name}.md`}
+                            rel='noopener noreferrer'
+                            target='_blank'
+                          />
+                        }
+                      >
+                        <FileTextIcon />
+                        View as Markdown
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       {Object.entries(PROMPT_LINKS).map(([key, value]) => (
-                        <DropdownMenuItem asChild key={key}>
-                          <a
-                            href={getPromptUrl(
-                              value.url,
-                              `${LINKS.SITE}/functions/${type}s/${name}.md`
-                            )}
-                            rel='noopener noreferrer'
-                            target='_blank'
-                          >
-                            {value.Icon}
-                            {value.title}
-                          </a>
+                        <DropdownMenuItem
+                          key={key}
+                          render={
+                            <a
+                              href={getPromptUrl(
+                                value.url,
+                                `${LINKS.SITE}/functions/${type}s/${name}.md`
+                              )}
+                              rel='noopener noreferrer'
+                              target='_blank'
+                            />
+                          }
+                        >
+                          {value.Icon}
+                          {value.title}
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
@@ -110,19 +117,25 @@ export const FunctionHeader = ({
             </div>
             <div className='ml-auto flex gap-2'>
               {previous && (
-                <Button asChild size='icon-sm' variant='secondary'>
-                  <Link href={previous} prefetch={false}>
-                    <ArrowLeftIcon />
-                    <span className='sr-only'>Previous</span>
-                  </Link>
+                <Button
+                  nativeButton={false}
+                  render={<Link href={previous} prefetch={false} />}
+                  size='icon-sm'
+                  variant='secondary'
+                >
+                  <ArrowLeftIcon />
+                  <span className='sr-only'>Previous</span>
                 </Button>
               )}
               {next && (
-                <Button asChild size='icon-sm' variant='secondary'>
-                  <Link href={next} prefetch={false}>
-                    <span className='sr-only'>Next</span>
-                    <ArrowRightIcon />
-                  </Link>
+                <Button
+                  nativeButton={false}
+                  render={<Link href={next} prefetch={false} />}
+                  size='icon-sm'
+                  variant='secondary'
+                >
+                  <span className='sr-only'>Next</span>
+                  <ArrowRightIcon />
                 </Button>
               )}
             </div>

@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 
-import { getContributors } from '@/lib/contributors';
 import { getElements } from '@/scripts/helpers';
 import { CONFIG } from '@/src/constants';
 import { getLatestReleases, getNpmDownloads, getRepository } from '@/src/utils/api';
 import { formatCount } from '@/src/utils/helpers';
+import { getContributors } from '@/src/utils/server';
 
 import {
   LandingAdvantages,
@@ -17,7 +17,7 @@ import {
   LandingHeader,
   LandingHero,
   LandingStats
-} from '../_components/sections';
+} from './_components/sections';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const hooks = await getElements('hook');

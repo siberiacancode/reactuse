@@ -1,4 +1,4 @@
-import { getRSS } from '@docs/lib/rss';
+import { getRSS } from '@/src/utils/server';
 
 export const revalidate = false;
 export const dynamic = 'force-static';

@@ -1,3 +1,4 @@
+//todo ai
 'use client';
 
 import type { ReactNode, RefObject, SubmitEvent } from 'react';
@@ -425,24 +426,26 @@ const ColorSchemeDemo = () => {
 
 const DropdownDemo = () => (
   <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <button
-        className='border-border bg-card hover:bg-accent flex w-full cursor-pointer items-center gap-3 rounded-full border p-2 pr-4 text-left transition-colors'
-        type='button'
-      >
-        <div className='relative shrink-0'>
-          <Avatar className='size-10'>
-            <AvatarFallback className='bg-gradient-to-br from-neutral-700 to-neutral-900 text-sm font-semibold text-white'>
-              SC
-            </AvatarFallback>
-          </Avatar>
-          <span className='ring-background bg-foreground absolute right-0 bottom-0 block size-2.5 rounded-full ring-2' />
-        </div>
-        <div className='flex flex-col items-start gap-0.5'>
-          <span className='text-sm font-medium'>siberiacancode</span>
-          <span className='text-muted-foreground text-xs'>Open-source team</span>
-        </div>
-      </button>
+    <DropdownMenuTrigger
+      render={
+        <button
+          className='border-border bg-card hover:bg-accent flex w-full cursor-pointer items-center gap-3 rounded-full border p-2 pr-4 text-left transition-colors'
+          type='button'
+        />
+      }
+    >
+      <div className='relative shrink-0'>
+        <Avatar className='size-10'>
+          <AvatarFallback className='bg-gradient-to-br from-neutral-700 to-neutral-900 text-sm font-semibold text-white'>
+            SC
+          </AvatarFallback>
+        </Avatar>
+        <span className='ring-background bg-foreground absolute right-0 bottom-0 block size-2.5 rounded-full ring-2' />
+      </div>
+      <div className='flex flex-col items-start gap-0.5'>
+        <span className='text-sm font-medium'>siberiacancode</span>
+        <span className='text-muted-foreground text-xs'>Open-source team</span>
+      </div>
     </DropdownMenuTrigger>
     <DropdownMenuContent align='start' className='min-w-64 rounded-2xl'>
       <DropdownMenuItem>
@@ -1381,10 +1384,10 @@ export const LandingBentoHooks = () => {
 
               {/* Column 3 */}
               <div className='flex flex-col gap-4'>
-                <Cell hookName='useLongPress'>
+                <Cell hookName='useOffsetPagination'>
                   <PaginationDemo />
                 </Cell>
-                <Cell hookName='useOffsetPagination'>
+                <Cell hookName='useLongPress'>
                   <LongPressDemo />
                 </Cell>
                 <Cell className='p-3' hookName='useQuery'>

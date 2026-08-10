@@ -8,6 +8,19 @@ minimumReleaseAgeExclude:
   - '@siberiacancode/eslint'
   - '@siberiacancode/prettier'
   - '@webcam/react'
+  - '@shikijs/core@4.4.3'
+  - '@shikijs/engine-javascript@4.4.3'
+  - '@shikijs/engine-oniguruma@4.4.3'
+  - '@shikijs/langs@4.4.3'
+  - '@shikijs/primitive@4.4.3'
+  - '@shikijs/rehype@4.4.3'
+  - '@shikijs/themes@4.4.3'
+  - '@shikijs/types@4.4.3'
+  - fumadocs-core@16.14.3
+  - fumadocs-mdx@15.2.3
+  - fumadocs-ui@16.14.3
+  - lucide-react@1.31.0
+  - shiki@4.4.3
 allowBuilds:
   core-js: true
   esbuild: true

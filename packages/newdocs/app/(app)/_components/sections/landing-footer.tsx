@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
+import { GithubIcon, LogoIcon, NpmIcon, TwitterIcon } from '@/src/components/icons';
 import { CONFIG, LINKS } from '@/src/constants';
 
 const COLUMNS = [
@@ -22,16 +22,20 @@ const COLUMNS = [
   {
     links: [
       { href: LINKS.GITHUB, label: 'GitHub', external: true },
-      { href: LINKS.NPM, label: 'npm', external: true }
+      { href: LINKS.NPM, label: 'npm', external: true },
+      { href: LINKS.TWITTER, label: 'X', external: true }
     ],
     title: 'Community'
   }
 ] as const;
 
 const SOCIALS = [
-  { external: true, href: LINKS.GITHUB, label: 'GitHub' },
-  { external: true, href: LINKS.NPM, label: 'npm' }
+  { href: LINKS.GITHUB, icon: GithubIcon, label: 'GitHub' },
+  { href: LINKS.NPM, icon: NpmIcon, label: 'npm' },
+  { href: LINKS.TWITTER, icon: TwitterIcon, label: 'X' }
 ];
+
+const COPYRIGHT_YEAR = new Date().getFullYear();
 
 export const LandingFooter = () => (
   <footer className='border-border border-t'>
@@ -40,7 +44,7 @@ export const LandingFooter = () => (
         <div className='grid gap-12 lg:grid-cols-[1.4fr_2fr] lg:gap-16'>
           <div className='max-w-sm'>
             <Link className='inline-flex items-center gap-2' href='/' prefetch={false}>
-              <Image alt='ReactUse' height={12} src='/logo.svg' width={12} />
+              <LogoIcon className='size-5' />
 
               <span className='text-foreground text-lg font-semibold tracking-tight'>
                 {CONFIG.NAME}
@@ -52,19 +56,24 @@ export const LandingFooter = () => (
               community.
             </p>
 
-            <div className='mt-6 flex items-center gap-4'>
-              {SOCIALS.map((social) => (
-                <Link
-                  key={social.label}
-                  className='text-muted-foreground hover:text-foreground text-sm transition-colors'
-                  href={social.href}
-                  prefetch={false}
-                  rel='noreferrer'
-                  target='_blank'
-                >
-                  {social.label}
-                </Link>
-              ))}
+            <div className='mt-6 flex items-center gap-2.5'>
+              {SOCIALS.map((social) => {
+                const Icon = social.icon;
+
+                return (
+                  <Link
+                    key={social.label}
+                    aria-label={social.label}
+                    className='text-muted-foreground hover:text-foreground inline-flex size-8 items-center justify-center rounded-full transition-colors'
+                    href={social.href}
+                    prefetch={false}
+                    rel='noreferrer'
+                    target='_blank'
+                  >
+                    <Icon className='size-4.5' />
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
@@ -96,7 +105,7 @@ export const LandingFooter = () => (
 
         <div className='mt-16 flex flex-col items-start gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between'>
           <p className='text-muted-foreground text-xs'>
-            © {new Date().getFullYear()} reactuse. Released under the MIT License. Made with care by{' '}
+            © {COPYRIGHT_YEAR} reactuse. Released under the MIT License. Made with care by{' '}
             <Link
               className='text-foreground hover:text-muted-foreground transition-colors'
               href={LINKS.GITHUB}

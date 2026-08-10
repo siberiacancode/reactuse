@@ -55,22 +55,25 @@ export const FunctionSidebar = ({ groups, ...props }: FunctionSidebarProps) => {
                   return (
                     <SidebarMenuItem key={item.url}>
                       <SidebarMenuButton
-                        asChild
                         className='data-[active=true]:bg-accent data-[active=true]:border-accent relative h-[30px] w-fit max-w-full overflow-hidden border border-transparent px-2 text-[0.8rem] font-medium'
                         isActive={pathname === item.url}
+                        render={
+                          <Component
+                            href={item.url}
+                            {...(item.external ? {} : { prefetch: false })}
+                          />
+                        }
                       >
-                        <Component href={item.url} {...(item.external ? {} : { prefetch: false })}>
-                          <span className='relative flex min-w-0 items-center gap-2'>
-                            <span className='block min-w-0 truncate'>{item.name}</span>
-                            {item.isNew && (
-                              <span
-                                aria-label='New function'
-                                className='size-2 shrink-0 rounded-full bg-sky-500'
-                                title='New function'
-                              />
-                            )}
-                          </span>
-                        </Component>
+                        <span className='relative flex min-w-0 items-center gap-2'>
+                          <span className='block min-w-0 truncate'>{item.name}</span>
+                          {item.isNew && (
+                            <span
+                              aria-label='New function'
+                              className='size-2 shrink-0 rounded-full bg-sky-500'
+                              title='New function'
+                            />
+                          )}
+                        </span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   );

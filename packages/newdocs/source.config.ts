@@ -1,4 +1,5 @@
-import { defineConfig, defineDocs, frontmatterSchema } from 'fumadocs-mdx/config';
+import { pageSchema } from 'fumadocs-core/source/schema';
+import { defineConfig, defineDocs } from 'fumadocs-mdx/config';
 import rehypePrettyCode from 'rehype-pretty-code';
 import z from 'zod';
 
@@ -37,7 +38,7 @@ export const integrations = defineDocs({
 export const functions = defineDocs({
   dir: 'content/functions',
   docs: {
-    schema: frontmatterSchema.extend({
+    schema: pageSchema.extend({
       isTest: z.boolean(),
       isDemo: z.boolean(),
       usage: usageSchema,
@@ -51,9 +52,8 @@ export const functions = defineDocs({
 export const blog = defineDocs({
   dir: 'content/blog',
   docs: {
-    schema: frontmatterSchema.extend({
-      date: z.string().date().or(z.date()).optional(),
-      author: z.string().optional()
+    schema: pageSchema.extend({
+      date: z.string()
     })
   }
 });

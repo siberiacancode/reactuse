@@ -32,16 +32,17 @@ export const FunctionDemo = ({ code }: FunctionDemoProps) => {
       )}
       <CollapsibleContent
         forceMount
-        className='relative overflow-hidden data-[state=closed]:max-h-42 data-[state=closed]:[content-visibility:auto] data-[state=open]:max-h-92 data-[state=open]:overflow-y-auto [&::-webkit-scrollbar]:hidden [&>figure]:mt-0 [&>figure]:md:mx-0!'
+        hidden={false}
+        className='relative overflow-hidden data-closed:max-h-42 data-closed:[content-visibility:auto] data-open:max-h-92 data-open:overflow-y-auto [&::-webkit-scrollbar]:hidden [&>figure]:mt-0 [&>figure]:md:mx-0!'
       >
         <figure className='relative rounded-none!' data-rehype-pretty-code-figure=''>
           <div ref={contentRef} dangerouslySetInnerHTML={{ __html: code }} />
         </figure>
       </CollapsibleContent>
 
-      <div className='from-code/30 to-code text-muted-foreground absolute inset-x-0 bottom-0 flex h-full items-center justify-center rounded-b-lg bg-gradient-to-b text-sm group-data-[state=open]/collapsible:hidden'>
-        <CollapsibleTrigger asChild>
-          <Button size='sm'>{isOpen ? 'Collapse' : 'Expand'}</Button>
+      <div className='from-code/30 to-code text-muted-foreground absolute inset-x-0 bottom-0 flex h-full items-center justify-center rounded-b-lg bg-gradient-to-b text-sm group-data-open/collapsible:hidden'>
+        <CollapsibleTrigger render={<Button size='sm' />}>
+          {isOpen ? 'Collapse' : 'Expand'}
         </CollapsibleTrigger>
       </div>
     </Collapsible>

@@ -6,23 +6,17 @@ import Link from 'next/link';
 
 import { Button } from '@/src/components/ui';
 
-export interface LandingStat {
-  /** Optional supporting line under the stat (as on the reference layout). */
-  description?: string;
-  /** Short uppercase-ish label under/next to the figure, e.g. "Hooks". */
-  label: string;
-  /** Big bold figure, e.g. "171", "100%", "8K+". */
-  value: string;
-}
-
 interface LandingStatsProps {
-  stats: LandingStat[];
+  stats: {
+    description?: string;
+    label: string;
+    value: string;
+  }[];
 }
 
 export const LandingStats = ({ stats }: LandingStatsProps) => (
   <section>
     <div className='container mx-auto px-6 py-24 md:py-32'>
-      {/* header — typography + buttons borrowed from the bento section */}
       <motion.div
         className='flex max-w-3xl flex-col gap-6'
         initial={{ opacity: 0, y: -28 }}
@@ -40,26 +34,26 @@ export const LandingStats = ({ stats }: LandingStatsProps) => (
         </p>
 
         <div className='flex flex-wrap items-center gap-2'>
-          <Button asChild className='rounded-full px-7 py-6 font-mono text-lg font-semibold'>
-            <Link href='/docs/installation' prefetch={false}>
-              <span>Get started</span>
-              <ArrowRight className='size-4' />
-            </Link>
+          <Button
+            className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
+            nativeButton={false}
+            render={<Link href='/docs/installation' prefetch={false} />}
+          >
+            <span>Get started</span>
+            <ArrowRight className='size-4' />
           </Button>
           <Button
-            asChild
             className='rounded-full px-7 py-6 font-mono text-lg font-semibold'
+            nativeButton={false}
+            render={<Link href='/docs/functions' prefetch={false} />}
             variant='secondary'
           >
-            <Link href='/docs/functions' prefetch={false}>
-              <span>Browse all functions</span>
-              <ArrowRight className='size-4' />
-            </Link>
+            <span>Browse all functions</span>
+            <ArrowRight className='size-4' />
           </Button>
         </div>
       </motion.div>
 
-      {/* stats grid — figure + label, optional description (as on the reference) */}
       <motion.div
         className='mt-16 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3'
         initial={{ opacity: 0, y: -32 }}

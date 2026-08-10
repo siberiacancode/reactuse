@@ -1,1 +1,1 @@
-export * from './ThemeScript/ThemeScript';
+export * from './theme-script';

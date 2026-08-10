@@ -6,7 +6,23 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import process from 'node:process';
 
-import { BlogToc } from '../_components/blog-toc';
+import { LINKS } from '@/src/constants';
+import { formatDate } from '@/src/utils/helpers';
+
+import {
+  PageHeader,
+  PageHeaderActions,
+  PageHeaderDescription,
+  PageHeaderTitle,
+  PageHeaderTopBar,
+  Toc,
+  TocEditLink,
+  TocItems,
+  TocList,
+  TocScrollToTop,
+  TocSeparator,
+  TocTitle
+} from '../../_components';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -17,19 +33,6 @@ export const generateStaticParams = () => blogSource.generateParams();
 interface BlogPageProps {
   params: Promise<{ slug: string[] }>;
 }
-
-const formatDate = (date?: string) => {
-  if (!date) return null;
-  try {
-    return new Date(date).toLocaleDateString('en-US', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
-  } catch {
-    return date;
-  }
-};
 
 export const generateMetadata = async (props: BlogPageProps) => {
   const params = await props.params;
@@ -72,6 +75,7 @@ export const BlogPage = async (props: BlogPageProps) => {
   if (!page) notFound();
 
   const doc = page.data;
+  const raw = await doc.getText('raw');
   const MDX = doc.body;
 
   return (
@@ -80,23 +84,20 @@ export const BlogPage = async (props: BlogPageProps) => {
       data-slot='blog'
     >
       <div className='mx-auto mt-12 w-full max-w-3xl pb-24'>
-        <Button asChild className='mb-8 shadow-none' size='sm' variant='secondary'>
-          <Link href='/blog' prefetch={false}>
-            <ArrowLeftIcon /> Back to blog
-          </Link>
-        </Button>
-
         <div className='mb-8 flex flex-col gap-3'>
-          <h1 className='text-foreground text-3xl font-semibold tracking-tight'>{doc.title}</h1>
-          {doc.description && <p className='text-muted-foreground text-base'>{doc.description}</p>}
+          <PageHeader>
+            <PageHeaderTopBar>
+              <PageHeaderTitle>{doc.title}</PageHeaderTitle>
+              <PageHeaderActions
+                markdown={raw}
+                markdownPath={`blog/${page.data.info.path.replace('.mdx', '.md')}`}
+              />
+            </PageHeaderTopBar>
+            {doc.description && <PageHeaderDescription>{doc.description}</PageHeaderDescription>}
+          </PageHeader>
+
           <div className='text-muted-foreground flex items-center gap-2 text-xs'>
             {formatDate(doc.date) && <span>{formatDate(doc.date)}</span>}
-            {doc.author && (
-              <>
-                <span>·</span>
-                <span>{doc.author}</span>
-              </>
-            )}
           </div>
         </div>
 
@@ -108,7 +109,17 @@ export const BlogPage = async (props: BlogPageProps) => {
       <div className='pointer-events-none sticky top-[calc(var(--header-height)+1px)] z-30 hidden w-(--sidebar-width) flex-col gap-4 self-start pb-8 xl:flex xl:pl-2'>
         {!!doc.toc.length && (
           <div className='no-scrollbar pointer-events-auto max-h-[calc(100svh-var(--header-height)-4rem)] overflow-y-auto overscroll-contain pt-12'>
-            <BlogToc items={doc.toc} path={page.data.info.path} />
+            <Toc>
+              <TocTitle>On this page</TocTitle>
+              <TocList>
+                <TocItems items={doc.toc} />
+                <TocSeparator />
+                <TocEditLink
+                  href={`${LINKS.DOCS_REPOSITORY}/content/blog/${page.data.info.path}`}
+                />
+                <TocScrollToTop />
+              </TocList>
+            </Toc>
           </div>
         )}
       </div>

@@ -18,7 +18,7 @@ import { cn } from '@/src/lib';
 
 const INTERVAL = 5000;
 
-const frameworks = [
+const FRAMEWORKS = [
   {
     description:
       'Best choice for a single page application. Fast dev server, instant HMR and optimized builds out of the box.',
@@ -77,13 +77,13 @@ const frameworks = [
 
 export const LandingGettingStarted = () => {
   const [activeFrameworkIndex, setActiveFrameworkIndex] = useState(0);
-  const activeFramework = frameworks[activeFrameworkIndex];
-  const ActiveFrameworkIcon = frameworks[activeFrameworkIndex].icon;
+  const activeFramework = FRAMEWORKS[activeFrameworkIndex];
+  const ActiveFrameworkIcon = FRAMEWORKS[activeFrameworkIndex].icon;
 
   const interval = useInterval(
     () =>
       setActiveFrameworkIndex(
-        (currentActiveFrameworkIndex) => (currentActiveFrameworkIndex + 1) % frameworks.length
+        (currentActiveFrameworkIndex) => (currentActiveFrameworkIndex + 1) % FRAMEWORKS.length
       ),
     INTERVAL
   );
@@ -114,7 +114,6 @@ export const LandingGettingStarted = () => {
             <Link
               className='text-foreground underline underline-offset-4'
               href='/docs/installation/vite'
-              prefetch={false}
             >
               Vite
             </Link>
@@ -129,11 +128,14 @@ export const LandingGettingStarted = () => {
             and other tools in minutes.
           </p>
 
-          <Button asChild className='mt-3 rounded-full px-0' variant='link'>
-            <Link href='/docs/installation/manual' prefetch={false}>
-              <span>Add to a manual project</span>
-              <ArrowRight className='size-4' />
-            </Link>
+          <Button
+            className='mt-3 rounded-full px-0'
+            nativeButton={false}
+            render={<Link href='/docs/installation/manual' prefetch={false} />}
+            variant='link'
+          >
+            <span>Add to a manual project</span>
+            <ArrowRight className='size-4' />
           </Button>
         </motion.div>
 
@@ -177,15 +179,17 @@ export const LandingGettingStarted = () => {
             </div>
 
             <div className='mt-10'>
-              <Button asChild className='rounded-full px-6'>
-                <Link href={activeFramework.href} prefetch={false}>
-                  <span>Install</span>
-                  <ArrowRight className='size-4' />
-                </Link>
+              <Button
+                className='rounded-full px-6'
+                nativeButton={false}
+                render={<Link href={activeFramework.href} prefetch={false} />}
+              >
+                <span>Install</span>
+                <ArrowRight className='size-4' />
               </Button>
 
               <div className='mt-6 flex gap-1.5'>
-                {frameworks.map((framework, index) => {
+                {FRAMEWORKS.map((framework, index) => {
                   const isActive = activeFrameworkIndex === index;
 
                   return (
@@ -218,7 +222,7 @@ export const LandingGettingStarted = () => {
           </div>
 
           <div className='flex flex-col gap-3'>
-            {frameworks.map((framework, index) => {
+            {FRAMEWORKS.map((framework, index) => {
               const isActive = activeFrameworkIndex === index;
               const FrameworkIcon = framework.icon;
 

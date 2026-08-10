@@ -6,6 +6,8 @@ export interface GitHubRepository {
   stargazers_count: number;
 }
 
+export const getRepository = () => fetches.get<GitHubRepository>(GITHUB_REPOSITORY_API);
+
 export interface GitHubRelease {
   body: string;
   html_url: string;
@@ -13,7 +15,6 @@ export interface GitHubRelease {
   tag_name: string;
 }
 
-export const getRepository = () => fetches.get<GitHubRepository>(GITHUB_REPOSITORY_API);
 export const getLatestReleases = () =>
   fetches.get<GitHubRelease[]>(`${GITHUB_REPOSITORY_API}/releases?per_page=1`);
 

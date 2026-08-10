@@ -7,8 +7,23 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import process from 'node:process';
 
-import { DocsHeader } from '../_components/docs-header';
-import { DocsToc } from '../_components/docs-toc';
+import { LINKS } from '@/src/constants';
+
+import {
+  PageHeader,
+  PageHeaderActions,
+  PageHeaderDescription,
+  PageHeaderNav,
+  PageHeaderTitle,
+  PageHeaderTopBar,
+  Toc,
+  TocEditLink,
+  TocItems,
+  TocList,
+  TocScrollToTop,
+  TocSeparator,
+  TocTitle
+} from '../../_components';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -75,30 +90,42 @@ export const DocsPage = async (props: DocsPageProps) => {
     >
       <div className='mt-12 min-w-0 flex-col pb-24 xl:flex xl:px-16 2xl:px-22'>
         <div className='mb-6 flex w-full min-w-0 flex-col gap-6 text-neutral-800 md:px-0 dark:text-neutral-300'>
-          <DocsHeader
-            description={doc.description}
-            markdown={raw}
-            next={neighbours.next?.url}
-            path={page.data.info.path}
-            previous={neighbours.previous?.url}
-            title={doc.title}
-          />
+          <PageHeader>
+            <PageHeaderTopBar>
+              <PageHeaderTitle>{doc.title}</PageHeaderTitle>
+              <PageHeaderActions
+                markdown={raw}
+                markdownPath={`docs/${page.data.info.path.replace('.mdx', '.md')}`}
+              >
+                <PageHeaderNav next={neighbours.next?.url} previous={neighbours.previous?.url} />
+              </PageHeaderActions>
+            </PageHeaderTopBar>
+            {doc.description && <PageHeaderDescription>{doc.description}</PageHeaderDescription>}
+          </PageHeader>
         </div>
         <div className='w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0'>
           <MDX components={mdxComponents} />
           <div className='hidden h-16 w-full items-center gap-2 px-4 sm:flex sm:px-0'>
             {neighbours.previous && (
-              <Button asChild className='shadow-none' size='sm' variant='secondary'>
-                <Link href={neighbours.previous.url} prefetch={false}>
-                  <ArrowLeftIcon /> {neighbours.previous.name}
-                </Link>
+              <Button
+                className='shadow-none'
+                nativeButton={false}
+                render={<Link href={neighbours.previous.url} prefetch={false} />}
+                size='sm'
+                variant='secondary'
+              >
+                <ArrowLeftIcon /> {neighbours.previous.name}
               </Button>
             )}
             {neighbours.next && (
-              <Button asChild className='ml-auto shadow-none' size='sm' variant='secondary'>
-                <Link href={neighbours.next.url} prefetch={false}>
-                  {neighbours.next.name} <ArrowRightIcon />
-                </Link>
+              <Button
+                className='ml-auto shadow-none'
+                nativeButton={false}
+                render={<Link href={neighbours.next.url} prefetch={false} />}
+                size='sm'
+                variant='secondary'
+              >
+                {neighbours.next.name} <ArrowRightIcon />
               </Button>
             )}
           </div>
@@ -107,7 +134,17 @@ export const DocsPage = async (props: DocsPageProps) => {
       <div className='pointer-events-none sticky top-[calc(var(--header-height)+1px)] z-30 hidden w-(--sidebar-width) flex-col gap-4 self-start pb-8 xl:flex xl:pl-2'>
         {!!doc.toc.length && (
           <div className='no-scrollbar pointer-events-auto max-h-[calc(100svh-var(--header-height)-4rem)] overflow-y-auto overscroll-contain pt-12'>
-            <DocsToc items={doc.toc} path={page.data.info.path} />
+            <Toc>
+              <TocTitle>On this page</TocTitle>
+              <TocList>
+                <TocItems items={doc.toc} />
+                <TocSeparator />
+                <TocEditLink
+                  href={`${LINKS.DOCS_REPOSITORY}/content/docs/${page.data.info.path}`}
+                />
+                <TocScrollToTop />
+              </TocList>
+            </Toc>
           </div>
         )}
       </div>

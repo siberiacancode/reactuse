@@ -9,12 +9,11 @@ export const getContributors = async () => {
     const contributorsMap = new Map<string, { name: string; email: string; avatar: string }>();
 
     log.all.forEach((commit) => {
-      const { author_email, author_name } = commit;
-      if (author_email && !contributorsMap.has(author_name)) {
-        contributorsMap.set(author_name, {
-          name: author_name,
-          email: author_email,
-          avatar: `https://gravatar.com/avatar/${createHash('md5').update(author_email).digest('hex')}?d=retro`
+      if (commit.author_email && !contributorsMap.has(commit.author_name)) {
+        contributorsMap.set(commit.author_name, {
+          name: commit.author_name,
+          email: commit.author_email,
+          avatar: `https://gravatar.com/avatar/${createHash('md5').update(commit.author_email).digest('hex')}?d=retro`
         });
       }
     });
@@ -24,8 +23,7 @@ export const getContributors = async () => {
     );
 
     return contributors;
-  } catch (error) {
-    console.error('Failed to load contributors:', error);
+  } catch {
     return [];
   }
 };

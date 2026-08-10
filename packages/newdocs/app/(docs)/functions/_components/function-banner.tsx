@@ -44,10 +44,13 @@ export const FunctionBanner = async ({
 
           <div className='text-muted-foreground px-6 py-4 text-sm leading-relaxed'>
             This hook uses{' '}
-            <Button asChild className='p-0' variant='link'>
-              <a href={browserapi.description} rel='noopener noreferrer' target='_blank'>
-                {browserapi.name}
-              </a>
+            <Button
+              className='p-0'
+              nativeButton={false}
+              render={<a href={browserapi.description} rel='noopener noreferrer' target='_blank' />}
+              variant='link'
+            >
+              {browserapi.name}
             </Button>{' '}
             browser api to provide enhanced functionality. Make sure to check for compatibility with
             different browsers when using this api

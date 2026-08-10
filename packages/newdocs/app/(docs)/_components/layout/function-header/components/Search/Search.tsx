@@ -13,6 +13,7 @@ import { useDocsSearch } from 'fumadocs-core/search/client';
 import { ArrowRightIcon, CircleDashedIcon, Loader2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import { AlgoliaIcon } from '@/src/components/icons';
 import {
   Button,
   Command,
@@ -58,16 +59,17 @@ export const Search = (props: Props) => {
 
   return (
     <Dialog open={dialog.opened} onOpenChange={dialog.toggle}>
-      <DialogTrigger asChild>
-        <Button
-          className={cn(
-            'dark:bg-card text-muted-foreground hover:text-foreground hover:bg-muted/70 border-input bg-muted/40 relative h-8 justify-start rounded-lg border px-2.5 font-normal shadow-none md:w-42 lg:w-62'
-          )}
-          variant='outline'
-          onClick={() => dialog.toggle()}
-        >
-          <span className='truncate text-sm'>Search docs...</span>
-        </Button>
+      <DialogTrigger
+        render={
+          <Button
+            className={cn(
+              'dark:bg-card text-muted-foreground hover:text-foreground hover:bg-muted/70 border-input bg-muted/40 relative h-8 justify-start rounded-lg border px-2.5 font-normal shadow-none md:w-42 lg:w-62'
+            )}
+            variant='outline'
+          />
+        }
+      >
+        <span className='truncate text-sm'>Search docs...</span>
       </DialogTrigger>
       <DialogContent
         className='rounded-xl border-none bg-clip-padding px-2 py-3 shadow-2xl ring-4 ring-neutral-200/80 dark:bg-neutral-900 dark:ring-neutral-800'
@@ -146,6 +148,19 @@ export const Search = (props: Props) => {
             )}
           </CommandList>
         </Command>
+        <div className='border-border/60 mt-2 flex items-center justify-end border-t px-2 pt-2'>
+          <a
+            aria-label='Search by Algolia'
+            className='text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-xs transition-colors'
+            href='https://algolia.com'
+            rel='noopener noreferrer'
+            target='_blank'
+          >
+            <span>Search by</span>
+            <AlgoliaIcon className='size-4' />
+            <span className='font-medium'>Algolia</span>
+          </a>
+        </div>
       </DialogContent>
     </Dialog>
   );

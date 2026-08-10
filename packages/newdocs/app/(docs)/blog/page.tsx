@@ -63,11 +63,9 @@ const formatTitle = (title: string, date?: string) => {
 };
 
 const BlogListPage = () => {
-  const posts = [...blogSource.getPages()].sort((a, b) => {
-    const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
-    const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
-    return dateB - dateA;
-  });
+  const posts = [...blogSource.getPages()].sort(
+    (a, b) => Number(a.data.date) - Number(b.data.date)
+  );
 
   const mainPosts = posts.slice(0, 10);
   const morePosts = posts.slice(10);
@@ -86,10 +84,14 @@ const BlogListPage = () => {
             </p>
           </div>
 
-          <Button asChild className='shrink-0 rounded-full' size='sm' variant='secondary'>
-            <a href='/blog/rss.xml' rel='noreferrer' target='_blank'>
-              <RssIcon className='size-3.5' /> RSS
-            </a>
+          <Button
+            className='shrink-0 rounded-full'
+            nativeButton={false}
+            render={<a href='/blog/rss.xml' rel='noreferrer' target='_blank' />}
+            size='sm'
+            variant='secondary'
+          >
+            <RssIcon className='size-3.5' /> RSS
           </Button>
         </div>
 

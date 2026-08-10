@@ -12,7 +12,6 @@ import {
   Button,
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger
 } from '@/src/components/ui';
 import { LINKS } from '@/src/constants';
@@ -77,25 +76,21 @@ export const LandingContributors = ({ contributors }: LandingContributorsProps) 
               collapse.opened ? 'max-h-[4000px]' : 'max-h-44 md:max-h-72'
             )}
           >
-            <TooltipProvider delayDuration={100}>
-              <div className='flex w-full flex-wrap justify-between gap-y-2.5 md:justify-start md:gap-2.5'>
-                {contributors.map((contributor) => (
-                  <Tooltip key={contributor.name}>
-                    <TooltipTrigger asChild>
-                      <div>
-                        <Avatar className='border-border size-12 border'>
-                          <AvatarImage alt={contributor.name} src={contributor.avatar} />
-                          <AvatarFallback className='bg-muted text-muted-foreground text-xs font-medium'>
-                            {contributor.name.slice(0, 1).toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent side='top'>{contributor.name}</TooltipContent>
-                  </Tooltip>
-                ))}
-              </div>
-            </TooltipProvider>
+            <div className='flex w-full flex-wrap justify-between gap-y-2.5 md:justify-start md:gap-2.5'>
+              {contributors.map((contributor) => (
+                <Tooltip key={contributor.name}>
+                  <TooltipTrigger render={<div />}>
+                    <Avatar className='border-border size-12 border'>
+                      <AvatarImage alt={contributor.name} src={contributor.avatar} />
+                      <AvatarFallback className='bg-muted text-muted-foreground text-xs font-medium'>
+                        {contributor.name.slice(0, 1).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </TooltipTrigger>
+                  <TooltipContent side='top'>{contributor.name}</TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
           </div>
 
           {hasMore && !collapse.opened && (

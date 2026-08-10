@@ -1,6 +1,7 @@
 export const LINKS = {
   SITE: 'https://reactuse.org',
   NPM: 'https://npmx.dev/package/@siberiacancode/reactuse',
+  TWITTER: 'https://x.com/de_babin',
   GITHUB: 'https://github.com/siberiacancode/reactuse',
   CHANGELOG: 'https://github.com/siberiacancode/reactuse/releases',
   CONTRIBUTING: 'https://github.com/siberiacancode/reactuse/blob/main/CONTRIBUTING.md',
