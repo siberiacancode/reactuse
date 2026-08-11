@@ -5,7 +5,7 @@ import { blogSource, functionsSource, source } from '@/lib/source';
 export const dynamic = 'force-static';
 export const revalidate = false;
 
-async function exportSearchIndexes() {
+const exportSearchIndexes = async () => {
   const results: DocumentRecord[] = [];
 
   for (const pageSource of [source, functionsSource, blogSource]) {
@@ -21,6 +21,6 @@ async function exportSearchIndexes() {
   }
 
   return results;
-}
+};
 
 export const GET = async () => Response.json(await exportSearchIndexes());

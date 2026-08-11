@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { getElements } from '@/scripts/helpers';
 import { CONFIG } from '@/src/constants';
 import { getLatestReleases, getNpmDownloads, getRepository } from '@/src/utils/api';
-import { formatCount } from '@/src/utils/helpers';
+import { formatCount, getOgImageUrl } from '@/src/utils/helpers';
 import { getContributors } from '@/src/utils/server';
 
 import {
@@ -32,7 +32,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       url: '/',
       images: [
         {
-          url: '/og.png'
+          url: getOgImageUrl('')
         }
       ]
     },
@@ -40,7 +40,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       card: 'summary_large_image',
       title: `reactuse ${hooks.length}+ The largest React hooks library.`,
       description: CONFIG.DESCRIPTION,
-      images: ['/og.png'],
+      images: [getOgImageUrl('')],
       creator: '@siberiacancode'
     }
   };

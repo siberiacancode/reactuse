@@ -24,9 +24,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-import { LINKS } from '@/src/constants';
+import { LINKS, PROMPT_LINKS } from '@/src/constants';
+import { getPromptUrl } from '@/src/utils/helpers';
 
-import { getPromptUrl, PROMPT_LINKS } from '../../_helpers';
 import { CATEGORIES } from '../_constants/categories';
 
 interface FunctionHeaderProps {

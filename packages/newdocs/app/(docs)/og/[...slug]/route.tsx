@@ -1,16 +1,25 @@
 import { blogSource, functionsSource, source } from '@docs/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
-import { Buffer } from 'node:buffer';
 import process from 'node:process';
 
 import type { PageTreePage, PageTreeRoot } from '@/lib/page-tree';
 
 import { getAllPagesFromFolder } from '@/lib/page-tree';
 
+import { loadAssets } from './_helpers';
+
+import 'react';
+
 export const revalidate = false;
 export const dynamic = 'force-static';
 export const dynamicParams = false;
+
+declare module 'react' {
+  interface HTMLAttributes<T> {
+    tw?: string;
+  }
+}
 
 interface OgPage {
   description: string;
@@ -103,34 +112,10 @@ export const getOgPageBySlug = (slug: string[]) => {
   return getOgPages().find((page) => page.slug.join('/') === pathname);
 };
 
-export const getOgImageUrl = (pageUrl: string) => `/og${pageUrl}.png`;
-
 export const generateStaticParams = () =>
   getOgPages().map((page) => ({
     slug: [...page.slug.slice(0, -1), `${page.slug[page.slug.length - 1]}.png`]
   }));
-
-const loadAssets = async () => {
-  const [normal, semibold] = await Promise.all([
-    import('./geist-regular-otf.json').then((mod) => mod.default),
-    import('./geist-semibold-otf.json').then((mod) => mod.default)
-  ]);
-
-  return [
-    {
-      name: 'Geist',
-      data: Buffer.from(normal.base64Font, 'base64'),
-      weight: 400,
-      style: 'normal'
-    },
-    {
-      name: 'Geist',
-      data: Buffer.from(semibold.base64Font, 'base64'),
-      weight: 600,
-      style: 'normal'
-    }
-  ] as const;
-};
 
 interface OgRouteProps {
   params: Promise<{
@@ -195,7 +180,7 @@ export const GET = async (_request: Request, props: OgRouteProps) => {
     {
       width: 1200,
       height: 628,
-      fonts: fonts as any
+      fonts
     }
   );
 };

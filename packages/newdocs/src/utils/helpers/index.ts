@@ -9,3 +9,8 @@ export const formatDate = (date: string) =>
     month: 'long',
     year: 'numeric'
   });
+
+export const getOgImageUrl = (pageUrl: string) => `/og${pageUrl}.png`;
+
+export const getPromptUrl = (baseURL: string, url: string) =>
+  `${baseURL}?q=${encodeURIComponent(`I'm looking at this reactuse documentation: ${url}.\n\nHelp me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.`)}`;

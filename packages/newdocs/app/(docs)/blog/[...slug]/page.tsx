@@ -1,13 +1,10 @@
 import { blogSource } from '@docs/lib/source';
 import { mdxComponents } from '@docs/mdx-components';
-import { Button } from '@docs/src/components/ui/button';
-import { ArrowLeftIcon } from 'lucide-react';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import process from 'node:process';
 
 import { LINKS } from '@/src/constants';
-import { formatDate } from '@/src/utils/helpers';
+import { formatDate, getOgImageUrl } from '@/src/utils/helpers';
 
 import {
   PageHeader,
@@ -50,7 +47,7 @@ export const generateMetadata = async (props: BlogPageProps) => {
       url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`,
       images: [
         {
-          url: `/og${page.url}.png`
+          url: getOgImageUrl(page.url)
         }
       ]
     },
@@ -60,7 +57,7 @@ export const generateMetadata = async (props: BlogPageProps) => {
       description: page.data.description,
       images: [
         {
-          url: `/og${page.url}.png`
+          url: getOgImageUrl(page.url)
         }
       ],
       creator: '@siberiacancode'

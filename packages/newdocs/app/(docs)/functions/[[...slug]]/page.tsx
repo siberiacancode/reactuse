@@ -12,6 +12,7 @@ import process from 'node:process';
 import type { FunctionMetadata } from '@/src/constants';
 
 import { LINKS } from '@/src/constants';
+import { getOgImageUrl } from '@/src/utils/helpers';
 
 import { mdxComponents } from '../../../../mdx-components';
 import {
@@ -53,7 +54,7 @@ export const generateMetadata = async (props: FunctionPageProps) => {
       url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`,
       images: [
         {
-          url: `/og${page.url}.png`
+          url: getOgImageUrl(page.url)
         }
       ]
     },
@@ -63,7 +64,7 @@ export const generateMetadata = async (props: FunctionPageProps) => {
       description: page.data.description,
       images: [
         {
-          url: `/og${page.url}.png`
+          url: getOgImageUrl(page.url)
         }
       ],
       creator: '@siberiacancode'

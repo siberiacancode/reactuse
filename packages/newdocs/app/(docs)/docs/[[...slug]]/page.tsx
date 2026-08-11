@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation';
 import process from 'node:process';
 
 import { LINKS } from '@/src/constants';
+import { getOgImageUrl } from '@/src/utils/helpers';
 
 import {
   PageHeader,
@@ -51,7 +52,7 @@ export const generateMetadata = async (props: DocsPageProps) => {
       url: `${process.env.NEXT_PUBLIC_APP_URL}${page.url}`,
       images: [
         {
-          url: `/og${page.url}.png`
+          url: getOgImageUrl(page.url)
         }
       ]
     },
@@ -61,7 +62,7 @@ export const generateMetadata = async (props: DocsPageProps) => {
       description: page.data.description,
       images: [
         {
-          url: `/og${page.url}.png`
+          url: getOgImageUrl(page.url)
         }
       ],
       creator: '@siberiacancode'

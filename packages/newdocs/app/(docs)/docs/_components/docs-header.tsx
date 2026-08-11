@@ -20,9 +20,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-import { LINKS } from '@/src/constants';
-
-import { getPromptUrl, PROMPT_LINKS } from '../../_helpers';
+import { LINKS, PROMPT_LINKS } from '@/src/constants';
+import { getPromptUrl } from '@/src/utils/helpers';
 
 interface DocsHeaderProps {
   description?: string;

@@ -157,8 +157,7 @@ export const Search = (props: Props) => {
             target='_blank'
           >
             <span>Search by</span>
-            <AlgoliaIcon className='size-4' />
-            <span className='font-medium'>Algolia</span>
+            <AlgoliaIcon className='h-4 w-auto' />
           </a>
         </div>
       </DialogContent>

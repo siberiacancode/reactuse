@@ -4,6 +4,7 @@ import Link from 'next/link';
 import process from 'node:process';
 
 import { Button } from '@/src/components/ui';
+import { getOgImageUrl } from '@/src/utils/helpers';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -28,7 +29,7 @@ export const metadata = {
     url: `${process.env.NEXT_PUBLIC_APP_URL}blog`,
     images: [
       {
-        url: `/og/blog.png`
+        url: getOgImageUrl('/blog')
       }
     ]
   },
@@ -38,7 +39,7 @@ export const metadata = {
     description: 'News, guides and updates about reactuse.',
     images: [
       {
-        url: `/og/blog.png`
+        url: getOgImageUrl('/blog')
       }
     ],
     creator: '@siberiacancode'
