@@ -198,10 +198,7 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
   useEffect(() => {
     const onParamsChange = () => {
       const searchParams = getUrlSearchParams(mode);
-      setValue({
-        ...(initialValue && getParsedUrlSearchParams(initialValue)),
-        ...getParsedUrlSearchParams(searchParams)
-      } as Value);
+      setValue(getParsedUrlSearchParams(searchParams) as Value);
     };
 
     window.addEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);

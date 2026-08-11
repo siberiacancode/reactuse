@@ -115,10 +115,7 @@ export const useUrlSearchParams = (params) => {
   useEffect(() => {
     const onParamsChange = () => {
       const searchParams = getUrlSearchParams(mode);
-      setValue({
-        ...(initialValue && getParsedUrlSearchParams(initialValue)),
-        ...getParsedUrlSearchParams(searchParams)
-      });
+      setValue(getParsedUrlSearchParams(searchParams));
     };
     window.addEventListener(URL_SEARCH_PARAMS_EVENT, onParamsChange);
     window.addEventListener('popstate', onParamsChange);
