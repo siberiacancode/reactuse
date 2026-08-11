@@ -112,6 +112,12 @@ export const useUrlSearchParam = (key, params) => {
     setUrlSearchParam(key, value, mode, options?.write ?? writeMode);
     setValue(value);
   };
+  useEffect(() => {
+    if (initialValue === undefined) return;
+    const urlSearchParams = getUrlSearchParams(mode);
+    if (urlSearchParams.get(key) !== null) return;
+    setUrlSearchParam(key, initialValue, mode, writeMode);
+  }, []);
   const remove = (options) => {
     setUrlSearchParam(key, undefined, mode, options?.write ?? writeMode);
     setValue(initialValue);
