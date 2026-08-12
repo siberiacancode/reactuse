@@ -168,14 +168,10 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
     if (typeof window === 'undefined') return (initialValue ?? {}) as Value;
 
     const urlSearchParams = getUrlSearchParams(mode);
-    const value = {
+    return {
       ...(initialValue && getParsedUrlSearchParams(initialValue)),
       ...getParsedUrlSearchParams(urlSearchParams)
     } as Value;
-
-    setUrlSearchParams(mode, value, writeMode);
-
-    return value;
   });
 
   const set = (params: Partial<Value>, options?: UseUrlSearchParamsSetOptions) => {
@@ -186,6 +182,18 @@ export const useUrlSearchParams = (<Value extends UrlParams>(
     );
     setValue(getParsedUrlSearchParams(searchParams) as Value);
   };
+
+  useEffect(() => {
+    if (!initialValue) return;
+
+    const urlSearchParams = getUrlSearchParams(mode);
+    const missingParams = Object.keys(getParsedUrlSearchParams(initialValue)).filter(
+      (param) => !urlSearchParams.has(param)
+    );
+    if (!missingParams.length) return;
+
+    setUrlSearchParams(mode, value, writeMode);
+  }, []);
 
   useEffect(() => {
     const onParamsChange = () => {

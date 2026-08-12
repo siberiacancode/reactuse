@@ -105,16 +105,19 @@ export const useUrlSearchParam = (key, params) => {
   const [value, setValue] = useState(() => {
     const urlSearchParams = getUrlSearchParams(mode);
     const currentValue = urlSearchParams.get(key);
-    if (currentValue === null && initialValue !== undefined) {
-      setUrlSearchParam(key, initialValue, mode, writeMode);
-      return initialValue;
-    }
+    if (currentValue === null) return initialValue;
     return currentValue ? deserializer(currentValue) : undefined;
   });
   const set = (value, options) => {
     setUrlSearchParam(key, value, mode, options?.write ?? writeMode);
     setValue(value);
   };
+  useEffect(() => {
+    if (initialValue === undefined) return;
+    const urlSearchParams = getUrlSearchParams(mode);
+    if (urlSearchParams.get(key) !== null) return;
+    setUrlSearchParam(key, initialValue, mode, writeMode);
+  }, []);
   const remove = (options) => {
     setUrlSearchParam(key, undefined, mode, options?.write ?? writeMode);
     setValue(undefined);
