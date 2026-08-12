@@ -105,12 +105,7 @@ export const useUrlSearchParam = (key, params) => {
   const [value, setValue] = useState(() => {
     const urlSearchParams = getUrlSearchParams(mode);
     const currentValue = urlSearchParams.get(key);
-<<<<<<< HEAD
     return currentValue !== null ? deserializer(currentValue) : initialValue;
-=======
-    if (currentValue === null) return initialValue;
-    return currentValue ? deserializer(currentValue) : undefined;
->>>>>>> f05076791b9fb50f8615324c42f539aa2e28d929
   });
   const set = (value, options) => {
     setUrlSearchParam(key, value, mode, options?.write ?? writeMode);

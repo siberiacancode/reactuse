@@ -83,7 +83,8 @@ const Demo = () => {
     cuisine: 'All'
   });
 
-  const { search, cuisine } = filters.value;
+  const { cuisine } = filters.value;
+  const search = String(filters.value.search ?? '');
 
   const results = RECIPES.filter((recipe) => {
     const matchesSearch = recipe.name.toLowerCase().includes(search.toLowerCase().trim());

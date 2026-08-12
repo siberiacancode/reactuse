@@ -44,7 +44,7 @@
   "dependencies": {
     "@base-ui/react": "^1.7.0",
     "@siberiacancode/fetches": "^1.14.3",
-    "@siberiacancode/reactuse": "^1.0.12",
+    "@siberiacancode/reactuse": "^1.0.13",
     "@types/mdx": "^2.0.14",
     "@webcam/react": "^1.1.0",
     "algoliasearch": "^5.56.0",
