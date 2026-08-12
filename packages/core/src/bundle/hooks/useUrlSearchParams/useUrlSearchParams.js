@@ -90,12 +90,10 @@ export const useUrlSearchParams = (params) => {
   const [value, setValue] = useState(() => {
     if (typeof window === 'undefined') return initialValue ?? {};
     const urlSearchParams = getUrlSearchParams(mode);
-    const value = {
+    return {
       ...(initialValue && getParsedUrlSearchParams(initialValue)),
       ...getParsedUrlSearchParams(urlSearchParams)
     };
-    setUrlSearchParams(mode, value, writeMode);
-    return value;
   });
   const set = (params, options) => {
     const searchParams = setUrlSearchParams(
@@ -105,6 +103,15 @@ export const useUrlSearchParams = (params) => {
     );
     setValue(getParsedUrlSearchParams(searchParams));
   };
+  useEffect(() => {
+    if (!initialValue) return;
+    const urlSearchParams = getUrlSearchParams(mode);
+    const currentParams = Object.keys(getParsedUrlSearchParams(initialValue)).filter(
+      (param) => !urlSearchParams.has(param)
+    );
+    if (!currentParams.length) return;
+    setUrlSearchParams(mode, value, writeMode);
+  }, []);
   useEffect(() => {
     const onParamsChange = () => {
       const searchParams = getUrlSearchParams(mode);

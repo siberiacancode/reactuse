@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { StrictMode } from 'react';
 
 import { renderHookServer } from '@/tests';
 
@@ -149,6 +150,17 @@ it('Should use push write mode', () => {
 
   expect(pushStateSpy).toHaveBeenCalled();
   expect(window.location.search).toBe('?q=hooks');
+});
+
+it('Should seed initial values only once in strict mode with push write mode', () => {
+  const pushStateSpy = vi.spyOn(window.history, 'pushState');
+
+  renderHook(() => useUrlSearchParams({ initialValue: { q: 'react', page: 1 }, write: 'push' }), {
+    wrapper: StrictMode
+  });
+
+  expect(pushStateSpy).toHaveBeenCalledTimes(1);
+  expect(window.location.search).toBe('?q=react&page=1');
 });
 
 it('Should cleanup on unmount for hash mode', () => {
