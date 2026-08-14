@@ -9,40 +9,369 @@ isDemo: true
 lastModifiedTime: 1779190580000
 ---
 
-import metadata from './createStore.meta.json';
+# createStore
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Creates a store with state management capabilities
+
+## Demo
+
+```tsx
+import type { SubmitEvent } from 'react';
+
+import { createStore, useDidUpdate } from '@siberiacancode/reactuse';
+import { CheckIcon, ChevronDownIcon } from 'lucide-react';
+import { memo, useRef } from 'react';
+
+interface Profile {
+  bio: string;
+  email: string;
+  isPublic: boolean;
+  language: string;
+  name: string;
+  notifications: boolean;
+}
+
+const DEFAULT_PROFILE: Profile = {
+  name: 'siberiacancode',
+  email: 'hello@reactuse.org',
+  bio: 'Building open-source React hooks',
+  language: 'en',
+  notifications: true,
+  isPublic: false
+};
+
+const LANGUAGES = [
+  { value: 'en', label: 'English' },
+  { value: 'ru', label: 'Russian' },
+  { value: 'de', label: 'German' }
+];
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/;
+
+const profileStore = createStore(() => DEFAULT_PROFILE);
+
+interface RerenderInfoProps {
+  componentName: string;
+}
+
+const RerenderInfo = ({ componentName }: RerenderInfoProps) => {
+  const countRef = useRef(0);
+  const badgeRef = useRef<HTMLSpanElement>(null);
+
+  useDidUpdate(() => {
+    countRef.current++;
+    if (badgeRef.current) {
+      badgeRef.current.textContent = `${componentName} x${countRef.current}`;
+      badgeRef.current.style.opacity = '1';
+    }
+
+    const timer = setTimeout(() => {
+      if (badgeRef.current) badgeRef.current.style.opacity = '0';
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  });
+
+  return (
+    <span
+      ref={badgeRef}
+      className='bg-primary text-primary-foreground absolute -top-2.5 right-0 z-10 rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold tabular-nums transition-opacity duration-300'
+      style={{ opacity: 0 }}
+    />
+  );
+};
+
+const NameField = memo(() => {
+  const name = profileStore.use((state) => state.name);
+  const error = name.trim().length < 2 ? 'At least 2 characters' : '';
+
+  return (
+    <div className='relative flex flex-col gap-1.5'>
+      <RerenderInfo componentName='NameField' />
+      <label className='text-foreground text-xs font-medium' htmlFor='name'>
+        Display name
+      </label>
+      <input
+        className='border-border bg-card text-foreground rounded-md border px-3 py-2 text-sm outline-none'
+        id='name'
+        placeholder='Your name'
+        value={name}
+        onChange={(event) => profileStore.set({ name: event.target.value })}
+      />
+      {error && <span className='text-destructive text-xs'>{error}</span>}
+    </div>
+  );
+});
+NameField.displayName = 'NameField';
+
+const EmailField = memo(() => {
+  const email = profileStore.use((state) => state.email);
+  const error = !EMAIL_PATTERN.test(email) ? 'Invalid email format' : '';
+
+  return (
+    <div className='relative flex flex-col gap-1.5'>
+      <RerenderInfo componentName='EmailField' />
+      <label className='text-foreground text-xs font-medium' htmlFor='email'>
+        Email
+      </label>
+      <input
+        className='border-border bg-card text-foreground rounded-md border px-3 py-2 text-sm outline-none'
+        id='email'
+        placeholder='you@example.com'
+        type='email'
+        value={email}
+        onChange={(event) => profileStore.set({ email: event.target.value })}
+      />
+      {error && <span className='text-destructive text-xs'>{error}</span>}
+    </div>
+  );
+});
+EmailField.displayName = 'EmailField';
+
+const BioField = memo(() => {
+  const bio = profileStore.use((state) => state.bio);
+
+  return (
+    <div className='relative flex flex-col gap-1.5'>
+      <RerenderInfo componentName='BioField' />
+      <label className='text-foreground text-xs font-medium' htmlFor='bio'>
+        Bio
+      </label>
+      <textarea
+        className='border-border bg-card text-foreground min-h-[72px] resize-none rounded-md border px-3 py-2 text-sm outline-none'
+        id='bio'
+        placeholder='Tell something about yourself...'
+        value={bio}
+        onChange={(event) => profileStore.set({ bio: event.target.value })}
+      />
+    </div>
+  );
+});
+BioField.displayName = 'BioField';
+
+const NotificationsField = memo(() => {
+  const notifications = profileStore.use((state) => state.notifications);
+
+  return (
+    <label className='relative flex cursor-pointer items-start justify-between gap-3'>
+      <RerenderInfo componentName='NotificationsField' />
+      <div className='flex flex-col gap-0.5'>
+        <span className='text-foreground text-xs font-medium'>Email notifications</span>
+        <span className='text-muted-foreground text-[11px]'>
+          Receive product updates and release notes
+        </span>
+      </div>
+      <input
+        checked={notifications}
+        role='switch'
+        type='checkbox'
+        onChange={(event) => profileStore.set({ notifications: event.target.checked })}
+      />
+    </label>
+  );
+});
+NotificationsField.displayName = 'NotificationsField';
+
+const LanguageField = memo(() => {
+  const language = profileStore.use((state) => state.language);
+
+  return (
+    <div className='relative flex items-center justify-between gap-3'>
+      <RerenderInfo componentName='LanguageField' />
+      <div className='flex flex-col gap-0.5'>
+        <label className='text-foreground text-xs font-medium' htmlFor='language'>
+          Language
+        </label>
+        <span className='text-muted-foreground text-[11px]'>Choose your preferred language</span>
+      </div>
+      <div className='relative'>
+        <select
+          className='border-border bg-card text-foreground w-32 appearance-none rounded-md border py-1.5 pr-7 pl-3 text-xs outline-none'
+          id='language'
+          value={language}
+          onChange={(event) => profileStore.set({ language: event.target.value })}
+        >
+          {LANGUAGES.map((item) => (
+            <option key={item.value} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDownIcon className='text-muted-foreground pointer-events-none absolute top-1/2 right-2 size-3.5 -translate-y-1/2' />
+      </div>
+    </div>
+  );
+});
+LanguageField.displayName = 'LanguageField';
+
+const PublicField = memo(() => {
+  const isPublic = profileStore.use((state) => state.isPublic);
+
+  return (
+    <label className='relative flex cursor-pointer items-start gap-3'>
+      <RerenderInfo componentName='PublicField' />
+      <span className='mt-0.5 flex shrink-0 items-center'>
+        <input
+          checked={isPublic}
+          className='peer sr-only'
+          type='checkbox'
+          onChange={(event) => profileStore.set({ isPublic: event.target.checked })}
+        />
+        <span className='border-border peer-checked:border-foreground peer-checked:bg-foreground flex size-4 items-center justify-center rounded-[5px] border transition-colors'>
+          {isPublic && <CheckIcon className='text-background size-3' strokeWidth={3.5} />}
+        </span>
+      </span>
+      <div className='flex flex-col gap-0.5'>
+        <span className='text-foreground text-xs font-medium'>Make profile public</span>
+        <span className='text-muted-foreground text-[11px]'>
+          Anyone on the internet can see your profile
+        </span>
+      </div>
+    </label>
+  );
+});
+PublicField.displayName = 'PublicField';
+
+const Demo = () => {
+  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => event.preventDefault();
+
+  return (
+    <section className='flex w-full max-w-md flex-col gap-4 p-4'>
+      <div className='flex flex-col gap-1'>
+        <h2 className='text-foreground text-sm font-semibold'>Account settings</h2>
+        <p className='text-muted-foreground text-xs'>
+          Each field subscribes to its own slice — only the changed field re-renders.
+        </p>
+      </div>
+
+      <form className='flex flex-col gap-4' onSubmit={onSubmit}>
+        <NameField />
+        <EmailField />
+        <BioField />
+        <NotificationsField />
+        <LanguageField />
+        <PublicField />
+      </form>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add createStore
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add createStore
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useSyncExternalStore } from 'react';
+
+type StoreSetAction<Value> = ((prev: Value) => Partial<Value>) | Partial<Value>;
+
+type StoreListener<Value> = (state: Value, prevState: Value) => void;
+
+type StoreCreator<Value> = (
+  set: (action: StoreSetAction<Value>) => void,
+  get: () => Value
+) => Value;
+
+export interface StoreApi<Value> {
+  get: () => Value;
+  getInitial: () => Value;
+  set: (action: StoreSetAction<Value>) => void;
+  subscribe: (listener: StoreListener<Value>) => () => void;
+
+  use: (() => Value) &
+    (<Selected>(selector: (state: Value) => Selected) => Selected) &
+    (<Selected>(selector?: (state: Value) => Selected) => Selected | Value);
+}
+
+/**
+ * @name createStore
+ * @description - Creates a store with state management capabilities
+ * @category Helpers
+ * @usage medium
+ *
+ * @template Value - The type of the store state
+ * @param {StateCreator<Value>} createState - Function that initializes the store state
+ * @returns {StoreApi<Value>} - Object containing store methods and hook for accessing state
+ *
+ * @example
+ * const { set, get, use, subscribe } = createStore((set) => ({
+ *   count: 0,
+ *   increment: () => set(state => ({ count: state.count + 1 }))
+ * }));
+ */
+export const createStore = <Value>(createState: StoreCreator<Value> | Value): StoreApi<Value> => {
+  let state: Value;
+  let initialState: Value;
+  const listeners: Set<StoreListener<Value>> = new Set();
+
+  const setState: StoreApi<Value>['set'] = (action: StoreSetAction<Value>) => {
+    const nextState = typeof action === 'function' ? action(state) : action;
+
+    if (!Object.is(nextState, state)) {
+      const prevState = state;
+      state = (
+        typeof nextState !== 'object' || nextState === null || Array.isArray(nextState)
+          ? nextState
+          : { ...state, ...nextState }
+      ) as Value;
+
+      listeners.forEach((listener) => listener(state, prevState));
+    }
+  };
+
+  const subscribe = (listener: StoreListener<Value>) => {
+    listeners.add(listener);
+
+    return () => listeners.delete(listener);
+  };
+
+  const getState = () => state;
+  const getInitialState = () => initialState;
+
+  if (typeof createState === 'function') {
+    initialState = state = (createState as StoreCreator<Value>)(setState, getState);
+  } else {
+    initialState = state = createState;
+  }
+
+  function useStore(): Value;
+  function useStore<Selected>(selector: (state: Value) => Selected): Selected;
+  function useStore<Selected>(selector?: (state: Value) => Selected): Selected | Value {
+    return useSyncExternalStore(
+      subscribe,
+      () => (selector ? selector(getState()) : getState()),
+      () => (selector ? selector(getInitialState()) : getInitialState())
+    );
+  }
+
+  return {
+    set: setState,
+    get: getState,
+    getInitial: getInitialState,
+    use: useStore,
+    subscribe
+  };
+};
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -52,12 +381,36 @@ const { set, get, use, subscribe } = createStore((set) => ({ count: 0, increment
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+```tsx
+type StoreSetAction<Value> = ((prev: Value) => Partial<Value>) | Partial<Value>;
+
+type StoreListener<Value> = (state: Value, prevState: Value) => void;
+
+type StoreCreator<Value> = (
+  set: (action: StoreSetAction<Value>) => void,
+  get: () => Value
+) => Value;
+
+export interface StoreApi<Value> {
+  get: () => Value;
+  getInitial: () => Value;
+  set: (action: StoreSetAction<Value>) => void;
+  subscribe: (listener: StoreListener<Value>) => () => void;
+
+  use: (() => Value) &
+    (<Selected>(selector: (state: Value) => Selected) => Selected) &
+    (<Selected>(selector?: (state: Value) => Selected) => Selected | Value);
+}
+```
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Parameters
 
-## Contributors
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| createState | `StateCreator<Value>` | - | Function that initializes the store state |
 
-<FunctionContributors contributors={metadata.contributors} />
+### Returns
+
+`StoreApi<Value>` - Object containing store methods and hook for accessing state

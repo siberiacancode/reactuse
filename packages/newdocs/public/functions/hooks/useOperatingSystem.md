@@ -9,40 +9,150 @@ isDemo: true
 lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useOperatingSystem.meta.json';
+# useOperatingSystem
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that returns the operating system of the current browser
+
+## Demo
+
+```tsx
+import type { OperatingSystem } from '@siberiacancode/reactuse';
+
+import { useOperatingSystem } from '@siberiacancode/reactuse';
+import { ChevronDownIcon, DownloadIcon } from 'lucide-react';
+import { useState } from 'react';
+
+const OS_CONFIG = {
+  macos: { label: 'macOS', arch: 'Apple Silicon', store: 'Mac App Store' },
+  ios: { label: 'iOS', arch: '', store: 'App Store' },
+  windows: { label: 'Windows', arch: 'x64', store: 'Microsoft Store' },
+  android: { label: 'Android', arch: '', store: 'Google Play' },
+  linux: { label: 'Linux', arch: 'x86_64', store: 'Snap Store' },
+  undetermined: { label: 'Desktop', arch: '', store: 'all stores' }
+} as const;
+
+const OPTIONS: OperatingSystem[] = ['macos', 'windows', 'linux', 'ios', 'android'];
+
+const Demo = () => {
+  const operatingSystem = useOperatingSystem();
+  const [os, setOs] = useState<OperatingSystem>(
+    operatingSystem === 'undetermined' ? 'macos' : operatingSystem
+  );
+
+  const config = OS_CONFIG[os];
+
+  return (
+    <section className='flex w-full max-w-xl flex-col items-center gap-6 p-8 text-center'>
+      <img alt='Juniors Bootcamp' className='h-14' src='/images/jb.png' />
+
+      <div className='flex flex-col gap-3'>
+        <h1 className='text-foreground text-4xl font-bold tracking-tight sm:text-5xl'>
+          The best start to your career
+        </h1>
+        <p className='text-muted-foreground text-base'>
+          Practice on tasks that mirror real work and level up your skills through experience.
+        </p>
+      </div>
+
+      <div className='flex flex-col items-center gap-4'>
+        <div className='relative inline-flex'>
+          <select
+            className='hover:bg-accent! w-auto! border-transparent! bg-transparent! pr-7!'
+            value={os}
+            onChange={(event) => setOs(event.target.value as OperatingSystem)}
+          >
+            {OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {OS_CONFIG[option].label}
+                {OS_CONFIG[option].arch && ` · ${OS_CONFIG[option].arch}`}
+              </option>
+            ))}
+          </select>
+          <ChevronDownIcon className='text-muted-foreground pointer-events-none absolute top-1/2 right-1.5 size-4 -translate-y-1/2' />
+        </div>
+
+        <div className='flex items-center gap-2'>
+          <button className='h-11 px-6 text-base' type='button'>
+            Download
+            <DownloadIcon className='size-4' />
+          </button>
+
+          <button className='h-11 px-6 text-base' data-variant='outline' type='button'>
+            Get it on {config.store}
+          </button>
+        </div>
+      </div>
+
+      <div className='border-border bg-muted mt-2 aspect-video w-full overflow-hidden rounded-xl border'>
+        <img
+          alt='Juniors Bootcamp preview'
+          className='size-full object-cover'
+          src='PREVIEW_URL_HERE'
+        />
+      </div>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useOperatingSystem
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useOperatingSystem
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useState } from 'react';
+
+/** The operating system type */
+export type OperatingSystem = 'android' | 'ios' | 'linux' | 'macos' | 'undetermined' | 'windows';
+
+export const getOperatingSystem = (): OperatingSystem => {
+  if (typeof window === 'undefined') return 'undetermined';
+
+  const { userAgent } = window.navigator;
+
+  if (/Macintosh|MacIntel|MacPPC|Mac68K/i.test(userAgent)) return 'macos';
+  if (/iPhone|iPad|iPod/i.test(userAgent)) return 'ios';
+  if (/Win32|Win64|Windows|WinCE/i.test(userAgent)) return 'windows';
+  if (/Android/i.test(userAgent)) return 'android';
+  if (/Linux/i.test(userAgent)) return 'linux';
+
+  return 'undetermined';
+};
+
+/**
+ * @name useOperatingSystem
+ * @description - Hook that returns the operating system of the current browser
+ * @category User
+ * @usage low
+ *
+ * @returns {OperatingSystem} The operating system
+ *
+ * @example
+ * const operatingSystem = useOperatingSystem();
+ */
+export const useOperatingSystem = () => {
+  const [osOperatingSystem] = useState<OperatingSystem>(getOperatingSystem());
+  return osOperatingSystem;
+};
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -52,12 +162,12 @@ const operatingSystem = useOperatingSystem();
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+```tsx
+export type OperatingSystem = 'android' | 'ios' | 'linux' | 'macos' | 'undetermined' | 'windows';
+```
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Returns
 
-## Contributors
-
-<FunctionContributors contributors={metadata.contributors} />
+`OperatingSystem` - The operating system

@@ -9,47 +9,75 @@ isDemo: true
 lastModifiedTime: 1754977987000
 ---
 
-import metadata from './usePreferredDark.meta.json';
+# usePreferredDark
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that returns if the user prefers dark mode
+
+## Demo
+
+```tsx
+import { usePreferredDark } from '@siberiacancode/reactuse';
+import { MoonIcon, SunIcon } from 'lucide-react';
+
+const Demo = () => {
+  const isDark = usePreferredDark();
+
+  return (
+    <section className='flex flex-col items-center gap-3 p-8'>
+      <div className='bg-muted text-foreground flex size-12 items-center justify-center rounded-full'>
+        {isDark ? <MoonIcon className='size-5' /> : <SunIcon className='size-5' />}
+      </div>
+
+      <div className='flex flex-col items-center gap-1 text-center'>
+        <p className='text-foreground text-sm font-medium'>
+          {isDark ? 'Dark mode is on' : 'Light mode is on'}
+        </p>
+        <p className='text-muted-foreground text-xs'>Detected from your system settings</p>
+      </div>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add usePreferredDark
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add usePreferredDark
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useMediaQuery } from '../useMediaQuery/useMediaQuery';
+
+/**
+ * @name usePreferredDark
+ * @description - Hook that returns if the user prefers dark mode
+ * @category User
+ * @usage medium
+ *
+ * @example
+ * const isDark = usePreferredDark();
+ */
+export const usePreferredDark = () => useMediaQuery('(prefers-color-scheme: dark)');
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
 ```tsx
 const isDark = usePreferredDark();
 ```
-
-## Contributors
-
-<FunctionContributors contributors={metadata.contributors} />

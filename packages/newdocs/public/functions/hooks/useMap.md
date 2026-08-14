@@ -9,40 +9,241 @@ isDemo: true
 lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useMap.meta.json';
+# useMap
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that manages a map structure
+
+## Demo
+
+```tsx
+import { useMap } from '@siberiacancode/reactuse';
+import { MinusIcon, PlusIcon } from 'lucide-react';
+
+import { cn } from '@/utils/lib';
+
+interface Product {
+  emoji: string;
+  id: string;
+  name: string;
+  price: number;
+  weight: string;
+}
+
+const CATALOG: Product[] = [
+  { id: 'bread', name: 'Baltic bread', price: 46, weight: '400 g', emoji: '🍞' },
+  { id: 'cheese', name: 'Almette cream cheese', price: 152, weight: '150 g', emoji: '🧀' },
+  { id: 'milk', name: 'Farm milk', price: 89, weight: '1 L', emoji: '🥛' },
+  { id: 'eggs', name: 'Free-range eggs', price: 120, weight: '10 pcs', emoji: '🥚' },
+  { id: 'butter', name: 'Creamy butter', price: 180, weight: '200 g', emoji: '🧈' },
+  { id: 'banana', name: 'Bananas', price: 95, weight: '1 kg', emoji: '🍌' }
+];
+
+const PRODUCT_BY_ID = new Map(CATALOG.map((product) => [product.id, product]));
+
+const Demo = () => {
+  const cart = useMap<string, number>([
+    ['bread', 2],
+    ['cheese', 1]
+  ]);
+
+  const onAdd = (id: string) => {
+    cart.set(id, (cart.value.get(id) ?? 0) + 1);
+  };
+
+  const onDecrement = (id: string) => {
+    const current = cart.value.get(id) ?? 0;
+    if (current <= 1) {
+      if (cart.size <= 1) return;
+      cart.remove(id);
+    } else {
+      cart.set(id, current - 1);
+    }
+  };
+
+  const items = Array.from(cart.value, ([id, qty]) => ({
+    product: PRODUCT_BY_ID.get(id)!,
+    qty
+  }));
+
+  const total = items.reduce((sum, { product, qty }) => sum + product.price * qty, 0);
+
+  return (
+    <section className='flex w-full max-w-sm flex-col gap-5 p-4'>
+      <div className='flex flex-col gap-3'>
+        <h2 className='text-foreground text-base font-semibold'>Cart</h2>
+
+        {items.map(({ product, qty }) => {
+          const isLastItem = cart.size <= 1 && qty <= 1;
+          return (
+            <div key={product.id} className='flex items-center gap-3'>
+              <div className='bg-muted/40 flex size-10 shrink-0 items-center justify-center rounded-lg text-xl'>
+                {product.emoji}
+              </div>
+              <div className='flex min-w-0 flex-1 flex-col leading-tight'>
+                <span className='text-foreground truncate text-sm'>{product.name}</span>
+                <span className='text-muted-foreground text-[10px]'>{product.weight}</span>
+              </div>
+              <div className='flex items-center gap-1.5'>
+                <button
+                  aria-label='Decrease'
+                  className='rounded-full!'
+                  data-size='icon-xs'
+                  data-variant='outline'
+                  disabled={isLastItem}
+                  type='button'
+                  onClick={() => onDecrement(product.id)}
+                >
+                  <MinusIcon className='size-3' />
+                </button>
+                <span className='text-foreground w-4 text-center font-mono text-xs font-semibold tabular-nums'>
+                  {qty}
+                </span>
+                <button
+                  aria-label='Increase'
+                  className='rounded-full!'
+                  data-size='icon-xs'
+                  data-variant='outline'
+                  type='button'
+                  onClick={() => onAdd(product.id)}
+                >
+                  <PlusIcon className='size-3' />
+                </button>
+              </div>
+              <span className='text-foreground w-12 text-right font-mono text-sm font-semibold tabular-nums'>
+                ${product.price * qty}
+              </span>
+            </div>
+          );
+        })}
+
+        <div className='border-border flex items-center justify-between border-t pt-3'>
+          <span className='text-muted-foreground text-sm'>Total</span>
+          <span className='text-foreground font-mono text-lg font-bold tabular-nums'>${total}</span>
+        </div>
+      </div>
+
+      <div className='grid grid-cols-3 gap-2'>
+        {CATALOG.map((product) => {
+          const inCart = cart.has(product.id);
+          return (
+            <div key={product.id} className='bg-card flex flex-col gap-1.5 rounded-xl p-2'>
+              <div className='bg-muted/40 flex h-12 items-center justify-center rounded-lg text-2xl'>
+                {product.emoji}
+              </div>
+              <span className='text-muted-foreground line-clamp-1 text-[10px] leading-tight'>
+                {product.name}
+              </span>
+              <button
+                className={cn(
+                  'flex h-7 items-center justify-center rounded-lg border transition-colors',
+                  inCart
+                    ? 'border-foreground bg-foreground text-background'
+                    : 'border-border bg-card hover:bg-muted/40'
+                )}
+                aria-label={`Add ${product.name}`}
+                data-variant='unstyled'
+                type='button'
+                onClick={() => onAdd(product.id)}
+              >
+                {inCart ? (
+                  <span className='font-mono text-xs font-semibold tabular-nums'>
+                    {cart.value.get(product.id)}
+                  </span>
+                ) : (
+                  <PlusIcon className='size-4' />
+                )}
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useMap
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useMap
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useState } from 'react';
+
+/** The use map return type */
+export interface UseMapReturn<Key, Value> {
+  /** The size of the map */
+  size: number;
+  /** The current map */
+  value: Map<Key, Value>;
+  /** Function to clear the map */
+  clear: () => void;
+  /** Function to check if a value exists in the map */
+  has: (key: Key) => boolean;
+  /** Function to remove a value from the map */
+  remove: (key: Key) => void;
+  /** Function to toggle a value in the map */
+  reset: () => void;
+  /** Function to add a value to the map */
+  set: (key: Key, value: Value) => void;
+}
+
+/**
+ * @name useMap
+ * @description - Hook that manages a map structure
+ * @category State
+ * @usage high
+ *
+ * @template Value The type of the value
+ * @param {Value[]} [values] The initial array of the map
+ * @returns {UseMapReturn<Key, Value>} An object containing the current map and functions to interact with the map
+ *
+ * @example
+ * const { value, set, remove, clear, reset, size, has } = useMap([1, 'one'], [2, 'two']);
+ */
+export const useMap = <Key, Value>(values?: [Key, Value][]): UseMapReturn<Key, Value> => {
+  const [map, setMap] = useState(new Map(values));
+
+  const set = (key: Key, value: Value) => setMap((prevMap) => new Map(prevMap).set(key, value));
+  const remove = (key: Key) =>
+    setMap((prevMap) => {
+      if (!prevMap.has(key)) return prevMap;
+      const newMap = new Map(prevMap);
+      newMap.delete(key);
+      return newMap;
+    });
+  const clear = () => setMap(new Map());
+  const reset = () => setMap(new Map(values));
+  const has = (key: Key) => map.has(key);
+
+  return {
+    value: map,
+    size: map.size,
+    set,
+    has,
+    remove,
+    clear,
+    reset
+  };
+};
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -52,12 +253,33 @@ const { value, set, remove, clear, reset, size, has } = useMap([1, 'one'], [2, '
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+```tsx
+export interface UseMapReturn<Key, Value> {
+  /** The size of the map */
+  size: number;
+  /** The current map */
+  value: Map<Key, Value>;
+  /** Function to clear the map */
+  clear: () => void;
+  /** Function to check if a value exists in the map */
+  has: (key: Key) => boolean;
+  /** Function to remove a value from the map */
+  remove: (key: Key) => void;
+  /** Function to toggle a value in the map */
+  reset: () => void;
+  /** Function to add a value to the map */
+  set: (key: Key, value: Value) => void;
+}
+```
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Parameters
 
-## Contributors
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| values | `Value[]` | - | The initial array of the map |
 
-<FunctionContributors contributors={metadata.contributors} />
+### Returns
+
+`UseMapReturn<Key, Value>` - An object containing the current map and functions to interact with the map

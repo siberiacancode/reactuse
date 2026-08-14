@@ -9,40 +9,411 @@ isDemo: true
 lastModifiedTime: 1775645190000
 ---
 
-import metadata from './useAutoScroll.meta.json';
+# useAutoScroll
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that automatically scrolls a list element to the bottom
+
+## Demo
+
+```tsx
+import type { SubmitEvent } from 'react';
+
+import { useAutoScroll, useEventListener, useField, useInterval } from '@siberiacancode/reactuse';
+import { ArrowDownIcon, SendIcon } from 'lucide-react';
+import { useState } from 'react';
+
+import { cn } from '@/utils/lib';
+
+interface Message {
+  author: 'reactuse' | 'siberiacancode';
+  avatar?: string;
+  id: number;
+  text: string;
+  time: string;
+}
+
+const POKEMON_IDS = [1, 4, 7];
+
+const random = <T,>(items: T[]): T => items[Math.floor(Math.random() * items.length)];
+
+const getPokemonAvatar = (id: number) =>
+  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+const getRandomPokemonAvatar = () => getPokemonAvatar(random(POKEMON_IDS));
+
+const REACTUSE_REPLIES = [
+  'Hey! How is the new release going?',
+  'I just shipped a new hook 🚀',
+  'Check out useAutoScroll — it just works.',
+  'You can scroll up and pause auto-scroll, btw.',
+  'No dependencies, no config needed.',
+  'Coffee break? ☕',
+  'Did you see the new docs?',
+  'TypeScript types are fully covered.',
+  'Working on a fresh demo right now.',
+  'Star us on GitHub if you like it ⭐',
+  'Got any feedback on the API?',
+  'How do you like the new docs theme?',
+  'Have you tried useDisclosure yet?',
+  'I love how composable React hooks are',
+  'BRB, grabbing some snacks 🍪',
+  'Anyone else excited for the next release?'
+];
+
+const formatTime = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+const INITIAL_MESSAGES: Message[] = [
+  {
+    id: 1,
+    author: 'reactuse',
+    text: 'Hey siberiacancode 👋',
+    time: formatTime(),
+    avatar: getRandomPokemonAvatar()
+  },
+  { id: 2, author: 'siberiacancode', text: 'Hey! What’s up?', time: formatTime() },
+  {
+    id: 3,
+    author: 'reactuse',
+    text: 'Just shipped useAutoScroll today',
+    time: formatTime(),
+    avatar: getRandomPokemonAvatar()
+  },
+  {
+    id: 4,
+    author: 'siberiacancode',
+    text: 'Nice! Does it pause on manual scroll?',
+    time: formatTime()
+  },
+  {
+    id: 5,
+    author: 'reactuse',
+    text: 'Yep, it just works ✨',
+    time: formatTime(),
+    avatar: getRandomPokemonAvatar()
+  },
+  { id: 6, author: 'siberiacancode', text: 'Let me try it out', time: formatTime() }
+];
+
+const SCROLL_THRESHOLD = 20;
+const MAX_MESSAGES = 20;
+
+const Demo = () => {
+  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const messageField = useField('');
+  const [showNewMessage, setShowNewMessage] = useState(false);
+
+  const autoScrollRef = useAutoScroll<HTMLDivElement>();
+
+  useEventListener(autoScrollRef, 'scroll', () => {
+    const container = autoScrollRef.current;
+    if (!container) return;
+    const isAtBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight < SCROLL_THRESHOLD;
+    if (isAtBottom) setShowNewMessage(false);
+  });
+
+  useInterval(() => {
+    const container = autoScrollRef.current;
+    const isAtBottom = container
+      ? container.scrollHeight - container.scrollTop - container.clientHeight < SCROLL_THRESHOLD
+      : true;
+
+    setMessages((currentMessages) =>
+      [
+        ...currentMessages,
+        {
+          id: Math.random(),
+          author: 'reactuse' as const,
+          text: random(REACTUSE_REPLIES),
+          time: formatTime(),
+          avatar: getRandomPokemonAvatar()
+        }
+      ].slice(-MAX_MESSAGES)
+    );
+
+    if (!isAtBottom) setShowNewMessage(true);
+  }, 4000);
+
+  const onScrollToBottom = () => {
+    const container = autoScrollRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+    setShowNewMessage(false);
+  };
+
+  const message = messageField.watch();
+
+  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const trimmed = message.trim();
+    if (!trimmed) return;
+
+    setMessages((prev) =>
+      [
+        ...prev,
+        {
+          id: Math.random(),
+          author: 'siberiacancode' as const,
+          text: trimmed,
+          time: formatTime()
+        }
+      ].slice(-MAX_MESSAGES)
+    );
+
+    messageField.setValue('');
+    setShowNewMessage(false);
+  };
+
+  return (
+    <section className='flex w-md min-w-xs flex-col items-center'>
+      <div className='flex w-full flex-col gap-3 rounded-2xl border px-4 pb-4'>
+        <div className='relative'>
+          <div
+            ref={autoScrollRef}
+            className='no-scrollbar flex h-80 flex-col gap-3 overflow-y-auto scroll-smooth'
+          >
+            {messages.map((message) => {
+              const isMe = message.author === 'siberiacancode';
+              return (
+                <div
+                  key={message.id}
+                  className={cn('flex items-end gap-2', isMe && 'flex-row-reverse')}
+                >
+                  {isMe && (
+                    <div
+                      className='size-7 shrink-0 bg-gradient-to-br from-neutral-700 to-neutral-900 text-[10px] font-semibold text-white'
+                      data-slot='avatar'
+                    >
+                      <span data-slot='avatar-fallback'>SC</span>
+                    </div>
+                  )}
+                  {!isMe && (
+                    <div
+                      className='size-7 shrink-0 bg-neutral-200 dark:bg-neutral-800'
+                      data-slot='avatar'
+                    >
+                      <img
+                        alt='reactuse'
+                        className='translate-x-1 translate-y-1.5 scale-130 object-cover object-top'
+                        data-slot='avatar-image'
+                        src={message.avatar}
+                      />
+                    </div>
+                  )}
+
+                  <div
+                    className={cn(
+                      'relative flex max-w-[75%] items-end gap-2 rounded-xl px-3 py-2 pr-12 text-sm',
+                      isMe
+                        ? 'bg-primary text-primary-foreground rounded-br-sm'
+                        : 'bg-muted rounded-bl-sm'
+                    )}
+                  >
+                    <span>{message.text}</span>
+                    <span
+                      className={cn(
+                        'absolute right-3 bottom-1 text-[9px] opacity-60',
+                        isMe ? 'text-primary-foreground' : 'text-muted-foreground'
+                      )}
+                    >
+                      {message.time}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {showNewMessage && (
+            <button
+              className='absolute bottom-2 left-1/2 flex h-7 -translate-x-1/2 items-center gap-1.5 rounded-full px-3 text-xs shadow-md'
+              data-variant='outline'
+              type='button'
+              onClick={onScrollToBottom}
+            >
+              <ArrowDownIcon className='size-3' />
+              new message
+            </button>
+          )}
+        </div>
+
+        <form className='relative flex items-center gap-2' onSubmit={onSubmit}>
+          <input
+            className='h-11! rounded-full!'
+            placeholder='Type a message...'
+            {...messageField.register()}
+          />
+          <button
+            className='absolute top-1/2 right-1 h-8! -translate-y-1/2 rounded-full! p-2!'
+            disabled={!message}
+            type='submit'
+          >
+            <SendIcon className='size-5' />
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useAutoScroll
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useAutoScroll
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useEffect, useRef } from 'react';
+
+import type { HookTarget } from '@/utils/helpers';
+
+import { isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
+
+/** The use auto scroll options type */
+export interface UseAutoScrollOptions {
+  /** Whether auto-scrolling is enabled */
+  enabled?: boolean;
+  /** Whether to force auto-scrolling regardless of user interactions */
+  force?: boolean;
+}
+
+export interface UseAutoScroll {
+  (target: HookTarget, options?: UseAutoScrollOptions): void;
+
+  <Target extends HTMLElement>(options?: UseAutoScrollOptions): StateRef<Target>;
+}
+
+/**
+ * @name useAutoScroll
+ * @description - Hook that automatically scrolls a list element to the bottom
+ * @category Elements
+ * @usage low
+ *
+ * @overload
+ * @param {HookTarget} target The target element to auto-scroll
+ * @param {boolean} [options.enabled] Whether auto-scrolling is enabled
+ * @returns {void}
+ *
+ * @example
+ * useAutoScroll(ref);
+ *
+ * @overload
+ * @template Target
+ * @param {boolean} [options.enabled] Whether auto-scrolling is enabled
+ * @returns {StateRef<Target>} A React ref to attach to the list element
+ *
+ * @example
+ * const ref = useAutoScroll();
+ */
+export const useAutoScroll = ((...params: any[]) => {
+  const target = isTarget(params[0]) ? params[0] : undefined;
+  const options = (params[1] ||
+    (typeof params[0] === 'object' ? params[0] : {})) as UseAutoScrollOptions;
+  const { enabled = true } = options;
+
+  const internalRef = useRefState<HTMLElement>();
+  const internalOptionsRef = useRef<UseAutoScrollOptions>(options);
+  internalOptionsRef.current = options;
+
+  useEffect(() => {
+    if (!enabled || (!target && !internalRef.state)) return;
+
+    const element = (target ? isTarget.getElement(target) : internalRef.state) as HTMLElement;
+
+    if (!element) return;
+
+    let shouldAutoScroll = true;
+    let touchStartY = 0;
+    let lastScrollTop = 0;
+
+    const onCheckScrollPosition = () => {
+      if (internalOptionsRef.current.force) return;
+
+      const { scrollHeight, clientHeight, scrollTop } = element;
+      const maxScrollHeight = scrollHeight - clientHeight;
+      const scrollThreshold = maxScrollHeight / 2;
+
+      if (scrollTop < lastScrollTop) shouldAutoScroll = false;
+      else if (maxScrollHeight - scrollTop <= scrollThreshold) shouldAutoScroll = true;
+
+      lastScrollTop = scrollTop;
+    };
+
+    const onWheel = (event: WheelEvent) => {
+      if (internalOptionsRef.current.force) return;
+
+      if (event.deltaY < 0) shouldAutoScroll = false;
+      else onCheckScrollPosition();
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      if (internalOptionsRef.current.force) return;
+      touchStartY = event.touches[0].clientY;
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      if (internalOptionsRef.current.force) return;
+
+      const touchEndY = event.touches[0].clientY;
+      const deltaY = touchStartY - touchEndY;
+
+      if (deltaY < 0) shouldAutoScroll = false;
+      else onCheckScrollPosition();
+
+      touchStartY = touchEndY;
+    };
+
+    const onMutation = () => {
+      if (!shouldAutoScroll && !internalOptionsRef.current.force) return;
+      element.scrollTo({ top: element.scrollHeight });
+    };
+
+    element.addEventListener('wheel', onWheel);
+    element.addEventListener('touchstart', onTouchStart);
+    element.addEventListener('touchmove', onTouchMove);
+
+    const observer = new MutationObserver(onMutation);
+
+    observer.observe(element, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+
+    return () => {
+      observer.disconnect();
+      element.removeEventListener('wheel', onWheel);
+      element.removeEventListener('touchstart', onTouchStart);
+      element.removeEventListener('touchmove', onTouchMove);
+    };
+  }, [enabled, target && isTarget.getRawElement(target), internalRef.state]);
+
+  if (target) return;
+  return internalRef;
+}) as UseAutoScroll;
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -54,12 +425,48 @@ const ref = useAutoScroll();
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+```tsx
+import type { HookTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
+
+export interface UseAutoScrollOptions {
+  /** Whether auto-scrolling is enabled */
+  enabled?: boolean;
+  /** Whether to force auto-scrolling regardless of user interactions */
+  force?: boolean;
+}
+
+export interface UseAutoScroll {
+  (target: HookTarget, options?: UseAutoScrollOptions): void;
+
+  <Target extends HTMLElement>(options?: UseAutoScrollOptions): StateRef<Target>;
+}
+```
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Overload 1
 
-## Contributors
+#### Parameters
 
-<FunctionContributors contributors={metadata.contributors} />
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to auto-scroll |
+| options.enabled | `boolean` | - | Whether auto-scrolling is enabled |
+
+#### Returns
+
+`void`
+
+### Overload 2
+
+#### Parameters
+
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.enabled | `boolean` | - | Whether auto-scrolling is enabled |
+
+#### Returns
+
+`StateRef<Target>` - A React ref to attach to the list element

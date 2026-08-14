@@ -6,7 +6,7 @@ import ts from 'typescript';
 
 import type { CodeLanguage, FunctionMetadata } from '@/src/constants';
 
-import { CONTENT_ROOT, CORE_ROOT } from './constants';
+import { CONTENT_ROOT, CORE_ROOT, PUBLIC_ROOT } from './constants';
 import {
   checkFileContent,
   extractDependencies,
@@ -80,7 +80,6 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push('');
 
   if (metadata.warning) {
-    result.push('');
     result.push(`<Callout title='Warning' variant='warning' className='my-5'>`);
     result.push(`  {metadata.warning}`);
     result.push(`</Callout>`);
@@ -156,6 +155,163 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   return result.join('\n');
 };
 
+const createCodeBlock = (code: string, language: string) =>
+  [`\`\`\`${language}`, code.trimEnd(), '```'].join('\n');
+
+const createMarkdownTableCell = (value?: string) =>
+  value
+    ?.trim()
+    .replace(/^\s*-\s*/, '')
+    .replace(/\|/g, '\\|')
+    .replace(/\n/g, '<br />') || '-';
+
+const createApiMarkdown = (apiParameters: FunctionMetadata['apiParameters']) => {
+  let groupIndex = 0;
+  const groups: {
+    id: number;
+    parameters: FunctionMetadata['apiParameters'];
+    returns: FunctionMetadata['apiParameters'][number] | null;
+  }[] = [{ id: groupIndex, parameters: [], returns: null }];
+
+  apiParameters.forEach((parameter, index) => {
+    if (parameter.tag === 'overload') {
+      const isFirstOverload = apiParameters.findIndex(({ tag }) => tag === 'overload') === index;
+
+      if (!isFirstOverload) {
+        groupIndex++;
+        groups.push({ id: groupIndex, parameters: [], returns: null });
+      }
+
+      return;
+    }
+
+    if (parameter.tag === 'returns') {
+      groups[groupIndex]!.returns = parameter;
+      return;
+    }
+
+    groups[groupIndex]!.parameters.push(parameter);
+  });
+
+  return groups
+    .flatMap((group, index) => {
+      const result: string[] = [];
+      const hasMultipleGroups = groups.length > 1;
+
+      if (hasMultipleGroups) {
+        result.push(`### Overload ${index + 1}`);
+        result.push('');
+      }
+
+      if (group.parameters.length) {
+        result.push(hasMultipleGroups ? '#### Parameters' : '### Parameters');
+        result.push('');
+        result.push('| Name | Type | Default | Note |');
+        result.push('| --- | --- | --- | --- |');
+        result.push(
+          ...group.parameters.map(
+            (parameter) =>
+              `| ${createMarkdownTableCell(parameter.name)} | \`${createMarkdownTableCell(
+                parameter.type
+              )}\` | ${createMarkdownTableCell(parameter.default)} | ${createMarkdownTableCell(
+                parameter.description
+              )} |`
+          )
+        );
+        result.push('');
+      }
+
+      if (group.returns) {
+        const description = createMarkdownTableCell(
+          [group.returns.name, group.returns.description].filter(Boolean).join(' ')
+        );
+
+        result.push(hasMultipleGroups ? '#### Returns' : '### Returns');
+        result.push('');
+        result.push(`\`${group.returns.type}\`${description !== '-' ? ` - ${description}` : ''}`);
+        result.push('');
+      }
+
+      return result;
+    })
+    .join('\n')
+    .trimEnd();
+};
+
+const createMdTemplate = (metadata: FunctionMetadata) => {
+  const result: string[] = [];
+  const raw = metadata.raw;
+
+  if (!raw) throw new Error(`No raw markdown metadata found for ${metadata.name}`);
+
+  result.push('---');
+  result.push(`title: ${metadata.name}`);
+  if (metadata.description) result.push(`description: ${metadata.description}`);
+  result.push(`category: ${metadata.category.toLowerCase()}`);
+  result.push(`usage: ${metadata.usage.toLowerCase()}`);
+  result.push(`type: ${metadata.type}`);
+  result.push(`isTest: ${metadata.isTest}`);
+  result.push(`isDemo: ${!!metadata.demo}`);
+  result.push(`lastModifiedTime: ${metadata.lastModified}`);
+  result.push('---');
+  result.push('');
+  result.push(`# ${metadata.name}`);
+  result.push('');
+  result.push(metadata.description);
+
+  if (metadata.warning) {
+    result.push('');
+    result.push(`> Warning: ${metadata.warning}`);
+  }
+
+  if (raw.demo) {
+    result.push('');
+    result.push('## Demo');
+    result.push('');
+    result.push(createCodeBlock(raw.demo, 'tsx'));
+  }
+
+  result.push('');
+  result.push('## Installation');
+  result.push('');
+  result.push('### Library');
+  result.push('');
+  result.push(createCodeBlock('npm install @siberiacancode/reactuse', 'bash'));
+  result.push('');
+  result.push('### CLI');
+  result.push('');
+  result.push(createCodeBlock(`npx useverse@latest add ${metadata.name}`, 'bash'));
+  result.push('');
+  result.push('### Manual');
+  result.push('');
+  result.push('Copy and paste the following code into your project.');
+  result.push('');
+  result.push(createCodeBlock(raw.code, 'tsx'));
+  result.push('');
+  result.push('Update the import paths to match your project setup.');
+
+  result.push('');
+  result.push('## Usage');
+  result.push('');
+  result.push(createCodeBlock(metadata.examples.join('\n// or\n'), 'tsx'));
+
+  if (raw.typeDeclarations) {
+    result.push('');
+    result.push('## Type Declarations');
+    result.push('');
+    result.push(createCodeBlock(raw.typeDeclarations, 'tsx'));
+  }
+
+  if (metadata.apiParameters.length) {
+    result.push('');
+    result.push('## API');
+    result.push('');
+    result.push(createApiMarkdown(metadata.apiParameters));
+  }
+
+  return result.join('\n').trimEnd();
+};
+
 const createHtmlCode = async (code: string, language: CodeLanguage) =>
   await codeToHtml(code, {
     lang: language,
@@ -185,6 +341,7 @@ const createLlmsTxt = (pages: FunctionMetadata[]) => {
     ['Installation', `${SITE_URL}/docs/installation`, 'Install Reactuse into your project.'],
     ['CLI', `${SITE_URL}/docs/cli`, 'Useverse CLI for adding hooks into your codebase.'],
     ['Functions', `${SITE_URL}/functions`, 'Browse all hooks and helpers with API docs.'],
+    ['Blog', `${SITE_URL}/blog`, 'Read product updates, guides, and release notes.'],
     ['Skills', `${SITE_URL}/docs/skills`, 'AI assistant skill guide for Reactuse.'],
     ['Reactuse Skill Registry', SKILLS_URL, 'Published Reactuse skill for coding agents.']
   ] as const;
@@ -203,7 +360,7 @@ const createLlmsTxt = (pages: FunctionMetadata[]) => {
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([key, items]) => {
       const [, category] = key.split(':');
-      const title = `${category.charAt(0).toUpperCase() + category.slice(1)}s`;
+      const title = `${category.charAt(0).toUpperCase() + category.slice(1)}`;
       const lines = items
         .sort((left, right) => left.name.localeCompare(right.name))
         .map(
@@ -211,7 +368,7 @@ const createLlmsTxt = (pages: FunctionMetadata[]) => {
             `- [${item.name}](${SITE_URL}/functions/${item.type}s/${item.name}): ${item.description}`
         );
 
-      return [`### ${title}`, '', ...lines].join('\n');
+      return ['\n', `### ${title}`, '', ...lines].join('\n');
     });
 
   const result = [];
@@ -369,6 +526,12 @@ const init = async () => {
       const typeDeclarations = extractTypeInfo(sourceFile);
 
       const dependencies = extractDependencies(content);
+      const demoContent = isDemo
+        ? await fs.promises.readFile(
+            path.join(CORE_ROOT, `${element.type}s`, element.name, `${element.name}.demo.tsx`),
+            'utf-8'
+          )
+        : undefined;
 
       return {
         badges: {
@@ -397,15 +560,14 @@ const init = async () => {
         }),
         dependencies,
         contributors,
-        ...(isDemo && {
-          demo: await createHtmlCode(
-            await fs.promises.readFile(
-              path.join(CORE_ROOT, `${element.type}s`, element.name, `${element.name}.demo.tsx`),
-              'utf-8'
-            ),
-            'tsx'
-          )
-        })
+        ...(demoContent && {
+          demo: await createHtmlCode(demoContent, 'tsx')
+        }),
+        raw: {
+          code: content,
+          ...(demoContent && { demo: demoContent }),
+          ...(typeDeclarations && { typeDeclarations })
+        }
       };
     })
   );
@@ -436,15 +598,26 @@ const init = async () => {
 
   for (const page of pages) {
     const mdx = createMdxTemplate(page);
+    const md = createMdTemplate(page);
+
     await fs.promises.writeFile(
       path.join(CONTENT_ROOT, 'functions', `${page.type}s`, `${page.name}.mdx`),
       mdx,
       'utf-8'
     );
+    await fs.promises.writeFile(
+      path.join(PUBLIC_ROOT, 'functions', `${page.type}s`, `${page.name}.md`),
+      md,
+      'utf-8'
+    );
 
     await fs.promises.writeFile(
       path.join(CONTENT_ROOT, 'functions', `${page.type}s`, `${page.name}.meta.json`),
-      JSON.stringify(page, null, 2),
+      JSON.stringify(
+        Object.fromEntries(Object.entries(page).filter(([key]) => key !== 'raw')),
+        null,
+        2
+      ),
       'utf-8'
     );
 

@@ -9,47 +9,68 @@ isDemo: true
 lastModifiedTime: 1754977987000
 ---
 
-import metadata from './useIsomorphicLayoutEffect.meta.json';
+# useIsomorphicLayoutEffect
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
+
+## Demo
+
+```tsx
+import { useIsomorphicLayoutEffect } from '@siberiacancode/reactuse';
+
+const Demo = () => {
+  useIsomorphicLayoutEffect(() => {
+    console.log(`log: useLayoutEffect`);
+  }, []);
+
+  return (
+    <div>
+      I am <b>useLayoutEffect</b>
+    </div>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useIsomorphicLayoutEffect
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useIsomorphicLayoutEffect
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useEffect, useLayoutEffect } from 'react';
+
+/**
+ * @name useIsomorphicLayoutEffect
+ * @description - Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
+ * @category Lifecycle
+ * @usage high
+ *
+ * @example
+ * useIsomorphicLayoutEffect(() => console.log('effect'), [])
+ */
+export const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
 ```tsx
 useIsomorphicLayoutEffect(() => console.log('effect'), [])
 ```
-
-## Contributors
-
-<FunctionContributors contributors={metadata.contributors} />

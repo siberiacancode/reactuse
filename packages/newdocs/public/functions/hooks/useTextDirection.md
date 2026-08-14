@@ -9,40 +9,197 @@ isDemo: true
 lastModifiedTime: 1768553242000
 ---
 
-import metadata from './useTextDirection.meta.json';
+# useTextDirection
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that can get and set the direction of the element
+
+## Demo
+
+```tsx
+import { useTextDirection } from '@siberiacancode/reactuse';
+import { ArrowLeftRightIcon } from 'lucide-react';
+
+const CONTENT = {
+  ltr: {
+    label: 'EN',
+    title: 'Welcome to reactuse',
+    body: 'A collection of essential React hooks for everyday development. Type-safe, tree-shakeable, and built with a focus on developer experience.',
+    author: '— the reactuse team'
+  },
+  rtl: {
+    label: 'ع',
+    title: 'مرحبًا بك في reactuse',
+    body: 'مجموعة من خطافات React الأساسية للتطوير اليومي. آمنة من حيث النوع، وقابلة للتشذيب، ومبنية مع التركيز على تجربة المطور.',
+    author: 'فريق reactuse —'
+  }
+};
+
+const Demo = () => {
+  const textDirection = useTextDirection<HTMLDivElement>();
+  const isRtl = textDirection.value === 'rtl';
+  const content = isRtl ? CONTENT.rtl : CONTENT.ltr;
+
+  return (
+    <section className='flex w-full max-w-md flex-col p-4'>
+      <div ref={textDirection.ref} className='bg-card flex h-72 flex-col gap-3 rounded-xl p-5'>
+        <button
+          className='self-start'
+          data-size='sm'
+          data-variant='outline'
+          style={{ direction: 'ltr' }}
+          type='button'
+          onClick={() => textDirection.set(isRtl ? 'ltr' : 'rtl')}
+        >
+          <ArrowLeftRightIcon className='size-4' />
+          {content.label}
+        </button>
+
+        <h3 className='text-foreground text-lg font-semibold'>{content.title}</h3>
+        <p className='text-muted-foreground text-sm leading-relaxed'>{content.body}</p>
+        <span className='text-muted-foreground mt-auto text-xs'>{content.author}</span>
+      </div>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useTextDirection
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useTextDirection
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useEffect, useRef, useState } from 'react';
+
+import type { HookTarget } from '@/utils/helpers';
+
+import { isTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
+
+import { useRefState } from '../useRefState/useRefState';
+
+/** The use text direction value type */
+export type UseTextDirectionValue = 'auto' | 'ltr' | 'rtl';
+
+/** The use text direction return type */
+export interface UseTextDirectionReturn {
+  /** The current direction */
+  value: UseTextDirectionValue;
+  /*** The function to remove the direction */
+  remove: () => void;
+  /*** The function to set the direction */
+  set: (value: UseTextDirectionValue | null) => void;
+}
+
+export interface UseTextDirection {
+  (target: HookTarget, initialValue?: UseTextDirectionValue): UseTextDirectionReturn;
+
+  <Target extends Element>(
+    initialValue?: UseTextDirectionValue,
+    target?: never
+  ): UseTextDirectionReturn & { ref: StateRef<Target> };
+}
+
+/**
+ * @name useTextDirection
+ * @description - Hook that can get and set the direction of the element
+ * @category Elements
+ * @usage medium
+ *
+ * @overload
+ * @param {HookTarget} [target=document.querySelector('html')] The target element to observe
+ * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element
+ * @returns {UseTextDirectionReturn} An object containing the current text direction of the element
+ *
+ * @example
+ * const { value, set, remove } = useTextDirection(ref);
+ *
+ * @overload
+ * @template Target The target element type
+ * @param {UseTextDirectionValue} [initialValue = 'ltr'] The initial direction of the element
+ * @returns { { ref: StateRef<Target> } & UseTextDirectionReturn } An object containing the current text direction of the element
+ *
+ * @example
+ * const { ref, value, set, remove } = useTextDirection();
+ */
+export const useTextDirection = ((...params: any[]) => {
+  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
+  const initialValue = ((target ? params[1] : params[0]) as UseTextDirectionValue) ?? 'ltr';
+
+  const internalRef = useRefState();
+  const elementRef = useRef<Element>(null);
+
+  const getDirection = () => {
+    if (typeof window === 'undefined') return initialValue;
+    const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
+    return (element?.getAttribute('dir') as UseTextDirectionValue) ?? initialValue;
+  };
+
+  const [value, setValue] = useState<UseTextDirectionValue>(getDirection());
+
+  const remove = () => {
+    if (!elementRef.current) return;
+
+    elementRef.current?.removeAttribute('dir');
+  };
+
+  const set = (value: UseTextDirectionValue) => {
+    if (!elementRef.current) return;
+
+    setValue(value);
+    elementRef.current.setAttribute('dir', value);
+  };
+
+  useEffect(() => {
+    if (!target && !internalRef.state) return;
+
+    const element =
+      ((target ? isTarget.getElement(target) : internalRef.current) as Element) ??
+      document.querySelector('html');
+    if (!element) return;
+
+    elementRef.current = element;
+
+    const direction = getDirection();
+    element.setAttribute('dir', direction);
+    setValue(direction);
+
+    const observer = new MutationObserver(() => setValue(getDirection()));
+
+    observer.observe(element, { attributes: true });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [internalRef.state, target && isTarget.getRawElement(target)]);
+
+  if (target) return { value, set, remove };
+  return {
+    ref: internalRef,
+    value,
+    set,
+    remove
+  };
+}) as UseTextDirection;
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -54,12 +211,55 @@ const { ref, value, set, remove } = useTextDirection();
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+```tsx
+import type { HookTarget } from '@/utils/helpers';
+
+import type { StateRef } from '../useRefState/useRefState';
+
+export type UseTextDirectionValue = 'auto' | 'ltr' | 'rtl';
+
+export interface UseTextDirectionReturn {
+  /** The current direction */
+  value: UseTextDirectionValue;
+  /*** The function to remove the direction */
+  remove: () => void;
+  /*** The function to set the direction */
+  set: (value: UseTextDirectionValue | null) => void;
+}
+
+export interface UseTextDirection {
+  (target: HookTarget, initialValue?: UseTextDirectionValue): UseTextDirectionReturn;
+
+  <Target extends Element>(
+    initialValue?: UseTextDirectionValue,
+    target?: never
+  ): UseTextDirectionReturn & { ref: StateRef<Target> };
+}
+```
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Overload 1
 
-## Contributors
+#### Parameters
 
-<FunctionContributors contributors={metadata.contributors} />
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | document.querySelector('html') | The target element to observe |
+| initialValue | `UseTextDirectionValue` | 'ltr' | The initial direction of the element |
+
+#### Returns
+
+`UseTextDirectionReturn` - An object containing the current text direction of the element
+
+### Overload 2
+
+#### Parameters
+
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `UseTextDirectionValue` | 'ltr' | The initial direction of the element |
+
+#### Returns
+
+`{ ref: StateRef<Target> } & UseTextDirectionReturn` - An object containing the current text direction of the element

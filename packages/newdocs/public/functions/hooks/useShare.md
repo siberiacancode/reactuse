@@ -9,40 +9,154 @@ isDemo: true
 lastModifiedTime: 1781450802000
 ---
 
-import metadata from './useShare.meta.json';
+# useShare
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that utilizes the share api
+
+## Demo
+
+```tsx
+import { useShare } from '@siberiacancode/reactuse';
+import { CheckIcon, GiftIcon, Share2Icon } from 'lucide-react';
+
+const REFERRAL_URL = 'https://siberiacancode.github.io/reactuse?ref=debabin';
+
+const PERKS = ['20% off their first year', 'You earn 20% back too', 'Stacks up to 5 friends'];
+
+const Demo = () => {
+  const share = useShare({
+    title: 'Join me on reactuse',
+    text: 'Use my link to sign up and we both get 20% off the Pro plan.',
+    url: REFERRAL_URL
+  });
+
+  if (!share.supported)
+    return (
+      <p>
+        Api not supported, make sure to check for compatibility with different browsers when using
+        this{' '}
+        <a
+          href='https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share'
+          rel='noreferrer'
+          target='_blank'
+        >
+          api
+        </a>
+      </p>
+    );
+
+  return (
+    <section className='flex w-full max-w-sm flex-col p-4'>
+      <div className='bg-card text-card-foreground flex flex-col gap-4 overflow-hidden rounded-xl py-4 text-sm'>
+        <div className='flex flex-col gap-1 px-4'>
+          <div className='bg-muted text-foreground mb-3 flex size-10 items-center justify-center rounded-lg'>
+            <GiftIcon className='size-5' />
+          </div>
+          <div className='text-2xl! font-semibold tracking-tight'>Get 20% off Pro</div>
+          <div className='text-muted-foreground text-sm'>
+            Invite a friend to reactuse Pro — they save 20%, and so do you.
+          </div>
+        </div>
+
+        <div className='px-4'>
+          <ul className='flex flex-col gap-2.5'>
+            {PERKS.map((perk) => (
+              <li key={perk} className='flex items-center gap-2.5 text-sm'>
+                <CheckIcon className='text-primary size-4 shrink-0' />
+                <span className='text-foreground'>{perk}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className='flex items-center border-t p-4'>
+          <button className='w-full! py-4!' type='button' onClick={() => share.trigger({})}>
+            <Share2Icon className='size-4' />
+            Share invite link
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useShare
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useShare
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+/** The use share options type */
+export interface UseShareParams {
+  /** Array of files to be shared */
+  files?: File[];
+  /** Text content to be shared */
+  text?: string;
+  /** Title of the content being shared */
+  title?: string;
+  /** URL link to be shared */
+  url?: string;
+}
+
+/** The use share return type */
+export interface UseShareReturn {
+  /** Whether the Web Share API is supported in the current environment */
+  supported: boolean;
+  /** Function to trigger the native share dialog */
+  trigger: (params?: ShareData) => Promise<void>;
+}
+
+/**
+ * @name useShare
+ * @description - Hook that utilizes the share api
+ * @category Browser
+ * @usage medium
+ *
+ * @browserapi share https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
+ *
+ * @param {UseShareParams} [params] The use share options
+ * @returns {UseShareReturn}
+ *
+ * @example
+ * const { share, supported } = useShare();
+ */
+export const useShare = (params?: UseShareParams) => {
+  const supported = typeof navigator !== 'undefined' && 'share' in navigator && !!navigator.share;
+
+  const trigger = async (shareParams?: ShareData) => {
+    if (!supported) return;
+
+    const data = {
+      ...params,
+      ...shareParams
+    };
+
+    if (data.files && navigator.canShare({ files: data.files })) navigator.share(data);
+
+    return navigator.share(data);
+  };
+
+  return { trigger, supported };
+};
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -52,12 +166,34 @@ const { share, supported } = useShare();
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+```tsx
+export interface UseShareParams {
+  /** Array of files to be shared */
+  files?: File[];
+  /** Text content to be shared */
+  text?: string;
+  /** Title of the content being shared */
+  title?: string;
+  /** URL link to be shared */
+  url?: string;
+}
+
+export interface UseShareReturn {
+  /** Whether the Web Share API is supported in the current environment */
+  supported: boolean;
+  /** Function to trigger the native share dialog */
+  trigger: (params?: ShareData) => Promise<void>;
+}
+```
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Parameters
 
-## Contributors
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| params | `UseShareParams` | - | The use share options |
 
-<FunctionContributors contributors={metadata.contributors} />
+### Returns
+
+`UseShareReturn`

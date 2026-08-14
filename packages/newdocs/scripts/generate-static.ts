@@ -11,7 +11,8 @@ const init = () => {
   });
 
   for (const file of files) {
-    if (typeof file !== 'string' || !file.endsWith('.mdx')) continue;
+    if (typeof file !== 'string' || !file.endsWith('.mdx') || file.startsWith('functions/'))
+      continue;
 
     const sourcePath = path.join(CONTENT_ROOT, file);
     const targetPath = path.join(PUBLIC_ROOT, file.replace(/\.mdx$/i, '.md'));

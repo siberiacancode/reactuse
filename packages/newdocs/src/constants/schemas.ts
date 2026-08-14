@@ -67,6 +67,11 @@ export interface FunctionMetadata {
   jsImplementation?: string;
   lastModified: number;
   name: string;
+  raw?: {
+    code: string;
+    demo?: string;
+    typeDeclarations?: string;
+  };
   type: FunctionType;
   typeDeclarations: string;
   usage: string;

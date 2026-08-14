@@ -9,40 +9,290 @@ isDemo: true
 lastModifiedTime: 1779722441000
 ---
 
-import metadata from './useCookie.meta.json';
+# useCookie
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that manages cookie value
+
+## Demo
+
+```tsx
+import { getCookie, useCookie } from '@siberiacancode/reactuse';
+import { MoonIcon, SunIcon } from 'lucide-react';
+
+type Theme = 'dark' | 'light';
+
+const getInitialTheme = (): Theme => {
+  if (typeof window === 'undefined') return 'dark';
+  const cookieTheme = getCookie('reactuse_docs_theme') as Theme | undefined;
+  if (cookieTheme === 'dark' || cookieTheme === 'light') return cookieTheme;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+
+const Demo = () => {
+  const themeCookie = useCookie<Theme>('reactuse_docs_theme', {
+    initialValue: getInitialTheme,
+    path: '/'
+  });
+
+  const onToggle = () => {
+    const nextTheme = themeCookie.value === 'dark' ? 'light' : 'dark';
+    themeCookie.set(nextTheme, { path: '/' });
+    const root = document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(themeCookie.value);
+  };
+
+  return (
+    <section className='flex w-full max-w-sm flex-col items-center gap-3 p-8'>
+      <button
+        aria-label='Toggle theme'
+        className='rounded-full!'
+        data-size='icon'
+        data-variant='outline'
+        type='button'
+        onClick={onToggle}
+      >
+        {themeCookie.value === 'dark' && <MoonIcon className='text-foreground size-5' />}
+        {themeCookie.value === 'light' && <SunIcon className='text-foreground size-5' />}
+      </button>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useCookie
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useCookie
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useEffect, useState } from 'react';
+
+export const getCookies = () =>
+  Object.fromEntries(
+    document.cookie.split('; ').map((cookie) => {
+      const [key, ...value] = cookie.split('=');
+      const decodedValue = decodeURIComponent(value.join('='));
+      return [key, decodedValue];
+    })
+  );
+
+export interface RemoveCookieParams {
+  domain?: string;
+  expires?: Date;
+  maxAge?: number;
+  path?: string;
+  sameSite?: 'Lax' | 'None' | 'Strict';
+  secure?: boolean;
+}
+
+export const removeCookie = (key: string, options: RemoveCookieParams = {}) => {
+  document.cookie = `${encodeURIComponent(key)}=; expires=Thu, 01 Jan 1970 00:00:00 GMT${
+    options.path ? `; path=${options.path}` : ''
+  }${options.domain ? `; domain=${options.domain}` : ''}${
+    options.maxAge ? `; max-age=0` : ''
+  }${options.expires ? `; expires=Thu, 01 Jan 1970 00:00:00 GMT` : ''}${
+    options.secure ? `; secure` : ''
+  }${options.sameSite ? `; samesite=${options.sameSite}` : ''}`;
+};
+
+export interface SetCookieParams {
+  domain?: string;
+  expires?: Date;
+  httpOnly?: boolean;
+  maxAge?: number;
+  path?: string;
+  sameSite?: 'Lax' | 'None' | 'Strict';
+  secure?: boolean;
+}
+
+export const setCookie = (key: string, value: string, options: SetCookieParams = {}) => {
+  const cookie = [`${encodeURIComponent(key)}=${encodeURIComponent(value)}`];
+
+  if (options.path) cookie.push(`path=${options.path}`);
+  if (options.domain) cookie.push(`domain=${options.domain}`);
+  if (typeof options.maxAge === 'number') cookie.push(`max-age=${options.maxAge}`);
+  if (options.expires) cookie.push(`expires=${options.expires.toUTCString()}`);
+  if (options.secure) cookie.push(`secure`);
+  if (options.httpOnly) cookie.push(`httpOnly`);
+  if (options.sameSite) cookie.push(`samesite=${options.sameSite}`);
+
+  document.cookie = cookie.join('; ');
+};
+
+/* The use cookie initial value type */
+export type UseCookieInitialValue<Value> = (() => Value) | Value;
+
+/* The use cookie options type */
+export interface UseCookieOptions<Value> {
+  /* The domain of the cookie */
+  domain?: string;
+  /* The expiration date of the cookie */
+  expires?: Date;
+  /* Whether the cookie is httpOnly */
+  httpOnly?: boolean;
+  /* The initial value of the storage */
+  initialValue?: UseCookieInitialValue<Value>;
+  /* The maximum age of the cookie */
+  maxAge?: number;
+  /* The path of the cookie */
+  path?: string;
+  /* The sameSite of the cookie */
+  sameSite?: 'Lax' | 'None' | 'Strict';
+  /* Whether the cookie is secure */
+  secure?: boolean;
+  /* The deserializer function to be invoked */
+  deserializer?: (value: string) => Value;
+  /* The serializer function to be invoked */
+  serializer?: (value: Value) => string;
+}
+
+/* The use cookie return type */
+export interface UseCookieReturn<Value> {
+  /* The value of the cookie */
+  value: Value;
+  /* The remove function */
+  remove: (options?: RemoveCookieParams) => void;
+  /* The set function */
+  set: (value: Value, options?: SetCookieParams) => void;
+}
+
+export const COOKIE_EVENT = 'reactuse-cookie';
+
+export const dispatchCookieEvent = () => window.dispatchEvent(new Event(COOKIE_EVENT));
+
+export const setCookieItem = (key: string, value: string, options?: SetCookieParams) => {
+  setCookie(key, value, options);
+  dispatchCookieEvent();
+};
+
+export const removeCookieItem = (key: string, options?: RemoveCookieParams) => {
+  removeCookie(key, options);
+  dispatchCookieEvent();
+};
+
+export const getCookie = (key: string): string | undefined => {
+  const cookies = getCookies();
+  return cookies[key];
+};
+
+export interface UseCookie {
+  <Value>(
+    key: string,
+    options: UseCookieOptions<Value> & {
+      initialValue: UseCookieInitialValue<Value>;
+    }
+  ): UseCookieReturn<Value>;
+
+  <Value>(key: string, options?: UseCookieOptions<Value>): UseCookieReturn<Value | undefined>;
+
+  <Value>(key: string, initialValue: UseCookieInitialValue<Value>): UseCookieReturn<Value>;
+
+  <Value>(key: string): UseCookieReturn<Value | undefined>;
+}
+
+/**
+ * @name useCookie
+ * @description - Hook that manages cookie value
+ * @category State
+ * @usage medium
+
+ * @overload
+ * @template Value The type of the cookie value
+ * @param {string} key The key of the cookie
+ * @param {UseCookieInitialValue<Value>} [initialValue] The initial value of the cookie
+ * @returns {UseCookieReturn<Value>} The value and the set function
+ *
+ * @overload
+ * @template Value The type of the cookie value
+ * @param {string} key The key of the cookie
+ * @param {UseCookieOptions<Value>} options The options object
+ * @param {UseCookieInitialValue<Value>} [options.initialValue] The initial value of the cookie
+ * @param {(value: string) => Value} [options.deserializer] The deserializer function to be invoked
+ * @param {(value: Value) => string} [options.serializer] The serializer function to be invoked
+ * @returns {UseCookieReturn<Value | undefined>} The value and the set function
+ *
+ * @example
+ * const { value, set, remove } = useCookie('key', 'value');
+ */
+export const useCookie = (<Value>(key: string, params?: any) => {
+  const options = (
+    typeof params === 'object' &&
+    params &&
+    ('serializer' in params || 'deserializer' in params || 'initialValue' in params)
+      ? params
+      : undefined
+  ) as UseCookieOptions<Value>;
+  const initialValue = (options ? options?.initialValue : params) as UseCookieInitialValue<Value>;
+
+  if (typeof document === 'undefined')
+    return {
+      set: () => {},
+      remove: () => {},
+      value: typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue
+    } as UseCookieReturn<Value>;
+
+  const serializer = (value: Value) => {
+    if (options?.serializer) return options.serializer(value);
+    if (typeof value === 'string') return value;
+    return JSON.stringify(value);
+  };
+
+  const deserializer = (value: string) => {
+    if (options?.deserializer) return options.deserializer(value);
+    if (value === 'undefined') return undefined as unknown as Value;
+
+    try {
+      return JSON.parse(value) as Value;
+    } catch {
+      return value as Value;
+    }
+  };
+
+  const [value, setValue] = useState<Value | undefined>(() => {
+    const cookieValue = getCookie(key);
+    if (cookieValue === undefined && initialValue !== undefined) {
+      const value =
+        typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue;
+      setCookieItem(key, serializer(value), options);
+      return value;
+    }
+    return cookieValue ? deserializer(cookieValue) : undefined;
+  });
+
+  useEffect(() => {
+    const onChange = () => {
+      const cookieValue = getCookie(key);
+      setValue(cookieValue ? deserializer(cookieValue) : undefined);
+    };
+    window.addEventListener(COOKIE_EVENT, onChange);
+    return () => window.removeEventListener(COOKIE_EVENT, onChange);
+  }, [key]);
+
+  const set = (value: Value, params?: SetCookieParams) =>
+    setCookieItem(key, serializer(value), { ...options, ...params });
+  const remove = (params?: RemoveCookieParams) => removeCookieItem(key, { ...options, ...params });
+
+  return { value, set, remove };
+}) as UseCookie;
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -52,12 +302,103 @@ const { value, set, remove } = useCookie('key', 'value');
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+```tsx
+export interface RemoveCookieParams {
+  domain?: string;
+  expires?: Date;
+  maxAge?: number;
+  path?: string;
+  sameSite?: 'Lax' | 'None' | 'Strict';
+  secure?: boolean;
+}
+
+export interface SetCookieParams {
+  domain?: string;
+  expires?: Date;
+  httpOnly?: boolean;
+  maxAge?: number;
+  path?: string;
+  sameSite?: 'Lax' | 'None' | 'Strict';
+  secure?: boolean;
+}
+
+export type UseCookieInitialValue<Value> = (() => Value) | Value;
+
+export interface UseCookieOptions<Value> {
+  /* The domain of the cookie */
+  domain?: string;
+  /* The expiration date of the cookie */
+  expires?: Date;
+  /* Whether the cookie is httpOnly */
+  httpOnly?: boolean;
+  /* The initial value of the storage */
+  initialValue?: UseCookieInitialValue<Value>;
+  /* The maximum age of the cookie */
+  maxAge?: number;
+  /* The path of the cookie */
+  path?: string;
+  /* The sameSite of the cookie */
+  sameSite?: 'Lax' | 'None' | 'Strict';
+  /* Whether the cookie is secure */
+  secure?: boolean;
+  /* The deserializer function to be invoked */
+  deserializer?: (value: string) => Value;
+  /* The serializer function to be invoked */
+  serializer?: (value: Value) => string;
+}
+
+export interface UseCookieReturn<Value> {
+  /* The value of the cookie */
+  value: Value;
+  /* The remove function */
+  remove: (options?: RemoveCookieParams) => void;
+  /* The set function */
+  set: (value: Value, options?: SetCookieParams) => void;
+}
+
+export interface UseCookie {
+  <Value>(
+    key: string,
+    options: UseCookieOptions<Value> & {
+      initialValue: UseCookieInitialValue<Value>;
+    }
+  ): UseCookieReturn<Value>;
+
+  <Value>(key: string, options?: UseCookieOptions<Value>): UseCookieReturn<Value | undefined>;
+
+  <Value>(key: string, initialValue: UseCookieInitialValue<Value>): UseCookieReturn<Value>;
+
+  <Value>(key: string): UseCookieReturn<Value | undefined>;
+}
+```
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Overload 1
 
-## Contributors
+#### Parameters
 
-<FunctionContributors contributors={metadata.contributors} />
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| key | `string` | - | The key of the cookie |
+| initialValue | `UseCookieInitialValue<Value>` | - | The initial value of the cookie |
+
+#### Returns
+
+`UseCookieReturn<Value>` - The value and the set function
+
+### Overload 2
+
+#### Parameters
+
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| key | `string` | - | The key of the cookie |
+| options | `UseCookieOptions<Value>` | - | The options object |
+| options.initialValue | `UseCookieInitialValue<Value>` | - | The initial value of the cookie |
+| options.deserializer | `(value: string) => Value` | - | The deserializer function to be invoked |
+| options.serializer | `(value: Value) => string` | - | The serializer function to be invoked |
+
+#### Returns
+
+`UseCookieReturn<Value | undefined>` - The value and the set function

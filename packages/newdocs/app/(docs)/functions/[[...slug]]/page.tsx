@@ -80,7 +80,7 @@ const FunctionPage = async (props: FunctionPageProps) => {
 
   const doc = page.data;
   const neighbours = findNeighbour(functionsSource.pageTree, page.url);
-  const raw = await doc.getText('raw');
+  const markdown = await fs.readFile(path.join(process.cwd(), 'public', `${page.url}.md`), 'utf-8');
   const lastModifiedTime = doc.lastModifiedTime;
 
   const metadata = JSON.parse(
@@ -103,11 +103,11 @@ const FunctionPage = async (props: FunctionPageProps) => {
             category={doc.category}
             description={doc.description}
             isTest={doc.isTest}
-            markdown={raw}
+            markdown={markdown}
             name={doc.title}
             next={neighbours.next?.url}
             previous={neighbours.previous?.url}
-            type={doc.type}
+            url={page.url}
             usage={doc.usage}
           />
         </div>

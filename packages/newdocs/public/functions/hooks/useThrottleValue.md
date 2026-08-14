@@ -9,40 +9,162 @@ isDemo: true
 lastModifiedTime: 1756623419000
 ---
 
-import metadata from './useThrottleValue.meta.json';
+# useThrottleValue
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that creates a throttled value
+
+## Demo
+
+```tsx
+import type { MouseEvent } from 'react';
+
+import { useThrottleValue } from '@siberiacancode/reactuse';
+import { useRef, useState } from 'react';
+
+const hslToHex = (h: number, s: number, l: number) => {
+  const lightness = l / 100;
+  const a = (s * Math.min(lightness, 1 - lightness)) / 100;
+  const f = (n: number) => {
+    const k = (n + h / 30) % 12;
+    const color = lightness - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color)
+      .toString(16)
+      .padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
+};
+
+const Demo = () => {
+  const [hsl, setHsl] = useState({ h: 210, l: 50 });
+  const draggingRef = useRef(false);
+
+  const throttledHsl = useThrottleValue(hsl, 120);
+  const hex = hslToHex(throttledHsl.h, 70, throttledHsl.l);
+
+  const pick = (event: MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = Math.min(Math.max(event.clientX - rect.left, 0), rect.width);
+    const y = Math.min(Math.max(event.clientY - rect.top, 0), rect.height);
+    setHsl({
+      h: Math.round((x / rect.width) * 360),
+      l: Math.round(90 - (y / rect.height) * 80)
+    });
+  };
+
+  const onMouseDown = (event: MouseEvent<HTMLDivElement>) => {
+    draggingRef.current = true;
+    pick(event);
+  };
+
+  const onMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+    if (draggingRef.current) pick(event);
+  };
+
+  return (
+    <section className='flex w-full max-w-sm flex-col p-4'>
+      <div>
+        <div className='flex flex-col gap-2'>
+          <h3>Color picker</h3>
+          <p className='text-muted-foreground'>Drag across the palette to pick a color.</p>
+        </div>
+
+        <div className='flex flex-col gap-4'>
+          <div
+            style={{
+              background:
+                'linear-gradient(to bottom, hsl(0,0%,90%), transparent, hsl(0,0%,10%)), linear-gradient(to right, hsl(0,70%,50%), hsl(60,70%,50%), hsl(120,70%,50%), hsl(180,70%,50%), hsl(240,70%,50%), hsl(300,70%,50%), hsl(360,70%,50%))'
+            }}
+            className='relative h-44 w-full cursor-crosshair overflow-hidden rounded-lg select-none'
+            onMouseDown={onMouseDown}
+            onMouseLeave={() => (draggingRef.current = false)}
+            onMouseMove={onMouseMove}
+            onMouseUp={() => (draggingRef.current = false)}
+          >
+            <div
+              style={{
+                left: `${(hsl.h / 360) * 100}%`,
+                top: `${((90 - hsl.l) / 80) * 100}%`,
+                background: hslToHex(hsl.h, 70, hsl.l)
+              }}
+              className='pointer-events-none absolute size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-md'
+            />
+          </div>
+
+          <div className='flex items-center gap-3'>
+            <div
+              className='border-border size-11 shrink-0 rounded-lg border transition-colors duration-100'
+              style={{ background: hex }}
+            />
+            <div className='flex flex-1 flex-col leading-tight'>
+              <span className='text-muted-foreground text-xs'>Selected</span>
+              <span className='text-foreground font-mono text-base font-semibold tabular-nums'>
+                {hex}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useThrottleValue
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useThrottleValue
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useEffect, useRef, useState } from 'react';
+
+import { useThrottleCallback } from '../useThrottleCallback/useThrottleCallback';
+
+/**
+ * @name useThrottleValue
+ * @description - Hook that creates a throttled value
+ * @category Utilities
+ * @usage medium
+ *
+ * @template Value The type of the value
+ * @param {Value} value The value to be throttled
+ * @param {number} delay The delay in milliseconds
+ * @returns {Value} The throttled value
+ *
+ * @example
+ * const throttledValue = useThrottleValue(value, 500);
+ */
+export const useThrottleValue = <Value>(value: Value, delay: number) => {
+  const previousValueRef = useRef(value);
+  const [throttledValue, setThrottledValue] = useState(value);
+
+  const throttledSetState = useThrottleCallback(setThrottledValue, delay);
+
+  useEffect(() => {
+    if (previousValueRef.current === value) return;
+    throttledSetState(value);
+    previousValueRef.current = value;
+  }, [value]);
+
+  return throttledValue;
+};
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -52,8 +174,13 @@ const throttledValue = useThrottleValue(value, 500);
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Parameters
 
-## Contributors
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| value | `Value` | - | The value to be throttled |
+| delay | `number` | - | The delay in milliseconds |
 
-<FunctionContributors contributors={metadata.contributors} />
+### Returns
+
+`Value` - The throttled value

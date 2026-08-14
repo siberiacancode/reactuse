@@ -9,40 +9,97 @@ isDemo: true
 lastModifiedTime: 1782054576000
 ---
 
-import metadata from './useWindowFocus.meta.json';
+# useWindowFocus
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that provides the current focus state of the window
+
+## Demo
+
+```tsx
+import { useWindowFocus } from '@siberiacancode/reactuse';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
+
+const Demo = () => {
+  const focused = useWindowFocus();
+
+  return (
+    <section className='flex flex-col p-4'>
+      <div className='bg-card flex w-fit items-center gap-3 rounded-xl p-4'>
+        <div className='bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg'>
+          {focused ? <EyeIcon className='size-5' /> : <EyeOffIcon className='size-5' />}
+        </div>
+
+        <div className='flex flex-col leading-tight'>
+          <span className='text-foreground text-sm font-medium whitespace-nowrap'>
+            {focused ? "You're viewing this page" : 'You left this tab'}
+          </span>
+          <span className='text-muted-foreground text-xs whitespace-nowrap'>
+            {focused ? 'The tab is active and in focus' : 'Come back anytime to continue'}
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useWindowFocus
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useWindowFocus
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useEffect, useState } from 'react';
+
+/**
+ * @name useWindowFocus
+ * @description - Hook that provides the current focus state of the window
+ * @category Sensors
+ * @usage low
+ *
+ * @returns {boolean} The current focus state of the window
+ *
+ * @example
+ * const focused = useWindowFocus();
+ *
+ * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useWindowFocus.html}
+ */
+export const useWindowFocus = () => {
+  const [focused, setFocused] = useState(false);
+
+  useEffect(() => {
+    const onFocus = () => setFocused(true);
+    const onBlur = () => setFocused(false);
+
+    window.addEventListener('focus', onFocus);
+    window.addEventListener('blur', onBlur);
+
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      window.removeEventListener('blur', onBlur);
+    };
+  }, []);
+
+  return focused;
+};
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -52,8 +109,6 @@ const focused = useWindowFocus();
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Returns
 
-## Contributors
-
-<FunctionContributors contributors={metadata.contributors} />
+`boolean` - The current focus state of the window

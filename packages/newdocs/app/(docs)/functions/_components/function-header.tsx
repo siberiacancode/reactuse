@@ -37,23 +37,22 @@ interface FunctionHeaderProps {
   name: string;
   next?: string;
   previous?: string;
-  type: string;
+  url: string;
   usage: string;
 }
 
 export const FunctionHeader = ({
   category,
   usage,
-  type,
   description,
   name,
   next,
   markdown,
   previous,
+  url,
   isTest
 }: FunctionHeaderProps) => {
   const { copy, copied } = useCopy();
-
   const categoryMeta = CATEGORIES[category as keyof typeof CATEGORIES]!;
 
   return (
@@ -80,13 +79,7 @@ export const FunctionHeader = ({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align='end' className='w-56 min-w-56'>
                       <DropdownMenuItem
-                        render={
-                          <a
-                            href={`${LINKS.SITE}/functions/${type}s/${name}.md`}
-                            rel='noopener noreferrer'
-                            target='_blank'
-                          />
-                        }
+                        render={<a href={`${url}.md`} rel='noopener noreferrer' target='_blank' />}
                       >
                         <FileTextIcon />
                         View as Markdown
@@ -97,10 +90,7 @@ export const FunctionHeader = ({
                           key={key}
                           render={
                             <a
-                              href={getPromptUrl(
-                                value.url,
-                                `${LINKS.SITE}/functions/${type}s/${name}.md`
-                              )}
+                              href={getPromptUrl(value.url, `${LINKS.SITE}${url}.md`)}
                               rel='noopener noreferrer'
                               target='_blank'
                             />

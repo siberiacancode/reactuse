@@ -9,40 +9,274 @@ isDemo: true
 lastModifiedTime: 1783351443000
 ---
 
-import metadata from './useObject.meta.json';
+# useObject
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook that provides state and helper methods to manage an object
+
+## Demo
+
+```tsx
+import { useDebounceCallback, useObject } from '@siberiacancode/reactuse';
+import { SearchIcon } from 'lucide-react';
+import { useState } from 'react';
+
+import { cn } from '@/utils/lib';
+
+const PRODUCTS = [
+  { emoji: '🎧', name: 'Headphones', category: 'Electronics', price: 89, stock: true },
+  { emoji: '⌨️', name: 'Keyboard', category: 'Electronics', price: 129, stock: true },
+  { emoji: '🖱️', name: 'Mouse', category: 'Electronics', price: 49, stock: false },
+  { emoji: '🖥️', name: 'Monitor', category: 'Electronics', price: 329, stock: true },
+  { emoji: '📷', name: 'Camera', category: 'Electronics', price: 549, stock: false },
+  { emoji: '🎒', name: 'Backpack', category: 'Accessories', price: 79, stock: true },
+  { emoji: '🧢', name: 'Cap', category: 'Accessories', price: 24, stock: true },
+  { emoji: '🕶️', name: 'Sunglasses', category: 'Accessories', price: 95, stock: false },
+  { emoji: '⌚', name: 'Watch', category: 'Accessories', price: 199, stock: true },
+  { emoji: '👜', name: 'Handbag', category: 'Accessories', price: 149, stock: true }
+];
+
+const CATEGORIES = ['All', 'Electronics', 'Accessories'];
+
+interface Filters {
+  category: string;
+  inStock: boolean;
+  search: string;
+}
+
+const Demo = () => {
+  const [search, setSearch] = useState('');
+  const filters = useObject<Filters>({ search: '', category: 'All', inStock: false });
+
+  const debouncedSearch = useDebounceCallback((value: string) => {
+    filters.set({ search: value });
+  }, 400);
+
+  const onSearch = (value: string) => {
+    setSearch(value);
+    debouncedSearch(value);
+  };
+
+  const filtered = PRODUCTS.filter((product) => {
+    if (filters.value.category !== 'All' && product.category !== filters.value.category)
+      return false;
+    if (filters.value.inStock && !product.stock) return false;
+    if (
+      filters.value.search &&
+      !product.name.toLowerCase().includes(filters.value.search.toLowerCase())
+    )
+      return false;
+    return true;
+  });
+
+  return (
+    <section className='flex w-full max-w-lg flex-col gap-4 p-4'>
+      <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
+        <div className='relative sm:min-w-[160px] sm:flex-1'>
+          <SearchIcon className='text-muted-foreground absolute top-1/2 left-2.5 z-10 size-4 -translate-y-1/2' />
+          <input
+            className='border-input bg-background focus-visible:border-ring focus-visible:ring-ring/50 h-8 w-full rounded-lg border py-1 pr-2.5 pl-8! text-sm outline-none focus-visible:ring-3'
+            placeholder='Search products'
+            type='text'
+            value={search}
+            onChange={(event) => onSearch(event.target.value)}
+          />
+        </div>
+
+        <div className='flex gap-2'>
+          <select
+            className='flex-1 sm:flex-none'
+            value={filters.value.category}
+            onChange={(event) => filters.set({ category: event.target.value })}
+          >
+            {CATEGORIES.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+
+          <button
+            className={cn(
+              'flex-1 sm:flex-none',
+              filters.value.inStock &&
+                'border-primary bg-primary text-primary-foreground hover:bg-primary/90'
+            )}
+            data-variant='outline'
+            type='button'
+            onClick={() => filters.set({ inStock: !filters.value.inStock })}
+          >
+            In stock
+          </button>
+        </div>
+      </div>
+
+      <div data-slot='table-container'>
+        <table data-slot='table'>
+          <thead data-slot='table-header'>
+            <tr data-slot='table-row'>
+              <th data-slot='table-head'>Product</th>
+              <th data-slot='table-head'>Category</th>
+              <th data-slot='table-head'>Stock</th>
+              <th className='text-right!' data-slot='table-head'>
+                Price
+              </th>
+            </tr>
+          </thead>
+          <tbody data-slot='table-body'>
+            {filtered.map((product) => (
+              <tr key={product.name} data-slot='table-row'>
+                <td data-slot='table-cell'>
+                  <div className='flex items-center gap-2'>
+                    <div data-slot='avatar'>
+                      <span data-slot='avatar-fallback'>{product.emoji}</span>
+                    </div>
+                    <span className='text-foreground font-medium'>{product.name}</span>
+                  </div>
+                </td>
+                <td className='text-muted-foreground' data-slot='table-cell'>
+                  {product.category}
+                </td>
+                <td data-slot='table-cell'>
+                  <span
+                    className={cn(
+                      'inline-flex items-center gap-1.5 text-xs font-medium',
+                      product.stock ? 'text-primary' : 'text-muted-foreground'
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'size-1.5 rounded-full',
+                        product.stock ? 'bg-primary' : 'bg-muted-foreground'
+                      )}
+                    />
+                    {product.stock ? 'In stock' : 'Out'}
+                  </span>
+                </td>
+                <td className='text-right! font-medium tabular-nums' data-slot='table-cell'>
+                  ${product.price}
+                </td>
+              </tr>
+            ))}
+            {!filtered.length && (
+              <tr data-slot='table-row'>
+                <td
+                  className='text-muted-foreground py-6 text-center!'
+                  colSpan={4}
+                  data-slot='table-cell'
+                >
+                  No products match your filters
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useObject
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useObject
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useState } from 'react';
+
+/** The use object return type */
+export interface UseObjectReturn<Value extends object> {
+  /** Checks if the object is empty */
+  empty: boolean;
+  /** Gets the keys of the object */
+  keys: Array<keyof Value>;
+  /** Gets the number of properties */
+  size: number;
+  /** The current object state */
+  value: Value;
+  /** Clears all properties from the object */
+  clear: () => void;
+  /** Checks if a property exists */
+  has: (key: keyof Value) => boolean;
+  /** Removes a property from the object */
+  remove: (key: keyof Value) => void;
+  /** Resets the object to its initial value */
+  reset: () => void;
+  /** Sets a property on the object */
+  set: (value: Partial<Value>) => void;
+}
+
+/**
+ * @name useObject
+ * @description - Hook that provides state and helper methods to manage an object
+ * @category State
+ * @usage medium
+ *
+ * @template Value The type of the object
+ * @param {Value} initialValue The initial object value
+ * @returns {UseObjectReturn<Value>} An object containing the current state and functions to interact with the object
+ *
+ * @example
+ * const { value, set, reset, remove, clear, has, keys, empty, size } = useObject({ name: 'John', age: 30, isActive: true });
+ */
+export function useObject<Value extends object>(initialValue: Value): UseObjectReturn<Value> {
+  const [value, setValue] = useState<Value>(initialValue);
+
+  const set = (value: Partial<Value>) =>
+    setValue((prevValue) => ({
+      ...prevValue,
+      ...value
+    }));
+
+  const reset = () => setValue(initialValue);
+
+  const remove = (key: keyof Value) => {
+    if (!(key in value)) return;
+
+    setValue((prevValue) => {
+      const { [key]: _, ...rest } = prevValue;
+      return rest as Value;
+    });
+  };
+
+  const clear = () => setValue({} as Value);
+
+  const has = (key: keyof Value) => key in value;
+
+  const keys = Object.keys(value) as Array<keyof Value>;
+  const empty = !Object.keys(value).length;
+  const size = Object.keys(value).length;
+
+  return {
+    value,
+    set,
+    reset,
+    remove,
+    clear,
+    has,
+    keys,
+    empty,
+    size
+  };
+}
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -52,12 +286,37 @@ const { value, set, reset, remove, clear, has, keys, empty, size } = useObject({
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+```tsx
+export interface UseObjectReturn<Value extends object> {
+  /** Checks if the object is empty */
+  empty: boolean;
+  /** Gets the keys of the object */
+  keys: Array<keyof Value>;
+  /** Gets the number of properties */
+  size: number;
+  /** The current object state */
+  value: Value;
+  /** Clears all properties from the object */
+  clear: () => void;
+  /** Checks if a property exists */
+  has: (key: keyof Value) => boolean;
+  /** Removes a property from the object */
+  remove: (key: keyof Value) => void;
+  /** Resets the object to its initial value */
+  reset: () => void;
+  /** Sets a property on the object */
+  set: (value: Partial<Value>) => void;
+}
+```
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Parameters
 
-## Contributors
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `Value` | - | The initial object value |
 
-<FunctionContributors contributors={metadata.contributors} />
+### Returns
+
+`UseObjectReturn<Value>` - An object containing the current state and functions to interact with the object

@@ -8,12 +8,15 @@
 - [Installation](https://reactuse.org/docs/installation): Install Reactuse into your project.
 - [CLI](https://reactuse.org/docs/cli): Useverse CLI for adding hooks into your codebase.
 - [Functions](https://reactuse.org/functions): Browse all hooks and helpers with API docs.
+- [Blog](https://reactuse.org/blog): Read product updates, guides, and release notes.
 - [Skills](https://reactuse.org/docs/skills): AI assistant skill guide for Reactuse.
 - [Reactuse Skill Registry](https://skills.sh/siberiacancode/agent-skills/reactuse): Published Reactuse skill for coding agents.
 
 ## Functions
 
-### Helperss
+
+
+### Helpers
 
 - [cn](https://reactuse.org/functions/helpers/cn): Combines class names from strings, arrays and objects into a single string
 - [createContext](https://reactuse.org/functions/helpers/createContext): Creates a typed context with additional utilities
@@ -21,14 +24,18 @@
 - [createReactiveContext](https://reactuse.org/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection
 - [createStore](https://reactuse.org/functions/helpers/createStore): Creates a store with state management capabilities
 - [makeDestructurable](https://reactuse.org/functions/helpers/makeDestructurable): Makes an object also iterable for array-style destructuring
-### Asyncs
+
+
+### Async
 
 - [useAsync](https://reactuse.org/functions/hooks/useAsync): Hook that provides the state of an async callback
 - [useLockCallback](https://reactuse.org/functions/hooks/useLockCallback): Hook that prevents a callback from being executed multiple times simultaneously
 - [useMutation](https://reactuse.org/functions/hooks/useMutation): Hook that defines the logic when mutate data
 - [useOptimistic](https://reactuse.org/functions/hooks/useOptimistic): Hook that allows get optimistic value before its update
 - [useQuery](https://reactuse.org/functions/hooks/useQuery): Hook that defines the logic when query data
-### Browsers
+
+
+### Browser
 
 - [useAudio](https://reactuse.org/functions/hooks/useAudio): Hook that manages audio playback with sprite support
 - [useBattery](https://reactuse.org/functions/hooks/useBattery): Hook for getting information about battery status
@@ -78,13 +85,17 @@
 - [useWebSocket](https://reactuse.org/functions/hooks/useWebSocket): Hook that connects to a WebSocket server and handles incoming and outgoing messages
 - [useWebWorker](https://reactuse.org/functions/hooks/useWebWorker): Hook that provides a reactive wrapper for a web worker
 - [useWebWorkerCallback](https://reactuse.org/functions/hooks/useWebWorkerCallback): Hook that runs a callback in a web worker without a separate worker file
-### Debugs
+
+
+### Debug
 
 - [useLogger](https://reactuse.org/functions/hooks/useLogger): Hook for debugging lifecycle
 - [useRenderCount](https://reactuse.org/functions/hooks/useRenderCount): Hook returns count component render times
 - [useRenderInfo](https://reactuse.org/functions/hooks/useRenderInfo): Hook for getting information about component rerender
 - [useRerender](https://reactuse.org/functions/hooks/useRerender): Hook that defines the logic to force rerender a component
-### Elementss
+
+
+### Elements
 
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
 - [useAutoScroll](https://reactuse.org/functions/hooks/useAutoScroll): Hook that automatically scrolls a list element to the bottom
@@ -105,12 +116,16 @@
 - [useSize](https://reactuse.org/functions/hooks/useSize): Hook that observes and returns the width and height of element
 - [useTextareaAutosize](https://reactuse.org/functions/hooks/useTextareaAutosize): Hook that automatically adjusts textarea height based on content
 - [useTextDirection](https://reactuse.org/functions/hooks/useTextDirection): Hook that can get and set the direction of the element
-### Humors
+
+
+### Humor
 
 - [useFul](https://reactuse.org/functions/hooks/useFul): Hook that can be so useful
 - [useLess](https://reactuse.org/functions/hooks/useLess): Hook that can be so useless
 - [useOnce](https://reactuse.org/functions/hooks/useOnce): Hook that runs an effect only once. Please do not use it in production code!
-### Lifecycles
+
+
+### Lifecycle
 
 - [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates
 - [useDidUpdate](https://reactuse.org/functions/hooks/useDidUpdate): Hook that triggers the effect callback on updates
@@ -119,7 +134,9 @@
 - [useMount](https://reactuse.org/functions/hooks/useMount): Hook that executes a callback when the component mounts
 - [useShallowEffect](https://reactuse.org/functions/hooks/useShallowEffect): Hook that executes an effect only when dependencies change shallowly or deeply
 - [useUnmount](https://reactuse.org/functions/hooks/useUnmount): Hook that defines the logic when unmounting a component
-### Sensorss
+
+
+### Sensors
 
 - [useDeviceMotion](https://reactuse.org/functions/hooks/useDeviceMotion): Hook that work with device motion
 - [useDeviceOrientation](https://reactuse.org/functions/hooks/useDeviceOrientation): Hook that provides the current device orientation
@@ -147,7 +164,9 @@
 - [useWindowFocus](https://reactuse.org/functions/hooks/useWindowFocus): Hook that provides the current focus state of the window
 - [useWindowScroll](https://reactuse.org/functions/hooks/useWindowScroll): Hook that manages the window scroll position
 - [useWindowSize](https://reactuse.org/functions/hooks/useWindowSize): Hook that manages a window size
-### States
+
+
+### State
 
 - [useBoolean](https://reactuse.org/functions/hooks/useBoolean): Hook provides opportunity to manage boolean state
 - [useControllableState](https://reactuse.org/functions/hooks/useControllableState): Hook that manages both controlled and uncontrolled state patterns
@@ -180,7 +199,9 @@
 - [useUrlSearchParams](https://reactuse.org/functions/hooks/useUrlSearchParams): Hook that provides reactive URLSearchParams
 - [useValidatedState](https://reactuse.org/functions/hooks/useValidatedState): Hook that manages a state value together with its validation result
 - [useWizard](https://reactuse.org/functions/hooks/useWizard): Hook that manages a wizard
-### Times
+
+
+### Time
 
 - [useInterval](https://reactuse.org/functions/hooks/useInterval): Hook that makes and interval and returns controlling functions
 - [useProgress](https://reactuse.org/functions/hooks/useProgress): Hook that creates a lightweight progress bar
@@ -188,7 +209,9 @@
 - [useTime](https://reactuse.org/functions/hooks/useTime): Hook that gives you current time in different values
 - [useTimeout](https://reactuse.org/functions/hooks/useTimeout): Hook that executes a callback function after a specified delay
 - [useTimer](https://reactuse.org/functions/hooks/useTimer): Hook that creates a timer functionality
-### Users
+
+
+### User
 
 - [useBrowserLanguage](https://reactuse.org/functions/hooks/useBrowserLanguage): Hook that returns the current browser language
 - [useOperatingSystem](https://reactuse.org/functions/hooks/useOperatingSystem): Hook that returns the operating system of the current browser
@@ -197,7 +220,9 @@
 - [usePreferredDark](https://reactuse.org/functions/hooks/usePreferredDark): Hook that returns if the user prefers dark mode
 - [usePreferredLanguages](https://reactuse.org/functions/hooks/usePreferredLanguages): that returns a browser preferred languages from navigator
 - [usePreferredReducedMotion](https://reactuse.org/functions/hooks/usePreferredReducedMotion): Hook that returns the reduced motion preference
-### Utilitiess
+
+
+### Utilities
 
 - [useBatchedCallback](https://reactuse.org/functions/hooks/useBatchedCallback): Hook that batches calls and forwards them to a callback
 - [useConst](https://reactuse.org/functions/hooks/useConst): Hook that returns the constant value

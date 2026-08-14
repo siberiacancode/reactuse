@@ -9,40 +9,220 @@ isDemo: true
 lastModifiedTime: 1755262808000
 ---
 
-import metadata from './useGamepad.meta.json';
+# useGamepad
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+Hook for getting information about gamepad
+
+## Demo
+
+```tsx
+import { useGamepad } from '@siberiacancode/reactuse';
+
+const Demo = () => {
+  const { supported, gamepads } = useGamepad();
+
+  if (!supported)
+    return (
+      <p>
+        Api not supported, make sure to check for compatibility with different browsers when using
+        this{' '}
+        <a
+          href='https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getGamepads'
+          rel='noreferrer'
+          target='_blank'
+        >
+          api
+        </a>
+      </p>
+    );
+
+  return (
+    <>
+      <p>Gamepads</p>
+      {!gamepads.length && <code>no gamepads connected</code>}
+      {!!gamepads.length && (
+        <>
+          {gamepads.map((gamepad) => (
+            <div key={gamepad.id}>
+              <p>
+                id: <code>{gamepad.id}</code>
+              </p>
+              <p>
+                index: <code>{gamepad.index}</code>
+              </p>
+            </div>
+          ))}
+        </>
+      )}
+    </>
+  );
+};
+
+export default Demo;
+```
 
 ## Installation
 
-<FunctionTabs className='space-y-2'>
-  <TabsList>
-    <TabsTrigger value='library'>Library</TabsTrigger>
-    <TabsTrigger value='cli'>CLI</TabsTrigger>
-    <TabsTrigger value='manual'>Manual</TabsTrigger>
-  </TabsList>
-  <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
-  </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add useGamepad
-    ```
-  </TabsContent>
-  <TabsContent value='manual'>
-    <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
-  </TabsContent>
-</FunctionTabs>
+### Library
+
+```bash
+npm install @siberiacancode/reactuse
+```
+
+### CLI
+
+```bash
+npx useverse@latest add useGamepad
+```
+
+### Manual
+
+Copy and paste the following code into your project.
+
+```tsx
+import { useEffect, useState } from 'react';
+
+import { useRaf } from '../useRaf/useRaf';
+
+declare global {
+  interface Gamepad {
+    hapticActuators?: GamepadHapticActuator[];
+  }
+}
+
+/** The use gamepad return type  */
+export interface UseGamepadStateReturn {
+  /** The gamepad active status */
+  active: boolean;
+  /** The gamepad state */
+  gamepads: Gamepad[];
+  /** The gamepad supported status */
+  supported: boolean;
+}
+
+/**
+ * @name useGamepad
+ * @description - Hook for getting information about gamepad
+ * @category Browser
+ * @usage low
+ *
+ * @browserapi navigator.getGamepads https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getGamepads
+ *
+ * @returns {UseGamepadStateReturn} An object containing the gamepad information
+ *
+ * @example
+ * const { supported, gamepads, active } = useGamepad();
+ */
+export const useGamepad = () => {
+  const supported =
+    typeof navigator !== 'undefined' && 'getGamepads' in navigator && !!navigator.getGamepads;
+  const [gamepads, setGamepads] = useState<Record<number, Gamepad>>({});
+
+  const createGamepad = (gamepad: Gamepad) => {
+    const hapticActuators = [];
+    const vibrationActuator = 'vibrationActuator' in gamepad ? gamepad.vibrationActuator : null;
+
+    if (vibrationActuator) hapticActuators.push(vibrationActuator);
+    if (gamepad.hapticActuators) hapticActuators.push(...gamepad.hapticActuators);
+
+    return {
+      ...gamepad,
+      hapticActuators
+    } as Gamepad;
+  };
+
+  const updateGamepadState = () => {
+    for (const gamepad of navigator.getGamepads() ?? []) {
+      if (gamepad && gamepads[gamepad.index]) gamepads[gamepad.index] = createGamepad(gamepad);
+    }
+  };
+
+  const { active } = useRaf(updateGamepadState, {
+    enabled: !!Object.keys(gamepads).length
+  });
+
+  useEffect(() => {
+    if (!supported) return;
+    const gamepads = navigator.getGamepads();
+    setGamepads(
+      gamepads.reduce(
+        (acc, gamepad) => ({
+          ...acc,
+          ...(gamepad && { [gamepad.index]: createGamepad(gamepad) })
+        }),
+        {}
+      )
+    );
+  }, []);
+
+  useEffect(() => {
+    const onConnected = (event: Event) => {
+      const { gamepad } = event as GamepadEvent;
+      setGamepads({ ...gamepads, [gamepad.index]: createGamepad(gamepad) });
+    };
+
+    const onDisconnected = (event: Event) => {
+      const { gamepad } = event as GamepadEvent;
+      const updatedGamepads = { ...gamepads };
+      delete updatedGamepads[gamepad.index];
+      setGamepads(updatedGamepads);
+    };
+
+    document.addEventListener('gamepadconnected', onConnected);
+    document.addEventListener('gamepaddisconnected', onDisconnected);
+
+    return () => {
+      document.removeEventListener('gamepadconnected', onConnected);
+      document.removeEventListener('gamepaddisconnected', onDisconnected);
+    };
+  }, []);
+
+  return {
+    active,
+    supported,
+    gamepads: Object.values(gamepads)
+  };
+};
+
+export const mapGamepadToXbox360Controller = (gamepad: Gamepad) => ({
+  buttons: {
+    a: gamepad.buttons[0],
+    b: gamepad.buttons[1],
+    x: gamepad.buttons[2],
+    y: gamepad.buttons[3]
+  },
+  bumper: {
+    left: gamepad.buttons[4],
+    right: gamepad.buttons[5]
+  },
+  triggers: {
+    left: gamepad.buttons[6],
+    right: gamepad.buttons[7]
+  },
+  stick: {
+    left: {
+      horizontal: gamepad.axes[0],
+      vertical: gamepad.axes[1],
+      button: gamepad.buttons[10]
+    },
+    right: {
+      horizontal: gamepad.axes[2],
+      vertical: gamepad.axes[3],
+      button: gamepad.buttons[11]
+    }
+  },
+  dpad: {
+    up: gamepad.buttons[12],
+    down: gamepad.buttons[13],
+    left: gamepad.buttons[14],
+    right: gamepad.buttons[15]
+  },
+  back: gamepad.buttons[8],
+  start: gamepad.buttons[9]
+});
+```
+
+Update the import paths to match your project setup.
 
 ## Usage
 
@@ -52,12 +232,23 @@ const { supported, gamepads, active } = useGamepad();
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+```tsx
+interface Gamepad {
+    hapticActuators?: GamepadHapticActuator[];
+  }
+
+export interface UseGamepadStateReturn {
+  /** The gamepad active status */
+  active: boolean;
+  /** The gamepad state */
+  gamepads: Gamepad[];
+  /** The gamepad supported status */
+  supported: boolean;
+}
+```
 
 ## API
 
-<FunctionApi apiParameters={metadata.apiParameters} />
+### Returns
 
-## Contributors
-
-<FunctionContributors contributors={metadata.contributors} />
+`UseGamepadStateReturn` - An object containing the gamepad information
