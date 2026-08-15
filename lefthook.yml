@@ -1,20 +1,41 @@
+assert_lefthook_installed: true
+
 pre-commit:
   parallel: true
-  commands:
-    lint-core:
+  jobs:
+    - name: lint-core
       glob: 'packages/core/**/*.{js,ts,tsx}'
-      run: sh .lefthook/lint {staged_files}
+      run: pnpm exec eslint --fix {staged_files} && pnpm exec prettier --write {staged_files}
       stage_fixed: true
 
-    lint-cli:
+    - name: lint-cli
       glob: 'packages/cli/**/*.{js,ts}'
-      run: pnpm --dir packages/cli run type && sh .lefthook/lint {staged_files}
+      run: pnpm --dir packages/cli run type && pnpm exec eslint --fix {staged_files} && pnpm exec prettier --write {staged_files}
       stage_fixed: true
 
-    core-checks:
-      run: sh .lefthook/core-checks
+    - name: lint-newdocs
+      glob: 'packages/newdocs/**/*.{js,jsx,ts,tsx}'
+      run: pnpm --dir packages/newdocs run type && pnpm exec eslint --fix {staged_files} && pnpm exec prettier --write {staged_files}
+      stage_fixed: true
+
+    - name: core-checks
+      run: |
+        if git diff --quiet HEAD -- packages/core; then
+          echo "No changes in packages/core. Skipping build."
+          exit 0
+        fi
+
+        echo "Running tests for packages/core..."
+        pnpm --dir packages/core exec vitest run
+
+        echo "Running build:js..."
+        pnpm core:build:js
+
+        git add packages/core/src/bundle
+        git add packages/cli/src/registry
+        echo "Built files added to git."
 
 commit-msg:
-  commands:
-    branch-prefix:
-      run: sh .lefthook/commit-msg {1}
+  jobs:
+    - name: branch-prefix
+      run: bash node_modules/@siberiacancode/lefthook/dist/hooks/commit-msg.sh {1}
