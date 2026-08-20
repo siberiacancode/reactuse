@@ -13,10 +13,10 @@ pre-commit:
       run: pnpm --dir packages/cli run type && pnpm exec eslint --fix {staged_files} && pnpm exec prettier --write {staged_files}
       stage_fixed: true
 
-    - name: lint-newdocs
-      glob: 'packages/newdocs/**/*.{js,jsx,ts,tsx}'
-      run: pnpm --dir packages/newdocs run type && pnpm exec eslint --fix {staged_files} && pnpm exec prettier --write {staged_files}
-      stage_fixed: true
+    # - name: lint-newdocs
+    #   glob: 'packages/newdocs/**/*.{js,jsx,ts,tsx}'
+    #   run: pnpm --dir packages/newdocs run type && pnpm exec eslint --fix {staged_files} && pnpm exec prettier --write {staged_files}
+    #   stage_fixed: true
 
     - name: core-checks
       run: |

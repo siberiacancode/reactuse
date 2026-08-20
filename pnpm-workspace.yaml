@@ -4,11 +4,16 @@ publicHoistPattern:
   - eslint
   - prettier
   - lefthook
+  - vitest
 minimumReleaseAgeExclude:
   - '@siberiacancode/reactuse'
   - '@siberiacancode/eslint'
   - '@siberiacancode/prettier'
   - '@webcam/react'
+  - '@vitest/coverage-v8@4.1.11'
+  - '@vitest/pretty-format@4.1.11'
+  - '@vitest/utils@4.1.11'
+  - lucide-react@1.32.0
 allowBuilds:
   core-js: true
   esbuild: true

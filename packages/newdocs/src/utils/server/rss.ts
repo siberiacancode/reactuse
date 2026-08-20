@@ -14,7 +14,7 @@ export const getRSS = () => {
   });
 
   const posts = [...blogSource.getPages()].sort(
-    (a, b) => Number(a.data.date) - Number(b.data.date)
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
   );
 
   for (const page of posts) {
