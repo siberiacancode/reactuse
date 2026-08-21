@@ -143,8 +143,8 @@ importers:
         specifier: ^1.14.3
         version: 1.14.3
       '@siberiacancode/reactuse':
-        specifier: ^1.0.13
-        version: 1.0.13(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: ^1.0.14
+        version: 1.0.14(@types/node@26.2.0)(@types/react@19.2.18)(jsdom@30.0.1(@noble/hashes@1.8.0))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
       '@types/mdx':
         specifier: ^2.0.14
         version: 2.0.14
@@ -3142,8 +3142,8 @@ packages:
     peerDependencies:
       prettier: ^3.9.6
 
-  '@siberiacancode/reactuse@1.0.13':
-    resolution: {integrity: sha512-qGsNabPnLOIO/0txZ/uWOGq/cw+pdCO8YUyXDsMTZj+kV+w92mjT9+S7fvVM47ruOvHAX2NW9YTr7DT/0EthyA==}
+  '@siberiacancode/reactuse@1.0.14':
+    resolution: {integrity: sha512-T2ML2uvJnezkYUtl11/yO5e8uXrxgfSIS3t25pnbN7WthOqVV299sch67sYNOimAluBdXcsjoQOLI7eb7RJSSw==}
     engines: {node: '>=14'}
     peerDependencies:
       '@types/react': ^18 || ^19
@@ -10653,12 +10653,27 @@ snapshots:
     dependencies:
       prettier: 3.9.6
 
-  '@siberiacancode/reactuse@1.0.13(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@siberiacancode/reactuse@1.0.14(@types/node@26.2.0)(@types/react@19.2.18)(jsdom@30.0.1(@noble/hashes@1.8.0))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))':
     dependencies:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
+      vitest: 4.1.10(@types/node@26.2.0)(@vitest/coverage-v8@4.1.11)(jsdom@30.0.1(@noble/hashes@1.8.0))(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.22.4)(yaml@2.9.0))
     optionalDependencies:
       '@types/react': 19.2.18
+    transitivePeerDependencies:
+      - '@edge-runtime/vm'
+      - '@opentelemetry/api'
+      - '@types/node'
+      - '@vitest/browser-playwright'
+      - '@vitest/browser-preview'
+      - '@vitest/browser-webdriverio'
+      - '@vitest/coverage-istanbul'
+      - '@vitest/coverage-v8'
+      - '@vitest/ui'
+      - happy-dom
+      - jsdom
+      - msw
+      - vite
 
   '@siberiacancode/reactuse@1.0.4(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
