@@ -22,8 +22,8 @@ it('Should use query', () => {
 it('Should use query on server side', () => {
   const { result } = renderHookServer(() => useQuery(() => Promise.resolve('data')));
 
-  expect(result.current.isLoading).toBeFalsy();
-  expect(result.current.isFetching).toBeFalsy();
+  expect(result.current.isLoading).toBeTruthy();
+  expect(result.current.isFetching).toBeTruthy();
   expect(result.current.isError).toBeFalsy();
   expect(result.current.isRefetching).toBeFalsy();
   expect(result.current.isSuccess).toBeFalsy();
