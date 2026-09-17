@@ -156,10 +156,3 @@ That is also how many production avatar components are usually modeled. The publ
 - every component repeats the same loading and error logic.
 
 `useImage` pulls that concern into one hook. Pass a `src`, get the lifecycle. Render the UI you mean.
-
-## Takeaways
-
-- **`useImage` makes image loading explicit** - loading, success, and error become React state.
-- **Render only when ready** - show skeletons or fallbacks without flashing broken browser UI.
-- **Great fit for avatars** - `Root` owns image state, `Image` renders on success, `Fallback` renders during loading or failure.
-- **The loaded value is useful** - `value` is an `HTMLImageElement`, ready for dimensions, canvas, and downloads.

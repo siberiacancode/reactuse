@@ -89,9 +89,3 @@ const mouse = useMouse((value) => {
   console.log(value.clientX, value.clientY);
 });
 ```
-
-## Takeaways
-
-- **`useMouse` re-renders zero times by default** — callback + `snapshot`, ideal for spotlights, cursors, canvas, parallax.
-- **`watch()` is opt-in reactivity** — call it only where you need coordinates in state.
-- **One ref gives every coordinate system**, scroll correction included; pass `window` for global tracking.

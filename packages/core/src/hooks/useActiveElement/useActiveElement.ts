@@ -61,7 +61,6 @@ export const useActiveElement = ((...params: any[]) => {
 
     const observer = new MutationObserver((mutations) => {
       mutations
-        .filter((mutation) => mutation.removedNodes.length)
         .map((mutation) => [...mutation.removedNodes])
         .flat()
         .forEach((node) => {

@@ -226,3 +226,7 @@ packages/docs/content/docs/hooks/
 .source
 
 out
+
+# Tests
+.stryker-tmp
+mutation.html

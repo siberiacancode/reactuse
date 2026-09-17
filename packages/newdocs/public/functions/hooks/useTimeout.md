@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1787651489000
 ---
 
 # useTimeout
@@ -152,7 +152,7 @@ interface UseTimeoutReturn {
 | Name | Type | Default | Note |
 | --- | --- | --- | --- |
 | callback | `() => void` | - | The function to be executed after the timeout |
-| delay | `number \| undefined` | - | The delay in milliseconds before the timeout executes the callback function |
+| delay | `number` | - | The delay in milliseconds before the timeout executes the callback function |
 
 ### Returns
 

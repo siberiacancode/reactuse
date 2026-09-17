@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1788267510000
 ---
 
 # useTimer
@@ -271,15 +271,14 @@ export interface UseTimer {
 export const useTimer = ((...params: any[]) => {
   const initialSeconds = Math.max((params[0] ?? 0) as PositiveInteger<number>, 0);
   const options = (typeof params[1] === 'object' ? params[1] : { onExpire: params[1] }) as
-    | UseTimerOptions
-    | undefined;
+    UseTimerOptions | undefined;
 
   const [active, setActive] = useState(initialSeconds > 0 && (options?.immediately ?? true));
   const [seconds, setSeconds] = useState(initialSeconds);
 
   const intervalIdRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const optionsRef = useRef<UseTimerOptions>(options);
-  optionsRef.current = options ?? {};
+  optionsRef.current = options;
 
   useDidUpdate(() => {
     if (initialSeconds <= 0) {
@@ -300,9 +299,10 @@ export const useTimer = ((...params: any[]) => {
       setSeconds((prevSeconds) => {
         optionsRef.current?.onTick?.(prevSeconds);
         const updatedSeconds = prevSeconds - 1;
-        if (updatedSeconds === 0) {
+        if (updatedSeconds <= 0) {
           setActive(false);
           optionsRef.current?.onExpire?.();
+          return 0;
         }
         return updatedSeconds;
       });

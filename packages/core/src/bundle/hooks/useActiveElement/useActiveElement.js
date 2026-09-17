@@ -31,7 +31,6 @@ export const useActiveElement = (...params) => {
     const element = (target ? isTarget.getElement(target) : internalRef.current) ?? window;
     const observer = new MutationObserver((mutations) => {
       mutations
-        .filter((mutation) => mutation.removedNodes.length)
         .map((mutation) => [...mutation.removedNodes])
         .flat()
         .forEach((node) => {

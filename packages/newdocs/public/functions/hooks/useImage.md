@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1787651489000
 ---
 
 # useImage
@@ -104,7 +104,7 @@ const Demo = () => {
           className='absolute top-3 right-3 rounded-full!'
           data-size='icon'
           data-variant='ghost'
-          disabled={image.isLoading || !image.image}
+          disabled={image.isLoading || !image.value}
           type='button'
           onClick={onDownload}
         >
