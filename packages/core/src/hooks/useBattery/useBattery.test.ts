@@ -31,6 +31,11 @@ beforeEach(() => {
   Object.assign(navigator, {
     getBattery: mockNavigatorGetBattery
   });
+
+  mockBatteryManager.charging = true;
+  mockBatteryManager.chargingTime = 0;
+  mockBatteryManager.dischargingTime = 5;
+  mockBatteryManager.level = 1;
   trigger.clear();
 });
 
@@ -84,6 +89,8 @@ it('Should use battery for unsupported', async () => {
 it('Should handle levelchange event', async () => {
   const { result } = renderHook(useBattery);
 
+  await waitFor(() => expect(result.current.value.loading).toBeFalsy());
+
   act(() => {
     mockBatteryManager.level = 2;
     mockBatteryManager.dispatchEvent(new Event('levelchange'));
@@ -102,6 +109,8 @@ it('Should handle levelchange event', async () => {
 it('Should handle chargingchange event', async () => {
   const { result } = renderHook(useBattery);
 
+  await waitFor(() => expect(result.current.value.loading).toBeFalsy());
+
   act(() => {
     mockBatteryManager.charging = false;
     mockBatteryManager.dispatchEvent(new Event('chargingchange'));
@@ -112,13 +121,15 @@ it('Should handle chargingchange event', async () => {
     expect(result.current.value.charging).toBeFalsy();
     expect(result.current.value.chargingTime).toBe(0);
     expect(result.current.value.dischargingTime).toBe(5);
-    expect(result.current.value.level).toBe(2);
+    expect(result.current.value.level).toBe(1);
     expect(result.current.value.loading).toBeFalsy();
   });
 });
 
 it('Should handle chargingtimechange event', async () => {
   const { result } = renderHook(useBattery);
+
+  await waitFor(() => expect(result.current.value.loading).toBeFalsy());
 
   act(() => {
     mockBatteryManager.chargingTime = 1;
@@ -127,16 +138,18 @@ it('Should handle chargingtimechange event', async () => {
 
   await waitFor(() => {
     expect(result.current.supported).toBeTruthy();
-    expect(result.current.value.charging).toBeFalsy();
+    expect(result.current.value.charging).toBeTruthy();
     expect(result.current.value.chargingTime).toBe(1);
     expect(result.current.value.dischargingTime).toBe(5);
-    expect(result.current.value.level).toBe(2);
+    expect(result.current.value.level).toBe(1);
     expect(result.current.value.loading).toBeFalsy();
   });
 });
 
 it('Should handle dischargingtimechange event', async () => {
   const { result } = renderHook(useBattery);
+
+  await waitFor(() => expect(result.current.value.loading).toBeFalsy());
 
   act(() => {
     mockBatteryManager.dischargingTime = 6;
@@ -145,12 +158,22 @@ it('Should handle dischargingtimechange event', async () => {
 
   await waitFor(() => {
     expect(result.current.supported).toBeTruthy();
-    expect(result.current.value.charging).toBeFalsy();
-    expect(result.current.value.chargingTime).toBe(1);
+    expect(result.current.value.charging).toBeTruthy();
+    expect(result.current.value.chargingTime).toBe(0);
     expect(result.current.value.dischargingTime).toBe(6);
-    expect(result.current.value.level).toBe(2);
+    expect(result.current.value.level).toBe(1);
     expect(result.current.value.loading).toBeFalsy();
   });
+});
+
+it('Should unmount while battery information is loading', () => {
+  Object.assign(navigator, {
+    getBattery: vi.fn(() => new Promise<typeof mockBatteryManager>(() => undefined))
+  });
+
+  const { unmount } = renderHook(useBattery);
+
+  expect(unmount).not.toThrow();
 });
 
 it('Should cleanup on unmount', async () => {

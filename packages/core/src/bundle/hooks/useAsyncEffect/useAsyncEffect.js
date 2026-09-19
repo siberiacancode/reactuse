@@ -10,6 +10,8 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  *
  * @example
  * useAsyncEffect(async () => console.log("effect runs on updates"), deps);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAsyncEffect}
  */
 export const useAsyncEffect = (сallback, deps) => {
   useIsomorphicLayoutEffect(() => {

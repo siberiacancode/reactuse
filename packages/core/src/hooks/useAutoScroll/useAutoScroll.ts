@@ -43,6 +43,8 @@ export interface UseAutoScroll {
  *
  * @example
  * const ref = useAutoScroll();
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAutoScroll}
  */
 export const useAutoScroll = ((...params: any[]) => {
   const target = isTarget(params[0]) ? params[0] : undefined;

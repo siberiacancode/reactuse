@@ -24,22 +24,25 @@ export interface UseBatchedCallbackOptions {
  *
  * @example
  * const delayed = useBatchedCallback((batch) => console.log(batch), { size: 5, delay: 1000 });
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBatchedCallback}
  */
 export function useBatchedCallback<Params extends unknown[]>(
   callback: (batch: Params[]) => void,
   options: UseBatchedCallbackOptions
 ): BatchedCallback<Params> {
-  const { size, delay } = options;
+  const size = Math.max(1, options.size);
+  const delay = Math.max(0, options.delay ?? 1000);
 
   const internalCallbackRef = useRef(callback);
   const sizeRef = useRef(size);
-  const delayRef = useRef(delay ?? 0);
+  const delayRef = useRef(delay);
   const queueRef = useRef<Params[]>([]);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   internalCallbackRef.current = callback;
-  sizeRef.current = Math.max(1, size);
-  delayRef.current = Math.max(0, delay ?? 0);
+  sizeRef.current = size;
+  delayRef.current = delay;
 
   const clearTimer = () => {
     if (!timerRef.current) return;

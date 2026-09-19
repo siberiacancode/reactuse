@@ -8,10 +8,20 @@ import type { StateRef } from '../useRefState/useRefState';
 
 import { useRefState } from '../useRefState/useRefState';
 
-export interface UseClickOutside {
-  (target: HookTarget, callback: (event: Event) => void): void;
+/** The use click outside options type */
+export interface UseClickOutsideOptions {
+  /** Whether outside click handling is enabled */
+  enabled?: boolean;
+}
 
-  <Target extends Element>(callback: (event: Event) => void, target?: never): StateRef<Target>;
+export interface UseClickOutside {
+  (target: HookTarget, callback: (event: Event) => void, options?: UseClickOutsideOptions): void;
+
+  <Target extends Element>(
+    callback: (event: Event) => void,
+    options?: UseClickOutsideOptions,
+    target?: never
+  ): StateRef<Target>;
 }
 
 /**
@@ -23,31 +33,38 @@ export interface UseClickOutside {
  * @overload
  * @param {HookTarget} target The target element(s) to detect outside clicks for
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
+ * @param {boolean} [options.enabled=true] Whether outside click handling is enabled
  * @returns {void}
  *
  * @example
- * useClickOutside(ref, () => console.log('click outside'));
+ * useClickOutside(ref, () => console.log('click outside'), { enabled: opened });
  *
  * @overload
  * @template Target The target element(s)
  * @param {(event: Event) => void} callback The callback to execute when a click outside the target is detected
+ * @param {boolean} [options.enabled=true] Whether outside click handling is enabled
  * @returns {StateRef<Target>} A ref to attach to the target element
  *
  * @example
- * const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
+ * const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'), {
+ *   enabled: opened
+ * });
  *
- * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useClickOutside.html}
+ * @see {@link https://reactuse.org/functions/hooks/useClickOutside}
  */
 export const useClickOutside = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
-  const callback = (params[1] ? params[1] : params[0]) as (event: Event) => void;
+  const callback = (target ? params[1] : params[0]) as (event: Event) => void;
+  const options = (target ? params[2] : params[1]) as UseClickOutsideOptions | undefined;
+
+  const enabled = options?.enabled ?? true;
 
   const internalRef = useRefState<Element>();
   const internalCallbackRef = useRef(callback);
   internalCallbackRef.current = callback;
 
   useEffect(() => {
-    if (!target && !internalRef.state) return;
+    if (!enabled || (!target && !internalRef.state)) return;
 
     const element = (target ? isTarget.getElement(target) : internalRef.current) as Element;
 
@@ -64,7 +81,7 @@ export const useClickOutside = ((...params: any[]) => {
     return () => {
       document.removeEventListener('click', onClick);
     };
-  }, [target && isTarget.getRawElement(target), internalRef.state]);
+  }, [enabled, target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return;
   return internalRef;
 }) as UseClickOutside;

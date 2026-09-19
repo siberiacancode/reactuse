@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react';
  *
  * @example
  * const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAsync}
  */
 export const useAsync = (callback, deps = []) => {
   const [isLoading, setIsLoading] = useState(true);

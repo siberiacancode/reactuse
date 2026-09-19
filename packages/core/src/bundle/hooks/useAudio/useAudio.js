@@ -19,6 +19,8 @@ import { useEffect, useRef, useState } from 'react';
  *
  * @example
  * const audio = useAudio("/path/to/sound.mp3");
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAudio}
  */
 export const useAudio = (src, options = {}) => {
   const [playing, setPlaying] = useState(false);

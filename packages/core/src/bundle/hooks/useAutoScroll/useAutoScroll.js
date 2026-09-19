@@ -22,6 +22,8 @@ import { useRefState } from '../useRefState/useRefState';
  *
  * @example
  * const ref = useAutoScroll();
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAutoScroll}
  */
 export const useAutoScroll = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;

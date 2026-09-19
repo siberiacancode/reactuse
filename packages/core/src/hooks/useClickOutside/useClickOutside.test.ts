@@ -136,7 +136,60 @@ targets.forEach((target) => {
       expect(callback).toHaveBeenCalledOnce();
     });
 
-    it('Should handle target changes', () => {
+    it('Should not call callback when disabled', () => {
+      const callback = vi.fn();
+
+      const { result } = renderHook(() => {
+        if (target)
+          return useClickOutside(target, callback, {
+            enabled: false
+          }) as unknown as StateRef<HTMLDivElement>;
+        return useClickOutside(callback, { enabled: false });
+      });
+
+      if (!target) act(() => result.current(element));
+
+      act(() => document.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+
+      expect(callback).not.toHaveBeenCalled();
+    });
+
+    it('Should handle enabled changes', () => {
+      const callback = vi.fn();
+
+      const { result, rerender } = renderHook(
+        (enabled) => {
+          if (target)
+            return useClickOutside(target, callback, {
+              enabled
+            }) as unknown as StateRef<HTMLDivElement>;
+          return useClickOutside(callback, { enabled });
+        },
+        {
+          initialProps: false
+        }
+      );
+
+      if (!target) act(() => result.current(element));
+
+      act(() => document.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+
+      expect(callback).not.toHaveBeenCalled();
+
+      rerender(true);
+
+      act(() => document.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+
+      expect(callback).toHaveBeenCalledOnce();
+
+      rerender(false);
+
+      act(() => document.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+
+      expect(callback).toHaveBeenCalledOnce();
+    });
+
+    it('Should recreate effect', () => {
       const callback = vi.fn();
       const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
       const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');

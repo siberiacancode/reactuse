@@ -26,6 +26,8 @@ export interface UseAsyncReturn<Data> {
  *
  * @example
  * const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAsync}
  */
 export const useAsync = <Data>(
   callback: () => Promise<Data>,

@@ -27,16 +27,15 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
+      entry: path.resolve(import.meta.dirname, 'src/index.ts'),
       name: pkg.name,
       fileName: (format) => `index.${format}.js`
     },
     rollupOptions: {
       input: {
-        index: path.resolve(__dirname, 'src/index.ts')
+        index: path.resolve(import.meta.dirname, 'src/index.ts')
       },
       external: [
-        ...Object.keys(pkg.dependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),
         'react/jsx-runtime',
         'react-dom/client'

@@ -60,6 +60,8 @@ export interface UseAudioReturn {
  *
  * @example
  * const audio = useAudio("/path/to/sound.mp3");
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAudio}
  */
 export const useAudio = (src: string, options: UseAudioOptions = {}): UseAudioReturn => {
   const [playing, setPlaying] = useState(false);
