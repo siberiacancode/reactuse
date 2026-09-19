@@ -36,7 +36,7 @@
     "lint-inspector": "npx @eslint/config-inspector@latest",
     "format": "prettier --write .",
     "type": "tsc --noEmit",
-    "pretty": "yarn type && yarn lint && yarn format"
+    "pretty": "pnpm type && pnpm lint && pnpm format"
   },
   "dependencies": {
     "@antfu/ni": "^30.6.0",
@@ -54,6 +54,7 @@
     "@types/prompts": "^2.4.9",
     "@types/yargs": "^17.0.35",
     "cross-env": "^10.1.0",
-    "tsdown": "^0.23.0"
+    "tsdown": "0.21.0",
+    "tsx": "^4.23.13"
   }
 }
