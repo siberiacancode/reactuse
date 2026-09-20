@@ -39,6 +39,8 @@ export interface UseBluetoothOptions {
  *
  * @example
  * const { supported, connected, device, requestDevice, server } = useBluetooth(options);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBluetooth}
  */
 export const useBluetooth = (options?: UseBluetoothOptions): UseBluetoothReturn => {
   const supported =

@@ -25,11 +25,11 @@ const mockBluetoothDevice = {
     return true;
   }
 };
-
+const mockRequestDevice = vi.fn(() => Promise.resolve(mockBluetoothDevice));
 beforeEach(() => {
   Object.defineProperty(navigator, 'bluetooth', {
     value: {
-      requestDevice: vi.fn(() => Promise.resolve(mockBluetoothDevice))
+      requestDevice: mockRequestDevice
     },
     writable: true,
     configurable: true
@@ -62,7 +62,7 @@ it('Should use bluetooth on server side', () => {
   });
 });
 
-it('Should use bluetooth for unsupported', () => {
+it('Should use bluetooth for unsupported', async () => {
   Object.defineProperty(navigator, 'bluetooth', {
     value: undefined,
     writable: true,
@@ -78,6 +78,10 @@ it('Should use bluetooth for unsupported', () => {
     server: undefined,
     requestDevice: expect.any(Function)
   });
+
+  await act(result.current.requestDevice);
+
+  expect(mockRequestDevice).not.toHaveBeenCalled();
 });
 
 it('Should request device successfully', async () => {

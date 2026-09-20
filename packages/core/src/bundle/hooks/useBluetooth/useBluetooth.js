@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react';
  *
  * @example
  * const { supported, connected, device, requestDevice, server } = useBluetooth(options);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBluetooth}
  */
 export const useBluetooth = (options) => {
   const supported =
