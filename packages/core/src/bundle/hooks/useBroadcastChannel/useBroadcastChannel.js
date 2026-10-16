@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLatest } from '../useLatest/useLatest';
 /**
  * @name useBroadcastChannel
  * @description - Hook that provides cross-tab/window communication
@@ -21,12 +22,13 @@ export const useBroadcastChannel = (name, callback) => {
   const [data, setData] = useState();
   const [error, setError] = useState();
   const channelRef = useRef(undefined);
+  const callbackLatest = useLatest(callback);
   useEffect(() => {
     if (!supported) return;
     channelRef.current = new BroadcastChannel(name);
     const onMessage = (event) => {
       setData(event.data);
-      callback?.(event.data);
+      callbackLatest.value?.(event.data);
     };
     const onMessageError = (event) => setError(event);
     const onClose = () => setClosed(true);
@@ -41,7 +43,7 @@ export const useBroadcastChannel = (name, callback) => {
         channelRef.current.close();
       }
     };
-  }, [name]);
+  }, [name, callbackLatest]);
   const post = (data) => {
     console.log('post', data, channelRef.current);
     if (!channelRef.current) return;

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { useLatest } from '../useLatest/useLatest';
+
 /** The use broadcast channel return type */
 export interface UseBroadcastChannelReturn<Data = unknown> {
   /** The underlying BroadcastChannel instance if supported, undefined otherwise */
@@ -44,6 +46,7 @@ export const useBroadcastChannel = <Data = unknown>(
   const [data, setData] = useState<Data>();
   const [error, setError] = useState<MessageEvent>();
   const channelRef = useRef<BroadcastChannel>(undefined);
+  const callbackLatest = useLatest(callback);
 
   useEffect(() => {
     if (!supported) return;
@@ -52,7 +55,7 @@ export const useBroadcastChannel = <Data = unknown>(
 
     const onMessage = (event: MessageEvent) => {
       setData(event.data);
-      callback?.(event.data);
+      callbackLatest.value?.(event.data);
     };
     const onMessageError = (event: MessageEvent) => setError(event);
     const onClose = () => setClosed(true);
@@ -69,7 +72,7 @@ export const useBroadcastChannel = <Data = unknown>(
         channelRef.current.close();
       }
     };
-  }, [name]);
+  }, [name, callbackLatest]);
 
   const post = (data: Data) => {
     console.log('post', data, channelRef.current);

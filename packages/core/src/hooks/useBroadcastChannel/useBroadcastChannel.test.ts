@@ -94,6 +94,41 @@ it('Should handle received messages', () => {
   expect(callback).toHaveBeenCalledWith('message');
 });
 
+it('Should use the latest callback without reopening the channel', () => {
+  const first = vi.fn();
+  const second = vi.fn();
+  const { result, rerender } = renderHook(
+    (callback) => useBroadcastChannel<string>(channelName, callback),
+    { initialProps: first }
+  );
+
+  rerender(second);
+  act(() => trigger.callback('message', new MessageEvent('message', { data: 'message' })));
+
+  expect(first).not.toHaveBeenCalled();
+  expect(second).toHaveBeenCalledWith('message');
+  expect(result.current.data).toBe('message');
+  expect(mockAddEventListener).toHaveBeenCalledTimes(3);
+  expect(mockBroadcastChannelClose).not.toHaveBeenCalled();
+});
+
+it('Should stop calling a removed callback while still receiving data', () => {
+  const callback = vi.fn();
+  const { result, rerender } = renderHook(
+    (callback: ((data: string) => void) | undefined) =>
+      useBroadcastChannel<string>(channelName, callback),
+    { initialProps: callback }
+  );
+
+  rerender(undefined);
+  act(() => trigger.callback('message', new MessageEvent('message', { data: 'message' })));
+
+  expect(callback).not.toHaveBeenCalled();
+  expect(result.current.data).toBe('message');
+  expect(mockAddEventListener).toHaveBeenCalledTimes(3);
+  expect(mockBroadcastChannelClose).not.toHaveBeenCalled();
+});
+
 it('Should handle message errors', () => {
   const { result } = renderHook(() => useBroadcastChannel(channelName));
 
