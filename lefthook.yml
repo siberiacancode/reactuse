@@ -21,19 +21,19 @@ pre-commit:
     - name: core-checks
       run: |
         if git diff --quiet HEAD -- packages/core; then
-          echo "No changes in packages/core. Skipping build."
+          echo 'No changes in packages/core. Skipping build.'
           exit 0
         fi
 
-        echo "Running tests for packages/core..."
+        echo 'Running tests for packages/core...'
         pnpm --dir packages/core exec vitest run
 
-        echo "Running build:js..."
+        echo 'Running build:js...'
         pnpm core:build:js
 
         git add packages/core/src/bundle
         git add packages/cli/src/registry
-        echo "Built files added to git."
+        echo 'Built files added to git.'
 
 commit-msg:
   jobs:
