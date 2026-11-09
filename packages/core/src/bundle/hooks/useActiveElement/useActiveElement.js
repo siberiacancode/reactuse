@@ -21,7 +21,7 @@ import { useRefState } from '../useRefState/useRefState';
  * @example
  * const { ref, value } = useActiveElement();
  *
- * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useActiveElement.html}
+ * @see {@link https://reactuse.org/functions/hooks/useActiveElement}
  */
 export const useActiveElement = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;

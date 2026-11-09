@@ -19,6 +19,8 @@ export type UseBooleanReturn = [
  *
  * @example
  * const [on, toggle] = useBoolean()
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBoolean}
  */
 export const useBoolean = (initialValue = false): UseBooleanReturn => {
   const [value, setValue] = useState(initialValue);

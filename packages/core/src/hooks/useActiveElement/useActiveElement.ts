@@ -10,6 +10,7 @@ import { useRefState } from '../useRefState/useRefState';
 
 /** The use active element return type */
 export interface UseActiveElementReturn<ActiveElement extends HTMLElement = HTMLElement> {
+  /** The current active element */
   value: ActiveElement | null;
 }
 
@@ -47,7 +48,7 @@ export interface UseActiveElement {
  * @example
  * const { ref, value } = useActiveElement();
  *
- * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useActiveElement.html}
+ * @see {@link https://reactuse.org/functions/hooks/useActiveElement}
  */
 export const useActiveElement = ((...params: any[]) => {
   const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
