@@ -1,8 +1,3 @@
-const isObject = (value) => typeof value === 'object' && value !== null;
-const isPlainObject = (value) => {
-  const prototype = Object.getPrototypeOf(value);
-  return prototype === Object.prototype || prototype === null;
-};
 /**
  * @name deepEqual
  * @description - Performs a deep comparison between two values to determine if they are equivalent
@@ -13,10 +8,8 @@ const isPlainObject = (value) => {
  * @param {any} b The second value to compare
  * @returns {boolean} `true` if the two values are deeply equal, `false` otherwise
  *
- * @warning - Set members and Map keys are compared by reference, Map values are compared deeply. Objects without own enumerable string keys are compared by reference unless they are plain objects.
- *
  * @example
- * deepEqual({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } }); // true
+ * deepEqual({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } });
  */
 export const deepEqual = (a, b) => {
   const seen = new WeakMap();
@@ -32,7 +25,7 @@ export const deepEqual = (a, b) => {
   };
   const compare = (x, y) => {
     if (Object.is(x, y)) return true;
-    if (!isObject(x) || !isObject(y)) return false;
+    if (typeof x !== 'object' || x === null || typeof y !== 'object' || y === null) return false;
     if (Object.getPrototypeOf(x) !== Object.getPrototypeOf(y)) return false;
     if (mark(x, y)) return true;
     if (x instanceof Date) return y instanceof Date && Object.is(x.getTime(), y.getTime());
@@ -66,7 +59,12 @@ export const deepEqual = (a, b) => {
     const keysX = [...Object.keys(xo), ...Object.getOwnPropertySymbols(xo)];
     const keysY = [...Object.keys(yo), ...Object.getOwnPropertySymbols(yo)];
     if (keysX.length !== keysY.length) return false;
-    if (!Object.keys(xo).length && !isPlainObject(x)) return false;
+    if (
+      !Object.keys(xo).length &&
+      Object.getPrototypeOf(x) !== Object.prototype &&
+      Object.getPrototypeOf(x) !== null
+    )
+      return false;
     for (const key of keysX) {
       if (!Object.hasOwn(yo, key)) return false;
       if (!compare(xo[key], yo[key])) return false;

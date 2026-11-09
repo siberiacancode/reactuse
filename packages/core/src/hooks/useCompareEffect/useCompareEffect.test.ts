@@ -136,6 +136,20 @@ it('Should not run effect when compare function returns true', () => {
   expect(effect).toHaveBeenCalledOnce();
 });
 
+it('Should run effect when any dependency changes', () => {
+  const effect = vi.fn();
+  let deps = [{ id: 1 }, { id: 2 }];
+
+  const { rerender } = renderHook(() => useCompareEffect(effect, deps));
+
+  act(() => {
+    deps = [{ id: 1 }, { id: 3 }];
+    rerender();
+  });
+
+  expect(effect).toHaveBeenCalledTimes(2);
+});
+
 it('Should cleanup and rerun effect when compare function returns false', () => {
   const cleanup = vi.fn();
   const effect = vi.fn(() => cleanup);
@@ -163,18 +177,13 @@ it('Should allow deps length to change between renders', () => {
   });
 
   expect(effect).toHaveBeenCalledTimes(2);
-});
 
-it('Should run cleanup on unmount', () => {
-  const cleanup = vi.fn();
+  act(() => {
+    deps = [{ id: 1 }];
+    rerender();
+  });
 
-  const { unmount } = renderHook(() => useCompareEffect(() => cleanup, [{ id: 1 }]));
-
-  expect(cleanup).not.toHaveBeenCalled();
-
-  unmount();
-
-  expect(cleanup).toHaveBeenCalledOnce();
+  expect(effect).toHaveBeenCalledTimes(3);
 });
 
 it('Should run effect on every render when deps are not passed', () => {
@@ -187,4 +196,16 @@ it('Should run effect on every render when deps are not passed', () => {
   act(rerender);
 
   expect(effect).toHaveBeenCalledTimes(2);
+});
+
+it('Should cleanup on unmount', () => {
+  const cleanup = vi.fn();
+
+  const { unmount } = renderHook(() => useCompareEffect(() => cleanup, [{ id: 1 }]));
+
+  expect(cleanup).not.toHaveBeenCalled();
+
+  unmount();
+
+  expect(cleanup).toHaveBeenCalledOnce();
 });

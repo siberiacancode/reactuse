@@ -131,6 +131,14 @@ it('Should handle mutually circular references', () => {
   expect(deepEqual(createPair(), createPair())).toBe(true);
 });
 
+it('Should compare a shared reference with separate equal values', () => {
+  const shared = { value: 1 };
+
+  expect(
+    deepEqual({ first: shared, second: shared }, { first: { value: 1 }, second: { value: 1 } })
+  ).toBe(true);
+});
+
 it('Should compare functions by reference', () => {
   const callback = () => 1;
 

@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781981977000
+lastModifiedTime: 1794210880000
 ---
 
 # useVirtualKeyboard
@@ -170,11 +170,10 @@ export const useVirtualKeyboard = (initialValue = false): UseVirtualKeyboardRetu
     const onResize = () => setOpened(window.screen.height - 300 > window.visualViewport!.height);
 
     const onGeometryChange = (event: Event) => {
+      if (!navigator.virtualKeyboard?.overlaysContent) return;
       const { height } = (event.target as any).boundingRect as DOMRect;
       setOpened(height > 0);
     };
-
-    if (navigator.virtualKeyboard) navigator.virtualKeyboard.overlaysContent = true;
 
     navigator.virtualKeyboard &&
       navigator.virtualKeyboard.addEventListener('geometrychange', onGeometryChange);

@@ -10,27 +10,21 @@ import { deepEqual } from '@/helpers/deepEqual/deepEqual';
  * @param {DependencyList} [deps] The dependencies list for the effect
  * @param {CompareFunction} [compare=deepEqual] The function that returns `true` when a dependency is equal to its previous value
  *
- * @warning - The compare function is called for each dependency separately, not for the whole list
- *
  * @example
  * useCompareEffect(() => console.log("effect"), [user]);
- *
- * @example
- * useCompareEffect(() => console.log("effect"), [user], shallowEqual);
- *
- * @example
- * useCompareEffect(() => console.log("effect"), [user], (user, prevUser) => user.id === prevUser.id);
  */
 export const useCompareEffect = (effect, deps, compare = deepEqual) => {
-  const depsRef = useRef(undefined);
-  const signalRef = useRef(0);
-  const prevDeps = depsRef.current;
+  const committedRef = useRef(undefined);
+  const committed = committedRef.current;
+  const committedDeps = committed?.deps;
   const equal =
     !!deps &&
-    !!prevDeps &&
-    deps.length === prevDeps.length &&
-    deps.every((dep, index) => compare(dep, prevDeps[index]));
-  if (!equal) signalRef.current += 1;
-  depsRef.current = deps;
-  useEffect(effect, [signalRef.current]);
+    !!committedDeps &&
+    deps.length === committedDeps.length &&
+    deps.every((dep, index) => compare(dep, committedDeps[index]));
+  const signal = (committed?.signal ?? 0) + (equal ? 0 : 1);
+  useEffect(() => {
+    committedRef.current = { deps, signal };
+    return effect();
+  }, [signal]);
 };

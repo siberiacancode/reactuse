@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1775645190000
+lastModifiedTime: 1789822825000
 ---
 
 # useAutoScroll
@@ -324,6 +324,8 @@ export interface UseAutoScroll {
  *
  * @example
  * const ref = useAutoScroll();
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAutoScroll}
  */
 export const useAutoScroll = ((...params: any[]) => {
   const target = isTarget(params[0]) ? params[0] : undefined;

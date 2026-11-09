@@ -1,8 +1,3 @@
-const isObject = (value) => typeof value === 'object' && value !== null;
-const isPlainObject = (value) => {
-  const prototype = Object.getPrototypeOf(value);
-  return prototype === Object.prototype || prototype === null;
-};
 /**
  * @name shallowEqual
  * @description - Performs a shallow comparison between two values to determine if they are equivalent
@@ -13,14 +8,12 @@ const isPlainObject = (value) => {
  * @param {any} b The second value to compare
  * @returns {boolean} `true` if the two values are shallowly equal, `false` otherwise
  *
- * @warning - Set members and Map keys are compared by reference. Objects without own enumerable string keys are compared by reference unless they are plain objects.
- *
  * @example
- * shallowEqual({ a: 1, b: 2 }, { a: 1, b: 2 }); // true
+ * shallowEqual({ a: 1, b: 2 }, { a: 1, b: 2 });
  */
 export const shallowEqual = (a, b) => {
   if (Object.is(a, b)) return true;
-  if (!isObject(a) || !isObject(b)) return false;
+  if (typeof a !== 'object' || a === null || typeof b !== 'object' || b === null) return false;
   if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) return false;
   if (a instanceof Date) return b instanceof Date && Object.is(a.getTime(), b.getTime());
   if (a instanceof RegExp)
@@ -52,7 +45,12 @@ export const shallowEqual = (a, b) => {
   const keysA = [...Object.keys(ao), ...Object.getOwnPropertySymbols(ao)];
   const keysB = [...Object.keys(bo), ...Object.getOwnPropertySymbols(bo)];
   if (keysA.length !== keysB.length) return false;
-  if (!Object.keys(ao).length && !isPlainObject(a)) return false;
+  if (
+    !Object.keys(ao).length &&
+    Object.getPrototypeOf(a) !== Object.prototype &&
+    Object.getPrototypeOf(a) !== null
+  )
+    return false;
   for (const key of keysA) {
     if (!Object.hasOwn(bo, key)) return false;
     if (!Object.is(ao[key], bo[key])) return false;

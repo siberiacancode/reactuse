@@ -23,7 +23,9 @@
 - [createEventEmitter](https://reactuse.org/functions/helpers/createEventEmitter): Creates a type-safe event emitter
 - [createReactiveContext](https://reactuse.org/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection
 - [createStore](https://reactuse.org/functions/helpers/createStore): Creates a store with state management capabilities
+- [deepEqual](https://reactuse.org/functions/helpers/deepEqual): Performs a deep comparison between two values to determine if they are equivalent
 - [makeDestructurable](https://reactuse.org/functions/helpers/makeDestructurable): Makes an object also iterable for array-style destructuring
+- [shallowEqual](https://reactuse.org/functions/helpers/shallowEqual): Performs a shallow comparison between two values to determine if they are equivalent
 
 
 ### Async
@@ -128,11 +130,11 @@
 ### Lifecycle
 
 - [useAsyncEffect](https://reactuse.org/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates
+- [useCompareEffect](https://reactuse.org/functions/hooks/useCompareEffect): Hook that executes an effect only when the compare function reports a dependency as changed
 - [useDidUpdate](https://reactuse.org/functions/hooks/useDidUpdate): Hook that triggers the effect callback on updates
 - [useIsFirstRender](https://reactuse.org/functions/hooks/useIsFirstRender): Hook that returns true if the component is first render
 - [useIsomorphicLayoutEffect](https://reactuse.org/functions/hooks/useIsomorphicLayoutEffect): Hook conditionally selects either `useLayoutEffect` or `useEffect` based on the environment
 - [useMount](https://reactuse.org/functions/hooks/useMount): Hook that executes a callback when the component mounts
-- [useShallowEffect](https://reactuse.org/functions/hooks/useShallowEffect): Hook that executes an effect only when dependencies change shallowly or deeply
 - [useUnmount](https://reactuse.org/functions/hooks/useUnmount): Hook that defines the logic when unmounting a component
 
 
