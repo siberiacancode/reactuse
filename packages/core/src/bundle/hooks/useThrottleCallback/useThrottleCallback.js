@@ -15,35 +15,31 @@ import { useMemo, useRef } from 'react';
  * const throttled = useThrottleCallback(() => console.log('callback'), 500);
  */
 export const useThrottleCallback = (callback, delay) => {
-  const internalCallbackRef = useRef(callback);
-  const timeoutRef = useRef(null);
-  const isCalledRef = useRef(false);
-  const delayRef = useRef(delay);
   const lastArgsRef = useRef(null);
+  const prevArgsRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const internalCallbackRef = useRef(callback);
+  const delayRef = useRef(delay);
   internalCallbackRef.current = callback;
   delayRef.current = delay;
   const throttled = useMemo(() => {
-    const timer = () => {
-      if (!lastArgsRef.current) {
-        isCalledRef.current = false;
-        return;
-      }
-      internalCallbackRef.current.apply(this, lastArgsRef.current);
-      lastArgsRef.current = null;
-      setTimeout(timer, delayRef.current);
-    };
     const cancel = () => {
       if (!timeoutRef.current) return;
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
-      isCalledRef.current = false;
+      prevArgsRef.current = null;
     };
     const throttledCallback = function (...args) {
       lastArgsRef.current = args;
-      if (isCalledRef.current) return;
+      if (timeoutRef.current) return;
+      prevArgsRef.current = args;
       internalCallbackRef.current.apply(this, args);
-      isCalledRef.current = true;
-      timeoutRef.current = setTimeout(timer, delayRef.current);
+      timeoutRef.current = setTimeout(() => {
+        timeoutRef.current = null;
+        if (!lastArgsRef.current) return;
+        if (prevArgsRef.current === lastArgsRef.current) return;
+        internalCallbackRef.current.apply(this, lastArgsRef.current);
+      }, delayRef.current);
     };
     throttledCallback.cancel = cancel;
     cancel();

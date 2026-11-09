@@ -23,41 +23,38 @@ export const useThrottleCallback = <Params extends unknown[], Return>(
   callback: (...args: Params) => Return,
   delay: number
 ): ThrottledCallback<Params> => {
-  const internalCallbackRef = useRef(callback);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const isCalledRef = useRef(false);
-  const delayRef = useRef(delay);
   const lastArgsRef = useRef<Params | null>(null);
+  const prevArgsRef = useRef<Params | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const internalCallbackRef = useRef(callback);
+  const delayRef = useRef(delay);
 
   internalCallbackRef.current = callback;
   delayRef.current = delay;
 
   const throttled = useMemo(() => {
-    const timer = () => {
-      if (!lastArgsRef.current) {
-        isCalledRef.current = false;
-        return;
-      }
-
-      internalCallbackRef.current.apply(this, lastArgsRef.current);
-      lastArgsRef.current = null;
-      setTimeout(timer, delayRef.current);
-    };
-
     const cancel = () => {
       if (!timeoutRef.current) return;
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
-      isCalledRef.current = false;
+      prevArgsRef.current = null;
     };
 
     const throttledCallback = function (this: any, ...args: Params) {
       lastArgsRef.current = args;
-      if (isCalledRef.current) return;
+      if (timeoutRef.current) return;
 
+      prevArgsRef.current = args;
       internalCallbackRef.current.apply(this, args);
-      isCalledRef.current = true;
-      timeoutRef.current = setTimeout(timer, delayRef.current);
+
+      timeoutRef.current = setTimeout(() => {
+        timeoutRef.current = null;
+
+        if (!lastArgsRef.current) return;
+        if (prevArgsRef.current === lastArgsRef.current) return;
+
+        internalCallbackRef.current.apply(this, lastArgsRef.current);
+      }, delayRef.current);
     };
 
     throttledCallback.cancel = cancel;

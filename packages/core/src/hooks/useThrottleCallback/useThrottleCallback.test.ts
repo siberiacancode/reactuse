@@ -33,6 +33,12 @@ it('Should execute the callback throttle', () => {
 
   act(() => vi.advanceTimersByTime(100));
   expect(callback).toHaveBeenCalledTimes(2);
+
+  result.current();
+  expect(callback).toHaveBeenCalledTimes(3);
+
+  act(() => vi.advanceTimersByTime(100));
+  expect(callback).toHaveBeenCalledTimes(3);
 });
 
 it('Should pass parameters into callback', () => {
@@ -50,9 +56,6 @@ it('Should pass parameters into callback', () => {
   expect(callback).toHaveBeenCalledWith('second');
 
   result.current('third');
-  expect(callback).not.toHaveBeenCalledWith('third');
-
-  act(() => vi.advanceTimersByTime(100));
   expect(callback).toHaveBeenCalledWith('third');
 });
 
@@ -87,7 +90,7 @@ it('Should keep throttling active while processing a trailing call', () => {
   expect(callback).toHaveBeenLastCalledWith('b');
 
   result.current('c');
-  expect(callback).toHaveBeenCalledTimes(2);
+  expect(callback).toHaveBeenCalledTimes(3);
 
   act(() => vi.advanceTimersByTime(100));
   expect(callback).toHaveBeenCalledTimes(3);
@@ -113,9 +116,10 @@ it('Should return new function when delay changes', () => {
   expect(callback).toHaveBeenCalledWith('third');
 
   result.current('fourth');
+  act(() => vi.advanceTimersByTime(100));
   expect(callback).not.toHaveBeenCalledWith('fourth');
 
-  act(() => vi.advanceTimersByTime(200));
+  act(() => vi.advanceTimersByTime(100));
   expect(callback).toHaveBeenCalledWith('fourth');
   expect(callback).toHaveBeenCalledTimes(3);
 });
@@ -129,13 +133,13 @@ it('Should reset the throttle window when no trailing call is pending', () => {
   expect(callback).toHaveBeenCalledTimes(1);
 
   act(() => vi.advanceTimersByTime(100));
-  expect(callback).toHaveBeenCalledTimes(2);
+  expect(callback).toHaveBeenCalledTimes(1);
 
   act(() => vi.advanceTimersByTime(100));
-  expect(callback).toHaveBeenCalledTimes(2);
+  expect(callback).toHaveBeenCalledTimes(1);
 
   result.current('second');
-  expect(callback).toHaveBeenCalledTimes(3);
+  expect(callback).toHaveBeenCalledTimes(2);
   expect(callback).toHaveBeenLastCalledWith('second');
 });
 
