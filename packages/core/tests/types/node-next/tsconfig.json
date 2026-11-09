@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": false,
+    "types": ["vitest/globals", "@types/web-bluetooth", "@types/dom-speech-recognition"]
+  },
+  "files": ["consumer.mts", "consumer.cts"]
+}
