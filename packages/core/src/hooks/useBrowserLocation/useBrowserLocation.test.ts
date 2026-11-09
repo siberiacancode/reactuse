@@ -35,7 +35,7 @@ it('Should use browser location', () => {
 it('Should use browser location on server side', () => {
   const { result } = renderHookServer(useBrowserLocation);
 
-  expect(result.current.value).toMatchObject({
+  expect(result.current.value).toEqual({
     searchParams: new URLSearchParams()
   });
   expect(result.current.push).toBeTypeOf('function');
@@ -60,8 +60,18 @@ it('Should navigate with push', () => {
   );
   expect(result.current.value.pathname).toBe('/browser-location');
   expect(result.current.value.search).toBe('?tab=push');
+  expect(result.current.value.searchParams.get('tab')).toBe('push');
   expect(result.current.value.hash).toBe('#section');
   expect(result.current.value.state).toEqual({ page: 'push' });
+});
+
+it('Should navigate with push using default title', () => {
+  const pushStateSpy = vi.spyOn(window.history, 'pushState');
+  const { result } = renderHook(useBrowserLocation);
+
+  act(() => result.current.push('/browser-location/push'));
+
+  expect(pushStateSpy).toHaveBeenCalledWith(undefined, '', '/browser-location/push');
 });
 
 it('Should navigate with replace', () => {
@@ -83,8 +93,18 @@ it('Should navigate with replace', () => {
   );
   expect(result.current.value.pathname).toBe('/browser-location');
   expect(result.current.value.search).toBe('?tab=replace');
+  expect(result.current.value.searchParams.get('tab')).toBe('replace');
   expect(result.current.value.hash).toBe('#state');
   expect(result.current.value.state).toEqual({ page: 'replace' });
+});
+
+it('Should navigate with replace using default title', () => {
+  const replaceStateSpy = vi.spyOn(window.history, 'replaceState');
+  const { result } = renderHook(useBrowserLocation);
+
+  act(() => result.current.replace('/browser-location/replace'));
+
+  expect(replaceStateSpy).toHaveBeenCalledWith(undefined, '', '/browser-location/replace');
 });
 
 it('Should navigate with back', () => {
