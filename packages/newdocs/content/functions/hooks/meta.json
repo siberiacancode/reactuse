@@ -8,7 +8,7 @@
       "useAsync","useLockCallback","useMutation","useOptimistic","useQuery",
 
       "---lifecycle---",
-      "useAsyncEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect","useMount","useShallowEffect","useUnmount",
+      "useAsyncEffect","useCompareEffect","useDidUpdate","useIsFirstRender","useIsomorphicLayoutEffect","useMount","useUnmount",
 
       "---browser---",
       "useAudio","useBattery","useBluetooth","useBreakpoints","useBroadcastChannel","useBrowserLocation","useClipboard","useCopy","useCssVar","useDeviceList","useDisplayMedia","useDocumentEvent","useDocumentTitle","useDocumentVisibility","useEventListener","useEventSource","useEyeDropper","useFavicon","useFileSystemAccess","useFps","useFullscreen","useGamepad","useGeolocation","useMeasure","useMediaControls","useMediaQuery","useMediaStream","useMemory","useNetwork","useNotification","useObjectUrl","useOnline","useOtpCredential","usePermission","usePictureInPicture","usePointerLock","usePostMessage","useRaf","useShare","useSpeechRecognition","useSpeechSynthesis","useSticky","useVibrate","useVirtualKeyboard","useWakeLock","useWebSocket","useWebWorker","useWebWorkerCallback",

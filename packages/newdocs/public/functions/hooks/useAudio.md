@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1762758339000
+lastModifiedTime: 1789822825000
 ---
 
 # useAudio
@@ -315,6 +315,8 @@ export interface UseAudioReturn {
  *
  * @example
  * const audio = useAudio("/path/to/sound.mp3");
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAudio}
  */
 export const useAudio = (src: string, options: UseAudioOptions = {}): UseAudioReturn => {
   const [playing, setPlaying] = useState(false);

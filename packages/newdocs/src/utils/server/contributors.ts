@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import simpleGit from 'simple-git';
+import { simpleGit } from 'simple-git';
 
 const git = simpleGit();
 

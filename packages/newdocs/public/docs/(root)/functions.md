@@ -12,7 +12,9 @@ A quick list of available functions.
 - [createEventEmitter](/functions/helpers/createEventEmitter): Creates a type-safe event emitter
 - [createReactiveContext](/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection
 - [createStore](/functions/helpers/createStore): Creates a store with state management capabilities
+- [deepEqual](/functions/helpers/deepEqual): Performs a deep comparison between two values to determine if they are equivalent
 - [makeDestructurable](/functions/helpers/makeDestructurable): Makes an object also iterable for array-style destructuring
+- [shallowEqual](/functions/helpers/shallowEqual): Performs a shallow comparison between two values to determine if they are equivalent
 - [useActiveElement](/functions/hooks/useActiveElement): Hook for tracking the active element
 - [useAsync](/functions/hooks/useAsync): Hook that provides the state of an async callback
 - [useAsyncEffect](/functions/hooks/useAsyncEffect): Hook that triggers the effect callback on updates
@@ -28,6 +30,7 @@ A quick list of available functions.
 - [useBrowserLocation](/functions/hooks/useBrowserLocation): Hook that returns reactive browser location state with navigation controls
 - [useClickOutside](/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
 - [useClipboard](/functions/hooks/useClipboard): Hook that manages a copy to clipboard
+- [useCompareEffect](/functions/hooks/useCompareEffect): Hook that executes an effect only when the compare function reports a dependency as changed
 - [useConst](/functions/hooks/useConst): Hook that returns the constant value
 - [useContextMenu](/functions/hooks/useContextMenu): Hook that handles custom context menus on desktop and long press on touch devices
 - [useControllableState](/functions/hooks/useControllableState): Hook that manages both controlled and uncontrolled state patterns
@@ -146,7 +149,6 @@ A quick list of available functions.
 - [useScrollTo](/functions/hooks/useScrollTo): Hook for scrolling to a specific element
 - [useSessionStorage](/functions/hooks/useSessionStorage): Hook that manages session storage value
 - [useSet](/functions/hooks/useSet): Hook that manages a set structure
-- [useShallowEffect](/functions/hooks/useShallowEffect): Hook that executes an effect only when dependencies change shallowly or deeply
 - [useShare](/functions/hooks/useShare): Hook that utilizes the share api
 - [useSize](/functions/hooks/useSize): Hook that observes and returns the width and height of element
 - [useSpeechRecognition](/functions/hooks/useSpeechRecognition): Hook that provides a streamlined interface for incorporating speech-to-text functionality

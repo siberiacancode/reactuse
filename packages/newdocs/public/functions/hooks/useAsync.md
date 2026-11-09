@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1789822825000
 ---
 
 # useAsync
@@ -187,6 +187,8 @@ export interface UseAsyncReturn<Data> {
  *
  * @example
  * const { data, isLoading, isError, error } = useAsync(() => fetch('url'), [deps]);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAsync}
  */
 export const useAsync = <Data>(
   callback: () => Promise<Data>,

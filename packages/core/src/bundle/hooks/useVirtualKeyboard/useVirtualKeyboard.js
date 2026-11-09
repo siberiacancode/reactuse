@@ -40,10 +40,10 @@ export const useVirtualKeyboard = (initialValue = false) => {
     if (!supported) return;
     const onResize = () => setOpened(window.screen.height - 300 > window.visualViewport.height);
     const onGeometryChange = (event) => {
+      if (!navigator.virtualKeyboard?.overlaysContent) return;
       const { height } = event.target.boundingRect;
       setOpened(height > 0);
     };
-    if (navigator.virtualKeyboard) navigator.virtualKeyboard.overlaysContent = true;
     navigator.virtualKeyboard &&
       navigator.virtualKeyboard.addEventListener('geometrychange', onGeometryChange);
     window.visualViewport && window.visualViewport.addEventListener('resize', onResize);

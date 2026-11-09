@@ -106,6 +106,25 @@ it('Should use virtual keyboard for unsupported', () => {
 
   expect(result.current.supported).toBeFalsy();
   expect(result.current.opened).toBeFalsy();
+
+  act(() => {
+    result.current.show();
+    result.current.hide();
+    result.current.changeOverlaysContent(true);
+  });
+
+  expect(result.current.opened).toBeFalsy();
+});
+
+it('Should support VirtualKeyboard API without visual viewport', () => {
+  Object.defineProperty(window, 'visualViewport', {
+    value: undefined,
+    writable: true
+  });
+
+  const { result } = renderHook(() => useVirtualKeyboard());
+
+  expect(result.current.supported).toBeTruthy();
 });
 
 it('Should show virtual keyboard', () => {
@@ -122,6 +141,8 @@ it('Should hide virtual keyboard', () => {
   const hideSpy = vi.spyOn(virtualKeyboard, 'hide');
   const { result } = renderHook(() => useVirtualKeyboard(true));
 
+  expect(result.current.opened).toBeTruthy();
+
   act(() => result.current.hide());
 
   expect(hideSpy).toHaveBeenCalledOnce();
@@ -131,11 +152,29 @@ it('Should hide virtual keyboard', () => {
 it('Should change overlays content', () => {
   const { result } = renderHook(() => useVirtualKeyboard());
 
-  expect(virtualKeyboard.overlaysContent).toBeTruthy();
+  expect(virtualKeyboard.overlaysContent).toBe(false);
+
+  act(() => result.current.changeOverlaysContent(true));
+
+  expect(virtualKeyboard.overlaysContent).toBe(true);
 
   act(() => result.current.changeOverlaysContent(false));
 
-  expect(virtualKeyboard.overlaysContent).toBeFalsy();
+  expect(virtualKeyboard.overlaysContent).toBe(false);
+});
+
+[false, true].forEach((overlaysContent) => {
+  it(`Should preserve ${overlaysContent} overlays content on mount and unmount`, () => {
+    virtualKeyboard.overlaysContent = overlaysContent;
+
+    const { unmount } = renderHook(() => useVirtualKeyboard());
+
+    expect(virtualKeyboard.overlaysContent).toBe(overlaysContent);
+
+    unmount();
+
+    expect(virtualKeyboard.overlaysContent).toBe(overlaysContent);
+  });
 });
 
 it('Should handle geometrychange event', () => {
@@ -148,7 +187,20 @@ it('Should handle geometrychange event', () => {
     virtualKeyboard.dispatchEvent(new Event('geometrychange'));
   });
 
+  expect(result.current.opened).toBeFalsy();
+
+  act(() => result.current.changeOverlaysContent(true));
+
+  act(() => virtualKeyboard.dispatchEvent(new Event('geometrychange')));
+
   expect(result.current.opened).toBeTruthy();
+
+  act(() => {
+    virtualKeyboard.boundingRect = new DOMRect();
+    virtualKeyboard.dispatchEvent(new Event('geometrychange'));
+  });
+
+  expect(result.current.opened).toBeFalsy();
 });
 
 it('Should handle resize fallback event', () => {
@@ -162,6 +214,13 @@ it('Should handle resize fallback event', () => {
   });
 
   expect(result.current.opened).toBeTruthy();
+
+  act(() => {
+    visualViewport.height = 700;
+    visualViewport.dispatchEvent(new UIEvent('resize'));
+  });
+
+  expect(result.current.opened).toBeFalsy();
 });
 
 it('Should cleanup on unmount', () => {

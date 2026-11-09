@@ -6,7 +6,7 @@ usage: necessary
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1775645190000
+lastModifiedTime: 1789822825000
 ---
 
 import metadata from './useClickOutside.meta.json';
@@ -47,9 +47,9 @@ import metadata from './useClickOutside.meta.json';
 ## Usage
 
 ```tsx
-useClickOutside(ref, () => console.log('click outside'));
+useClickOutside(ref, () => console.log('click outside'), { enabled: opened });
 // or
-const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'));
+const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'), { enabled: opened });
 ```
 
 ## Type Declarations

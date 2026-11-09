@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781981977000
+lastModifiedTime: 1789822825000
 ---
 
 # useBattery
@@ -190,6 +190,8 @@ export interface UseBatteryReturn {
  *
  * @example
  * const { supported, loading, charging, chargingTime, dischargingTime, level } = useBattery();
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBattery}
  */
 export const useBattery = (): UseBatteryReturn => {
   const supported =
@@ -206,19 +208,20 @@ export const useBattery = (): UseBatteryReturn => {
   useEffect(() => {
     if (!supported) return;
 
-    let battery: BatteryManager | null;
+    let battery: BatteryManager | undefined;
 
     const onChange = () =>
       setValue({
         loading: false,
-        level: battery?.level ?? 0,
-        charging: battery?.charging ?? false,
-        dischargingTime: battery?.dischargingTime ?? 0,
-        chargingTime: battery?.chargingTime ?? 0
+        level: battery!.level,
+        charging: battery!.charging,
+        chargingTime: battery!.chargingTime,
+        dischargingTime: battery!.dischargingTime
       });
 
     navigator.getBattery().then((batteryManager) => {
       battery = batteryManager;
+
       onChange();
 
       battery.addEventListener('levelchange', onChange);
@@ -229,6 +232,7 @@ export const useBattery = (): UseBatteryReturn => {
 
     return () => {
       if (!battery) return;
+
       battery.removeEventListener('levelchange', onChange);
       battery.removeEventListener('chargingchange', onChange);
       battery.removeEventListener('chargingtimechange', onChange);

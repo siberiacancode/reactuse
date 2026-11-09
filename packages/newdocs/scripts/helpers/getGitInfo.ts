@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import process from 'node:process';
-import simpleGit from 'simple-git';
+import { simpleGit } from 'simple-git';
 
 import type { FunctionType } from '@/src/constants';
 

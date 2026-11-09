@@ -21,7 +21,7 @@ export const useBluetooth = (options) => {
   const supported =
     typeof navigator !== 'undefined' && 'bluetooth' in navigator && !!navigator.bluetooth;
   const { acceptAllDevices = false, filters, optionalServices } = options ?? {};
-  const [connected, setIsConnected] = useState(false);
+  const [connected, setConnected] = useState(false);
   const [device, setDevice] = useState(undefined);
   const [server, setServer] = useState(undefined);
   const requestDevice = async () => {
@@ -38,12 +38,12 @@ export const useBluetooth = (options) => {
     const connectToBluetoothGATTServer = async () => {
       const gattServer = await device.gatt.connect();
       setServer(gattServer);
-      setIsConnected(gattServer.connected);
+      setConnected(gattServer.connected);
     };
     const reset = () => {
       setServer(undefined);
       setDevice(undefined);
-      setIsConnected(false);
+      setConnected(false);
     };
     device.addEventListener('gattserverdisconnected', reset);
     connectToBluetoothGATTServer();

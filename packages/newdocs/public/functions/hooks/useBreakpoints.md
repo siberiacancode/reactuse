@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1766052966000
+lastModifiedTime: 1794210880000
 ---
 
 # useBreakpoints
@@ -215,6 +215,8 @@ export type UseBreakpointsReturn<Breakpoint extends string = string> = {
  *
  * @example
  * const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBreakpoints}
  */
 export const useBreakpoints = <Breakpoint extends string>(
   breakpoints: Breakpoints<Breakpoint>,

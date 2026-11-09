@@ -14,7 +14,6 @@ const Demo = () => {
     try {
       await bluetooth.requestDevice();
     } catch {
-      // The device picker can be closed without selecting a device.
     } finally {
       setConnecting(false);
     }

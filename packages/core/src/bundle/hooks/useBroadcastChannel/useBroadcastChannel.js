@@ -13,6 +13,8 @@ import { useEffect, useRef, useState } from 'react';
  *
  * @example
  * const { supported, data, post, error } = useBroadcastChannel('channel');
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBroadcastChannel}
  */
 export const useBroadcastChannel = (name, callback) => {
   const supported =
@@ -21,14 +23,14 @@ export const useBroadcastChannel = (name, callback) => {
   const [data, setData] = useState();
   const [error, setError] = useState();
   const channelRef = useRef(undefined);
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
   useEffect(() => {
     if (!supported) return;
     channelRef.current = new BroadcastChannel(name);
     const onMessage = (event) => {
       setData(event.data);
-      callbackRef.current?.(event.data);
+      internalCallbackRef.current?.(event.data);
     };
     const onMessageError = (event) => setError(event);
     const onClose = () => setClosed(true);
@@ -36,16 +38,14 @@ export const useBroadcastChannel = (name, callback) => {
     channelRef.current.addEventListener('messageerror', onMessageError);
     channelRef.current.addEventListener('close', onClose);
     return () => {
-      if (channelRef.current) {
-        channelRef.current.removeEventListener('message', onMessage);
-        channelRef.current.removeEventListener('messageerror', onMessageError);
-        channelRef.current.removeEventListener('close', onClose);
-        channelRef.current.close();
-      }
+      if (!channelRef.current) return;
+      channelRef.current.removeEventListener('message', onMessage);
+      channelRef.current.removeEventListener('messageerror', onMessageError);
+      channelRef.current.removeEventListener('close', onClose);
+      channelRef.current.close();
     };
   }, [name]);
   const post = (data) => {
-    console.log('post', data, channelRef.current);
     if (!channelRef.current) return;
     channelRef.current.postMessage(data);
   };

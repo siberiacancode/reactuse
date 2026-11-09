@@ -6,7 +6,7 @@ usage: necessary
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781247117000
+lastModifiedTime: 1794210880000
 ---
 
 # useBoolean
@@ -94,6 +94,8 @@ export type UseBooleanReturn = [
  *
  * @example
  * const [on, toggle] = useBoolean()
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBoolean}
  */
 export const useBoolean = (initialValue = false): UseBooleanReturn => {
   const [value, setValue] = useState(initialValue);

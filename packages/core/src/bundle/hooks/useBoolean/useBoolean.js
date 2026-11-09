@@ -10,6 +10,8 @@ import { useState } from 'react';
  *
  * @example
  * const [on, toggle] = useBoolean()
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBoolean}
  */
 export const useBoolean = (initialValue = false) => {
   const [value, setValue] = useState(initialValue);

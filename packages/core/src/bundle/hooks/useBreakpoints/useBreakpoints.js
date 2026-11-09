@@ -14,6 +14,8 @@ const match = (query) => typeof window !== 'undefined' && window.matchMedia(quer
  *
  * @example
  * const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBreakpoints}
  */
 export const useBreakpoints = (breakpoints, strategy = 'mobile-first') => {
   const rerender = useRerender();

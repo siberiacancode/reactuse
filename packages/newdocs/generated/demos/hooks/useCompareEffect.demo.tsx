@@ -1,21 +1,32 @@
-import { useShallowEffect } from '@siberiacancode/reactuse';
+'use client'
+
+import { shallowEqual, useCompareEffect, useRerender } from '@siberiacancode/reactuse';
 import { LayersIcon, RefreshCwIcon } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 const Demo = () => {
-  const [, forceRerender] = useState(0);
+  const rerender = useRerender();
 
-  const filter = { role: 'admin', active: true };
+  const filter = { role: 'admin', range: { from: 0, to: 10 } };
 
-  const effectCount = useRef(0);
-  const shallowCount = useRef(0);
+  const effectCountRef = useRef(0);
+  const shallowCountRef = useRef(0);
+  const deepCountRef = useRef(0);
 
   useEffect(() => {
-    effectCount.current++;
+    effectCountRef.current++;
   }, [filter]);
 
-  useShallowEffect(() => {
-    shallowCount.current++;
+  useCompareEffect(
+    () => {
+      shallowCountRef.current++;
+    },
+    [filter],
+    shallowEqual
+  );
+
+  useCompareEffect(() => {
+    deepCountRef.current++;
   }, [filter]);
 
   return (
@@ -27,32 +38,45 @@ const Demo = () => {
           </div>
 
           <div className='flex min-w-0 flex-1 flex-col gap-1 leading-tight'>
-            <span className='text-foreground text-sm font-semibold'>Object dependency</span>
+            <span className='text-foreground text-sm font-semibold'>Nested dependency</span>
             <span className='text-muted-foreground text-xs leading-relaxed'>
-              Compares by value, so it skips re-runs when nothing actually changed.
+              The nested <b>range</b> object is rebuilt on every render, so only the default deep
+              comparison sees the filter as unchanged.
             </span>
           </div>
         </div>
 
-        <div className='border-border grid grid-cols-2 gap-3 border-t pt-3'>
+        <div className='border-border grid grid-cols-3 gap-3 border-t pt-3'>
           <div className='flex flex-col leading-tight'>
             <span className='text-muted-foreground text-[10px] tracking-wider uppercase'>
               useEffect
             </span>
             <span className='text-foreground font-mono text-lg font-semibold tabular-nums'>
-              {effectCount.current}
+              {effectCountRef.current}
             </span>
             <span className='text-muted-foreground mt-0.5 text-[10px] leading-tight'>
-              runs on every render
+              every render
             </span>
           </div>
 
           <div className='flex flex-col leading-tight'>
             <span className='text-muted-foreground text-[10px] tracking-wider uppercase'>
-              useShallowEffect
+              shallowEqual
+            </span>
+            <span className='text-foreground font-mono text-lg font-semibold tabular-nums'>
+              {shallowCountRef.current}
+            </span>
+            <span className='text-muted-foreground mt-0.5 text-[10px] leading-tight'>
+              nested ref differs
+            </span>
+          </div>
+
+          <div className='flex flex-col leading-tight'>
+            <span className='text-muted-foreground text-[10px] tracking-wider uppercase'>
+              default
             </span>
             <span className='text-primary font-mono text-lg font-semibold tabular-nums'>
-              {shallowCount.current}
+              {deepCountRef.current}
             </span>
             <span className='text-muted-foreground mt-0.5 text-[10px] leading-tight'>
               skips identical values
@@ -61,12 +85,7 @@ const Demo = () => {
         </div>
 
         <div className='border-border flex items-center justify-end border-t pt-3'>
-          <button
-            data-size='sm'
-            data-variant='outline'
-            type='button'
-            onClick={() => forceRerender((n) => n + 1)}
-          >
+          <button data-size='sm' data-variant='outline' type='button' onClick={rerender}>
             <RefreshCwIcon className='size-3.5' />
             Re-render
           </button>

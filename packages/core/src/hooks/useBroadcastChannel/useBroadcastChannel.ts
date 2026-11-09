@@ -32,6 +32,8 @@ export interface UseBroadcastChannelReturn<Data = unknown> {
  *
  * @example
  * const { supported, data, post, error } = useBroadcastChannel('channel');
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useBroadcastChannel}
  */
 export const useBroadcastChannel = <Data = unknown>(
   name: string,
@@ -44,8 +46,9 @@ export const useBroadcastChannel = <Data = unknown>(
   const [data, setData] = useState<Data>();
   const [error, setError] = useState<MessageEvent>();
   const channelRef = useRef<BroadcastChannel>(undefined);
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
   useEffect(() => {
     if (!supported) return;
@@ -54,7 +57,7 @@ export const useBroadcastChannel = <Data = unknown>(
 
     const onMessage = (event: MessageEvent) => {
       setData(event.data);
-      callbackRef.current?.(event.data);
+      internalCallbackRef.current?.(event.data);
     };
     const onMessageError = (event: MessageEvent) => setError(event);
     const onClose = () => setClosed(true);
@@ -64,17 +67,15 @@ export const useBroadcastChannel = <Data = unknown>(
     channelRef.current.addEventListener('close', onClose);
 
     return () => {
-      if (channelRef.current) {
-        channelRef.current.removeEventListener('message', onMessage);
-        channelRef.current.removeEventListener('messageerror', onMessageError);
-        channelRef.current.removeEventListener('close', onClose);
-        channelRef.current.close();
-      }
+      if (!channelRef.current) return;
+      channelRef.current.removeEventListener('message', onMessage);
+      channelRef.current.removeEventListener('messageerror', onMessageError);
+      channelRef.current.removeEventListener('close', onClose);
+      channelRef.current.close();
     };
   }, [name]);
 
   const post = (data: Data) => {
-    console.log('post', data, channelRef.current);
     if (!channelRef.current) return;
     channelRef.current.postMessage(data);
   };

@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1758638440000
+lastModifiedTime: 1789822825000
 ---
 
 # useAsyncEffect
@@ -149,6 +149,8 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect/useIsomo
  *
  * @example
  * useAsyncEffect(async () => console.log("effect runs on updates"), deps);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useAsyncEffect}
  */
 export const useAsyncEffect = (сallback: () => Promise<any>, deps?: DependencyList): void => {
   useIsomorphicLayoutEffect(() => {
