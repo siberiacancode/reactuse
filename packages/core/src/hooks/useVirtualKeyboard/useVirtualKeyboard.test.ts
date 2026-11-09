@@ -187,6 +187,12 @@ it('Should handle geometrychange event', () => {
     virtualKeyboard.dispatchEvent(new Event('geometrychange'));
   });
 
+  expect(result.current.opened).toBeFalsy();
+
+  act(() => result.current.changeOverlaysContent(true));
+
+  act(() => virtualKeyboard.dispatchEvent(new Event('geometrychange')));
+
   expect(result.current.opened).toBeTruthy();
 
   act(() => {
