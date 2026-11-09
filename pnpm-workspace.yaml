@@ -11,6 +11,9 @@ minimumReleaseAgeExclude:
   - '@siberiacancode/eslint'
   - '@siberiacancode/prettier'
   - '@webcam/react'
+  - fumadocs-core@16.18.3
+  - fumadocs-mdx@15.5.3
+  - fumadocs-ui@16.18.3
 allowBuilds:
   core-js: true
   esbuild: true

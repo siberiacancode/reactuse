@@ -40,8 +40,8 @@ const Demo = () => {
           <div className='flex min-w-0 flex-1 flex-col gap-1 leading-tight'>
             <span className='text-foreground text-sm font-semibold'>Nested dependency</span>
             <span className='text-muted-foreground text-xs leading-relaxed'>
-              The nested <b>range</b> object is rebuilt on every render, so only the default
-              deep comparison sees the filter as unchanged.
+              The nested <b>range</b> object is rebuilt on every render, so only the default deep
+              comparison sees the filter as unchanged.
             </span>
           </div>
         </div>
