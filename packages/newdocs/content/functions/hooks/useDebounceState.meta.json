@@ -14,9 +14,7 @@
   "description": "Hook that creates a debounced state",
   "category": "Utilities",
   "lastModified": 1756623419000,
-  "examples": [
-    "const [debouncedValue, setDebouncedValue] = useDebounceState(value, 500);"
-  ],
+  "examples": ["const [debouncedValue, setDebouncedValue] = useDebounceState(value, 500);"],
   "apiParameters": [
     {
       "tag": "param",
@@ -122,9 +120,7 @@
     }
   ],
   "dependencies": {
-    "hooks": [
-      "useDebounceCallback"
-    ],
+    "hooks": ["useDebounceCallback"],
     "utils": [],
     "packages": []
   },

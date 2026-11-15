@@ -399,12 +399,12 @@ export interface UseIntersectionObserver {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element to detect intersection |
-| options.enabled | `boolean` | true | The IntersectionObserver options |
-| options.onChange | `((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) \| undefined` | - | The callback to execute when intersection is detected |
-| options.root | `HookTarget` | document | The root element to observe |
+| Name             | Type                                                                                            | Default  | Note                                                  |
+| ---------------- | ----------------------------------------------------------------------------------------------- | -------- | ----------------------------------------------------- |
+| target           | `HookTarget`                                                                                    | -        | The target element to detect intersection             |
+| options.enabled  | `boolean`                                                                                       | true     | The IntersectionObserver options                      |
+| options.onChange | `((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) \| undefined` | -        | The callback to execute when intersection is detected |
+| options.root     | `HookTarget`                                                                                    | document | The root element to observe                           |
 
 #### Returns
 
@@ -414,11 +414,11 @@ export interface UseIntersectionObserver {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.enabled | `boolean` | true | The IntersectionObserver options |
-| options.onChange | `((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) \| undefined` | - | The callback to execute when intersection is detected |
-| options.root | `HookTarget` | document | The root element to observe |
+| Name             | Type                                                                                            | Default  | Note                                                  |
+| ---------------- | ----------------------------------------------------------------------------------------------- | -------- | ----------------------------------------------------- |
+| options.enabled  | `boolean`                                                                                       | true     | The IntersectionObserver options                      |
+| options.onChange | `((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void) \| undefined` | -        | The callback to execute when intersection is detected |
+| options.root     | `HookTarget`                                                                                    | document | The root element to observe                           |
 
 #### Returns
 
@@ -428,9 +428,9 @@ export interface UseIntersectionObserver {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `UseIntersectionObserverCallback` | - | The callback to execute when intersection is detected |
+| Name     | Type                              | Default | Note                                                  |
+| -------- | --------------------------------- | ------- | ----------------------------------------------------- |
+| callback | `UseIntersectionObserverCallback` | -       | The callback to execute when intersection is detected |
 
 #### Returns
 
@@ -440,10 +440,10 @@ export interface UseIntersectionObserver {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `UseIntersectionObserverCallback` | - | The callback to execute when intersection is detected |
-| target | `HookTarget` | - | The target element to detect intersection |
+| Name     | Type                              | Default | Note                                                  |
+| -------- | --------------------------------- | ------- | ----------------------------------------------------- |
+| callback | `UseIntersectionObserverCallback` | -       | The callback to execute when intersection is detected |
+| target   | `HookTarget`                      | -       | The target element to detect intersection             |
 
 #### Returns
 

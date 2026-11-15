@@ -165,10 +165,10 @@ export interface UsePreviousOptions<Value> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| value | `Value` | - | The value to get the previous value |
-| options.equality | `(a: Value, b: Value) => boolean` | - | The custom equality function to determine if the value has changed |
+| Name             | Type                              | Default | Note                                                               |
+| ---------------- | --------------------------------- | ------- | ------------------------------------------------------------------ |
+| value            | `Value`                           | -       | The value to get the previous value                                |
+| options.equality | `(a: Value, b: Value) => boolean` | -       | The custom equality function to determine if the value has changed |
 
 ### Returns
 

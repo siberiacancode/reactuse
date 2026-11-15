@@ -248,9 +248,9 @@ export interface UseListReturn<Item> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialList | `Item[] \| (() => Item[])` | - | The initial list of items |
+| Name        | Type                       | Default | Note                      |
+| ----------- | -------------------------- | ------- | ------------------------- |
+| initialList | `Item[] \| (() => Item[])` | -       | The initial list of items |
 
 ### Returns
 

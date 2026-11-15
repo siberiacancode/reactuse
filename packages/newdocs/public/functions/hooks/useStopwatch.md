@@ -293,7 +293,10 @@ Update the import paths to match your project setup.
 ```tsx
 const { seconds, minutes, start, pause, reset } = useStopwatch(1000, { immediately: false });
 // or
-const { seconds, minutes, start, pause, reset } = useStopwatch({ initialTime: 1000, immediately: false });
+const { seconds, minutes, start, pause, reset } = useStopwatch({
+  initialTime: 1000,
+  immediately: false
+});
 ```
 
 ## Type Declarations
@@ -339,10 +342,10 @@ interface UseStopwatch {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialTime | `number` | 0 | The initial time of the timer |
-| options.immediately | `boolean` | false | Start the stopwatch immediately |
+| Name                | Type      | Default | Note                            |
+| ------------------- | --------- | ------- | ------------------------------- |
+| initialTime         | `number`  | 0       | The initial time of the timer   |
+| options.immediately | `boolean` | false   | Start the stopwatch immediately |
 
 #### Returns
 
@@ -352,10 +355,10 @@ interface UseStopwatch {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.initialTime | `number` | 0 | The initial time of the timer |
-| options.immediately | `boolean` | false | Start the stopwatch immediately |
+| Name                | Type      | Default | Note                            |
+| ------------------- | --------- | ------- | ------------------------------- |
+| options.initialTime | `number`  | 0       | The initial time of the timer   |
+| options.immediately | `boolean` | false   | Start the stopwatch immediately |
 
 #### Returns
 

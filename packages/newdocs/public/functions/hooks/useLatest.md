@@ -204,9 +204,9 @@ export interface UseLatestReturn<Value> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| value | `Value` | - | The value to get the previous value |
+| Name  | Type    | Default | Note                                |
+| ----- | ------- | ------- | ----------------------------------- |
+| value | `Value` | -       | The value to get the previous value |
 
 ### Returns
 

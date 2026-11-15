@@ -60,9 +60,7 @@
   "description": "Hook that provides vibrate api",
   "category": "Browser",
   "lastModified": 1755262808000,
-  "examples": [
-    "const { supported, active, vibrate, stop, pause, resume } = useVibrate(1000);"
-  ],
+  "examples": ["const { supported, active, vibrate, stop, pause, resume } = useVibrate(1000);"],
   "apiParameters": [
     {
       "tag": "overload",

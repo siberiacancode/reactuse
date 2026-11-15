@@ -367,7 +367,8 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort } = useQuery(() => fetch('url'));
+const { data, isFetching, isLoading, isError, isSuccess, error, refetch, isRefetching, abort } =
+  useQuery(() => fetch('url'));
 ```
 
 ## Type Declarations
@@ -431,17 +432,17 @@ export interface UseQueryReturn<Data> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `() => Promise<Data>` | - | The callback function to be invoked |
-| options.keys | `DependencyList` | - | The dependencies for the hook |
-| options.onSuccess | `(data: Data) => void` | - | The callback function to be invoked on success |
-| options.onError | `(error: Error) => void` | - | The callback function to be invoked on error |
-| options.select | `UseQueryOptionsSelect<Data>` | - | The select function to be invoked |
-| options.placeholderData | `Data \| (() => Data)` | - | The placeholder data for the hook |
-| options.refetchInterval | `number` | - | The refetch interval |
-| options.retry | `boolean \| number \| ((failureCount: number, error: Error) => boolean)` | - | The retry count of requests, or a function to decide whether to retry |
-| options.retryDelay | `number` | 0 | The delay in milliseconds before retrying the request |
+| Name                    | Type                                                                     | Default | Note                                                                  |
+| ----------------------- | ------------------------------------------------------------------------ | ------- | --------------------------------------------------------------------- |
+| callback                | `() => Promise<Data>`                                                    | -       | The callback function to be invoked                                   |
+| options.keys            | `DependencyList`                                                         | -       | The dependencies for the hook                                         |
+| options.onSuccess       | `(data: Data) => void`                                                   | -       | The callback function to be invoked on success                        |
+| options.onError         | `(error: Error) => void`                                                 | -       | The callback function to be invoked on error                          |
+| options.select          | `UseQueryOptionsSelect<Data>`                                            | -       | The select function to be invoked                                     |
+| options.placeholderData | `Data \| (() => Data)`                                                   | -       | The placeholder data for the hook                                     |
+| options.refetchInterval | `number`                                                                 | -       | The refetch interval                                                  |
+| options.retry           | `boolean \| number \| ((failureCount: number, error: Error) => boolean)` | -       | The retry count of requests, or a function to decide whether to retry |
+| options.retryDelay      | `number`                                                                 | 0       | The delay in milliseconds before retrying the request                 |
 
 ### Returns
 

@@ -308,7 +308,8 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } = useSpeechSynthesis();
+const { supported, playing, status, utterance, error, stop, toggle, speak, resume, pause } =
+  useSpeechSynthesis();
 ```
 
 ## Type Declarations

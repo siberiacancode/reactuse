@@ -150,16 +150,16 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const isLeft = usePageLeave(() => console.log('on leave'))
+const isLeft = usePageLeave(() => console.log('on leave'));
 ```
 
 ## API
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `() => void` | - | The callback function what calls then mouse leaves the page |
+| Name     | Type         | Default | Note                                                        |
+| -------- | ------------ | ------- | ----------------------------------------------------------- |
+| callback | `() => void` | -       | The callback function what calls then mouse leaves the page |
 
 ### Returns
 

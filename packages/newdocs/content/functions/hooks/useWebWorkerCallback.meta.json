@@ -60,9 +60,7 @@
   "description": "Hook that runs a callback in a web worker without a separate worker file",
   "category": "Browser",
   "lastModified": 1784301938000,
-  "examples": [
-    "const { run, pending, terminate } = useWebWorkerCallback(() => {});"
-  ],
+  "examples": ["const { run, pending, terminate } = useWebWorkerCallback(() => {});"],
   "apiParameters": [
     {
       "tag": "param",

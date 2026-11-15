@@ -283,9 +283,9 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { value, set } = useHash("initial");
+const { value, set } = useHash('initial');
 // or
-const { value, set } = useHash("initial", (newHash) => console.log('callback'));
+const { value, set } = useHash('initial', (newHash) => console.log('callback'));
 // or
 const { value, set } = useHash();
 // or
@@ -328,13 +328,13 @@ export interface UseHash {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `string` | - | The initial hash value if no hash exists |
-| options | `UseHashOptions` | - | Configuration options |
-| options.enabled | `boolean` | - | The enabled state of the hook |
-| options.mode | `'initial' \| 'replace'` | - | The mode of hash setting |
-| options.onChange | `(hash: string) => void` | - | Callback function called when hash changes |
+| Name             | Type                     | Default | Note                                       |
+| ---------------- | ------------------------ | ------- | ------------------------------------------ |
+| initialValue     | `string`                 | -       | The initial hash value if no hash exists   |
+| options          | `UseHashOptions`         | -       | Configuration options                      |
+| options.enabled  | `boolean`                | -       | The enabled state of the hook              |
+| options.mode     | `'initial' \| 'replace'` | -       | The mode of hash setting                   |
+| options.onChange | `(hash: string) => void` | -       | Callback function called when hash changes |
 
 #### Returns
 
@@ -344,10 +344,10 @@ export interface UseHash {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `string` | - | The initial hash value if no hash exists |
-| callback | `(hash: string) => void` | - | Callback function called when hash changes |
+| Name         | Type                     | Default | Note                                       |
+| ------------ | ------------------------ | ------- | ------------------------------------------ |
+| initialValue | `string`                 | -       | The initial hash value if no hash exists   |
+| callback     | `(hash: string) => void` | -       | Callback function called when hash changes |
 
 #### Returns
 
@@ -357,12 +357,12 @@ export interface UseHash {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options | `UseHashOptions` | - | Configuration options |
-| options.enabled | `boolean` | - | The enabled state of the hook |
-| options.mode | `'initial' \| 'replace'` | - | The mode of hash setting |
-| options.onChange | `(hash: string) => void` | - | Callback function called when hash changes |
+| Name             | Type                     | Default | Note                                       |
+| ---------------- | ------------------------ | ------- | ------------------------------------------ |
+| options          | `UseHashOptions`         | -       | Configuration options                      |
+| options.enabled  | `boolean`                | -       | The enabled state of the hook              |
+| options.mode     | `'initial' \| 'replace'` | -       | The mode of hash setting                   |
+| options.onChange | `(hash: string) => void` | -       | Callback function called when hash changes |
 
 #### Returns
 
@@ -372,9 +372,9 @@ export interface UseHash {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(hash: string) => void` | - | Callback function called when hash changes |
+| Name     | Type                     | Default | Note                                       |
+| -------- | ------------------------ | ------- | ------------------------------------------ |
+| callback | `(hash: string) => void` | -       | Callback function called when hash changes |
 
 #### Returns
 

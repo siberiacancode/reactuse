@@ -60,9 +60,7 @@
   "description": "Hook that manages the text selection",
   "category": "Sensors",
   "lastModified": 1781882408000,
-  "examples": [
-    "const selection = useTextSelection();"
-  ],
+  "examples": ["const selection = useTextSelection();"],
   "apiParameters": [
     {
       "tag": "param",

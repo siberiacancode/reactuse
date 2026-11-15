@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useBoolean, useCounter, useUnmount } from '@siberiacancode/reactuse';
 import { PowerIcon, PowerOffIcon } from 'lucide-react';

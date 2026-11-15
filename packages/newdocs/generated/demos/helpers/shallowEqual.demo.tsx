@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { cn, shallowEqual } from '@siberiacancode/reactuse';
 import { CheckIcon, XIcon } from 'lucide-react';

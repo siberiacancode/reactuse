@@ -288,10 +288,10 @@ export interface UsePermission {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| name | `UsePermissionName` | - | The permission name |
-| callback | `(state: PermissionState) => void` | - | The callback fired when the permission state changes |
+| Name     | Type                               | Default | Note                                                 |
+| -------- | ---------------------------------- | ------- | ---------------------------------------------------- |
+| name     | `UsePermissionName`                | -       | The permission name                                  |
+| callback | `(state: PermissionState) => void` | -       | The callback fired when the permission state changes |
 
 #### Returns
 
@@ -301,10 +301,10 @@ export interface UsePermission {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| name | `UsePermissionName` | - | The permission name |
-| options.onChange | `(state: PermissionState) => void` | - | The callback fired when the permission state changes |
+| Name             | Type                               | Default | Note                                                 |
+| ---------------- | ---------------------------------- | ------- | ---------------------------------------------------- |
+| name             | `UsePermissionName`                | -       | The permission name                                  |
+| options.onChange | `(state: PermissionState) => void` | -       | The callback fired when the permission state changes |
 
 #### Returns
 

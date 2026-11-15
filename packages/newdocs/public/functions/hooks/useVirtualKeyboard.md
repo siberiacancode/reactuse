@@ -208,15 +208,15 @@ const { opened, show, hide, supported, changeOverlaysContent } = useVirtualKeybo
 
 ```tsx
 interface Navigator {
-    virtualKeyboard?: {
-      boundingRect: DOMRect;
-      overlaysContent: boolean;
-      show: () => void;
-      hide: () => void;
-      addEventListener: (type: 'geometrychange', listener: EventListener) => void;
-      removeEventListener: (type: 'geometrychange', listener: EventListener) => void;
-    };
-  }
+  virtualKeyboard?: {
+    boundingRect: DOMRect;
+    overlaysContent: boolean;
+    show: () => void;
+    hide: () => void;
+    addEventListener: (type: 'geometrychange', listener: EventListener) => void;
+    removeEventListener: (type: 'geometrychange', listener: EventListener) => void;
+  };
+}
 
 export interface UseVirtualKeyboardReturn {
   /** Whether the virtual keyboard is currently open */
@@ -236,9 +236,9 @@ export interface UseVirtualKeyboardReturn {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `boolean` | false | The initial state value for keyboard visibility |
+| Name         | Type      | Default | Note                                            |
+| ------------ | --------- | ------- | ----------------------------------------------- |
+| initialValue | `boolean` | false   | The initial state value for keyboard visibility |
 
 ### Returns
 

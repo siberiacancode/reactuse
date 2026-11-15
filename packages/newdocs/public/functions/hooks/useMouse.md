@@ -323,10 +323,10 @@ export interface UseMouse {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | window | The target element to manage the mouse position for |
-| callback | `(value: UseMouseValue, event: Event) => void` | - | The callback to invoke on mouse updates |
+| Name     | Type                                           | Default | Note                                                |
+| -------- | ---------------------------------------------- | ------- | --------------------------------------------------- |
+| target   | `HookTarget`                                   | window  | The target element to manage the mouse position for |
+| callback | `(value: UseMouseValue, event: Event) => void` | -       | The callback to invoke on mouse updates             |
 
 #### Returns
 
@@ -336,9 +336,9 @@ export interface UseMouse {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(value: UseMouseValue, event: Event) => void` | - | The callback to invoke on mouse updates |
+| Name     | Type                                           | Default | Note                                    |
+| -------- | ---------------------------------------------- | ------- | --------------------------------------- |
+| callback | `(value: UseMouseValue, event: Event) => void` | -       | The callback to invoke on mouse updates |
 
 #### Returns
 

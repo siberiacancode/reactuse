@@ -49,10 +49,10 @@
   "scripts": {
     "prepublishOnly": "pnpm unit-test run && pnpm build",
     "build": "shx rm -rf dist && vite build",
-    "build:js": "tsc --project tsconfig.build.json && pnpm prettier --write src/bundle",
+    "build:js": "tsc --project tsconfig.build.json && pnpm oxfmt src/bundle",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",
-    "format": "prettier --write .",
+    "format": "oxfmt",
     "type": "tsc --noEmit",
     "pretty": "pnpm lint && pnpm format",
     "unit-test": "vitest",

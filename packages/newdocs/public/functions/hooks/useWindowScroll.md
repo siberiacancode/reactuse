@@ -221,9 +221,9 @@ export type UseWindowScrollCallback = (value: ScrollPosition, event: Event) => v
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(value: ScrollPosition, event: Event) => void` | - | The callback to invoke on window scroll updates |
+| Name     | Type                                            | Default | Note                                            |
+| -------- | ----------------------------------------------- | ------- | ----------------------------------------------- |
+| callback | `(value: ScrollPosition, event: Event) => void` | -       | The callback to invoke on window scroll updates |
 
 ### Returns
 

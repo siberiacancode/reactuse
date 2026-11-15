@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useStopwatch } from '@siberiacancode/reactuse';
 import { PauseIcon, PlayIcon, RotateCcwIcon } from 'lucide-react';

@@ -125,7 +125,7 @@ import { useRef } from 'react';
  *
  * @example
  * const value = useConst('value');
- * 
+ *
  * @see {@link https://reactuse.org/functions/hooks/useConst}
  */
 export const useConst = <Value>(initialValue: (() => Value) | Value) =>
@@ -145,9 +145,9 @@ const value = useConst('value');
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `(() => Value) \| Value` | - | The initial value of the constant |
+| Name         | Type                     | Default | Note                              |
+| ------------ | ------------------------ | ------- | --------------------------------- |
+| initialValue | `(() => Value) \| Value` | -       | The initial value of the constant |
 
 ### Returns
 

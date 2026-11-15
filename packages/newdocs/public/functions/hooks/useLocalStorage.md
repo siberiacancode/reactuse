@@ -131,8 +131,8 @@ import type { UseStorageInitialValue, UseStorageOptions } from '../useStorage/us
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| key | `string` | - | The key of the storage |
-| initialValue | `UseStorageInitialValue<Value>` | - | The initial value of the storage |
-| options | `UseStorageOptions<Value>` | - | The options of the storage |
+| Name         | Type                            | Default | Note                             |
+| ------------ | ------------------------------- | ------- | -------------------------------- |
+| key          | `string`                        | -       | The key of the storage           |
+| initialValue | `UseStorageInitialValue<Value>` | -       | The initial value of the storage |
+| options      | `UseStorageOptions<Value>`      | -       | The options of the storage       |

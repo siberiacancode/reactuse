@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useTimeout } from '@siberiacancode/reactuse';
 

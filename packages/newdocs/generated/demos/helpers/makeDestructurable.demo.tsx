@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { makeDestructurable } from '@siberiacancode/reactuse';
 import { MinusIcon, PlusIcon } from 'lucide-react';

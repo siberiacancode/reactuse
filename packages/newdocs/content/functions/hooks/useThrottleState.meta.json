@@ -14,9 +14,7 @@
   "description": "Hook that creates a throttled state",
   "category": "Utilities",
   "lastModified": 1756623419000,
-  "examples": [
-    "const [throttledValue, setThrottledValue] = useThrottleState(value, 500);"
-  ],
+  "examples": ["const [throttledValue, setThrottledValue] = useThrottleState(value, 500);"],
   "apiParameters": [
     {
       "tag": "param",
@@ -122,9 +120,7 @@
     }
   ],
   "dependencies": {
-    "hooks": [
-      "useThrottleCallback"
-    ],
+    "hooks": ["useThrottleCallback"],
     "utils": [],
     "packages": []
   },

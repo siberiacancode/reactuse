@@ -251,23 +251,26 @@ Update the import paths to match your project setup.
 ```tsx
 useOtpCredential((credential) => console.log(credential));
 // or
-useOtpCredential({ onSuccess: (credential) => console.log(credential), onError: (error) => console.log(error) });
+useOtpCredential({
+  onSuccess: (credential) => console.log(credential),
+  onError: (error) => console.log(error)
+});
 ```
 
 ## Type Declarations
 
 ```tsx
 interface OTPOptions {
-    readonly transport: string[];
-  }
+  readonly transport: string[];
+}
 
 interface CredentialRequestOptions {
-    readonly otp: OTPOptions;
-  }
+  readonly otp: OTPOptions;
+}
 
 interface Credential {
-    readonly code: string;
-  }
+  readonly code: string;
+}
 
 export type UseOtpCredentialCallback = (otp: Credential | null) => void;
 
@@ -300,9 +303,9 @@ export interface UseOtpCredential {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `UseOtpCredentialCallback` | - | The callback function to be invoked |
+| Name     | Type                       | Default | Note                                |
+| -------- | -------------------------- | ------- | ----------------------------------- |
+| callback | `UseOtpCredentialCallback` | -       | The callback function to be invoked |
 
 #### Returns
 
@@ -312,10 +315,10 @@ export interface UseOtpCredential {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| params.onSuccess | `UseOtpCredentialCallback` | - | The callback function to be invoked on success |
-| params.onError | `UseOtpCredentialCallback` | - | The callback function to be invoked on error |
+| Name             | Type                       | Default | Note                                           |
+| ---------------- | -------------------------- | ------- | ---------------------------------------------- |
+| params.onSuccess | `UseOtpCredentialCallback` | -       | The callback function to be invoked on success |
+| params.onError   | `UseOtpCredentialCallback` | -       | The callback function to be invoked on error   |
 
 #### Returns
 

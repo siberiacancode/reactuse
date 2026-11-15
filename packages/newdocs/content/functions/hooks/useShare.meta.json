@@ -60,9 +60,7 @@
   "description": "Hook that utilizes the share api",
   "category": "Browser",
   "lastModified": 1781450802000,
-  "examples": [
-    "const { share, supported } = useShare();"
-  ],
+  "examples": ["const { share, supported } = useShare();"],
   "apiParameters": [
     {
       "tag": "param",

@@ -252,10 +252,10 @@ export interface UseKeysPressed {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget \| Window` | window | DOM element or ref to attach keyboard listeners to |
-| options.enabled | `UseKeysPressedOptions` | true | Enable or disable the event listeners |
+| Name            | Type                    | Default | Note                                               |
+| --------------- | ----------------------- | ------- | -------------------------------------------------- |
+| target          | `HookTarget \| Window`  | window  | DOM element or ref to attach keyboard listeners to |
+| options.enabled | `UseKeysPressedOptions` | true    | Enable or disable the event listeners              |
 
 #### Returns
 
@@ -265,9 +265,9 @@ export interface UseKeysPressed {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options | `UseKeysPressedOptions` | - | Optional configuration options |
+| Name    | Type                    | Default | Note                           |
+| ------- | ----------------------- | ------- | ------------------------------ |
+| options | `UseKeysPressedOptions` | -       | Optional configuration options |
 
 #### Returns
 

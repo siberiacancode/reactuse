@@ -182,9 +182,9 @@ export type ClassValue =
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| values | `...ClassValue[]` | - | Class values to normalize and join |
+| Name   | Type              | Default | Note                               |
+| ------ | ----------------- | ------- | ---------------------------------- |
+| values | `...ClassValue[]` | -       | Class values to normalize and join |
 
 ### Returns
 

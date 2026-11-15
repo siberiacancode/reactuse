@@ -137,10 +137,10 @@ export interface UseLastChangedOptions {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| source | `any` | - | The source of the last change |
-| options.initialValue | `number \| null` | null | The initial value |
+| Name                 | Type             | Default | Note                          |
+| -------------------- | ---------------- | ------- | ----------------------------- |
+| source               | `any`            | -       | The source of the last change |
+| options.initialValue | `number \| null` | null    | The initial value             |
 
 ### Returns
 

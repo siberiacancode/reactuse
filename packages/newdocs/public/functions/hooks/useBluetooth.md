@@ -244,11 +244,11 @@ export interface UseBluetoothOptions {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.acceptAllDevices | `boolean` | false | The options to request all Bluetooth devices |
-| options.filters | `Array<BluetoothLEScanFilter>` | - | Array of filters to apply when scanning Bluetooth devices |
-| options.optionalServices | `Array<BluetoothServiceUUID>` | - | Array of optional services that the application can use |
+| Name                     | Type                           | Default | Note                                                      |
+| ------------------------ | ------------------------------ | ------- | --------------------------------------------------------- |
+| options.acceptAllDevices | `boolean`                      | false   | The options to request all Bluetooth devices              |
+| options.filters          | `Array<BluetoothLEScanFilter>` | -       | Array of filters to apply when scanning Bluetooth devices |
+| options.optionalServices | `Array<BluetoothServiceUUID>`  | -       | Array of optional services that the application can use   |
 
 ### Returns
 

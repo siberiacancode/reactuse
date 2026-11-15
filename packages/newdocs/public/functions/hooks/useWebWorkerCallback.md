@@ -320,9 +320,9 @@ type WorkerResponse<Result> = ['ERROR', unknown] | ['SUCCESS', Result];
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `Callback` | - | The self-contained callback to run in a web worker. Closures are not available, so its arguments and result must be structured-cloneable |
+| Name     | Type       | Default | Note                                                                                                                                     |
+| -------- | ---------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| callback | `Callback` | -       | The self-contained callback to run in a web worker. Closures are not available, so its arguments and result must be structured-cloneable |
 
 ### Returns
 

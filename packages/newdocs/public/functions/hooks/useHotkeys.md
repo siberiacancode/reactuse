@@ -539,13 +539,13 @@ export interface UseHotkeys {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | window | The target element to attach the event listener to |
-| hotkeys | `string` | - | The hotkey to listen for |
-| options | `UseHotkeysOptions` | - | The options for the hook |
-| options.enabled | `boolean` | true | Enable or disable the event listeners |
-| options.onChange | `(event: KeyboardEvent) => void` | - | The callback function to execute when hotkey is pressed |
+| Name             | Type                             | Default | Note                                                    |
+| ---------------- | -------------------------------- | ------- | ------------------------------------------------------- |
+| target           | `HookTarget`                     | window  | The target element to attach the event listener to      |
+| hotkeys          | `string`                         | -       | The hotkey to listen for                                |
+| options          | `UseHotkeysOptions`              | -       | The options for the hook                                |
+| options.enabled  | `boolean`                        | true    | Enable or disable the event listeners                   |
+| options.onChange | `(event: KeyboardEvent) => void` | -       | The callback function to execute when hotkey is pressed |
 
 #### Returns
 
@@ -555,12 +555,12 @@ export interface UseHotkeys {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | window | The target element to attach the event listener to |
-| hotkeys | `string` | - | The hotkey to listen for |
-| callback | `(event: KeyboardEvent) => void` | - | The callback function to execute when hotkey is pressed |
-| options.enabled | `boolean` | true | Enable or disable the event listeners |
+| Name            | Type                             | Default | Note                                                    |
+| --------------- | -------------------------------- | ------- | ------------------------------------------------------- |
+| target          | `HookTarget`                     | window  | The target element to attach the event listener to      |
+| hotkeys         | `string`                         | -       | The hotkey to listen for                                |
+| callback        | `(event: KeyboardEvent) => void` | -       | The callback function to execute when hotkey is pressed |
+| options.enabled | `boolean`                        | true    | Enable or disable the event listeners                   |
 
 #### Returns
 
@@ -570,12 +570,12 @@ export interface UseHotkeys {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| hotkeys | `string` | - | The hotkey to listen for |
-| options | `UseHotkeysOptions` | - | The options for the hook |
-| options.enabled | `boolean` | true | Enable or disable the event listeners |
-| options.onChange | `(event: KeyboardEvent) => void` | - | The callback function to execute when hotkey is pressed |
+| Name             | Type                             | Default | Note                                                    |
+| ---------------- | -------------------------------- | ------- | ------------------------------------------------------- |
+| hotkeys          | `string`                         | -       | The hotkey to listen for                                |
+| options          | `UseHotkeysOptions`              | -       | The options for the hook                                |
+| options.enabled  | `boolean`                        | true    | Enable or disable the event listeners                   |
+| options.onChange | `(event: KeyboardEvent) => void` | -       | The callback function to execute when hotkey is pressed |
 
 #### Returns
 
@@ -585,11 +585,11 @@ export interface UseHotkeys {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| hotkeys | `string` | - | The hotkey to listen for |
-| callback | `(event: KeyboardEvent) => void` | - | The callback function to execute when hotkey is pressed |
-| options.enabled | `boolean` | true | Enable or disable the event listeners |
+| Name            | Type                             | Default | Note                                                    |
+| --------------- | -------------------------------- | ------- | ------------------------------------------------------- |
+| hotkeys         | `string`                         | -       | The hotkey to listen for                                |
+| callback        | `(event: KeyboardEvent) => void` | -       | The callback function to execute when hotkey is pressed |
+| options.enabled | `boolean`                        | true    | Enable or disable the event listeners                   |
 
 #### Returns
 

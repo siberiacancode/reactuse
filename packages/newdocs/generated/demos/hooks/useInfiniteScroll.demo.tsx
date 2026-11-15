@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useInfiniteScroll, useList } from '@siberiacancode/reactuse';
 import { HeartIcon, Loader2Icon, MessageCircleIcon, Repeat2Icon } from 'lucide-react';

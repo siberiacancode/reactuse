@@ -510,10 +510,10 @@ export interface UseParallax {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element for the parallax effect |
-| callback | `(value: UseParallaxValue, event: Event) => void` | - | The callback invoked on parallax updates |
+| Name     | Type                                              | Default | Note                                       |
+| -------- | ------------------------------------------------- | ------- | ------------------------------------------ |
+| target   | `HookTarget`                                      | -       | The target element for the parallax effect |
+| callback | `(value: UseParallaxValue, event: Event) => void` | -       | The callback invoked on parallax updates   |
 
 #### Returns
 
@@ -523,10 +523,10 @@ export interface UseParallax {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element for the parallax effect |
-| options | `UseParallaxOptions` | - | The options for the parallax effect |
+| Name    | Type                 | Default | Note                                       |
+| ------- | -------------------- | ------- | ------------------------------------------ |
+| target  | `HookTarget`         | -       | The target element for the parallax effect |
+| options | `UseParallaxOptions` | -       | The options for the parallax effect        |
 
 #### Returns
 
@@ -536,9 +536,9 @@ export interface UseParallax {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(value: UseParallaxValue, event: Event) => void` | - | The callback invoked on parallax updates |
+| Name     | Type                                              | Default | Note                                     |
+| -------- | ------------------------------------------------- | ------- | ---------------------------------------- |
+| callback | `(value: UseParallaxValue, event: Event) => void` | -       | The callback invoked on parallax updates |
 
 #### Returns
 
@@ -548,9 +548,9 @@ export interface UseParallax {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options | `UseParallaxOptions` | - | The options for the parallax effect |
+| Name    | Type                 | Default | Note                                |
+| ------- | -------------------- | ------- | ----------------------------------- |
+| options | `UseParallaxOptions` | -       | The options for the parallax effect |
 
 #### Returns
 

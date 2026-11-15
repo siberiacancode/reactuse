@@ -401,13 +401,13 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { scrolling, scrollIntoView, scrollTo} = useScroll(ref, options);
+const { scrolling, scrollIntoView, scrollTo } = useScroll(ref, options);
 // or
-const { scrolling, scrollIntoView, scrollTo} = useScroll(ref, () => console.log('callback'));
+const { scrolling, scrollIntoView, scrollTo } = useScroll(ref, () => console.log('callback'));
 // or
-const { ref, scrolling, scrollIntoView, scrollTo} = useScroll(options);
+const { ref, scrolling, scrollIntoView, scrollTo } = useScroll(options);
 // or
-const { ref, scrolling, scrollIntoView, scrollTo} = useScroll(() => console.log('callback'));
+const { ref, scrolling, scrollIntoView, scrollTo } = useScroll(() => console.log('callback'));
 ```
 
 ## Type Declarations
@@ -505,15 +505,15 @@ export interface UseScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.behavior | `ScrollBehavior` | auto | The behavior of scrolling |
-| options.offset.left | `number` | 0 | The left offset for arrived states |
-| options.offset.right | `number` | 0 | The right offset for arrived states |
-| options.offset.top | `number` | 0 | The top offset for arrived states |
-| options.offset.bottom | `number` | 0 | The bottom offset for arrived states |
-| options.onScroll | `(params: UseScrollCallbackParams, event: Event) => void` | - | The callback function to be invoked on scroll |
-| options.onStop | `(event: Event) => void` | - | The callback function to be invoked on scroll end |
+| Name                  | Type                                                      | Default | Note                                              |
+| --------------------- | --------------------------------------------------------- | ------- | ------------------------------------------------- |
+| options.behavior      | `ScrollBehavior`                                          | auto    | The behavior of scrolling                         |
+| options.offset.left   | `number`                                                  | 0       | The left offset for arrived states                |
+| options.offset.right  | `number`                                                  | 0       | The right offset for arrived states               |
+| options.offset.top    | `number`                                                  | 0       | The top offset for arrived states                 |
+| options.offset.bottom | `number`                                                  | 0       | The bottom offset for arrived states              |
+| options.onScroll      | `(params: UseScrollCallbackParams, event: Event) => void` | -       | The callback function to be invoked on scroll     |
+| options.onStop        | `(event: Event) => void`                                  | -       | The callback function to be invoked on scroll end |
 
 #### Returns
 
@@ -523,9 +523,9 @@ export interface UseScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(params: UseScrollCallbackParams, event: Event) => void` | - | The callback function to be invoked on scroll |
+| Name     | Type                                                      | Default | Note                                          |
+| -------- | --------------------------------------------------------- | ------- | --------------------------------------------- |
+| callback | `(params: UseScrollCallbackParams, event: Event) => void` | -       | The callback function to be invoked on scroll |
 
 #### Returns
 
@@ -535,16 +535,16 @@ export interface UseScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `Target` | window | The target element to scroll |
-| options.behavior | `ScrollBehavior` | auto | The behavior of scrolling |
-| options.offset.left | `number` | 0 | The left offset for arrived states |
-| options.offset.right | `number` | 0 | The right offset for arrived states |
-| options.offset.top | `number` | 0 | The top offset for arrived states |
-| options.offset.bottom | `number` | 0 | The bottom offset for arrived states |
-| options.onScroll | `(params: UseScrollCallbackParams, event: Event) => void` | - | The callback function to be invoked on scroll |
-| options.onStop | `(event: Event) => void` | - | The callback function to be invoked on scroll end |
+| Name                  | Type                                                      | Default | Note                                              |
+| --------------------- | --------------------------------------------------------- | ------- | ------------------------------------------------- |
+| target                | `Target`                                                  | window  | The target element to scroll                      |
+| options.behavior      | `ScrollBehavior`                                          | auto    | The behavior of scrolling                         |
+| options.offset.left   | `number`                                                  | 0       | The left offset for arrived states                |
+| options.offset.right  | `number`                                                  | 0       | The right offset for arrived states               |
+| options.offset.top    | `number`                                                  | 0       | The top offset for arrived states                 |
+| options.offset.bottom | `number`                                                  | 0       | The bottom offset for arrived states              |
+| options.onScroll      | `(params: UseScrollCallbackParams, event: Event) => void` | -       | The callback function to be invoked on scroll     |
+| options.onStop        | `(event: Event) => void`                                  | -       | The callback function to be invoked on scroll end |
 
 #### Returns
 
@@ -554,10 +554,10 @@ export interface UseScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `Target` | - | The target element to scroll |
-| callback | `(params: UseScrollCallbackParams, event: Event) => void` | - | The callback function to be invoked on scroll |
+| Name     | Type                                                      | Default | Note                                          |
+| -------- | --------------------------------------------------------- | ------- | --------------------------------------------- |
+| target   | `Target`                                                  | -       | The target element to scroll                  |
+| callback | `(params: UseScrollCallbackParams, event: Event) => void` | -       | The callback function to be invoked on scroll |
 
 #### Returns
 

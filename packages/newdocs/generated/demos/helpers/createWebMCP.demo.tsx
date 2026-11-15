@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { createWebMCP } from '@siberiacancode/reactuse';
 import { BotIcon } from 'lucide-react';

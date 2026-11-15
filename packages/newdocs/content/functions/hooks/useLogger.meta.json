@@ -14,9 +14,7 @@
   "description": "Hook for debugging lifecycle",
   "category": "Debug",
   "lastModified": 1754977987000,
-  "examples": [
-    "useLogger('Component', [1, 2, 3]);"
-  ],
+  "examples": ["useLogger('Component', [1, 2, 3]);"],
   "apiParameters": [
     {
       "tag": "param",
@@ -94,9 +92,7 @@
     }
   ],
   "dependencies": {
-    "hooks": [
-      "useDidUpdate"
-    ],
+    "hooks": ["useDidUpdate"],
     "utils": [],
     "packages": []
   },

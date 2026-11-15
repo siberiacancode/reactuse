@@ -492,7 +492,9 @@ const init = async () => {
 
       const jsdoc = {
         description: commment.tags.find(({ tag }) => tag === 'description'),
-        examples: parse(jsdocMatch, { spacing: 'preserve' })[0].tags.filter(({ tag }) => tag === 'example'),
+        examples: parse(jsdocMatch, { spacing: 'preserve' })[0].tags.filter(
+          ({ tag }) => tag === 'example'
+        ),
         usage: commment.tags.find(({ tag }) => tag === 'usage'),
         deprecated: commment.tags.find(({ tag }) => tag === 'deprecated'),
         category: commment.tags.find(({ tag }) => tag === 'category'),

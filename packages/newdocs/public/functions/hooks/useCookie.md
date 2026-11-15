@@ -378,10 +378,10 @@ export interface UseCookie {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| key | `string` | - | The key of the cookie |
-| initialValue | `UseCookieInitialValue<Value>` | - | The initial value of the cookie |
+| Name         | Type                           | Default | Note                            |
+| ------------ | ------------------------------ | ------- | ------------------------------- |
+| key          | `string`                       | -       | The key of the cookie           |
+| initialValue | `UseCookieInitialValue<Value>` | -       | The initial value of the cookie |
 
 #### Returns
 
@@ -391,13 +391,13 @@ export interface UseCookie {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| key | `string` | - | The key of the cookie |
-| options | `UseCookieOptions<Value>` | - | The options object |
-| options.initialValue | `UseCookieInitialValue<Value>` | - | The initial value of the cookie |
-| options.deserializer | `(value: string) => Value` | - | The deserializer function to be invoked |
-| options.serializer | `(value: Value) => string` | - | The serializer function to be invoked |
+| Name                 | Type                           | Default | Note                                    |
+| -------------------- | ------------------------------ | ------- | --------------------------------------- |
+| key                  | `string`                       | -       | The key of the cookie                   |
+| options              | `UseCookieOptions<Value>`      | -       | The options object                      |
+| options.initialValue | `UseCookieInitialValue<Value>` | -       | The initial value of the cookie         |
+| options.deserializer | `(value: string) => Value`     | -       | The deserializer function to be invoked |
+| options.serializer   | `(value: Value) => string`     | -       | The serializer function to be invoked   |
 
 #### Returns
 

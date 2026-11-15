@@ -11,7 +11,13 @@ lastModifiedTime: 1780921357000
 
 import metadata from './usePaint.meta.json';
 
-<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
+<FunctionBanner
+  browserapi={metadata.browserapi}
+  code={metadata.demo}
+  type={metadata.type}
+  name={metadata.name}
+  language='tsx'
+/>
 
 ## Installation
 
@@ -22,25 +28,15 @@ import metadata from './usePaint.meta.json';
     <TabsTrigger value='manual'>Manual</TabsTrigger>
   </TabsList>
   <TabsContent value='library'>
-    ```packages-install
-    npm install @siberiacancode/reactuse
-    ```
+    ```packages-install npm install @siberiacancode/reactuse ```
   </TabsContent>
-  <TabsContent value='cli'>
-    ```packages-install
-    npx useverse@latest add usePaint
-    ```
-  </TabsContent>
+  <TabsContent value='cli'>```packages-install npx useverse@latest add usePaint ```</TabsContent>
   <TabsContent value='manual'>
     <Steps>
-     <Step>
-      Copy and paste the following code into your project.
-    </Step>
-      <FunctionCode code={metadata.code} language="tsx" />
-    <Step>
-      Update the import paths to match your project setup.
-    </Step>
-  </Steps>
+      <Step>Copy and paste the following code into your project.</Step>
+      <FunctionCode code={metadata.code} language='tsx' />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
   </TabsContent>
 </FunctionTabs>
 
@@ -49,12 +45,15 @@ import metadata from './usePaint.meta.json';
 ```tsx
 const paint = usePaint(canvasRef, { color: 'red', radius: 10 });
 // or
-const { ref, draw, clear, undo, redo, changeColor } = usePaint({ color: 'red', radius: 10 }, { smooth: true });
+const { ref, draw, clear, undo, redo, changeColor } = usePaint(
+  { color: 'red', radius: 10 },
+  { smooth: true }
+);
 ```
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language="tsx" />
+<FunctionCode code={metadata.typeDeclarations} language='tsx' />
 
 ## API
 

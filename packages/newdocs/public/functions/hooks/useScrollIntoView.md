@@ -281,13 +281,13 @@ export interface UseScrollIntoView {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element to scroll into view |
-| options.immediately | `boolean` | true | Whether to scroll immediately |
-| options.behavior | `ScrollBehavior` | 'smooth' | The scrolling behavior |
-| options.block | `ScrollLogicalPosition` | 'start' | The vertical alignment |
-| options.inline | `ScrollLogicalPosition` | 'nearest' | The horizontal alignment |
+| Name                | Type                    | Default   | Note                                   |
+| ------------------- | ----------------------- | --------- | -------------------------------------- |
+| target              | `HookTarget`            | -         | The target element to scroll into view |
+| options.immediately | `boolean`               | true      | Whether to scroll immediately          |
+| options.behavior    | `ScrollBehavior`        | 'smooth'  | The scrolling behavior                 |
+| options.block       | `ScrollLogicalPosition` | 'start'   | The vertical alignment                 |
+| options.inline      | `ScrollLogicalPosition` | 'nearest' | The horizontal alignment               |
 
 #### Returns
 
@@ -297,12 +297,12 @@ export interface UseScrollIntoView {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.immediately | `boolean` | true | Whether to scroll immediately |
-| options.behavior | `ScrollBehavior` | 'smooth' | The scrolling behavior |
-| options.block | `ScrollLogicalPosition` | 'start' | The vertical alignment |
-| options.inline | `ScrollLogicalPosition` | 'nearest' | The horizontal alignment |
+| Name                | Type                    | Default   | Note                          |
+| ------------------- | ----------------------- | --------- | ----------------------------- |
+| options.immediately | `boolean`               | true      | Whether to scroll immediately |
+| options.behavior    | `ScrollBehavior`        | 'smooth'  | The scrolling behavior        |
+| options.block       | `ScrollLogicalPosition` | 'start'   | The vertical alignment        |
+| options.inline      | `ScrollLogicalPosition` | 'nearest' | The horizontal alignment      |
 
 #### Returns
 

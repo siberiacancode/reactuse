@@ -192,9 +192,9 @@ export interface UseCopyParams {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| delay | `number` | 1000 | Delay in ms before resetting copied status |
+| Name  | Type     | Default | Note                                       |
+| ----- | -------- | ------- | ------------------------------------------ |
+| delay | `number` | 1000    | Delay in ms before resetting copied status |
 
 ### Returns
 

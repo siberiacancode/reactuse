@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useSticky } from '@siberiacancode/reactuse';
 import { useRef } from 'react';

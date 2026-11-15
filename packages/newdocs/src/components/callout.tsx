@@ -20,7 +20,8 @@ const calloutVariants = cva('mt-6 w-auto rounded-xl md:-mx-1 **:[code]:border', 
 });
 
 interface CalloutProps
-  extends Omit<React.ComponentProps<typeof Alert>, 'title' | 'variant'>,
+  extends
+    Omit<React.ComponentProps<typeof Alert>, 'title' | 'variant'>,
     VariantProps<typeof calloutVariants> {
   icon?: React.ReactNode;
   title?: React.ReactNode;

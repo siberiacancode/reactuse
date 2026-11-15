@@ -238,8 +238,8 @@ const { supported, value, lock, unlock } = useOrientation();
 
 ```tsx
 interface ScreenOrientation {
-    lock: (orientation: OrientationLockType) => Promise<void>;
-  }
+  lock: (orientation: OrientationLockType) => Promise<void>;
+}
 
 export interface UseOrientationValue {
   /** The current angle */
@@ -274,9 +274,9 @@ export interface useOrientationReturn {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(value: UseOrientationValue) => void` | - | The callback invoked when the orientation changes |
+| Name     | Type                                   | Default | Note                                              |
+| -------- | -------------------------------------- | ------- | ------------------------------------------------- |
+| callback | `(value: UseOrientationValue) => void` | -       | The callback invoked when the orientation changes |
 
 ### Returns
 

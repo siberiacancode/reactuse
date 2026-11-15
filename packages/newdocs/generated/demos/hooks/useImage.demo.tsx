@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useImage } from '@siberiacancode/reactuse';
 import { ChevronLeftIcon, ChevronRightIcon, DownloadIcon, Loader2Icon } from 'lucide-react';

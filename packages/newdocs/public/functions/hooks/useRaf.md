@@ -205,11 +205,11 @@ export interface UseRafReturn {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `UseRafCallback` | - | The callback to execute |
-| options.delay | `number` | - | The delay between each frame in milliseconds |
-| options.enabled | `boolean` | true | Whether the callback should be enabled |
+| Name            | Type             | Default | Note                                         |
+| --------------- | ---------------- | ------- | -------------------------------------------- |
+| callback        | `UseRafCallback` | -       | The callback to execute                      |
+| options.delay   | `number`         | -       | The delay between each frame in milliseconds |
+| options.enabled | `boolean`        | true    | Whether the callback should be enabled       |
 
 ### Returns
 

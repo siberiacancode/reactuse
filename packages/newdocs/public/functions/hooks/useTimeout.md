@@ -149,10 +149,10 @@ interface UseTimeoutReturn {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `() => void` | - | The function to be executed after the timeout |
-| delay | `number` | - | The delay in milliseconds before the timeout executes the callback function |
+| Name     | Type         | Default | Note                                                                        |
+| -------- | ------------ | ------- | --------------------------------------------------------------------------- |
+| callback | `() => void` | -       | The function to be executed after the timeout                               |
+| delay    | `number`     | -       | The delay in milliseconds before the timeout executes the callback function |
 
 ### Returns
 

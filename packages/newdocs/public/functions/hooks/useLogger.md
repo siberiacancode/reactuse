@@ -177,7 +177,7 @@ useLogger('Component', [1, 2, 3]);
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| name | `string` | - | The name or identifier for the logger |
-| params | `unknown[]` | - | Additional arguments to be logged |
+| Name   | Type        | Default | Note                                  |
+| ------ | ----------- | ------- | ------------------------------------- |
+| name   | `string`    | -       | The name or identifier for the logger |
+| params | `unknown[]` | -       | Additional arguments to be logged     |

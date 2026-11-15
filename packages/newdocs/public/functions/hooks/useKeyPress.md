@@ -326,11 +326,11 @@ export interface UseKeyPress {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | window | The target to attach the event listeners to |
-| key | `UseKeyPressKey` | - | The key or keys to listen for |
-| callback | `(pressed: boolean, event: KeyboardEvent) => void` | - | Callback function invoked when key is pressed |
+| Name     | Type                                               | Default | Note                                          |
+| -------- | -------------------------------------------------- | ------- | --------------------------------------------- |
+| target   | `HookTarget`                                       | window  | The target to attach the event listeners to   |
+| key      | `UseKeyPressKey`                                   | -       | The key or keys to listen for                 |
+| callback | `(pressed: boolean, event: KeyboardEvent) => void` | -       | Callback function invoked when key is pressed |
 
 #### Returns
 
@@ -340,10 +340,10 @@ export interface UseKeyPress {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| key | `UseKeyPressKey` | - | The key or keys to listen for |
-| callback | `(pressed: boolean, event: KeyboardEvent) => void` | - | Callback function invoked when key is pressed |
+| Name     | Type                                               | Default | Note                                          |
+| -------- | -------------------------------------------------- | ------- | --------------------------------------------- |
+| key      | `UseKeyPressKey`                                   | -       | The key or keys to listen for                 |
+| callback | `(pressed: boolean, event: KeyboardEvent) => void` | -       | Callback function invoked when key is pressed |
 
 #### Returns
 

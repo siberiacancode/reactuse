@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useFavicon } from '@siberiacancode/reactuse';
 import { CheckIcon } from 'lucide-react';

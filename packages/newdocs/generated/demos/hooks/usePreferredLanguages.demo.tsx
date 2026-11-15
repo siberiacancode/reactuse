@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { usePreferredLanguages } from '@siberiacancode/reactuse';
 import { GlobeIcon } from 'lucide-react';

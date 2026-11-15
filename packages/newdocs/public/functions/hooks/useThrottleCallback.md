@@ -211,10 +211,10 @@ export type ThrottledCallback<Params extends unknown[]> = ((...args: Params) => 
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(...args: Params) => Return` | - | The callback function |
-| delay | `number` | - | The delay in milliseconds |
+| Name     | Type                          | Default | Note                      |
+| -------- | ----------------------------- | ------- | ------------------------- |
+| callback | `(...args: Params) => Return` | -       | The callback function     |
+| delay    | `number`                      | -       | The delay in milliseconds |
 
 ### Returns
 

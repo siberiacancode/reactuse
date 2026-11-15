@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useTextSelection } from '@siberiacancode/reactuse';
 import { HighlighterIcon, XIcon } from 'lucide-react';

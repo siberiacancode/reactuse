@@ -14,9 +14,7 @@
   "description": "Performs a deep comparison between two values to determine if they are equivalent",
   "category": "Helpers",
   "lastModified": 1794213760000,
-  "examples": [
-    "deepEqual({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } });"
-  ],
+  "examples": ["deepEqual({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } });"],
   "apiParameters": [
     {
       "tag": "param",

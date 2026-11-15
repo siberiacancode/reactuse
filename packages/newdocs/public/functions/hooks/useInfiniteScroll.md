@@ -446,13 +446,13 @@ export interface UseInfiniteScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(event?: Event) => void \| Promise<void>` | - | The callback to execute when the scroll reaches the configured threshold |
-| options.distance | `number` | 10 | The distance in pixels to trigger the callback |
-| options.direction | `string` | 'bottom' | The direction to trigger the callback |
-| options.hasMore | `boolean` | true | Whether there is more content to load |
-| options.immediately | `boolean` | false | Whether to keep loading while the content doesn't overflow the viewport |
+| Name                | Type                                       | Default  | Note                                                                     |
+| ------------------- | ------------------------------------------ | -------- | ------------------------------------------------------------------------ |
+| callback            | `(event?: Event) => void \| Promise<void>` | -        | The callback to execute when the scroll reaches the configured threshold |
+| options.distance    | `number`                                   | 10       | The distance in pixels to trigger the callback                           |
+| options.direction   | `string`                                   | 'bottom' | The direction to trigger the callback                                    |
+| options.hasMore     | `boolean`                                  | true     | Whether there is more content to load                                    |
+| options.immediately | `boolean`                                  | false    | Whether to keep loading while the content doesn't overflow the viewport  |
 
 #### Returns
 
@@ -462,14 +462,14 @@ export interface UseInfiniteScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element to detect infinite scroll for |
-| callback | `(event?: Event) => void \| Promise<void>` | - | The callback to execute when the scroll reaches the configured threshold |
-| options.distance | `number` | 10 | The distance in pixels to trigger the callback |
-| options.direction | `string` | 'bottom' | The direction to trigger the callback |
-| options.hasMore | `boolean` | true | Whether there is more content to load |
-| options.immediately | `boolean` | false | Whether to keep loading while the content doesn't overflow the viewport |
+| Name                | Type                                       | Default  | Note                                                                     |
+| ------------------- | ------------------------------------------ | -------- | ------------------------------------------------------------------------ |
+| target              | `HookTarget`                               | -        | The target element to detect infinite scroll for                         |
+| callback            | `(event?: Event) => void \| Promise<void>` | -        | The callback to execute when the scroll reaches the configured threshold |
+| options.distance    | `number`                                   | 10       | The distance in pixels to trigger the callback                           |
+| options.direction   | `string`                                   | 'bottom' | The direction to trigger the callback                                    |
+| options.hasMore     | `boolean`                                  | true     | Whether there is more content to load                                    |
+| options.immediately | `boolean`                                  | false    | Whether to keep loading while the content doesn't overflow the viewport  |
 
 #### Returns
 

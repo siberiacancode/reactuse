@@ -72,12 +72,7 @@ const FAQItem = ({ id, question, answer, initiallyExpanded }: FAQItemProps) => {
         />
       </button>
 
-      <div
-        ref={collapse.ref}
-        aria-hidden={!collapse.expanded}
-        id={id}
-        inert={!collapse.expanded}
-      >
+      <div ref={collapse.ref} aria-hidden={!collapse.expanded} id={id} inert={!collapse.expanded}>
         <p className='text-muted-foreground pb-4 text-base leading-relaxed'>{answer}</p>
       </div>
     </div>
@@ -376,14 +371,14 @@ interface ElementStyles {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element to collapse |
-| initialValue | `boolean` | false | Whether the target is initially expanded |
-| options.duration | `number` | 200 | Transition duration in milliseconds |
-| options.easing | `string` | 'ease' | CSS transition easing function |
-| options.onStart | `() => void` | - | Callback invoked when the transition starts |
-| options.onEnd | `() => void` | - | Callback invoked when the transition ends |
+| Name             | Type         | Default | Note                                        |
+| ---------------- | ------------ | ------- | ------------------------------------------- |
+| target           | `HookTarget` | -       | The target element to collapse              |
+| initialValue     | `boolean`    | false   | Whether the target is initially expanded    |
+| options.duration | `number`     | 200     | Transition duration in milliseconds         |
+| options.easing   | `string`     | 'ease'  | CSS transition easing function              |
+| options.onStart  | `() => void` | -       | Callback invoked when the transition starts |
+| options.onEnd    | `() => void` | -       | Callback invoked when the transition ends   |
 
 #### Returns
 
@@ -393,13 +388,13 @@ interface ElementStyles {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `boolean` | false | Whether the target is initially expanded |
-| options.duration | `number` | 200 | Transition duration in milliseconds |
-| options.easing | `string` | 'ease' | CSS transition easing function |
-| options.onStart | `() => void` | - | Callback invoked when the transition starts |
-| options.onEnd | `() => void` | - | Callback invoked when the transition ends |
+| Name             | Type         | Default | Note                                        |
+| ---------------- | ------------ | ------- | ------------------------------------------- |
+| initialValue     | `boolean`    | false   | Whether the target is initially expanded    |
+| options.duration | `number`     | 200     | Transition duration in milliseconds         |
+| options.easing   | `string`     | 'ease'  | CSS transition easing function              |
+| options.onStart  | `() => void` | -       | Callback invoked when the transition starts |
+| options.onEnd    | `() => void` | -       | Callback invoked when the transition ends   |
 
 #### Returns
 

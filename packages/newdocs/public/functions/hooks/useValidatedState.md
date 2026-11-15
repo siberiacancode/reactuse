@@ -175,11 +175,11 @@ export type UseValidatedStateReturn<Value> = [
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `Value` | - | The initial state value |
-| validate | `(value: Value) => boolean` | - | Function that validates the state value |
-| initialValidationState | `boolean` | - | Optional initial validity state |
+| Name                   | Type                        | Default | Note                                    |
+| ---------------------- | --------------------------- | ------- | --------------------------------------- |
+| initialValue           | `Value`                     | -       | The initial state value                 |
+| validate               | `(value: Value) => boolean` | -       | Function that validates the state value |
+| initialValidationState | `boolean`                   | -       | Optional initial validity state         |
 
 ### Returns
 

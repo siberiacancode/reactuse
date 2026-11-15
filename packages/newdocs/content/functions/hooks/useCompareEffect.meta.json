@@ -14,9 +14,7 @@
   "description": "Hook that executes an effect only when the compare function reports a dependency as changed",
   "category": "Lifecycle",
   "lastModified": 1794213760000,
-  "examples": [
-    "useCompareEffect(() => console.log(\"effect\"), [user]);"
-  ],
+  "examples": ["useCompareEffect(() => console.log(\"effect\"), [user]);"],
   "apiParameters": [
     {
       "tag": "param",

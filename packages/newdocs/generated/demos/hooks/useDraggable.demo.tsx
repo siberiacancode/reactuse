@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useDraggable } from '@siberiacancode/reactuse';
 import { GripVerticalIcon } from 'lucide-react';

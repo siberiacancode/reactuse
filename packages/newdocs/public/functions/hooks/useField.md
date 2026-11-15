@@ -465,7 +465,19 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { register, getValue, setValue, reset, dirty, error, setError, clearError, touched, focus, watch } = useField();
+const {
+  register,
+  getValue,
+  setValue,
+  reset,
+  dirty,
+  error,
+  setError,
+  clearError,
+  touched,
+  focus,
+  watch
+} = useField();
 ```
 
 ## Type Declarations
@@ -560,21 +572,21 @@ export interface UseFieldReturn<Value> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `Value` | "" | Initial value |
-| options.initialTouched | `boolean` | false | Initial touched state |
-| options.autoFocus | `boolean` | false | Auto focus |
-| options.validateOnChange | `boolean` | false | Validate on change |
-| options.validateOnBlur | `boolean` | false | Validate on blur |
-| options.validateOnMount | `boolean` | false | Validate on mount |
-| options.required | `string` | - | Required validation message |
-| options.min | `object` | - | Min value validation |
-| options.max | `object` | - | Max value validation |
-| options.minLength | `object` | - | Min length validation |
-| options.maxLength | `object` | - | Max length validation |
-| options.pattern | `object` | - | Pattern validation |
-| options.validate | `Function` | - | Custom validation |
+| Name                     | Type       | Default | Note                        |
+| ------------------------ | ---------- | ------- | --------------------------- |
+| initialValue             | `Value`    | ""      | Initial value               |
+| options.initialTouched   | `boolean`  | false   | Initial touched state       |
+| options.autoFocus        | `boolean`  | false   | Auto focus                  |
+| options.validateOnChange | `boolean`  | false   | Validate on change          |
+| options.validateOnBlur   | `boolean`  | false   | Validate on blur            |
+| options.validateOnMount  | `boolean`  | false   | Validate on mount           |
+| options.required         | `string`   | -       | Required validation message |
+| options.min              | `object`   | -       | Min value validation        |
+| options.max              | `object`   | -       | Max value validation        |
+| options.minLength        | `object`   | -       | Min length validation       |
+| options.maxLength        | `object`   | -       | Max length validation       |
+| options.pattern          | `object`   | -       | Pattern validation          |
+| options.validate         | `Function` | -       | Custom validation           |
 
 ### Returns
 

@@ -126,10 +126,10 @@ const result = makeDestructurable({ x: 10, y: 20 }, [10, 20] as const);
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| obj | `object` | - | Object part of the returned value |
-| arr | `Array` | - | Iterable tuple/array part of the returned value |
+| Name | Type     | Default | Note                                            |
+| ---- | -------- | ------- | ----------------------------------------------- |
+| obj  | `object` | -       | Object part of the returned value               |
+| arr  | `Array`  | -       | Iterable tuple/array part of the returned value |
 
 ### Returns
 

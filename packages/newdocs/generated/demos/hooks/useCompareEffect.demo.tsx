@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { shallowEqual, useCompareEffect, useRerender } from '@siberiacancode/reactuse';
 import { LayersIcon, RefreshCwIcon } from 'lucide-react';

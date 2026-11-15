@@ -253,10 +253,10 @@ export interface UseIdle {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| milliseconds | `number` | ONE_MINUTE | The idle time in milliseconds |
-| callback | `(idle: boolean) => void` | - | The callback to execute when idle state changes |
+| Name         | Type                      | Default    | Note                                            |
+| ------------ | ------------------------- | ---------- | ----------------------------------------------- |
+| milliseconds | `number`                  | ONE_MINUTE | The idle time in milliseconds                   |
+| callback     | `(idle: boolean) => void` | -          | The callback to execute when idle state changes |
 
 #### Returns
 
@@ -266,12 +266,12 @@ export interface UseIdle {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| milliseconds | `number` | ONE_MINUTE | The idle time in milliseconds |
-| options.onChange | `(idle: boolean) => void` | - | The callback to execute when idle state changes |
-| options.initialValue | `boolean` | false | The options for the hook |
-| options.events | `Array<keyof WindowEventMap>` | IDLE_EVENTS | - |
+| Name                 | Type                          | Default     | Note                                            |
+| -------------------- | ----------------------------- | ----------- | ----------------------------------------------- |
+| milliseconds         | `number`                      | ONE_MINUTE  | The idle time in milliseconds                   |
+| options.onChange     | `(idle: boolean) => void`     | -           | The callback to execute when idle state changes |
+| options.initialValue | `boolean`                     | false       | The options for the hook                        |
+| options.events       | `Array<keyof WindowEventMap>` | IDLE_EVENTS | -                                               |
 
 #### Returns
 

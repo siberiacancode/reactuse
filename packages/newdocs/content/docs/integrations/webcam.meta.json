@@ -6,16 +6,9 @@
     "link": "https://github.com/siberiacancode/webcam"
   },
   "dependencies": {
-    "hooks": [
-      "useBoolean",
-      "useTimeout"
-    ],
+    "hooks": ["useBoolean", "useTimeout"],
     "utils": [],
-    "packages": [
-      "@siberiacancode/reactuse",
-      "@webcam/react",
-      "lucide-react"
-    ]
+    "packages": ["@siberiacancode/reactuse", "@webcam/react", "lucide-react"]
   },
   "lastModified": 1786167198143,
   "type": "integration",

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useCollapse } from '@siberiacancode/reactuse';
 import { ChevronDownIcon } from 'lucide-react';
@@ -56,12 +56,7 @@ const FAQItem = ({ id, question, answer, initiallyExpanded }: FAQItemProps) => {
         />
       </button>
 
-      <div
-        ref={collapse.ref}
-        aria-hidden={!collapse.expanded}
-        id={id}
-        inert={!collapse.expanded}
-      >
+      <div ref={collapse.ref} aria-hidden={!collapse.expanded} id={id} inert={!collapse.expanded}>
         <p className='text-muted-foreground pb-4 text-base leading-relaxed'>{answer}</p>
       </div>
     </div>

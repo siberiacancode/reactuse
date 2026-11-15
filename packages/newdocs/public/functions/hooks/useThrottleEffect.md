@@ -198,8 +198,8 @@ import type { DependencyList, EffectCallback } from 'react';
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| effect | `EffectCallback` | - | The effect callback to run |
-| delay | `number` | - | The delay in milliseconds |
-| deps | `DependencyList` | - | The dependencies list for the effect |
+| Name   | Type             | Default | Note                                 |
+| ------ | ---------------- | ------- | ------------------------------------ |
+| effect | `EffectCallback` | -       | The effect callback to run           |
+| delay  | `number`         | -       | The delay in milliseconds            |
+| deps   | `DependencyList` | -       | The dependencies list for the effect |

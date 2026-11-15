@@ -303,12 +303,12 @@ export interface UseFullScreen {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element for fullscreen |
-| options.initialValue | `boolean` | false | initial value of fullscreen |
-| options.onEnter | `() => void` | - | on enter fullscreen |
-| options.onExit | `() => void` | - | on exit fullscreen |
+| Name                 | Type         | Default | Note                              |
+| -------------------- | ------------ | ------- | --------------------------------- |
+| target               | `HookTarget` | -       | The target element for fullscreen |
+| options.initialValue | `boolean`    | false   | initial value of fullscreen       |
+| options.onEnter      | `() => void` | -       | on enter fullscreen               |
+| options.onExit       | `() => void` | -       | on exit fullscreen                |
 
 #### Returns
 
@@ -318,11 +318,11 @@ export interface UseFullScreen {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.initialValue | `boolean` | false | initial value of fullscreen |
-| options.onEnter | `() => void` | - | on enter fullscreen |
-| options.onExit | `() => void` | - | on exit fullscreen |
+| Name                 | Type         | Default | Note                        |
+| -------------------- | ------------ | ------- | --------------------------- |
+| options.initialValue | `boolean`    | false   | initial value of fullscreen |
+| options.onEnter      | `() => void` | -       | on enter fullscreen         |
+| options.onExit       | `() => void` | -       | on exit fullscreen          |
 
 #### Returns
 

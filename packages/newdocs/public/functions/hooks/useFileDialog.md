@@ -373,13 +373,13 @@ export interface UseFileDialog {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(value: FileList \| null) => void` | - | The callback to execute when a file is selected |
-| options.multiple | `boolean` | true | Whether multiple files can be selected |
-| options.accept | `string` | '*' | The accepted file types |
-| options.reset | `boolean` | false | Whether the input should be reset when the callback is called |
-| options.capture | `string` | - | The capture value |
+| Name             | Type                                | Default | Note                                                          |
+| ---------------- | ----------------------------------- | ------- | ------------------------------------------------------------- |
+| callback         | `(value: FileList \| null) => void` | -       | The callback to execute when a file is selected               |
+| options.multiple | `boolean`                           | true    | Whether multiple files can be selected                        |
+| options.accept   | `string`                            | '*'     | The accepted file types                                       |
+| options.reset    | `boolean`                           | false   | Whether the input should be reset when the callback is called |
+| options.capture  | `string`                            | -       | The capture value                                             |
 
 #### Returns
 
@@ -389,12 +389,12 @@ export interface UseFileDialog {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.multiple | `boolean` | true | Whether multiple files can be selected |
-| options.accept | `string` | '*' | The accepted file types |
-| options.reset | `boolean` | false | Whether the input should be reset when the callback is called |
-| options.capture | `string` | - | The capture value |
+| Name             | Type      | Default | Note                                                          |
+| ---------------- | --------- | ------- | ------------------------------------------------------------- |
+| options.multiple | `boolean` | true    | Whether multiple files can be selected                        |
+| options.accept   | `string`  | '*'     | The accepted file types                                       |
+| options.reset    | `boolean` | false   | Whether the input should be reset when the callback is called |
+| options.capture  | `string`  | -       | The capture value                                             |
 
 #### Returns
 

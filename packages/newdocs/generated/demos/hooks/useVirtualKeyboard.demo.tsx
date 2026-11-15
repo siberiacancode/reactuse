@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useField, useVirtualKeyboard } from '@siberiacancode/reactuse';
 import { SendIcon } from 'lucide-react';

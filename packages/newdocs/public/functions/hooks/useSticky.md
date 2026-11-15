@@ -324,11 +324,11 @@ export interface UseSticky {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target sticky element |
-| options.axis | `UseStickyAxis` | 'vertical' | The axis of motion of the sticky component |
-| options.root | `UseStickyRoot` | document | The element that contains your sticky component |
+| Name         | Type            | Default    | Note                                            |
+| ------------ | --------------- | ---------- | ----------------------------------------------- |
+| target       | `HookTarget`    | -          | The target sticky element                       |
+| options.axis | `UseStickyAxis` | 'vertical' | The axis of motion of the sticky component      |
+| options.root | `UseStickyRoot` | document   | The element that contains your sticky component |
 
 #### Returns
 
@@ -338,10 +338,10 @@ export interface UseSticky {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.axis | `UseStickyAxis` | 'vertical' | The axis of motion of the sticky component |
-| options.root | `UseStickyRoot` | document | The element that contains your sticky component |
+| Name         | Type            | Default    | Note                                            |
+| ------------ | --------------- | ---------- | ----------------------------------------------- |
+| options.axis | `UseStickyAxis` | 'vertical' | The axis of motion of the sticky component      |
+| options.root | `UseStickyRoot` | document   | The element that contains your sticky component |
 
 #### Returns
 

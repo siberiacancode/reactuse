@@ -193,9 +193,9 @@ export interface UseCopyToClipboardParams {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| params.enabled | `boolean` | false | Whether the copy to clipboard is enabled |
+| Name           | Type      | Default | Note                                     |
+| -------------- | --------- | ------- | ---------------------------------------- |
+| params.enabled | `boolean` | false   | Whether the copy to clipboard is enabled |
 
 ### Returns
 

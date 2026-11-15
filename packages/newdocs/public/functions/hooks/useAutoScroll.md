@@ -452,10 +452,10 @@ export interface UseAutoScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element to auto-scroll |
-| options.enabled | `boolean` | - | Whether auto-scrolling is enabled |
+| Name            | Type         | Default | Note                              |
+| --------------- | ------------ | ------- | --------------------------------- |
+| target          | `HookTarget` | -       | The target element to auto-scroll |
+| options.enabled | `boolean`    | -       | Whether auto-scrolling is enabled |
 
 #### Returns
 
@@ -465,9 +465,9 @@ export interface UseAutoScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.enabled | `boolean` | - | Whether auto-scrolling is enabled |
+| Name            | Type      | Default | Note                              |
+| --------------- | --------- | ------- | --------------------------------- |
+| options.enabled | `boolean` | -       | Whether auto-scrolling is enabled |
 
 #### Returns
 

@@ -230,9 +230,9 @@ export interface UseObjectUrlReturn {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| object | `Blob \| MediaSource` | - | The object to represent as a URL |
+| Name   | Type                  | Default | Note                             |
+| ------ | --------------------- | ------- | -------------------------------- |
+| object | `Blob \| MediaSource` | -       | The object to represent as a URL |
 
 ### Returns
 

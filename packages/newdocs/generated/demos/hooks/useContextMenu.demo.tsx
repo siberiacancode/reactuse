@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useClickOutside, useContextMenu } from '@siberiacancode/reactuse';
 import {

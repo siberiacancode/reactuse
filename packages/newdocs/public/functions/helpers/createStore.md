@@ -378,7 +378,7 @@ Update the import paths to match your project setup.
 ```tsx
 const { set, get, use, subscribe } = createStore((set) => ({
   count: 0,
-  increment: () => set(state => ({ count: state.count + 1 }))
+  increment: () => set((state) => ({ count: state.count + 1 }))
 }));
 ```
 
@@ -410,9 +410,9 @@ export interface StoreApi<Value> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| createState | `StateCreator<Value>` | - | Function that initializes the store state |
+| Name        | Type                  | Default | Note                                      |
+| ----------- | --------------------- | ------- | ----------------------------------------- |
+| createState | `StateCreator<Value>` | -       | Function that initializes the store state |
 
 ### Returns
 

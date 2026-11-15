@@ -238,11 +238,11 @@ export interface UseBatchedCallbackOptions {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(batch: Params[]) => void` | - | The callback that receives a batch of calls |
-| options.size | `number` | - | The batch settings with size and optional delay |
-| options.delay | `number` | 1000 | The delay (ms) after which pending calls are flushed |
+| Name          | Type                        | Default | Note                                                 |
+| ------------- | --------------------------- | ------- | ---------------------------------------------------- |
+| callback      | `(batch: Params[]) => void` | -       | The callback that receives a batch of calls          |
+| options.size  | `number`                    | -       | The batch settings with size and optional delay      |
+| options.delay | `number`                    | 1000    | The delay (ms) after which pending calls are flushed |
 
 ### Returns
 

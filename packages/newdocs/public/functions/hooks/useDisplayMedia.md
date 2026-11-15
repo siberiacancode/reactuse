@@ -408,13 +408,13 @@ export interface UseDisplayMedia {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target video element to display the media stream |
-| options.constraints | `UseDisplayMediaConstraints` | - | Default constraints passed to `getDisplayMedia` |
-| options.immediately | `boolean` | false | Whether to start immediately |
-| options.onStart | `(stream: MediaStream) => void` | - | Callback fired when screen sharing starts |
-| options.onStop | `(stream?: MediaStream) => void` | - | Callback fired when screen sharing stops |
+| Name                | Type                             | Default | Note                                                 |
+| ------------------- | -------------------------------- | ------- | ---------------------------------------------------- |
+| target              | `HookTarget`                     | -       | The target video element to display the media stream |
+| options.constraints | `UseDisplayMediaConstraints`     | -       | Default constraints passed to `getDisplayMedia`      |
+| options.immediately | `boolean`                        | false   | Whether to start immediately                         |
+| options.onStart     | `(stream: MediaStream) => void`  | -       | Callback fired when screen sharing starts            |
+| options.onStop      | `(stream?: MediaStream) => void` | -       | Callback fired when screen sharing stops             |
 
 #### Returns
 
@@ -424,12 +424,12 @@ export interface UseDisplayMedia {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.constraints | `UseDisplayMediaConstraints` | - | Default constraints passed to `getDisplayMedia` |
-| options.immediately | `boolean` | false | Whether to start immediately |
-| options.onStart | `(stream: MediaStream) => void` | - | Callback fired when screen sharing starts |
-| options.onStop | `(stream?: MediaStream) => void` | - | Callback fired when screen sharing stops |
+| Name                | Type                             | Default | Note                                            |
+| ------------------- | -------------------------------- | ------- | ----------------------------------------------- |
+| options.constraints | `UseDisplayMediaConstraints`     | -       | Default constraints passed to `getDisplayMedia` |
+| options.immediately | `boolean`                        | false   | Whether to start immediately                    |
+| options.onStart     | `(stream: MediaStream) => void`  | -       | Callback fired when screen sharing starts       |
+| options.onStop      | `(stream?: MediaStream) => void` | -       | Callback fired when screen sharing stops        |
 
 #### Returns
 

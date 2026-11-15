@@ -356,11 +356,11 @@ export interface UseTextareaAutosize {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target textarea element |
-| options.initialValue | `string` | - | The initial value for the textarea |
-| options.onResize | `Function` | - | Callback function called when the textarea size changes |
+| Name                 | Type         | Default | Note                                                    |
+| -------------------- | ------------ | ------- | ------------------------------------------------------- |
+| target               | `HookTarget` | -       | The target textarea element                             |
+| options.initialValue | `string`     | -       | The initial value for the textarea                      |
+| options.onResize     | `Function`   | -       | Callback function called when the textarea size changes |
 
 #### Returns
 
@@ -370,10 +370,10 @@ export interface UseTextareaAutosize {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target textarea element |
-| initialValue | `string` | - | The initial value for the textarea |
+| Name         | Type         | Default | Note                               |
+| ------------ | ------------ | ------- | ---------------------------------- |
+| target       | `HookTarget` | -       | The target textarea element        |
+| initialValue | `string`     | -       | The initial value for the textarea |
 
 #### Returns
 
@@ -383,9 +383,9 @@ export interface UseTextareaAutosize {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `string` | - | The initial value for the textarea |
+| Name         | Type     | Default | Note                               |
+| ------------ | -------- | ------- | ---------------------------------- |
+| initialValue | `string` | -       | The initial value for the textarea |
 
 #### Returns
 
@@ -395,10 +395,10 @@ export interface UseTextareaAutosize {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.initialValue | `string` | - | The initial value for the textarea |
-| options.onResize | `Function` | - | Callback function called when the textarea size changes |
+| Name                 | Type       | Default | Note                                                    |
+| -------------------- | ---------- | ------- | ------------------------------------------------------- |
+| options.initialValue | `string`   | -       | The initial value for the textarea                      |
+| options.onResize     | `Function` | -       | Callback function called when the textarea size changes |
 
 #### Returns
 

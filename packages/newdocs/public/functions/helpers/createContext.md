@@ -442,10 +442,10 @@ export interface CreateContextReturn<Value> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| defaultValue | `Value \| undefined` | - | Default value for the context |
-| options | `CreateContextOptions<Value>` | - | Additional options for context creation |
+| Name         | Type                          | Default | Note                                    |
+| ------------ | ----------------------------- | ------- | --------------------------------------- |
+| defaultValue | `Value \| undefined`          | -       | Default value for the context           |
+| options      | `CreateContextOptions<Value>` | -       | Additional options for context creation |
 
 ### Returns
 

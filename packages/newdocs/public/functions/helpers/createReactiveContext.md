@@ -500,10 +500,10 @@ interface ReactiveContextValue<Value> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| defaultValue | `Value \| undefined` | - | Default value for the context |
-| options | `CreateReactiveContextOptions<Value>` | - | Additional options for context creation |
+| Name         | Type                                  | Default | Note                                    |
+| ------------ | ------------------------------------- | ------- | --------------------------------------- |
+| defaultValue | `Value \| undefined`                  | -       | Default value for the context           |
+| options      | `CreateReactiveContextOptions<Value>` | -       | Additional options for context creation |
 
 ### Returns
 

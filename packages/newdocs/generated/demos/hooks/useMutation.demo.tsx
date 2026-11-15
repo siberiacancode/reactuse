@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useMutation, useQuery } from '@siberiacancode/reactuse';
 import { BadgeCheckIcon, CalendarIcon, Loader2Icon } from 'lucide-react';

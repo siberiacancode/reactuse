@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useScrollIntoView } from '@siberiacancode/reactuse';
 import { CheckIcon, ClockIcon, SparklesIcon, UserIcon } from 'lucide-react';

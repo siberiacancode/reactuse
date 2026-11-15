@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useHotkeys, usePaint } from '@siberiacancode/reactuse';
 import { Redo2Icon, Undo2Icon } from 'lucide-react';

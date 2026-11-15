@@ -345,10 +345,10 @@ export interface UseCssVar {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| key | `string` | - | The CSS variable key |
-| initialValue | `string` | - | The initial value of the CSS variable |
+| Name         | Type     | Default | Note                                  |
+| ------------ | -------- | ------- | ------------------------------------- |
+| key          | `string` | -       | The CSS variable key                  |
+| initialValue | `string` | -       | The initial value of the CSS variable |
 
 #### Returns
 
@@ -358,11 +358,11 @@ export interface UseCssVar {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element |
-| key | `string` | - | The CSS variable key |
-| initialValue | `string` | - | The initial value of the CSS variable |
+| Name         | Type         | Default | Note                                  |
+| ------------ | ------------ | ------- | ------------------------------------- |
+| target       | `HookTarget` | -       | The target element                    |
+| key          | `string`     | -       | The CSS variable key                  |
+| initialValue | `string`     | -       | The initial value of the CSS variable |
 
 #### Returns
 

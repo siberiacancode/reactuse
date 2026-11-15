@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useClickOutside, useDisclosure, usePictureInPicture } from '@siberiacancode/reactuse';
 import { FlagIcon, MoreHorizontalIcon, PictureInPicture2Icon, Share2Icon } from 'lucide-react';

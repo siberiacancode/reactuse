@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useFul } from '@siberiacancode/reactuse';
 

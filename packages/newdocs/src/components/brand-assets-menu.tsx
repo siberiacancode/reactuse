@@ -30,7 +30,7 @@ const PNG_MIME_TYPE = 'image/png';
 
 export const BrandAssetsMenu = ({ children, className }: BrandAssetsMenuProps) => {
   const onCopySvg = async (href: string) => {
-    const svg = await fetch(href).then(response => response.text());
+    const svg = await fetch(href).then((response) => response.text());
     await copy(svg);
   };
 
@@ -48,9 +48,7 @@ export const BrandAssetsMenu = ({ children, className }: BrandAssetsMenuProps) =
 
     context.drawImage(image, 0, 0);
 
-    const blob = await new Promise<Blob | null>(resolve =>
-      canvas.toBlob(resolve, PNG_MIME_TYPE)
-    );
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, PNG_MIME_TYPE));
     if (!blob) return;
 
     await navigator.clipboard.write([new ClipboardItem({ [PNG_MIME_TYPE]: blob })]);

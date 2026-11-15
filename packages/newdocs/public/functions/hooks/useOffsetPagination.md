@@ -306,11 +306,12 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { currentPage, currentPageSize, pageCount, isFirstPage, isLastPage, prev, next } = useOffsetPagination({
- total: 100,
- initialPageSize: 10,
- initialPage: 1
-});
+const { currentPage, currentPageSize, pageCount, isFirstPage, isLastPage, prev, next } =
+  useOffsetPagination({
+    total: 100,
+    initialPageSize: 10,
+    initialPage: 1
+  });
 ```
 
 ## Type Declarations
@@ -353,13 +354,13 @@ export interface UseOffsetPaginationReturn {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options | `UseOffsetPaginationOptions` | - | The options for the hook |
-| options.total | `number` | - | The total number of items |
-| options.pageSize | `number` | - | The number of items per page |
-| options.initialPage | `number` | - | The current page |
-| options.onChange | `({ page, pageSize }: { page: number; pageSize: number }) => void` | - | The callback function to be invoked when page changes |
+| Name                | Type                                                               | Default | Note                                                  |
+| ------------------- | ------------------------------------------------------------------ | ------- | ----------------------------------------------------- |
+| options             | `UseOffsetPaginationOptions`                                       | -       | The options for the hook                              |
+| options.total       | `number`                                                           | -       | The total number of items                             |
+| options.pageSize    | `number`                                                           | -       | The number of items per page                          |
+| options.initialPage | `number`                                                           | -       | The current page                                      |
+| options.onChange    | `({ page, pageSize }: { page: number; pageSize: number }) => void` | -       | The callback function to be invoked when page changes |
 
 ### Returns
 

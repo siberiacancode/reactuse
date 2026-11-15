@@ -29,7 +29,7 @@
     "preview": "next build && next start --port 4000",
     "lint": "eslint . --fix",
     "lint-inspector": "npx @eslint/config-inspector@latest",
-    "format": "prettier --write .",
+    "format": "oxfmt",
     "type": "tsc --noEmit",
     "pretty": "pnpm type && pnpm lint && pnpm format",
     "predev": "pnpm run generate:functions && pnpm run generate:integrations && pnpm run generate:static && fumadocs-mdx",

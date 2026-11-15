@@ -494,13 +494,13 @@ export interface FileSystemWritableFileStreamWrite {
 }
 
 interface Window {
-    readonly showOpenFilePicker: (
-      options?: FileSystemAccessShowOpenFileOptions
-    ) => Promise<FileSystemFileHandle[]>;
-    readonly showSaveFilePicker: (
-      options?: FileSystemAccessShowSaveFileOptions
-    ) => Promise<FileSystemFileHandle>;
-  }
+  readonly showOpenFilePicker: (
+    options?: FileSystemAccessShowOpenFileOptions
+  ) => Promise<FileSystemFileHandle[]>;
+  readonly showSaveFilePicker: (
+    options?: FileSystemAccessShowSaveFileOptions
+  ) => Promise<FileSystemFileHandle>;
+}
 
 export type UseFileSystemAccessCommonOptions = Pick<
   FileSystemAccessShowOpenFileOptions,
@@ -568,9 +568,9 @@ export interface UseFileSystemAccess {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options | `UseFileSystemAccessOptions` | - | - |
+| Name    | Type                         | Default | Note |
+| ------- | ---------------------------- | ------- | ---- |
+| options | `UseFileSystemAccessOptions` | -       | -    |
 
 #### Returns
 

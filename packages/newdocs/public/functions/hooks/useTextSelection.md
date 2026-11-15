@@ -324,9 +324,9 @@ export type UseTextSelectionCallback = (value: UseTextSelectionReturn, event: Ev
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(value: UseTextSelectionReturn, event: Event) => void` | - | The callback to invoke on selection updates |
+| Name     | Type                                                    | Default | Note                                        |
+| -------- | ------------------------------------------------------- | ------- | ------------------------------------------- |
+| callback | `(value: UseTextSelectionReturn, event: Event) => void` | -       | The callback to invoke on selection updates |
 
 ### Returns
 

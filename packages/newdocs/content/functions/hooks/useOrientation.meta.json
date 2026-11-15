@@ -60,9 +60,7 @@
   "description": "Hook that provides the current screen orientation",
   "category": "Sensors",
   "lastModified": 1781981977000,
-  "examples": [
-    "const { supported, value, lock, unlock } = useOrientation();"
-  ],
+  "examples": ["const { supported, value, lock, unlock } = useOrientation();"],
   "apiParameters": [
     {
       "tag": "param",

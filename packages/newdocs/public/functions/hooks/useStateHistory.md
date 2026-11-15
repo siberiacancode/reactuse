@@ -320,7 +320,8 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { value, history, index, set, back, forward, reset, undo, redo, canUndo, canRedo } = useStateHistory(0);
+const { value, history, index, set, back, forward, reset, undo, redo, canUndo, canRedo } =
+  useStateHistory(0);
 ```
 
 ## Type Declarations
@@ -371,10 +372,10 @@ export interface StateHistory<Value> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `Value` | - | The initial value to start the history with |
-| capacity | `number` | 10 | Maximum number of history entries and undo actions to keep |
+| Name         | Type     | Default | Note                                                       |
+| ------------ | -------- | ------- | ---------------------------------------------------------- |
+| initialValue | `Value`  | -       | The initial value to start the history with                |
+| capacity     | `number` | 10      | Maximum number of history entries and undo actions to keep |
 
 ### Returns
 

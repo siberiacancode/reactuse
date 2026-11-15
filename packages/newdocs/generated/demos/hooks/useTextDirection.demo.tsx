@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useTextDirection } from '@siberiacancode/reactuse';
 import { ArrowLeftRightIcon } from 'lucide-react';

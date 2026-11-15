@@ -324,9 +324,13 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList((devices) => console.log(devices));
+const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList(
+  (devices) => console.log(devices)
+);
 // or
-const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList({ immediately: true });
+const { devices, videoInputs, audioInputs, audioOutputs, update, trigger } = useDeviceList({
+  immediately: true
+});
 ```
 
 ## Type Declarations
@@ -373,9 +377,9 @@ export interface UseDeviceList {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(devices: MediaDeviceInfo[]) => void` | - | The callback fired when the device list updates |
+| Name     | Type                                   | Default | Note                                            |
+| -------- | -------------------------------------- | ------- | ----------------------------------------------- |
+| callback | `(devices: MediaDeviceInfo[]) => void` | -       | The callback fired when the device list updates |
 
 #### Returns
 
@@ -385,10 +389,10 @@ export interface UseDeviceList {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.immediately | `boolean` | true | Whether the device list should be requested immediately |
-| options.onUpdate | `(devices: MediaDeviceInfo[]) => void` | - | The callback fired when the device list updates |
+| Name                | Type                                   | Default | Note                                                    |
+| ------------------- | -------------------------------------- | ------- | ------------------------------------------------------- |
+| options.immediately | `boolean`                              | true    | Whether the device list should be requested immediately |
+| options.onUpdate    | `(devices: MediaDeviceInfo[]) => void` | -       | The callback fired when the device list updates         |
 
 #### Returns
 

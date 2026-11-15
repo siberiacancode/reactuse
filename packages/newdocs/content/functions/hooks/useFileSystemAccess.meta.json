@@ -60,9 +60,7 @@
   "description": "Hook for reading and writing local files via the File System Access API",
   "category": "Browser",
   "lastModified": 1781981977000,
-  "examples": [
-    "const fileSystemAccess = useFileSystemAccess({ dataType: 'Text' });"
-  ],
+  "examples": ["const fileSystemAccess = useFileSystemAccess({ dataType: 'Text' });"],
   "apiParameters": [
     {
       "tag": "overload",

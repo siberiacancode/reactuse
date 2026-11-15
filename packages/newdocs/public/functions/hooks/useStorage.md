@@ -287,10 +287,10 @@ export interface UseStorage {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| key | `string` | - | The key of the storage |
-| initialValue | `UseStorageInitialValue<Value>` | - | The initial value of the storage |
+| Name         | Type                            | Default | Note                             |
+| ------------ | ------------------------------- | ------- | -------------------------------- |
+| key          | `string`                        | -       | The key of the storage           |
+| initialValue | `UseStorageInitialValue<Value>` | -       | The initial value of the storage |
 
 #### Returns
 
@@ -300,13 +300,13 @@ export interface UseStorage {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| key | `string` | - | The key of the storage |
-| params.serializer | `(value: Value) => string` | - | The serializer function |
-| params.deserializer | `(value: string) => Value` | - | The deserializer function |
-| params.storage | `Storage` | - | The storage |
-| params.initialValue | `UseStorageInitialValue<Value>` | - | The initial value of the storage |
+| Name                | Type                            | Default | Note                             |
+| ------------------- | ------------------------------- | ------- | -------------------------------- |
+| key                 | `string`                        | -       | The key of the storage           |
+| params.serializer   | `(value: Value) => string`      | -       | The serializer function          |
+| params.deserializer | `(value: string) => Value`      | -       | The deserializer function        |
+| params.storage      | `Storage`                       | -       | The storage                      |
+| params.initialValue | `UseStorageInitialValue<Value>` | -       | The initial value of the storage |
 
 #### Returns
 

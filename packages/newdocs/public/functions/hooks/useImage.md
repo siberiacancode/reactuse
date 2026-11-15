@@ -326,18 +326,18 @@ export interface UseImageReturn {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| src | `string` | - | The source of the image |
-| options.srcset | `string` | - | The srcset of the image |
-| options.sizes | `string` | - | The sizes of the image |
-| options.alt | `string` | - | The alt of the image |
-| options.class | `string` | - | The class of the image |
-| options.loading | `HTMLImageElement['loading']` | - | The loading of the image |
-| options.crossorigin | `string` | - | The crossorigin of the image |
-| options.referrerPolicy | `HTMLImageElement['referrerPolicy']` | - | The referrerPolicy of the image |
-| options.onSuccess | `(data: HTMLImageElement) => void` | - | The callback function to be invoked on success |
-| options.onError | `(error: Error) => void` | - | The callback function to be invoked on error |
+| Name                   | Type                                 | Default | Note                                           |
+| ---------------------- | ------------------------------------ | ------- | ---------------------------------------------- |
+| src                    | `string`                             | -       | The source of the image                        |
+| options.srcset         | `string`                             | -       | The srcset of the image                        |
+| options.sizes          | `string`                             | -       | The sizes of the image                         |
+| options.alt            | `string`                             | -       | The alt of the image                           |
+| options.class          | `string`                             | -       | The class of the image                         |
+| options.loading        | `HTMLImageElement['loading']`        | -       | The loading of the image                       |
+| options.crossorigin    | `string`                             | -       | The crossorigin of the image                   |
+| options.referrerPolicy | `HTMLImageElement['referrerPolicy']` | -       | The referrerPolicy of the image                |
+| options.onSuccess      | `(data: HTMLImageElement) => void`   | -       | The callback function to be invoked on success |
+| options.onError        | `(error: Error) => void`             | -       | The callback function to be invoked on error   |
 
 ### Returns
 

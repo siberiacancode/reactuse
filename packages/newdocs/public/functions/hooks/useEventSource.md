@@ -373,7 +373,9 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', ['message']);
+const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', [
+  'message'
+]);
 ```
 
 ## Type Declarations
@@ -422,11 +424,11 @@ interface UseEventSourceReturn<Data = any> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| url | `string \| URL` | - | The URL of the EventSource |
-| events | `string[]` | [] | List of events to listen to |
-| options | `UseEventSourceOptions` | {} | Configuration options |
+| Name    | Type                    | Default | Note                        |
+| ------- | ----------------------- | ------- | --------------------------- |
+| url     | `string \| URL`         | -       | The URL of the EventSource  |
+| events  | `string[]`              | []      | List of events to listen to |
+| options | `UseEventSourceOptions` | {}      | Configuration options       |
 
 ### Returns
 

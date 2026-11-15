@@ -221,10 +221,10 @@ const [value, setValue] = useDefault(initialValue, defaultValue);
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialValue | `Value` | - | The initial value |
-| defaultValue | `Value` | - | The default value |
+| Name         | Type    | Default | Note              |
+| ------------ | ------- | ------- | ----------------- |
+| initialValue | `Value` | -       | The initial value |
+| defaultValue | `Value` | -       | The default value |
 
 ### Returns
 

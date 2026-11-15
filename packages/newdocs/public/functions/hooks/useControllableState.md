@@ -220,7 +220,7 @@ export type UseControllableStateReturn<Value> = [
  *
  * @example
  * const [value, setValue, isControlled] = useControllableState({ initialValue: 'initial' });
- * 
+ *
  * @see {@link https://reactuse.org/functions/hooks/useControllableState}
  */
 export function useControllableState<Value>(
@@ -288,11 +288,11 @@ export type UseControllableStateReturn<Value> = [
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.value | `Value` | - | The controlled value. When provided, the component becomes controlled |
-| options.initialValue | `Value` | - | The initial value for uncontrolled state |
-| options.onChange | `(value: Value) => void` | - | The callback function called when the state changes |
+| Name                 | Type                     | Default | Note                                                                  |
+| -------------------- | ------------------------ | ------- | --------------------------------------------------------------------- |
+| options.value        | `Value`                  | -       | The controlled value. When provided, the component becomes controlled |
+| options.initialValue | `Value`                  | -       | The initial value for uncontrolled state                              |
+| options.onChange     | `(value: Value) => void` | -       | The callback function called when the state changes                   |
 
 ### Returns
 

@@ -14,9 +14,7 @@
   "description": "Hook that runs an effect at most once per delay period when dependencies change",
   "category": "Utilities",
   "lastModified": 1768590847000,
-  "examples": [
-    "useThrottleEffect(() => console.log('effect'), 500, [value]);"
-  ],
+  "examples": ["useThrottleEffect(() => console.log('effect'), 500, [value]);"],
   "apiParameters": [
     {
       "tag": "param",

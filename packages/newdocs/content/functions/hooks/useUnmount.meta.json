@@ -14,9 +14,7 @@
   "description": "Hook that defines the logic when unmounting a component",
   "category": "Lifecycle",
   "lastModified": 1754977987000,
-  "examples": [
-    "useUnmount(() => console.log('This effect runs on component unmount'));"
-  ],
+  "examples": ["useUnmount(() => console.log('This effect runs on component unmount'));"],
   "apiParameters": [
     {
       "tag": "param",

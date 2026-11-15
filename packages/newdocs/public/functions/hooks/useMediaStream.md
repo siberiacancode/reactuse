@@ -526,14 +526,14 @@ export interface UseMediaStream {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target video element the stream will be attached to |
-| options.immediately | `boolean` | false | Whether the stream should be requested immediately |
-| options.constraints | `MediaStreamConstraints` | - | Default constraints passed to `getUserMedia` |
-| options.onStart | `(stream: MediaStream) => void` | - | Callback fired when the stream starts |
-| options.onStop | `(stream?: MediaStream) => void` | - | Callback fired when the stream stops |
-| options.onError | `(error: Error) => void` | - | Callback fired when the request fails |
+| Name                | Type                             | Default | Note                                                    |
+| ------------------- | -------------------------------- | ------- | ------------------------------------------------------- |
+| target              | `HookTarget`                     | -       | The target video element the stream will be attached to |
+| options.immediately | `boolean`                        | false   | Whether the stream should be requested immediately      |
+| options.constraints | `MediaStreamConstraints`         | -       | Default constraints passed to `getUserMedia`            |
+| options.onStart     | `(stream: MediaStream) => void`  | -       | Callback fired when the stream starts                   |
+| options.onStop      | `(stream?: MediaStream) => void` | -       | Callback fired when the stream stops                    |
+| options.onError     | `(error: Error) => void`         | -       | Callback fired when the request fails                   |
 
 #### Returns
 
@@ -543,13 +543,13 @@ export interface UseMediaStream {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.immediately | `boolean` | false | Whether the stream should be requested immediately |
-| options.constraints | `MediaStreamConstraints` | - | Default constraints passed to `getUserMedia` |
-| options.onStart | `(stream: MediaStream) => void` | - | Callback fired when the stream starts |
-| options.onStop | `(stream?: MediaStream) => void` | - | Callback fired when the stream stops |
-| options.onError | `(error: Error) => void` | - | Callback fired when the request fails |
+| Name                | Type                             | Default | Note                                               |
+| ------------------- | -------------------------------- | ------- | -------------------------------------------------- |
+| options.immediately | `boolean`                        | false   | Whether the stream should be requested immediately |
+| options.constraints | `MediaStreamConstraints`         | -       | Default constraints passed to `getUserMedia`       |
+| options.onStart     | `(stream: MediaStream) => void`  | -       | Callback fired when the stream starts              |
+| options.onStop      | `(stream?: MediaStream) => void` | -       | Callback fired when the stream stops               |
+| options.onError     | `(error: Error) => void`         | -       | Callback fired when the request fails              |
 
 #### Returns
 

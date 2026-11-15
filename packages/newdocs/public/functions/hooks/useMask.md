@@ -1630,21 +1630,21 @@ interface UndoState {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| mask | `UseMaskPattern` | - | Mask pattern string or array of literals and RegExp tokens |
-| options | `Omit<UseMaskOptions, 'mask'>` | - | The hook options when mask is passed as the first argument |
-| options.autoClear | `boolean` | false | Clear value on blur when mask is incomplete |
-| options.initialValue | `string` | "" | Initial raw value |
-| options.modify | `(value: string) => Partial<Pick<UseMaskOptions, 'mask' \| 'showMask' \| 'slot' \| 'tokens'>>` | - | Called before masking and can return dynamic mask option overrides |
-| options.showMask | `UseMaskShow` | "focus" | Defines when placeholder slots are displayed |
-| options.slot | `string \| null` | "" | Character displayed in unfilled slots |
-| options.tokens | `Record<string, RegExp>` | - | Override or extend the default token map |
-| options.beforeMaskedStateChange | `(states: { previousState: MaskState; currentState: MaskState; nextState: MaskState }) => MaskState` | - | Escape hatch for advanced cursor/value manipulation |
-| options.onChangeRaw | `(rawValue: string, maskedValue: string) => void` | - | Called on every change with raw and display values |
-| options.onFilled | `(maskedValue: string, rawValue: string) => void` | - | Called when all required mask slots are filled |
-| options.transform | `(char: string) => string` | - | Transform each character before validation and insertion |
-| options.sanitize | `(rawValue: string) => string` | - | Normalize the entire raw value before masking on every change, paste and setValue |
+| Name                            | Type                                                                                                 | Default | Note                                                                              |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------- |
+| mask                            | `UseMaskPattern`                                                                                     | -       | Mask pattern string or array of literals and RegExp tokens                        |
+| options                         | `Omit<UseMaskOptions, 'mask'>`                                                                       | -       | The hook options when mask is passed as the first argument                        |
+| options.autoClear               | `boolean`                                                                                            | false   | Clear value on blur when mask is incomplete                                       |
+| options.initialValue            | `string`                                                                                             | ""      | Initial raw value                                                                 |
+| options.modify                  | `(value: string) => Partial<Pick<UseMaskOptions, 'mask' \| 'showMask' \| 'slot' \| 'tokens'>>`       | -       | Called before masking and can return dynamic mask option overrides                |
+| options.showMask                | `UseMaskShow`                                                                                        | "focus" | Defines when placeholder slots are displayed                                      |
+| options.slot                    | `string \| null`                                                                                     | ""      | Character displayed in unfilled slots                                             |
+| options.tokens                  | `Record<string, RegExp>`                                                                             | -       | Override or extend the default token map                                          |
+| options.beforeMaskedStateChange | `(states: { previousState: MaskState; currentState: MaskState; nextState: MaskState }) => MaskState` | -       | Escape hatch for advanced cursor/value manipulation                               |
+| options.onChangeRaw             | `(rawValue: string, maskedValue: string) => void`                                                    | -       | Called on every change with raw and display values                                |
+| options.onFilled                | `(maskedValue: string, rawValue: string) => void`                                                    | -       | Called when all required mask slots are filled                                    |
+| options.transform               | `(char: string) => string`                                                                           | -       | Transform each character before validation and insertion                          |
+| options.sanitize                | `(rawValue: string) => string`                                                                       | -       | Normalize the entire raw value before masking on every change, paste and setValue |
 
 ### Returns
 

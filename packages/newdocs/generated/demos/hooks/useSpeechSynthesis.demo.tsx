@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useSpeechSynthesis } from '@siberiacancode/reactuse';
 import { PlayIcon, SquareIcon } from 'lucide-react';

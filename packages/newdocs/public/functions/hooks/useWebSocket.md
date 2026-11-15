@@ -395,19 +395,19 @@ export interface UseWebSocketReturn {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| url | `UseWebSocketUrl` | - | The URL of the WebSocket server |
-| options.onConnected | `(webSocket: WebSocket) => void` | - | The callback function that is called when the WebSocket connection is established |
-| options.onClose | `(event: CloseEvent, webSocket: WebSocket) => void` | - | The callback function that is called when the WebSocket connection is closed |
-| options.onError | `(event: Event, webSocket: WebSocket) => void` | - | The callback function that is called when an error occurs |
-| options.onMessage | `(event: MessageEvent, webSocket: WebSocket) => void` | - | The callback function that is called when a message is received |
-| options.immediately | `boolean` | true | Immediately open the connection when calling this hook |
-| options.retry | `boolean \| number \| ((failureCount: number, event: CloseEvent) => boolean)` | - | The number of times to retry the connection, or a function to decide whether to retry |
-| options.retryDelay | `number` | 0 | The delay in milliseconds before retrying the connection |
-| options.heartbeat | `((webSocket: WebSocket) => void)` | - | The heartbeat callback that is called on each tick |
-| options.heartbeatDelay | `number` | 30000 | The heartbeat interval in milliseconds |
-| options.protocols | `Array<'soap' \| 'wasm'>` | - | The list of protocols to use |
+| Name                   | Type                                                                          | Default | Note                                                                                  |
+| ---------------------- | ----------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------- |
+| url                    | `UseWebSocketUrl`                                                             | -       | The URL of the WebSocket server                                                       |
+| options.onConnected    | `(webSocket: WebSocket) => void`                                              | -       | The callback function that is called when the WebSocket connection is established     |
+| options.onClose        | `(event: CloseEvent, webSocket: WebSocket) => void`                           | -       | The callback function that is called when the WebSocket connection is closed          |
+| options.onError        | `(event: Event, webSocket: WebSocket) => void`                                | -       | The callback function that is called when an error occurs                             |
+| options.onMessage      | `(event: MessageEvent, webSocket: WebSocket) => void`                         | -       | The callback function that is called when a message is received                       |
+| options.immediately    | `boolean`                                                                     | true    | Immediately open the connection when calling this hook                                |
+| options.retry          | `boolean \| number \| ((failureCount: number, event: CloseEvent) => boolean)` | -       | The number of times to retry the connection, or a function to decide whether to retry |
+| options.retryDelay     | `number`                                                                      | 0       | The delay in milliseconds before retrying the connection                              |
+| options.heartbeat      | `((webSocket: WebSocket) => void)`                                            | -       | The heartbeat callback that is called on each tick                                    |
+| options.heartbeatDelay | `number`                                                                      | 30000   | The heartbeat interval in milliseconds                                                |
+| options.protocols      | `Array<'soap' \| 'wasm'>`                                                     | -       | The list of protocols to use                                                          |
 
 ### Returns
 

@@ -174,10 +174,10 @@ shallowEqual({ a: 1, b: 2 }, { a: 1, b: 2 });
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| a | `any` | - | The first value to compare |
-| b | `any` | - | The second value to compare |
+| Name | Type  | Default | Note                        |
+| ---- | ----- | ------- | --------------------------- |
+| a    | `any` | -       | The first value to compare  |
+| b    | `any` | -       | The second value to compare |
 
 ### Returns
 

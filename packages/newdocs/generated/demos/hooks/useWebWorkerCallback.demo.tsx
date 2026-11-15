@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useBoolean, useTime, useWebWorkerCallback } from '@siberiacancode/reactuse';
 import { CpuIcon } from 'lucide-react';

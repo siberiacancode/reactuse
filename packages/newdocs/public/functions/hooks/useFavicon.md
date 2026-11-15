@@ -167,9 +167,9 @@ export type UseFaviconReturn = [string, Dispatch<SetStateAction<string>>];
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| initialFavicon | `string` | - | The initial favicon. If not provided, the current favicon will be used |
+| Name           | Type     | Default | Note                                                                   |
+| -------------- | -------- | ------- | ---------------------------------------------------------------------- |
+| initialFavicon | `string` | -       | The initial favicon. If not provided, the current favicon will be used |
 
 ### Returns
 

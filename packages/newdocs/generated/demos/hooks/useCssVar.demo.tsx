@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useCssVar } from '@siberiacancode/reactuse';
 import { ChevronDownIcon } from 'lucide-react';

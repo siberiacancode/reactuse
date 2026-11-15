@@ -302,12 +302,12 @@ const { value } = useMemory((nextValue) => {
 
 ```tsx
 interface Performance {
-    memory: {
-      readonly jsHeapSizeLimit: number;
-      readonly totalJSHeapSize: number;
-      readonly usedJSHeapSize: number;
-    };
-  }
+  memory: {
+    readonly jsHeapSizeLimit: number;
+    readonly totalJSHeapSize: number;
+    readonly usedJSHeapSize: number;
+  };
+}
 
 export interface UseMemoryReturn {
   /** The memory supported status */
@@ -323,9 +323,9 @@ export type UseMemoryCallback = (value: Performance['memory']) => void;
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(value: Performance['memory']) => void` | - | The callback to execute when the memory usage changes |
+| Name     | Type                                     | Default | Note                                                  |
+| -------- | ---------------------------------------- | ------- | ----------------------------------------------------- |
+| callback | `(value: Performance['memory']) => void` | -       | The callback to execute when the memory usage changes |
 
 ### Returns
 

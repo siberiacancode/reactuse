@@ -309,10 +309,10 @@ export interface UseHover {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element to be hovered |
-| callback | `(event: Event) => void` | - | The callback function to be invoked on mouse enter |
+| Name     | Type                     | Default | Note                                               |
+| -------- | ------------------------ | ------- | -------------------------------------------------- |
+| target   | `HookTarget`             | -       | The target element to be hovered                   |
+| callback | `(event: Event) => void` | -       | The callback function to be invoked on mouse enter |
 
 #### Returns
 
@@ -322,11 +322,11 @@ export interface UseHover {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | - | The target element to be hovered |
-| options.onEntry | `(event: Event) => void` | - | The callback function to be invoked on mouse enter |
-| options.onLeave | `(event: Event) => void` | - | The callback function to be invoked on mouse leave |
+| Name            | Type                     | Default | Note                                               |
+| --------------- | ------------------------ | ------- | -------------------------------------------------- |
+| target          | `HookTarget`             | -       | The target element to be hovered                   |
+| options.onEntry | `(event: Event) => void` | -       | The callback function to be invoked on mouse enter |
+| options.onLeave | `(event: Event) => void` | -       | The callback function to be invoked on mouse leave |
 
 #### Returns
 
@@ -336,9 +336,9 @@ export interface UseHover {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| callback | `(event: Event) => void` | - | The callback function to be invoked on mouse enter |
+| Name     | Type                     | Default | Note                                               |
+| -------- | ------------------------ | ------- | -------------------------------------------------- |
+| callback | `(event: Event) => void` | -       | The callback function to be invoked on mouse enter |
 
 #### Returns
 
@@ -348,10 +348,10 @@ export interface UseHover {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options.onEntry | `(event: Event) => void` | - | The callback function to be invoked on mouse enter |
-| options.onLeave | `(event: Event) => void` | - | The callback function to be invoked on mouse leave |
+| Name            | Type                     | Default | Note                                               |
+| --------------- | ------------------------ | ------- | -------------------------------------------------- |
+| options.onEntry | `(event: Event) => void` | -       | The callback function to be invoked on mouse enter |
+| options.onLeave | `(event: Event) => void` | -       | The callback function to be invoked on mouse leave |
 
 #### Returns
 

@@ -284,10 +284,10 @@ export interface UseLockScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| target | `HookTarget` | document.body | The target element to lock scroll on |
-| options | `UseLockScrollOptions` | - | The options for scroll locking |
+| Name    | Type                   | Default       | Note                                 |
+| ------- | ---------------------- | ------------- | ------------------------------------ |
+| target  | `HookTarget`           | document.body | The target element to lock scroll on |
+| options | `UseLockScrollOptions` | -             | The options for scroll locking       |
 
 #### Returns
 
@@ -297,9 +297,9 @@ export interface UseLockScroll {
 
 #### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| options | `UseLockScrollOptions` | - | The options for scroll locking |
+| Name    | Type                   | Default | Note                           |
+| ------- | ---------------------- | ------- | ------------------------------ |
+| options | `UseLockScrollOptions` | -       | The options for scroll locking |
 
 #### Returns
 

@@ -262,7 +262,7 @@ export interface UseBroadcastChannelReturn<Data = unknown> {
  *
  * @see {@link https://reactuse.org/functions/hooks/useBroadcastChannel}
  */
-export const useBroadcastChannel = <Data = unknown>(
+export const useBroadcastChannel = <Data = unknown,>(
   name: string,
   callback?: (data: Data) => void
 ): UseBroadcastChannelReturn<Data> => {
@@ -358,10 +358,10 @@ export interface UseBroadcastChannelReturn<Data = unknown> {
 
 ### Parameters
 
-| Name | Type | Default | Note |
-| --- | --- | --- | --- |
-| name | `string` | - | The name of the channel |
-| callback | `Function` | - | A callback function that will be called when a message is received |
+| Name     | Type       | Default | Note                                                               |
+| -------- | ---------- | ------- | ------------------------------------------------------------------ |
+| name     | `string`   | -       | The name of the channel                                            |
+| callback | `Function` | -       | A callback function that will be called when a message is received |
 
 ### Returns
 

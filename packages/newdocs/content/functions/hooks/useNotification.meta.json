@@ -60,9 +60,7 @@
   "description": "Hook that provides a reactive wrapper around the browser Notifications API",
   "category": "Browser",
   "lastModified": 1783690580000,
-  "examples": [
-    "const { supported, notification, trigger, show, close } = useNotification();"
-  ],
+  "examples": ["const { supported, notification, trigger, show, close } = useNotification();"],
   "apiParameters": [
     {
       "tag": "returns",

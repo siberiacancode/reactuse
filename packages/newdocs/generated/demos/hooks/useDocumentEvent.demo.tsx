@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useCounter, useDocumentEvent } from '@siberiacancode/reactuse';
 import { useState } from 'react';

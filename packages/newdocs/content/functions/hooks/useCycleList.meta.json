@@ -14,9 +14,7 @@
   "description": "Hook that cycles through a list of items",
   "category": "State",
   "lastModified": 1782457293000,
-  "examples": [
-    "const { value, index, next, prev, go } = useCycleList(['Dog', 'Cat', 'Lizard']);"
-  ],
+  "examples": ["const { value, index, next, prev, go } = useCycleList(['Dog', 'Cat', 'Lizard']);"],
   "apiParameters": [
     {
       "tag": "param",
