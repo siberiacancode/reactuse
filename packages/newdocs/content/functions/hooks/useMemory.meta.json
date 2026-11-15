@@ -62,7 +62,7 @@
   "lastModified": 1780638301000,
   "examples": [
     "const { supported, value } = useMemory();",
-    "const { value } = useMemory((nextValue) => { console.log(nextValue.usedJSHeapSize); });"
+    "const { value } = useMemory((nextValue) => {\n  console.log(nextValue.usedJSHeapSize);\n});"
   ],
   "apiParameters": [
     {

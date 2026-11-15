@@ -14,9 +14,9 @@ minimumReleaseAgeExclude:
   - fumadocs-core@16.18.3
   - fumadocs-mdx@15.5.3
   - fumadocs-ui@16.18.3
+  - '@vitejs/plugin-react@6.3.0'
 allowBuilds:
   core-js: true
   esbuild: true
   lefthook: true
-  msw: true
   sharp: true

@@ -36,6 +36,7 @@ export * from './useSpeechSynthesis/useSpeechSynthesis';
 export * from './useVibrate/useVibrate';
 export * from './useVirtualKeyboard/useVirtualKeyboard';
 export * from './useWakeLock/useWakeLock';
+export * from './useWebMCP/useWebMCP';
 export * from './useWebSocket/useWebSocket';
 export * from './useWebWorker/useWebWorker';
 export * from './useWebWorkerCallback/useWebWorkerCallback';

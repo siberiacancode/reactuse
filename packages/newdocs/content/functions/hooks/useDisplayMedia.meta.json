@@ -61,8 +61,8 @@
   "category": "Browser",
   "lastModified": 1783064047000,
   "examples": [
-    "const { stream, active, start, stop } = useDisplayMedia(ref); start({ video: false, audio: true });",
-    "const { ref, stream, active, start, stop } = useDisplayMedia<HTMLVideoElement>(); start({ video: { displaySurface: 'browser' } });"
+    "const { stream, active, start, stop } = useDisplayMedia(ref);\nstart({ video: false, audio: true });",
+    "const { ref, stream, active, start, stop } = useDisplayMedia<HTMLVideoElement>();\nstart({ video: { displaySurface: 'browser' } });"
   ],
   "apiParameters": [
     {

@@ -198,7 +198,9 @@ Update the import paths to match your project setup.
 ```tsx
 useClickOutside(ref, () => console.log('click outside'), { enabled: opened });
 // or
-const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'), { enabled: opened });
+const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'), {
+  enabled: opened
+});
 ```
 
 ## Type Declarations

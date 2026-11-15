@@ -23,6 +23,7 @@
 - [createEventEmitter](https://reactuse.org/functions/helpers/createEventEmitter): Creates a type-safe event emitter
 - [createReactiveContext](https://reactuse.org/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection
 - [createStore](https://reactuse.org/functions/helpers/createStore): Creates a store with state management capabilities
+- [createWebMCP](https://reactuse.org/functions/helpers/createWebMCP): Creates a registry for WebMCP tools exposed by the current document
 - [deepEqual](https://reactuse.org/functions/helpers/deepEqual): Performs a deep comparison between two values to determine if they are equivalent
 - [makeDestructurable](https://reactuse.org/functions/helpers/makeDestructurable): Makes an object also iterable for array-style destructuring
 - [shallowEqual](https://reactuse.org/functions/helpers/shallowEqual): Performs a shallow comparison between two values to determine if they are equivalent
@@ -84,6 +85,7 @@
 - [useVibrate](https://reactuse.org/functions/hooks/useVibrate): Hook that provides vibrate api
 - [useVirtualKeyboard](https://reactuse.org/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
 - [useWakeLock](https://reactuse.org/functions/hooks/useWakeLock): Hook that provides a wake lock functionality
+- [useWebMCP](https://reactuse.org/functions/hooks/useWebMCP): Registers a WebMCP tool for the component lifecycle
 - [useWebSocket](https://reactuse.org/functions/hooks/useWebSocket): Hook that connects to a WebSocket server and handles incoming and outgoing messages
 - [useWebWorker](https://reactuse.org/functions/hooks/useWebWorker): Hook that provides a reactive wrapper for a web worker
 - [useWebWorkerCallback](https://reactuse.org/functions/hooks/useWebWorkerCallback): Hook that runs a callback in a web worker without a separate worker file
@@ -102,6 +104,7 @@
 - [useActiveElement](https://reactuse.org/functions/hooks/useActiveElement): Hook for tracking the active element
 - [useAutoScroll](https://reactuse.org/functions/hooks/useAutoScroll): Hook that automatically scrolls a list element to the bottom
 - [useClickOutside](https://reactuse.org/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
+- [useCollapse](https://reactuse.org/functions/hooks/useCollapse): Hook that animates an element between collapsed and expanded states
 - [useContextMenu](https://reactuse.org/functions/hooks/useContextMenu): Hook that handles custom context menus on desktop and long press on touch devices
 - [useDoubleClick](https://reactuse.org/functions/hooks/useDoubleClick): Hook that defines the logic when double clicking an element
 - [useDraggable](https://reactuse.org/functions/hooks/useDraggable): Hook that makes an element draggable

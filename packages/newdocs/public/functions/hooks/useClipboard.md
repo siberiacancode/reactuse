@@ -129,6 +129,8 @@ export interface UseCopyToClipboardParams {
  *
  * @example
  * const { value, copy } = useClipboard();
+ * 
+ * @see {@link https://reactuse.org/functions/hooks/useClipboard}
  */
 export const useClipboard = (params?: UseCopyToClipboardParams): UseCopyToClipboardReturn => {
   const [value, setValue] = useState<string | null>(null);

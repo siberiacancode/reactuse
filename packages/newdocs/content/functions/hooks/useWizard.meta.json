@@ -15,7 +15,7 @@
   "category": "State",
   "lastModified": 1782054576000,
   "examples": [
-    "const { currentStepId, set, reset, back, history } = useWizard([ { id: 'step1', nodes: ['step2', 'step3'] }, { id: 'step2', nodes: ['step3'] }, { id: 'step3', nodes: [] }, ])"
+    "const { currentStepId, set, reset, back, history } = useWizard([\n { id: 'step1', nodes: ['step2', 'step3'] },\n { id: 'step2', nodes: ['step3'] },\n { id: 'step3', nodes: [] },\n])"
   ],
   "apiParameters": [
     {

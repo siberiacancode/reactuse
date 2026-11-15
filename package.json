@@ -35,11 +35,11 @@
   },
   "devDependencies": {
     "@siberiacancode/tsconfig": "1.2.0",
-    "@siberiacancode/eslint": "2.18.1",
+    "@siberiacancode/eslint": "2.19.1",
     "@siberiacancode/lefthook": "1.0.2",
-    "@siberiacancode/prettier": "^1.9.0",
-    "@types/node": "^26.2.0",
-    "lucide-react": "1.32.0",
+    "@siberiacancode/prettier": "^1.10.1",
+    "@types/node": "^26.6.6",
+    "lucide-react": "1.70.0",
     "prettier-plugin-tailwindcss": "0.8.1",
     "typescript": "^6.0.3"
   }

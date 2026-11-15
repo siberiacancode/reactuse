@@ -12,6 +12,7 @@ A quick list of available functions.
 - [createEventEmitter](/functions/helpers/createEventEmitter): Creates a type-safe event emitter
 - [createReactiveContext](/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection
 - [createStore](/functions/helpers/createStore): Creates a store with state management capabilities
+- [createWebMCP](/functions/helpers/createWebMCP): Creates a registry for WebMCP tools exposed by the current document
 - [deepEqual](/functions/helpers/deepEqual): Performs a deep comparison between two values to determine if they are equivalent
 - [makeDestructurable](/functions/helpers/makeDestructurable): Makes an object also iterable for array-style destructuring
 - [shallowEqual](/functions/helpers/shallowEqual): Performs a shallow comparison between two values to determine if they are equivalent
@@ -30,6 +31,7 @@ A quick list of available functions.
 - [useBrowserLocation](/functions/hooks/useBrowserLocation): Hook that returns reactive browser location state with navigation controls
 - [useClickOutside](/functions/hooks/useClickOutside): Hook to handle click events outside the specified target element(s)
 - [useClipboard](/functions/hooks/useClipboard): Hook that manages a copy to clipboard
+- [useCollapse](/functions/hooks/useCollapse): Hook that animates an element between collapsed and expanded states
 - [useCompareEffect](/functions/hooks/useCompareEffect): Hook that executes an effect only when the compare function reports a dependency as changed
 - [useConst](/functions/hooks/useConst): Hook that returns the constant value
 - [useContextMenu](/functions/hooks/useContextMenu): Hook that handles custom context menus on desktop and long press on touch devices
@@ -178,6 +180,7 @@ A quick list of available functions.
 - [useVirtualKeyboard](/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
 - [useVisibility](/functions/hooks/useVisibility): Hook that gives you visibility observer state
 - [useWakeLock](/functions/hooks/useWakeLock): Hook that provides a wake lock functionality
+- [useWebMCP](/functions/hooks/useWebMCP): Registers a WebMCP tool for the component lifecycle
 - [useWebSocket](/functions/hooks/useWebSocket): Hook that connects to a WebSocket server and handles incoming and outgoing messages
 - [useWebWorker](/functions/hooks/useWebWorker): Hook that provides a reactive wrapper for a web worker
 - [useWebWorkerCallback](/functions/hooks/useWebWorkerCallback): Hook that runs a callback in a web worker without a separate worker file

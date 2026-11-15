@@ -15,7 +15,7 @@
   "category": "State",
   "lastModified": 1754977987000,
   "examples": [
-    "const { currentPage, currentPageSize, pageCount, isFirstPage, isLastPage, prev, next } = useOffsetPagination({ total: 100, initialPageSize: 10, initialPage: 1 });"
+    "const { currentPage, currentPageSize, pageCount, isFirstPage, isLastPage, prev, next } = useOffsetPagination({\n total: 100,\n initialPageSize: 10,\n initialPage: 1\n});"
   ],
   "apiParameters": [
     {

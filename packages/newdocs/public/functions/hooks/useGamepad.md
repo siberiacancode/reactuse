@@ -39,16 +39,16 @@ const Demo = () => {
   return (
     <>
       <p>Gamepads</p>
-      {!gamepads.length && <code>no gamepads connected</code>}
+      {!gamepads.length && <b>no gamepads connected</b>}
       {!!gamepads.length && (
         <>
           {gamepads.map((gamepad) => (
             <div key={gamepad.id}>
               <p>
-                id: <code>{gamepad.id}</code>
+                id: <b>{gamepad.id}</b>
               </p>
               <p>
-                index: <code>{gamepad.index}</code>
+                index: <b>{gamepad.index}</b>
               </p>
             </div>
           ))}

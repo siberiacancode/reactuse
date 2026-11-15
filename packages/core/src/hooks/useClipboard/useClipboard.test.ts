@@ -38,6 +38,18 @@ it('Should use copy to clipboard on server side', () => {
   expect(result.current.copy).toBeTypeOf('function');
 });
 
+it('Should ignore clipboard events when disabled by default', () => {
+  const { result } = renderHook(useClipboard);
+
+  act(() => {
+    document.dispatchEvent(new Event('copy'));
+    document.dispatchEvent(new Event('cut'));
+  });
+
+  expect(result.current.value).toBeNull();
+  expect(mockNavigatorClipboardReadText).not.toHaveBeenCalled();
+});
+
 it('Should copy value to clipboard', async () => {
   const { result } = renderHook(useClipboard);
 
@@ -61,7 +73,7 @@ it('Should copy value to clipboard if writeText not supported', async () => {
   expect(execCommand).toHaveBeenLastCalledWith('copy');
 });
 
-it('Should read value from clipboard if readText not supported', async () => {
+it('Should fall back to selected text when clipboard reading fails', async () => {
   mockNavigatorClipboardReadText.mockRejectedValueOnce(new Error('readText not supported'));
   const { result } = renderHook(() => useClipboard({ enabled: true }));
 
@@ -74,7 +86,32 @@ it('Should read value from clipboard if readText not supported', async () => {
   expect(getSelection).toHaveBeenCalledOnce();
 });
 
-it('Should change value upon copy and cut events', async () => {
+it('Should fall back to empty string when selection is empty', async () => {
+  mockNavigatorClipboardReadText.mockRejectedValueOnce(new Error('readText not supported'));
+  mockDocumentGetSelection.mockReturnValue(null);
+  const { result } = renderHook(() => useClipboard({ enabled: true }));
+
+  await act(() => document.dispatchEvent(new Event('copy')));
+
+  expect(result.current.value).toBe('');
+  expect(mockDocumentGetSelection).toHaveBeenCalledOnce();
+});
+
+it('Should fall back to empty string when selection API is unavailable', async () => {
+  mockNavigatorClipboardReadText.mockRejectedValueOnce(new Error('readText not supported'));
+  Object.assign(document, { getSelection: undefined });
+  const { result } = renderHook(() => useClipboard({ enabled: true }));
+
+  try {
+    await act(() => document.dispatchEvent(new Event('copy')));
+
+    expect(result.current.value).toBe('');
+  } finally {
+    Object.assign(document, { getSelection: mockDocumentGetSelection });
+  }
+});
+
+it('Should change value upon copy event', async () => {
   const { result } = renderHook(() => useClipboard({ enabled: true }));
 
   mockNavigatorClipboardReadText.mockResolvedValue('copied');
@@ -94,25 +131,28 @@ it('Should change value upon cut event', async () => {
   expect(mockNavigatorClipboardReadText).toHaveBeenCalled();
 });
 
-it('Should handle enabled changes', () => {
-  const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
-  const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
-
-  const { rerender } = renderHook((enabled) => useClipboard({ enabled }), {
+it('Should handle enabled changes', async () => {
+  mockNavigatorClipboardReadText
+    .mockResolvedValueOnce('enabled')
+    .mockResolvedValueOnce('re-enabled');
+  const { result, rerender } = renderHook((enabled) => useClipboard({ enabled }), {
     initialProps: true
   });
 
-  expect(addEventListenerSpy).toHaveBeenCalledTimes(2);
-  expect(removeEventListenerSpy).not.toHaveBeenCalled();
+  await act(() => document.dispatchEvent(new Event('copy')));
+
+  expect(result.current.value).toBe('enabled');
 
   rerender(false);
+  act(() => document.dispatchEvent(new Event('copy')));
 
-  expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+  expect(result.current.value).toBe('enabled');
 
   rerender(true);
+  await act(() => document.dispatchEvent(new Event('cut')));
 
-  expect(addEventListenerSpy).toHaveBeenCalledTimes(4);
-  expect(removeEventListenerSpy).toHaveBeenCalledTimes(2);
+  expect(result.current.value).toBe('re-enabled');
+  expect(mockNavigatorClipboardReadText).toHaveBeenCalledTimes(2);
 });
 
 it('Should cleanup on unmount', () => {

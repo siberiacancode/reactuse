@@ -376,7 +376,10 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { set, get, use, subscribe } = createStore((set) => ({ count: 0, increment: () => set(state => ({ count: state.count + 1 })) }));
+const { set, get, use, subscribe } = createStore((set) => ({
+  count: 0,
+  increment: () => set(state => ({ count: state.count + 1 }))
+}));
 ```
 
 ## Type Declarations

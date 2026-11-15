@@ -13,6 +13,8 @@ import { useCallback, useRef, useState } from 'react';
  *
  * @example
  * const [value, setValue, isControlled] = useControllableState({ initialValue: 'initial' });
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useControllableState}
  */
 export function useControllableState(options) {
   const { value, initialValue, onChange } = options;

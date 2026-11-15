@@ -88,8 +88,8 @@ const Demo = () => {
       </div>
 
       <p className='text-muted-foreground max-w-xs text-center text-xs'>
-        We batch analytics events for economy of scale. So far we tracked <code>{totalEvents}</code>{' '}
-        events and sent <code>{requestsSent}</code> requests.
+        We batch analytics events for economy of scale. So far we tracked <b>{totalEvents}</b>{' '}
+        events and sent <b>{requestsSent}</b> requests.
       </p>
     </section>
   );

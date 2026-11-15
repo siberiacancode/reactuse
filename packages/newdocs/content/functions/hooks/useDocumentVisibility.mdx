@@ -49,7 +49,9 @@ import metadata from './useDocumentVisibility.meta.json';
 ```tsx
 const visibilityState = useDocumentVisibility();
 // or
-const visibilityState = useDocumentVisibility((state) => { if (state === 'hidden') console.log('user left the tab'); });
+const visibilityState = useDocumentVisibility((state) => {
+  if (state === 'hidden') console.log('user left the tab');
+});
 ```
 
 ## API

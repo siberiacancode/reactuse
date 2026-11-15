@@ -154,6 +154,8 @@ export type CompareFunction = (current: any, previous: any) => boolean;
  *
  * @example
  * useCompareEffect(() => console.log("effect"), [user]);
+ * 
+ * @see {@link https://reactuse.org/functions/hooks/useCompareEffect}
  */
 export const useCompareEffect = (
   effect: EffectCallback,

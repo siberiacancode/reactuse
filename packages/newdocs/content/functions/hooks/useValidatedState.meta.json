@@ -15,7 +15,7 @@
   "category": "State",
   "lastModified": 1782393128000,
   "examples": [
-    "const [{ value, lastValidValue, valid }, setValue] = useValidatedState( '', (value) => value.length >= 3 );"
+    "const [{ value, lastValidValue, valid }, setValue] = useValidatedState(\n  '',\n  (value) => value.length >= 3\n);"
   ],
   "apiParameters": [
     {

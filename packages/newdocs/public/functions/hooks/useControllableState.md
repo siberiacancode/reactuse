@@ -220,6 +220,8 @@ export type UseControllableStateReturn<Value> = [
  *
  * @example
  * const [value, setValue, isControlled] = useControllableState({ initialValue: 'initial' });
+ * 
+ * @see {@link https://reactuse.org/functions/hooks/useControllableState}
  */
 export function useControllableState<Value>(
   options: UseControllableStateOptions<Value>
