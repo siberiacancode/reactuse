@@ -22,6 +22,37 @@ const targets = [
 
 const element = document.getElementById('target') as HTMLDivElement;
 
+it('Should preserve the event target as the listener receiver after rerender', () => {
+  const first = vi.fn(function (this: Element) {
+    return this;
+  });
+  const second = vi.fn(function (this: Element) {
+    return this;
+  });
+  const { rerender } = renderHook(
+    (listener) => useEventListener(target(element), 'click', listener),
+    { initialProps: first }
+  );
+
+  act(() => element.dispatchEvent(new Event('click')));
+  expect(first).toHaveReturnedWith(element);
+
+  rerender(second);
+  act(() => element.dispatchEvent(new Event('click')));
+  expect(first).toHaveBeenCalledOnce();
+  expect(second).toHaveReturnedWith(element);
+});
+
+it('Should bind a window listener to window', () => {
+  const listener = vi.fn(function (this: Window) {
+    return this;
+  });
+  renderHook(() => useEventListener(target(window), 'resize', listener));
+
+  act(() => window.dispatchEvent(new Event('resize')));
+  expect(listener).toHaveReturnedWith(window);
+});
+
 targets.forEach((target) => {
   describe(`${target}`, () => {
     it('Should use event listener', () => {
