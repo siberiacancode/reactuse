@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useScript } from '@siberiacancode/reactuse';
 import { Loader2Icon } from 'lucide-react';

@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1794213760000
+lastModifiedTime: 1794763416000
 ---
 
 # useCompareEffect
@@ -187,7 +187,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-useCompareEffect(() => console.log('effect'), [user]);
+useCompareEffect(() => console.log("effect"), [user]);
 ```
 
 ## Type Declarations
@@ -202,8 +202,8 @@ export type CompareFunction = (current: any, previous: any) => boolean;
 
 ### Parameters
 
-| Name    | Type              | Default   | Note                                                                              |
-| ------- | ----------------- | --------- | --------------------------------------------------------------------------------- |
-| effect  | `EffectCallback`  | -         | The effect callback                                                               |
-| deps    | `DependencyList`  | -         | The dependencies list for the effect                                              |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| effect | `EffectCallback` | - | The effect callback |
+| deps | `DependencyList` | - | The dependencies list for the effect |
 | compare | `CompareFunction` | deepEqual | The function that returns `true` when a dependency is equal to its previous value |

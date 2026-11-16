@@ -220,9 +220,9 @@ const matches = useMediaQuery('(max-width: 768px)');
 
 ### Parameters
 
-| Name  | Type     | Default | Note                   |
-| ----- | -------- | ------- | ---------------------- |
-| query | `string` | -       | The media query string |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| query | `string` | - | The media query string |
 
 ### Returns
 

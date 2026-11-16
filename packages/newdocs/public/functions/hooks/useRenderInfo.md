@@ -193,10 +193,10 @@ export interface UseRenderInfoReturn {
 
 ### Parameters
 
-| Name | Type      | Default   | Note           |
-| ---- | --------- | --------- | -------------- |
-| name | `string`  | 'Unknown' | Component name |
-| log  | `boolean` | true      | Toggle logging |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| name | `string` | 'Unknown' | Component name |
+| log | `boolean` | true | Toggle logging |
 
 ### Returns
 

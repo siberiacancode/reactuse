@@ -265,10 +265,10 @@ export interface UseSize {
 
 #### Parameters
 
-| Name     | Type                                                      | Default | Note                                   |
-| -------- | --------------------------------------------------------- | ------- | -------------------------------------- |
-| target   | `HookTarget`                                              | -       | The target element to observe          |
-| callback | `(value: UseSizeValue, observer: ResizeObserver) => void` | -       | The callback to invoke on size updates |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to observe |
+| callback | `(value: UseSizeValue, observer: ResizeObserver) => void` | - | The callback to invoke on size updates |
 
 #### Returns
 
@@ -278,9 +278,9 @@ export interface UseSize {
 
 #### Parameters
 
-| Name     | Type                                                      | Default | Note                                   |
-| -------- | --------------------------------------------------------- | ------- | -------------------------------------- |
-| callback | `(value: UseSizeValue, observer: ResizeObserver) => void` | -       | The callback to invoke on size updates |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(value: UseSizeValue, observer: ResizeObserver) => void` | - | The callback to invoke on size updates |
 
 #### Returns
 

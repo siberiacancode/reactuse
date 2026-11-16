@@ -257,10 +257,10 @@ export interface UseVibrateReturn {
 
 ### Parameters
 
-| Name             | Type                | Default | Note                                    |
-| ---------------- | ------------------- | ------- | --------------------------------------- |
-| options.pattern  | `UseVibratePattern` | -       | The pattern for vibration               |
-| options.interval | `number`            | 0       | Time in milliseconds between vibrations |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.pattern | `UseVibratePattern` | - | The pattern for vibration |
+| options.interval | `number` | 0 | Time in milliseconds between vibrations |
 
 ### Returns
 

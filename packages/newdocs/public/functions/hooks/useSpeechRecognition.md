@@ -302,8 +302,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { supported, value, recognition, listening, error, start, stop, abort, toggle } =
-  useSpeechRecognition();
+const { supported, value, recognition, listening, error, start, stop, abort, toggle  } = useSpeechRecognition();
 ```
 
 ## Type Declarations
@@ -358,17 +357,17 @@ interface UseSpeechRecognitionReturn {
 
 ### Parameters
 
-| Name                    | Type                                           | Default | Note                                                     |
-| ----------------------- | ---------------------------------------------- | ------- | -------------------------------------------------------- |
-| options.continuous      | `boolean`                                      | false   | Whether recognition should continue after pauses         |
-| options.interimResults  | `boolean`                                      | false   | Whether interim results should be provided               |
-| options.language        | `string`                                       | "en-US" | The language for recognition, as a valid BCP 47 tag      |
-| options.maxAlternatives | `number`                                       | 1       | The maximum number of alternative transcripts to return  |
-| options.grammars        | `SpeechGrammarList`                            | -       | A list of grammar rules                                  |
-| options.onStart         | `() => void`                                   | -       | Callback invoked when speech recognition starts          |
-| options.onEnd           | `() => void`                                   | -       | Callback invoked when speech recognition ends            |
-| options.onError         | `(error: SpeechRecognitionErrorEvent) => void` | -       | Callback invoked when an error occurs during recognition |
-| options.onResult        | `(event: SpeechRecognitionEvent) => void`      | -       | Callback invoked when recognition produces a result      |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.continuous | `boolean` | false | Whether recognition should continue after pauses |
+| options.interimResults | `boolean` | false | Whether interim results should be provided |
+| options.language | `string` | "en-US" | The language for recognition, as a valid BCP 47 tag |
+| options.maxAlternatives | `number` | 1 | The maximum number of alternative transcripts to return |
+| options.grammars | `SpeechGrammarList` | - | A list of grammar rules |
+| options.onStart | `() => void` | - | Callback invoked when speech recognition starts |
+| options.onEnd | `() => void` | - | Callback invoked when speech recognition ends |
+| options.onError | `(error: SpeechRecognitionErrorEvent) => void` | - | Callback invoked when an error occurs during recognition |
+| options.onResult | `(event: SpeechRecognitionEvent) => void` | - | Callback invoked when recognition produces a result |
 
 ### Returns
 

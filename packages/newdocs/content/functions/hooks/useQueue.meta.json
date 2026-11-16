@@ -14,7 +14,9 @@
   "description": "Hook that manages a queue",
   "category": "State",
   "lastModified": 1782130513000,
-  "examples": ["const { queue, add, remove, clear, first, last, size } = useQueue([1, 2, 3]);"],
+  "examples": [
+    "const { queue, add, remove, clear, first, last, size } = useQueue([1, 2, 3]);"
+  ],
   "apiParameters": [
     {
       "tag": "param",

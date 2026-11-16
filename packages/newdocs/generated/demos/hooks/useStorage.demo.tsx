@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useStorage } from '@siberiacancode/reactuse';
 import { SaveIcon } from 'lucide-react';

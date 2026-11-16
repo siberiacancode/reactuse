@@ -26,6 +26,11 @@ const LOGOS = {
   light: '/brand/logo-light.svg'
 } as const;
 
+const WORDMARKS = {
+  dark: '/brand/reactuse-uwu-dark.svg',
+  light: '/brand/reactuse-uwu-light.svg'
+} as const;
+
 const PNG_MIME_TYPE = 'image/png';
 
 export const BrandAssetsMenu = ({ children, className }: BrandAssetsMenuProps) => {
@@ -65,7 +70,14 @@ export const BrandAssetsMenu = ({ children, className }: BrandAssetsMenuProps) =
             render={<a download href={LOGOS.dark} />}
           >
             <DownloadIcon className='size-4' />
-            Download SVG
+            Download icon SVG
+          </ContextMenuItem>
+          <ContextMenuItem
+            className='gap-3 px-2 py-2 text-sm font-medium'
+            render={<a download href={WORDMARKS.dark} />}
+          >
+            <DownloadIcon className='size-4' />
+            Download uwu SVG
           </ContextMenuItem>
           <ContextMenuItem
             className='gap-3 px-2 py-2 text-sm font-medium'
@@ -92,7 +104,14 @@ export const BrandAssetsMenu = ({ children, className }: BrandAssetsMenuProps) =
             render={<a download href={LOGOS.light} />}
           >
             <DownloadIcon className='size-4' />
-            Download SVG
+            Download icon SVG
+          </ContextMenuItem>
+          <ContextMenuItem
+            className='gap-3 px-2 py-2 text-sm font-medium'
+            render={<a download href={WORDMARKS.light} />}
+          >
+            <DownloadIcon className='size-4' />
+            Download uwu SVG
           </ContextMenuItem>
           <ContextMenuItem
             className='gap-3 px-2 py-2 text-sm font-medium'

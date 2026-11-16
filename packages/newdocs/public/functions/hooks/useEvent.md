@@ -297,9 +297,9 @@ const onClick = useEvent(() => console.log('clicked'));
 
 ### Parameters
 
-| Name     | Type                          | Default | Note                  |
-| -------- | ----------------------------- | ------- | --------------------- |
-| callback | `(...args: Params) => Return` | -       | The callback function |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(...args: Params) => Return` | - | The callback function |
 
 ### Returns
 

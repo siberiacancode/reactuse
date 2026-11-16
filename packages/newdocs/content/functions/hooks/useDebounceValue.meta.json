@@ -14,7 +14,9 @@
   "description": "Hook that creates a debounced value",
   "category": "Utilities",
   "lastModified": 1754977987000,
-  "examples": ["const debouncedValue = useDebounceValue(value, 500);"],
+  "examples": [
+    "const debouncedValue = useDebounceValue(value, 500);"
+  ],
   "apiParameters": [
     {
       "tag": "param",
@@ -120,7 +122,9 @@
     }
   ],
   "dependencies": {
-    "hooks": ["useDebounceCallback"],
+    "hooks": [
+      "useDebounceCallback"
+    ],
     "utils": [],
     "packages": []
   },

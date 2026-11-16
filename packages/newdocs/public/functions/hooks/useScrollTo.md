@@ -247,13 +247,13 @@ export interface UseScrollTo {
 
 #### Parameters
 
-| Name                | Type             | Default | Note                                 |
-| ------------------- | ---------------- | ------- | ------------------------------------ |
-| target              | `HookTarget`     | window  | The target element for scrolling to  |
-| options.immediately | `boolean`        | true    | Whether to scroll immediately        |
-| options.x           | `number`         | -       | The horizontal position to scroll to |
-| options.y           | `number`         | -       | The vertical position to scroll to   |
-| options.behavior    | `ScrollBehavior` | auto    | The scrolling behavior               |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | window | The target element for scrolling to |
+| options.immediately | `boolean` | true | Whether to scroll immediately |
+| options.x | `number` | - | The horizontal position to scroll to |
+| options.y | `number` | - | The vertical position to scroll to |
+| options.behavior | `ScrollBehavior` | auto | The scrolling behavior |
 
 #### Returns
 
@@ -263,12 +263,12 @@ export interface UseScrollTo {
 
 #### Parameters
 
-| Name                | Type             | Default | Note                                 |
-| ------------------- | ---------------- | ------- | ------------------------------------ |
-| options.immediately | `boolean`        | true    | Whether to scroll immediately        |
-| options.x           | `number`         | -       | The horizontal position to scroll to |
-| options.y           | `number`         | -       | The vertical position to scroll to   |
-| options.behavior    | `ScrollBehavior` | auto    | The scrolling behavior               |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.immediately | `boolean` | true | Whether to scroll immediately |
+| options.x | `number` | - | The horizontal position to scroll to |
+| options.y | `number` | - | The vertical position to scroll to |
+| options.behavior | `ScrollBehavior` | auto | The scrolling behavior |
 
 #### Returns
 

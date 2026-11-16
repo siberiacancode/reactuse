@@ -14,7 +14,10 @@
   "description": "Hook that create stepper",
   "category": "State",
   "lastModified": 1776860709000,
-  "examples": ["const stepper = useStep(5);", "const stepper = useStep({ initial: 2, max: 5 });"],
+  "examples": [
+    "const stepper = useStep(5);",
+    "const stepper = useStep({ initial: 2, max: 5 });"
+  ],
   "apiParameters": [
     {
       "tag": "overload",

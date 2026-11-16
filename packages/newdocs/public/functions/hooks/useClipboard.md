@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1794763416000
 ---
 
 # useClipboard
@@ -193,9 +193,9 @@ export interface UseCopyToClipboardParams {
 
 ### Parameters
 
-| Name           | Type      | Default | Note                                     |
-| -------------- | --------- | ------- | ---------------------------------------- |
-| params.enabled | `boolean` | false   | Whether the copy to clipboard is enabled |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| params.enabled | `boolean` | false | Whether the copy to clipboard is enabled |
 
 ### Returns
 

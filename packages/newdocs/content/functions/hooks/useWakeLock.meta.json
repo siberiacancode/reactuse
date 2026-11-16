@@ -60,7 +60,9 @@
   "description": "Hook that provides a wake lock functionality",
   "category": "Browser",
   "lastModified": 1782026158000,
-  "examples": ["const { supported, active, request, release } = useWakeLock();"],
+  "examples": [
+    "const { supported, active, request, release } = useWakeLock();"
+  ],
   "apiParameters": [
     {
       "tag": "param",

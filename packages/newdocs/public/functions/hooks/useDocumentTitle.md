@@ -233,10 +233,10 @@ export interface UseDocumentTitleReturn {
 
 ### Parameters
 
-| Name            | Type      | Default | Note                                                                        |
-| --------------- | --------- | ------- | --------------------------------------------------------------------------- |
-| initialValue    | `string`  | -       | The initial title. If not provided, the current document title will be used |
-| options.restore | `boolean` | -       | Restore the previous title on unmount                                       |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `string` | - | The initial title. If not provided, the current document title will be used |
+| options.restore | `boolean` | - | Restore the previous title on unmount |
 
 ### Returns
 

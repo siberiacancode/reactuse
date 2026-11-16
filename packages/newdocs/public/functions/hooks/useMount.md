@@ -135,6 +135,6 @@ import type { EffectCallback } from 'react';
 
 ### Parameters
 
-| Name   | Type             | Default | Note                    |
-| ------ | ---------------- | ------- | ----------------------- |
-| effect | `EffectCallback` | -       | The callback to execute |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| effect | `EffectCallback` | - | The callback to execute |

@@ -14,7 +14,9 @@
   "description": "Combines class names from strings, arrays and objects into a single string",
   "category": "Helpers",
   "lastModified": 1786111973000,
-  "examples": ["cn('btn', ['btn-primary', { 'btn-disabled': disabled }]);"],
+  "examples": [
+    "cn('btn', ['btn-primary', { 'btn-disabled': disabled }]);"
+  ],
   "apiParameters": [
     {
       "tag": "param",

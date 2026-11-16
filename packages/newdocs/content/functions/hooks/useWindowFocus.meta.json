@@ -14,7 +14,9 @@
   "description": "Hook that provides the current focus state of the window",
   "category": "Sensors",
   "lastModified": 1782054576000,
-  "examples": ["const focused = useWindowFocus();"],
+  "examples": [
+    "const focused = useWindowFocus();"
+  ],
   "apiParameters": [
     {
       "tag": "returns",

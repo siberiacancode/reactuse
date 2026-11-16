@@ -11,5 +11,6 @@ export * from './react-router-icon';
 export * from './scira-icon';
 export * from './tanstack-icon';
 export * from './twitter-icon';
+export * from './uwu-logo';
 export * from './v0-icon';
 export * from './vite-icon';

@@ -284,10 +284,10 @@ export interface Connection extends EventTarget {
 }
 
 interface Navigator {
-  readonly connection: Connection;
-  readonly mozConnection: Connection;
-  readonly webkitConnection: Connection;
-}
+    readonly connection: Connection;
+    readonly mozConnection: Connection;
+    readonly webkitConnection: Connection;
+  }
 
 export type ConnectionType = Connection['type'];
 
@@ -315,9 +315,9 @@ export interface UseNetworkReturn {
 
 ### Parameters
 
-| Name     | Type                                | Default | Note                                                |
-| -------- | ----------------------------------- | ------- | --------------------------------------------------- |
-| callback | `(value: UseNetworkReturn) => void` | -       | The callback invoked when the network state changes |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(value: UseNetworkReturn) => void` | - | The callback invoked when the network state changes |
 
 ### Returns
 

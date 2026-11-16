@@ -164,7 +164,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-useAsyncEffect(async () => console.log('effect runs on updates'), deps);
+useAsyncEffect(async () => console.log("effect runs on updates"), deps);
 ```
 
 ## Type Declarations
@@ -177,7 +177,7 @@ import type { DependencyList } from 'react';
 
 ### Parameters
 
-| Name   | Type             | Default | Note                                 |
-| ------ | ---------------- | ------- | ------------------------------------ |
-| effect | `EffectCallback` | -       | The effect callback                  |
-| deps   | `DependencyList` | -       | The dependencies list for the effect |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| effect | `EffectCallback` | - | The effect callback |
+| deps | `DependencyList` | - | The dependencies list for the effect |

@@ -245,9 +245,9 @@ const lockedCallback = useLockCallback(() => promise());
 
 ### Parameters
 
-| Name     | Type       | Default | Note                      |
-| -------- | ---------- | ------- | ------------------------- |
-| callback | `Function` | -       | The callback to be locked |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `Function` | - | The callback to be locked |
 
 ### Returns
 

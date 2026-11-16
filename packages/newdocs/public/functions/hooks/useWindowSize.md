@@ -326,10 +326,10 @@ export interface UseWindowSize {
 
 #### Parameters
 
-| Name                     | Type                                                | Default | Note                                                            |
-| ------------------------ | --------------------------------------------------- | ------- | --------------------------------------------------------------- |
-| callback                 | `(value: UseWindowSizeValue, event: Event) => void` | -       | The callback to invoke on window size updates                   |
-| options.includeScrollbar | `boolean`                                           | true    | Whether to include the scrollbar in the window size calculation |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(value: UseWindowSizeValue, event: Event) => void` | - | The callback to invoke on window size updates |
+| options.includeScrollbar | `boolean` | true | Whether to include the scrollbar in the window size calculation |
 
 #### Returns
 
@@ -339,9 +339,9 @@ export interface UseWindowSize {
 
 #### Parameters
 
-| Name                     | Type      | Default | Note                                                            |
-| ------------------------ | --------- | ------- | --------------------------------------------------------------- |
-| options.includeScrollbar | `boolean` | true    | Whether to include the scrollbar in the window size calculation |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.includeScrollbar | `boolean` | true | Whether to include the scrollbar in the window size calculation |
 
 #### Returns
 

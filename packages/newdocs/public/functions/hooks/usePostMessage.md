@@ -176,10 +176,10 @@ export type UsePostMessageReturn<Message> = (message: Message) => void;
 
 ### Parameters
 
-| Name     | Type                            | Default | Note                             |
-| -------- | ------------------------------- | ------- | -------------------------------- |
-| origin   | `UsePostMessageOrigin`          | -       | The origin of the message        |
-| callback | `(message: Message) => Message` | -       | callback to get received message |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| origin | `UsePostMessageOrigin` | - | The origin of the message |
+| callback | `(message: Message) => Message` | - | callback to get received message |
 
 ### Returns
 

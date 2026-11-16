@@ -157,9 +157,9 @@ const visibilityState = useDocumentVisibility((state) => {
 
 ### Parameters
 
-| Name     | Type                                       | Default | Note                                                      |
-| -------- | ------------------------------------------ | ------- | --------------------------------------------------------- |
-| callback | `(state: DocumentVisibilityState) => void` | -       | The callback to execute when the visibility state changes |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(state: DocumentVisibilityState) => void` | - | The callback to execute when the visibility state changes |
 
 ### Returns
 

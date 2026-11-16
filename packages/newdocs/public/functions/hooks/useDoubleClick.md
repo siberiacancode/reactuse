@@ -381,11 +381,11 @@ export interface UseDoubleClick {
 
 #### Parameters
 
-| Name     | Type                                 | Default | Note                                                |
-| -------- | ------------------------------------ | ------- | --------------------------------------------------- |
-| target   | `HookTarget`                         | -       | The target element to be double clicked             |
-| callback | `(event: DoubleClickEvents) => void` | -       | The callback function to be invoked on double click |
-| options  | `UseDoubleClickOptions`              | -       | The options for the double click                    |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to be double clicked |
+| callback | `(event: DoubleClickEvents) => void` | - | The callback function to be invoked on double click |
+| options | `UseDoubleClickOptions` | - | The options for the double click |
 
 #### Returns
 
@@ -395,10 +395,10 @@ export interface UseDoubleClick {
 
 #### Parameters
 
-| Name     | Type                                 | Default | Note                                                |
-| -------- | ------------------------------------ | ------- | --------------------------------------------------- |
-| callback | `(event: DoubleClickEvents) => void` | -       | The callback function to be invoked on double click |
-| options  | `UseDoubleClickOptions`              | -       | The options for the double click                    |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(event: DoubleClickEvents) => void` | - | The callback function to be invoked on double click |
+| options | `UseDoubleClickOptions` | - | The options for the double click |
 
 #### Returns
 

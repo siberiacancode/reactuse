@@ -363,11 +363,11 @@ export interface UseLongPress {
 
 #### Parameters
 
-| Name     | Type                               | Default | Note                                              |
-| -------- | ---------------------------------- | ------- | ------------------------------------------------- |
-| target   | `HookTarget`                       | -       | The target element to be long pressed             |
-| callback | `(event: LongPressEvents) => void` | -       | The callback function to be invoked on long press |
-| options  | `UseLongPressOptions`              | -       | The options for the long press                    |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to be long pressed |
+| callback | `(event: LongPressEvents) => void` | - | The callback function to be invoked on long press |
+| options | `UseLongPressOptions` | - | The options for the long press |
 
 #### Returns
 
@@ -377,10 +377,10 @@ export interface UseLongPress {
 
 #### Parameters
 
-| Name     | Type                               | Default | Note                                              |
-| -------- | ---------------------------------- | ------- | ------------------------------------------------- |
-| callback | `(event: LongPressEvents) => void` | -       | The callback function to be invoked on long press |
-| options  | `UseLongPressOptions`              | -       | The options for the long press                    |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(event: LongPressEvents) => void` | - | The callback function to be invoked on long press |
+| options | `UseLongPressOptions` | - | The options for the long press |
 
 #### Returns
 

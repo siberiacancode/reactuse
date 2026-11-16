@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useBoolean, useField, useFocus } from '@siberiacancode/reactuse';
 import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from 'lucide-react';

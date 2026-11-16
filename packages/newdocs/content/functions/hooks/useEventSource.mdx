@@ -11,13 +11,7 @@ lastModifiedTime: 1767095034000
 
 import metadata from './useEventSource.meta.json';
 
-<FunctionBanner
-  browserapi={metadata.browserapi}
-  code={metadata.demo}
-  type={metadata.type}
-  name={metadata.name}
-  language='tsx'
-/>
+<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />
 
 ## Installation
 
@@ -28,31 +22,37 @@ import metadata from './useEventSource.meta.json';
     <TabsTrigger value='manual'>Manual</TabsTrigger>
   </TabsList>
   <TabsContent value='library'>
-    ```packages-install npm install @siberiacancode/reactuse ```
+    ```packages-install
+    npm install @siberiacancode/reactuse
+    ```
   </TabsContent>
   <TabsContent value='cli'>
-    ```packages-install npx useverse@latest add useEventSource ```
+    ```packages-install
+    npx useverse@latest add useEventSource
+    ```
   </TabsContent>
   <TabsContent value='manual'>
     <Steps>
-      <Step>Copy and paste the following code into your project.</Step>
-      <FunctionCode code={metadata.code} language='tsx' />
-      <Step>Update the import paths to match your project setup.</Step>
-    </Steps>
+     <Step>
+      Copy and paste the following code into your project.
+    </Step>
+      <FunctionCode code={metadata.code} language="tsx" />
+    <Step>
+      Update the import paths to match your project setup.
+    </Step>
+  </Steps>
   </TabsContent>
 </FunctionTabs>
 
 ## Usage
 
 ```tsx
-const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', [
-  'message'
-]);
+const { instance, data, connecting, opened, isError, close, open } = useEventSource('url', ['message']);
 ```
 
 ## Type Declarations
 
-<FunctionCode code={metadata.typeDeclarations} language='tsx' />
+<FunctionCode code={metadata.typeDeclarations} language="tsx" />
 
 ## API
 

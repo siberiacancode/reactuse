@@ -148,9 +148,9 @@ export type UseRafStateReturn<Value> = [Value, (value: Value) => void];
 
 ### Parameters
 
-| Name         | Type    | Default | Note              |
-| ------------ | ------- | ------- | ----------------- |
-| initialValue | `Value` | -       | The initial value |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `Value` | - | The initial value |
 
 ### Returns
 

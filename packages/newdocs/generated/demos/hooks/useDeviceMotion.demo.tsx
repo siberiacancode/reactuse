@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useDeviceMotion } from '@siberiacancode/reactuse';
 import { SmartphoneIcon } from 'lucide-react';

@@ -564,17 +564,11 @@ Update the import paths to match your project setup.
 ```tsx
 const { playing, play, pause } = useMediaControls(videoRef, 'video.mp4');
 // or
-const { playing, play, pause } = useMediaControls(audioRef, {
-  src: 'audio.mp3',
-  type: 'audio/mp3'
-});
+const { playing, play, pause } = useMediaControls(audioRef, { src: 'audio.mp3', type: 'audio/mp3' });
 // or
 const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>('video.mp4');
 // or
-const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>({
-  src: 'video.mp4',
-  type: 'video/mp4'
-});
+const { ref, playing, play, pause } = useMediaControls<HTMLVideoElement>({ src: 'video.mp4', type: 'video/mp4' });
 ```
 
 ## Type Declarations
@@ -657,10 +651,10 @@ export interface UseMediaControls {
 
 #### Parameters
 
-| Name   | Type         | Default | Note                        |
-| ------ | ------------ | ------- | --------------------------- |
-| target | `HookTarget` | -       | The target media element    |
-| src    | `string`     | -       | The source URL of the media |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target media element |
+| src | `string` | - | The source URL of the media |
 
 #### Returns
 
@@ -670,10 +664,10 @@ export interface UseMediaControls {
 
 #### Parameters
 
-| Name    | Type             | Default | Note                           |
-| ------- | ---------------- | ------- | ------------------------------ |
-| target  | `HookTarget`     | -       | The target media element       |
-| options | `UseMediaSource` | -       | The media source configuration |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target media element |
+| options | `UseMediaSource` | - | The media source configuration |
 
 #### Returns
 
@@ -683,9 +677,9 @@ export interface UseMediaControls {
 
 #### Parameters
 
-| Name | Type     | Default | Note                        |
-| ---- | -------- | ------- | --------------------------- |
-| src  | `string` | -       | The source URL of the media |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| src | `string` | - | The source URL of the media |
 
 #### Returns
 
@@ -695,9 +689,9 @@ export interface UseMediaControls {
 
 #### Parameters
 
-| Name    | Type             | Default | Note                           |
-| ------- | ---------------- | ------- | ------------------------------ |
-| options | `UseMediaSource` | -       | The media source configuration |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options | `UseMediaSource` | - | The media source configuration |
 
 #### Returns
 

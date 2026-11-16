@@ -243,10 +243,10 @@ export interface UseWakeLockReturn {
 
 ### Parameters
 
-| Name                | Type           | Default  | Note                                                                                             |
-| ------------------- | -------------- | -------- | ------------------------------------------------------------------------------------------------ |
-| options.immediately | `boolean`      | false    | Determines if the wake lock should be automatically reacquired when the document becomes visible |
-| options.type        | `WakeLockType` | 'screen' | A string specifying the wake lock type                                                           |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.immediately | `boolean` | false | Determines if the wake lock should be automatically reacquired when the document becomes visible |
+| options.type | `WakeLockType` | 'screen' | A string specifying the wake lock type |
 
 ### Returns
 

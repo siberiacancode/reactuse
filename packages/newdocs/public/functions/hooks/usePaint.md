@@ -629,10 +629,7 @@ Update the import paths to match your project setup.
 ```tsx
 const paint = usePaint(canvasRef, { color: 'red', radius: 10 });
 // or
-const { ref, draw, clear, undo, redo, changeColor } = usePaint(
-  { color: 'red', radius: 10 },
-  { smooth: true }
-);
+const { ref, draw, clear, undo, redo, changeColor } = usePaint({ color: 'red', radius: 10 }, { smooth: true });
 ```
 
 ## Type Declarations
@@ -727,11 +724,11 @@ export interface UsePaint {
 
 #### Parameters
 
-| Name         | Type                   | Default | Note                             |
-| ------------ | ---------------------- | ------- | -------------------------------- |
-| target       | `HookTarget`           | -       | The target element to be painted |
-| initialValue | `UsePaintInitialValue` | -       | The initial value of the paint   |
-| options      | `UsePaintOptions`      | -       | The options to be used           |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to be painted |
+| initialValue | `UsePaintInitialValue` | - | The initial value of the paint |
+| options | `UsePaintOptions` | - | The options to be used |
 
 #### Returns
 
@@ -741,10 +738,10 @@ export interface UsePaint {
 
 #### Parameters
 
-| Name         | Type                   | Default | Note                           |
-| ------------ | ---------------------- | ------- | ------------------------------ |
-| initialValue | `UsePaintInitialValue` | -       | The initial value of the paint |
-| options      | `UsePaintOptions`      | -       | The options to be used         |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `UsePaintInitialValue` | - | The initial value of the paint |
+| options | `UsePaintOptions` | - | The options to be used |
 
 #### Returns
 

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useMount } from '@siberiacancode/reactuse';
 import { RocketIcon, SparklesIcon, ZapIcon } from 'lucide-react';

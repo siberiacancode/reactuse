@@ -350,7 +350,7 @@ export interface UseWebWorkerReturn<Data = unknown> {
  * @example
  * const { data, error, terminated, post, restart, terminate } = useWebWorker<number>('/worker.js');
  */
-export const useWebWorker = <Data = unknown,>(
+export const useWebWorker = <Data = unknown>(
   source: UseWebWorkerSource,
   options?: UseWebWorkerOptions<Data>
 ): UseWebWorkerReturn<Data> => {
@@ -465,14 +465,14 @@ export interface UseWebWorkerReturn<Data = unknown> {
 
 ### Parameters
 
-| Name                | Type                                              | Default | Note                                                                                                                                                |
-| ------------------- | ------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| source              | `UseWebWorkerSource`                              | -       | The worker script URL or an existing Worker instance. Passing a Worker instance transfers its ownership to the hook, so it is terminated on unmount |
-| options.name        | `WorkerOptions['name']`                           | -       | The name of the worker                                                                                                                              |
-| options.type        | `WorkerOptions['type']`                           | -       | The type of the worker                                                                                                                              |
-| options.credentials | `WorkerOptions['credentials']`                    | -       | The credentials of the worker                                                                                                                       |
-| options.onMessage   | `(data: Data, event: MessageEvent<Data>) => void` | -       | The callback to execute when a message is received from the worker                                                                                  |
-| options.onError     | `(event: Event) => void`                          | -       | The callback to execute when the worker fails                                                                                                       |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| source | `UseWebWorkerSource` | - | The worker script URL or an existing Worker instance. Passing a Worker instance transfers its ownership to the hook, so it is terminated on unmount |
+| options.name | `WorkerOptions['name']` | - | The name of the worker |
+| options.type | `WorkerOptions['type']` | - | The type of the worker |
+| options.credentials | `WorkerOptions['credentials']` | - | The credentials of the worker |
+| options.onMessage | `(data: Data, event: MessageEvent<Data>) => void` | - | The callback to execute when a message is received from the worker |
+| options.onError | `(event: Event) => void` | - | The callback to execute when the worker fails |
 
 ### Returns
 

@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1794732747682
+lastModifiedTime: 1794763416000
 ---
 
 # useCollapse
@@ -371,14 +371,14 @@ interface ElementStyles {
 
 #### Parameters
 
-| Name             | Type         | Default | Note                                        |
-| ---------------- | ------------ | ------- | ------------------------------------------- |
-| target           | `HookTarget` | -       | The target element to collapse              |
-| initialValue     | `boolean`    | false   | Whether the target is initially expanded    |
-| options.duration | `number`     | 200     | Transition duration in milliseconds         |
-| options.easing   | `string`     | 'ease'  | CSS transition easing function              |
-| options.onStart  | `() => void` | -       | Callback invoked when the transition starts |
-| options.onEnd    | `() => void` | -       | Callback invoked when the transition ends   |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to collapse |
+| initialValue | `boolean` | false | Whether the target is initially expanded |
+| options.duration | `number` | 200 | Transition duration in milliseconds |
+| options.easing | `string` | 'ease' | CSS transition easing function |
+| options.onStart | `() => void` | - | Callback invoked when the transition starts |
+| options.onEnd | `() => void` | - | Callback invoked when the transition ends |
 
 #### Returns
 
@@ -388,13 +388,13 @@ interface ElementStyles {
 
 #### Parameters
 
-| Name             | Type         | Default | Note                                        |
-| ---------------- | ------------ | ------- | ------------------------------------------- |
-| initialValue     | `boolean`    | false   | Whether the target is initially expanded    |
-| options.duration | `number`     | 200     | Transition duration in milliseconds         |
-| options.easing   | `string`     | 'ease'  | CSS transition easing function              |
-| options.onStart  | `() => void` | -       | Callback invoked when the transition starts |
-| options.onEnd    | `() => void` | -       | Callback invoked when the transition ends   |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `boolean` | false | Whether the target is initially expanded |
+| options.duration | `number` | 200 | Transition duration in milliseconds |
+| options.easing | `string` | 'ease' | CSS transition easing function |
+| options.onStart | `() => void` | - | Callback invoked when the transition starts |
+| options.onEnd | `() => void` | - | Callback invoked when the transition ends |
 
 #### Returns
 

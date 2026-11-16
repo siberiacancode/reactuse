@@ -351,10 +351,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const [optimisticValue, updateOptimistic] = useOptimistic<number>(
-  count,
-  (currentState, optimisticValue) => currentState + optimisticValue
-);
+const [optimisticValue, updateOptimistic] = useOptimistic<number>(count, (currentState, optimisticValue) => currentState + optimisticValue);
 ```
 
 ## Type Declarations
@@ -370,10 +367,10 @@ export type UseOptimisticReturn<State> = [
 
 ### Parameters
 
-| Name   | Type                                                     | Default | Note                                                                                                                                        |
-| ------ | -------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| state  | `State`                                                  | -       | The value to be returned initially and whenever no action is pending                                                                        |
-| update | `(currentState: State, optimisticValue: State) => State` | -       | A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| state | `State` | - | The value to be returned initially and whenever no action is pending |
+| update | `(currentState: State, optimisticValue: State) => State` | - | A pure function that takes the current state and the optimistic value passed to updateOptimistic and returns the resulting optimistic state |
 
 ### Returns
 

@@ -220,17 +220,11 @@ Update the import paths to match your project setup.
 ```tsx
 useKeyboard(ref, (event) => console.log('key down'));
 // or
-useKeyboard(ref, {
-  onKeyDown: (event) => console.log('key down'),
-  onKeyUp: (event) => console.log('key up')
-});
+useKeyboard(ref, { onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
 // or
 const ref = useKeyboard((event) => console.log('key down'));
 // or
-const ref = useKeyboard({
-  onKeyDown: (event) => console.log('key down'),
-  onKeyUp: (event) => console.log('key up')
-});
+const ref = useKeyboard({ onKeyDown: (event) => console.log('key down'), onKeyUp: (event) => console.log('key up') });
 ```
 
 ## Type Declarations
@@ -268,10 +262,10 @@ export interface UseKeyboard {
 
 #### Parameters
 
-| Name     | Type                   | Default | Note                                            |
-| -------- | ---------------------- | ------- | ----------------------------------------------- |
-| target   | `HookTarget`           | -       | The target to attach the event listeners to     |
-| callback | `KeyboardEventHandler` | -       | The callback function to be invoked on key down |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target to attach the event listeners to |
+| callback | `KeyboardEventHandler` | - | The callback function to be invoked on key down |
 
 #### Returns
 
@@ -281,10 +275,10 @@ export interface UseKeyboard {
 
 #### Parameters
 
-| Name    | Type                      | Default | Note                                        |
-| ------- | ------------------------- | ------- | ------------------------------------------- |
-| target  | `HookTarget`              | -       | The target to attach the event listeners to |
-| options | `UseKeyboardEventOptions` | -       | The keyboard event options                  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target to attach the event listeners to |
+| options | `UseKeyboardEventOptions` | - | The keyboard event options |
 
 #### Returns
 
@@ -294,9 +288,9 @@ export interface UseKeyboard {
 
 #### Parameters
 
-| Name     | Type                   | Default | Note                                            |
-| -------- | ---------------------- | ------- | ----------------------------------------------- |
-| callback | `KeyboardEventHandler` | -       | The callback function to be invoked on key down |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `KeyboardEventHandler` | - | The callback function to be invoked on key down |
 
 #### Returns
 
@@ -306,9 +300,9 @@ export interface UseKeyboard {
 
 #### Parameters
 
-| Name    | Type                      | Default | Note                       |
-| ------- | ------------------------- | ------- | -------------------------- |
-| options | `UseKeyboardEventOptions` | -       | The keyboard event options |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options | `UseKeyboardEventOptions` | - | The keyboard event options |
 
 #### Returns
 

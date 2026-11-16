@@ -402,12 +402,12 @@ export interface UseResizeObserver {
 
 #### Parameters
 
-| Name             | Type                        | Default | Note                                            |
-| ---------------- | --------------------------- | ------- | ----------------------------------------------- |
-| target           | `HookTarget`                | -       | The target element to observe                   |
-| options.enabled  | `boolean`                   | true    | The enabled state of the resize observer        |
-| options.box      | `ResizeObserverBoxOptions`  | -       | The box model to observe                        |
-| options.onChange | `UseResizeObserverCallback` | -       | The callback to execute when resize is detected |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to observe |
+| options.enabled | `boolean` | true | The enabled state of the resize observer |
+| options.box | `ResizeObserverBoxOptions` | - | The box model to observe |
+| options.onChange | `UseResizeObserverCallback` | - | The callback to execute when resize is detected |
 
 #### Returns
 
@@ -417,11 +417,11 @@ export interface UseResizeObserver {
 
 #### Parameters
 
-| Name             | Type                        | Default | Note                                            |
-| ---------------- | --------------------------- | ------- | ----------------------------------------------- |
-| options.enabled  | `boolean`                   | true    | The enabled state of the resize observer        |
-| options.box      | `ResizeObserverBoxOptions`  | -       | The box model to observe                        |
-| options.onChange | `UseResizeObserverCallback` | -       | The callback to execute when resize is detected |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.enabled | `boolean` | true | The enabled state of the resize observer |
+| options.box | `ResizeObserverBoxOptions` | - | The box model to observe |
+| options.onChange | `UseResizeObserverCallback` | - | The callback to execute when resize is detected |
 
 #### Returns
 
@@ -431,9 +431,9 @@ export interface UseResizeObserver {
 
 #### Parameters
 
-| Name     | Type                        | Default | Note                                            |
-| -------- | --------------------------- | ------- | ----------------------------------------------- |
-| callback | `UseResizeObserverCallback` | -       | The callback to execute when resize is detected |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `UseResizeObserverCallback` | - | The callback to execute when resize is detected |
 
 #### Returns
 
@@ -443,10 +443,10 @@ export interface UseResizeObserver {
 
 #### Parameters
 
-| Name     | Type                        | Default | Note                                            |
-| -------- | --------------------------- | ------- | ----------------------------------------------- |
-| target   | `HookTarget`                | -       | The target element to observe                   |
-| callback | `UseResizeObserverCallback` | -       | The callback to execute when resize is detected |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to observe |
+| callback | `UseResizeObserverCallback` | - | The callback to execute when resize is detected |
 
 #### Returns
 

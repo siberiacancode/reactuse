@@ -315,11 +315,11 @@ export interface UsePictureInPicture {
 
 #### Parameters
 
-| Name            | Type         | Default | Note                                             |
-| --------------- | ------------ | ------- | ------------------------------------------------ |
-| target          | `HookTarget` | -       | The target video element                         |
-| options.onEnter | `() => void` | -       | Callback when Picture-in-Picture mode is entered |
-| options.onExit  | `() => void` | -       | Callback when Picture-in-Picture mode is exited  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target video element |
+| options.onEnter | `() => void` | - | Callback when Picture-in-Picture mode is entered |
+| options.onExit | `() => void` | - | Callback when Picture-in-Picture mode is exited |
 
 #### Returns
 
@@ -329,10 +329,10 @@ export interface UsePictureInPicture {
 
 #### Parameters
 
-| Name            | Type         | Default | Note                                             |
-| --------------- | ------------ | ------- | ------------------------------------------------ |
-| options.onEnter | `() => void` | -       | Callback when Picture-in-Picture mode is entered |
-| options.onExit  | `() => void` | -       | Callback when Picture-in-Picture mode is exited  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.onEnter | `() => void` | - | Callback when Picture-in-Picture mode is entered |
+| options.onExit | `() => void` | - | Callback when Picture-in-Picture mode is exited |
 
 #### Returns
 

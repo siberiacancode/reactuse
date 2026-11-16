@@ -512,15 +512,15 @@ export interface UseUrlSearchParam {
 
 #### Parameters
 
-| Name                 | Type                                                        | Default   | Note                                                               |
-| -------------------- | ----------------------------------------------------------- | --------- | ------------------------------------------------------------------ |
-| key                  | `string`                                                    | -         | The key of the url param                                           |
-| options              | `UseUrlSearchParamOptions<Value> & { initialValue: Value }` | -         | The options object with required initialValue                      |
-| options.initialValue | `Value`                                                     | -         | The initial value for the url param                                |
-| options.mode         | `UrlSearchParamsMode`                                       | 'history' | The mode to use for the URL ('history' \| 'hash-params' \| 'hash') |
-| options.write        | `'push' \| 'replace'`                                       | 'replace' | The mode to use for writing to the URL                             |
-| options.serializer   | `(value: Value) => string`                                  | -         | Custom serializer function to convert value to string              |
-| options.deserializer | `(value: string) => Value`                                  | -         | Custom deserializer function to convert string to value            |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| key | `string` | - | The key of the url param |
+| options | `UseUrlSearchParamOptions<Value> & { initialValue: Value }` | - | The options object with required initialValue |
+| options.initialValue | `Value` | - | The initial value for the url param |
+| options.mode | `UrlSearchParamsMode` | 'history' | The mode to use for the URL ('history' \| 'hash-params' \| 'hash') |
+| options.write | `'push' \| 'replace'` | 'replace' | The mode to use for writing to the URL |
+| options.serializer | `(value: Value) => string` | - | Custom serializer function to convert value to string |
+| options.deserializer | `(value: string) => Value` | - | Custom deserializer function to convert string to value |
 
 #### Returns
 
@@ -530,10 +530,10 @@ export interface UseUrlSearchParam {
 
 #### Parameters
 
-| Name         | Type     | Default | Note                                |
-| ------------ | -------- | ------- | ----------------------------------- |
-| key          | `string` | -       | The key of the url param            |
-| initialValue | `Value`  | -       | The initial value for the url param |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| key | `string` | - | The key of the url param |
+| initialValue | `Value` | - | The initial value for the url param |
 
 #### Returns
 

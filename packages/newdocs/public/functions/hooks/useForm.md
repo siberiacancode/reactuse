@@ -735,14 +735,14 @@ export interface UseFormReturn<Values extends Record<string, any>> {
 
 ### Parameters
 
-| Name                     | Type                      | Default | Note                    |
-| ------------------------ | ------------------------- | ------- | ----------------------- |
-| options.initialValues    | `Values`                  | -       | Initial values          |
-| options.resolver         | `UseFormResolver<Values>` | -       | Schema resolver         |
-| options.autoFocus        | `keyof Values`            | -       | Field to focus on mount |
-| options.validateOnChange | `boolean`                 | false   | Validate on change      |
-| options.validateOnBlur   | `boolean`                 | false   | Validate on blur        |
-| options.validateOnMount  | `boolean`                 | false   | Validate on mount       |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.initialValues | `Values` | - | Initial values |
+| options.resolver | `UseFormResolver<Values>` | - | Schema resolver |
+| options.autoFocus | `keyof Values` | - | Field to focus on mount |
+| options.validateOnChange | `boolean` | false | Validate on change |
+| options.validateOnBlur | `boolean` | false | Validate on blur |
+| options.validateOnMount | `boolean` | false | Validate on mount |
 
 ### Returns
 

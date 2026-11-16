@@ -166,10 +166,10 @@ const [debouncedValue, setDebouncedValue] = useDebounceState(value, 500);
 
 ### Parameters
 
-| Name  | Type     | Default | Note                      |
-| ----- | -------- | ------- | ------------------------- |
-| value | `Value`  | -       | The value to be debounced |
-| delay | `number` | -       | The delay in milliseconds |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| value | `Value` | - | The value to be debounced |
+| delay | `number` | - | The delay in milliseconds |
 
 ### Returns
 

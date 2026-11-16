@@ -471,15 +471,15 @@ export interface UseDropZone {
 
 #### Parameters
 
-| Name              | Type                                                | Default | Note                           |
-| ----------------- | --------------------------------------------------- | ------- | ------------------------------ |
-| target            | `Target`                                            | -       | The target element drop zone's |
-| options.dataTypes | `DataTypes`                                         | -       | The data types                 |
-| options.multiple  | `boolean`                                           | -       | The multiple mode              |
-| options.onDrop    | `(files: File[] \| null, event: DragEvent) => void` | -       | The on drop callback function  |
-| options.onEnter   | `(event: DragEvent) => void`                        | -       | The on enter callback function |
-| options.onLeave   | `(event: DragEvent) => void`                        | -       | The on leave callback function |
-| options.onOver    | `(event: DragEvent) => void`                        | -       | The on over callback function  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `Target` | - | The target element drop zone's |
+| options.dataTypes | `DataTypes` | - | The data types |
+| options.multiple | `boolean` | - | The multiple mode |
+| options.onDrop | `(files: File[] \| null, event: DragEvent) => void` | - | The on drop callback function |
+| options.onEnter | `(event: DragEvent) => void` | - | The on enter callback function |
+| options.onLeave | `(event: DragEvent) => void` | - | The on leave callback function |
+| options.onOver | `(event: DragEvent) => void` | - | The on over callback function |
 
 #### Returns
 
@@ -489,10 +489,10 @@ export interface UseDropZone {
 
 #### Parameters
 
-| Name     | Type                                                | Default | Note                                        |
-| -------- | --------------------------------------------------- | ------- | ------------------------------------------- |
-| target   | `Target`                                            | -       | The target element drop zone's              |
-| callback | `(files: File[] \| null, event: DragEvent) => void` | -       | The callback function to be invoked on drop |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `Target` | - | The target element drop zone's |
+| callback | `(files: File[] \| null, event: DragEvent) => void` | - | The callback function to be invoked on drop |
 
 #### Returns
 
@@ -502,14 +502,14 @@ export interface UseDropZone {
 
 #### Parameters
 
-| Name              | Type                                                | Default | Note                           |
-| ----------------- | --------------------------------------------------- | ------- | ------------------------------ |
-| options.dataTypes | `DataTypes`                                         | -       | The data types                 |
-| options.multiple  | `boolean`                                           | -       | The multiple mode              |
-| options.onDrop    | `(files: File[] \| null, event: DragEvent) => void` | -       | The on drop callback function  |
-| options.onEnter   | `(event: DragEvent) => void`                        | -       | The on enter callback function |
-| options.onLeave   | `(event: DragEvent) => void`                        | -       | The on leave callback function |
-| options.onOver    | `(event: DragEvent) => void`                        | -       | The on over callback function  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.dataTypes | `DataTypes` | - | The data types |
+| options.multiple | `boolean` | - | The multiple mode |
+| options.onDrop | `(files: File[] \| null, event: DragEvent) => void` | - | The on drop callback function |
+| options.onEnter | `(event: DragEvent) => void` | - | The on enter callback function |
+| options.onLeave | `(event: DragEvent) => void` | - | The on leave callback function |
+| options.onOver | `(event: DragEvent) => void` | - | The on over callback function |
 
 #### Returns
 
@@ -519,9 +519,9 @@ export interface UseDropZone {
 
 #### Parameters
 
-| Name     | Type                                                | Default | Note                                        |
-| -------- | --------------------------------------------------- | ------- | ------------------------------------------- |
-| callback | `(files: File[] \| null, event: DragEvent) => void` | -       | The callback function to be invoked on drop |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(files: File[] \| null, event: DragEvent) => void` | - | The callback function to be invoked on drop |
 
 #### Returns
 

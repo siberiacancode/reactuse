@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useDidUpdate } from '@siberiacancode/reactuse';
 import { CheckIcon, LoaderIcon } from 'lucide-react';

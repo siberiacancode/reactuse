@@ -239,11 +239,11 @@ export interface UseCounter {
 
 #### Parameters
 
-| Name         | Type     | Default                  | Note                     |
-| ------------ | -------- | ------------------------ | ------------------------ |
-| initialValue | `number` | 0                        | The initial number value |
-| options.min  | `number` | Number.NEGATIVE_INFINITY | The min of count value   |
-| options.max  | `number` | Number.POSITIVE_INFINITY | The max of count value   |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `number` | 0 | The initial number value |
+| options.min | `number` | Number.NEGATIVE_INFINITY | The min of count value |
+| options.max | `number` | Number.POSITIVE_INFINITY | The max of count value |
 
 #### Returns
 
@@ -253,11 +253,11 @@ export interface UseCounter {
 
 #### Parameters
 
-| Name                | Type     | Default                  | Note                     |
-| ------------------- | -------- | ------------------------ | ------------------------ |
-| params.initialValue | `number` | 0                        | The initial number value |
-| params.min          | `number` | Number.NEGATIVE_INFINITY | The min of count value   |
-| params.max          | `number` | Number.POSITIVE_INFINITY | The max of count value   |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| params.initialValue | `number` | 0 | The initial number value |
+| params.min | `number` | Number.NEGATIVE_INFINITY | The min of count value |
+| params.max | `number` | Number.POSITIVE_INFINITY | The max of count value |
 
 #### Returns
 

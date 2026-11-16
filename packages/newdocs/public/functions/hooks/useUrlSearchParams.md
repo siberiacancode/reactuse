@@ -476,14 +476,14 @@ export interface UseUrlSearchParams {
 
 #### Parameters
 
-| Name                 | Type                                                                                         | Default   | Note                                                               |
-| -------------------- | -------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------ |
-| options              | `UseUrlSearchParamsOptions<Value> & { initialValue: UseUrlSearchParamsInitialValue<Value> }` | -         | The options object with required initialValue                      |
-| options.initialValue | `UseUrlSearchParamsInitialValue<Value>`                                                      | -         | The initial value for the url params                               |
-| options.mode         | `UrlSearchParamsMode`                                                                        | 'history' | The mode to use for the URL ('history' \| 'hash-params' \| 'hash') |
-| options.write        | `'push' \| 'replace'`                                                                        | 'replace' | The mode to use for writing to the URL                             |
-| options.serializer   | `(value: Value[keyof Value]) => string`                                                      | -         | Custom serializer function to convert value to string              |
-| options.deserializer | `(value: string) => Value[keyof Value]`                                                      | -         | Custom deserializer function to convert string to value            |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options | `UseUrlSearchParamsOptions<Value> & { initialValue: UseUrlSearchParamsInitialValue<Value> }` | - | The options object with required initialValue |
+| options.initialValue | `UseUrlSearchParamsInitialValue<Value>` | - | The initial value for the url params |
+| options.mode | `UrlSearchParamsMode` | 'history' | The mode to use for the URL ('history' \| 'hash-params' \| 'hash') |
+| options.write | `'push' \| 'replace'` | 'replace' | The mode to use for writing to the URL |
+| options.serializer | `(value: Value[keyof Value]) => string` | - | Custom serializer function to convert value to string |
+| options.deserializer | `(value: string) => Value[keyof Value]` | - | Custom deserializer function to convert string to value |
 
 #### Returns
 
@@ -493,9 +493,9 @@ export interface UseUrlSearchParams {
 
 #### Parameters
 
-| Name         | Type                                    | Default | Note                                 |
-| ------------ | --------------------------------------- | ------- | ------------------------------------ |
-| initialValue | `UseUrlSearchParamsInitialValue<Value>` | -       | The initial value for the url params |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `UseUrlSearchParamsInitialValue<Value>` | - | The initial value for the url params |
 
 #### Returns
 

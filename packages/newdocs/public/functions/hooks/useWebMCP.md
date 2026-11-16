@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1794732751297
+lastModifiedTime: 1794763416000
 ---
 
 # useWebMCP
@@ -248,12 +248,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { supported, registered, error, register, unregister } = useWebMCP({
-  name: 'add-todo',
-  description: 'Adds a todo item',
-  inputSchema: { type: 'object', properties: { text: { type: 'string' } }, required: ['text'] },
-  execute: ({ text }) => addTodo(text)
-});
+const { supported, registered, error, register, unregister } = useWebMCP({ name: 'add-todo', description: 'Adds a todo item', inputSchema: { type: 'object', properties: { text: { type: 'string' } }, required: ['text'] }, execute: ({ text }) => addTodo(text) });
 ```
 
 ## Type Declarations
@@ -297,8 +292,8 @@ export interface WebMCPModelContext {
 }
 
 interface Document {
-  readonly modelContext?: WebMCPModelContext;
-}
+    readonly modelContext?: WebMCPModelContext;
+  }
 
 export type UseWebMCPCommonOptions = Omit<WebMCPModelContextRegisterToolOptions, 'signal'> & {
   /** Whether the tool should be registered immediately */
@@ -325,17 +320,17 @@ export interface UseWebMCPReturn {
 
 ### Parameters
 
-| Name                | Type               | Default | Note                                              |
-| ------------------- | ------------------ | ------- | ------------------------------------------------- |
-| options             | `UseWebMCPOptions` | -       | The tool definition and registration options      |
-| options.name        | `string`           | -       | The tool name                                     |
-| options.title       | `string`           | -       | The human-readable tool title                     |
-| options.description | `string`           | -       | The tool description                              |
-| options.inputSchema | `object`           | -       | The JSON schema describing the tool input         |
-| options.execute     | `Function`         | -       | The function to execute when the tool is called   |
-| options.annotations | `object`           | -       | The metadata describing the tool behavior         |
-| options.immediately | `boolean`          | true    | Whether the tool should be registered immediately |
-| options.exposedTo   | `string[]`         | -       | The origins allowed to call the tool              |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options | `UseWebMCPOptions` | - | The tool definition and registration options |
+| options.name | `string` | - | The tool name |
+| options.title | `string` | - | The human-readable tool title |
+| options.description | `string` | - | The tool description |
+| options.inputSchema | `object` | - | The JSON schema describing the tool input |
+| options.execute | `Function` | - | The function to execute when the tool is called |
+| options.annotations | `object` | - | The metadata describing the tool behavior |
+| options.immediately | `boolean` | true | Whether the tool should be registered immediately |
+| options.exposedTo | `string[]` | - | The origins allowed to call the tool |
 
 ### Returns
 

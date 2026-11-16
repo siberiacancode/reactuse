@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useBoolean, useTimeout } from '@siberiacancode/reactuse';
 import { Webcam } from '@webcam/react';

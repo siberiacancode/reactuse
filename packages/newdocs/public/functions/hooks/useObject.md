@@ -281,11 +281,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { value, set, reset, remove, clear, has, keys, empty, size } = useObject({
-  name: 'John',
-  age: 30,
-  isActive: true
-});
+const { value, set, reset, remove, clear, has, keys, empty, size } = useObject({ name: 'John', age: 30, isActive: true });
 ```
 
 ## Type Declarations
@@ -317,9 +313,9 @@ export interface UseObjectReturn<Value extends object> {
 
 ### Parameters
 
-| Name         | Type    | Default | Note                     |
-| ------------ | ------- | ------- | ------------------------ |
-| initialValue | `Value` | -       | The initial object value |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `Value` | - | The initial object value |
 
 ### Returns
 

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useBluetooth } from '@siberiacancode/reactuse';
 import { BluetoothConnectedIcon, BluetoothIcon } from 'lucide-react';

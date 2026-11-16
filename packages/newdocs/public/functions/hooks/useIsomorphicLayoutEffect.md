@@ -72,5 +72,5 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-useIsomorphicLayoutEffect(() => console.log('effect'), []);
+useIsomorphicLayoutEffect(() => console.log('effect'), [])
 ```

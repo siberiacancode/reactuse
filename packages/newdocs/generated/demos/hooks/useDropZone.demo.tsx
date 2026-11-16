@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useDropZone, useFileDialog } from '@siberiacancode/reactuse';
 import { ImageIcon, UploadCloudIcon, XIcon } from 'lucide-react';

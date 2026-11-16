@@ -374,12 +374,12 @@ export interface UseDraggable {
 
 #### Parameters
 
-| Name                 | Type                   | Default | Note                                 |
-| -------------------- | ---------------------- | ------- | ------------------------------------ |
-| target               | `HookTarget`           | -       | The target element to make draggable |
-| options.enabled      | `boolean`              | true    | The enabled state of the draggable   |
-| options.axis         | `'x' \| 'y' \| 'both'` | 'both'  | The axis to drag on                  |
-| options.initialValue | `UseDraggablePosition` | -       | The initial position of the element  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to make draggable |
+| options.enabled | `boolean` | true | The enabled state of the draggable |
+| options.axis | `'x' \| 'y' \| 'both'` | 'both' | The axis to drag on |
+| options.initialValue | `UseDraggablePosition` | - | The initial position of the element |
 
 #### Returns
 
@@ -389,11 +389,11 @@ export interface UseDraggable {
 
 #### Parameters
 
-| Name                 | Type                   | Default | Note                                |
-| -------------------- | ---------------------- | ------- | ----------------------------------- |
-| options.enabled      | `boolean`              | true    | The enabled state of the draggable  |
-| options.axis         | `'x' \| 'y' \| 'both'` | 'both'  | The axis to drag on                 |
-| options.initialValue | `UseDraggablePosition` | -       | The initial position of the element |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.enabled | `boolean` | true | The enabled state of the draggable |
+| options.axis | `'x' \| 'y' \| 'both'` | 'both' | The axis to drag on |
+| options.initialValue | `UseDraggablePosition` | - | The initial position of the element |
 
 #### Returns
 

@@ -229,20 +229,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const {
-  value,
-  add,
-  remove,
-  clear,
-  reset,
-  toggle,
-  union,
-  intersection,
-  difference,
-  symmetricDifference,
-  size,
-  has
-} = useSet([1, 2, 3]);
+const { value, add, remove, clear, reset, toggle, union, intersection, difference, symmetricDifference, size, has } = useSet([1, 2, 3]);
 ```
 
 ## Type Declarations
@@ -280,9 +267,9 @@ interface UseSetReturn<Value> {
 
 ### Parameters
 
-| Name   | Type      | Default | Note                         |
-| ------ | --------- | ------- | ---------------------------- |
-| values | `Value[]` | -       | The initial array of the set |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| values | `Value[]` | - | The initial array of the set |
 
 ### Returns
 

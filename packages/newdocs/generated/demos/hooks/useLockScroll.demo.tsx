@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useDisclosure, useLockScroll } from '@siberiacancode/reactuse';
 import { XIcon } from 'lucide-react';

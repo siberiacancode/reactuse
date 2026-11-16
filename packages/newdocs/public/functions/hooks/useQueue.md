@@ -257,9 +257,9 @@ export interface UseQueueReturn<Value> {
 
 ### Parameters
 
-| Name         | Type      | Default | Note                           |
-| ------------ | --------- | ------- | ------------------------------ |
-| initialValue | `Value[]` | []      | The initial value of the queue |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `Value[]` | [] | The initial value of the queue |
 
 ### Returns
 

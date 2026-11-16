@@ -243,10 +243,10 @@ export interface UseTextDirection {
 
 #### Parameters
 
-| Name         | Type                    | Default                        | Note                                 |
-| ------------ | ----------------------- | ------------------------------ | ------------------------------------ |
-| target       | `HookTarget`            | document.querySelector('html') | The target element to observe        |
-| initialValue | `UseTextDirectionValue` | 'ltr'                          | The initial direction of the element |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | document.querySelector('html') | The target element to observe |
+| initialValue | `UseTextDirectionValue` | 'ltr' | The initial direction of the element |
 
 #### Returns
 
@@ -256,9 +256,9 @@ export interface UseTextDirection {
 
 #### Parameters
 
-| Name         | Type                    | Default | Note                                 |
-| ------------ | ----------------------- | ------- | ------------------------------------ |
-| initialValue | `UseTextDirectionValue` | 'ltr'   | The initial direction of the element |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `UseTextDirectionValue` | 'ltr' | The initial direction of the element |
 
 #### Returns
 

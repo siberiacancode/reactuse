@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useForm } from '@siberiacancode/reactuse';
 import { CheckIcon, ChevronDownIcon } from 'lucide-react';

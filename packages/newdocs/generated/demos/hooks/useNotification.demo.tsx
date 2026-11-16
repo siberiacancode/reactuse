@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useNotification, usePermission } from '@siberiacancode/reactuse';
 import { BellIcon, CheckIcon } from 'lucide-react';

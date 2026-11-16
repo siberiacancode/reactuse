@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useDevicePixelRatio } from '@siberiacancode/reactuse';
 

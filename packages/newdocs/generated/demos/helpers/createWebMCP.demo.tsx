@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { createWebMCP } from '@siberiacancode/reactuse';
 import { BotIcon } from 'lucide-react';
@@ -10,7 +10,7 @@ const Demo = () => {
   useEffect(() => {
     if (!webMCP.supported) return;
 
-    void webMCP.register({
+    webMCP.register({
       name: 'get-react-hooks',
       title: 'Get React hooks',
       description: 'Returns all React hooks available in the reactuse documentation',

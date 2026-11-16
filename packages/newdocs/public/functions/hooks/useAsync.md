@@ -255,10 +255,10 @@ export interface UseAsyncReturn<Data> {
 
 ### Parameters
 
-| Name     | Type                  | Default | Note                             |
-| -------- | --------------------- | ------- | -------------------------------- |
-| callback | `() => Promise<Data>` | -       | The async callback               |
-| deps     | `DependencyList`      | []      | The dependencies of the callback |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `() => Promise<Data>` | - | The async callback |
+| deps | `DependencyList` | [] | The dependencies of the callback |
 
 ### Returns
 

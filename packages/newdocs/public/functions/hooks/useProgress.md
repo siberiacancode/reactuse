@@ -407,14 +407,14 @@ export interface UseProgressReturn {
 
 ### Parameters
 
-| Name            | Type      | Default | Note                                                        |
-| --------------- | --------- | ------- | ----------------------------------------------------------- |
-| initialProgress | `number`  | -       | Initial progress value in range 0..1                        |
-| options.active  | `boolean` | -       | Controls progress externally (true -> start, false -> done) |
-| options.maximum | `number`  | 0.95    | Maximum value when progress starts                          |
-| options.speed   | `number`  | 250     | Auto increment interval in milliseconds                     |
-| options.rate    | `number`  | 0.02    | Additional random increment amount on each tick             |
-| options.delay   | `number`  | 250     | Delay before reset to null after done                       |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialProgress | `number` | - | Initial progress value in range 0..1 |
+| options.active | `boolean` | - | Controls progress externally (true -> start, false -> done) |
+| options.maximum | `number` | 0.95 | Maximum value when progress starts |
+| options.speed | `number` | 250 | Auto increment interval in milliseconds |
+| options.rate | `number` | 0.02 | Additional random increment amount on each tick |
+| options.delay | `number` | 250 | Delay before reset to null after done |
 
 ### Returns
 

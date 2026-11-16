@@ -612,10 +612,10 @@ interface Coords {
 
 #### Parameters
 
-| Name     | Type               | Default | Note                                 |
-| -------- | ------------------ | ------- | ------------------------------------ |
-| target   | `HookTarget`       | -       | The target element to track swipe on |
-| callback | `UseSwipeCallback` | -       | Swipe move callback                  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to track swipe on |
+| callback | `UseSwipeCallback` | - | Swipe move callback |
 
 #### Returns
 
@@ -625,9 +625,9 @@ interface Coords {
 
 #### Parameters
 
-| Name     | Type               | Default | Note                |
-| -------- | ------------------ | ------- | ------------------- |
-| callback | `UseSwipeCallback` | -       | Swipe move callback |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `UseSwipeCallback` | - | Swipe move callback |
 
 #### Returns
 
@@ -637,10 +637,10 @@ interface Coords {
 
 #### Parameters
 
-| Name    | Type              | Default | Note                                 |
-| ------- | ----------------- | ------- | ------------------------------------ |
-| target  | `HookTarget`      | -       | The target element to track swipe on |
-| options | `UseSwipeOptions` | -       | Swipe options                        |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to track swipe on |
+| options | `UseSwipeOptions` | - | Swipe options |
 
 #### Returns
 
@@ -650,9 +650,9 @@ interface Coords {
 
 #### Parameters
 
-| Name    | Type              | Default | Note          |
-| ------- | ----------------- | ------- | ------------- |
-| options | `UseSwipeOptions` | -       | Swipe options |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options | `UseSwipeOptions` | - | Swipe options |
 
 #### Returns
 

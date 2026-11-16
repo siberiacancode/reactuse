@@ -14,7 +14,9 @@
   "description": "Creates a typed context with additional utilities",
   "category": "Helpers",
   "lastModified": 1779190580000,
-  "examples": ["const { useSelect, instance, Provider } = createContext<number>(0);"],
+  "examples": [
+    "const { useSelect, instance, Provider } = createContext<number>(0);"
+  ],
   "apiParameters": [
     {
       "tag": "param",

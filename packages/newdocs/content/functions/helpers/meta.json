@@ -1,14 +1,7 @@
 {
-  "pages": [
-    "---helpers---",
-    "cn",
-    "createContext",
-    "createEventEmitter",
-    "createReactiveContext",
-    "createStore",
-    "createWebMCP",
-    "deepEqual",
-    "makeDestructurable",
-    "shallowEqual"
-  ]
-}
+    "pages": [
+      
+      "---helpers---",
+      "cn","createContext","createEventEmitter","createReactiveContext","createStore","createWebMCP","deepEqual","makeDestructurable","shallowEqual"
+    ]
+  }

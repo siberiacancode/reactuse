@@ -60,7 +60,9 @@
   "description": "Hook that returns the device's pixel ratio",
   "category": "Utilities",
   "lastModified": 1781981977000,
-  "examples": ["const { supported, value } = useDevicePixelRatio();"],
+  "examples": [
+    "const { supported, value } = useDevicePixelRatio();"
+  ],
   "apiParameters": [
     {
       "tag": "param",

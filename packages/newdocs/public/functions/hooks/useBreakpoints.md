@@ -373,12 +373,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({
-  mobile: 0,
-  tablet: 640,
-  laptop: 1024,
-  desktop: 1280
-});
+const { greater, smaller, between, current, active, ...breakpoints } = useBreakpoints({ mobile: 0, tablet: 640, laptop: 1024, desktop: 1280 });
 ```
 
 ## Type Declarations
@@ -410,10 +405,10 @@ export type UseBreakpointsReturn<Breakpoint extends string = string> = {
 
 ### Parameters
 
-| Name        | Type                      | Default   | Note                             |
-| ----------- | ------------------------- | --------- | -------------------------------- |
-| breakpoints | `Breakpoints<Breakpoint>` | -         | The breakpoints to use           |
-| strategy    | `UseBreakpointsStrategy`  | min-width | The strategy to use for matching |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| breakpoints | `Breakpoints<Breakpoint>` | - | The breakpoints to use |
+| strategy | `UseBreakpointsStrategy` | min-width | The strategy to use for matching |
 
 ### Returns
 

@@ -150,9 +150,9 @@ useUnmount(() => console.log('This effect runs on component unmount'));
 
 ### Parameters
 
-| Name     | Type         | Default | Note                                                     |
-| -------- | ------------ | ------- | -------------------------------------------------------- |
-| callback | `() => void` | -       | The callback function to be invoked on component unmount |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `() => void` | - | The callback function to be invoked on component unmount |
 
 ### Returns
 

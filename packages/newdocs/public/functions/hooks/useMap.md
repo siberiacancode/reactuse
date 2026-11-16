@@ -276,9 +276,9 @@ export interface UseMapReturn<Key, Value> {
 
 ### Parameters
 
-| Name   | Type      | Default | Note                         |
-| ------ | --------- | ------- | ---------------------------- |
-| values | `Value[]` | -       | The initial array of the map |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| values | `Value[]` | - | The initial array of the map |
 
 ### Returns
 

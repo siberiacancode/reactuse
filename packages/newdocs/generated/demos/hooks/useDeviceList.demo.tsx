@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useClickOutside, useDeviceList, useDisclosure } from '@siberiacancode/reactuse';
 import { CameraIcon, CheckIcon, MicIcon } from 'lucide-react';

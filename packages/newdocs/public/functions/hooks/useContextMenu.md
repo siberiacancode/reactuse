@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1781376500000
+lastModifiedTime: 1794763416000
 ---
 
 # useContextMenu
@@ -444,10 +444,10 @@ export interface UseContextMenu {
 
 #### Parameters
 
-| Name     | Type                     | Default | Note                                                    |
-| -------- | ------------------------ | ------- | ------------------------------------------------------- |
-| target   | `HookTarget`             | -       | The target element for context menu handling            |
-| callback | `UseContextMenuCallback` | -       | The callback function to be invoked when the menu opens |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element for context menu handling |
+| callback | `UseContextMenuCallback` | - | The callback function to be invoked when the menu opens |
 
 #### Returns
 
@@ -457,15 +457,15 @@ export interface UseContextMenu {
 
 #### Parameters
 
-| Name            | Type                                | Default | Note                                                            |
-| --------------- | ----------------------------------- | ------- | --------------------------------------------------------------- |
-| target          | `HookTarget`                        | -       | The target element for context menu handling                    |
-| options.delay   | `number`                            | 500     | The long press delay on touch devices in milliseconds           |
-| options.enabled | `boolean`                           | true    | The enabled state of the hook                                   |
-| options.onOpen  | `UseContextMenuCallback`            | -       | The callback function to be invoked when the menu opens         |
-| options.onClose | `() => void`                        | -       | The callback function to be invoked when the menu closes        |
-| options.onStart | `(event: ContextMenuEvent) => void` | -       | The callback function to be invoked when the interaction starts |
-| options.onEnd   | `(event: ContextMenuEvent) => void` | -       | The callback function to be invoked when the interaction ends   |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element for context menu handling |
+| options.delay | `number` | 500 | The long press delay on touch devices in milliseconds |
+| options.enabled | `boolean` | true | The enabled state of the hook |
+| options.onOpen | `UseContextMenuCallback` | - | The callback function to be invoked when the menu opens |
+| options.onClose | `() => void` | - | The callback function to be invoked when the menu closes |
+| options.onStart | `(event: ContextMenuEvent) => void` | - | The callback function to be invoked when the interaction starts |
+| options.onEnd | `(event: ContextMenuEvent) => void` | - | The callback function to be invoked when the interaction ends |
 
 #### Returns
 
@@ -475,9 +475,9 @@ export interface UseContextMenu {
 
 #### Parameters
 
-| Name     | Type                     | Default | Note                                                    |
-| -------- | ------------------------ | ------- | ------------------------------------------------------- |
-| callback | `UseContextMenuCallback` | -       | The callback function to be invoked when the menu opens |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `UseContextMenuCallback` | - | The callback function to be invoked when the menu opens |
 
 #### Returns
 
@@ -487,14 +487,14 @@ export interface UseContextMenu {
 
 #### Parameters
 
-| Name            | Type                                | Default | Note                                                            |
-| --------------- | ----------------------------------- | ------- | --------------------------------------------------------------- |
-| options.delay   | `number`                            | 500     | The long press delay on touch devices in milliseconds           |
-| options.enabled | `boolean`                           | true    | The enabled state of the hook                                   |
-| options.onOpen  | `UseContextMenuCallback`            | -       | The callback function to be invoked when the menu opens         |
-| options.onClose | `() => void`                        | -       | The callback function to be invoked when the menu closes        |
-| options.onStart | `(event: ContextMenuEvent) => void` | -       | The callback function to be invoked when the interaction starts |
-| options.onEnd   | `(event: ContextMenuEvent) => void` | -       | The callback function to be invoked when the interaction ends   |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.delay | `number` | 500 | The long press delay on touch devices in milliseconds |
+| options.enabled | `boolean` | true | The enabled state of the hook |
+| options.onOpen | `UseContextMenuCallback` | - | The callback function to be invoked when the menu opens |
+| options.onClose | `() => void` | - | The callback function to be invoked when the menu closes |
+| options.onStart | `(event: ContextMenuEvent) => void` | - | The callback function to be invoked when the interaction starts |
+| options.onEnd | `(event: ContextMenuEvent) => void` | - | The callback function to be invoked when the interaction ends |
 
 #### Returns
 

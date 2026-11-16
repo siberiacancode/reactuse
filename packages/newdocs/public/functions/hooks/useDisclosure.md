@@ -276,11 +276,11 @@ export interface UseDisclosureReturn {
 
 ### Parameters
 
-| Name            | Type         | Default | Note                                         |
-| --------------- | ------------ | ------- | -------------------------------------------- |
-| initialValue    | `boolean`    | false   | The initial value of the component           |
-| options.onOpen  | `() => void` | -       | The callback function to be invoked on open  |
-| options.onClose | `() => void` | -       | The callback function to be invoked on close |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `boolean` | false | The initial value of the component |
+| options.onOpen | `() => void` | - | The callback function to be invoked on open |
+| options.onClose | `() => void` | - | The callback function to be invoked on close |
 
 ### Returns
 

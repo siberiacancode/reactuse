@@ -312,9 +312,9 @@ export interface UseStepReturn {
 
 #### Parameters
 
-| Name | Type     | Default | Note                    |
-| ---- | -------- | ------- | ----------------------- |
-| max  | `number` | -       | Maximum number of steps |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| max | `number` | - | Maximum number of steps |
 
 #### Returns
 
@@ -324,10 +324,10 @@ export interface UseStepReturn {
 
 #### Parameters
 
-| Name           | Type     | Default | Note                    |
-| -------------- | -------- | ------- | ----------------------- |
-| params.max     | `number` | -       | Maximum number of steps |
-| params.initial | `number` | -       | Initial value for step  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| params.max | `number` | - | Maximum number of steps |
+| params.initial | `number` | - | Initial value for step |
 
 #### Returns
 

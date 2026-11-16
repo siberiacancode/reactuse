@@ -212,8 +212,8 @@ export interface EyeDropperConstructor {
 }
 
 interface Window {
-  readonly EyeDropper?: EyeDropperConstructor | undefined;
-}
+    readonly EyeDropper?: EyeDropperConstructor | undefined;
+  }
 
 export interface UseEyeDropperReturn {
   /** The eye dropper supported status */
@@ -229,8 +229,8 @@ export interface UseEyeDropperReturn {
 
 ### Parameters
 
-| Name         | Type     | Default   | Note                                  |
-| ------------ | -------- | --------- | ------------------------------------- |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
 | initialValue | `string` | undefined | The initial value for the eye dropper |
 
 ### Returns

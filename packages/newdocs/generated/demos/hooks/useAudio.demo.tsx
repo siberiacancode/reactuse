@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useAudio } from '@siberiacancode/reactuse';
 import { CircleIcon, XIcon } from 'lucide-react';

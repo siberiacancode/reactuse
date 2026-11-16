@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useUrlSearchParams } from '@siberiacancode/reactuse';
 import { ClockIcon, SearchIcon } from 'lucide-react';

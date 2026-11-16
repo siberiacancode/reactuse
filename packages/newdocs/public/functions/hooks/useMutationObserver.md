@@ -324,15 +324,15 @@ export interface UseMutationObserver {
 
 #### Parameters
 
-| Name                  | Type                          | Default | Note                                                                                          |
-| --------------------- | ----------------------------- | ------- | --------------------------------------------------------------------------------------------- |
-| target                | `HookTarget`                  | -       | The target element to observe                                                                 |
-| options.enabled       | `boolean`                     | true    | The enabled state of the mutation observer                                                    |
-| options.onChange      | `UseMutationObserverCallback` | -       | The callback to execute when mutation is detected                                             |
-| options.attributes    | `boolean`                     | -       | Set to true if mutations to target's attributes are to be observed                            |
-| options.characterData | `boolean`                     | -       | Set to true if mutations to target's data are to be observed                                  |
-| options.childList     | `boolean`                     | -       | Set to true if mutations to target's children are to be observed                              |
-| options.subtree       | `boolean`                     | -       | Set to true if mutations to not just target, but also target's descendants are to be observed |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to observe |
+| options.enabled | `boolean` | true | The enabled state of the mutation observer |
+| options.onChange | `UseMutationObserverCallback` | - | The callback to execute when mutation is detected |
+| options.attributes | `boolean` | - | Set to true if mutations to target's attributes are to be observed |
+| options.characterData | `boolean` | - | Set to true if mutations to target's data are to be observed |
+| options.childList | `boolean` | - | Set to true if mutations to target's children are to be observed |
+| options.subtree | `boolean` | - | Set to true if mutations to not just target, but also target's descendants are to be observed |
 
 #### Returns
 
@@ -342,14 +342,14 @@ export interface UseMutationObserver {
 
 #### Parameters
 
-| Name                  | Type                          | Default | Note                                                                                          |
-| --------------------- | ----------------------------- | ------- | --------------------------------------------------------------------------------------------- |
-| options.enabled       | `boolean`                     | true    | The enabled state of the mutation observer                                                    |
-| options.onChange      | `UseMutationObserverCallback` | -       | The callback to execute when mutation is detected                                             |
-| options.attributes    | `boolean`                     | -       | Set to true if mutations to target's attributes are to be observed                            |
-| options.characterData | `boolean`                     | -       | Set to true if mutations to target's data are to be observed                                  |
-| options.childList     | `boolean`                     | -       | Set to true if mutations to target's children are to be observed                              |
-| options.subtree       | `boolean`                     | -       | Set to true if mutations to not just target, but also target's descendants are to be observed |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.enabled | `boolean` | true | The enabled state of the mutation observer |
+| options.onChange | `UseMutationObserverCallback` | - | The callback to execute when mutation is detected |
+| options.attributes | `boolean` | - | Set to true if mutations to target's attributes are to be observed |
+| options.characterData | `boolean` | - | Set to true if mutations to target's data are to be observed |
+| options.childList | `boolean` | - | Set to true if mutations to target's children are to be observed |
+| options.subtree | `boolean` | - | Set to true if mutations to not just target, but also target's descendants are to be observed |
 
 #### Returns
 
@@ -359,9 +359,9 @@ export interface UseMutationObserver {
 
 #### Parameters
 
-| Name     | Type                          | Default | Note                                              |
-| -------- | ----------------------------- | ------- | ------------------------------------------------- |
-| callback | `UseMutationObserverCallback` | -       | The callback to execute when mutation is detected |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `UseMutationObserverCallback` | - | The callback to execute when mutation is detected |
 
 #### Returns
 
@@ -371,10 +371,10 @@ export interface UseMutationObserver {
 
 #### Parameters
 
-| Name     | Type                          | Default | Note                                              |
-| -------- | ----------------------------- | ------- | ------------------------------------------------- |
-| callback | `UseMutationObserverCallback` | -       | The callback to execute when mutation is detected |
-| target   | `HookTarget`                  | -       | The target element to observe                     |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `UseMutationObserverCallback` | - | The callback to execute when mutation is detected |
+| target | `HookTarget` | - | The target element to observe |
 
 #### Returns
 

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { usePreferredReducedMotion } from '@siberiacancode/reactuse';
 import { Loader2Icon } from 'lucide-react';

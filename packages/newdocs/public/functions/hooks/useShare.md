@@ -190,9 +190,9 @@ export interface UseShareReturn {
 
 ### Parameters
 
-| Name   | Type             | Default | Note                  |
-| ------ | ---------------- | ------- | --------------------- |
-| params | `UseShareParams` | -       | The use share options |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| params | `UseShareParams` | - | The use share options |
 
 ### Returns
 

@@ -270,10 +270,10 @@ export interface UseMeasure {
 
 #### Parameters
 
-| Name     | Type                                                                                     | Default | Note                                      |
-| -------- | ---------------------------------------------------------------------------------------- | ------- | ----------------------------------------- |
-| target   | `HookTarget`                                                                             | -       | The element to measure                    |
-| callback | `(value: UseMeasureValue, entry: ResizeObserverEntry, observer: ResizeObserver) => void` | -       | The callback to invoke on measure updates |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The element to measure |
+| callback | `(value: UseMeasureValue, entry: ResizeObserverEntry, observer: ResizeObserver) => void` | - | The callback to invoke on measure updates |
 
 #### Returns
 
@@ -283,9 +283,9 @@ export interface UseMeasure {
 
 #### Parameters
 
-| Name     | Type                                                                                     | Default | Note                                      |
-| -------- | ---------------------------------------------------------------------------------------- | ------- | ----------------------------------------- |
-| callback | `(value: UseMeasureValue, entry: ResizeObserverEntry, observer: ResizeObserver) => void` | -       | The callback to invoke on measure updates |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(value: UseMeasureValue, entry: ResizeObserverEntry, observer: ResizeObserver) => void` | - | The callback to invoke on measure updates |
 
 #### Returns
 

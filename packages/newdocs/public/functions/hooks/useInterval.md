@@ -193,9 +193,7 @@ Update the import paths to match your project setup.
 ```tsx
 const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), 2500);
 // or
-const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), {
-  interval: 2500
-});
+const { active, pause, resume, toggle } = useInterval(() => console.log('inside interval'), { interval: 2500 });
 ```
 
 ## Type Declarations
@@ -230,11 +228,11 @@ interface UseInterval {
 
 #### Parameters
 
-| Name                | Type         | Default | Note                           |
-| ------------------- | ------------ | ------- | ------------------------------ |
-| callback            | `() => void` | -       | Any callback function          |
-| interval            | `number`     | 1000    | Time in milliseconds           |
-| options.immediately | `boolean`    | true    | Start the interval immediately |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `() => void` | - | Any callback function |
+| interval | `number` | 1000 | Time in milliseconds |
+| options.immediately | `boolean` | true | Start the interval immediately |
 
 #### Returns
 
@@ -244,8 +242,8 @@ interface UseInterval {
 
 #### Parameters
 
-| Name                | Type         | Default | Note                           |
-| ------------------- | ------------ | ------- | ------------------------------ |
-| callback            | `() => void` | -       | Any callback function          |
-| options.interval    | `number`     | 1000    | Time in milliseconds           |
-| options.immediately | `boolean`    | true    | Start the interval immediately |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `() => void` | - | Any callback function |
+| options.interval | `number` | 1000 | Time in milliseconds |
+| options.immediately | `boolean` | true | Start the interval immediately |

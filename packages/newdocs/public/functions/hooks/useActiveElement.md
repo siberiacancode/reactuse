@@ -251,9 +251,9 @@ export interface UseActiveElement {
 
 #### Parameters
 
-| Name   | Type         | Default | Note                                                 |
-| ------ | ------------ | ------- | ---------------------------------------------------- |
-| target | `HookTarget` | window  | The target element to observe active element changes |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | window | The target element to observe active element changes |
 
 #### Returns
 

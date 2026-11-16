@@ -255,12 +255,9 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion(
-  (event) => console.log(event)
-).watch();
+const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion((event) => console.log(event)).watch();
 // or
-const { interval, rotationRate, acceleration, accelerationIncludingGravity } =
-  useDeviceMotion().watch();
+const { interval, rotationRate, acceleration, accelerationIncludingGravity } = useDeviceMotion().watch();
 ```
 
 ## Type Declarations
@@ -298,9 +295,9 @@ export interface UseDeviceMotion {
 
 #### Parameters
 
-| Name     | Type                                 | Default | Note                                |
-| -------- | ------------------------------------ | ------- | ----------------------------------- |
-| callback | `(event: DeviceMotionEvent) => void` | -       | The callback function to be invoked |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(event: DeviceMotionEvent) => void` | - | The callback function to be invoked |
 
 #### Returns
 
@@ -310,11 +307,11 @@ export interface UseDeviceMotion {
 
 #### Parameters
 
-| Name             | Type                                 | Default | Note                                |
-| ---------------- | ------------------------------------ | ------- | ----------------------------------- |
-| options          | `UseDeviceMotionOptions`             | -       | Configuration options               |
-| options.enabled  | `boolean`                            | -       | Whether to enable the hook          |
-| options.onChange | `(event: DeviceMotionEvent) => void` | -       | The callback function to be invoked |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options | `UseDeviceMotionOptions` | - | Configuration options |
+| options.enabled | `boolean` | - | Whether to enable the hook |
+| options.onChange | `(event: DeviceMotionEvent) => void` | - | The callback function to be invoked |
 
 #### Returns
 

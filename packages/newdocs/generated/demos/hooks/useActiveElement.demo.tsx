@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useActiveElement } from '@siberiacancode/reactuse';
 import { AtSignIcon, InfoIcon } from 'lucide-react';

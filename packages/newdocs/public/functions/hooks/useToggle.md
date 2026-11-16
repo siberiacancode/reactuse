@@ -197,7 +197,7 @@ export type UseToggleReturn<Value> = readonly [Value, (value?: Value) => void];
  * @example
  * const [value, toggle] = useToggle(['light', 'dark'] as const);
  */
-export const useToggle = <Value = boolean,>(values: readonly Value[] = [false, true] as any) => {
+export const useToggle = <Value = boolean>(values: readonly Value[] = [false, true] as any) => {
   const [[option], toggle] = useReducer((state: Value[], action: SetStateAction<Value>) => {
     const value =
       typeof action === 'function' ? (action as (prevState: Value) => Value)(state[0]) : action;
@@ -231,6 +231,6 @@ export type UseToggleReturn<Value> = readonly [Value, (value?: Value) => void];
 
 ### Parameters
 
-| Name   | Type      | Default       | Note                 |
-| ------ | --------- | ------------- | -------------------- |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
 | values | `Value[]` | [false, true] | The values to toggle |

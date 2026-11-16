@@ -1,7 +1,13 @@
 import type { ComponentProps } from 'react';
 
-export const LogoIcon = (props: ComponentProps<'span'>) => (
-  <span aria-hidden='true' {...props}>
+import { cn } from '@/src/lib';
+
+export const LogoIcon = ({ className, ...props }: ComponentProps<'span'>) => (
+  <span
+    aria-hidden='true'
+    className={cn('hidden [.classic-logo_&]:inline-flex', className)}
+    {...props}
+  >
     <svg
       className='block size-full'
       fill='none'

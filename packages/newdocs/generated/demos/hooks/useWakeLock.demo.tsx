@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useWakeLock } from '@siberiacancode/reactuse';
 import { MoonIcon } from 'lucide-react';

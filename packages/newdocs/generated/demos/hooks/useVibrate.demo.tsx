@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useVibrate } from '@siberiacancode/reactuse';
 import { PlayIcon } from 'lucide-react';

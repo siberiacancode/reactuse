@@ -315,10 +315,10 @@ export interface UseFocusTrap {
 
 #### Parameters
 
-| Name   | Type         | Default | Note                              |
-| ------ | ------------ | ------- | --------------------------------- |
-| target | `HookTarget` | -       | The target element for focus trap |
-| active | `boolean`    | true    | Whether focus trap is active      |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element for focus trap |
+| active | `boolean` | true | Whether focus trap is active |
 
 #### Returns
 
@@ -328,9 +328,9 @@ export interface UseFocusTrap {
 
 #### Parameters
 
-| Name   | Type      | Default | Note                         |
-| ------ | --------- | ------- | ---------------------------- |
-| active | `boolean` | true    | Whether focus trap is active |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| active | `boolean` | true | Whether focus trap is active |
 
 #### Returns
 

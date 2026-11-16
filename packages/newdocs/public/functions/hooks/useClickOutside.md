@@ -232,11 +232,11 @@ export interface UseClickOutside {
 
 #### Parameters
 
-| Name            | Type                     | Default | Note                                                                |
-| --------------- | ------------------------ | ------- | ------------------------------------------------------------------- |
-| target          | `HookTarget`             | -       | The target element(s) to detect outside clicks for                  |
-| callback        | `(event: Event) => void` | -       | The callback to execute when a click outside the target is detected |
-| options.enabled | `boolean`                | true    | Whether outside click handling is enabled                           |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element(s) to detect outside clicks for |
+| callback | `(event: Event) => void` | - | The callback to execute when a click outside the target is detected |
+| options.enabled | `boolean` | true | Whether outside click handling is enabled |
 
 #### Returns
 
@@ -246,10 +246,10 @@ export interface UseClickOutside {
 
 #### Parameters
 
-| Name            | Type                     | Default | Note                                                                |
-| --------------- | ------------------------ | ------- | ------------------------------------------------------------------- |
-| callback        | `(event: Event) => void` | -       | The callback to execute when a click outside the target is detected |
-| options.enabled | `boolean`                | true    | Whether outside click handling is enabled                           |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(event: Event) => void` | - | The callback to execute when a click outside the target is detected |
+| options.enabled | `boolean` | true | Whether outside click handling is enabled |
 
 #### Returns
 

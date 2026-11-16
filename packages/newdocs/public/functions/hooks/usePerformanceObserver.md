@@ -202,10 +202,10 @@ export type UsePerformanceObserverOptions = PerformanceObserverInit & {
 
 ### Parameters
 
-| Name     | Type                            | Default | Note                                       |
-| -------- | ------------------------------- | ------- | ------------------------------------------ |
-| options  | `UsePerformanceObserverOptions` | -       | The options for the performance observer   |
-| callback | `PerformanceObserverCallback`   | -       | The function to handle performance entries |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options | `UsePerformanceObserverOptions` | - | The options for the performance observer |
+| callback | `PerformanceObserverCallback` | - | The function to handle performance entries |
 
 ### Returns
 

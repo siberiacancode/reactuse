@@ -14,7 +14,9 @@
   "description": "Hook that creates a throttled callback",
   "category": "Utilities",
   "lastModified": 1788077977000,
-  "examples": ["const throttled = useThrottleCallback(() => console.log('callback'), 500);"],
+  "examples": [
+    "const throttled = useThrottleCallback(() => console.log('callback'), 500);"
+  ],
   "apiParameters": [
     {
       "tag": "param",

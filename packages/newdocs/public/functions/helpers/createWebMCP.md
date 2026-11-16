@@ -6,7 +6,7 @@ usage: low
 type: helper
 isTest: true
 isDemo: true
-lastModifiedTime: 1794732751021
+lastModifiedTime: 1794763416000
 ---
 
 # createWebMCP
@@ -26,7 +26,7 @@ const Demo = () => {
   useEffect(() => {
     if (!webMCP.supported) return;
 
-    void webMCP.register({
+    webMCP.register({
       name: 'get-react-hooks',
       title: 'Get React hooks',
       description: 'Returns all React hooks available in the reactuse documentation',
@@ -149,26 +149,16 @@ export const createWebMCP = (): createWebMCPReturn => {
     tool: WebMCPModelContextTool,
     options?: WebMCPModelContextRegisterToolOptions
   ) => {
-    if (!supported) return false;
-
     unregister(tool.name);
 
     const controller = new AbortController();
     registrations.set(tool.name, controller);
 
-    try {
-      await document.modelContext!.registerTool(tool, {
-        ...options,
-        signal: controller.signal
-      });
-      return registrations.get(tool.name) === controller;
-    } catch (error) {
-      if (registrations.get(tool.name) === controller) {
-        registrations.delete(tool.name);
-      }
-      controller.abort();
-      throw error;
-    }
+    await document.modelContext!.registerTool(tool, {
+      ...options,
+      signal: controller.signal
+    });
+    return registrations.get(tool.name) === controller;
   };
 
   const clear = () => {

@@ -311,9 +311,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { mutate, mutateAsync, isLoading, isError, isSuccess, error, data } = useMutation((name) =>
-  Promise.resolve(name)
-);
+const { mutate, mutateAsync, isLoading, isError, isSuccess, error, data } = useMutation((name) => Promise.resolve(name));
 ```
 
 ## Type Declarations
@@ -357,12 +355,12 @@ export interface RequestOptions<Data> extends UseMutationOptions<Data> {
 
 ### Parameters
 
-| Name              | Type                            | Default | Note                                           |
-| ----------------- | ------------------------------- | ------- | ---------------------------------------------- |
-| callback          | `(body: Body) => Promise<Data>` | -       | The callback function to be invoked            |
-| options.retry     | `boolean \| number`             | -       | The retry count of requests                    |
-| options.onSuccess | `(data: Data) => void`          | -       | The callback function to be invoked on success |
-| options.onError   | `(error: Error) => void`        | -       | The callback function to be invoked on error   |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(body: Body) => Promise<Data>` | - | The callback function to be invoked |
+| options.retry | `boolean \| number` | - | The retry count of requests |
+| options.onSuccess | `(data: Data) => void` | - | The callback function to be invoked on success |
+| options.onError | `(error: Error) => void` | - | The callback function to be invoked on error |
 
 ### Returns
 

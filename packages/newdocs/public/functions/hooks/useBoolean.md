@@ -110,7 +110,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const [on, toggle] = useBoolean();
+const [on, toggle] = useBoolean()
 ```
 
 ## Type Declarations
@@ -128,9 +128,9 @@ export type UseBooleanReturn = [
 
 ### Parameters
 
-| Name         | Type      | Default | Note                      |
-| ------------ | --------- | ------- | ------------------------- |
-| initialValue | `boolean` | false   | The initial boolean value |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `boolean` | false | The initial boolean value |
 
 ### Returns
 

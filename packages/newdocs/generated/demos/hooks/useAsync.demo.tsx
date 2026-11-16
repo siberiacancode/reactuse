@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useAsync, useCounter } from '@siberiacancode/reactuse';
 import { ArrowLeftIcon, ArrowRightIcon, Loader2Icon } from 'lucide-react';

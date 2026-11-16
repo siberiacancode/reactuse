@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useValidatedState } from '@siberiacancode/reactuse';
 import { Mail } from 'lucide-react';

@@ -387,10 +387,10 @@ export interface UseFocus {
 
 #### Parameters
 
-| Name     | Type                          | Default | Note                                         |
-| -------- | ----------------------------- | ------- | -------------------------------------------- |
-| target   | `HookTarget`                  | -       | The target element to focus                  |
-| callback | `(event: FocusEvent) => void` | -       | The callback function to be invoked on focus |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to focus |
+| callback | `(event: FocusEvent) => void` | - | The callback function to be invoked on focus |
 
 #### Returns
 
@@ -400,13 +400,13 @@ export interface UseFocus {
 
 #### Parameters
 
-| Name                 | Type                          | Default | Note                                         |
-| -------------------- | ----------------------------- | ------- | -------------------------------------------- |
-| target               | `HookTarget`                  | -       | The target element to focus                  |
-| options.enabled      | `boolean`                     | true    | The enabled state of the focus hook          |
-| options.initialValue | `boolean`                     | false   | The initial focus state of the target        |
-| options.onFocus      | `(event: FocusEvent) => void` | -       | The callback function to be invoked on focus |
-| options.onBlur       | `(event: FocusEvent) => void` | -       | The callback function to be invoked on blur  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to focus |
+| options.enabled | `boolean` | true | The enabled state of the focus hook |
+| options.initialValue | `boolean` | false | The initial focus state of the target |
+| options.onFocus | `(event: FocusEvent) => void` | - | The callback function to be invoked on focus |
+| options.onBlur | `(event: FocusEvent) => void` | - | The callback function to be invoked on blur |
 
 #### Returns
 
@@ -416,9 +416,9 @@ export interface UseFocus {
 
 #### Parameters
 
-| Name     | Type                          | Default | Note                                         |
-| -------- | ----------------------------- | ------- | -------------------------------------------- |
-| callback | `(event: FocusEvent) => void` | -       | The callback function to be invoked on focus |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(event: FocusEvent) => void` | - | The callback function to be invoked on focus |
 
 #### Returns
 
@@ -428,12 +428,12 @@ export interface UseFocus {
 
 #### Parameters
 
-| Name                 | Type                          | Default | Note                                         |
-| -------------------- | ----------------------------- | ------- | -------------------------------------------- |
-| options.enabled      | `boolean`                     | true    | The enabled state of the focus hook          |
-| options.initialValue | `boolean`                     | false   | The initial focus state of the target        |
-| options.onFocus      | `(event: FocusEvent) => void` | -       | The callback function to be invoked on focus |
-| options.onBlur       | `(event: FocusEvent) => void` | -       | The callback function to be invoked on blur  |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.enabled | `boolean` | true | The enabled state of the focus hook |
+| options.initialValue | `boolean` | false | The initial focus state of the target |
+| options.onFocus | `(event: FocusEvent) => void` | - | The callback function to be invoked on focus |
+| options.onBlur | `(event: FocusEvent) => void` | - | The callback function to be invoked on blur |
 
 #### Returns
 

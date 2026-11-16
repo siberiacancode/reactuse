@@ -369,13 +369,13 @@ export interface UseGeolocation {
 
 #### Parameters
 
-| Name                      | Type                     | Default | Note                                                         |
-| ------------------------- | ------------------------ | ------- | ------------------------------------------------------------ |
-| callback                  | `UseGeolocationCallback` | -       | The callback function to be invoked when geolocation changes |
-| params.immediately        | `boolean`                | true    | Start watching immediately                                   |
-| params.enableHighAccuracy | `boolean`                | -       | Enable high accuracy                                         |
-| params.maximumAge         | `number`                 | -       | Maximum age                                                  |
-| params.timeout            | `number`                 | -       | Timeout                                                      |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `UseGeolocationCallback` | - | The callback function to be invoked when geolocation changes |
+| params.immediately | `boolean` | true | Start watching immediately |
+| params.enableHighAccuracy | `boolean` | - | Enable high accuracy |
+| params.maximumAge | `number` | - | Maximum age |
+| params.timeout | `number` | - | Timeout |
 
 #### Returns
 
@@ -385,15 +385,15 @@ export interface UseGeolocation {
 
 #### Parameters
 
-| Name                       | Type                                        | Default | Note                                                         |
-| -------------------------- | ------------------------------------------- | ------- | ------------------------------------------------------------ |
-| options                    | `UseGeolocationOptions`                     | -       | Configuration options                                        |
-| options.immediately        | `boolean`                                   | true    | Start watching immediately on mount                          |
-| options.onChange           | `(position: GeolocationPosition) => void`   | -       | The callback function to be invoked when geolocation changes |
-| options.onError            | `(error: GeolocationPositionError) => void` | -       | The callback function to be invoked on geolocation error     |
-| options.enableHighAccuracy | `boolean`                                   | -       | Enable high accuracy                                         |
-| options.maximumAge         | `number`                                    | -       | Maximum age                                                  |
-| options.timeout            | `number`                                    | -       | Timeout                                                      |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options | `UseGeolocationOptions` | - | Configuration options |
+| options.immediately | `boolean` | true | Start watching immediately on mount |
+| options.onChange | `(position: GeolocationPosition) => void` | - | The callback function to be invoked when geolocation changes |
+| options.onError | `(error: GeolocationPositionError) => void` | - | The callback function to be invoked on geolocation error |
+| options.enableHighAccuracy | `boolean` | - | Enable high accuracy |
+| options.maximumAge | `number` | - | Maximum age |
+| options.timeout | `number` | - | Timeout |
 
 #### Returns
 

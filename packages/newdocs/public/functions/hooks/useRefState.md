@@ -137,9 +137,9 @@ export interface StateRef<Value> {
 
 ### Parameters
 
-| Name         | Type    | Default | Note              |
-| ------------ | ------- | ------- | ----------------- |
-| initialValue | `Value` | -       | The initial value |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| initialValue | `Value` | - | The initial value |
 
 ### Returns
 

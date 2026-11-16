@@ -2,7 +2,8 @@ import type { ReactNode } from 'react';
 
 import { TooltipProvider } from '@/src/components/ui/tooltip';
 
-import { ThemeProvider } from './_contexts/theme/ThemeProvider';
+import { LogoProvider } from './_contexts/logo';
+import { ThemeProvider } from './_contexts/theme';
 
 interface ProviderProps {
   children: ReactNode;
@@ -10,6 +11,8 @@ interface ProviderProps {
 
 export const Provider = ({ children }: ProviderProps) => (
   <TooltipProvider>
-    <ThemeProvider>{children}</ThemeProvider>
+    <ThemeProvider>
+      <LogoProvider>{children}</LogoProvider>
+    </ThemeProvider>
   </TooltipProvider>
 );

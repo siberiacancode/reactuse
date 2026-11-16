@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { usePrevious, useTime } from '@siberiacancode/reactuse';
 import { memo } from 'react';

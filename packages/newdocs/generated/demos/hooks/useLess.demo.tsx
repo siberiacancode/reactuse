@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useLess } from '@siberiacancode/reactuse';
 

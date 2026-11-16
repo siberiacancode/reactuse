@@ -153,11 +153,11 @@ import type { UseEventListenerOptions } from '../useEventListener/useEventListen
 
 ### Parameters
 
-| Name     | Type                                     | Default | Note                                                             |
-| -------- | ---------------------------------------- | ------- | ---------------------------------------------------------------- |
-| event    | `Event`                                  | -       | The event to listen for.                                         |
-| listener | `(event: WindowEventMap[Event]) => void` | -       | The callback function to be executed when the event is triggered |
-| options  | `UseEventListenerOptions`                | -       | The options for the event listener                               |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| event | `Event` | - | The event to listen for. |
+| listener | `(event: WindowEventMap[Event]) => void` | - | The callback function to be executed when the event is triggered |
+| options | `UseEventListenerOptions` | - | The options for the event listener |
 
 ### Returns
 

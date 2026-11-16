@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useCounter } from '@siberiacancode/reactuse';
 import { MinusIcon, PlusIcon } from 'lucide-react';

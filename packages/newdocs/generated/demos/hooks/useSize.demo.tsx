@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useSize } from '@siberiacancode/reactuse';
 import { PlusIcon, SparklesIcon } from 'lucide-react';

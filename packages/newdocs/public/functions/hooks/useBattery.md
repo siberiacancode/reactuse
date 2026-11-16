@@ -263,8 +263,8 @@ export interface BatteryManager extends EventTarget {
 }
 
 interface Navigator {
-  readonly getBattery: () => Promise<BatteryManager>;
-}
+    readonly getBattery: () => Promise<BatteryManager>;
+  }
 
 export interface UseBatteryValue {
   /** Is charging battery? */

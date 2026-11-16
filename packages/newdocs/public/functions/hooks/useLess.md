@@ -106,9 +106,9 @@ const value = useLess(state);
 
 ### Parameters
 
-| Name  | Type    | Default | Note                     |
-| ----- | ------- | ------- | ------------------------ |
-| value | `Value` | -       | The value to be returned |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| value | `Value` | - | The value to be returned |
 
 ### Returns
 

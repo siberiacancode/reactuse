@@ -8,6 +8,7 @@ import {
   ReactIcon,
   ReactRouterIcon,
   TanStackIcon,
+  UwuLogo,
   ViteIcon
 } from '@/src/components/icons';
 import { Badge, Button } from '@/src/components/ui';
@@ -58,6 +59,8 @@ export const LandingHero = ({ hooksCount, release }: LandingHeroProps) => (
             <ArrowRightIcon className='text-muted-foreground size-3.5 transition-transform group-hover:translate-x-0.5' />
           </a>
         )}
+
+        <UwuLogo className='mb-8 w-full max-w-lg px-4 sm:px-0' />
 
         <h1 className='text-foreground font-serif text-5xl leading-[1.05] font-normal tracking-tight md:text-7xl lg:text-8xl'>
           <span className='italic'>Every</span> hook your app will{' '}

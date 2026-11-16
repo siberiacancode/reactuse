@@ -259,10 +259,10 @@ export interface UseCycleListReturn<Value> {
 
 ### Parameters
 
-| Name         | Type                  | Default | Note                                         |
-| ------------ | --------------------- | ------- | -------------------------------------------- |
-| list         | `[Value, ...Value[]]` | -       | The non-empty list of items to cycle through |
-| initialIndex | `number`              | 0       | The initial index in the list                |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| list | `[Value, ...Value[]]` | - | The non-empty list of items to cycle through |
+| initialIndex | `number` | 0 | The initial index in the list |
 
 ### Returns
 

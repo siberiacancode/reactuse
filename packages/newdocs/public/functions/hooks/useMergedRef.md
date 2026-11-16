@@ -197,9 +197,9 @@ import type { Ref, RefCallback } from 'react';
 
 ### Parameters
 
-| Name | Type                | Default | Note              |
-| ---- | ------------------- | ------- | ----------------- |
-| refs | `...Ref<Element>[]` | -       | The refs to merge |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| refs | `...Ref<Element>[]` | - | The refs to merge |
 
 ### Returns
 

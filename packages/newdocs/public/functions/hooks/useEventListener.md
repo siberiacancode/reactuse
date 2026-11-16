@@ -206,7 +206,7 @@ export const useEventListener = ((...params: any[]) => {
     const element =
       ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;
 
-    const listener = (event: Event) => internalListenerRef.current(event);
+    const listener = (event: Event) => internalListenerRef.current.call(event);
 
     element.addEventListener(event, listener, options);
     return () => {
@@ -289,12 +289,12 @@ export interface UseEventListener {
 
 #### Parameters
 
-| Name    | Type                                                        | Default | Note                                               |
-| ------- | ----------------------------------------------------------- | ------- | -------------------------------------------------- |
-| target  | `HookTarget`                                                | -       | The target element to attach the event listener to |
-| event   | `Event \| Event[]`                                          | -       | An array of event types to listen for              |
-| handler | `(this: Target, event: HTMLElementEventMap[Event]) => void` | -       | The event handler function                         |
-| options | `UseEventListenerOptions`                                   | -       | Options for the event listener                     |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| target | `HookTarget` | - | The target element to attach the event listener to |
+| event | `Event \| Event[]` | - | An array of event types to listen for |
+| handler | `(this: Target, event: HTMLElementEventMap[Event]) => void` | - | The event handler function |
+| options | `UseEventListenerOptions` | - | Options for the event listener |
 
 #### Returns
 
@@ -304,11 +304,11 @@ export interface UseEventListener {
 
 #### Parameters
 
-| Name    | Type                                                                                         | Default | Note                                  |
-| ------- | -------------------------------------------------------------------------------------------- | ------- | ------------------------------------- |
-| event   | `Event \| Event[]`                                                                           | -       | An array of event types to listen for |
-| handler | `(this: Target, event: HTMLElementEventMap[Event] \| MediaQueryListEventMap[Event]) => void` | -       | The event handler function            |
-| options | `UseEventListenerOptions`                                                                    | -       | Options for the event listener        |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| event | `Event \| Event[]` | - | An array of event types to listen for |
+| handler | `(this: Target, event: HTMLElementEventMap[Event] \| MediaQueryListEventMap[Event]) => void` | - | The event handler function |
+| options | `UseEventListenerOptions` | - | Options for the event listener |
 
 #### Returns
 

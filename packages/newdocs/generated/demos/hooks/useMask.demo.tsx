@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useField, useMask } from '@siberiacancode/reactuse';
 

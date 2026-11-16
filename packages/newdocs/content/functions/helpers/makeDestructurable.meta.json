@@ -14,7 +14,9 @@
   "description": "Makes an object also iterable for array-style destructuring",
   "category": "Helpers",
   "lastModified": 1774777329000,
-  "examples": ["const result = makeDestructurable({ x: 10, y: 20 }, [10, 20] as const);"],
+  "examples": [
+    "const result = makeDestructurable({ x: 10, y: 20 }, [10, 20] as const);"
+  ],
   "apiParameters": [
     {
       "tag": "param",

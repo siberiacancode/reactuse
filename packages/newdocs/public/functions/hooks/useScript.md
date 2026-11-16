@@ -193,11 +193,11 @@ export type UseScriptOptions = ComponentProps<'script'>;
 
 ### Parameters
 
-| Name          | Type               | Default | Note                                                         |
-| ------------- | ------------------ | ------- | ------------------------------------------------------------ |
-| src           | `string`           | -       | The source of the script                                     |
-| options       | `UseScriptOptions` | -       | The options of the script extends from attributes script tag |
-| options.async | `boolean`          | true    | Whether to load the script asynchronously                    |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| src | `string` | - | The source of the script |
+| options | `UseScriptOptions` | - | The options of the script extends from attributes script tag |
+| options.async | `boolean` | true | Whether to load the script asynchronously |
 
 ### Returns
 

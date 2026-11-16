@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1788267510000
+lastModifiedTime: 1794765410000
 ---
 
 # useTimer
@@ -378,50 +378,11 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const {
-  days,
-  hours,
-  minutes,
-  seconds,
-  toggle,
-  pause,
-  start,
-  restart,
-  resume,
-  active,
-  decrease,
-  increase
-} = useTimer();
+const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer();
 // or
-const {
-  days,
-  hours,
-  minutes,
-  seconds,
-  toggle,
-  pause,
-  start,
-  restart,
-  resume,
-  active,
-  decrease,
-  increase
-} = useTimer(1000, () => console.log('ready'));
+const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000, () => console.log('ready'));
 // or
-const {
-  days,
-  hours,
-  minutes,
-  seconds,
-  toggle,
-  pause,
-  start,
-  restart,
-  resume,
-  active,
-  decrease,
-  increase
-} = useTimer(1000);
+const { days, hours, minutes, seconds, toggle, pause, start, restart, resume, active, decrease, increase } = useTimer(1000);
 ```
 
 ## Type Declarations
@@ -494,10 +455,10 @@ export interface UseTimer {
 
 #### Parameters
 
-| Name     | Type         | Default | Note                                                                 |
-| -------- | ------------ | ------- | -------------------------------------------------------------------- |
-| seconds  | `number`     | -       | The seconds value that define for how long the timer will be running |
-| callback | `() => void` | -       | The function to be executed once countdown timer is expired          |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| seconds | `number` | - | The seconds value that define for how long the timer will be running |
+| callback | `() => void` | - | The function to be executed once countdown timer is expired |
 
 #### Returns
 
@@ -507,12 +468,12 @@ export interface UseTimer {
 
 #### Parameters
 
-| Name                | Type                          | Default | Note                                                                 |
-| ------------------- | ----------------------------- | ------- | -------------------------------------------------------------------- |
-| seconds             | `number`                      | -       | The seconds value that define for how long the timer will be running |
-| options.immediately | `boolean`                     | true    | The flag to decide if timer should start automatically               |
-| options.onExpire    | `() => void`                  | -       | The function to be executed when the timer is expired                |
-| options.onTick      | `(timestamp: number) => void` | -       | The function to be executed on each tick of the timer                |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| seconds | `number` | - | The seconds value that define for how long the timer will be running |
+| options.immediately | `boolean` | true | The flag to decide if timer should start automatically |
+| options.onExpire | `() => void` | - | The function to be executed when the timer is expired |
+| options.onTick | `(timestamp: number) => void` | - | The function to be executed on each tick of the timer |
 
 #### Returns
 

@@ -14,7 +14,9 @@
   "description": "Performs a shallow comparison between two values to determine if they are equivalent",
   "category": "Helpers",
   "lastModified": 1794213760000,
-  "examples": ["shallowEqual({ a: 1, b: 2 }, { a: 1, b: 2 });"],
+  "examples": [
+    "shallowEqual({ a: 1, b: 2 }, { a: 1, b: 2 });"
+  ],
   "apiParameters": [
     {
       "tag": "param",

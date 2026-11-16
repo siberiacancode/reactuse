@@ -14,7 +14,9 @@
   "description": "Hook that manages storage value",
   "category": "State",
   "lastModified": 1767164032000,
-  "examples": ["const { value, set, remove } = useStorage('key', 'value');"],
+  "examples": [
+    "const { value, set, remove } = useStorage('key', 'value');"
+  ],
   "apiParameters": [
     {
       "tag": "overload",

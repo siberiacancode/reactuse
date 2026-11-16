@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1757226836000
+lastModifiedTime: 1794763416000
 ---
 
 # useControllableState
@@ -288,11 +288,11 @@ export type UseControllableStateReturn<Value> = [
 
 ### Parameters
 
-| Name                 | Type                     | Default | Note                                                                  |
-| -------------------- | ------------------------ | ------- | --------------------------------------------------------------------- |
-| options.value        | `Value`                  | -       | The controlled value. When provided, the component becomes controlled |
-| options.initialValue | `Value`                  | -       | The initial value for uncontrolled state                              |
-| options.onChange     | `(value: Value) => void` | -       | The callback function called when the state changes                   |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| options.value | `Value` | - | The controlled value. When provided, the component becomes controlled |
+| options.initialValue | `Value` | - | The initial value for uncontrolled state |
+| options.onChange | `(value: Value) => void` | - | The callback function called when the state changes |
 
 ### Returns
 

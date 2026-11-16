@@ -234,8 +234,8 @@ const { supported, gamepads, active } = useGamepad();
 
 ```tsx
 interface Gamepad {
-  hapticActuators?: GamepadHapticActuator[];
-}
+    hapticActuators?: GamepadHapticActuator[];
+  }
 
 export interface UseGamepadStateReturn {
   /** The gamepad active status */

@@ -14,7 +14,9 @@
   "description": "Hook that manages a script with onLoad, onError, and removeOnUnmount functionalities",
   "category": "Elements",
   "lastModified": 1781376500000,
-  "examples": ["const status = useScript('https://example.com/script.js');"],
+  "examples": [
+    "const status = useScript('https://example.com/script.js');"
+  ],
   "apiParameters": [
     {
       "tag": "param",

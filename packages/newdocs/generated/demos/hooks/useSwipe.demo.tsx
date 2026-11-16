@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useSwipe } from '@siberiacancode/reactuse';
 import { LockIcon, MinusIcon, PlusIcon, Trash2Icon } from 'lucide-react';

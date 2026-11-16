@@ -184,9 +184,9 @@ export interface UseDevicePixelRatioReturn {
 
 ### Parameters
 
-| Name     | Type                      | Default | Note                                                        |
-| -------- | ------------------------- | ------- | ----------------------------------------------------------- |
-| callback | `(value: number) => void` | -       | The callback to execute when the device pixel ratio changes |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| callback | `(value: number) => void` | - | The callback to execute when the device pixel ratio changes |
 
 ### Returns
 

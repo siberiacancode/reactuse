@@ -439,7 +439,7 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const audio = useAudio('/path/to/sound.mp3');
+const audio = useAudio("/path/to/sound.mp3");
 ```
 
 ## Type Declarations
@@ -487,15 +487,15 @@ export interface UseAudioReturn {
 
 ### Parameters
 
-| Name                 | Type              | Default | Note                                                     |
-| -------------------- | ----------------- | ------- | -------------------------------------------------------- |
-| url                  | `string`          | -       | The URL of the audio file to play                        |
-| options              | `UseAudioOptions` | -       | Audio configuration options                              |
-| options.volume       | `number`          | 1       | Initial volume level (0 to 1)                            |
-| options.playbackRate | `number`          | 1       | Initial playback speed (0.5 to 2)                        |
-| options.interrupt    | `boolean`         | false   | Whether to stop current playback when starting a new one |
-| options.soundEnabled | `boolean`         | true    | Whether audio playback is initially enabled              |
-| options.sprite       | `SpriteMap`       | -       | Map of named audio segments for sprite-based playback    |
+| Name | Type | Default | Note |
+| --- | --- | --- | --- |
+| url | `string` | - | The URL of the audio file to play |
+| options | `UseAudioOptions` | - | Audio configuration options |
+| options.volume | `number` | 1 | Initial volume level (0 to 1) |
+| options.playbackRate | `number` | 1 | Initial playback speed (0.5 to 2) |
+| options.interrupt | `boolean` | false | Whether to stop current playback when starting a new one |
+| options.soundEnabled | `boolean` | true | Whether audio playback is initially enabled |
+| options.sprite | `SpriteMap` | - | Map of named audio segments for sprite-based playback |
 
 ### Returns
 
