@@ -1,1 +1,1 @@
-<Webcam requestTimeLimit={5000} />
+<Webcam requestTimeLimit={5000} />;

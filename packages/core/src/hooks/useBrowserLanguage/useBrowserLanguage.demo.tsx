@@ -79,7 +79,7 @@ const Demo = () => {
           <div className='text-muted-foreground flex items-center gap-2 text-xs'>
             <GlobeIcon className='size-4 shrink-0' />
             <span className='min-w-0 break-all'>
-              Detected: <code>{language}</code>
+              Detected: <b>{language}</b>
             </span>
           </div>
         </div>

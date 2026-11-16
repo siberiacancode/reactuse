@@ -80,77 +80,77 @@ const createMdxTemplate = (metadata: FunctionMetadata) => {
   result.push('');
 
   if (metadata.warning) {
-    result.push(`<Callout title='Warning' variant='warning' className='my-5'>`);
-    result.push(`  {metadata.warning}`);
-    result.push(`</Callout>`);
+    result.push("<Callout title='Warning' variant='warning' className='my-5'>");
+    result.push('  {metadata.warning}');
+    result.push('</Callout>');
   }
 
   result.push(
-    `<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />`
+    '<FunctionBanner browserapi={metadata.browserapi} code={metadata.demo} type={metadata.type} name={metadata.name} language="tsx" />'
   );
 
   result.push('');
-  result.push(`## Installation`);
+  result.push('## Installation');
   result.push('');
 
-  result.push(`<FunctionTabs className='space-y-2'>`);
-  result.push(`  <TabsList>`);
-  result.push(`    <TabsTrigger value='library'>Library</TabsTrigger>`);
-  result.push(`    <TabsTrigger value='cli'>CLI</TabsTrigger>`);
-  result.push(`    <TabsTrigger value='manual'>Manual</TabsTrigger>`);
-  result.push(`  </TabsList>`);
-  result.push(`  <TabsContent value='library'>`);
-  result.push(`    \`\`\`packages-install`);
-  result.push(`    npm install @siberiacancode/reactuse`);
-  result.push(`    \`\`\``);
-  result.push(`  </TabsContent>`);
-  result.push(`  <TabsContent value='cli'>`);
-  result.push(`    \`\`\`packages-install`);
+  result.push("<FunctionTabs className='space-y-2'>");
+  result.push('  <TabsList>');
+  result.push("    <TabsTrigger value='library'>Library</TabsTrigger>");
+  result.push("    <TabsTrigger value='cli'>CLI</TabsTrigger>");
+  result.push("    <TabsTrigger value='manual'>Manual</TabsTrigger>");
+  result.push('  </TabsList>');
+  result.push("  <TabsContent value='library'>");
+  result.push('    ```packages-install');
+  result.push('    npm install @siberiacancode/reactuse');
+  result.push('    ```');
+  result.push('  </TabsContent>');
+  result.push("  <TabsContent value='cli'>");
+  result.push('    ```packages-install');
   result.push(`    npx useverse@latest add ${metadata.name}`);
-  result.push(`    \`\`\``);
-  result.push(`  </TabsContent>`);
-  result.push(`  <TabsContent value='manual'>`);
-  result.push(`    <Steps>`);
-  result.push(`     <Step>`);
-  result.push(`      Copy and paste the following code into your project.`);
-  result.push(`    </Step>`);
-  result.push(`      <FunctionCode code={metadata.code} language="tsx" />`);
-  result.push(`    <Step>`);
-  result.push(`      Update the import paths to match your project setup.`);
-  result.push(`    </Step>`);
-  result.push(`  </Steps>`);
-  result.push(`  </TabsContent>`);
-  result.push(`</FunctionTabs>`);
+  result.push('    ```');
+  result.push('  </TabsContent>');
+  result.push("  <TabsContent value='manual'>");
+  result.push('    <Steps>');
+  result.push('     <Step>');
+  result.push('      Copy and paste the following code into your project.');
+  result.push('    </Step>');
+  result.push('      <FunctionCode code={metadata.code} language="tsx" />');
+  result.push('    <Step>');
+  result.push('      Update the import paths to match your project setup.');
+  result.push('    </Step>');
+  result.push('  </Steps>');
+  result.push('  </TabsContent>');
+  result.push('</FunctionTabs>');
 
   result.push('');
   result.push('## Usage');
   result.push('');
 
-  result.push(`\`\`\`tsx`);
+  result.push('```tsx');
   metadata.examples.forEach((example, index) => {
     result.push(example);
     if (index !== metadata.examples.length - 1) result.push('// or');
   });
-  result.push(`\`\`\``);
+  result.push('```');
 
   if (metadata.typeDeclarations) {
     result.push('');
     result.push('## Type Declarations');
     result.push('');
-    result.push(`<FunctionCode code={metadata.typeDeclarations} language="tsx" />`);
+    result.push('<FunctionCode code={metadata.typeDeclarations} language="tsx" />');
   }
 
   if (metadata.apiParameters.length) {
     result.push('');
     result.push('## API');
     result.push('');
-    result.push(`<FunctionApi apiParameters={metadata.apiParameters} />`);
+    result.push('<FunctionApi apiParameters={metadata.apiParameters} />');
   }
 
   result.push('');
   result.push('## Contributors');
   result.push('');
-  result.push(`<FunctionContributors contributors={metadata.contributors} />`);
+  result.push('<FunctionContributors contributors={metadata.contributors} />');
 
   return result.join('\n');
 };
@@ -488,11 +488,13 @@ const init = async () => {
         return null;
       }
 
-      const commment = parse(jsdocMatch)[0];
+      const [commment] = parse(jsdocMatch);
 
       const jsdoc = {
         description: commment.tags.find(({ tag }) => tag === 'description'),
-        examples: commment.tags.filter(({ tag }) => tag === 'example'),
+        examples: parse(jsdocMatch, { spacing: 'preserve' })[0].tags.filter(
+          ({ tag }) => tag === 'example'
+        ),
         usage: commment.tags.find(({ tag }) => tag === 'usage'),
         deprecated: commment.tags.find(({ tag }) => tag === 'deprecated'),
         category: commment.tags.find(({ tag }) => tag === 'category'),
@@ -553,7 +555,7 @@ const init = async () => {
         description: jsdoc.description.description,
         category: jsdoc.category!.name,
         lastModified: lastCommitAt,
-        examples: jsdoc.examples.map((example) => example.description),
+        examples: jsdoc.examples.map((example) => example.description.trim()),
         apiParameters: jsdoc.apiParameters ?? [],
         ...(typeDeclarations && {
           typeDeclarations: await createHtmlCode(typeDeclarations, 'tsx')
@@ -634,7 +636,7 @@ const init = async () => {
   for (const type of ['hook', 'helper'] as const) {
     const metaJson = createMetaJson(pages.filter((page) => page.type === type));
     await fs.promises.writeFile(
-      path.join(CONTENT_ROOT, 'functions', `${type}s`, `meta.json`),
+      path.join(CONTENT_ROOT, 'functions', `${type}s`, 'meta.json'),
       metaJson,
       'utf-8'
     );

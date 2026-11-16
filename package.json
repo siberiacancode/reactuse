@@ -29,18 +29,18 @@
     "docs:build": "pnpm --dir packages/newdocs build",
     "core:build:js": "pnpm --dir packages/core build:js",
     "lint": "pnpm --recursive lint",
-    "format": "prettier --write .",
+    "format": "oxfmt",
     "unit-test": "pnpm --recursive run unit-test",
     "prepare": "lefthook install"
   },
   "devDependencies": {
-    "@siberiacancode/tsconfig": "1.2.0",
-    "@siberiacancode/eslint": "2.18.1",
+    "@siberiacancode/eslint": "2.19.1",
     "@siberiacancode/lefthook": "1.0.2",
-    "@siberiacancode/prettier": "^1.9.0",
-    "@types/node": "^26.2.0",
-    "lucide-react": "1.32.0",
-    "prettier-plugin-tailwindcss": "0.8.1",
+    "@siberiacancode/oxfmt": "^1.0.0",
+    "@siberiacancode/tsconfig": "1.2.0",
+    "@types/node": "^26.6.6",
+    "lucide-react": "1.70.0",
+    "oxfmt": "^0.78.0",
     "typescript": "^6.0.3"
   }
 }

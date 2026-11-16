@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1757226836000
+lastModifiedTime: 1794763416000
 ---
 
 # useControllableState
@@ -220,6 +220,8 @@ export type UseControllableStateReturn<Value> = [
  *
  * @example
  * const [value, setValue, isControlled] = useControllableState({ initialValue: 'initial' });
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useControllableState}
  */
 export function useControllableState<Value>(
   options: UseControllableStateOptions<Value>

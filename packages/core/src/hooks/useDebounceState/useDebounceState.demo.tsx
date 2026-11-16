@@ -3,13 +3,14 @@ import { useState } from 'react';
 
 import { cn } from '@/utils/lib';
 
-const DEFAULT_MARKDOWN = `# Welcome to reactuse\n\nA collection of **React hooks** for everyday tasks.\n\n## Quick start\n\nInstall via npm and you get **zero dependencies**, **TypeScript types** out of the box, and **fully tested** hooks ready to use.\n\nCheck it out at [reactuse.com](https://reactuse.com).`;
+const DEFAULT_MARKDOWN =
+  '# Welcome to reactuse\n\nA collection of **React hooks** for everyday tasks.\n\n## Quick start\n\nInstall via npm and you get **zero dependencies**, **TypeScript types** out of the box, and **fully tested** hooks ready to use.\n\nCheck it out at [reactuse.com](https://reactuse.com).';
 
 const formatInline = (text: string) =>
   text
     .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
     .replace(/\*(.+?)\*/g, '<i>$1</i>')
-    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/`(.+?)`/g, '<b>$1</b>')
     .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>');
 
 const renderMarkdown = (markdown: string) => {

@@ -15,7 +15,7 @@
   "category": "Helpers",
   "lastModified": 1779190580000,
   "examples": [
-    "const { set, get, use, subscribe } = createStore((set) => ({ count: 0, increment: () => set(state => ({ count: state.count + 1 })) }));"
+    "const { set, get, use, subscribe } = createStore((set) => ({\n  count: 0,\n  increment: () => set(state => ({ count: state.count + 1 }))\n}));"
   ],
   "apiParameters": [
     {

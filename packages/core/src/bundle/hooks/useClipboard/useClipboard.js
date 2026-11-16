@@ -13,6 +13,8 @@ import { copy } from '@/utils/helpers';
  *
  * @example
  * const { value, copy } = useClipboard();
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useClipboard}
  */
 export const useClipboard = (params) => {
   const [value, setValue] = useState(null);

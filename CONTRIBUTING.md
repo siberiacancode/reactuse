@@ -55,7 +55,7 @@ pnpm cli:build       # build the CLI and generate its registry
 ```bash
 pnpm lint            # lint all packages
 pnpm unit-test       # run unit tests across all packages
-pnpm format          # format with prettier
+pnpm format          # format with oxfmt
 ```
 
 7. commit your changes (the `lefthook` pre-commit hook will lint and format staged files automatically)

@@ -3,8 +3,8 @@ import type { ComponentProps } from 'react';
 import { ArrowUpRightIcon, StarIcon } from 'lucide-react';
 import Link from 'next/link';
 
-import { GithubIcon, LogoIcon, NpmIcon, TwitterIcon } from '@/src/components/icons';
 import { BrandAssetsMenu } from '@/src/components';
+import { GithubIcon, LogoIcon, NpmIcon, TwitterIcon } from '@/src/components/icons';
 import {
   Button,
   NavigationMenu,

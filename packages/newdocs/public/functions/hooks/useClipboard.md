@@ -6,7 +6,7 @@ usage: medium
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1794763416000
 ---
 
 # useClipboard
@@ -129,6 +129,8 @@ export interface UseCopyToClipboardParams {
  *
  * @example
  * const { value, copy } = useClipboard();
+ * 
+ * @see {@link https://reactuse.org/functions/hooks/useClipboard}
  */
 export const useClipboard = (params?: UseCopyToClipboardParams): UseCopyToClipboardReturn => {
   const [value, setValue] = useState<string | null>(null);

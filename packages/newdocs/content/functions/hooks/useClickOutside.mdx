@@ -49,7 +49,9 @@ import metadata from './useClickOutside.meta.json';
 ```tsx
 useClickOutside(ref, () => console.log('click outside'), { enabled: opened });
 // or
-const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'), { enabled: opened });
+const ref = useClickOutside<HTMLDivElement>(() => console.log('click outside'), {
+  enabled: opened
+});
 ```
 
 ## Type Declarations

@@ -6,7 +6,7 @@ usage: high
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1754977987000
+lastModifiedTime: 1794763416000
 ---
 
 # useConst
@@ -125,6 +125,8 @@ import { useRef } from 'react';
  *
  * @example
  * const value = useConst('value');
+ * 
+ * @see {@link https://reactuse.org/functions/hooks/useConst}
  */
 export const useConst = <Value>(initialValue: (() => Value) | Value) =>
   useRef<Value>(typeof initialValue === 'function' ? (initialValue as () => Value)() : initialValue)

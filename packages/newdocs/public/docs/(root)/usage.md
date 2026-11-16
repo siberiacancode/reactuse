@@ -55,6 +55,7 @@ Situational building blocks for recurring patterns and product-specific workflow
 - [useBrowserLanguage](/functions/hooks/useBrowserLanguage): Hook that returns the current browser language
 - [useBrowserLocation](/functions/hooks/useBrowserLocation): Hook that returns reactive browser location state with navigation controls
 - [useClipboard](/functions/hooks/useClipboard): Hook that manages a copy to clipboard
+- [useCollapse](/functions/hooks/useCollapse): Hook that animates an element between collapsed and expanded states
 - [useControllableState](/functions/hooks/useControllableState): Hook that manages both controlled and uncontrolled state patterns
 - [useCookie](/functions/hooks/useCookie): Hook that manages cookie value
 - [useCookies](/functions/hooks/useCookies): Hook that manages cookie values
@@ -122,6 +123,7 @@ Niche utilities for targeted browser APIs, edge cases, and specialized interacti
 
 - [createEventEmitter](/functions/helpers/createEventEmitter): Creates a type-safe event emitter
 - [createReactiveContext](/functions/helpers/createReactiveContext): Creates a typed context selector with optimized updates for state selection
+- [createWebMCP](/functions/helpers/createWebMCP): Creates a registry for WebMCP tools exposed by the current document
 - [deepEqual](/functions/helpers/deepEqual): Performs a deep comparison between two values to determine if they are equivalent
 - [makeDestructurable](/functions/helpers/makeDestructurable): Makes an object also iterable for array-style destructuring
 - [shallowEqual](/functions/helpers/shallowEqual): Performs a shallow comparison between two values to determine if they are equivalent
@@ -199,6 +201,7 @@ Niche utilities for targeted browser APIs, edge cases, and specialized interacti
 - [useVibrate](/functions/hooks/useVibrate): Hook that provides vibrate api
 - [useVirtualKeyboard](/functions/hooks/useVirtualKeyboard): Hook that manages virtual keyboard state
 - [useWakeLock](/functions/hooks/useWakeLock): Hook that provides a wake lock functionality
+- [useWebMCP](/functions/hooks/useWebMCP): Registers a WebMCP tool for the component lifecycle
 - [useWebWorker](/functions/hooks/useWebWorker): Hook that provides a reactive wrapper for a web worker
 - [useWebWorkerCallback](/functions/hooks/useWebWorkerCallback): Hook that runs a callback in a web worker without a separate worker file
 - [useWindowEvent](/functions/hooks/useWindowEvent): Hook attaches an event listener to the window object for the specified event

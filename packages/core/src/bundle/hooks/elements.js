@@ -1,6 +1,7 @@
 export * from './useActiveElement/useActiveElement';
 export * from './useAutoScroll/useAutoScroll';
 export * from './useClickOutside/useClickOutside';
+export * from './useCollapse/useCollapse';
 export * from './useContextMenu/useContextMenu';
 export * from './useDoubleClick/useDoubleClick';
 export * from './useDraggable/useDraggable';

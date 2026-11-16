@@ -33,8 +33,8 @@ const Demo = () => {
             </div>
 
             <p className='text-muted-foreground px-1 text-sm'>
-              Compact <code>mobile</code> layout for small screens. Stacked content, tap-friendly
-              buttons, and short copy that respects narrow viewports.
+              Compact <b>mobile</b> layout for small screens. Stacked content, tap-friendly buttons,
+              and short copy that respects narrow viewports.
             </p>
 
             <div className='flex flex-col gap-2'>
@@ -69,8 +69,8 @@ const Demo = () => {
           </div>
 
           <p className='text-muted-foreground text-sm'>
-            Balanced <code>tablet</code> layout for medium screens. More room for content with
-            comfortable reading width and side margins.
+            Balanced <b>tablet</b> layout for medium screens. More room for content with comfortable
+            reading width and side margins.
           </p>
 
           <div className='grid grid-cols-2 gap-2'>
@@ -102,7 +102,7 @@ const Demo = () => {
             </div>
 
             <p className='text-muted-foreground text-sm'>
-              Wide <code>desktop</code> layout for large displays. Multi-column content, persistent
+              Wide <b>desktop</b> layout for large displays. Multi-column content, persistent
               sidebars, and rich detail panes for productivity.
             </p>
 

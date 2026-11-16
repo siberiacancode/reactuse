@@ -1,1 +1,1 @@
-<Webcam mirrored={false} />
+<Webcam mirrored={false} />;

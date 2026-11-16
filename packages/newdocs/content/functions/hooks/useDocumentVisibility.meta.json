@@ -16,7 +16,7 @@
   "lastModified": 1779453143000,
   "examples": [
     "const visibilityState = useDocumentVisibility();",
-    "const visibilityState = useDocumentVisibility((state) => { if (state === 'hidden') console.log('user left the tab'); });"
+    "const visibilityState = useDocumentVisibility((state) => {\n  if (state === 'hidden') console.log('user left the tab');\n});"
   ],
   "apiParameters": [
     {

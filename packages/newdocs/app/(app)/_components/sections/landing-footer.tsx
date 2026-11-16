@@ -1,6 +1,8 @@
 import Link from 'next/link';
 
-import { GithubIcon, LogoIcon, NpmIcon, TwitterIcon } from '@/src/components/icons';
+import { BrandAssetsMenu } from '@/src/components/brand-assets-menu';
+import { GithubIcon, LogoIcon, NpmIcon, TwitterIcon, UwuLogo } from '@/src/components/icons';
+import { LogoToggle } from '@/src/components/logo-toggle';
 import { CONFIG, LINKS } from '@/src/constants';
 
 const COLUMNS = [
@@ -43,13 +45,20 @@ export const LandingFooter = () => (
       <div>
         <div className='grid gap-12 lg:grid-cols-[1.4fr_2fr] lg:gap-16'>
           <div className='max-w-sm'>
-            <Link className='inline-flex items-center gap-2' href='/' prefetch={false}>
-              <LogoIcon className='size-5' />
-
-              <span className='text-foreground text-lg font-semibold tracking-tight'>
-                {CONFIG.NAME}
-              </span>
-            </Link>
+            <BrandAssetsMenu>
+              <Link
+                aria-label='reactuse'
+                className='inline-flex items-center gap-2'
+                href='/'
+                prefetch={false}
+              >
+                <UwuLogo className='w-64 max-w-full' />
+                <LogoIcon className='size-5' />
+                <span className='text-foreground hidden text-lg font-semibold tracking-tight [.classic-logo_&]:inline'>
+                  {CONFIG.NAME}
+                </span>
+              </Link>
+            </BrandAssetsMenu>
 
             <p className='text-muted-foreground mt-4 text-sm leading-relaxed'>
               The largest and most useful React hooks library. Built by the community, for the
@@ -103,7 +112,7 @@ export const LandingFooter = () => (
           </div>
         </div>
 
-        <div className='mt-16 flex flex-col items-start gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between'>
+        <div className='mt-16 flex flex-col items-start gap-2 pt-8'>
           <p className='text-muted-foreground text-xs'>
             © {COPYRIGHT_YEAR} reactuse. Released under the MIT License. Made with care by{' '}
             <Link
@@ -117,6 +126,7 @@ export const LandingFooter = () => (
             </Link>
             .
           </p>
+          <LogoToggle />
         </div>
       </div>
     </div>

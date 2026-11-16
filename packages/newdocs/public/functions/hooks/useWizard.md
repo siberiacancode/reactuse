@@ -329,7 +329,11 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const { currentStepId, set, reset, back, history } = useWizard([ { id: 'step1', nodes: ['step2', 'step3'] }, { id: 'step2', nodes: ['step3'] }, { id: 'step3', nodes: [] }, ])
+const { currentStepId, set, reset, back, history } = useWizard([
+ { id: 'step1', nodes: ['step2', 'step3'] },
+ { id: 'step2', nodes: ['step3'] },
+ { id: 'step3', nodes: [] },
+])
 ```
 
 ## Type Declarations

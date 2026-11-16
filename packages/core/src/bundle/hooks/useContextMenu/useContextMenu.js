@@ -49,6 +49,8 @@ const DEFAULT_DELAY = 500;
  *
  * @example
  * const { ref, opened, position } = useContextMenu(options);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useContextMenu}
  */
 export const useContextMenu = (...params) => {
   const target = isTarget(params[0]) ? params[0] : undefined;

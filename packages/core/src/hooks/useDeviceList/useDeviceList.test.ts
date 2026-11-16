@@ -169,7 +169,7 @@ it('Should update devices on device change event', async () => {
 
   mockEnumerateDevices.mockResolvedValueOnce(nextDevices);
 
-  act(() => trigger.callback('devicechange'));
+  await act(() => trigger.callback('devicechange'));
 
   await waitFor(() => {
     expect(result.current.devices).toEqual(nextDevices);

@@ -80,12 +80,7 @@ Under the hood, `Root` owns the image state. `Image` renders only when loading s
 
 ```tsx
 import { useImage } from '@siberiacancode/reactuse';
-import {
-  createContext,
-  useContext,
-  type HTMLAttributes,
-  type ImgHTMLAttributes
-} from 'react';
+import { createContext, useContext, type HTMLAttributes, type ImgHTMLAttributes } from 'react';
 
 type AvatarContextValue = {
   alt: string;

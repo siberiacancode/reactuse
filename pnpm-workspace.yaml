@@ -2,21 +2,21 @@ packages:
   - 'packages/*'
 publicHoistPattern:
   - eslint
-  - prettier
+  - oxfmt
   - lefthook
   - vitest
 minimumReleaseAgeExclude:
   - '@siberiacancode/reactuse'
   - '@siberiacancode/vitest'
   - '@siberiacancode/eslint'
-  - '@siberiacancode/prettier'
+  - '@siberiacancode/oxfmt'
   - '@webcam/react'
   - fumadocs-core@16.18.3
   - fumadocs-mdx@15.5.3
   - fumadocs-ui@16.18.3
+  - '@vitejs/plugin-react@6.3.0'
 allowBuilds:
   core-js: true
   esbuild: true
   lefthook: true
-  msw: true
   sharp: true

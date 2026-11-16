@@ -147,7 +147,10 @@ Update the import paths to match your project setup.
 ## Usage
 
 ```tsx
-const [{ value, lastValidValue, valid }, setValue] = useValidatedState( '', (value) => value.length >= 3 );
+const [{ value, lastValidValue, valid }, setValue] = useValidatedState(
+  '',
+  (value) => value.length >= 3
+);
 ```
 
 ## Type Declarations

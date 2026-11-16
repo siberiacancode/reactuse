@@ -12,6 +12,8 @@ import { deepEqual } from '@/helpers/deepEqual/deepEqual';
  *
  * @example
  * useCompareEffect(() => console.log("effect"), [user]);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useCompareEffect}
  */
 export const useCompareEffect = (effect, deps, compare = deepEqual) => {
   const committedRef = useRef(undefined);

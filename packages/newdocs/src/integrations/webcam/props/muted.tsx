@@ -1,1 +1,1 @@
-<Webcam muted={false} />
+<Webcam muted={false} />;

@@ -5,6 +5,7 @@ export * from './createEventEmitter/createEventEmitter';
 export * from './createReactiveContext/createReactiveContext';
 export * from './createSharedHook/createSharedHook';
 export * from './createStore/createStore';
+export * from './createWebMCP/createWebMCP';
 export * from './deepEqual/deepEqual';
 export * from './makeDestructurable/makeDestructurable';
 export * from './shallowEqual/shallowEqual';

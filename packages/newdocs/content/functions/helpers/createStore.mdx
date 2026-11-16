@@ -47,7 +47,10 @@ import metadata from './createStore.meta.json';
 ## Usage
 
 ```tsx
-const { set, get, use, subscribe } = createStore((set) => ({ count: 0, increment: () => set(state => ({ count: state.count + 1 })) }));
+const { set, get, use, subscribe } = createStore((set) => ({
+  count: 0,
+  increment: () => set(state => ({ count: state.count + 1 }))
+}));
 ```
 
 ## Type Declarations

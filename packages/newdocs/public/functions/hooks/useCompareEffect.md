@@ -6,7 +6,7 @@ usage: low
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1794213760000
+lastModifiedTime: 1794763416000
 ---
 
 # useCompareEffect
@@ -154,6 +154,8 @@ export type CompareFunction = (current: any, previous: any) => boolean;
  *
  * @example
  * useCompareEffect(() => console.log("effect"), [user]);
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useCompareEffect}
  */
 export const useCompareEffect = (
   effect: EffectCallback,

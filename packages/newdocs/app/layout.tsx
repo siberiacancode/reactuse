@@ -7,7 +7,7 @@ import process from 'node:process';
 import { CONFIG } from '@/src/constants';
 import { cn } from '@/src/lib';
 
-import { ThemeScript } from './_scripts';
+import { LogoScript, ThemeScript } from './_scripts';
 import { Provider } from './provider';
 
 import '../styles/global.css';
@@ -43,6 +43,7 @@ export const RootLayout = ({ children }: RootLayoutProps) => (
   >
     <head>
       <ThemeScript />
+      <LogoScript />
     </head>
     <body className='mb-10 flex min-h-screen flex-col'>
       <Provider>{children}</Provider>

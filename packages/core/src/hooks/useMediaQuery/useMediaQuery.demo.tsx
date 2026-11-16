@@ -26,7 +26,7 @@ const Demo = () => {
           </div>
 
           <p className='text-muted-foreground px-1 text-sm'>
-            Compact <code>mobile</code> layout for small screens. Stacked destinations, tap-friendly
+            Compact <b>mobile</b> layout for small screens. Stacked destinations, tap-friendly
             actions, and short copy that respects narrow viewports.
           </p>
 
@@ -66,7 +66,7 @@ const Demo = () => {
           </div>
 
           <p className='text-muted-foreground text-sm'>
-            Balanced <code>tablet</code> layout for medium screens. More room for planning with a
+            Balanced <b>tablet</b> layout for medium screens. More room for planning with a
             comfortable reading width and a tidy two-column grid.
           </p>
 
@@ -102,7 +102,7 @@ const Demo = () => {
           </div>
 
           <p className='text-muted-foreground text-sm'>
-            Wide <code>desktop</code> layout for large displays. Multi-column trip planning, richer
+            Wide <b>desktop</b> layout for large displays. Multi-column trip planning, richer
             details, and room to compare destinations side by side.
           </p>
 

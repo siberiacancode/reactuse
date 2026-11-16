@@ -11,6 +11,8 @@ import { useRef } from 'react';
  *
  * @example
  * const value = useConst('value');
+ *
+ * @see {@link https://reactuse.org/functions/hooks/useConst}
  */
 export const useConst = (initialValue) =>
   useRef(typeof initialValue === 'function' ? initialValue() : initialValue).current;
