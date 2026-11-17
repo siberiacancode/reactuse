@@ -6,7 +6,7 @@ usage: necessary
 type: hook
 isTest: true
 isDemo: true
-lastModifiedTime: 1775226876000
+lastModifiedTime: 1794821326000
 ---
 
 # useEventListener
@@ -206,7 +206,7 @@ export const useEventListener = ((...params: any[]) => {
     const element =
       ((target ? isTarget.getElement(target) : internalRef.current) as Element) ?? window;
 
-    const listener = (event: Event) => internalListenerRef.current.call(event);
+    const listener = (event: Event) => internalListenerRef.current.call(element, event);
 
     element.addEventListener(event, listener, options);
     return () => {

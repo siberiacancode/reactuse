@@ -124,7 +124,7 @@ export const LandingHeader = ({ releaseName, stars, className, ...props }: Landi
 
       <div className='pointer-events-auto flex items-center gap-2'>
         <Button
-          className='rounded-full'
+          className='hidden rounded-full sm:inline-flex'
           nativeButton={false}
           render={<Link href='/docs/installation' />}
         >

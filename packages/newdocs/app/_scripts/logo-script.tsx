@@ -2,6 +2,7 @@ import { COOKIES } from '@/src/constants';
 
 export const LogoScript = () => (
   <script
+    // eslint-disable-next-line react/dom-no-dangerously-set-innerhtml
     dangerouslySetInnerHTML={{
       __html: `
       (function() {
@@ -12,7 +13,19 @@ export const LogoScript = () => (
           return null;
         };
 
-        const logo = getCookie('${COOKIES.LOGO}') || 'uwu';
+        const setCookie = (name, value) => {
+          document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value) + '; path=/; samesite=Lax';
+        };
+
+        const isUwuRequested = new URLSearchParams(window.location.search).get('uwu') === 'true';
+        const savedLogo = getCookie('${COOKIES.LOGO}');
+        let logo = savedLogo === 'uwu' ? 'uwu' : 'classic';
+
+        if (isUwuRequested) {
+          logo = 'uwu';
+          setCookie('${COOKIES.LOGO}', logo);
+        }
+
         document.documentElement.classList.add(logo === 'classic' ? 'classic-logo' : 'uwu-logo');
       })();
     `

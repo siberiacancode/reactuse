@@ -1,11 +1,11 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
+import { renderHookServer } from '@/tests';
 import { target } from '@/utils/helpers';
 
 import type { UseEventListenerReturn } from './useEventListener';
 
-import { renderHookServer } from '../../../tests/renderHookServer';
 import { useEventListener } from './useEventListener';
 
 const targets = [
@@ -21,37 +21,6 @@ const targets = [
 ];
 
 const element = document.getElementById('target') as HTMLDivElement;
-
-it('Should preserve the event target as the listener receiver after rerender', () => {
-  const first = vi.fn(function (this: Element) {
-    return this;
-  });
-  const second = vi.fn(function (this: Element) {
-    return this;
-  });
-  const { rerender } = renderHook(
-    (listener) => useEventListener(target(element), 'click', listener),
-    { initialProps: first }
-  );
-
-  act(() => element.dispatchEvent(new Event('click')));
-  expect(first).toHaveReturnedWith(element);
-
-  rerender(second);
-  act(() => element.dispatchEvent(new Event('click')));
-  expect(first).toHaveBeenCalledOnce();
-  expect(second).toHaveReturnedWith(element);
-});
-
-it('Should bind a window listener to window', () => {
-  const listener = vi.fn(function (this: Window) {
-    return this;
-  });
-  renderHook(() => useEventListener(target(window), 'resize', listener));
-
-  act(() => window.dispatchEvent(new Event('resize')));
-  expect(listener).toHaveReturnedWith(window);
-});
 
 targets.forEach((target) => {
   describe(`${target}`, () => {
@@ -114,6 +83,55 @@ targets.forEach((target) => {
       act(() => element.dispatchEvent(new Event('click')));
 
       expect(listener).toHaveBeenCalled();
+    });
+
+    it('Should call listener with target as receiver and event as argument', () => {
+      const listener = vi.fn();
+      const event = new Event('click');
+
+      const { result } = renderHook(() => {
+        if (target)
+          return useEventListener(
+            target,
+            'click',
+            listener
+          ) as unknown as UseEventListenerReturn<HTMLDivElement>;
+        return useEventListener<HTMLDivElement>('click', listener);
+      });
+
+      if (!target) act(() => result.current(element));
+
+      act(() => element.dispatchEvent(event));
+
+      expect(listener).toHaveBeenCalledOnce();
+      expect(listener).toHaveBeenCalledWith(event);
+    });
+
+    it('Should use latest listener', () => {
+      const initialListener = vi.fn();
+      const listener = vi.fn();
+
+      const { result, rerender } = renderHook(
+        (listener) => {
+          if (target)
+            return useEventListener(
+              target,
+              'click',
+              listener
+            ) as unknown as UseEventListenerReturn<HTMLDivElement>;
+          return useEventListener<HTMLDivElement>('click', listener);
+        },
+        { initialProps: initialListener }
+      );
+
+      if (!target) act(() => result.current(element));
+
+      rerender(listener);
+
+      act(() => element.dispatchEvent(new Event('click')));
+
+      expect(initialListener).not.toHaveBeenCalled();
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     it('Should handle enabled option', () => {

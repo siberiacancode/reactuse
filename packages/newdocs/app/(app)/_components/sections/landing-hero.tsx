@@ -70,14 +70,14 @@ export const LandingHero = ({ hooksCount, release }: LandingHeroProps) => (
           ever need
         </h1>
 
-        <p className='text-muted-foreground mt-6 max-w-xl text-base leading-relaxed md:text-lg'>
+        <p className='text-muted-foreground mt-6 max-w-xl px-4 text-base leading-relaxed sm:px-0 md:text-lg'>
           The largest React hooks library. {hooksCount} production-ready hooks — lightweight,
           tree-shakeable, and TypeScript-first.
         </p>
 
-        <div className='mt-8 flex flex-col items-center gap-3 sm:flex-row'>
+        <div className='mt-8 flex w-full flex-col items-center gap-3 px-4 sm:w-auto sm:flex-row sm:px-0'>
           <Button
-            className='group h-11 rounded-full px-7 text-sm'
+            className='group h-11 w-full rounded-full px-7 text-sm sm:w-auto'
             nativeButton={false}
             render={<Link href='/docs/installation' prefetch={false} />}
           >
@@ -85,7 +85,7 @@ export const LandingHero = ({ hooksCount, release }: LandingHeroProps) => (
             <ArrowRightIcon className='size-4 transition-transform group-hover:translate-x-0.5' />
           </Button>
           <Button
-            className='h-11 rounded-full px-7 text-sm'
+            className='h-11 w-full rounded-full px-7 text-sm sm:w-auto'
             nativeButton={false}
             render={<Link href={LINKS.GITHUB} prefetch={false} rel='noreferrer' target='_blank' />}
             variant='outline'

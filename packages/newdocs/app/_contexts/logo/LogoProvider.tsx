@@ -17,10 +17,10 @@ export interface LogoProviderProps {
 
 export const LogoProvider = ({ children }: LogoProviderProps) => {
   const logoCookie = useCookie(COOKIES.LOGO, {
-    initialValue: 'uwu' as Logo,
+    initialValue: 'classic' as Logo,
     path: '/'
   });
-  const logo: Logo = logoCookie.value === 'classic' ? 'classic' : 'uwu';
+  const logo: Logo = logoCookie.value === 'uwu' ? 'uwu' : 'classic';
 
   useLayoutEffect(() => {
     const root = document.documentElement;
