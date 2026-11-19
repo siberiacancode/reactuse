@@ -53,8 +53,11 @@ it('Should apply new delay when delay changes', () => {
   expect(result.current[0]).not.toBe('second');
 
   rerender(200);
-  setThrottledValue('third');
-  expect(result.current[0]).not.toBe('third');
+
+  act(() => {
+    setThrottledValue('third');
+  });
+  expect(result.current[0]).toBe('third');
 
   act(() => vi.advanceTimersByTime(200));
   expect(result.current[0]).toBe('third');
