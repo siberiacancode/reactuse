@@ -37,24 +37,24 @@ export const useFullscreen = (...params) => {
   const elementRef = useRef(null);
   const optionsRef = useRef(options);
   optionsRef.current = options;
-  const enter = () => {
+  const enter = async () => {
     const element = elementRef.current;
     if (!element) return;
-    element.requestFullscreen();
+    await element.requestFullscreen();
   };
-  const exit = () => {
+  const exit = async () => {
     if (!document.fullscreenElement) return;
-    document.exitFullscreen();
+    await document.exitFullscreen();
   };
-  const toggle = () => {
-    if (value) return exit();
-    enter();
+  const toggle = async () => {
+    if (document.fullscreenElement) return exit();
+    await enter();
   };
   useEffect(() => {
     const element = target ? isTarget.getElement(target) : internalRef.current;
     if (!element) return;
     elementRef.current = element;
-    const onChange = () => {
+    const onFullscreenChange = () => {
       const active = document.fullscreenElement === elementRef.current;
       setValue((currentValue) => {
         if (!currentValue && active) optionsRef.current?.onEnter?.();
@@ -62,8 +62,8 @@ export const useFullscreen = (...params) => {
         return active;
       });
     };
-    document.addEventListener('fullscreenchange', onChange);
-    return () => document.removeEventListener('fullscreenchange', onChange);
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
   }, [target && isTarget.getRawElement(target), internalRef.state]);
   if (target) return { enter, exit, toggle, value };
   return { ref: internalRef, enter, exit, toggle, value };

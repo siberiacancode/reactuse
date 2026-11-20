@@ -23,33 +23,33 @@ it('Should use raf on server side', () => {
 });
 
 it('Should start request animation frame by default', () => {
-  const requestAnimationFrameSpy = vi.spyOn(window, 'requestAnimationFrame');
+  const mockRequestAnimationFrame = vi.spyOn(window, 'requestAnimationFrame');
 
   renderHook(() => useRaf(vi.fn()));
 
-  expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1);
+  expect(mockRequestAnimationFrame).toHaveBeenCalledTimes(1);
 });
 
 it('Should not start when disabled', () => {
-  const requestAnimationFrameSpy = vi.spyOn(window, 'requestAnimationFrame');
+  const mockRequestAnimationFrame = vi.spyOn(window, 'requestAnimationFrame');
   const { result } = renderHook(() => useRaf(vi.fn(), { enabled: false }));
 
   expect(result.current.active).toBeFalsy();
-  expect(requestAnimationFrameSpy).not.toHaveBeenCalled();
+  expect(mockRequestAnimationFrame).not.toHaveBeenCalled();
 });
 
 it('Should pause animation frame', () => {
-  const cancelAnimationFrameSpy = vi.spyOn(window, 'cancelAnimationFrame');
+  const mockCancelAnimationFrame = vi.spyOn(window, 'cancelAnimationFrame');
   const { result } = renderHook(() => useRaf(vi.fn()));
 
   act(result.current.pause);
 
   expect(result.current.active).toBeFalsy();
-  expect(cancelAnimationFrameSpy).toHaveBeenCalledTimes(1);
+  expect(mockCancelAnimationFrame).toHaveBeenCalledTimes(1);
 });
 
 it('Should resume animation frame after pause', () => {
-  const requestAnimationFrameSpy = vi.spyOn(window, 'requestAnimationFrame');
+  const mockRequestAnimationFrame = vi.spyOn(window, 'requestAnimationFrame');
   const { result } = renderHook(() => useRaf(vi.fn()));
 
   expect(result.current.active).toBeTruthy();
@@ -60,29 +60,29 @@ it('Should resume animation frame after pause', () => {
   act(result.current.resume);
 
   expect(result.current.active).toBeTruthy();
-  expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(2);
+  expect(mockRequestAnimationFrame).toHaveBeenCalledTimes(2);
 });
 
 it('Should handle enabled changes', () => {
-  const requestAnimationFrameSpy = vi.spyOn(window, 'requestAnimationFrame');
+  const mockRequestAnimationFrame = vi.spyOn(window, 'requestAnimationFrame');
   const { result, rerender } = renderHook((enabled) => useRaf(vi.fn(), { enabled }), {
     initialProps: false
   });
 
   expect(result.current.active).toBeFalsy();
-  expect(requestAnimationFrameSpy).not.toHaveBeenCalled();
+  expect(mockRequestAnimationFrame).not.toHaveBeenCalled();
 
   rerender(true);
 
   expect(result.current.active).toBeTruthy();
-  expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1);
+  expect(mockRequestAnimationFrame).toHaveBeenCalledTimes(1);
 });
 
 it('Should cleanup on unmount', () => {
-  const cancelAnimationFrameSpy = vi.spyOn(window, 'cancelAnimationFrame');
+  const mockCancelAnimationFrame = vi.spyOn(window, 'cancelAnimationFrame');
   const { unmount } = renderHook(() => useRaf(vi.fn()));
 
   unmount();
 
-  expect(cancelAnimationFrameSpy).toHaveBeenCalledTimes(1);
+  expect(mockCancelAnimationFrame).toHaveBeenCalledTimes(1);
 });

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type UseFpsCallback = (fps: number) => void;
 
@@ -17,6 +17,8 @@ type UseFpsCallback = (fps: number) => void;
  */
 export const useFps = (callback?: UseFpsCallback) => {
   const [fps, setFps] = useState(0);
+  const internalCallbackRef = useRef(callback);
+  internalCallbackRef.current = callback;
 
   useEffect(() => {
     let frameCount = 0;
@@ -31,7 +33,7 @@ export const useFps = (callback?: UseFpsCallback) => {
       if (elapsedTime >= 1000) {
         const calculatedFps = Math.round((frameCount * 1000) / elapsedTime);
         setFps(calculatedFps);
-        callback?.(calculatedFps);
+        internalCallbackRef.current?.(calculatedFps);
         frameCount = 0;
         startTime = currentTime;
       }

@@ -40,6 +40,22 @@ it('Should reset counter', () => {
   expect(result.current.value).toBe(0);
 });
 
+it('Should reset counter to max limit', () => {
+  const { result } = renderHook(() => useCounter(10, { max: 5 }));
+
+  act(result.current.reset);
+
+  expect(result.current.value).toBe(5);
+});
+
+it('Should reset counter to min limit', () => {
+  const { result } = renderHook(() => useCounter({ initialValue: -10, min: -5 }));
+
+  act(result.current.reset);
+
+  expect(result.current.value).toBe(-5);
+});
+
 it('Should set counter', () => {
   const { result } = renderHook(useCounter);
 

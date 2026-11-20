@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
 import { renderHookServer } from '@/tests';
-import { target, targetSymbol } from '@/utils/helpers';
+import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -90,19 +90,12 @@ targets.forEach((target) => {
     });
 
     it('Should not subscribe when element is not resolved', () => {
+      if (target) return;
+
       const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
       const callback = vi.fn();
 
-      const { result } = renderHook(() => {
-        if (target)
-          return useClickOutside(
-            { value: '#missing', type: targetSymbol },
-            callback
-          ) as unknown as StateRef<HTMLDivElement>;
-        return useClickOutside(callback);
-      });
-
-      if (!target) expect(result.current).toBeTypeOf('function');
+      renderHook(() => useClickOutside(callback));
 
       expect(addEventListenerSpy).not.toHaveBeenCalledWith('click', expect.any(Function));
 

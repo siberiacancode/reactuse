@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { copy } from '@/utils/helpers';
 
@@ -35,12 +35,14 @@ export interface UseCopyParams {
 export const useCopy = (delay: number = 1000): UseCopyReturn => {
   const [value, setValue] = useState<string | undefined>();
   const [copied, setCopied] = useState(false);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const copyToClipboard = async (text: string) => {
     await copy(text);
     setValue(text);
     setCopied(true);
-    setTimeout(setCopied, delay, false);
+    if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+    timeoutIdRef.current = setTimeout(setCopied, delay, false);
   };
 
   return { value, copied, copy: copyToClipboard };

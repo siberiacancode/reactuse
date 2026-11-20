@@ -23,11 +23,11 @@ export interface UseFullScreenReturn {
   /** The fullscreen state */
   value: boolean;
   /** The fullscreen enter method */
-  enter: () => void;
+  enter: () => Promise<void>;
   /** The fullscreen exit method */
-  exit: () => void;
+  exit: () => Promise<void>;
   /** The fullscreen toggle method */
-  toggle: () => void;
+  toggle: () => Promise<void>;
 }
 
 export interface UseFullScreen {
@@ -77,20 +77,20 @@ export const useFullscreen = ((...params: any[]) => {
   const optionsRef = useRef<UseFullScreenOptions | undefined>(options);
   optionsRef.current = options;
 
-  const enter = () => {
+  const enter = async () => {
     const element = elementRef.current;
     if (!element) return;
-    element.requestFullscreen();
+    await element.requestFullscreen();
   };
 
-  const exit = () => {
+  const exit = async () => {
     if (!document.fullscreenElement) return;
-    document.exitFullscreen();
+    await document.exitFullscreen();
   };
 
-  const toggle = () => {
-    if (value) return exit();
-    enter();
+  const toggle = async () => {
+    if (document.fullscreenElement) return exit();
+    await enter();
   };
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export const useFullscreen = ((...params: any[]) => {
 
     elementRef.current = element;
 
-    const onChange = () => {
+    const onFullscreenChange = () => {
       const active = document.fullscreenElement === elementRef.current;
 
       setValue((currentValue) => {
@@ -109,9 +109,9 @@ export const useFullscreen = ((...params: any[]) => {
       });
     };
 
-    document.addEventListener('fullscreenchange', onChange);
+    document.addEventListener('fullscreenchange', onFullscreenChange);
 
-    return () => document.removeEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
   }, [target && isTarget.getRawElement(target), internalRef.state]);
 
   if (target) return { enter, exit, toggle, value };

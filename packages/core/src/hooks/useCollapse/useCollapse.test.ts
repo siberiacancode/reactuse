@@ -30,7 +30,7 @@ const targets = [
 
 const element = document.getElementById('target') as HTMLDivElement;
 
-let animationFrameCallback: FrameRequestCallback;
+let mockAnimationFrameCallback: FrameRequestCallback;
 
 beforeEach(() => {
   element.replaceChildren();
@@ -42,7 +42,7 @@ beforeEach(() => {
   });
 
   vi.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
-    animationFrameCallback = callback;
+    mockAnimationFrameCallback = callback;
     return 1;
   });
 });
@@ -195,7 +195,7 @@ targets.forEach((target) => {
       expect(element.style.transition).toBe('height 200ms ease');
       expect(element.style.willChange).toBe('height');
 
-      act(() => animationFrameCallback(performance.now()));
+      act(() => mockAnimationFrameCallback(performance.now()));
 
       expect(element.style.height).toBe('120px');
 
@@ -221,7 +221,7 @@ targets.forEach((target) => {
       expect(element.style.height).toBe('48px');
       expect(element.style.transition).toBe('height 200ms ease');
 
-      act(() => animationFrameCallback(performance.now()));
+      act(() => mockAnimationFrameCallback(performance.now()));
 
       expect(element.style.height).toBe('0px');
 
@@ -353,7 +353,7 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
       act(result.current.open);
-      act(() => animationFrameCallback(performance.now()));
+      act(() => mockAnimationFrameCallback(performance.now()));
 
       act(() =>
         child.dispatchEvent(
@@ -373,7 +373,7 @@ targets.forEach((target) => {
     });
 
     it('Should replace pending animation', () => {
-      const cancelAnimationFrame = vi.spyOn(window, 'cancelAnimationFrame');
+      const mockCancelAnimationFrame = vi.spyOn(window, 'cancelAnimationFrame');
       const { result } = renderHook(() => {
         if (target)
           return useCollapse(target) as UseCollapseReturn & {
@@ -386,16 +386,55 @@ targets.forEach((target) => {
       act(result.current.open);
       act(result.current.close);
 
-      expect(cancelAnimationFrame).toHaveBeenCalledWith(1);
+      expect(mockCancelAnimationFrame).toHaveBeenCalledWith(1);
 
-      act(() => animationFrameCallback(performance.now()));
+      act(() => mockAnimationFrameCallback(performance.now()));
 
       expect(element.style.height).toBe('0px');
     });
 
+    it('Should handle target changes', () => {
+      const nextElement = document.createElement('div');
+      Object.assign(nextElement.style, INITIAL_STYLES);
+
+      const { result, rerender } = renderHook(
+        (nextTarget) => {
+          if (nextTarget)
+            return useCollapse(nextTarget) as UseCollapseReturn & {
+              ref: StateRef<HTMLDivElement>;
+            };
+          return useCollapse<HTMLDivElement>();
+        },
+        { initialProps: target }
+      );
+
+      if (!target) act(() => result.current.ref(element));
+
+      expect(element.style.display).toBe('none');
+
+      rerender({ current: nextElement });
+
+      expect(element.style).toEqual(expect.objectContaining(INITIAL_STYLES));
+      expect(nextElement.style.display).toBe('none');
+      expect(nextElement.style.height).toBe('0px');
+      expect(nextElement.style.overflow).toBe('hidden');
+    });
+
+    it('Should not subscribe when element is not resolved', () => {
+      if (target) return;
+
+      const { result } = renderHook(useCollapse);
+
+      expect(result.current.expanded).toBeFalsy();
+
+      act(result.current.open);
+
+      expect(result.current.expanded).toBeTruthy();
+    });
+
     it('Should cleanup on unmount', () => {
       const onEnd = vi.fn();
-      const cancelAnimationFrame = vi.spyOn(window, 'cancelAnimationFrame');
+      const mockCancelAnimationFrame = vi.spyOn(window, 'cancelAnimationFrame');
       const { result, unmount } = renderHook(() => {
         if (target)
           return useCollapse(target, false, { onEnd }) as UseCollapseReturn & {
@@ -412,38 +451,9 @@ targets.forEach((target) => {
         element.dispatchEvent(Object.assign(new Event('transitionend'), { propertyName: 'height' }))
       );
 
-      expect(cancelAnimationFrame).toHaveBeenCalledWith(1);
+      expect(mockCancelAnimationFrame).toHaveBeenCalledWith(1);
       expect(element.style).toEqual(expect.objectContaining(INITIAL_STYLES));
       expect(onEnd).not.toHaveBeenCalled();
     });
   });
-});
-
-it('Should use collapse with unresolved target', () => {
-  const { result } = renderHook(() => useCollapse(target('#missing-collapse-target')));
-
-  expect(result.current.expanded).toBeFalsy();
-
-  act(result.current.open);
-
-  expect(result.current.expanded).toBeTruthy();
-});
-
-it('Should handle target changes', () => {
-  const nextElement = document.createElement('div');
-  Object.assign(nextElement.style, INITIAL_STYLES);
-  const firstTarget = target(element);
-  const secondTarget = target(nextElement);
-  const { rerender } = renderHook((target) => useCollapse(target), {
-    initialProps: firstTarget
-  });
-
-  expect(element.style.display).toBe('none');
-
-  rerender(secondTarget);
-
-  expect(element.style).toEqual(expect.objectContaining(INITIAL_STYLES));
-  expect(nextElement.style.display).toBe('none');
-  expect(nextElement.style.height).toBe('0px');
-  expect(nextElement.style.overflow).toBe('hidden');
 });

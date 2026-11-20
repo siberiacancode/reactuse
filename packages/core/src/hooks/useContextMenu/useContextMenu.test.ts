@@ -92,6 +92,15 @@ targets.forEach((target) => {
       expect(result.current.position).toBeUndefined();
     });
 
+    it('Should not subscribe when element is not resolved', () => {
+      if (target) return;
+
+      const { result } = renderHook(useContextMenu);
+
+      expect(result.current.opened).toBeFalsy();
+      expect(result.current.position).toBeUndefined();
+    });
+
     it('Should open context menu on context menu event', () => {
       const { result } = renderHook(() => {
         if (target)

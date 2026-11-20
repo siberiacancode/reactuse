@@ -43,7 +43,9 @@ it('Should normalize initial index', () => {
 it('Should go to the next item', () => {
   const { result } = renderHook(() => useCycleList(INITIAL_LIST));
 
-  act(result.current.next);
+  act(() => {
+    expect(result.current.next()).toBe('bar');
+  });
 
   expect(result.current.value).toBe('bar');
   expect(result.current.index).toBe(1);
@@ -52,7 +54,9 @@ it('Should go to the next item', () => {
 it('Should go to the previous item', () => {
   const { result } = renderHook(() => useCycleList(INITIAL_LIST));
 
-  act(result.current.prev);
+  act(() => {
+    expect(result.current.prev()).toBe('fooBar');
+  });
 
   expect(result.current.value).toBe('fooBar');
   expect(result.current.index).toBe(2);
@@ -79,7 +83,9 @@ it('Should go to the previous item by custom step', () => {
 it('Should go to a specific index', () => {
   const { result } = renderHook(() => useCycleList(INITIAL_LIST));
 
-  act(() => result.current.go(2));
+  act(() => {
+    expect(result.current.go(2)).toBe('fooBar');
+  });
 
   expect(result.current.value).toBe('fooBar');
   expect(result.current.index).toBe(2);
@@ -103,8 +109,8 @@ it('Should normalize index when list length changes', () => {
   });
 
   act(() => result.current.go(2));
-  rerender({ list: ['foo', 'bar'] });
+  rerender({ list: ['newFoo', 'newBar'] });
 
-  expect(result.current.value).toBe('foo');
+  expect(result.current.value).toBe('newFoo');
   expect(result.current.index).toBe(0);
 });

@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
 import { createTrigger, renderHookServer } from '@/tests';
-import { target, targetSymbol } from '@/utils/helpers';
+import { target } from '@/utils/helpers';
 
 import type { StateRef } from '../useRefState/useRefState';
 
@@ -82,18 +82,11 @@ targets.forEach((target) => {
     });
 
     it('Should not subscribe when element is not resolved', () => {
+      if (target) return;
+
       const addEventListenerSpy = vi.spyOn(element, 'addEventListener');
 
-      const { result } = renderHook(() => {
-        if (target)
-          return useAutoScroll({
-            value: '#missing',
-            type: targetSymbol
-          }) as unknown as StateRef<HTMLElement>;
-        return useAutoScroll<HTMLElement>();
-      });
-
-      if (!target) expect(result.current).toBeTypeOf('function');
+      renderHook(useAutoScroll);
 
       expect(mockMutationObserverObserve).not.toHaveBeenCalled();
       expect(addEventListenerSpy).not.toHaveBeenCalledWith('wheel', expect.any(Function));

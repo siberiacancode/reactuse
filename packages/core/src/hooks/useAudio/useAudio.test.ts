@@ -274,11 +274,11 @@ it('Should clamp playback rate between 0.5 and 2', () => {
 });
 
 it('Should handle sprite playback', async () => {
-  let animationFrameCallback!: FrameRequestCallback;
-  const requestAnimationFrameSpy = vi
+  let mockAnimationFrameCallback!: FrameRequestCallback;
+  const mockRequestAnimationFrame = vi
     .spyOn(window, 'requestAnimationFrame')
     .mockImplementation((callback) => {
-      animationFrameCallback = callback;
+      mockAnimationFrameCallback = callback;
       return 1;
     });
   const sprite = {
@@ -296,10 +296,10 @@ it('Should handle sprite playback', async () => {
 
   expect(audio.currentTime).toBe(2);
   expect(mockAudioPlay).toHaveBeenCalledOnce();
-  expect(requestAnimationFrameSpy).toHaveBeenCalledOnce();
+  expect(mockRequestAnimationFrame).toHaveBeenCalledOnce();
 
   audio.currentTime = 5;
-  act(() => animationFrameCallback(0));
+  act(() => mockAnimationFrameCallback(0));
 
   expect(result.current.playing).toBeFalsy();
   expect(audio.currentTime).toBe(0);

@@ -40,6 +40,7 @@ it('Should use copy on server side', () => {
 });
 
 it('Should copy value to clipboard', async () => {
+  const clearTimeoutSpy = vi.spyOn(window, 'clearTimeout');
   const { result } = renderHook(useCopy);
 
   await act(() => result.current.copy('value'));
@@ -49,6 +50,7 @@ it('Should copy value to clipboard', async () => {
 
   expect(mockNavigatorClipboardWriteText).toHaveBeenCalledOnce();
   expect(mockNavigatorClipboardWriteText).toHaveBeenCalledWith('value');
+  expect(clearTimeoutSpy).not.toHaveBeenCalled();
 });
 
 it('Should copy value to clipboard if writeText not supported', async () => {
@@ -75,6 +77,22 @@ it('Should reset copied status after delay', async () => {
 
   expect(result.current.copied).toBeFalsy();
   expect(result.current.value).toBe('value');
+});
+
+it('Should restart reset delay after copying again', async () => {
+  const { result } = renderHook(useCopy);
+
+  await act(() => result.current.copy('first-value'));
+  act(() => vi.advanceTimersByTime(500));
+  await act(() => result.current.copy('second-value'));
+  act(() => vi.advanceTimersByTime(500));
+
+  expect(result.current.copied).toBeTruthy();
+  expect(result.current.value).toBe('second-value');
+
+  act(() => vi.advanceTimersByTime(500));
+
+  expect(result.current.copied).toBeFalsy();
 });
 
 it('Should use custom delay', async () => {

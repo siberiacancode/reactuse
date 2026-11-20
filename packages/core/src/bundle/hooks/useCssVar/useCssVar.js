@@ -34,14 +34,12 @@ export const useCssVar = (...params) => {
   const set = (value) => {
     if (!elementRef.current) return;
     const element = elementRef.current;
-    if (!element.style) return;
     element.style.setProperty(key, value);
     setValue(value);
   };
   const remove = () => {
     if (!elementRef.current) return;
     const element = elementRef.current;
-    if (!element.style) return;
     element.style.removeProperty(key);
     setValue('');
   };
@@ -50,9 +48,7 @@ export const useCssVar = (...params) => {
     const element =
       (target ? isTarget.getElement(target) : internalRef.current) ??
       window.document.documentElement;
-    if (!element.style) return;
     element.style.setProperty(key, initialValue);
-    setValue(initialValue);
   }, []);
   useEffect(() => {
     const element =
@@ -60,8 +56,8 @@ export const useCssVar = (...params) => {
       window.document.documentElement;
     elementRef.current = element;
     const onChange = () => {
-      const value = window.getComputedStyle(element).getPropertyValue(key)?.trim();
-      setValue(value ?? initialValue);
+      const value = window.getComputedStyle(element).getPropertyValue(key).trim();
+      setValue(value);
     };
     const observer = new MutationObserver(onChange);
     observer.observe(element, { attributeFilter: ['style', 'class'] });

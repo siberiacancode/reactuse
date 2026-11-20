@@ -39,7 +39,35 @@ it('Should get cookie', () => {
   document.cookie = 'cookie=value';
   const { result } = renderHook(() => useCookies<{ cookie: string }>());
 
-  expect(result.current.value).toEqual({ cookie: 'value' });
+  expect(result.current.value).toStrictEqual({ cookie: 'value' });
+});
+
+it('Should deserialize undefined cookie value', () => {
+  document.cookie = 'cookie=undefined';
+
+  const { result } = renderHook(() => useCookies<{ cookie: string | undefined }>());
+
+  expect(result.current.value).toEqual({ cookie: undefined });
+});
+
+it('Should preserve equals signs in cookie value', () => {
+  document.cookie = 'cookie=value=with=equals';
+
+  const { result } = renderHook(() => useCookies<{ cookie: string }>());
+
+  expect(result.current.value).toEqual({ cookie: 'value=with=equals' });
+});
+
+it('Should ignore invalid cookie entries', () => {
+  const mockDocumentCookie = vi
+    .spyOn(Document.prototype, 'cookie', 'get')
+    .mockReturnValue('cookie=value; invalid');
+
+  const { result } = renderHook(() => useCookies<{ cookie: string }>());
+
+  expect(result.current.value).toStrictEqual({ cookie: 'value' });
+
+  mockDocumentCookie.mockRestore();
 });
 
 it('Should remove cookie', () => {

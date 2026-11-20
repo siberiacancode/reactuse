@@ -31,19 +31,19 @@ it('Should handle function as initial value', () => {
 });
 
 it('Should set value using requestAnimationFrame', async () => {
-  const requestAnimationFrame = vi.spyOn(window, 'requestAnimationFrame');
+  const mockRequestAnimationFrame = vi.spyOn(window, 'requestAnimationFrame');
   const { result } = renderHook(() => useRafState(0));
   const [, setValue] = result.current;
 
   act(() => setValue(10));
 
-  expect(requestAnimationFrame).toHaveBeenCalledOnce();
+  expect(mockRequestAnimationFrame).toHaveBeenCalledOnce();
 });
 
 it('Should cleanup on unmount', () => {
-  const cancelAnimationFrame = vi.spyOn(window, 'cancelAnimationFrame');
+  const mockCancelAnimationFrame = vi.spyOn(window, 'cancelAnimationFrame');
   const { unmount } = renderHook(() => useRafState(0));
 
   unmount();
-  expect(cancelAnimationFrame).toHaveBeenCalledOnce();
+  expect(mockCancelAnimationFrame).toHaveBeenCalledOnce();
 });

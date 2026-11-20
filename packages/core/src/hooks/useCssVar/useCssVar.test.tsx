@@ -23,6 +23,7 @@ const targets = [
 const element = document.getElementById('target') as HTMLDivElement;
 
 beforeEach(() => {
+  window.document.documentElement.style.removeProperty('--test-color');
   element.style.removeProperty('--test-color');
   element.className = '';
 });
@@ -37,20 +38,14 @@ class MockMutationObserver {
 
   callback: MutationCallback;
 
-  observe = (target: Node) => {
+  observe = (target: Node, options?: MutationObserverInit) => {
     trigger.add(target, this.callback);
-    mockMutationObserverObserve();
+    mockMutationObserverObserve(target, options);
   };
   disconnect = () => mockMutationObserverDisconnect();
 }
 
 globalThis.MutationObserver = MockMutationObserver as any;
-
-it('Should use css var with default target', () => {
-  renderHook(() => useCssVar('--test-color', 'green'));
-
-  expect(window.document.documentElement.style.getPropertyValue('--test-color')).toBe('green');
-});
 
 targets.forEach((target) => {
   describe(`${target}`, () => {
@@ -84,6 +79,10 @@ targets.forEach((target) => {
       expect(result.current.value).toBe('green');
       if (!target) expect(result.current.ref).toBeTypeOf('function');
       if (target) expect(result.current.ref).toBeUndefined();
+
+      expect(() => result.current.set('purple')).not.toThrow();
+      expect(() => result.current.remove()).not.toThrow();
+      expect(result.current.value).toBe('green');
     });
 
     it('Should work without initial value', () => {

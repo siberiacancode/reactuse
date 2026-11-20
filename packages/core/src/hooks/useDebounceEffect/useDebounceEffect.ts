@@ -17,7 +17,6 @@ import { useEffect, useRef } from 'react';
  */
 export const useDebounceEffect = (effect: EffectCallback, delay: number, deps?: DependencyList) => {
   const mountedRef = useRef(true);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cleanupRef = useRef<ReturnType<EffectCallback>>(undefined);
   const effectRef = useRef(effect);
   const delayRef = useRef(delay);
@@ -31,19 +30,14 @@ export const useDebounceEffect = (effect: EffectCallback, delay: number, deps?: 
       return;
     }
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
-    timeoutRef.current = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       cleanupRef.current = effectRef.current();
     }, delayRef.current);
 
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
+      clearTimeout(timeoutId);
       if (typeof cleanupRef.current === 'function') cleanupRef.current();
+      cleanupRef.current = undefined;
     };
   }, deps);
 };

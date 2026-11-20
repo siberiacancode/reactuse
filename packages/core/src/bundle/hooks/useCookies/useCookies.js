@@ -44,9 +44,8 @@ export const useCookies = (options) => {
       return value;
     }
   };
-  const getParsedCookies = () => {
-    if (!document.cookie) return {};
-    return Object.fromEntries(
+  const getParsedCookies = () =>
+    Object.fromEntries(
       document.cookie
         .split('; ')
         .map((cookie) => {
@@ -57,7 +56,6 @@ export const useCookies = (options) => {
         })
         .filter((entry) => entry.length)
     );
-  };
   const [value, setValue] = useState(() => {
     if (typeof window === 'undefined') return {};
     return getParsedCookies();

@@ -25,6 +25,19 @@ it('Should return initial value', () => {
   expect(result.current[0]).toBe(5);
 });
 
+it('Should use lazy initial value', () => {
+  const initialValue = vi.fn(() => 5);
+
+  const { result, rerender } = renderHook(() => useDefault(initialValue, 10));
+
+  expect(result.current[0]).toBe(5);
+  expect(initialValue).toHaveBeenCalledOnce();
+
+  rerender();
+
+  expect(initialValue).toHaveBeenCalledOnce();
+});
+
 const emptyValues = [null, undefined];
 emptyValues.forEach((emptyValue) => {
   it(`Should return default value when initial value is ${emptyValue}`, () => {
@@ -44,13 +57,25 @@ it('Should set new value', () => {
   expect(result.current[0]).toBe(30);
 });
 
-it('Should return default value when set new empty value', () => {
-  const { result } = renderHook(() => useDefault(5, 10));
-  const [, setState] = result.current;
+emptyValues.forEach((emptyValue) => {
+  it(`Should return default value when set value is ${emptyValue}`, () => {
+    const { result } = renderHook(() => useDefault(5, 10));
+    const [, setState] = result.current;
 
-  expect(result.current[0]).toBe(5);
+    act(() => setState(emptyValue));
 
-  act(() => setState(undefined));
+    expect(result.current[0]).toBe(10);
+  });
+});
+
+it('Should use latest default value', () => {
+  const { result, rerender } = renderHook((defaultValue) => useDefault(undefined, defaultValue), {
+    initialProps: 10
+  });
 
   expect(result.current[0]).toBe(10);
+
+  rerender(20);
+
+  expect(result.current[0]).toBe(20);
 });

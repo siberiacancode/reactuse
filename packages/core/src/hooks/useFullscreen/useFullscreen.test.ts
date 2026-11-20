@@ -74,7 +74,7 @@ targets.forEach((target) => {
       if (target) expect(result.current.ref).toBeUndefined();
     });
 
-    it('Should handle enter', () => {
+    it('Should handle enter', async () => {
       const { result } = renderHook(() => {
         if (target) {
           return useFullscreen(target) as unknown as UseFullScreenReturn & {
@@ -88,7 +88,7 @@ targets.forEach((target) => {
       if (!target)
         act(() => result.current.ref(document.getElementById('target')! as HTMLDivElement));
 
-      act(result.current.enter);
+      await act(result.current.enter);
 
       const element = (
         target ? isTarget.getElement(target) : result.current.ref.current
@@ -96,7 +96,30 @@ targets.forEach((target) => {
       expect(element.requestFullscreen).toHaveBeenCalledTimes(1);
     });
 
-    it('Should handle exit', () => {
+    it('Should not enter fullscreen without target', async () => {
+      if (target) return;
+
+      const { result } = renderHook(() => useFullscreen<HTMLDivElement>());
+
+      await act(result.current.enter);
+
+      expect(element.requestFullscreen).not.toHaveBeenCalled();
+    });
+
+    it('Should not subscribe when element is not resolved', () => {
+      if (target) return;
+
+      const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
+
+      renderHook(() => useFullscreen<HTMLDivElement>());
+
+      expect(addEventListenerSpy).not.toHaveBeenCalledWith(
+        'fullscreenchange',
+        expect.any(Function)
+      );
+    });
+
+    it('Should handle exit', async () => {
       const { result } = renderHook(() => {
         if (target) {
           return useFullscreen(target) as unknown as UseFullScreenReturn & {
@@ -109,15 +132,16 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      act(() => {
-        (document as any).fullscreenElement = element;
-        result.current.exit();
-      });
+      await act(result.current.exit);
+      expect(document.exitFullscreen).not.toHaveBeenCalled();
+
+      (document as any).fullscreenElement = element;
+      await act(result.current.exit);
 
       expect(document.exitFullscreen).toHaveBeenCalledTimes(1);
     });
 
-    it('Should toggle fullscreen', () => {
+    it('Should toggle fullscreen', async () => {
       const { result } = renderHook(() => {
         if (target) {
           return useFullscreen(target) as unknown as UseFullScreenReturn & {
@@ -131,20 +155,16 @@ targets.forEach((target) => {
       if (!target)
         act(() => result.current.ref(document.getElementById('target')! as HTMLDivElement));
 
-      act(result.current.toggle);
+      await act(result.current.toggle);
       const element = (
         target ? isTarget.getElement(target) : result.current.ref.current
       ) as Element;
       expect(element.requestFullscreen).toHaveBeenCalledTimes(1);
 
-      act(() => {
-        (document as any).fullscreenElement = element;
-        document.dispatchEvent(new Event('fullscreenchange'));
-      });
+      (document as any).fullscreenElement = element;
+      await act(result.current.toggle);
 
-      expect(result.current.value).toBeTruthy();
-
-      act(result.current.toggle);
+      expect(element.requestFullscreen).toHaveBeenCalledTimes(1);
       expect(document.exitFullscreen).toHaveBeenCalledTimes(1);
     });
 
@@ -210,37 +230,91 @@ targets.forEach((target) => {
 
     it('Should ignore fullscreen changes from other elements', () => {
       const onEnter = vi.fn();
+      const onExit = vi.fn();
 
       const { result } = renderHook(() => {
         if (target) {
-          return useFullscreen(target, { onEnter }) as unknown as UseFullScreenReturn & {
+          return useFullscreen(target, { onEnter, onExit }) as unknown as UseFullScreenReturn & {
             ref: StateRef<HTMLDivElement>;
           };
         }
 
-        return useFullscreen<HTMLDivElement>({ onEnter });
+        return useFullscreen<HTMLDivElement>({ onEnter, onExit });
       });
 
       if (!target) act(() => result.current.ref(element));
 
       act(() => {
-        (document as Document & { fullscreenElement: Element | null }).fullscreenElement =
-          document.body;
+        (document as any).fullscreenElement = document.body;
         document.dispatchEvent(new Event('fullscreenchange'));
       });
 
       expect(result.current.value).toBeFalsy();
       expect(onEnter).toHaveBeenCalledTimes(0);
+      expect(onExit).toHaveBeenCalledTimes(0);
+    });
+
+    it('Should change value on fullscreen events', () => {
+      const { result } = renderHook(() => {
+        if (target) {
+          return useFullscreen(target) as unknown as UseFullScreenReturn & {
+            ref: StateRef<HTMLDivElement>;
+          };
+        }
+
+        return useFullscreen<HTMLDivElement>();
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      act(() => {
+        (document as any).fullscreenElement = element;
+        document.dispatchEvent(new Event('fullscreenchange'));
+      });
+
+      expect(result.current.value).toBeTruthy();
+
+      act(() => {
+        (document as any).fullscreenElement = null;
+        document.dispatchEvent(new Event('fullscreenchange'));
+      });
+
+      expect(result.current.value).toBeFalsy();
+    });
+
+    it('Should change value on fullscreen events with empty options', () => {
+      const { result } = renderHook(() => {
+        if (target) {
+          return useFullscreen(target, {}) as unknown as UseFullScreenReturn & {
+            ref: StateRef<HTMLDivElement>;
+          };
+        }
+
+        return useFullscreen<HTMLDivElement>({});
+      });
+
+      if (!target) act(() => result.current.ref(element));
+
+      act(() => {
+        (document as any).fullscreenElement = element;
+        document.dispatchEvent(new Event('fullscreenchange'));
+      });
+
+      expect(result.current.value).toBeTruthy();
+
+      act(() => {
+        (document as any).fullscreenElement = null;
+        document.dispatchEvent(new Event('fullscreenchange'));
+      });
+
+      expect(result.current.value).toBeFalsy();
     });
 
     it('Should handle target changes', () => {
-      const addEventListenerSpy = vi.spyOn(document, 'addEventListener');
-      const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
-
       const { result, rerender } = renderHook(
         (nextTarget) => {
           if (nextTarget)
-            return useFullscreen(nextTarget) as unknown as {
+            return useFullscreen(nextTarget) as unknown as UseFullScreenReturn & {
               ref: StateRef<HTMLDivElement>;
             };
           return useFullscreen<HTMLDivElement>();
@@ -250,12 +324,21 @@ targets.forEach((target) => {
 
       if (!target) act(() => result.current.ref(element));
 
-      expect(addEventListenerSpy).toHaveBeenCalledWith('fullscreenchange', expect.any(Function));
-
       rerender({ current: document.body });
 
-      expect(removeEventListenerSpy).toHaveBeenCalledWith('fullscreenchange', expect.any(Function));
-      expect(addEventListenerSpy).toHaveBeenCalledWith('fullscreenchange', expect.any(Function));
+      act(() => {
+        (document as any).fullscreenElement = element;
+        document.dispatchEvent(new Event('fullscreenchange'));
+      });
+
+      expect(result.current.value).toBeFalsy();
+
+      act(() => {
+        (document as any).fullscreenElement = document.body;
+        document.dispatchEvent(new Event('fullscreenchange'));
+      });
+
+      expect(result.current.value).toBeTruthy();
     });
 
     it('Should cleanup on unmount', () => {

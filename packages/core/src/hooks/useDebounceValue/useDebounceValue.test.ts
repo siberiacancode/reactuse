@@ -35,6 +35,25 @@ it('Should update value after delay', () => {
   expect(result.current).toBe('second');
 });
 
+it('Should restart delay when value changes', () => {
+  const { result, rerender } = renderHook((value) => useDebounceValue(value, 100), {
+    initialProps: 'first'
+  });
+
+  rerender('second');
+
+  act(() => vi.advanceTimersByTime(99));
+  expect(result.current).toBe('first');
+
+  rerender('third');
+
+  act(() => vi.advanceTimersByTime(99));
+  expect(result.current).toBe('first');
+
+  act(() => vi.advanceTimersByTime(1));
+  expect(result.current).toBe('third');
+});
+
 it('Should apply new delay when delay changes', () => {
   const { result, rerender } = renderHook(({ value, delay }) => useDebounceValue(value, delay), {
     initialProps: { value: 'first', delay: 100 }
