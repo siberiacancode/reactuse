@@ -66,6 +66,22 @@ it('Should copy value to clipboard if writeText not supported', async () => {
   expect(mockDocumentExecCommand).toHaveBeenLastCalledWith('copy');
 });
 
+it('Should use custom delay', async () => {
+  const { result } = renderHook(() => useCopy(2000));
+
+  await act(() => result.current.copy('value'));
+
+  expect(result.current.copied).toBeTruthy();
+
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(result.current.copied).toBeTruthy();
+
+  act(() => vi.advanceTimersByTime(1000));
+
+  expect(result.current.copied).toBeFalsy();
+});
+
 it('Should reset copied status after delay', async () => {
   const { result } = renderHook(useCopy);
 
@@ -84,29 +100,44 @@ it('Should restart reset delay after copying again', async () => {
 
   await act(() => result.current.copy('first-value'));
   act(() => vi.advanceTimersByTime(500));
-  await act(() => result.current.copy('second-value'));
+
+  const clipboardWrite = Promise.withResolvers<void>();
+  mockNavigatorClipboardWriteText.mockReturnValueOnce(clipboardWrite.promise);
+  const copyPromise = result.current.copy('second-value');
+
   act(() => vi.advanceTimersByTime(500));
 
   expect(result.current.copied).toBeTruthy();
+  expect(result.current.value).toBe('first-value');
+
+  await act(async () => {
+    clipboardWrite.resolve();
+    await copyPromise;
+  });
+
   expect(result.current.value).toBe('second-value');
 
-  act(() => vi.advanceTimersByTime(500));
+  act(() => vi.advanceTimersByTime(1000));
 
   expect(result.current.copied).toBeFalsy();
 });
 
-it('Should use custom delay', async () => {
-  const { result } = renderHook(() => useCopy(2000));
+it('Should cancel reset on unmount', async () => {
+  const clearTimeoutSpy = vi.spyOn(window, 'clearTimeout');
+  const { result, unmount } = renderHook(useCopy);
 
   await act(() => result.current.copy('value'));
 
-  expect(result.current.copied).toBeTruthy();
+  unmount();
 
-  act(() => vi.advanceTimersByTime(1000));
+  expect(clearTimeoutSpy).toHaveBeenCalledOnce();
+});
 
-  expect(result.current.copied).toBeTruthy();
+it('Should cleanup on unmount', () => {
+  const clearTimeoutSpy = vi.spyOn(window, 'clearTimeout');
+  const { unmount } = renderHook(useCopy);
 
-  act(() => vi.advanceTimersByTime(1000));
+  unmount();
 
-  expect(result.current.copied).toBeFalsy();
+  expect(clearTimeoutSpy).not.toHaveBeenCalled();
 });
