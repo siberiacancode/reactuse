@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { copyFileSync } from 'node:fs';
+import { copyFileSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
@@ -12,7 +12,16 @@ export default defineConfig({
     react(),
     dts({
       afterBuild: () => {
-        copyFileSync('dist/types/index.d.ts', 'dist/types/index.d.mts');
+        const esmEntry = 'dist/types/index.d.mts';
+
+        copyFileSync('dist/types/index.d.ts', esmEntry);
+
+        const declarations = readFileSync(esmEntry, 'utf8')
+          .replace("from './helpers';", "from './helpers/index.js';")
+          .replace("from './hooks';", "from './hooks/index.js';")
+          .replace("from './utils/helpers';", "from './utils/helpers/index.js';");
+
+        writeFileSync(esmEntry, declarations);
       },
       exclude: ['**/*.test.{ts,tsx}', '**/*.stories.{ts,tsx}'],
       entryRoot: 'src',
